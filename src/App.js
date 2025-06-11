@@ -1,24 +1,42 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ProgressProvider } from './contexts/ProgressContext';
+import { LanguageProvider } from './contexts/LanguageContext';
+import Homepage from './components/Homepage';
+import ModuleLayout from './components/ModuleLayout';
 import './App.css';
+
+// Import all modules
+import NumbersModule from './modules/NumbersModule';
+import HashingModule from './modules/HashingModule';
+import MiningModule from './modules/MiningModule';
+import KeysModule from './modules/KeysModule';
+import TransactionsModule from './modules/TransactionsModule';
+import ScriptsModule from './modules/ScriptsModule';
+import MerkleModule from './modules/MerkleModule';
+import CustodyModule from './modules/CustodyModule';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LanguageProvider>
+      <ProgressProvider>
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
+              <Route path="/module/hashing" element={<ModuleLayout><HashingModule /></ModuleLayout>} />
+              <Route path="/module/mining" element={<ModuleLayout><MiningModule /></ModuleLayout>} />
+              <Route path="/module/keys" element={<ModuleLayout><KeysModule /></ModuleLayout>} />
+              <Route path="/module/transactions" element={<ModuleLayout><TransactionsModule /></ModuleLayout>} />
+              <Route path="/module/scripts" element={<ModuleLayout><ScriptsModule /></ModuleLayout>} />
+              <Route path="/module/merkle" element={<ModuleLayout><MerkleModule /></ModuleLayout>} />
+              <Route path="/module/custody" element={<ModuleLayout><CustodyModule /></ModuleLayout>} />
+            </Routes>
+          </div>
+        </Router>
+      </ProgressProvider>
+    </LanguageProvider>
   );
 }
 

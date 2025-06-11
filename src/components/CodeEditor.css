@@ -1,0 +1,235 @@
+/* Code Editor Styles */
+.code-editor {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 2rem 0;
+}
+
+.code-editor-header {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-editor-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: white;
+}
+
+.code-editor-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.run-button {
+  background: linear-gradient(45deg, #10B981, #059669);
+  color: white;
+}
+
+.run-button:hover:not(:disabled) {
+  background: linear-gradient(45deg, #059669, #047857);
+  transform: translateY(-2px);
+}
+
+.run-button:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.reset-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.reset-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.reset-button:disabled {
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.code-editor-body {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.code-input-section,
+.code-output-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.code-label,
+.output-label,
+.expected-label {
+  font-weight: 600;
+  color: white;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.code-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.code-textarea:focus {
+  outline: none;
+  border-color: #10B981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.code-textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.code-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.success-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #10B981;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.error-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #EF4444;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.code-output,
+.error-output,
+.expected-output {
+  min-height: 200px;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.error-output {
+  color: #FCA5A5;
+  border-color: #EF4444;
+}
+
+.expected-output-section {
+  padding: 0 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.expected-output {
+  min-height: auto;
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .code-editor-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .code-editor-actions {
+    justify-content: center;
+  }
+
+  .code-editor-body {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .code-textarea,
+  .code-output,
+  .error-output {
+    min-height: 150px;
+  }
+
+  .expected-output-section {
+    padding: 0 1rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .code-editor-header {
+    padding: 1rem;
+  }
+
+  .action-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .code-textarea,
+  .code-output,
+  .error-output {
+    min-height: 120px;
+    font-size: 0.8rem;
+  }
+} 
