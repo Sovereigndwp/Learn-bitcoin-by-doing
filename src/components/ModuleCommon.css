@@ -177,6 +177,126 @@
   cursor: not-allowed;
 }
 
+/* Examples Step Styles */
+.examples-step {
+  text-align: center;
+}
+
+.calculator-section {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 2rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.calculator-section h3 {
+  color: #FFD700;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.calculator-section p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.calculator-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.calc-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: #FFD700;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.calc-input:focus {
+  outline: none;
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.calc-input::placeholder {
+  color: rgba(255, 215, 0, 0.5);
+  font-family: inherit;
+}
+
+.calc-result {
+  background: rgba(16, 185, 129, 0.2);
+  border: 2px solid #10B981;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: #10B981;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-width: 100px;
+  text-align: center;
+}
+
+.equals {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.arrow {
+  font-size: 1.5rem;
+  color: #10B981;
+  font-weight: bold;
+}
+
+.quick-try-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.quick-try-buttons span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.quick-try-buttons button {
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.8rem;
+  color: #FFD700;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.quick-try-buttons button:hover {
+  background: rgba(255, 215, 0, 0.3);
+  border-color: #FFD700;
+  transform: translateY(-1px);
+}
+
 /* Warmup Quiz Styles */
 .warmup-quiz {
   text-align: center;

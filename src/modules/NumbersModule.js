@@ -22,6 +22,40 @@ const NumbersModule = () => {
       }
     },
     {
+      title: "Examples: Hex & Little Endian",
+      type: "examples",
+      content: {
+        title: "Quick Examples Before the Quiz",
+        sections: [
+          {
+            title: "Hex Numbers",
+            description: "Hex uses 0-9 and A-F. Just like counting, but with 16 symbols instead of 10.",
+            examples: [
+              { hex: "A", decimal: 10, explanation: "A means 10" },
+              { hex: "F", decimal: 15, explanation: "F means 15" },
+              { hex: "10", decimal: 16, explanation: "10 means 16 (like going from 9 to 10 in normal counting)" }
+            ]
+          },
+          {
+            title: "Little Endian",
+            description: "Bitcoin reverses the order of bytes. Think of it like reading backwards.",
+            examples: [
+              { 
+                normal: "12", 
+                reversed: "21", 
+                explanation: "Normal: 12 → Little endian: 21" 
+              },
+              { 
+                normal: "1234", 
+                reversed: "3412", 
+                explanation: "Normal: 1234 → Little endian: 3412 (pairs are flipped)" 
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       title: "Warm-up: Hex Quiz",
       type: "warmup",
       content: {
@@ -108,6 +142,15 @@ const NumbersModule = () => {
               Continue
             </button>
           </div>
+        );
+
+      case 'examples':
+        return (
+          <ExamplesStep
+            title={step.content.title}
+            sections={step.content.sections}
+            onComplete={() => handleStepComplete(index)}
+          />
         );
 
       case 'warmup':
@@ -222,6 +265,112 @@ const NumbersModule = () => {
 };
 
 // Helper Components
+const ExamplesStep = ({ title, sections, onComplete }) => {
+  const [hexInput, setHexInput] = useState('');
+  const [endianInput, setEndianInput] = useState('');
+
+  // Convert hex to decimal
+  const hexToDecimal = (hex) => {
+    if (!hex) return '';
+    const cleaned = hex.replace(/[^0-9A-Fa-f]/g, '');
+    if (!cleaned) return '';
+    return parseInt(cleaned, 16).toString();
+  };
+
+  // Convert normal to little endian (reverse pairs of characters)
+  const normalToLittleEndian = (input) => {
+    if (!input) return '';
+    const cleaned = input.replace(/[^0-9A-Fa-f]/g, '');
+    if (cleaned.length % 2 !== 0) return cleaned; // Need even number of chars
+    
+    let result = '';
+    for (let i = cleaned.length - 2; i >= 0; i -= 2) {
+      result += cleaned.substr(i, 2);
+    }
+    return result;
+  };
+
+  const tryHexExample = (hex) => {
+    setHexInput(hex);
+  };
+
+  const tryEndianExample = (normal) => {
+    setEndianInput(normal);
+  };
+
+  return (
+    <div className="step-content examples-step">
+      <div className="step-icon">
+        <Calculator size={48} />
+      </div>
+      <h2>Interactive Calculator</h2>
+      <p className="intro-text">Try converting numbers yourself! Type and see results instantly.</p>
+      
+      {/* Hex Converter */}
+      <div className="calculator-section">
+        <h3>🔢 Hex to Decimal</h3>
+        <p>Type hex numbers (like A, FF, 100) and see the decimal value:</p>
+        
+        <div className="calculator-row">
+          <input
+            type="text"
+            value={hexInput}
+            onChange={(e) => setHexInput(e.target.value.toUpperCase())}
+            placeholder="Type hex here..."
+            className="calc-input"
+          />
+          <span className="equals">=</span>
+          <div className="calc-result">
+            {hexToDecimal(hexInput) || '?'}
+          </div>
+        </div>
+        
+        <div className="quick-try-buttons">
+          <span>Quick try:</span>
+          <button onClick={() => tryHexExample('A')}>A</button>
+          <button onClick={() => tryHexExample('F')}>F</button>
+          <button onClick={() => tryHexExample('FF')}>FF</button>
+          <button onClick={() => tryHexExample('100')}>100</button>
+        </div>
+      </div>
+
+      {/* Little Endian Converter */}
+      <div className="calculator-section">
+        <h3>🔄 Little Endian Converter</h3>
+        <p>Type normal hex and see it flipped backwards (pairs reversed):</p>
+        
+        <div className="calculator-row">
+          <input
+            type="text"
+            value={endianInput}
+            onChange={(e) => setEndianInput(e.target.value.toUpperCase())}
+            placeholder="Type hex here..."
+            className="calc-input"
+          />
+          <span className="arrow">→</span>
+          <div className="calc-result">
+            {normalToLittleEndian(endianInput) || '?'}
+          </div>
+        </div>
+        
+        <div className="quick-try-buttons">
+          <span>Quick try:</span>
+          <button onClick={() => tryEndianExample('12')}>12</button>
+          <button onClick={() => tryEndianExample('1234')}>1234</button>
+          <button onClick={() => tryEndianExample('ABCD')}>ABCD</button>
+        </div>
+      </div>
+      
+      <button 
+        className="continue-button"
+        onClick={() => onComplete()}
+      >
+        Continue to Quiz
+      </button>
+    </div>
+  );
+};
+
 const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => {
   const [selected, setSelected] = useState(null);
   const [showResult, setShowResult] = useState(false);
