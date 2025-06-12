@@ -54,11 +54,25 @@ const CodeEditor = ({
           onError('Output does not match expected result');
         }
       } else if (onSuccess) {
+        // Show success message and provide a continue button
+        setIsSuccess(true);
+        setOutput(outputStr + "\n\nYou've successfully completed this challenge! Click Continue to move on.");
         onSuccess(result);
       }
 
     } catch (err) {
-      const errorMsg = err.message || 'An error occurred';
+      let errorMsg = err.message || 'An error occurred';
+      
+      // Provide more helpful error messages
+      if (errorMsg.includes('is not defined')) {
+        const varName = errorMsg.split(' ')[0];
+        errorMsg = `${errorMsg}\n\nHint: Make sure you're using the ${varName} function or variable correctly. Check for typos or missing imports.`;
+      } else if (errorMsg.includes('is not a function')) {
+        errorMsg = `${errorMsg}\n\nHint: Check that you're calling the function with the correct name and parameters.`;
+      } else if (errorMsg.includes('unexpected token')) {
+        errorMsg = `${errorMsg}\n\nHint: There might be a syntax error in your code. Check for missing brackets, parentheses, or semicolons.`;
+      }
+      
       setError(errorMsg);
       if (onError) {
         onError(errorMsg);
@@ -131,11 +145,28 @@ const CodeEditor = ({
           
           {error ? (
             <div className="error-output">
-              {error}
+              <p className="error-message">{error}</p>
+              <div className="error-tips">
+                <p>Common solutions:</p>
+                <ul>
+                  <li>Check for syntax errors (missing brackets, quotes, etc.)</li>
+                  <li>Verify you're using the correct function names</li>
+                  <li>Make sure all variables are properly defined</li>
+                </ul>
+              </div>
             </div>
           ) : (
             <div className="code-output">
               {output || (isRunning ? 'Running...' : 'No output yet')}
+              {isSuccess && !isRunning && (
+                <button 
+                  className="continue-button"
+                  onClick={() => onSuccess && onSuccess()}
+                  style={{ marginTop: '1rem' }}
+                >
+                  Continue
+                </button>
+              )}
             </div>
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import CodeEditor from '../components/CodeEditor';
@@ -18,7 +18,7 @@ const HashingModule = () => {
       type: "intro",
       content: {
         title: "Hashing in Bitcoin",
-        text: "Bitcoin uses cryptographic hashing (specifically SHA-256) everywhere: to secure blocks, create addresses, and verify transactions. A hash function takes any input and produces a fixed-size, unpredictable output. Even tiny input changes create completely different hashes, making tampering detectable."
+        text: "Bitcoin uses cryptographic hashing (specifically SHA-256) as a fundamental building block of its security model. Hashing is used everywhere in Bitcoin: to secure blocks in the blockchain, create addresses, verify transactions, and protect the integrity of the entire network.\n\nA hash function takes any input (regardless of size) and produces a fixed-size, seemingly random output. Even the tiniest change to the input creates a completely different hash, making data tampering immediately detectable. This property, known as the 'avalanche effect,' is crucial for Bitcoin's security.\n\nIn Bitcoin, double-hashing (SHA-256 applied twice) is commonly used for extra security, such as in block hashing and transaction IDs. Understanding hashing is essential for grasping how Bitcoin works under the hood."
       }
     },
     {
@@ -33,7 +33,7 @@ const HashingModule = () => {
           "Only numbers change in the hash"
         ],
         correct: 1,
-        explanation: "This is called the avalanche effect - even the smallest input change produces a completely different hash, making tampering easily detectable."
+        explanation: "This is called the avalanche effect - even the smallest input change produces a completely different hash output. For example, the hash of 'hello' and 'hellp' are entirely different. This property makes tampering easily detectable and is critical for Bitcoin's security. Without this property, attackers could make small modifications to transactions or blocks without detection."
       }
     },
     {
@@ -45,6 +45,14 @@ const HashingModule = () => {
   // Bitcoin uses double-SHA256 for extra security
   // First hash the message, then hash the result again
   // Use the provided sha256() function
+  //
+  // Why double-hash? It provides extra security against length extension attacks
+  // and adds an additional layer of protection to Bitcoin's most critical operations.
+  //
+  // Real-world usage:
+  // - Transaction IDs are double-hashed
+  // - Block headers are double-hashed to create block IDs
+  // - Merkle trees use double-hashing
   
   // Your code here:
   
@@ -71,7 +79,7 @@ const HashingModule = () => {
       type: "challenge",
       content: {
         title: "Verify a Bitcoin Block Hash",
-        description: "Real Bitcoin block #100,000 had this data. Compute its hash and verify it meets the difficulty target (starts with enough zeros):",
+        description: "This is real data from Bitcoin block #100,000 (mined in December 2010). A block header contains metadata about the block, including version, previous block hash, merkle root, timestamp, difficulty target, and nonce. Miners repeatedly change the nonce until they find a hash that meets the difficulty target.\n\nCompute the double-SHA256 hash of this block header and verify it meets the difficulty target (starts with enough zeros):",
         data: {
           blockHeader: "0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710",
           expectedHash: "000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506",
@@ -84,19 +92,44 @@ const HashingModule = () => {
       type: "reflection",
       content: {
         question: "How does hashing make Bitcoin secure and trustworthy?",
-        placeholder: "Think about how hashing prevents tampering, creates unpredictable outputs, and helps miners prove their work..."
+        placeholder: "Think about how hashing prevents tampering with transactions, creates unpredictable outputs that can't be reverse-engineered, and enables miners to prove they've done computational work. How might Bitcoin be vulnerable without strong hash functions? What might happen if someone could predict hash outputs?"
       }
     }
   ];
 
-  const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
-    
-    if (newCompleted.size === steps.length) {
+  // Use useEffect to handle module completion when completedSteps changes
+  useEffect(() => {
+    if (completedSteps.size === steps.length) {
       completeModule('hashing');
     }
+  }, [completedSteps, steps.length, completeModule]);
+
+  const handleStepComplete = (stepIndex) => {
+    // Use functional update to avoid race conditions
+    setCompletedSteps(prevCompletedSteps => {
+      const newCompleted = new Set(prevCompletedSteps);
+      newCompleted.add(stepIndex);
+      return newCompleted;
+    });
+    
+    // Auto-advance to next step after a short delay to show completion
+    setTimeout(() => {
+      if (stepIndex < steps.length - 1) {
+        setCurrentStep(stepIndex + 1);
+      }
+    }, 800);
+    
+    // Add visual feedback for button click
+    const button = document.querySelector('.continue-button, .submit-button');
+    if (button) {
+      button.classList.add('button-clicked');
+      setTimeout(() => button.classList.remove('button-clicked'), 400);
+    }
+  };
+  
+  const handleSkipStep = (stepIndex) => {
+    // Mark step as viewed but not completed
+    setCurrentStep(stepIndex + 1);
   };
 
   const renderStep = (step, index) => {
@@ -123,9 +156,13 @@ const HashingModule = () => {
                 <span>Fixed Output Size</span>
               </div>
             </div>
+            <div className="step-action-hint">
+              <p className="action-hint">Read through the introduction and click Continue when ready</p>
+            </div>
             <button 
               className="continue-button"
               onClick={() => handleStepComplete(index)}
+              aria-label="Continue to next step"
             >
               Continue
             </button>
@@ -220,6 +257,50 @@ const HashingModule = () => {
 
         <div className="step-content-container">
           {renderStep(steps[currentStep], currentStep)}
+          
+          <div className="step-navigation">
+            <div className="step-navigation-breadcrumb">
+              {steps.map((step, idx) => (
+                <div 
+                  key={idx} 
+                  className={`breadcrumb-indicator ${idx === currentStep ? 'active' : ''} ${completedSteps.has(idx) ? 'completed' : ''}`}
+                  title={step.title}
+                />
+              ))}
+            </div>
+            
+            <button 
+              className="nav-button prev-button"
+              onClick={() => setCurrentStep(prev => Math.max(0, prev - 1))}
+              disabled={currentStep === 0}
+              aria-label="Go to previous step"
+            >
+              ← Previous
+            </button>
+            
+            <span className="step-label">
+              Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
+            </span>
+            
+            {!completedSteps.has(currentStep) && currentStep < steps.length - 1 && (
+              <button 
+                className="nav-button skip-button"
+                onClick={() => handleSkipStep(currentStep)}
+                aria-label="Skip this step"
+              >
+                Skip this step
+              </button>
+            )}
+            
+            <button 
+              className="nav-button next-button"
+              onClick={() => setCurrentStep(prev => Math.min(steps.length - 1, prev + 1))}
+              disabled={currentStep === steps.length - 1 || (!completedSteps.has(currentStep) && currentStep < steps.length - 1)}
+              aria-label="Go to next step"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -234,7 +315,8 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   const handleSubmit = () => {
     setShowResult(true);
     if (selectedAnswer === correct) {
-      setTimeout(() => onComplete(), 2000);
+      // Don't use setTimeout to prevent race conditions with component unmounting
+      onComplete();
     }
   };
 
@@ -285,6 +367,16 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   );
 };
 
+// Success Notification Component
+const SuccessNotification = ({ message }) => {
+  return (
+    <div className="completion-indicator">
+      <CheckCircle size={18} />
+      <span>{message}</span>
+    </div>
+  );
+};
+
 // Challenge Step Component
 const ChallengeStep = ({ title, description, data, onComplete }) => {
   const [userHash, setUserHash] = useState('');
@@ -298,19 +390,27 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
       if (userHash.toLowerCase() === data.expectedHash.toLowerCase()) {
         setResult({
           success: true,
-          message: "Perfect! You've successfully computed the block hash. Notice how it starts with many zeros - this proves the miner did the computational work required."
+          message: "Perfect! You've successfully computed the block hash. Notice how it starts with many zeros - this proves the miner did the computational work required. This is known as Proof-of-Work, the consensus mechanism that secures the Bitcoin network."
         });
-        setTimeout(() => onComplete(), 3000);
+        onComplete(); // Don't use setTimeout to prevent race conditions
       } else if (userHash.toLowerCase() === computedHash.toLowerCase()) {
         setResult({
           success: true,
-          message: "Great job computing the hash! This matches our educational implementation."
+          message: "Great job computing the hash! This matches our educational implementation. In real Bitcoin nodes, this hash would be compared against the current difficulty target to validate the block."
         });
-        setTimeout(() => onComplete(), 3000);
+        onComplete(); // Don't use setTimeout to prevent race conditions
       } else {
+        // Provide more helpful error feedback
+        let hint = "";
+        if (userHash.toLowerCase().startsWith("0x")) {
+          hint = " Note: Your hash starts with '0x', which is a common prefix for hex values, but Bitcoin hashes don't use this prefix.";
+        } else if (userHash.length !== data.expectedHash.length) {
+          hint = ` The hash should be exactly ${data.expectedHash.length} characters long.`;
+        }
+        
         setResult({
           success: false,
-          message: `Not quite right. Try using hash256() on the block header. Expected: ${data.expectedHash}`
+          message: `Not quite right. Try using hash256() on the block header. Expected: ${data.expectedHash}${hint}`
         });
       }
     } catch (error) {
@@ -333,6 +433,19 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
       </div>
       <h2>{title}</h2>
       <p className="challenge-description">{description}</p>
+      <div className="educational-note">
+        <h3>Understanding Block Headers</h3>
+        <p>A Bitcoin block header (160 bytes) contains:</p>
+        <ul>
+          <li><strong>Version</strong>: Protocol version (4 bytes)</li>
+          <li><strong>Previous Block Hash</strong>: Hash of the previous block (32 bytes)</li>
+          <li><strong>Merkle Root</strong>: Hash representing all transactions in the block (32 bytes)</li>
+          <li><strong>Timestamp</strong>: Block creation time (4 bytes)</li>
+          <li><strong>Difficulty Target</strong>: Mining difficulty representation (4 bytes)</li>
+          <li><strong>Nonce</strong>: Value changed by miners to find valid hash (4 bytes)</li>
+        </ul>
+        <p>Miners hash this data repeatedly with different nonce values until they find a hash below the target (with enough leading zeros).</p>
+      </div>
       
       <div className="challenge-data">
         <div className="data-item">
@@ -378,6 +491,20 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
       {result && (
         <div className={`challenge-result ${result.success ? 'success' : 'error'}`}>
           <p>{result.message}</p>
+          {result.success && (
+            <div className="step-action-hint" style={{ marginTop: '1rem' }}>
+              <p className="action-hint">You've successfully completed this challenge! Click the Continue button to proceed.</p>
+            </div>
+          )}
+          {result.success && (
+            <button 
+              className="continue-button"
+              onClick={() => onComplete()}
+              style={{ marginTop: '1rem' }}
+            >
+              Continue to Next Step
+            </button>
+          )}
         </div>
       )}
     </div>
@@ -387,9 +514,17 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
 // Reflection Step Component
 const ReflectionStep = ({ question, placeholder, onComplete }) => {
   const [reflection, setReflection] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [wordCount, setWordCount] = useState(0);
+
+  useEffect(() => {
+    const words = reflection.trim().split(/\s+/).filter(word => word.length > 0);
+    setWordCount(words.length);
+  }, [reflection]);
 
   const handleSubmit = () => {
-    if (reflection.trim().length > 10) {
+    if (wordCount >= 10) {
+      setSubmitted(true);
       onComplete();
     }
   };
@@ -410,17 +545,26 @@ const ReflectionStep = ({ question, placeholder, onComplete }) => {
         rows={6}
       />
       
+      <div className="step-action-hint" style={{ marginTop: '1rem', textAlign: 'left' }}>
+        <p className="action-hint">Reflect on the question above. Write at least 10 words to complete this exercise.</p>
+      </div>
+      
       <div className="reflection-footer">
         <span className="word-count">
-          {reflection.trim().split(/\s+/).filter(word => word.length > 0).length} words
+          {wordCount} words {wordCount < 10 ? `(${10 - wordCount} more needed)` : '✓'}
         </span>
-        <button 
-          className="submit-button"
-          onClick={handleSubmit}
-          disabled={reflection.trim().length < 10}
-        >
-          Complete Reflection
-        </button>
+        
+        {!submitted ? (
+          <button 
+            className="submit-button"
+            onClick={handleSubmit}
+            disabled={wordCount < 10}
+          >
+            Complete Reflection
+          </button>
+        ) : (
+          <SuccessNotification message="Reflection saved! You can continue to the next module." />
+        )}
       </div>
     </div>
   );
