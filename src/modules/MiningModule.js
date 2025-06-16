@@ -119,6 +119,13 @@ const MiningModule = () => {
     newCompleted.add(stepIndex);
     setCompletedSteps(newCompleted);
     
+    // Auto-advance to next step if not the last step
+    if (stepIndex < steps.length - 1) {
+      setTimeout(() => {
+        setCurrentStep(stepIndex + 1);
+      }, 500);
+    }
+    
     if (newCompleted.size === steps.length) {
       completeModule('mining');
     }
