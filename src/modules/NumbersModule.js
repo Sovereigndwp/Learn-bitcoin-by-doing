@@ -97,38 +97,87 @@ const NumbersModule = () => {
       }
     },
     {
-      title: "Challenge: Block Data",
+      title: "Fun with Bitcoin Numbers",
       type: "challenge",
       content: {
-        title: "Decode Block Version and Timestamp",
-        description: "A Bitcoin block header contains a version number (4 bytes) and timestamp (4 bytes) in little-endian format. Decode these values:",
-        data: {
-          version: "01000000", // Version 1 in little endian
-          timestamp: "398b1d4f" // Unix timestamp in little endian
-        }
+        title: "Byte Arcade! 🎮",
+        description: "Welcome to the Byte Arcade! Each game stores its scores and levels in hex numbers. Can you decode them to win prizes? 🏆",
+        challenges: [
+                      {
+            title: "🎮 Retro Console Hacker",
+            description: "You've found a secret game cartridge with the high score stored as '1ACE1'. Decode this legendary gamer's score to claim your place in history!",
+            hint: "Break it down: 1 × 16⁴ + A(10) × 16³ + C(12) × 16² + E(14) × 16¹ + 1",
+            answer: "109793",
+            context: "High Score",
+            gameImage: "👾",
+            inputType: "number",
+            successMessage: "🏆 NEW HIGH SCORE! You've hacked the impossible! The arcade legends bow to you! 🏆"
+          },
+          {
+            title: "🤖 Binary Beats DJ",
+            description: "Your synthesizer displays 'CAFE' as the perfect frequency code. What's the decimal frequency to make the crowd go wild?",
+            hint: "Each hex digit plays a note: C(12) × 16³ + A(10) × 16² + F(15) × 16¹ + E(14)",
+            answer: "51966",
+            context: "Frequency",
+            gameImage: "🎵",
+            inputType: "number",
+            successMessage: "🎵 EPIC DROP! The crowd is going crazy! You're the master of digital beats! 🎵"
+          },
+          {
+            title: "🎭 Byte Ninja Master",
+            description: "The ancient scroll shows 'BA DC FE FF' but it's written in little-endian! Rearrange these bytes to reveal the secret of the Byte Ninja clan!",
+            hint: "A true Byte Ninja reads in reverse pairs: 'FF FE DC BA'",
+            answer: "FFFEDCBA",
+            context: "Ninja Code",
+            gameImage: "⚔️",
+            inputType: "code",
+            successMessage: "🥷 NINJA MASTERY ACHIEVED! The ancient byte techniques are now yours! 🥷"
+          }
+        ]
       }
     },
     {
-      title: "Reflection",
+      title: "Reflection: Bitcoin's Time-Stamped History Book",
       type: "reflection",
       content: {
-        question: "What did you learn about how Bitcoin uses numbers?",
-        placeholder: "Write about how hex and little-endian encoding help Bitcoin pack data efficiently..."
+        question: "If you had to keep track of every page in a giant history book, how would you label them so a computer could quickly find any story from the past? 📚",
+        mainPrompt: "Imagine Bitcoin like a giant time-stamped notebook of transactions. Each page in this notebook has a unique label, not with words but with numbers written in hex, like '000000000000039458fa2...'. And here's the twist: sometimes these numbers are stored backwards! 🔄",
+        subQuestions: [
+          "What do you find weird about this system?",
+          "What seems clever about it?",
+          "What's still confusing to you?",
+          "If you were explaining this to a friend, what everyday example would you use to help them understand?"
+        ],
+        placeholder: "Share your thoughts about this unusual numbering system. Maybe it reminds you of something else you've seen? Or maybe you have questions about why it works this way? There's no wrong answer - just share what stands out to you about Bitcoin's way of organizing its giant history book..."
       }
     }
   ];
 
   const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
-    
-    if (newCompleted.size === steps.length) {
-      completeModule('numbers');
+    try {
+      if (typeof stepIndex !== 'number' || stepIndex < 0 || stepIndex >= steps.length) {
+        console.error('Invalid step index:', stepIndex);
+        return;
+      }
+
+      const newCompleted = new Set(completedSteps);
+      newCompleted.add(stepIndex);
+      setCompletedSteps(newCompleted);
+      
+      if (newCompleted.size === steps.length && typeof completeModule === 'function') {
+        completeModule('numbers');
+      }
+    } catch (error) {
+      console.error('Error in handleStepComplete:', error);
     }
   };
 
   const renderStep = (step, index) => {
+    if (!step || !step.type) {
+      console.error('Invalid step data:', step);
+      return null;
+    }
+
     switch (step.type) {
       case 'intro':
         return (
@@ -189,20 +238,26 @@ const NumbersModule = () => {
       case 'challenge':
         return (
           <ChallengeStep
-            title={step.content.title}
-            description={step.content.description}
-            data={step.content.data}
-            onComplete={() => handleStepComplete(index)}
+            title={step.title}
+            description={step.description}
+            content={step.content}
+            onComplete={() => {
+              handleStepComplete(index);
+              setCurrentStep(index + 1);
+            }}
           />
         );
 
       case 'reflection':
-        return (
-          <ReflectionStep
-            question={step.content.question}
-            placeholder={step.content.placeholder}
-            onComplete={() => handleStepComplete(index)}
-          />
+                  return (
+            <ReflectionStep
+              question={step.content.question}
+              placeholder={step.content.placeholder}
+              content={step.content}
+              onComplete={() => handleStepComplete(index)}
+              setCurrentStep={setCurrentStep}
+              isLastStep={index === steps.length - 1}
+            />
         );
 
       default:
@@ -682,57 +737,218 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   );
 };
 
-const ChallengeStep = ({ title, description, data, onComplete }) => {
-  const [answers, setAnswers] = useState({ version: '', timestamp: '' });
-  const [showResults, setShowResults] = useState(false);
+const ChallengeStep = ({ title, description, content, onComplete }) => {
+  const [currentChallenge, setCurrentChallenge] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [completed, setCompleted] = useState(new Set());
 
-  const handleSubmit = () => {
-    setShowResults(true);
-    // Check answers
-    const versionCorrect = parseInt(hexToLittleEndian(data.version), 16) === parseInt(answers.version);
-    const timestampCorrect = parseInt(hexToLittleEndian(data.timestamp), 16) === parseInt(answers.timestamp);
+  const validateAnswer = (answer) => {
+    if (!answer) return false;
     
-    if (versionCorrect && timestampCorrect) {
-      setTimeout(() => onComplete(), 2000);
+    switch (currentChallengeData.inputType) {
+      case 'number':
+        return !isNaN(answer) && answer.toString() === currentChallengeData.answer;
+      case 'sequence':
+        const userSeq = answer.split(',').map(n => n.trim());
+        const correctSeq = currentChallengeData.answer.split(',');
+        return userSeq.length === correctSeq.length && 
+               userSeq.every((n, i) => n === correctSeq[i]);
+      case 'code':
+        return answer.replace(/\s+/g, '') === currentChallengeData.answer;
+      default:
+        return false;
     }
   };
 
+  const handleInputChange = (value) => {
+    setUserAnswer(value);
+    setShowError(false);
+  };
+
+  const checkAnswer = () => {
+    if (!userAnswer) {
+      setShowError(true);
+      return;
+    }
+
+    const isCorrect = validateAnswer(userAnswer);
+    
+    if (isCorrect) {
+      setShowSuccess(true);
+      setShowError(false);
+      setShowHint(false);
+    } else {
+      setShowError(true);
+      setTimeout(() => setShowError(false), 2000);
+    }
+  };
+
+  // Validate props and provide defaults
+  const challenges = content?.challenges || [];
+  const currentChallengeData = challenges[currentChallenge] || {
+    title: '',
+    description: '',
+    hint: '',
+    answer: ''
+  };
+
+  const handleNext = () => {
+    if (currentChallenge < challenges.length - 1) {
+      setCurrentChallenge(currentChallenge + 1);
+      resetState();
+    } else if (completed.size === challenges.length) {
+      onComplete?.();
+    }
+  };
+
+  const resetState = () => {
+    setShowHint(false);
+    setShowSuccess(false);
+    setShowError(false);
+    setUserAnswer('');
+  };
+
+  const markCompleted = () => {
+    const newCompleted = new Set(completed);
+    newCompleted.add(currentChallenge);
+    setCompleted(newCompleted);
+    
+    // Show success message briefly before moving on
+    setTimeout(handleNext, 1500);
+  };
+
+  // If no challenges are available, show an error message
+  if (challenges.length === 0) {
+    return (
+      <div className="challenge-step error">
+        <h2>Oops!</h2>
+        <p>No challenges available at the moment. Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="challenge-step">
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <div className="challenge-data">
-        <div className="data-field">
-          <label>Version (little-endian): {data.version}</label>
-          <input
-            type="number"
-            placeholder="Enter decimal value"
-            value={answers.version}
-            onChange={(e) => setAnswers({...answers, version: e.target.value})}
-            disabled={showResults}
+      <h2>{content.title}</h2>
+      <p className="description">{content.description}</p>
+
+      <div className="challenge-progress">
+        {challenges.map((_, index) => (
+          <div 
+            key={index}
+            className={`progress-dot ${currentChallenge === index ? 'active' : ''} ${completed.has(index) ? 'completed' : ''}`}
           />
-        </div>
-        <div className="data-field">
-          <label>Timestamp (little-endian): {data.timestamp}</label>
-          <input
-            type="number"
-            placeholder="Enter decimal value"
-            value={answers.timestamp}
-            onChange={(e) => setAnswers({...answers, timestamp: e.target.value})}
-            disabled={showResults}
-          />
-        </div>
+        ))}
       </div>
-      {!showResults && (
-        <button className="submit-button" onClick={handleSubmit}>
-          Submit Answers
-        </button>
-      )}
-      {showResults && (
-        <div className="challenge-results">
-          <p>Version: {parseInt(hexToLittleEndian(data.version), 16)} (Your answer: {answers.version})</p>
-          <p>Timestamp: {parseInt(hexToLittleEndian(data.timestamp), 16)} (Your answer: {answers.timestamp})</p>
+
+      <div className="challenge-card">
+        <div className="game-header">
+          <span className="game-emoji">{currentChallengeData.gameImage}</span>
+          <h3>{currentChallengeData.title}</h3>
         </div>
+
+        <p className="game-description">{currentChallengeData.description}</p>
+
+        <div className="answer-input-section">
+          {currentChallengeData.inputType === 'number' && (
+            <div className="number-input">
+              <input
+                type="number"
+                placeholder={`Enter ${currentChallengeData.context}`}
+                onChange={(e) => handleInputChange(e.target.value)}
+                value={userAnswer}
+                className="game-input"
+              />
+              <span className="context-label">{currentChallengeData.context}</span>
+            </div>
+          )}
+
+          {currentChallengeData.inputType === 'sequence' && (
+            <div className="sequence-input">
+              <input
+                type="text"
+                placeholder="Enter numbers separated by commas"
+                onChange={(e) => handleInputChange(e.target.value)}
+                value={userAnswer}
+                className="game-input"
+              />
+              <span className="context-label">{currentChallengeData.context}</span>
+            </div>
+          )}
+
+          {currentChallengeData.inputType === 'code' && (
+            <div className="code-input">
+              <input
+                type="text"
+                placeholder="Enter the flipped code"
+                onChange={(e) => handleInputChange(e.target.value)}
+                value={userAnswer}
+                className="game-input code-style"
+              />
+              <span className="context-label">{currentChallengeData.context}</span>
+            </div>
+          )}
+
+          <button 
+            className="submit-answer"
+            onClick={checkAnswer}
+          >
+            Submit Answer! 🎮
+          </button>
+        </div>
+
+        <div className="game-controls">
+          {!showHint && (
+            <button 
+              className="hint-button"
+              onClick={() => setShowHint(true)}
+            >
+              Need a Hint? 💡
+            </button>
+          )}
+        </div>
+
+        {showHint && (
+          <div className="hint-box">
+            <p>💡 {currentChallengeData.hint}</p>
+          </div>
+        )}
+
+        {showSuccess && (
+          <div className="success-box">
+            <p className="success-message">{currentChallengeData.successMessage}</p>
+            <button 
+              className="next-challenge"
+              onClick={() => {
+                markCompleted();
+                setShowSuccess(false);
+              }}
+            >
+              Next Challenge! →
+            </button>
+          </div>
+        )}
+
+        {showError && (
+          <div className="error-box">
+            <p>Not quite! Try again or use the hint! 🎮</p>
+          </div>
+        )}
+      </div>
+
+      {currentChallenge > 0 && (
+                  <button 
+            className="back-button"
+            onClick={() => {
+              setCurrentChallenge(currentChallenge - 1);
+              resetState();
+            }}
+          >
+            ← Previous Challenge
+          </button>
       )}
     </div>
   );
@@ -745,8 +961,21 @@ const PracticeStep = ({ title, description, challenges, onComplete }) => {
   const [feedback, setFeedback] = useState({});
 
   const handleAnswerSubmit = (challengeIndex, answer) => {
+    if (!answer) return;
+
     const numAnswer = parseInt(answer);
-    const isCorrect = !isNaN(numAnswer) && numAnswer === challenges[challengeIndex].expected;
+    if (isNaN(numAnswer)) {
+      setFeedback({
+        ...feedback,
+        [challengeIndex]: {
+          isCorrect: false,
+          message: "Please enter a valid number"
+        }
+      });
+      return;
+    }
+
+    const isCorrect = numAnswer === challenges[challengeIndex].expected;
     
     setFeedback({
       ...feedback,
@@ -845,33 +1074,117 @@ const PracticeStep = ({ title, description, challenges, onComplete }) => {
   );
 };
 
-const ReflectionStep = ({ question, placeholder, onComplete }) => {
+const ReflectionStep = ({ question, placeholder, onComplete, content, setCurrentStep, isLastStep }) => {
   const [reflection, setReflection] = useState('');
+  const [isSkipped, setIsSkipped] = useState(false);
+  const minLength = 100; // Requiring more thoughtful responses
+
+  // Ensure we have the required props
+  if (!onComplete || typeof onComplete !== 'function') {
+    console.error('ReflectionStep: onComplete prop is required and must be a function');
+    return null;
+  }
 
   const handleSubmit = () => {
-    if (reflection.trim().length > 20) {
-      onComplete();
+    if (reflection.trim().length >= minLength) {
+      handleStepComplete();
     }
   };
 
-  return (
+  const handleStepComplete = () => {
+    try {
+      onComplete();
+      if (isLastStep) {
+        setIsSkipped(true);
+      } else if (setCurrentStep && typeof setCurrentStep === 'function') {
+        setCurrentStep(prev => prev + 1);
+      }
+    } catch (error) {
+      console.error('Error in handleStepComplete:', error);
+    }
+  };
+
+  const handleSkip = () => {
+    handleStepComplete();
+  };
+
+  const handleBackToHome = () => {
+    window.location.href = '/';
+  };
+
+    return (
     <div className="reflection-step">
-      <h3>{question}</h3>
-      <textarea
-        value={reflection}
-        onChange={(e) => setReflection(e.target.value)}
-        placeholder={placeholder}
-        rows={6}
-        className="reflection-textarea"
-      />
-      <button 
-        className="submit-button"
-        onClick={handleSubmit}
-        disabled={reflection.trim().length < 20}
-      >
-        Submit Reflection
-      </button>
-      <p className="word-count">{reflection.length} characters</p>
+      {isSkipped ? (
+        <div className="completion-view">
+          <h3>🎉 Module Complete!</h3>
+          <p>You've completed the Numbers & Encoding module.</p>
+          <div className="completion-buttons">
+            <button 
+              className="home-button"
+              onClick={handleBackToHome}
+            >
+              ← Back to Home
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="reflection-intro">
+            <h3>🤔 Think About This...</h3>
+            <div className="reflection-header">
+              <p className="main-question">{question || 'Time to reflect on what you learned!'}</p>
+              {content?.mainPrompt && <p className="main-prompt">{content.mainPrompt}</p>}
+              <p className="optional-note">(This reflection is optional - feel free to skip if you prefer to continue learning!)</p>
+            </div>
+          </div>
+
+          <div className="sub-questions">
+            {content?.subQuestions?.length > 0 && (
+              <>
+                <p className="prompt-header">✨ Consider these points:</p>
+                {content.subQuestions.map((subQ, index) => (
+                  <div key={index} className="sub-question">
+                    <p>• {subQ || `Question ${index + 1}`}</p>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+          <div className="reflection-input">
+            <textarea
+              value={reflection}
+              onChange={(e) => setReflection(e.target.value)}
+              placeholder={placeholder}
+              rows={10}
+              className="reflection-textarea"
+            />
+            <div className="reflection-footer">
+              <div className="reflection-controls">
+                <p className="word-count">
+                  {reflection.length} / {minLength} characters
+                  {reflection.length < minLength && " (need more thoughts!)"}
+                </p>
+                <div className="button-group">
+                  <button 
+                    className="skip-button"
+                    onClick={handleSkip}
+                  >
+                    Skip Reflection →
+                  </button>
+                  <button 
+                    className="submit-button"
+                    onClick={handleSubmit}
+                    disabled={reflection.trim().length < minLength}
+                  >
+                    Share Your Insights
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

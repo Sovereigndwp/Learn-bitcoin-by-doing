@@ -21,28 +21,40 @@ export const littleEndianToHex = (littleEndian) => {
   return bytes.reverse().join('');
 };
 
-// Simple Hashing Utilities (Educational - not cryptographically secure)
-export const simpleHash = (message) => {
-  // Simple hash for educational purposes
-  let hash = 0;
-  for (let i = 0; i < message.length; i++) {
-    const char = message.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
+// Convert string to Uint8Array for crypto operations
+const stringToUint8Array = (str) => {
+  const encoder = new TextEncoder();
+  return encoder.encode(str);
+};
+
+// Convert ArrayBuffer to hex string
+const arrayBufferToHex = (buffer) => {
+  return Array.from(new Uint8Array(buffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+};
+
+// Real SHA-256 implementation using Web Crypto API
+export const sha256 = async (message) => {
+  try {
+    const msgUint8 = stringToUint8Array(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    return arrayBufferToHex(hashBuffer);
+  } catch (error) {
+    console.error('SHA-256 hashing failed:', error);
+    throw error;
   }
-  return Math.abs(hash).toString(16).padStart(8, '0');
 };
 
-export const sha256 = (message) => {
-  // For educational purposes, we'll use a simplified approach
-  // In a real app, you'd use proper crypto libraries
-  return simpleHash(message + "sha256salt").padStart(64, '0');
-};
-
-export const hash256 = (message) => {
-  // Double hash simulation for educational purposes
-  const firstHash = sha256(message);
-  return sha256(firstHash);
+// Double SHA-256 hash (used in Bitcoin)
+export const hash256 = async (message) => {
+  try {
+    const firstHash = await sha256(message);
+    return await sha256(firstHash);
+  } catch (error) {
+    console.error('Double SHA-256 hashing failed:', error);
+    throw error;
+  }
 };
 
 // Mining Simulation

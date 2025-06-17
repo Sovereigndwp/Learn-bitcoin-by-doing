@@ -6,6 +6,162 @@ import { sha256, hash256, simpleHash } from '../utils/bitcoin';
 import { Hash, CheckCircle, Trophy, Shield, Zap } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
+// Hash Explorer Component
+const HashExplorer = ({ onComplete }) => {
+  const [input, setInput] = useState('');
+  const [hashResult, setHashResult] = useState('');
+  const [hasCompletedExamples, setHasCompletedExamples] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizAnswer, setQuizAnswer] = useState(null);
+  const [showQuizResult, setShowQuizResult] = useState(false);
+  const [isHashing, setIsHashing] = useState(false);
+
+  const examples = [
+    { text: 'hello', hash: '' },
+    { text: 'hello!', hash: '' },
+    { text: 'Hello', hash: '' },
+    { text: 'hello Dalia', hash: '' }
+  ];
+
+  const [completedExamples, setCompletedExamples] = useState(new Set());
+
+  // Pre-compute hashes for examples
+  useEffect(() => {
+    const computeExampleHashes = async () => {
+      for (const example of examples) {
+        example.hash = await sha256(example.text);
+      }
+    };
+    computeExampleHashes();
+  }, []);
+
+  const handleInputChange = async (e) => {
+    const newInput = e.target.value;
+    setInput(newInput);
+    setIsHashing(true);
+    try {
+      const hash = await sha256(newInput);
+      setHashResult(hash);
+    } catch (error) {
+      console.error('Hashing failed:', error);
+      setHashResult('Error computing hash');
+    }
+    setIsHashing(false);
+  };
+
+  const handleExampleClick = async (example) => {
+    setInput(example.text);
+    setIsHashing(true);
+    try {
+      const hash = await sha256(example.text);
+      setHashResult(hash);
+      const newCompleted = new Set(completedExamples);
+      newCompleted.add(example.text);
+      setCompletedExamples(newCompleted);
+      
+      if (newCompleted.size === examples.length && !hasCompletedExamples) {
+        setHasCompletedExamples(true);
+        setTimeout(() => setShowQuiz(true), 1000);
+      }
+    } catch (error) {
+      console.error('Example hashing failed:', error);
+      setHashResult('Error computing hash');
+    }
+    setIsHashing(false);
+  };
+
+  const handleQuizSubmit = () => {
+    setShowQuizResult(true);
+    if (quizAnswer === 1) { // Correct answer index
+      setTimeout(() => onComplete(), 2000);
+    }
+  };
+
+  return (
+    <div className="step-content hash-explorer">
+      <div className="step-icon">
+        <Hash size={48} />
+      </div>
+      <h2>SHA-256 Hash Explorer</h2>
+      
+      <div className="explorer-section">
+        <h3>Try it yourself! 🔍</h3>
+        <p>Type any text below to see its SHA-256 hash instantly:</p>
+        <input
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Type anything..."
+          className="hash-input"
+        />
+        <div className="hash-output">
+          <strong>Hash:</strong> {isHashing ? 'Computing...' : (hashResult || '(empty)')}
+        </div>
+      </div>
+
+      <div className="examples-section">
+        <h3>Try these examples:</h3>
+        <div className="example-buttons">
+          {examples.map((example) => (
+            <button
+              key={example.text}
+              onClick={() => handleExampleClick(example)}
+              className={`example-button ${completedExamples.has(example.text) ? 'completed' : ''}`}
+              disabled={isHashing}
+            >
+              Try "{example.text}"
+              {completedExamples.has(example.text) && <CheckCircle size={16} />}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {showQuiz && (
+        <div className="quiz-section">
+          <h3>Quick Question! 🤔</h3>
+          <p>Looking at the hashes above, what do you notice about small changes in the input?</p>
+          
+          <div className="quiz-options">
+            {[
+              "The hash only changes a little bit",
+              "The hash changes completely",
+              "The hash stays mostly the same",
+              "Only the first few characters change"
+            ].map((option, index) => (
+              <button
+                key={index}
+                onClick={() => setQuizAnswer(index)}
+                className={`quiz-option ${quizAnswer === index ? 'selected' : ''} ${
+                  showQuizResult ? (index === 1 ? 'correct' : quizAnswer === index ? 'incorrect' : '') : ''
+                }`}
+                disabled={showQuizResult}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+
+          {quizAnswer !== null && !showQuizResult && (
+            <button className="submit-button" onClick={handleQuizSubmit}>
+              Submit Answer
+            </button>
+          )}
+
+          {showQuizResult && (
+            <div className={`quiz-result ${quizAnswer === 1 ? 'correct' : 'incorrect'}`}>
+              <p>
+                {quizAnswer === 1 
+                  ? "✅ Correct! This is called the 'avalanche effect' - even a tiny change in input creates a completely different hash. This is crucial for Bitcoin's security!"
+                  : "❌ Not quite. Look at how different the hashes are, even when we just changed one character from 'hello' to 'hello!' or 'Hello'"}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const HashingModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
   const { t } = useLanguage();
@@ -19,6 +175,13 @@ const HashingModule = () => {
       content: {
         title: "Hashing in Bitcoin",
         text: "Bitcoin uses cryptographic hashing (specifically SHA-256) as a fundamental building block of its security model. Hashing is used everywhere in Bitcoin: to secure blocks in the blockchain, create addresses, verify transactions, and protect the integrity of the entire network.\n\nA hash function takes any input (regardless of size) and produces a fixed-size, seemingly random output. Even the tiniest change to the input creates a completely different hash, making data tampering immediately detectable. This property, known as the 'avalanche effect,' is crucial for Bitcoin's security.\n\nIn Bitcoin, double-hashing (SHA-256 applied twice) is commonly used for extra security, such as in block hashing and transaction IDs. Understanding hashing is essential for grasping how Bitcoin works under the hood."
+      }
+    },
+    {
+      title: "Hash Explorer",
+      type: "explorer",
+      content: {
+        component: HashExplorer
       }
     },
     {
@@ -208,6 +371,11 @@ const HashingModule = () => {
             onComplete={() => handleStepComplete(index)}
           />
         );
+
+      case 'explorer':
+        return React.createElement(step.content.component, {
+          onComplete: () => handleStepComplete(index)
+        });
 
       default:
         return <div>Unknown step type</div>;
