@@ -97,46 +97,6 @@ const NumbersModule = () => {
       }
     },
     {
-      title: "Fun with Bitcoin Numbers",
-      type: "challenge",
-      content: {
-        title: "Byte Arcade! 🎮",
-        description: "Welcome to the Byte Arcade! Each game stores its scores and levels in hex numbers. Can you decode them to win prizes? 🏆",
-        challenges: [
-          {
-            title: "🎮 Retro Console Hacker",
-            description: "You've found a secret game cartridge with the high score stored as '1ACE1'. Decode this legendary gamer's score to claim your place in history!",
-            hint: "Break it down: 1 × 16⁴ + A(10) × 16³ + C(12) × 16² + E(14) × 16¹ + 1",
-            answer: "109793",
-            context: "High Score",
-            gameImage: "👾",
-            inputType: "number",
-            successMessage: "🏆 NEW HIGH SCORE! You've hacked the impossible! The arcade legends bow to you! 🏆"
-          },
-          {
-            title: "🤖 Binary Beats DJ",
-            description: "Your synthesizer displays 'CAFE' as the perfect frequency code. What's the decimal frequency to make the crowd go wild?",
-            hint: "Each hex digit plays a note: C(12) × 16³ + A(10) × 16² + F(15) × 16¹ + E(14)",
-            answer: "51966",
-            context: "Frequency",
-            gameImage: "🎵",
-            inputType: "number",
-            successMessage: "🎵 EPIC DROP! The crowd is going crazy! You're the master of digital beats! 🎵"
-          },
-          {
-            title: "🎭 Byte Ninja Master",
-            description: "The ancient scroll shows 'BA DC FE FF' but it's written in little-endian! Rearrange these bytes to reveal the secret of the Byte Ninja clan!",
-            hint: "A true Byte Ninja reads in reverse pairs: 'FF FE DC BA'",
-            answer: "FFFEDCBA",
-            context: "Ninja Code",
-            gameImage: "⚔️",
-            inputType: "code",
-            successMessage: "🥷 NINJA MASTERY ACHIEVED! The ancient byte techniques are now yours! 🥷"
-          }
-        ]
-      }
-    },
-    {
       title: "Digital Security",
       type: "intro",
       content: {
@@ -236,19 +196,6 @@ const NumbersModule = () => {
             title={step.content.title}
             description={step.content.description}
             challenges={step.content.challenges}
-            onComplete={() => {
-              handleStepComplete(index);
-              setCurrentStep(index + 1);
-            }}
-          />
-        );
-
-      case 'challenge':
-        return (
-          <ChallengeStep
-            title={step.title}
-            description={step.description}
-            content={step.content}
             onComplete={() => {
               handleStepComplete(index);
               setCurrentStep(index + 1);
