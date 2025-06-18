@@ -10,65 +10,160 @@ export const useProgress = () => {
   return context;
 };
 
+// Define available modules
 const MODULES = [
-  'numbers',
-  'hashing', 
-  'mining',
-  'keys',
-  'transactions',
-  'scripts',
-  'merkle',
-  'custody'
+  {
+    id: 'money',
+    title: 'What Makes Good Money?',
+    description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.'
+  },
+  {
+    id: 'numbers',
+    title: 'Numbers & Encoding',
+    description: 'Learn how computers represent and secure information using different number systems.'
+  },
+  {
+    id: 'hashing',
+    title: 'Digital Fingerprints',
+    description: 'Discover how Bitcoin uses SHA-256 hashing to create tamper-proof digital fingerprints.'
+  },
+  {
+    id: 'mining',
+    title: 'Mining & Consensus',
+    description: 'Understand how Bitcoin mining works and why it\'s essential for network security.'
+  },
+  {
+    id: 'keys',
+    title: 'Keys & Addresses',
+    description: 'Learn about public key cryptography and how Bitcoin addresses work.'
+  },
+  {
+    id: 'transactions',
+    title: 'Transactions',
+    description: 'Explore how Bitcoin transactions are created, signed, and verified.'
+  },
+  {
+    id: 'scripts',
+    title: 'Bitcoin Scripts',
+    description: 'Dive into Bitcoin\'s scripting language and how it enables smart contracts.'
+  },
+  {
+    id: 'merkle',
+    title: 'Merkle Trees',
+    description: 'Learn how Bitcoin efficiently verifies transactions using Merkle trees.'
+  },
+  {
+    id: 'custody',
+    title: 'Bitcoin Custody',
+    description: 'Master different ways to secure and manage Bitcoin.'
+  }
 ];
 
+// Define available badges
 const BADGES = [
-  { id: 'hash-hero', name: 'Hash Hero', description: 'Completed hashing module' },
-  { id: 'key-master', name: 'Key Master', description: 'Generated keys and addresses' },
-  { id: 'tx-builder', name: 'Tx Builder', description: 'Built a transaction' },
-  { id: 'mining-master', name: 'Mining Master', description: 'Found a valid hash' },
-  { id: 'script-decoder', name: 'Script Decoder', description: 'Decoded Bitcoin scripts' },
-  { id: 'merkle-maven', name: 'Merkle Maven', description: 'Computed merkle roots' },
-  { id: 'custody-captain', name: 'Custody Captain', description: 'Mastered multisig' },
-  { id: 'bitcoin-graduate', name: 'Bitcoin Graduate', description: 'Completed all modules' }
+  {
+    id: 'money-master',
+    title: 'Money Master',
+    description: 'Mastered the fundamentals of what makes good money'
+  },
+  {
+    id: 'hash-hero',
+    title: 'Hash Hero',
+    description: 'Mastered digital fingerprints and hashing'
+  },
+  {
+    id: 'key-master',
+    title: 'Key Master',
+    description: 'Mastered public key cryptography'
+  },
+  {
+    id: 'tx-builder',
+    title: 'Transaction Builder',
+    description: 'Mastered Bitcoin transactions'
+  },
+  {
+    id: 'mining-master',
+    title: 'Mining Master',
+    description: 'Mastered Bitcoin mining and consensus'
+  },
+  {
+    id: 'script-decoder',
+    title: 'Script Decoder',
+    description: 'Mastered Bitcoin scripting'
+  },
+  {
+    id: 'merkle-maven',
+    title: 'Merkle Maven',
+    description: 'Mastered Merkle trees'
+  },
+  {
+    id: 'custody-captain',
+    title: 'Custody Captain',
+    description: 'Mastered Bitcoin custody'
+  },
+  {
+    id: 'bitcoin-graduate',
+    title: 'Bitcoin Graduate',
+    description: 'Completed all modules and earned the Bitcoin Graduate badge!'
+  }
 ];
 
 export const ProgressProvider = ({ children }) => {
-  const [completedModules, setCompletedModules] = useState([]);
-  const [earnedBadges, setEarnedBadges] = useState([]);
-  const [currentStreak, setCurrentStreak] = useState(0);
-  const [totalPoints, setTotalPoints] = useState(0);
+  const [completedModules, setCompletedModules] = useState(() => {
+    const saved = localStorage.getItem('completedModules');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  // Load progress from localStorage on mount
-  useEffect(() => {
-    const savedProgress = localStorage.getItem('bitcoinLearningProgress');
-    if (savedProgress) {
-      const progress = JSON.parse(savedProgress);
-      setCompletedModules(progress.completedModules || []);
-      setEarnedBadges(progress.earnedBadges || []);
-      setCurrentStreak(progress.currentStreak || 0);
-      setTotalPoints(progress.totalPoints || 0);
-    }
-  }, []);
+  const [earnedBadges, setEarnedBadges] = useState(() => {
+    const saved = localStorage.getItem('earnedBadges');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  // Save progress to localStorage whenever it changes
+  const [currentStreak, setCurrentStreak] = useState(() => {
+    const saved = localStorage.getItem('currentStreak');
+    return saved ? parseInt(saved) : 0;
+  });
+
+  const [totalPoints, setTotalPoints] = useState(() => {
+    const saved = localStorage.getItem('totalPoints');
+    return saved ? parseInt(saved) : 0;
+  });
+
+  // Save state to localStorage whenever it changes
   useEffect(() => {
-    const progress = {
-      completedModules,
-      earnedBadges,
-      currentStreak,
-      totalPoints
-    };
-    localStorage.setItem('bitcoinLearningProgress', JSON.stringify(progress));
+    localStorage.setItem('completedModules', JSON.stringify(completedModules));
+    localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
+    localStorage.setItem('currentStreak', currentStreak.toString());
+    localStorage.setItem('totalPoints', totalPoints.toString());
   }, [completedModules, earnedBadges, currentStreak, totalPoints]);
 
   const completeModule = (moduleId) => {
     if (!completedModules.includes(moduleId)) {
-      setCompletedModules(prev => [...prev, moduleId]);
+      // Update completed modules first
+      const updatedModules = [...completedModules, moduleId];
+      setCompletedModules(updatedModules);
+      
+      // Award points
       setTotalPoints(prev => prev + 100);
-      setCurrentStreak(prev => prev + 1);
+      
+      // Update streak
+      const lastActive = localStorage.getItem('lastActiveDate');
+      const today = new Date().toDateString();
+      
+      if (lastActive === today) {
+        // Already active today, no streak update needed
+      } else if (lastActive === new Date(Date.now() - 86400000).toDateString()) {
+        // Yesterday - increment streak
+        setCurrentStreak(prev => prev + 1);
+      } else {
+        // Not consecutive - reset streak to 1
+        setCurrentStreak(1);
+      }
+      localStorage.setItem('lastActiveDate', today);
       
       // Award module-specific badges
       const badgeMap = {
+        'money': 'money-master',
         'hashing': 'hash-hero',
         'keys': 'key-master',
         'transactions': 'tx-builder',
@@ -83,7 +178,7 @@ export const ProgressProvider = ({ children }) => {
       }
       
       // Check if all modules completed for graduate badge
-      if (completedModules.length + 1 === MODULES.length) {
+      if (updatedModules.length === MODULES.length) {
         earnBadge('bitcoin-graduate');
       }
     }
