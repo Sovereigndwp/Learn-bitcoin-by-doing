@@ -14,18 +14,18 @@ const NumbersModule = () => {
 
   const steps = [
     {
-      title: "Introduction",
+      title: "Computer Language",
       type: "intro",
       content: {
-        title: "Numbers and Encoding in Bitcoin",
-        text: "Bitcoin works with numbers in a special way! Instead of regular numbers (0-9), it often uses hex numbers (0-9 and A-F) which are like a shorthand for bigger numbers. Bitcoin also flips the order of number pairs around - think of it like reading backwards. Don't worry if this sounds confusing - we'll practice together and it'll make sense!"
+        title: "How Computers Talk",
+        text: "Just like we use letters and numbers to communicate, computers have their own special language! 💻\n\nAt their core, computers only understand 0s and 1s (binary). But that would be hard for humans to read! So we have different ways to write these numbers:\n\n- Binary (0s and 1s): 1010\n- Decimal (what we use): 10\n- Hexadecimal (shorter way): A\n\nThink of these as different translations of the same thing - just like how 'hello' in Spanish is 'hola'! 🌎"
       }
     },
     {
       title: "Examples: Hex & Little Endian",
       type: "examples",
       content: {
-        title: "Quick Examples Before the Quiz",
+        title: "Let's Practice Different Number Systems",
         sections: [
           {
             title: "Hex Numbers",
@@ -38,17 +38,17 @@ const NumbersModule = () => {
           },
           {
             title: "Little Endian",
-            description: "Bitcoin reverses the order of bytes. Think of it like reading backwards.",
+            description: "Sometimes computers read numbers backwards in pairs - it's just another way to organize information!",
             examples: [
               { 
                 normal: "12", 
                 reversed: "21", 
-                explanation: "Normal: 12 → Little endian: 21" 
+                explanation: "Normal: 12 → Flipped: 21" 
               },
               { 
                 normal: "1234", 
                 reversed: "3412", 
-                explanation: "Normal: 1234 → Little endian: 3412 (pairs are flipped)" 
+                explanation: "Normal: 1234 → Flipped: 3412 (pairs are flipped)" 
               }
             ]
           }
@@ -103,7 +103,7 @@ const NumbersModule = () => {
         title: "Byte Arcade! 🎮",
         description: "Welcome to the Byte Arcade! Each game stores its scores and levels in hex numbers. Can you decode them to win prizes? 🏆",
         challenges: [
-                      {
+          {
             title: "🎮 Retro Console Hacker",
             description: "You've found a secret game cartridge with the high score stored as '1ACE1'. Decode this legendary gamer's score to claim your place in history!",
             hint: "Break it down: 1 × 16⁴ + A(10) × 16³ + C(12) × 16² + E(14) × 16¹ + 1",
@@ -134,6 +134,14 @@ const NumbersModule = () => {
             successMessage: "🥷 NINJA MASTERY ACHIEVED! The ancient byte techniques are now yours! 🥷"
           }
         ]
+      }
+    },
+    {
+      title: "Digital Security",
+      type: "intro",
+      content: {
+        title: "How Computers Protect Information",
+        text: "Let's explore how computers transform and secure information. 🔒\n\nComputers write information in different ways:\n\n1. Binary (computer's native language)\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (shorter way to write binary)\n   01001000 01101001 → 4869\n\nUsing these number systems, computers can transform messages into secure patterns that can't be reversed. For example:\n\n'I love you'\n→ Binary: 01001001 01101100 01101111 01110110 01100101\n→ Secure Pattern: 8f93f6f05c9ac2d2937fb25ad5fce374\n\nThis transformation has three key properties:\n\n1. Same Message = Same Pattern\n   Type 'I love you' a hundred times, get '8f93f6f...' every time\n\n2. Tiny Change = New Pattern\n   'I love you!' → 'd2e12af...' (completely different!)\n\n3. One-Way Only\n   You can make the pattern, but can't reverse it\n\nReal-World Uses:\n- Password verification (store only the pattern)\n- Digital signatures (prove it's really you)\n- Bitcoin transactions (secure billions in value)\n\nNext, we'll practice reading and writing these hexadecimal numbers! 💫"
       }
     },
     {
