@@ -173,49 +173,67 @@ const HashingModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Hashing in Bitcoin",
-        text: "Bitcoin uses cryptographic hashing (specifically SHA-256) as a fundamental building block of its security model. Hashing is used everywhere in Bitcoin: to secure blocks in the blockchain, create addresses, verify transactions, and protect the integrity of the entire network.\n\nA hash function takes any input (regardless of size) and produces a fixed-size, seemingly random output. Even the tiniest change to the input creates a completely different hash, making data tampering immediately detectable. This property, known as the 'avalanche effect,' is crucial for Bitcoin's security.\n\nIn Bitcoin, double-hashing (SHA-256 applied twice) is commonly used for extra security, such as in block hashing and transaction IDs. Understanding hashing is essential for grasping how Bitcoin works under the hood."
+        title: "Understanding Digital Fingerprints",
+        text: "Remember how we talked about one-way functions being like a paper shredder? In Bitcoin, this special one-way transformation is called SHA-256! 🔒\n\nJust like how a paper shredder:\n- Takes any document and turns it into a unique pattern of shreds\n- Makes it impossible to reconstruct the original document\n- Creates completely different patterns even if you change just one word\n\nSHA-256 does the same thing with digital information:\n- Takes any digital data and creates a unique 'fingerprint' (always 64 characters long)\n- Makes it mathematically impossible to reverse the process\n- Creates totally different fingerprints even if you change just one character\n\nThis is crucial for Bitcoin because:\n- Every transaction gets its own unique fingerprint\n- Every block of transactions gets its own fingerprint\n- Any attempt to tamper with the data is instantly detectable\n\nLet's explore how this works and why it's essential for Bitcoin's security! 🔍"
       }
     },
     {
-      title: "Hash Explorer",
+      title: "SHA-256 Explorer",
       type: "explorer",
       content: {
         component: HashExplorer
       }
     },
     {
-      title: "Warm-up: Hash Properties",
+      title: "Understanding Changes",
       type: "warmup",
       content: {
-        question: "What happens when you change just one character in a message before hashing it?",
+        question: "What happens when you change just one character in a message before creating its fingerprint?",
         options: [
-          "The hash changes slightly", 
-          "The hash changes completely", 
-          "The hash stays the same", 
-          "Only numbers change in the hash"
+          "The fingerprint changes slightly", 
+          "The fingerprint changes completely", 
+          "The fingerprint stays the same", 
+          "Only some parts change"
         ],
         correct: 1,
-        explanation: "This is called the avalanche effect - even the smallest input change produces a completely different hash output. For example, the hash of 'hello' and 'hellp' are entirely different. This property makes tampering easily detectable and is critical for Bitcoin's security. Without this property, attackers could make small modifications to transactions or blocks without detection."
+        explanation: "Even a tiny change creates a completely different fingerprint! This is crucial for Bitcoin's security - it means you can't make even the smallest change without everyone noticing."
       }
     },
     {
-      title: "Code Lab: SHA-256 Hashing",
+      title: "Building Blocks",
+      type: "intro",
+      content: {
+        title: "From Messages to Blocks",
+        text: "In Bitcoin, SHA-256 is used to create unique fingerprints of blocks of information. Each block contains:\n\n- Transaction details (who sent what to whom)\n- A link to the previous block's fingerprint\n- Some special numbers the miners use\n\nAll this information gets blended together to create the block's unique fingerprint. Let's see how it works! 🧱"
+      }
+    },
+    {
+      title: "Block Explorer",
+      type: "challenge",
+      content: {
+        title: "Create Your Own Block Fingerprint",
+        description: "This is real data from Bitcoin block #100,000. See how all the block information gets transformed into a unique fingerprint that starts with lots of zeros (that's what makes it special!):",
+        data: {
+          blockHeader: "0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710",
+          expectedHash: "000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506",
+          target: "0000000000000000001bc16d674ec80000000000000000000000000000000000"
+        }
+      }
+    },
+    {
+      title: "Practice: Double Hashing",
       type: "codelab",
       content: {
-        title: "Implement Double-SHA256",
+        title: "Extra Security with Double-SHA256",
         initialCode: `function hash256(message) {
-  // Bitcoin uses double-SHA256 for extra security
-  // First hash the message, then hash the result again
+  // Bitcoin uses SHA-256 twice for extra security!
+  // First create a fingerprint, then create a fingerprint of that fingerprint
   // Use the provided sha256() function
   //
-  // Why double-hash? It provides extra security against length extension attacks
-  // and adds an additional layer of protection to Bitcoin's most critical operations.
-  //
-  // Real-world usage:
-  // - Transaction IDs are double-hashed
-  // - Block headers are double-hashed to create block IDs
-  // - Merkle trees use double-hashing
+  // Examples in Bitcoin:
+  // - Transaction IDs
+  // - Block IDs
+  // - Mining calculations
   
   // Your code here:
   
@@ -238,24 +256,11 @@ const HashingModule = () => {
       }
     },
     {
-      title: "Challenge: Block Header Hash",
-      type: "challenge",
-      content: {
-        title: "Verify a Bitcoin Block Hash",
-        description: "This is real data from Bitcoin block #100,000 (mined in December 2010). A block header contains metadata about the block, including version, previous block hash, merkle root, timestamp, difficulty target, and nonce. Miners repeatedly change the nonce until they find a hash that meets the difficulty target.\n\nCompute the double-SHA256 hash of this block header and verify it meets the difficulty target (starts with enough zeros):",
-        data: {
-          blockHeader: "0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710",
-          expectedHash: "000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506",
-          target: "0000000000000000001bc16d674ec80000000000000000000000000000000000"
-        }
-      }
-    },
-    {
       title: "Reflection",
       type: "reflection",
       content: {
-        question: "How does hashing make Bitcoin secure and trustworthy?",
-        placeholder: "Think about how hashing prevents tampering with transactions, creates unpredictable outputs that can't be reverse-engineered, and enables miners to prove they've done computational work. How might Bitcoin be vulnerable without strong hash functions? What might happen if someone could predict hash outputs?"
+        question: "How do digital fingerprints (hashes) make Bitcoin secure?",
+        placeholder: "Think about how these unique fingerprints protect information, make changes obvious, and help miners prove their work. How would Bitcoin be different without them? What makes them so special for security?"
       }
     }
   ];
