@@ -16,85 +16,95 @@ const MoneyModule = () => {
       type: "intro",
       content: {
         title: "What Makes Something Good to Pay With?",
-        text: "Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭\n\nImagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.\n\nIn this module, we'll:\n- Explore what qualities make good money\n- Test different things as money\n- Discover why some money lasts while other forms fail\n- See how Bitcoin fits into the story of money\n\nGet ready to challenge your assumptions about what makes good money! 🎯"
+        text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.
+
+But money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something *today*, or save up for something bigger *tomorrow*. For that to work, money has to hold its value.
+
+In this module, we'll:
+- Explore what qualities make good money
+- Test different things as money
+- Discover why some money lasts while others fail
+- See how Bitcoin fits into the story of money
+
+Get ready to challenge your assumptions about what makes good money!`
       }
     },
     {
       title: "Money Quiz",
       type: "interactive-quiz",
       content: {
-        title: "Test Your Money Knowledge",
-        description: "Let's examine different things people have used as money. For each one, think about whether it would work well as money and why.",
+        title: "Judge These as Money",
+        description: "Let's test your understanding of what makes good money by examining different options.",
         questions: [
           {
-            prompt: "Could seashells work as money today?",
+            prompt: "Could seashells be money?",
             choices: [
-              "Yes—people find them beautiful",
-              "No—they're too easy to find",
-              "Maybe—if everyone agreed to use them"
+              "Yes—people liked them",
+              "No—they were too common",
+              "Maybe—if everyone agreed"
             ],
             correct: 1,
-            explanation: "Money needs to be scarce. Seashells might have worked in the past, but they're too easy to find. Good money can't be created easily—otherwise, its value would constantly decrease as more is found or made."
+            explanation: "Money needs scarcity. Seashells were too easy to collect."
           },
           {
-            prompt: "Would ice cream make good money?",
+            prompt: "Ice cream?",
             choices: [
               "Yes—everyone loves it",
-              "No—it melts and spoils",
-              "Maybe—if we had special storage"
+              "No—it melts",
+              "Maybe—with magic fridge"
             ],
             correct: 1,
-            explanation: "Money needs to be durable. Ice cream melts and spoils, making it impossible to save or transport. Good money must last through time and maintain its properties."
+            explanation: "Money must last—ice cream spoils."
           },
           {
-            prompt: "Why did gold work as money for thousands of years?",
+            prompt: "Gold?",
             choices: [
-              "Because it's scarce and doesn't degrade",
-              "Because it's just pretty and shiny",
-              "Because governments chose it"
+              "Yes—scarce and durable",
+              "No—just shiny",
+              "Maybe—if governments approve"
             ],
             correct: 0,
-            explanation: "Gold became money naturally because it's: scarce (hard to mine), durable (doesn't rust), divisible (can be split), portable (high value in small size), and uniform (pure gold is the same everywhere)."
+            explanation: "Gold works because it's scarce, durable, divisible, and portable."
           },
           {
-            prompt: "If your grandmother saved $100 in 1990, what would it buy today?",
+            prompt: "If your grandmother saved $100 under her mattress in 1990, how much would that buy today?",
             choices: [
-              "The same amount—money is money",
-              "Much less—prices have increased",
-              "More—things get cheaper over time"
+              "Exactly the same — money is money",
+              "Much less — prices have gone up",
+              "Way more — things get cheaper over time"
             ],
             correct: 1,
-            explanation: "This is inflation in action. The $100 bill is the same paper, but it buys much less today. Why? Because central banks can create more dollars anytime, making each existing dollar worth less. Good money should hold its value over time."
+            explanation: "Inflation makes money lose value over time. Even if the number doesn't change, what you can buy with it shrinks. This is why inflationary money quietly steals purchasing power."
           },
           {
-            prompt: "Are digital bank balances good money?",
+            prompt: "Bank digital number (centralized records)?",
             choices: [
-              "Yes—banks keep them safe",
-              "No—they can be frozen or changed",
-              "Maybe—if protected by good passwords"
+              "Yes—banks protect it",
+              "No—can be changed by authorities",
+              "Maybe—if locked with code"
             ],
             correct: 1,
-            explanation: "Digital bank balances can be: frozen by authorities, changed by bank errors, lost in bank failures, or devalued by inflation. Good money should be under your control, not someone else's."
+            explanation: "Centralized money can be inflated or tracked arbitrarily."
           },
           {
-            prompt: "Could a government freeze your bank account if they disagree with your views?",
+            prompt: "If the government doesn't like your opinion, could they freeze your bank account?",
             choices: [
-              "Yes—it's happened in several countries",
-              "No—banks are independent",
-              "Only if you break laws"
+              "Yes—they've done it before in some countries",
+              "No—banks are neutral",
+              "Maybe—but only if you're very rich"
             ],
             correct: 0,
-            explanation: "Recent history shows governments can and do freeze accounts for political reasons. In 2022, peaceful protesters had accounts frozen in Canada. Good money should work without requiring anyone's permission."
+            explanation: "Money held in a bank can be frozen or taken. Good money should protect your freedom, not depend on approval."
           },
           {
-            prompt: "What about a digital coin that no one controls, with a fixed supply?",
+            prompt: "A digital coin with fixed supply, owned by no one, with verifiable ledger?",
             choices: [
-              "Perfect money—if truly decentralized",
-              "Bad money—digital things can be copied",
-              "Maybe—if governments approve it"
+              "Yes—if truly decentralized and limited",
+              "No—digital can be copied",
+              "Maybe—if backed by government"
             ],
             correct: 0,
-            explanation: "This describes Bitcoin: it combines the scarcity of gold with digital convenience. No one can create more than planned, freeze accounts, or change the rules without everyone agreeing. It's the first money that's both digital and truly under your control."
+            explanation: "That's Bitcoin—scarcity + decentralization + verifiability + unconfiscatability."
           }
         ]
       }
@@ -103,44 +113,44 @@ const MoneyModule = () => {
       title: "Properties of Sound Money",
       type: "interactive-summary",
       content: {
-        title: "What Makes Money 'Sound'?",
-        description: "Let's explore the key properties that make money reliable and useful. Click each property to learn more.",
+        title: "What Makes Money Sound?",
+        description: "Click each property to learn more about what makes money reliable and useful.",
         properties: [
           {
             icon: Scale,
             title: "Scarce",
-            description: "Cannot be created easily or arbitrarily. The supply is limited and predictable.",
-            example: "Like gold—hard to mine, unlike paper money which can be printed endlessly."
+            description: "Can't be created on the fly",
+            example: "Like gold or Bitcoin's fixed supply"
           },
           {
             icon: Clock,
             title: "Durable",
-            description: "Maintains its properties over time without degrading.",
-            example: "Gold doesn't rust, while paper money wears out and food spoils."
+            description: "Doesn't perish or break",
+            example: "Digital data and gold last forever"
           },
           {
             icon: Zap,
             title: "Portable & Divisible",
-            description: "Easy to transport and can be split into smaller units.",
-            example: "Digital bitcoin can be sent globally and divided into 100 million pieces."
+            description: "Works for small or big trades",
+            example: "Bitcoin can be split into 100 million pieces"
           },
           {
             icon: CheckCircle,
             title: "Uniform",
-            description: "Every unit is identical in quality and properties.",
-            example: "One bitcoin is exactly the same as another, like pure gold."
+            description: "Each unit is the same as any other",
+            example: "Every bitcoin is identical"
           },
           {
             icon: Globe,
-            title: "Decentralized",
-            description: "No single entity controls or can manipulate it.",
-            example: "Bitcoin's rules are enforced by thousands of independent computers."
+            title: "Decentralized & Secure",
+            description: "No single party can change records",
+            example: "Bitcoin's network is run by thousands"
           },
           {
             icon: Lock,
             title: "Unconfiscatable",
-            description: "Cannot be taken without the owner's permission.",
-            example: "Bitcoin requires your private key—like a password only you know."
+            description: "No one can take it without permission",
+            example: "Only you control your Bitcoin keys"
           }
         ]
       }
@@ -149,8 +159,8 @@ const MoneyModule = () => {
       title: "Why Bitcoin?",
       type: "transition",
       content: {
-        title: "The Evolution of Money",
-        text: "We've seen what makes good money. Now, let's explore how Bitcoin takes these ancient principles and adapts them for the digital age. 🚀\n\nBitcoin combines:\n- The scarcity of gold\n- The convenience of digital payments\n- The security of mathematics\n- The freedom of cash\n\nIn the next modules, we'll discover exactly how Bitcoin achieves this through clever use of numbers, codes, and network rules. Ready to dive in? 💡"
+        title: "Why Bitcoin?",
+        text: "You've mapped out what makes money work. Now let's see how Bitcoin matches those qualities—and why it's built for the digital age."
       }
     }
   ];
