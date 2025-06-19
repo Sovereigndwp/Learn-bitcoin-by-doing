@@ -550,8 +550,16 @@
 
 .step-content h2, 
 .step-content h3 {
-  color: #24292e;
+  color: #ffffff;
   margin-bottom: 1rem;
+}
+
+.step-content h2 {
+  font-size: 2rem;
+}
+
+.step-content h3 {
+  font-size: 1.5rem;
 }
 
 .step-action-hint {
