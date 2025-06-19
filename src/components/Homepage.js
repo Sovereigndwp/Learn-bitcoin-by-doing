@@ -31,7 +31,8 @@ const Homepage = () => {
       id: 'money',
       icon: Coins,
       color: '#F7931A',
-      path: '/module/money'
+      path: '/module/money',
+      isFoundational: true
     },
     {
       id: 'numbers',
@@ -99,25 +100,19 @@ const Homepage = () => {
   return (
     <div className="homepage">
       {/* Header */}
-      <header className="header">
-        <div className="header-content">
-          <div className="logo" style={{ marginLeft: '0', paddingLeft: '0' }}>
-            <span className="bitcoin-symbol">₿</span>
-            <div className="logo-container">
-              <span className="logo-text">Bitcoin, Straight Up</span>
-              <span className="author-text">@Dalia</span>
-            </div>
+      <header className="homepage-header">
+        <div className="logo">
+          <span className="bitcoin-symbol">₿</span>
+          <div className="logo-container">
+            <span className="logo-text">Bitcoin, Straight Up</span>
+            <span className="author-text">@Dalia</span>
           </div>
-          <div className="nav-buttons">
-            <Link to="/" className="nav-button">
-              <Home size={20} />
-              Home
-            </Link>
-            <button className="language-toggle" onClick={toggleLanguage}>
-              <Globe size={20} />
-              {language === 'en' ? 'ES' : 'EN'}
-            </button>
-          </div>
+        </div>
+        <div className="header-buttons">
+          <button className="language-toggle" onClick={toggleLanguage}>
+            <Globe size={20} />
+            {language === 'en' ? 'ES' : 'EN'}
+          </button>
         </div>
       </header>
 
@@ -167,6 +162,7 @@ const Homepage = () => {
         <div className="modules-grid">
           {sortedModules.map((module) => {
             const IconComponent = module.icon;
+            const progress = getProgressPercentage(module.id);
             const isCompleted = completedModules.includes(module.id);
             const moduleInfo = getAllModules().find(m => m.id === module.id);
             
@@ -174,19 +170,29 @@ const Homepage = () => {
               <Link 
                 key={module.id}
                 to={module.path} 
-                className={`module-card ${isCompleted ? 'completed' : ''}`}
-                style={{ '--module-color': module.color }}
+                className={`module-card ${module.isFoundational ? 'foundational' : ''} ${isCompleted ? 'completed' : ''}`}
+                style={{
+                  '--module-color': module.color,
+                  '--progress': `${progress}%`
+                }}
               >
                 <div className="module-icon">
-                  <IconComponent size={32} />
+                  <IconComponent size={24} />
                 </div>
-                <h3 className="module-title">{moduleInfo?.title || t(`modules.${module.id}`)}</h3>
-                <p className="module-description">
-                  {moduleInfo?.description || t(`moduleDescriptions.${module.id}`)}
-                </p>
+                <div className="module-info">
+                  <h3>{moduleInfo?.title || t(`modules.${module.id}`)}</h3>
+                  <p>{moduleInfo?.description || t(`moduleDescriptions.${module.id}`)}</p>
+                </div>
                 {isCompleted && (
                   <div className="completion-badge">
+                    <Trophy size={16} />
+                    Completed
+                  </div>
+                )}
+                {module.isFoundational && (
+                  <div className="foundational-badge">
                     <Star size={16} />
+                    Start Here
                   </div>
                 )}
               </Link>

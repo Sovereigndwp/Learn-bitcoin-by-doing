@@ -14,8 +14,8 @@ export const useProgress = () => {
 const MODULES = [
   {
     id: 'money',
-    title: 'Follow the Money...Before It Defines You',
-    description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.'
+    title: 'Money Fundamentals: The Foundation of Bitcoin',
+    description: 'Start your Bitcoin journey by understanding what money is, how it evolved, and why Bitcoin represents the next leap forward in monetary technology.'
   },
   {
     id: 'numbers',
@@ -56,6 +56,11 @@ const MODULES = [
     id: 'custody',
     title: 'Bitcoin Custody',
     description: 'Master different ways to secure and manage Bitcoin.'
+  },
+  {
+    id: 'myths',
+    title: 'Myths & Misconceptions',
+    description: 'Explore and debunk common Bitcoin myths and misconceptions.'
   }
 ];
 

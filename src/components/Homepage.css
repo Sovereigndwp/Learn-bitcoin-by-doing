@@ -221,77 +221,72 @@
 }
 
 .module-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  text-decoration: none;
-  color: white;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  border: 2px solid transparent;
   position: relative;
-  overflow: hidden;
-}
-
-.module-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--module-color);
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .module-card:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.module-card.foundational {
   border-color: var(--module-color);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom right, white, rgba(247, 147, 26, 0.1));
 }
 
-.module-card.completed {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #FFD700;
-}
-
-.module-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 1rem;
+.foundational-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   background: var(--module-color);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  color: white;
-}
-
-.module-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.module-description {
-  font-size: 1rem;
-  opacity: 0.9;
-  line-height: 1.5;
-  margin: 0;
+  gap: 4px;
 }
 
 .completion-badge {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 30px;
-  height: 30px;
-  background: #FFD700;
-  border-radius: 50%;
+  top: 12px;
+  right: 12px;
+  background: #10B981;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #333;
+  gap: 4px;
+}
+
+.module-card.foundational .completion-badge {
+  right: 100px;
+}
+
+.module-info {
+  margin-top: 16px;
+}
+
+.module-info h3 {
+  color: var(--module-color);
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.module-info p {
+  margin: 0;
+  color: #4B5563;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 /* CTA Section */
