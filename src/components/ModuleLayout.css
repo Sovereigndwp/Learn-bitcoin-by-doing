@@ -17,22 +17,25 @@
 }
 
 .module-header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.module-nav {
+.nav-buttons {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
+  margin-left: auto;
+  padding-right: 2rem;
+  min-width: 300px; /* Ensures consistent spacing */
+  justify-content: flex-end;
 }
 
-.nav-button,
-.home-button {
+.nav-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -47,8 +50,7 @@
   font-size: 0.875rem;
 }
 
-.nav-button:hover,
-.home-button:hover {
+.nav-button:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
   color: white;
@@ -64,6 +66,8 @@
   gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .logo-container {

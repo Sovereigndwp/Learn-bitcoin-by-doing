@@ -15,7 +15,8 @@ import {
   Trophy,
   Flame,
   Star,
-  Globe
+  Globe,
+  Home
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';
@@ -93,17 +94,23 @@ const Homepage = () => {
       {/* Header */}
       <header className="header">
         <div className="header-content">
-          <div className="logo">
+          <div className="logo" style={{ marginLeft: '0', paddingLeft: '0' }}>
             <span className="bitcoin-symbol">₿</span>
             <div className="logo-container">
               <span className="logo-text">Bitcoin, Straight Up</span>
               <span className="author-text">@Dalia</span>
             </div>
           </div>
-          <button className="language-toggle" onClick={toggleLanguage}>
-            <Globe size={20} />
-            {language === 'en' ? 'ES' : 'EN'}
-          </button>
+          <div className="nav-buttons">
+            <Link to="/" className="nav-button">
+              <Home size={20} />
+              Home
+            </Link>
+            <button className="language-toggle" onClick={toggleLanguage}>
+              <Globe size={20} />
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
+          </div>
         </div>
       </header>
 

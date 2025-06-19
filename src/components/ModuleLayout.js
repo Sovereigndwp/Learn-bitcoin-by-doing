@@ -12,28 +12,27 @@ const ModuleLayout = ({ children }) => {
       {/* Header */}
       <header className="module-header">
         <div className="module-header-content">
-          <div className="module-nav">
-            <Link to="/" className="nav-button">
-              <ArrowLeft size={20} />
-              Back
-            </Link>
-            <Link to="/" className="home-button">
-              <Home size={20} />
-            </Link>
-          </div>
-          
-          <div className="logo">
+          <div className="logo" style={{ marginLeft: '0', paddingLeft: '0' }}>
             <span className="bitcoin-symbol">₿</span>
             <div className="logo-container">
               <span className="logo-text">Bitcoin, Straight Up</span>
               <span className="author-text">@Dalia</span>
             </div>
           </div>
-          
-          <button className="language-toggle" onClick={toggleLanguage}>
-            <Globe size={20} />
-            {language === 'en' ? 'ES' : 'EN'}
-          </button>
+          <div className="nav-buttons">
+            <Link to="/" className="nav-button">
+              <Home size={20} />
+              Home
+            </Link>
+            <Link to="/" className="nav-button">
+              <ArrowLeft size={20} />
+              Back
+            </Link>
+            <button className="language-toggle" onClick={toggleLanguage}>
+              <Globe size={20} />
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
+          </div>
         </div>
       </header>
 
