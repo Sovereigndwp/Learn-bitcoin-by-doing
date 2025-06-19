@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Bitcoin, Network, Lock, Coins, CheckCircle, Trophy, Wallet, Send } from 'lucide-react';
+import { Bitcoin, Lock, Wallet, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const BitcoinBasicsModule = () => {
@@ -236,7 +236,6 @@ const BitcoinBasicsModule = () => {
         </h1>
         {isModuleCompleted('bitcoin-basics') && (
           <div className="completion-badge">
-            <Trophy size={24} />
             Completed!
           </div>
         )}

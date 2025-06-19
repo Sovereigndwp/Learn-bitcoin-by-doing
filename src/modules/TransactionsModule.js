@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeftRight, Wallet, Send, DollarSign, ShieldCheck } from 'lucide-react';
+import { ArrowLeftRight, Wallet, Send, DollarSign, ShieldCheck, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const TransactionsModule = () => {
@@ -80,7 +80,6 @@ const TransactionsModule = () => {
   const handlePrevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
-      setShowSuccess(false);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GitBranch, Hash, Search, CheckCircle, Tree } from 'lucide-react';
+import { GitBranch, Hash, Search, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const MerkleModule = () => {
@@ -9,7 +9,7 @@ const MerkleModule = () => {
   const sections = {
     intro: {
       title: "The Family Tree of Transactions",
-      icon: <Tree size={24} />,
+      icon: <GitBranch size={24} />,
       content: `Imagine organizing your family photos into a special tree where each branch 
                 helps you quickly find any photo. That's similar to how Bitcoin organizes 
                 transactions in a Merkle tree!`
