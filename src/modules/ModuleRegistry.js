@@ -1,4 +1,5 @@
 import MoneyModule from '../modules/MoneyModule';
+import BitcoinBasicsModule from '../modules/BitcoinBasicsModule';
 import NumbersModule from '../modules/NumbersModule';
 import HashingModule from '../modules/HashingModule';
 import MiningModule from '../modules/MiningModule';
@@ -17,67 +18,74 @@ export const moduleRegistry = {
     component: MoneyModule,
     order: 1
   },
+  'bitcoin-basics': {
+    id: 'bitcoin-basics',
+    title: 'Bitcoin Basics: Your First Steps',
+    description: 'Learn how to get started with Bitcoin - from choosing a wallet to making your first transaction, with practical security tips.',
+    component: BitcoinBasicsModule,
+    order: 2
+  },
   numbers: {
     id: 'numbers',
     title: 'Numbers & Encoding',
     description: 'Learn how computers represent and secure information using different number systems.',
     component: NumbersModule,
-    order: 2
+    order: 3
   },
   hashing: {
     id: 'hashing',
     title: 'Digital Fingerprints',
     description: 'Discover how Bitcoin uses SHA-256 hashing to create tamper-proof digital fingerprints.',
     component: HashingModule,
-    order: 3
+    order: 4
   },
   mining: {
     id: 'mining',
     title: 'The World\'s Most Expensive Puzzle Game',
     description: 'Understand how Bitcoin mining secures the network through proof-of-work.',
     component: MiningModule,
-    order: 4
+    order: 5
   },
   keys: {
     id: 'keys',
     title: 'Keys to the Kingdom',
     description: 'Learn about public key cryptography and how Bitcoin uses digital signatures.',
     component: KeysModule,
-    order: 5
+    order: 6
   },
   transactions: {
     id: 'transactions',
     title: 'Building Blocks',
     description: 'Explore how Bitcoin transactions work and how they\'re structured.',
     component: TransactionsModule,
-    order: 6
+    order: 7
   },
   scripts: {
     id: 'scripts',
     title: 'Bitcoin Scripts',
     description: 'Dive into Bitcoin\'s scripting language and how it enables smart contracts.',
     component: ScriptsModule,
-    order: 7
+    order: 8
   },
   merkle: {
     id: 'merkle',
     title: 'Merkle Trees',
     description: 'Learn how Bitcoin efficiently verifies transactions using Merkle trees.',
     component: MerkleModule,
-    order: 8
+    order: 9
   },
   custody: {
     id: 'custody',
     title: 'Bitcoin Custody',
     description: 'Master different ways to secure and manage Bitcoin.',
     component: CustodyModule,
-    order: 9
+    order: 10
   },
   myths: {
     id: 'myths',
     title: 'Myths & Misconceptions',
     description: 'Explore and debunk common Bitcoin myths and misconceptions.',
     component: MythsModule,
-    order: 10
+    order: 11
   }
 }; 

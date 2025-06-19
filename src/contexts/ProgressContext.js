@@ -18,6 +18,11 @@ const MODULES = [
     description: 'Start your Bitcoin journey by understanding what money is, how it evolved, and why Bitcoin represents the next leap forward in monetary technology.'
   },
   {
+    id: 'bitcoin-basics',
+    title: 'Bitcoin Basics: Your First Steps',
+    description: 'Learn how to get started with Bitcoin - from choosing a wallet to making your first transaction, with practical security tips.'
+  },
+  {
     id: 'numbers',
     title: 'Numbers & Encoding',
     description: 'Learn how computers represent and secure information using different number systems.'

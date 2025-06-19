@@ -8,6 +8,7 @@ import './App.css';
 
 // Import all modules
 import MoneyModule from './modules/MoneyModule';
+import BitcoinBasicsModule from './modules/BitcoinBasicsModule';
 import NumbersModule from './modules/NumbersModule';
 import HashingModule from './modules/HashingModule';
 import MiningModule from './modules/MiningModule';
@@ -27,6 +28,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
               <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
               <Route path="/module/hashing" element={<ModuleLayout><HashingModule /></ModuleLayout>} />
               <Route path="/module/mining" element={<ModuleLayout><MiningModule /></ModuleLayout>} />
