@@ -37,21 +37,21 @@ Get ready to challenge your assumptions about what makes good money!`
         description: "Throughout history, societies have experimented with different forms of money. Let's explore what worked, what failed, and why.",
         questions: [
           {
-            prompt: "In ancient Pacific islands, communities used seashells as money, with rare shells being more valuable. But when European traders arrived with ships full of shells from other oceans, what happened to the shell-money system?",
+            prompt: "In ancient Pacific islands, communities used rare seashells as money. When European traders arrived with ships full of shells from other oceans, they were able to buy most of the islands' valuable goods with what felt like 'monopoly money' to them. What does this teach us about money?",
             choices: [
-              "It got stronger because more shells meant more trade",
-              "It collapsed because shells lost their scarcity",
-              "It adapted by using only local shells"
+              "Trade increased because there was more money",
+              "The money system failed because shells lost their natural scarcity",
+              "The islanders should have used different shells"
             ],
             correct: 1,
-            explanation: "When Europeans flooded the market with shells, the money system collapsed. This teaches us that money needs natural scarcity - if something can be easily found or copied, it can't maintain value as money."
+            explanation: "When Europeans could easily collect shells from other places, they essentially got 'free money' to buy valuable island goods. This shows why money needs natural scarcity - if someone can easily create more of it, they can take real value from others without giving value in return."
           },
           {
-            prompt: "The Yap islands used massive stone wheels called 'Rai stones' as money, some too heavy to move. They tracked ownership through oral history. What does this teach us about the physical nature of money?",
+            prompt: "The Yap islands used massive stone wheels called 'Rai stones' as money. Even when a stone was lost at sea, everyone kept track of who owned it through community memory. What key lesson about money does this reveal?",
             choices: [
-              "Money must be easy to carry",
-              "The physical form doesn't matter if everyone agrees on ownership",
-              "Heavier money is more valuable"
+              "Money needs to be physically present to work",
+              "Money is really about community agreement on ownership",
+              "Lost money should still count as money"
             ],
             correct: 1,
             explanation: "The Rai stones show that money is really about trusted record-keeping. The stones didn't move physically, but ownership changed through community consensus - similar to how Bitcoin's ledger works today."
@@ -87,14 +87,14 @@ Get ready to challenge your assumptions about what makes good money!`
             explanation: "This recent event shows why decentralization matters. When money is controlled by central authorities, it can be used as a tool of control. True money should work regardless of whether someone approves of how you're using it."
           },
           {
-            prompt: "The Roman Empire gradually debased their silver coins by mixing in cheaper metals, leading to economic collapse. What principle of sound money did they violate?",
+            prompt: "The Roman Empire gradually made their coins worse by mixing cheap metals into the silver, and people even shaved off the edges of gold coins to make more coins. How did this affect people's trust in the money?",
             choices: [
-              "Money should be easy to produce",
-              "Money should be beautiful to look at",
-              "Money should have consistent, unchangeable properties"
+              "People didn't notice because the coins looked similar",
+              "It helped create more money for trade",
+              "People lost trust because the money was being secretly weakened"
             ],
             correct: 2,
-            explanation: "The Roman debasement shows that money must have unchangeable properties. When authorities can secretly alter money's fundamental properties (like its scarcity), they will eventually yield to the temptation, destroying the money's reliability."
+            explanation: "When authorities secretly reduce money's quality (like mixing cheap metals into silver or shaving gold), it's a form of theft. People eventually realize their money is being weakened, and they lose trust in the entire system. Good money needs to be consistent and honest."
           },
           {
             prompt: "Bitcoin is the first money in history that can be sent instantly worldwide while being impossible to counterfeit or confiscate. How does this change what's possible with money?",
@@ -110,57 +110,63 @@ Get ready to challenge your assumptions about what makes good money!`
       }
     },
     {
+      title: "Why Bitcoin?",
+      type: "transition",
+      content: {
+        title: "The Evolution of Money",
+        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans\n- Gold was sound but too heavy to move and easy to confiscate\n- Paper money started as gold receipts but became unlimited printing\n- Digital banking brought convenience but with surveillance and control\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat)\n- Too hard to move (gold, large stones)\n- Too easy to control (digital banking)\n- Too easy to confiscate (gold, cash)\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
+      }
+    },
+    {
       title: "Properties of Sound Money",
       type: "interactive-summary",
       content: {
         title: "What Makes Money Sound?",
-        description: "Click each property to learn more about what makes money reliable and useful.",
+        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Click each property to learn how Bitcoin perfects these qualities in ways that were impossible before.",
         properties: [
           {
             icon: Scale,
-            title: "Scarce",
-            description: "Can't be created on the fly",
-            example: "Like gold or Bitcoin's fixed supply"
+            title: "Scarce & Disinflationary",
+            description: "Supply is limited and growth rate decreases over time",
+            example: "Bitcoin's supply becomes harder to create every 4 years, unlike fiat money which increases unpredictably"
+          },
+          {
+            icon: Zap,
+            title: "Portable, Divisible & Uniform",
+            description: "Easy to move, split into smaller units, and each piece is identical",
+            example: "Bitcoin can be split into 100 million pieces called 'sats' (short for satoshis). Just like every dollar is worth the same as any other dollar, every sat is identical. You can send any amount, from 1 sat (0.00000001 BTC) to millions of bitcoin, anywhere in the world"
           },
           {
             icon: Clock,
             title: "Durable",
-            description: "Doesn't perish or break",
-            example: "Digital data and gold last forever"
+            description: "Maintains its integrity over time without degrading or corrupting",
+            example: "Unlike physical money that wears out, Bitcoin's digital records are permanent and can be verified by anyone. Every transaction since 2009 is still perfectly intact and readable today"
           },
           {
-            icon: Zap,
-            title: "Portable & Divisible",
-            description: "Works for small or big trades",
-            example: "Bitcoin can be split into 100 million pieces"
+            icon: Globe,
+            title: "Open & Accessible",
+            description: "Anyone can use it without permission or approval - rich or poor have equal rights",
+            example: "Bitcoin treats everyone equally - no bank approvals, no minimum balances, no discrimination. A farmer in Africa has the same rights as a banker in New York"
           },
           {
-            icon: CheckCircle,
-            title: "Uniform",
-            description: "Each unit is the same as any other",
-            example: "Every bitcoin is identical"
+            icon: Lock,
+            title: "Unconfiscatable & Borderless",
+            description: "Your money remains yours no matter where you go",
+            example: "Cross any border, travel anywhere in the world, and your bitcoin stays with you - no government or bank can freeze or seize it. Access your money from any country, anytime"
+          },
+          {
+            icon: Scale,
+            title: "Rules, Not Rulers",
+            description: "Governed by transparent code, not human decisions",
+            example: "Bitcoin's rules are fixed and equal for everyone - no special privileges"
           },
           {
             icon: Globe,
             title: "Decentralized & Secure",
-            description: "No single party can change records",
-            example: "Bitcoin's network is run by thousands"
-          },
-          {
-            icon: Lock,
-            title: "Unconfiscatable",
-            description: "No one can take it without permission",
-            example: "Only you control your Bitcoin keys"
+            description: "Information about who owns what is stored on thousands of computers, not just one bank's database",
+            example: "Traditional banks keep everyone's money info in one place - one mistake or hack can affect millions. Bitcoin is different: imagine a global notebook with thousands of exact copies - no single point of failure, no accidental deletions, no central computer to hack"
           }
         ]
-      }
-    },
-    {
-      title: "Why Bitcoin?",
-      type: "transition",
-      content: {
-        title: "Why Bitcoin?",
-        text: "You've mapped out what makes money work. Now let's see how Bitcoin matches those qualities—and why it's built for the digital age."
       }
     }
   ];
