@@ -15,8 +15,8 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "What Makes Good Money?",
-        text: "Let's play a fun game! 🎮\n\nImagine you're on a desert island with your friends, and you need to create money from scratch. What would you use?\n\n🥥 Coconuts?\n- But what if someone finds a huge coconut tree?\n- Now they're suddenly rich without doing any work!\n\n🐚 Seashells?\n- Beautiful and easy to carry...\n- But what if a ship arrives with tons of shells from another beach?\n\n💎 Rare rocks?\n- Can't make more of them...\n- But they might break, and they're heavy to carry!\n\nThis is the same puzzle people have been solving for thousands of years!\n\nLet's discover together:\n- Why some things work better as money than others\n- What happens when money isn't quite right\n- How Bitcoin solves these ancient problems in a new way\n\nReady to create the perfect money? Let's explore! 🚀"
+        title: "Welcome to Your Bitcoin Journey!",
+        text: "Before we dive into the technical aspects of Bitcoin, let's start with the most fundamental question: What is money, and why do we need it? 🤔\n\nImagine a world without money:\n- How would you trade your skills for food?\n- How would you save for the future?\n- How would you measure value?\n\nMoney isn't just coins and bills - it's a technology that humans invented to solve these problems. And like all technologies, it evolves:\n\n🐚 Shells & Beads: Easy to carry, but too easy to find more\n💎 Precious Metals: Better, but hard to move and verify\n📜 Paper Money: Convenient, but too easy to create more\n💻 Digital Banking: Fast, but requires permission and trust\n₿ Bitcoin: Combines the best of all previous forms\n\nIn this foundational module, you'll discover:\n1. The key properties that make good money\n2. Why previous forms of money had trade-offs\n3. How Bitcoin solves these age-old problems\n4. Why this matters for your future\n\nThis module sets the stage for your entire Bitcoin journey. Once you understand these fundamentals, the technical concepts in later modules will make much more sense.\n\nReady to understand money in a whole new way? Let's begin! 🚀"
       }
     },
     {
@@ -253,7 +253,7 @@ const MoneyModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          Follow the Money...Before It Defines You
+          Money Fundamentals: The Foundation of Bitcoin
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">
