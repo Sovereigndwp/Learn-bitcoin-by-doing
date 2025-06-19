@@ -15,16 +15,16 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "What Makes Something Good to Pay With?",
+        title: "Who made the Rules?",
         text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.
 
-But money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something *today*, or save up for something bigger *tomorrow*. For that to work, money has to hold its value.
+But money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something today, or save up for something bigger tomorrow. For that to work, money has to hold its value.
 
 In this module, we'll:
-- Explore what qualities make good money
-- Test different things as money
-- Discover why some money lasts while others fail
-- See how Bitcoin fits into the story of money
+    - Explore what qualities make good money
+    - Test different things as money
+    - Discover why some money lasts while others fail
+    - See how Bitcoin fits into the story of money
 
 Get ready to challenge your assumptions about what makes good money!`
       }
@@ -34,77 +34,77 @@ Get ready to challenge your assumptions about what makes good money!`
       type: "interactive-quiz",
       content: {
         title: "Judge These as Money",
-        description: "Let's test your understanding of what makes good money by examining different options.",
+        description: "Throughout history, societies have experimented with different forms of money. Let's explore what worked, what failed, and why.",
         questions: [
           {
-            prompt: "Could seashells be money?",
+            prompt: "In ancient Pacific islands, communities used seashells as money, with rare shells being more valuable. But when European traders arrived with ships full of shells from other oceans, what happened to the shell-money system?",
             choices: [
-              "Yes—people liked them",
-              "No—they were too common",
-              "Maybe—if everyone agreed"
+              "It got stronger because more shells meant more trade",
+              "It collapsed because shells lost their scarcity",
+              "It adapted by using only local shells"
             ],
             correct: 1,
-            explanation: "Money needs scarcity. Seashells were too easy to collect."
+            explanation: "When Europeans flooded the market with shells, the money system collapsed. This teaches us that money needs natural scarcity - if something can be easily found or copied, it can't maintain value as money."
           },
           {
-            prompt: "Ice cream?",
+            prompt: "The Yap islands used massive stone wheels called 'Rai stones' as money, some too heavy to move. They tracked ownership through oral history. What does this teach us about the physical nature of money?",
             choices: [
-              "Yes—everyone loves it",
-              "No—it melts",
-              "Maybe—with magic fridge"
+              "Money must be easy to carry",
+              "The physical form doesn't matter if everyone agrees on ownership",
+              "Heavier money is more valuable"
             ],
             correct: 1,
-            explanation: "Money must last—ice cream spoils."
+            explanation: "The Rai stones show that money is really about trusted record-keeping. The stones didn't move physically, but ownership changed through community consensus - similar to how Bitcoin's ledger works today."
           },
           {
-            prompt: "Gold?",
+            prompt: "Gold has been used as money for over 5,000 years across different civilizations that had no contact with each other. Why did such different cultures independently choose gold?",
             choices: [
-              "Yes—scarce and durable",
-              "No—just shiny",
-              "Maybe—if governments approve"
+              "Because it's naturally scarce, durable, and universal",
+              "Because governments forced people to use it",
+              "Because it was the prettiest metal available"
             ],
             correct: 0,
-            explanation: "Gold works because it's scarce, durable, divisible, and portable."
+            explanation: "Gold emerged naturally as money across civilizations because it has properties that make it ideal: it's scarce (can't be easily mined), durable (doesn't rust), divisible (can be split), and universal (same everywhere). These are the same properties we need in modern money."
           },
           {
-            prompt: "If your grandmother saved $100 under her mattress in 1990, how much would that buy today?",
+            prompt: "In 1923 Germany, people had to spend their money immediately because prices doubled every few days. Workers were paid twice a day and rushed to buy bread before prices rose again. What does this teach us about money's role as a store of value?",
             choices: [
-              "Exactly the same — money is money",
-              "Much less — prices have gone up",
-              "Way more — things get cheaper over time"
+              "Quick spending stimulates the economy",
+              "Money fails when it can't hold value over time",
+              "Prices should be flexible to help commerce"
             ],
             correct: 1,
-            explanation: "Inflation makes money lose value over time. Even if the number doesn't change, what you can buy with it shrinks. This is why inflationary money quietly steals purchasing power."
+            explanation: "The German hyperinflation shows that money must be a reliable store of value. When money loses value too quickly, it fails at its core purpose - helping people trade and save across time. This is why inflationary money eventually breaks society's trust."
           },
           {
-            prompt: "Bank digital number (centralized records)?",
+            prompt: "In 2020, Canadian truckers protesting COVID policies had their bank accounts frozen. If they had used a decentralized currency like Bitcoin instead, what would have been different?",
             choices: [
-              "Yes—banks protect it",
-              "No—can be changed by authorities",
-              "Maybe—if locked with code"
+              "Nothing - all money can be controlled",
+              "Their money would have remained accessible",
+              "The protest would have been illegal"
             ],
             correct: 1,
-            explanation: "Centralized money can be inflated or tracked arbitrarily."
+            explanation: "This recent event shows why decentralization matters. When money is controlled by central authorities, it can be used as a tool of control. True money should work regardless of whether someone approves of how you're using it."
           },
           {
-            prompt: "If the government doesn't like your opinion, could they freeze your bank account?",
+            prompt: "The Roman Empire gradually debased their silver coins by mixing in cheaper metals, leading to economic collapse. What principle of sound money did they violate?",
             choices: [
-              "Yes—they've done it before in some countries",
-              "No—banks are neutral",
-              "Maybe—but only if you're very rich"
+              "Money should be easy to produce",
+              "Money should be beautiful to look at",
+              "Money should have consistent, unchangeable properties"
             ],
-            correct: 0,
-            explanation: "Money held in a bank can be frozen or taken. Good money should protect your freedom, not depend on approval."
+            correct: 2,
+            explanation: "The Roman debasement shows that money must have unchangeable properties. When authorities can secretly alter money's fundamental properties (like its scarcity), they will eventually yield to the temptation, destroying the money's reliability."
           },
           {
-            prompt: "A digital coin with fixed supply, owned by no one, with verifiable ledger?",
+            prompt: "Bitcoin is the first money in history that can be sent instantly worldwide while being impossible to counterfeit or confiscate. How does this change what's possible with money?",
             choices: [
-              "Yes—if truly decentralized and limited",
-              "No—digital can be copied",
-              "Maybe—if backed by government"
+              "It combines gold's scarcity with digital convenience",
+              "It's just another payment app like PayPal",
+              "It's only useful for small transactions"
             ],
             correct: 0,
-            explanation: "That's Bitcoin—scarcity + decentralization + verifiability + unconfiscatability."
+            explanation: "Bitcoin represents a breakthrough in monetary technology - it combines the scarcity of gold with the convenience of digital transfer, while adding new properties like mathematical certainty and resistance to confiscation. This makes it uniquely suited for an interconnected digital world."
           }
         ]
       }
@@ -170,6 +170,9 @@ Get ready to challenge your assumptions about what makes good money!`
     newCompleted.add(stepIndex);
     setCompletedSteps(newCompleted);
     
+    // Advance to the next step
+    setCurrentStep(currentStep + 1);
+    
     if (newCompleted.size === steps.length) {
       completeModule('money');
     }
@@ -187,7 +190,10 @@ Get ready to challenge your assumptions about what makes good money!`
             <p className="intro-text">{step.content.text}</p>
             <button 
               className="continue-button"
-              onClick={() => handleStepComplete(index)}
+              onClick={() => {
+                handleStepComplete(index);
+                setCurrentStep(index + 1);
+              }}
             >
               Start Learning
             </button>
@@ -241,7 +247,7 @@ Get ready to challenge your assumptions about what makes good money!`
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          What Makes Good Money?
+          Who made the Rules?
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">
