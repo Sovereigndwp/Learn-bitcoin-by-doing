@@ -15,8 +15,8 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Follow the Money...Before It Defines You",
-        text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.\n\nBut money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something today, or save up for something bigger tomorrow. For that to work, money has to hold its value.\n\nIn this module, we'll:\n- Explore what qualities make good money.\n- Test different things as money.\n- Discover why some money lasts while others fail.\n- See how Bitcoin fits into the story of money.\n\nGet ready to challenge your assumptions about what makes good money!`
+        title: "What Makes Good Money?",
+        text: "Let's play a fun game! 🎮\n\nImagine you're on a desert island with your friends, and you need to create money from scratch. What would you use?\n\n🥥 Coconuts?\n- But what if someone finds a huge coconut tree?\n- Now they're suddenly rich without doing any work!\n\n🐚 Seashells?\n- Beautiful and easy to carry...\n- But what if a ship arrives with tons of shells from another beach?\n\n💎 Rare rocks?\n- Can't make more of them...\n- But they might break, and they're heavy to carry!\n\nThis is the same puzzle people have been solving for thousands of years!\n\nLet's discover together:\n- Why some things work better as money than others\n- What happens when money isn't quite right\n- How Bitcoin solves these ancient problems in a new way\n\nReady to create the perfect money? Let's explore! 🚀"
       }
     },
     {

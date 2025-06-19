@@ -16,7 +16,8 @@ import {
   Flame,
   Star,
   Globe,
-  Home
+  Home,
+  AlertCircle
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';
@@ -79,6 +80,12 @@ const Homepage = () => {
       icon: Shield,
       color: '#F97316',
       path: '/module/custody'
+    },
+    {
+      id: 'myths',
+      icon: AlertCircle,
+      color: '#0EA5E9',
+      path: '/module/myths'
     }
   ];
 

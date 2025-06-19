@@ -16,6 +16,7 @@ import TransactionsModule from './modules/TransactionsModule';
 import ScriptsModule from './modules/ScriptsModule';
 import MerkleModule from './modules/MerkleModule';
 import CustodyModule from './modules/CustodyModule';
+import MythsModule from './modules/MythsModule';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/module/scripts" element={<ModuleLayout><ScriptsModule /></ModuleLayout>} />
               <Route path="/module/merkle" element={<ModuleLayout><MerkleModule /></ModuleLayout>} />
               <Route path="/module/custody" element={<ModuleLayout><CustodyModule /></ModuleLayout>} />
+              <Route path="/module/myths" element={<ModuleLayout><MythsModule /></ModuleLayout>} />
             </Routes>
           </div>
         </Router>

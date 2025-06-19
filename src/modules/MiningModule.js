@@ -17,99 +17,72 @@ const MiningModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Bitcoin Mining & Proof of Work",
-        text: "Mining is how Bitcoin secures its network. Miners compete to find a special number (nonce) that makes a block's hash start with enough zeros. This requires computational work, making it expensive to attack the network but easy to verify valid blocks."
+        title: "The World's Most Expensive Puzzle Game 🎮",
+        text: "Let's play a fun guessing game! 🎲\n\nImagine you and thousands of other players around the world are trying to guess a special number. Here's how it works:\n\n1. Everyone gets the same puzzle:\n   \"Find a number that makes this ➡️ 2947163... start with three zeros\"\n\n2. Players start guessing:\n   - Player 1: \"Is it 12?\" ❌\n   - Player 2: \"Maybe 839?\" ❌\n   - Player 3: \"Let me try 4721...\" ❌\n   \n3. Finally, someone shouts:\n   \"I found it! It's 5829!\" ✨\n   When everyone checks: 5829 + 2947163... = 000748291...\n   They won this round!\n\n🤔 But here's what makes it interesting...\n\nIn Bitcoin:\n- These puzzles happen every 10 minutes\n- Winners get brand new Bitcoin as a reward\n- The more players join, the harder the puzzle gets\n- You need special puzzle-solving computers to compete\n\nWant to know the best part?\nThis 'game' is what keeps Bitcoin safe! 🛡️\n\nLet's discover:\n- Why making it hard to win is actually good\n- How the puzzle difficulty changes automatically\n- What happens when someone wins\n\nReady to try solving some puzzles yourself? Let's play! 🚀"
       }
     },
     {
-      title: "Warm-up: Mining Basics",
+      title: "Warm-up: The Puzzle Game",
       type: "warmup",
       content: {
-        question: "What makes a Bitcoin block hash 'valid' for mining?",
+        question: "You're playing the Bitcoin puzzle game! Which number would win this round? 🎯\n\nPuzzle: \"Find a number that makes 1234... start with two zeros\"\n\nHint: Try these numbers with 1234...\n- 5678 + 1234... = 6912...\n- 9012 + 1234... = 10246...\n- 8766 + 1234... = 009999...",
         options: [
-          "It contains the word 'bitcoin'.", 
-          "It starts with enough zeros (below difficulty target).", 
-          "It's exactly 64 characters long.", 
-          "It ends with the miner's signature."
+          "5678 (because it's smaller)", 
+          "9012 (because it's bigger)", 
+          "8766 (because it makes it start with 00)", 
+          "1234 (because it matches)"
         ],
-        correct: 1,
-        explanation: "A valid hash must be below the difficulty target, which is represented by a hash starting with a certain number of zeros. The more zeros required, the harder it is to find."
+        correct: 2,
+        explanation: "Yes! 8766 wins because when added to 1234..., it creates a number starting with '00'. In Bitcoin mining, we're looking for numbers that create patterns starting with zeros - the more zeros needed, the harder the puzzle! 🎮"
       }
     },
     {
-      title: "Code Lab: Mining Simulator",
-      type: "codelab",
+      title: "Practice: Be a Bitcoin Miner!",
+      type: "interactive",
       content: {
-        title: "Find a Valid Nonce",
-        initialCode: `function findValidNonce(blockHeader, target) {
-  // Try different nonce values until hash is below target
-  // Return {nonce, hash, attempts} when successful
-  // Use hash256() and isValidHash() functions
-  
-  for (let nonce = 0; nonce < 1000000; nonce++) {
-    // Your code here:
-    // 1. Append nonce to blockHeader (as hex)
-    // 2. Hash the result with hash256()
-    // 3. Check if hash is valid with isValidHash()
-    // 4. Return result if valid
-    
-  }
-  
-  return { success: false, attempts: 1000000 };
-}`,
-        testFunction: (userFunc) => {
-          const testHeader = "test_block_header_";
-          const testTarget = "0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
-          
-          const result = userFunc(testHeader, testTarget);
-          
-          if (!result.success) {
-            throw new Error("Function should find a valid nonce within the attempts limit");
+        title: "Your First Mining Adventure 🚀",
+        description: "Let's try mining! You'll compete with other miners to solve puzzles and win Bitcoin. Each puzzle gets harder as more miners join.",
+        challenges: [
+          {
+            title: "🎯 Round 1: Easy Mode",
+            description: "Find a number that makes this start with one zero:\nBase: 7777...",
+            hint: "Try adding different numbers until you see a result starting with 0",
+            target: "0",
+            baseNumber: "7777",
+            successMessage: "You found a winning number! In real Bitcoin mining, you'd win 6.25 BTC for this! 🎉"
+          },
+          {
+            title: "🎯 Round 2: Medium Mode",
+            description: "Now find a number for two zeros:\nBase: 8888...",
+            hint: "This will take more tries - the more zeros needed, the harder it gets!",
+            target: "00",
+            baseNumber: "8888",
+            successMessage: "Amazing! You're getting the hang of mining! 🌟"
+          },
+          {
+            title: "🎯 Round 3: Hard Mode",
+            description: "Final challenge - three zeros:\nBase: 9999...",
+            hint: "This is really tough - just like real Bitcoin mining!",
+            target: "000",
+            baseNumber: "9999",
+            successMessage: "Incredible! You've experienced how Bitcoin mining works! 🏆"
           }
-          
-          if (typeof result.nonce !== 'number' || typeof result.hash !== 'string') {
-            throw new Error("Return object should have 'nonce' (number) and 'hash' (string) properties");
-          }
-          
-          // Verify the result
-          const blockWithNonce = testHeader + result.nonce.toString(16).padStart(8, '0');
-          const verifyHash = hash256(blockWithNonce);
-          
-          if (verifyHash !== result.hash) {
-            throw new Error("Returned hash doesn't match computed hash");
-          }
-          
-          if (!isValidHash(result.hash, testTarget)) {
-            throw new Error("Returned hash is not valid (not below target)");
-          }
-          
-          return `Excellent! Found valid nonce ${result.nonce} in ${result.attempts} attempts. Hash: ${result.hash}`;
-        }
+        ]
       }
     },
     {
-      title: "Challenge: Interactive Mining",
-      type: "challenge",
-      content: {
-        title: "Mine Your Own Block",
-        description: "Try mining with different difficulty levels. Higher difficulty (more zeros) takes exponentially more work!",
-        data: {
-          blockHeader: "00000001deadbeefcafebabe",
-          difficulties: [
-            { name: "Easy", target: "0fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", zeros: 1 },
-            { name: "Medium", target: "00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", zeros: 2 },
-            { name: "Hard", target: "000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", zeros: 3 },
-            { name: "Very Hard", target: "0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", zeros: 4 }
-          ]
-        }
-      }
-    },
-    {
-      title: "Reflection",
+      title: "The Big Picture",
       type: "reflection",
       content: {
-        question: "Why does Bitcoin use proof-of-work mining instead of simpler methods?",
-        placeholder: "Consider how mining creates security, prevents double-spending, and makes the network trustworthy without central authority..."
+        question: "Why do you think Bitcoin makes these puzzles so hard to solve? 🤔",
+        mainPrompt: "Think about what would happen if:\n- The puzzles were too easy?\n- Too many people were winning?\n- Someone tried to cheat?",
+        subQuestions: [
+          "How does making the puzzle hard protect Bitcoin?",
+          "Why give rewards to puzzle solvers?",
+          "What happens when more players join the game?",
+          "How would you explain this to a friend?"
+        ],
+        placeholder: "Share your thoughts about why Bitcoin's 'expensive puzzle game' is actually a brilliant security system! 💭"
       }
     }
   ];
@@ -175,22 +148,12 @@ const MiningModule = () => {
           />
         );
 
-      case 'codelab':
+      case 'interactive':
         return (
-          <CodeEditor
-            title={step.content.title}
-            initialCode={step.content.initialCode}
-            testFunction={step.content.testFunction}
-            onSuccess={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'challenge':
-        return (
-          <MiningChallenge
+          <InteractiveChallenge
             title={step.content.title}
             description={step.content.description}
-            data={step.content.data}
+            challenges={step.content.challenges}
             onComplete={() => handleStepComplete(index)}
           />
         );
@@ -199,6 +162,8 @@ const MiningModule = () => {
         return (
           <ReflectionStep
             question={step.content.question}
+            mainPrompt={step.content.mainPrompt}
+            subQuestions={step.content.subQuestions}
             placeholder={step.content.placeholder}
             onComplete={() => handleStepComplete(index)}
           />
@@ -317,15 +282,15 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   );
 };
 
-// Mining Challenge Component
-const MiningChallenge = ({ title, description, data, onComplete }) => {
-  const [selectedDifficulty, setSelectedDifficulty] = useState(0);
+// Interactive Challenge Component
+const InteractiveChallenge = ({ title, description, challenges, onComplete }) => {
+  const [selectedChallenge, setSelectedChallenge] = useState(0);
   const [miningState, setMiningState] = useState('idle'); // idle, mining, success, failed
   const [miningResults, setMiningResults] = useState(null);
   const [attempts, setAttempts] = useState(0);
   const [startTime, setStartTime] = useState(null);
 
-  const difficulty = data.difficulties[selectedDifficulty];
+  const challenge = challenges[selectedChallenge];
 
   const startMining = () => {
     setMiningState('mining');
@@ -339,9 +304,7 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
 
   const simulateMining = () => {
     let currentAttempts = 0;
-    const maxAttempts = difficulty.zeros === 1 ? 100 : 
-                      difficulty.zeros === 2 ? 1000 : 
-                      difficulty.zeros === 3 ? 10000 : 50000;
+    const maxAttempts = 1000;
                       
     const mineStep = () => {
       if (currentAttempts >= maxAttempts) {
@@ -358,14 +321,12 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
       setAttempts(currentAttempts);
       
       // Check for success based on difficulty
-      const successRate = difficulty.zeros === 1 ? 0.1 : 
-                         difficulty.zeros === 2 ? 0.01 : 
-                         difficulty.zeros === 3 ? 0.001 : 0.0001;
+      const successRate = 0.1;
       
       if (Math.random() < successRate) {
         // Found a valid nonce!
         const nonce = currentAttempts;
-        const blockWithNonce = data.blockHeader + nonce.toString(16).padStart(8, '0');
+        const blockWithNonce = challenge.baseNumber + nonce.toString(16).padStart(8, '0');
         const hash = hash256(blockWithNonce);
         
         setMiningState('success');
@@ -378,7 +339,7 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
         });
         
         // Complete after first successful mine
-        if (selectedDifficulty >= 1) {
+        if (selectedChallenge >= 1) {
           setTimeout(() => onComplete(), 3000);
         }
         return;
@@ -401,17 +362,16 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
       
       <div className="mining-controls">
         <div className="difficulty-selector">
-          <h3>Choose Difficulty:</h3>
+          <h3>Choose Challenge:</h3>
           <div className="difficulty-buttons">
-            {data.difficulties.map((diff, index) => (
+            {challenges.map((challenge, index) => (
               <button
                 key={index}
-                className={`difficulty-button ${selectedDifficulty === index ? 'selected' : ''}`}
-                onClick={() => setSelectedDifficulty(index)}
+                className={`difficulty-button ${selectedChallenge === index ? 'selected' : ''}`}
+                onClick={() => setSelectedChallenge(index)}
                 disabled={miningState === 'mining'}
               >
-                <div className="difficulty-name">{diff.name}</div>
-                <div className="difficulty-zeros">{diff.zeros} zeros</div>
+                <div className="difficulty-name">{challenge.title}</div>
               </button>
             ))}
           </div>
@@ -419,12 +379,12 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
 
         <div className="mining-info">
           <div className="info-item">
-            <strong>Block Header:</strong>
-            <code>{data.blockHeader}</code>
+            <strong>Base Number:</strong>
+            <code>{challenge.baseNumber}</code>
           </div>
           <div className="info-item">
             <strong>Target:</strong>
-            <code>{difficulty.target}</code>
+            <code>{challenge.target}</code>
           </div>
         </div>
 
@@ -485,8 +445,8 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
           </div>
           <p className="results-explanation">
             {miningResults.success 
-              ? `Notice how the hash starts with ${difficulty.zeros} zero${difficulty.zeros > 1 ? 's' : ''} - this proves you did the computational work!`
-              : `Mining is probabilistic. Higher difficulty means exponentially more attempts needed. Try an easier difficulty or try again!`
+              ? `Notice how the hash starts with ${challenge.target.length} zero${challenge.target.length > 1 ? 's' : ''} - this proves you did the computational work!`
+              : `Mining is probabilistic. Higher difficulty means exponentially more attempts needed. Try an easier challenge or try again!`
             }
           </p>
         </div>
@@ -496,7 +456,7 @@ const MiningChallenge = ({ title, description, data, onComplete }) => {
 };
 
 // Reflection Step Component
-const ReflectionStep = ({ question, placeholder, onComplete }) => {
+const ReflectionStep = ({ question, mainPrompt, subQuestions, placeholder, onComplete }) => {
   const [reflection, setReflection] = useState('');
 
   const handleSubmit = () => {

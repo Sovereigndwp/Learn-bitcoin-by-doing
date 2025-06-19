@@ -17,92 +17,93 @@ const KeysModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Bitcoin Keys and Addresses",
-        text: "Bitcoin uses public-key cryptography to prove ownership. Your private key is like a secret password that lets you spend coins. Your public key and address are like your account number that others can send coins to. Never share your private key!"
+        title: "Your Digital Treasure Chest 🗝️",
+        text: "Let's play pretend! 🎭\n\nImagine you have a magical treasure chest that works in a special way:\n\n1. The chest has TWO keys:\n   - A blue key that can only OPEN it (to receive treasure)\n   - A red key that can only EMPTY it (to send treasure)\n\n2. Here's the magic part:\n   - You can make copies of the blue key\n   - Give them to anyone who wants to send you treasure\n   - But keep the red key super secret!\n\n🤔 Think about it:\n- What happens if you share your blue key?\n   Nothing bad! People can only ADD treasure!\n\n- What happens if you share your red key?\n   Uh oh! Someone could take ALL your treasure!\n\nIn Bitcoin:\n- Your 'blue key' is called your Bitcoin address\n  (Share it with anyone who wants to send you Bitcoin!)\n\n- Your 'red key' is called your private key\n  (Never, ever, ever share this with anyone!)\n\nLet's learn:\n- How to create your own keys\n- How to keep your red key safe\n- Cool tricks you can do with these keys\n\nReady to make some magic happen? Let's go! ✨"
       }
     },
     {
-      title: "Warm-up: Key Concepts",
+      title: "Warm-up: Key Safety",
       type: "warmup",
       content: {
-        question: "Which of these should you NEVER share with anyone?",
+        question: "Your friend Alice wants to send you some Bitcoin. Which key should you share with her? 🤔",
         options: [
-          "Your Bitcoin address", 
-          "Your public key", 
-          "Your private key", 
-          "Your transaction ID"
+          "The red key (private key) - it's needed to receive Bitcoin", 
+          "The blue key (Bitcoin address) - it's safe to share", 
+          "Both keys - Alice needs them to send Bitcoin", 
+          "Neither key - Alice can guess your address"
         ],
-        correct: 2,
-        explanation: "Your private key is the secret that controls your coins. Anyone with your private key can spend your Bitcoin. Addresses and public keys are safe to share - that's how people send you coins!"
+        correct: 1,
+        explanation: "Perfect! Just like giving someone your mailbox number to receive mail, sharing your blue key (Bitcoin address) is completely safe. They can only send you Bitcoin, not take any! 📬"
       }
     },
     {
-      title: "Code Lab: Key Generation",
-      type: "codelab",
+      title: "Practice: Key Master Game",
+      type: "interactive",
       content: {
-        title: "Generate a Complete Key Pair",
-        initialCode: `function generateKeyPair() {
-  // Generate private key, derive public key, then create address
-  // Use: generatePrivateKey(), privateKeyToPublicKey(), publicKeyToAddress()
-  // Return an object with all three values
-  
-  // Your code here:
-  
-}`,
-        testFunction: (userFunc) => {
-          const result = userFunc();
-          
-          if (!result || typeof result !== 'object') {
-            throw new Error("Function should return an object");
+        title: "Let's Play with Keys! 🎮",
+        description: "Help these Bitcoin users figure out what to do with their keys!",
+        scenarios: [
+          {
+            title: "🎯 Scenario 1: The Coffee Shop",
+            description: "You want to accept Bitcoin payments at your coffee shop. Which sign should you put on the counter?",
+            options: [
+              {
+                text: "Our Private Key: 5KJ...",
+                feedback: "Oh no! Never share the red key! Someone could steal all your Bitcoin! ❌"
+              },
+              {
+                text: "Our Bitcoin Address: bc1q...",
+                feedback: "Perfect! The blue key is safe to display. Customers can now send you Bitcoin! ✅"
+              }
+            ],
+            correct: 1
+          },
+          {
+            title: "🎯 Scenario 2: The Backup",
+            description: "You want to back up your Bitcoin keys. Which one needs to be kept super safe?",
+            options: [
+              {
+                text: "The blue key (Bitcoin address)",
+                feedback: "The blue key is public anyway - no need for special protection! ❌"
+              },
+              {
+                text: "The red key (private key)",
+                feedback: "Yes! The red key must be kept super safe - maybe write it down and store it securely! ✅"
+              }
+            ],
+            correct: 1
+          },
+          {
+            title: "🎯 Scenario 3: The Website",
+            description: "Your online store needs to receive Bitcoin. What should you put on the checkout page?",
+            options: [
+              {
+                text: "A different blue key (address) for each customer",
+                feedback: "Smart! Using different addresses helps keep track of payments! ✅"
+              },
+              {
+                text: "The same red key (private key) for everyone",
+                feedback: "Never put the red key on a website - it's like leaving your wallet open on the street! ❌"
+              }
+            ],
+            correct: 0
           }
-          
-          if (!result.privateKey || typeof result.privateKey !== 'string') {
-            throw new Error("Result should have a 'privateKey' string property");
-          }
-          
-          if (!result.publicKey || typeof result.publicKey !== 'string') {
-            throw new Error("Result should have a 'publicKey' string property");
-          }
-          
-          if (!result.address || typeof result.address !== 'string') {
-            throw new Error("Result should have an 'address' string property");
-          }
-          
-          // Verify the keys are related
-          const expectedPubKey = privateKeyToPublicKey(result.privateKey);
-          if (result.publicKey !== expectedPubKey) {
-            throw new Error("Public key doesn't match private key");
-          }
-          
-          const expectedAddress = publicKeyToAddress(result.publicKey);
-          if (result.address !== expectedAddress) {
-            throw new Error("Address doesn't match public key");
-          }
-          
-          return `Perfect! Generated a complete key pair:\n• Private: ${result.privateKey.substring(0, 10)}...\n• Public: ${result.publicKey.substring(0, 10)}...\n• Address: ${result.address}`;
-        }
+        ]
       }
     },
     {
-      title: "Challenge: Address Validation",
-      type: "challenge",
-      content: {
-        title: "Create and Verify Addresses",
-        description: "Generate multiple addresses and understand the relationship between private keys, public keys, and addresses. Practice with both mainnet and testnet formats.",
-        data: {
-          networks: [
-            { name: 'Testnet', prefix: 'm', description: 'For testing - fake Bitcoin.' },
-            { name: 'Mainnet', prefix: '1', description: 'Real Bitcoin network.' }
-          ]
-        }
-      }
-    },
-    {
-      title: "Reflection",
+      title: "The Big Picture",
       type: "reflection",
       content: {
-        question: "How do Bitcoin keys enable ownership without a central authority?",
-        placeholder: "Think about how cryptography lets you prove you own coins without needing a bank or government to verify your identity..."
+        question: "Why is it so important to keep your red key (private key) secret? 🤔",
+        mainPrompt: "Think about:\n- What could happen if someone found your red key?\n- Why is the blue key safe to share?\n- How is this different from a bank account?",
+        subQuestions: [
+          "How does having two different keys make Bitcoin special?",
+          "Why is it good that everyone can see the blue key?",
+          "What makes the red key so powerful?",
+          "How would you explain Bitcoin keys to a friend?"
+        ],
+        placeholder: "Share your thoughts about how Bitcoin's two-key system keeps your money safe! 💭"
       }
     }
   ];
@@ -161,22 +162,12 @@ const KeysModule = () => {
           />
         );
 
-      case 'codelab':
+      case 'interactive':
         return (
-          <CodeEditor
-            title={step.content.title}
-            initialCode={step.content.initialCode}
-            testFunction={step.content.testFunction}
-            onSuccess={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'challenge':
-        return (
-          <KeysChallenge
+          <InteractiveScenario
             title={step.content.title}
             description={step.content.description}
-            data={step.content.data}
+            scenarios={step.content.scenarios}
             onComplete={() => handleStepComplete(index)}
           />
         );
@@ -185,6 +176,8 @@ const KeysModule = () => {
         return (
           <ReflectionStep
             question={step.content.question}
+            mainPrompt={step.content.mainPrompt}
+            subQuestions={step.content.subQuestions}
             placeholder={step.content.placeholder}
             onComplete={() => handleStepComplete(index)}
           />
@@ -303,140 +296,74 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   );
 };
 
-// Keys Challenge Component
-const KeysChallenge = ({ title, description, data, onComplete }) => {
-  const [selectedNetwork, setSelectedNetwork] = useState(0);
-  const [generatedKeys, setGeneratedKeys] = useState([]);
-  const [showPrivateKeys, setShowPrivateKeys] = useState(false);
+// Interactive Scenario Component
+const InteractiveScenario = ({ title, description, scenarios, onComplete }) => {
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showResult, setShowResult] = useState(false);
 
-  const network = data.networks[selectedNetwork];
+  const scenario = scenarios[currentScenario];
 
-  const generateNewKey = () => {
-    const privateKey = generatePrivateKey();
-    const publicKey = privateKeyToPublicKey(privateKey);
-    const address = publicKeyToAddress(publicKey, network.name.toLowerCase());
-    
-    const newKey = {
-      id: Date.now(),
-      privateKey,
-      publicKey,
-      address,
-      network: network.name
-    };
-    
-    setGeneratedKeys(prev => [newKey, ...prev.slice(0, 4)]); // Keep last 5
-  };
-
-  const handleComplete = () => {
-    if (generatedKeys.length >= 2) {
-      onComplete();
+  const handleSubmit = () => {
+    setShowResult(true);
+    if (selectedAnswer === scenario.correct) {
+      setTimeout(() => {
+        if (currentScenario < scenarios.length - 1) {
+          setCurrentScenario(prev => prev + 1);
+          setSelectedAnswer(null);
+          setShowResult(false);
+        } else {
+          onComplete();
+        }
+      }, 2000);
     }
   };
 
   return (
-    <div className="step-content challenge-step">
+    <div className="step-content interactive-step">
       <div className="step-icon">
         <Key size={48} />
       </div>
       <h2>{title}</h2>
-      <p className="challenge-description">{description}</p>
+      <p className="scenario-description">{description}</p>
       
-      <div className="keys-controls">
-        <div className="network-selector">
-          <h3>Choose Network:</h3>
-          <div className="network-buttons">
-            {data.networks.map((net, index) => (
+      {currentScenario < scenarios.length && (
+        <div className="scenario-content">
+          <h3>{scenario.title}</h3>
+          <p>{scenario.description}</p>
+          
+          <div className="scenario-options">
+            {scenario.options.map((option, index) => (
               <button
                 key={index}
-                className={`network-button ${selectedNetwork === index ? 'selected' : ''}`}
-                onClick={() => setSelectedNetwork(index)}
+                className={`scenario-option ${selectedAnswer === index ? 'selected' : ''} ${
+                  showResult ? (index === scenario.correct ? 'correct' : selectedAnswer === index ? 'incorrect' : '') : ''
+                }`}
+                onClick={() => !showResult && setSelectedAnswer(index)}
+                disabled={showResult}
               >
-                <div className="network-name">{net.name}</div>
-                <div className="network-prefix">Addresses start with "{net.prefix}"</div>
-                <div className="network-desc">{net.description}</div>
+                {option.text}
               </button>
             ))}
           </div>
-        </div>
 
-        <div className="generation-controls">
-          <button className="generate-button" onClick={generateNewKey}>
-            <Key size={20} />
-            Generate New Key Pair
-          </button>
-          <label className="privacy-toggle">
-            <input
-              type="checkbox"
-              checked={showPrivateKeys}
-              onChange={(e) => setShowPrivateKeys(e.target.checked)}
-            />
-            Show private keys (⚠️ Never do this in real life!)
-          </label>
-        </div>
-      </div>
+          {!showResult && selectedAnswer !== null && (
+            <button 
+              className="submit-button"
+              onClick={handleSubmit}
+            >
+              Submit Answer
+            </button>
+          )}
 
-      {generatedKeys.length > 0 && (
-        <div className="generated-keys">
-          <h3>Generated Key Pairs:</h3>
-          <div className="keys-list">
-            {generatedKeys.map((keyPair, index) => (
-              <div key={keyPair.id} className="key-pair">
-                <div className="key-pair-header">
-                  <span className="key-index">#{index + 1}</span>
-                  <span className="key-network">{keyPair.network}</span>
-                </div>
-                
-                <div className="key-item">
-                  <strong>Address (Safe to share):</strong>
-                  <code className="address-display">{keyPair.address}</code>
-                </div>
-                
-                <div className="key-item">
-                  <strong>Public Key (Safe to share):</strong>
-                  <code className="pubkey-display">
-                    {keyPair.publicKey.substring(0, 20)}...{keyPair.publicKey.substring(-10)}
-                  </code>
-                </div>
-                
-                <div className="key-item private-key">
-                  <strong>Private Key (🔴 NEVER SHARE!):</strong>
-                  <code className="privkey-display">
-                    {showPrivateKeys 
-                      ? keyPair.privateKey 
-                      : '••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••'
-                    }
-                  </code>
-                </div>
-              </div>
-            ))}
-          </div>
+          {showResult && (
+            <div className={`scenario-result ${selectedAnswer === scenario.correct ? 'correct' : 'incorrect'}`}>
+              <p>{selectedAnswer === scenario.correct ? '🔐 Correct!' : '❌ Not quite right.'}</p>
+              <p className="explanation">{scenario.options[selectedAnswer].feedback}</p>
+            </div>
+          )}
         </div>
       )}
-
-      <div className="challenge-info">
-        <div className="info-box">
-          <h4>🔐 Key Security Tips:</h4>
-          <ul>
-            <li>Private keys control your Bitcoin - never share them</li>
-            <li>Addresses are like account numbers - safe to share</li>
-            <li>Each key pair is unique and mathematically related</li>
-            <li>Testnet coins have no value - perfect for learning</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="challenge-actions">
-        <button 
-          className="complete-button"
-          onClick={handleComplete}
-          disabled={generatedKeys.length < 2}
-        >
-          Complete Challenge
-          {generatedKeys.length < 2 && (
-            <span className="requirement"> (Generate at least 2 key pairs)</span>
-          )}
-        </button>
-      </div>
     </div>
   );
 };
