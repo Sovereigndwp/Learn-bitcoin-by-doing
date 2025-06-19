@@ -17,8 +17,8 @@ const NumbersModule = () => {
       title: "Computer Language",
       type: "intro",
       content: {
-        title: "How Computers Talk",
-        text: "Just like we use letters and numbers to communicate, computers have their own special language! 💻\n\nAt their core, computers only understand 0s and 1s (binary). But that would be hard for humans to read! So we have different ways to write these numbers:\n\n- Binary (0s and 1s): 1010\n- Decimal (what we use): 10\n- Hexadecimal (shorter way): A\n\nThink of these as different translations of the same thing - just like how 'hello' in Spanish is 'hola'! 🌎"
+        title: "How Computers Keep Track of Your Bitcoin",
+        text: "Imagine it's May 22, 2010, and Laszlo posts online: \"I'll pay 10,000 BTC for two pizzas\" (worth millions today! 🤯). Someone takes the offer, orders two pizzas for $25, and has them delivered to Laszlo. In return, Laszlo sends them 10,000 Bitcoin. A simple trade! 🍕\n\nBut how does the Bitcoin network record this historic transaction? 🤔\n\nIn the regular financial system:\n- The pizza buyer's $25 payment gets processed by their bank and card network.\n- The pizza place receives their money.\n- Each bank updates their own separate records.\n\nBut Bitcoin is different! Instead of banks, thousands of computers worldwide need to:\n- Verify Laszlo has the 10,000 BTC.\n- Record the transfer to the pizza buyer.\n- Make sure nobody can tamper with this record.\n- Store this forever.\n\nTo do this efficiently, computers don't use regular numbers like we do. They have their own special language:\n\n- Binary (0s and 1s): 1010\n  Like morse code for computers.\n\n- Decimal (what we use): 10\n  What humans prefer.\n\n- Hexadecimal (shorter way): A\n  A shortcut computers love.\n\nThink of these as different ways to write the same thing - just like how one pizza transaction was written as '10,000 BTC' for humans but needed to be translated for computers to understand! 💻\n\nLet's learn how computers read and write these numbers, making millions of Bitcoin transactions possible without any banks! 🌐"
       }
     },
     {
@@ -31,24 +31,24 @@ const NumbersModule = () => {
             title: "Hex Numbers",
             description: "Hex uses 0-9 and A-F. Just like counting, but with 16 symbols instead of 10.",
             examples: [
-              { hex: "A", decimal: 10, explanation: "A means 10" },
-              { hex: "F", decimal: 15, explanation: "F means 15" },
-              { hex: "10", decimal: 16, explanation: "10 means 16 (like going from 9 to 10 in normal counting)" }
+              { hex: "A", decimal: 10, explanation: "A means 10." },
+              { hex: "F", decimal: 15, explanation: "F means 15." },
+              { hex: "10", decimal: 16, explanation: "10 means 16 (like going from 9 to 10 in normal counting)." }
             ]
           },
           {
             title: "Little Endian",
-            description: "Sometimes computers read numbers backwards in pairs - it's just another way to organize information!",
+            description: "Sometimes computers read numbers backwards in pairs - it's just another way to organize information.",
             examples: [
               { 
                 normal: "12", 
                 reversed: "21", 
-                explanation: "Normal: 12 → Flipped: 21" 
+                explanation: "Normal: 12 → Flipped: 21." 
               },
               { 
                 normal: "1234", 
                 reversed: "3412", 
-                explanation: "Normal: 1234 → Flipped: 3412 (pairs are flipped)" 
+                explanation: "Normal: 1234 → Flipped: 3412 (pairs are flipped)." 
               }
             ]
           }
@@ -62,7 +62,7 @@ const NumbersModule = () => {
         question: "What is the decimal value of hex 'FF'?",
         options: ["255", "256", "15", "16"],
         correct: 0,
-        explanation: "FF in hex = (15 × 16¹) + (15 × 16⁰) = 240 + 15 = 255"
+        explanation: "FF in hex = (15 × 16¹) + (15 × 16⁰) = 240 + 15 = 255."
       }
     },
     {
@@ -76,21 +76,21 @@ const NumbersModule = () => {
             title: "🎯 Challenge 1: Block Version",
             description: "Bitcoin blocks have a version number. Convert this hex version number:",
             hex: "01",
-            hint: "Remember: 01 is just like regular number 1",
+            hint: "Remember: 01 is just like regular number 1.",
             expected: 1
           },
           {
             title: "🎯 Challenge 2: Transaction Fee",
             description: "This transaction paid this fee (in hex):",
             hex: "2A",
-            hint: "2A = (2 × 16) + (A=10)",
+            hint: "2A = (2 × 16) + (A=10).",
             expected: 42
           },
           {
             title: "🎯 Challenge 3: Block Reward",
             description: "Early Bitcoin blocks had this reward (in hex):",
             hex: "FF",
-            hint: "FF = (F=15 × 16) + (F=15)",
+            hint: "FF = (F=15 × 16) + (F=15).",
             expected: 255
           }
         ]
@@ -101,7 +101,7 @@ const NumbersModule = () => {
       type: "intro",
       content: {
         title: "How Computers Protect Information",
-        text: "Let's explore how computers transform and secure information. 🔒\n\nComputers write information in different ways:\n\n1. Binary (computer's native language)\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (shorter way to write binary)\n   01001000 01101001 → 4869\n\nUsing these number systems, computers can transform messages into secure patterns that can't be reversed. For example:\n\n'I love you'\n→ Binary: 01001001 01101100 01101111 01110110 01100101\n→ Secure Pattern: 8f93f6f05c9ac2d2937fb25ad5fce374\n\nThis transformation has three key properties:\n\n1. Same Message = Same Pattern\n   Type 'I love you' a hundred times, get '8f93f6f...' every time\n\n2. Tiny Change = New Pattern\n   'I love you!' → 'd2e12af...' (completely different!)\n\n3. One-Way Only\n   You can make the pattern, but can't reverse it\n\nReal-World Uses:\n- Password verification (store only the pattern)\n- Digital signatures (prove it's really you)\n- Bitcoin transactions (secure billions in value)\n\nNext, we'll practice reading and writing these hexadecimal numbers! 💫"
+        text: "Let's explore how computers transform and secure information. 🔒\n\nComputers write information in different ways:\n\n1. Binary (computer's native language):\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (shorter way to write binary):\n   01001000 01101001 → 4869\n\nUsing these number systems, computers can transform messages into secure patterns that can't be reversed. For example:\n\n'I love you'\n→ Binary: 01001001 01101100 01101111 01110110 01100101\n→ Secure Pattern: 8f93f6f05c9ac2d2937fb25ad5fce374\n\nThis transformation has three key properties:\n\n1. Same Message = Same Pattern:\n   Type 'I love you' a hundred times, get '8f93f6f...' every time.\n\n2. Tiny Change = New Pattern:\n   'I love you!' → 'd2e12af...' (completely different!).\n\n3. One-Way Only:\n   You can make the pattern, but can't reverse it.\n\nReal-World Uses:\n- Password verification (store only the pattern).\n- Digital signatures (prove it's really you).\n- Bitcoin transactions (secure billions in value).\n\nNext, we'll practice reading and writing these hexadecimal numbers! 💫"
       }
     },
     {

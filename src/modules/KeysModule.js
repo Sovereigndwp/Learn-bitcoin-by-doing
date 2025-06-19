@@ -91,8 +91,8 @@ const KeysModule = () => {
         description: "Generate multiple addresses and understand the relationship between private keys, public keys, and addresses. Practice with both mainnet and testnet formats.",
         data: {
           networks: [
-            { name: 'Testnet', prefix: 'm', description: 'For testing - fake Bitcoin' },
-            { name: 'Mainnet', prefix: '1', description: 'Real Bitcoin network' }
+            { name: 'Testnet', prefix: 'm', description: 'For testing - fake Bitcoin.' },
+            { name: 'Mainnet', prefix: '1', description: 'Real Bitcoin network.' }
           ]
         }
       }

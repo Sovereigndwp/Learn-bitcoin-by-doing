@@ -190,10 +190,10 @@ const HashingModule = () => {
       content: {
         question: "What happens when you change just one character in a message before creating its fingerprint?",
         options: [
-          "The fingerprint changes slightly", 
-          "The fingerprint changes completely", 
-          "The fingerprint stays the same", 
-          "Only some parts change"
+          "The fingerprint changes slightly.", 
+          "The fingerprint changes completely.", 
+          "The fingerprint stays the same.", 
+          "Only some parts change."
         ],
         correct: 1,
         explanation: "Even a tiny change creates a completely different fingerprint! This is crucial for Bitcoin's security - it means you can't make even the smallest change without everyone noticing."
@@ -204,7 +204,7 @@ const HashingModule = () => {
       type: "intro",
       content: {
         title: "From Messages to Blocks",
-        text: "In Bitcoin, SHA-256 is used to create unique fingerprints of blocks of information. Each block contains:\n\n- Transaction details (who sent what to whom)\n- A link to the previous block's fingerprint\n- Some special numbers the miners use\n\nAll this information gets blended together to create the block's unique fingerprint. Let's see how it works! 🧱"
+        text: "In Bitcoin, SHA-256 is used to create unique fingerprints of blocks of information. Each block contains:\n\n- Transaction details (who sent what to whom).\n- A link to the previous block's fingerprint.\n- Some special numbers the miners use.\n\nAll this information gets blended together to create the block's unique fingerprint. Let's see how it works! 🧱"
       }
     },
     {

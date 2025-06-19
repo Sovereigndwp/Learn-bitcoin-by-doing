@@ -27,10 +27,10 @@ const MiningModule = () => {
       content: {
         question: "What makes a Bitcoin block hash 'valid' for mining?",
         options: [
-          "It contains the word 'bitcoin'", 
-          "It starts with enough zeros (below difficulty target)", 
-          "It's exactly 64 characters long", 
-          "It ends with the miner's signature"
+          "It contains the word 'bitcoin'.", 
+          "It starts with enough zeros (below difficulty target).", 
+          "It's exactly 64 characters long.", 
+          "It ends with the miner's signature."
         ],
         correct: 1,
         explanation: "A valid hash must be below the difficulty target, which is represented by a hash starting with a certain number of zeros. The more zeros required, the harder it is to find."
