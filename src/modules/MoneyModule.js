@@ -16,17 +16,7 @@ const MoneyModule = () => {
       type: "intro",
       content: {
         title: "Follow the Money...Before It Defines You",
-        text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.
-
-But money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something today, or save up for something bigger tomorrow. For that to work, money has to hold its value.
-
-In this module, we'll:
-    - Explore what qualities make good money
-    - Test different things as money
-    - Discover why some money lasts while others fail
-    - See how Bitcoin fits into the story of money
-
-Get ready to challenge your assumptions about what makes good money!`
+        text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.\n\nBut money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something today, or save up for something bigger tomorrow. For that to work, money has to hold its value.\n\nIn this module, we'll:\n- Explore what qualities make good money.\n- Test different things as money.\n- Discover why some money lasts while others fail.\n- See how Bitcoin fits into the story of money.\n\nGet ready to challenge your assumptions about what makes good money!`
       }
     },
     {
@@ -39,9 +29,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "In ancient Pacific islands, communities used rare seashells as money. When European traders arrived with ships full of shells from other oceans, they were able to buy most of the islands' valuable goods with what felt like 'monopoly money' to them. What does this teach us about money?",
             choices: [
-              "Trade increased because there was more money",
-              "The money system failed because shells lost their natural scarcity",
-              "The islanders should have used different shells"
+              "Trade increased because there was more money.",
+              "The money system failed because shells lost their natural scarcity.",
+              "The islanders should have used different shells."
             ],
             correct: 1,
             explanation: "When Europeans could easily collect shells from other places, they essentially got 'free money' to buy valuable island goods. This shows why money needs natural scarcity - if someone can easily create more of it, they can take real value from others without giving value in return."
@@ -49,9 +39,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "The Yap islands used massive stone wheels called 'Rai stones' as money. Even when a stone was lost at sea, everyone kept track of who owned it through community memory. What key lesson about money does this reveal?",
             choices: [
-              "Money needs to be physically present to work",
-              "Money is really about community agreement on ownership",
-              "Lost money should still count as money"
+              "Money needs to be physically present to work.",
+              "Money is really about community agreement on ownership.",
+              "Lost money should still count as money."
             ],
             correct: 1,
             explanation: "The Rai stones show that money is really about trusted record-keeping. The stones didn't move physically, but ownership changed through community consensus - similar to how Bitcoin's ledger works today."
@@ -59,9 +49,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "Gold has been used as money for over 5,000 years across different civilizations that had no contact with each other. Why did such different cultures independently choose gold?",
             choices: [
-              "Because it's naturally scarce, durable, and universal",
-              "Because governments forced people to use it",
-              "Because it was the prettiest metal available"
+              "Because it's naturally scarce, durable, and universal.",
+              "Because governments forced people to use it.",
+              "Because it was the prettiest metal available."
             ],
             correct: 0,
             explanation: "Gold emerged naturally as money across civilizations because it has properties that make it ideal: it's scarce (can't be easily mined), durable (doesn't rust), divisible (can be split), and universal (same everywhere). These are the same properties we need in modern money."
@@ -69,9 +59,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "In 1923 Germany, people had to spend their money immediately because prices doubled every few days. Workers were paid twice a day and rushed to buy bread before prices rose again. What does this teach us about money's role as a store of value?",
             choices: [
-              "Quick spending stimulates the economy",
-              "Money fails when it can't hold value over time",
-              "Prices should be flexible to help commerce"
+              "Quick spending stimulates the economy.",
+              "Money fails when it can't hold value over time.",
+              "Prices should be flexible to help commerce."
             ],
             correct: 1,
             explanation: "The German hyperinflation shows that money must be a reliable store of value. When money loses value too quickly, it fails at its core purpose - helping people trade and save across time. This is why inflationary money eventually breaks society's trust."
@@ -79,9 +69,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "In 2020, Canadian truckers protesting COVID policies had their bank accounts frozen. If they had used a decentralized currency like Bitcoin instead, what would have been different?",
             choices: [
-              "Nothing - all money can be controlled",
-              "Their money would have remained accessible",
-              "The protest would have been illegal"
+              "Nothing - all money can be controlled.",
+              "Their money would have remained accessible.",
+              "The protest would have been illegal."
             ],
             correct: 1,
             explanation: "This recent event shows why decentralization matters. When money is controlled by central authorities, it can be used as a tool of control. True money should work regardless of whether someone approves of how you're using it."
@@ -89,9 +79,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "The Roman Empire gradually made their coins worse by mixing cheap metals into the silver, and people even shaved off the edges of gold coins to make more coins. How did this affect people's trust in the money?",
             choices: [
-              "People didn't notice because the coins looked similar",
-              "It helped create more money for trade",
-              "People lost trust because the money was being secretly weakened"
+              "People didn't notice because the coins looked similar.",
+              "It helped create more money for trade.",
+              "People lost trust because the money was being secretly weakened."
             ],
             correct: 2,
             explanation: "When authorities secretly reduce money's quality (like mixing cheap metals into silver or shaving gold), it's a form of theft. People eventually realize their money is being weakened, and they lose trust in the entire system. Good money needs to be consistent and honest."
@@ -99,9 +89,9 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             prompt: "Bitcoin is the first money in history that can be sent instantly worldwide while being impossible to counterfeit or confiscate. How does this change what's possible with money?",
             choices: [
-              "It combines gold's scarcity with digital convenience",
-              "It's just another payment app like PayPal",
-              "It's only useful for small transactions"
+              "It combines gold's scarcity with digital convenience.",
+              "It's just another payment app like PayPal.",
+              "It's only useful for small transactions."
             ],
             correct: 0,
             explanation: "Bitcoin represents a breakthrough in monetary technology - it combines the scarcity of gold with the convenience of digital transfer, while adding new properties like mathematical certainty and resistance to confiscation. This makes it uniquely suited for an interconnected digital world."
@@ -114,7 +104,7 @@ Get ready to challenge your assumptions about what makes good money!`
       type: "transition",
       content: {
         title: "The Evolution of Money",
-        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans\n- Gold was sound but too heavy to move and easy to confiscate\n- Paper money started as gold receipts but became unlimited printing\n- Digital banking brought convenience but with surveillance and control\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat)\n- Too hard to move (gold, large stones)\n- Too easy to control (digital banking)\n- Too easy to confiscate (gold, cash)\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
+        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans.\n- Gold was sound but too heavy to move and easy to confiscate.\n- Paper money started as gold receipts but became unlimited printing.\n- Digital banking brought convenience but with surveillance and control.\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat).\n- Too hard to move (gold, large stones).\n- Too easy to control (digital banking).\n- Too easy to confiscate (gold, cash).\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
       }
     },
     {
@@ -127,44 +117,44 @@ Get ready to challenge your assumptions about what makes good money!`
           {
             icon: Scale,
             title: "Scarce & Disinflationary",
-            description: "Supply is limited and growth rate decreases over time",
-            example: "Bitcoin's supply becomes harder to create every 4 years, unlike fiat money which increases unpredictably"
+            description: "Supply is limited and growth rate decreases over time.",
+            example: "Bitcoin's supply becomes harder to create every 4 years, unlike fiat money which increases unpredictably."
           },
           {
             icon: Zap,
             title: "Portable, Divisible & Uniform",
-            description: "Easy to move, split into smaller units, and each piece is identical",
-            example: "Bitcoin can be split into 100 million pieces called 'sats' (short for satoshis). Just like every dollar is worth the same as any other dollar, every sat is identical. You can send any amount, from 1 sat (0.00000001 BTC) to millions of bitcoin, anywhere in the world"
+            description: "Easy to move, split into smaller units, and each piece is identical.",
+            example: "Bitcoin can be split into 100 million pieces called 'sats' (short for satoshis). Just like every dollar is worth the same as any other dollar, every sat is identical. You can send any amount, from 1 sat (0.00000001 BTC) to millions of bitcoin, anywhere in the world."
           },
           {
             icon: Clock,
             title: "Durable",
-            description: "Maintains its integrity over time without degrading or corrupting",
-            example: "Unlike physical money that wears out, Bitcoin's digital records are permanent and can be verified by anyone. Every transaction since 2009 is still perfectly intact and readable today"
+            description: "Maintains its integrity over time without degrading or corrupting.",
+            example: "Unlike physical money that wears out, Bitcoin's digital records are permanent and can be verified by anyone. Every transaction since 2009 is still perfectly intact and readable today."
           },
           {
             icon: Globe,
             title: "Open & Accessible",
-            description: "Anyone can use it without permission or approval - rich or poor have equal rights",
-            example: "Bitcoin treats everyone equally - no bank approvals, no minimum balances, no discrimination. A farmer in Africa has the same rights as a banker in New York"
+            description: "Anyone can use it without permission or approval - rich or poor have equal rights.",
+            example: "Bitcoin treats everyone equally - no bank approvals, no minimum balances, no discrimination. A farmer in Africa has the same rights as a banker in New York."
           },
           {
             icon: Lock,
             title: "Unconfiscatable & Borderless",
-            description: "Your money remains yours no matter where you go",
-            example: "Cross any border, travel anywhere in the world, and your bitcoin stays with you - no government or bank can freeze or seize it. Access your money from any country, anytime"
+            description: "Your money remains yours no matter where you go.",
+            example: "Cross any border, travel anywhere in the world, and your bitcoin stays with you - no government or bank can freeze or seize it. Access your money from any country, anytime."
           },
           {
             icon: Scale,
             title: "Rules, Not Rulers",
-            description: "Governed by transparent code, not human decisions",
-            example: "Bitcoin's rules are fixed and equal for everyone - no special privileges"
+            description: "Governed by transparent code, not human decisions.",
+            example: "Bitcoin's rules are fixed and equal for everyone - no special privileges."
           },
           {
             icon: Globe,
             title: "Decentralized & Secure",
-            description: "Information about who owns what is stored on thousands of computers, not just one bank's database",
-            example: "Traditional banks keep everyone's money info in one place - one mistake or hack can affect millions. Bitcoin is different: imagine a global notebook with thousands of exact copies - no single point of failure, no accidental deletions, no central computer to hack"
+            description: "Information about who owns what is stored on thousands of computers, not just one bank's database.",
+            example: "Traditional banks keep everyone's money info in one place - one mistake or hack can affect millions. Bitcoin is different: imagine a global notebook with thousands of exact copies - no single point of failure, no accidental deletions, no central computer to hack."
           }
         ]
       }
@@ -172,19 +162,31 @@ Get ready to challenge your assumptions about what makes good money!`
   ];
 
   const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
-    
-    // Advance to the next step
-    setCurrentStep(currentStep + 1);
-    
-    if (newCompleted.size === steps.length) {
-      completeModule('money');
+    try {
+      const newCompleted = new Set(completedSteps);
+      newCompleted.add(stepIndex);
+      setCompletedSteps(newCompleted);
+      
+      // Only advance to next step if there is one
+      if (stepIndex < steps.length - 1) {
+        setCurrentStep(stepIndex + 1);
+      }
+      
+      // Check if all steps are completed
+      if (newCompleted.size === steps.length) {
+        completeModule('money');
+      }
+    } catch (error) {
+      console.error('Error in handleStepComplete:', error);
     }
   };
 
   const renderStep = (step, index) => {
+    if (!step || !step.type) {
+      console.error('Invalid step data:', step);
+      return null;
+    }
+
     switch (step.type) {
       case 'intro':
         return (
@@ -196,10 +198,7 @@ Get ready to challenge your assumptions about what makes good money!`
             <p className="intro-text">{step.content.text}</p>
             <button 
               className="continue-button"
-              onClick={() => {
-                handleStepComplete(index);
-                setCurrentStep(index + 1);
-              }}
+              onClick={() => handleStepComplete(index)}
             >
               Start Learning
             </button>
@@ -244,6 +243,7 @@ Get ready to challenge your assumptions about what makes good money!`
         );
 
       default:
+        console.error('Unknown step type:', step.type);
         return <div>Unknown step type</div>;
     }
   };
@@ -304,6 +304,7 @@ const MoneyQuiz = ({ title, description, questions, onComplete }) => {
   const [showExplanation, setShowExplanation] = useState(false);
 
   const handleAnswer = (answer) => {
+    if (showExplanation) return; // Prevent multiple answers
     setAnswers({ ...answers, [currentQuestion]: answer });
     setShowExplanation(true);
   };
@@ -313,11 +314,15 @@ const MoneyQuiz = ({ title, description, questions, onComplete }) => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      onComplete();
+      // Only complete if all questions have been answered
+      if (Object.keys(answers).length === questions.length) {
+        onComplete();
+      }
     }
   };
 
   const question = questions[currentQuestion];
+  if (!question) return null;
 
   return (
     <div className="quiz-container">
