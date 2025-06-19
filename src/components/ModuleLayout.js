@@ -24,7 +24,10 @@ const ModuleLayout = ({ children }) => {
           
           <div className="logo">
             <span className="bitcoin-symbol">₿</span>
-            <span className="logo-text">BitcoinLearn</span>
+            <div className="logo-container">
+              <span className="logo-text">Bitcoin, Straight Up</span>
+              <span className="author-text">@Dalia</span>
+            </div>
           </div>
           
           <button className="language-toggle" onClick={toggleLanguage}>
