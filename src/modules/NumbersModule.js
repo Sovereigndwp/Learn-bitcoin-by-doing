@@ -14,11 +14,19 @@ const NumbersModule = () => {
 
   const steps = [
     {
+      title: "The $600M Pizza 🍕",
+      type: "intro",
+      content: {
+        title: "The Most Expensive Pizza Ever!",
+        text: "May 22, 2010: A programmer named Laszlo was hungry and posted online:\n\"I'll pay 10,000 Bitcoin for two pizzas.\" 🤔\n\nSomeone took the offer:\n- Ordered two pizzas for $40.\n- Delivered them to Laszlo.\n- Received 10,000 Bitcoin in return.\n\nToday, those Bitcoin would be worth hundreds of millions! But this simple pizza purchase made history—it was one of the first real-world Bitcoin transactions.\n\nLet's see how this transaction worked:\n\n📱 Regular Pizza Order (Traditional Banking):\n1. You pay with your credit card ($40).\n2. Your bank checks if you have $40.\n3. Bank sends money to pizza place.\n4. Only the banks see and record this.\n\n₿ Laszlo's Bitcoin Pizza Order:\n1. Laszlo sends 10,000 BTC.\n2. No banks involved!\n3. Everyone can see the transaction.\n4. Thousands of computers worldwide verify it.\n5. The record is permanent and can't be changed.\n\nThis brings us to a fascinating question: How do thousands of computers worldwide keep track of Bitcoin transactions without any banks? 🤔\n\nClick 'Continue' to discover how computers speak their own special language to make this possible! 💫"
+      }
+    },
+    {
       title: "Computer Language",
       type: "intro",
       content: {
-        title: "How Computers Keep Track of Your Bitcoin",
-        text: "Imagine it's May 22, 2010, and Laszlo posts online: \"I'll pay 10,000 BTC for two pizzas\" (worth millions today! 🤯). Someone takes the offer, orders two pizzas for $25, and has them delivered to Laszlo. In return, Laszlo sends them 10,000 Bitcoin. A simple trade! 🍕\n\nBut how does the Bitcoin network record this historic transaction? 🤔\n\nIn the regular financial system:\n- The pizza buyer's $25 payment gets processed by their bank and card network.\n- The pizza place receives their money.\n- Each bank updates their own separate records.\n\nBut Bitcoin is different! Instead of banks, thousands of computers worldwide need to:\n- Verify Laszlo has the 10,000 BTC.\n- Record the transfer to the pizza buyer.\n- Make sure nobody can tamper with this record.\n- Store this forever.\n\nTo do this efficiently, computers don't use regular numbers like we do. They have their own special language:\n\n- Binary (0s and 1s): 1010\n  Like morse code for computers.\n\n- Decimal (what we use): 10\n  What humans prefer.\n\n- Hexadecimal (shorter way): A\n  A shortcut computers love.\n\nThink of these as different ways to write the same thing - just like how one pizza transaction was written as '10,000 BTC' for humans but needed to be translated for computers to understand! 💻\n\nLet's learn how computers read and write these numbers, making millions of Bitcoin transactions possible without any banks! 🌐"
+        title: "How Do Computers Track Bitcoin?",
+        text: "Remember Laszlo's 10,000 BTC pizza transaction? While we see it as \"10,000 Bitcoin,\" computers need their own special way to record this! 🔢\n\nComputers are like international accountants that:\n- Need to speak the same language.\n- Must be extremely precise.\n- Can't make any mistakes.\n\nTo do this, they use three different number systems:\n\n1. Binary (0s and 1s): 1010\n   This is the computer's native language—like their alphabet.\n   Example: Just like we write 'A B C', computers write '0 1 0 1'.\n\n2. Decimal (0-9): 10\n   This is what we use daily for counting and money.\n   Example: Your $10 coffee. ☕\n\n3. Hexadecimal (0-9, A-F): A\n   This is a shorter way to write binary numbers.\n   Example: Instead of writing '1010', we can write 'A'.\n\nWhy These Different Systems? 🤔\n- Computers need binary (it's their language).\n- Humans like decimal (it's easier for us).\n- Hex makes long computer numbers shorter to write.\n\nThink of it like translation:\n- When Laszlo sent 10,000 Bitcoin, he saw '10000 BTC'.\n- The computers saw '0000000000002710' in binary.\n- Using hex, it's written as '2710'—much shorter!\n\nReady to learn how to read and write these different number systems? It's like learning the secret language of Bitcoin! 🌐"
       }
     },
     {
@@ -29,26 +37,26 @@ const NumbersModule = () => {
         sections: [
           {
             title: "Hex Numbers",
-            description: "Hex uses 0-9 and A-F. Just like counting, but with 16 symbols instead of 10.",
+            description: "Hex (short for hexadecimal) is like a secret code that uses 16 different symbols: the numbers 0-9 and letters A-F. It's a shorter way to write the long numbers that computers use.",
             examples: [
-              { hex: "A", decimal: 10, explanation: "A means 10." },
-              { hex: "F", decimal: 15, explanation: "F means 15." },
-              { hex: "10", decimal: 16, explanation: "10 means 16 (like going from 9 to 10 in normal counting)." }
+              { hex: "A", decimal: 10, explanation: "When you see 'A' in hex, it means '10' in regular numbers." },
+              { hex: "F", decimal: 15, explanation: "The letter 'F' is the highest digit in hex, meaning '15'." },
+              { hex: "10", decimal: 16, explanation: "Just like we write '10' when we run out of single digits, hex uses '10' to mean '16'." }
             ]
           },
           {
             title: "Little Endian",
-            description: "Sometimes computers read numbers backwards in pairs - it's just another way to organize information.",
+            description: "Sometimes computers read numbers backwards in pairs - like reading 'desserts' as 'stressed'. It might seem strange, but it helps computers work faster with these numbers.",
             examples: [
               { 
                 normal: "12", 
                 reversed: "21", 
-                explanation: "Normal: 12 → Flipped: 21." 
+                explanation: "Think of it like flipping a two-digit number: 12 becomes 21." 
               },
               { 
                 normal: "1234", 
                 reversed: "3412", 
-                explanation: "Normal: 1234 → Flipped: 3412 (pairs are flipped)." 
+                explanation: "With more digits, we flip them in pairs: '12 34' becomes '34 12'." 
               }
             ]
           }
@@ -70,27 +78,27 @@ const NumbersModule = () => {
       type: "practice",
       content: {
         title: "Your Turn: Convert These Numbers!",
-        description: "Let's practice converting some real Bitcoin numbers. Try these challenges:",
+        description: "Let's practice converting real Bitcoin numbers:",
         challenges: [
           {
             title: "🎯 Challenge 1: Block Version",
-            description: "Bitcoin blocks have a version number. Convert this hex version number:",
+            description: "Convert this block version number from hex:",
             hex: "01",
-            hint: "Remember: 01 is just like regular number 1.",
+            hint: "Remember: 01 in hex equals 1 in decimal.",
             expected: 1
           },
           {
             title: "🎯 Challenge 2: Transaction Fee",
-            description: "This transaction paid this fee (in hex):",
+            description: "Convert this transaction fee from hex:",
             hex: "2A",
-            hint: "2A = (2 × 16) + (A=10).",
+            hint: "2A = (2 × 16) + (10).",
             expected: 42
           },
           {
             title: "🎯 Challenge 3: Block Reward",
-            description: "Early Bitcoin blocks had this reward (in hex):",
+            description: "Convert this early block reward from hex:",
             hex: "FF",
-            hint: "FF = (F=15 × 16) + (F=15).",
+            hint: "FF = (15 × 16) + 15.",
             expected: 255
           }
         ]
@@ -101,22 +109,22 @@ const NumbersModule = () => {
       type: "intro",
       content: {
         title: "How Computers Protect Information",
-        text: "Let's explore how computers transform and secure information. 🔒\n\nComputers write information in different ways:\n\n1. Binary (computer's native language):\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (shorter way to write binary):\n   01001000 01101001 → 4869\n\nUsing these number systems, computers can transform messages into secure patterns that can't be reversed. For example:\n\n'I love you'\n→ Binary: 01001001 01101100 01101111 01110110 01100101\n→ Secure Pattern: 8f93f6f05c9ac2d2937fb25ad5fce374\n\nThis transformation has three key properties:\n\n1. Same Message = Same Pattern:\n   Type 'I love you' a hundred times, get '8f93f6f...' every time.\n\n2. Tiny Change = New Pattern:\n   'I love you!' → 'd2e12af...' (completely different!).\n\n3. One-Way Only:\n   You can make the pattern, but can't reverse it.\n\nReal-World Uses:\n- Password verification (store only the pattern).\n- Digital signatures (prove it's really you).\n- Bitcoin transactions (secure billions in value).\n\nNext, we'll practice reading and writing these hexadecimal numbers! 💫"
+        text: "Let's explore how computers secure information 🔒\n\nComputers write data in different formats:\n\n1. Binary (native language):\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (compact format):\n   01001000 01101001 → 4869\n\nUsing these formats, computers create secure patterns that can't be reversed:\n\n'Hello Bitcoin'\n→ Binary: 01001000 01100101 01101100...\n→ Secure Pattern: 9595c9bca95d...\n\nThis process has three key features:\n\n1. Consistency:\n   Same input = Same pattern, always.\n\n2. Sensitivity:\n   Tiny change = Completely different pattern.\n\n3. One-Way:\n   Can't reverse the pattern back to the original.\n\nReal-World Uses:\n- Password security\n- Digital signatures\n- Bitcoin transactions\n\nNext, we'll practice working with these number systems! 💫"
       }
     },
     {
       title: "Reflection: Bitcoin's Time-Stamped History Book",
       type: "reflection",
       content: {
-        question: "If you had to keep track of every page in a giant history book, how would you label them so a computer could quickly find any story from the past? 📚",
-        mainPrompt: "Imagine Bitcoin like a giant time-stamped notebook of transactions. Each page in this notebook has a unique label, not with words but with numbers written in hex, like '000000000000039458fa2...'. And here's the twist: sometimes these numbers are stored backwards! 🔄",
+        question: "How would you organize a giant digital history book so computers can quickly find any past transaction? 📚",
+        mainPrompt: "Bitcoin works like a time-stamped ledger where each page has a unique hex number label (like '000000000003ba27...'). Sometimes these numbers are stored backwards for efficiency! 🔄",
         subQuestions: [
-          "What do you find weird about this system?",
-          "What seems clever about it?",
-          "What's still confusing to you?",
-          "If you were explaining this to a friend, what everyday example would you use to help them understand?"
+          "What's unusual about this numbering system?",
+          "What makes it clever?",
+          "What aspects still puzzle you?",
+          "How would you explain this system to a friend?"
         ],
-        placeholder: "Share your thoughts about this unusual numbering system. Maybe it reminds you of something else you've seen? Or maybe you have questions about why it works this way? There's no wrong answer - just share what stands out to you about Bitcoin's way of organizing its giant history book..."
+        placeholder: "Share your thoughts about Bitcoin's unique way of organizing its transaction history. Does it remind you of other systems you know? What questions do you have about how it works?"
       }
     }
   ];
