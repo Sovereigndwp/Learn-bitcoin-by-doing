@@ -15,7 +15,7 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Who made the Rules?",
+        title: "Follow the Money...Before It Defines You",
         text: `Money is something we use every day, but have you ever wondered why we use certain things as money and not others? 💭 Imagine trying to buy coffee with mangoes, or pay rent with seashells! Some things work better as money than others.
 
 But money isn't just for spending now — it's also how we store the value of our work. 💪 Imagine working all day and getting paid — you might want to buy something today, or save up for something bigger tomorrow. For that to work, money has to hold its value.
@@ -253,7 +253,7 @@ Get ready to challenge your assumptions about what makes good money!`
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          Who made the Rules?
+          Follow the Money...Before It Defines You
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">

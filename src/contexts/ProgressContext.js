@@ -14,7 +14,7 @@ export const useProgress = () => {
 const MODULES = [
   {
     id: 'money',
-    title: 'What Makes Good Money?',
+    title: 'Follow the Money...Before It Defines You',
     description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.'
   },
   {
