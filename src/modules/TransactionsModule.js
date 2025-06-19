@@ -8,40 +8,40 @@ const TransactionsModule = () => {
 
   const transactionSteps = [
     {
-      id: 'inputs',
-      title: 'Gathering Your Coins',
+      id: 'receiving',
+      title: 'Receiving Bitcoin',
       icon: <Wallet size={24} />,
-      description: 'Just like gathering coins from your piggy bank before buying something!',
+      description: 'Learn how to safely receive bitcoin from others',
       interactive: {
-        scenario: 'You have 3 previous transactions that sent you Bitcoin:',
+        scenario: 'Someone wants to send you bitcoin. Let\'s learn the right way to receive it:',
         details: [
-          '0.5 BTC from your friend Alice',
-          '0.3 BTC from selling your old laptop',
-          '0.2 BTC from your birthday gift'
+          'Generate a new receiving address (never reuse old ones)',
+          'Understand different address formats (Legacy, SegWit, Native SegWit)',
+          'Learn when the payment is considered "confirmed"'
         ],
-        task: 'Select which "coins" you want to spend in your new transaction'
+        task: 'Practice generating and verifying receiving addresses'
       }
     },
     {
-      id: 'outputs',
-      title: 'Planning Your Spending',
+      id: 'sending',
+      title: 'Sending Bitcoin',
       icon: <Send size={24} />,
-      description: 'Deciding who gets what, like dividing pizza slices among friends',
+      description: 'Master the art of sending bitcoin safely and efficiently',
       interactive: {
-        scenario: 'You want to:',
+        scenario: 'You want to send bitcoin to someone. Let\'s do it right:',
         details: [
-          'Send 0.7 BTC to an online store',
-          'Get 0.2 BTC back as change',
-          'Leave a small tip for miners (fee)'
+          'Verify the recipient\'s address format and validity',
+          'Choose between different sending options (urgent vs. cost-saving)',
+          'Understand transaction confirmation times'
         ],
-        task: 'Arrange your transaction outputs to match your spending plan'
+        task: 'Practice sending bitcoin with different priority levels'
       }
     },
     {
       id: 'fees',
-      title: 'Tipping the Network',
+      title: 'Understanding Fees',
       icon: <DollarSign size={24} />,
-      description: 'Like tipping for faster service at a restaurant',
+      description: 'Learn how to choose the right fee for your needs',
       interactive: {
         scenario: 'Current network conditions:',
         details: [
@@ -49,22 +49,22 @@ const TransactionsModule = () => {
           'Medium priority: 5 sat/byte (≈30 minutes)',
           'High priority: 10 sat/byte (next block)'
         ],
-        task: 'Choose your fee based on how quickly you need the transaction confirmed'
+        task: 'Practice selecting appropriate fees based on urgency'
       }
     },
     {
-      id: 'signing',
-      title: 'Making It Official',
+      id: 'privacy',
+      title: 'Transaction Privacy',
       icon: <ShieldCheck size={24} />,
-      description: 'Like signing a check - proves these are really your coins to spend',
+      description: 'Best practices for maintaining privacy when transacting',
       interactive: {
-        scenario: 'To complete your transaction:',
+        scenario: 'Let\'s learn how to keep your transactions private:',
         details: [
-          'Use your private key to sign',
-          'Verify all details are correct',
-          'Broadcast to the network'
+          'Use new addresses for every transaction',
+          'Understand coin control and UTXO management',
+          'Learn about transaction batching for multiple payments'
         ],
-        task: 'Review and sign your transaction'
+        task: 'Practice privacy-enhancing transaction techniques'
       }
     }
   ];

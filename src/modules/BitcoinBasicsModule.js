@@ -16,11 +16,11 @@ const BitcoinBasicsModule = () => {
       type: "intro",
       content: {
         title: "Bitcoin: Digital Money Without Banks",
-        text: "Welcome to Bitcoin Basics! 👋\n\nYou've learned about money's history and properties. Now let's see how Bitcoin works in practice.\n\nImagine sending an email:\n📧 You write a message\n📨 Click send\n📬 It arrives instantly anywhere in the world\n\nBitcoin does the same thing with money:\n💰 You specify an amount\n📲 Click send\n✨ Money moves instantly, anywhere\n\nBut wait... if it's that simple, why do we need all this technical stuff?\n\nBecause moving money has three big challenges email doesn't:\n1. How do we prevent copying? (You can't copy-paste money!)\n2. How do we track ownership? (Like a bank, but without the bank)\n3. How do we keep it secure? (No password resets in Bitcoin!)\n\nIn this module, you'll learn:\n- How to get your first bitcoin\n- How to send and receive payments\n- How to keep your bitcoin safe\n- What makes Bitcoin different from PayPal/Venmo\n\nNo complex math or coding required - just practical knowledge to start using Bitcoin! 🚀"
+        text: "Welcome to Bitcoin Basics! 👋\n\nYou've learned about money's history and properties. Now let's get you started with Bitcoin!\n\nIn this module, you'll learn:\n- How to choose your first Bitcoin wallet\n- Where to buy your first bitcoin\n- Basic safety tips to get started\n- What makes Bitcoin different from regular money\n\nNo complex math or coding required - just practical steps to join the Bitcoin network! 🚀"
       }
     },
     {
-      title: "Your First Bitcoin",
+      title: "Your First Wallet",
       type: "interactive-guide",
       content: {
         title: "Getting Started with Bitcoin",
@@ -45,109 +45,43 @@ const BitcoinBasicsModule = () => {
             ]
           },
           {
-            title: "Buy Your First Bitcoin",
-            icon: Coins,
-            description: "You can start with any amount - even $20 worth of bitcoin!",
-            methods: [
-              {
-                name: "Bitcoin Exchange",
-                pros: ["Easy to use", "Many payment options"],
-                cons: ["Requires ID verification", "Not private"],
-                examples: ["Strike", "Cash App", "Coinbase"]
-              },
-              {
-                name: "Bitcoin ATM",
-                pros: ["More private", "Instant bitcoin"],
-                cons: ["Higher fees", "Limited locations"],
-                examples: ["Find ATMs at Coinatmradar.com"]
-              },
-              {
-                name: "Peer-to-Peer",
-                pros: ["Most private", "No corporate involvement"],
-                cons: ["Takes more effort", "Be careful with strangers"],
-                examples: ["Bisq", "HodlHodl", "Local meetups"]
-              }
+            title: "Basic Security",
+            icon: Lock,
+            description: "Quick security checklist for your new wallet:",
+            tasks: [
+              "Set a strong PIN",
+              "Write down your backup phrase",
+              "Never share your backup phrase",
+              "Keep your wallet app updated"
             ]
           }
         ]
       }
     },
     {
-      title: "Sending & Receiving",
-      type: "interactive-demo",
+      title: "Buying Bitcoin",
+      type: "interactive-guide",
       content: {
-        title: "Making Your First Transaction",
-        description: "Let's practice sending and receiving bitcoin!",
-        exercises: [
+        title: "Getting Your First Bitcoin",
+        description: "You can start with any amount - even $20 worth of bitcoin!",
+        methods: [
           {
-            title: "Receiving Bitcoin",
-            steps: [
-              "Open your wallet app",
-              "Click 'Receive' or 'Get Bitcoin'",
-              "You'll see your Bitcoin address",
-              "Share this address with the sender"
-            ],
-            tips: [
-              "Each address looks like: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-              "You can create new addresses anytime - it's good privacy!",
-              "Never reuse addresses if possible"
-            ]
+            name: "Bitcoin Exchange",
+            pros: ["Easy to use", "Many payment options"],
+            cons: ["Requires ID verification", "Not private"],
+            examples: ["Strike", "Cash App", "Coinbase"]
           },
           {
-            title: "Sending Bitcoin",
-            steps: [
-              "Click 'Send' or 'Pay'",
-              "Enter/scan the recipient's address",
-              "Enter the amount (in bitcoin or your local currency)",
-              "Choose your fee (based on how fast you need it)",
-              "Double-check everything!",
-              "Confirm and send"
-            ],
-            tips: [
-              "Triple-check the address - transactions can't be reversed!",
-              "Start with small test amounts",
-              "Higher fees = faster confirmation"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      title: "Security Essentials",
-      type: "interactive-checklist",
-      content: {
-        title: "Keeping Your Bitcoin Safe",
-        description: "Unlike a bank account, you are fully responsible for your bitcoin's security. Let's learn the essentials!",
-        checklist: [
-          {
-            title: "Backup Your Seed Phrase",
-            description: "Your seed phrase is like the master key to your bitcoin. Usually 12 or 24 words.",
-            tasks: [
-              "Write it down on paper (never digital!)",
-              "Make multiple copies",
-              "Store copies in different safe places",
-              "Never share it with anyone"
-            ]
+            name: "Bitcoin ATM",
+            pros: ["More private", "Instant bitcoin"],
+            cons: ["Higher fees", "Limited locations"],
+            examples: ["Find ATMs at Coinatmradar.com"]
           },
           {
-            title: "Protect Your Wallet",
-            description: "Your wallet is like your email app - keep it secure!",
-            tasks: [
-              "Use a strong PIN/password",
-              "Enable biometric security if available",
-              "Keep your wallet app updated",
-              "Only download from official sources"
-            ]
-          },
-          {
-            title: "Safe Practices",
-            description: "Good habits keep your bitcoin safe:",
-            tasks: [
-              "Start with small amounts",
-              "Use new addresses for each transaction",
-              "Double-check addresses before sending",
-              "Don't tell others how much you own"
-            ]
+            name: "Peer-to-Peer",
+            pros: ["Most private", "No corporate involvement"],
+            cons: ["Takes more effort", "Be careful with strangers"],
+            examples: ["Bisq", "HodlHodl", "Local meetups"]
           }
         ]
       }
@@ -198,27 +132,6 @@ const BitcoinBasicsModule = () => {
                 "24/7/365 operation",
                 "Global, borderless system",
                 "Fixed supply (21M)"
-              ]
-            }
-          },
-          {
-            aspect: "Practical Impact",
-            traditional: {
-              title: "Old Money",
-              points: [
-                "Need bank permission",
-                "High fees for global transfers",
-                "Days to settle transactions",
-                "Can be censored/blocked"
-              ]
-            },
-            bitcoin: {
-              title: "New Money",
-              points: [
-                "Self-sovereign money",
-                "Low fees globally",
-                "Settles in ~10 minutes",
-                "Censorship resistant"
               ]
             }
           }
