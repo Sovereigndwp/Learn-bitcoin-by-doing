@@ -6,7 +6,6 @@ import {
   Coins,
   Calculator, 
   Hash, 
-  Pickaxe, 
   Key, 
   ArrowLeftRight, 
   FileText, 
@@ -16,8 +15,14 @@ import {
   Flame,
   Star,
   Globe,
-  Home,
-  AlertCircle
+  AlertCircle,
+  Hammer,
+  FileCode,
+  Scroll,
+  Blocks,
+  Lightbulb,
+  Wallet,
+  Cpu
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';
@@ -48,7 +53,7 @@ const Homepage = () => {
     },
     {
       id: 'mining',
-      icon: Pickaxe, 
+      icon: Hammer,
       color: '#F59E0B',
       path: '/module/mining'
     },

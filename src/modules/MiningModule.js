@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import CodeEditor from '../components/CodeEditor';
+import { CodeEditor } from '../components/CodeEditor';
 import { hash256, mineBlock, isValidHash } from '../utils/bitcoin';
-import { Pickaxe, CheckCircle, Trophy, Zap, Target, Clock } from 'lucide-react';
+import { Hammer, CheckCircle, Trophy, Zap, Target, Clock } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const MiningModule = () => {
@@ -110,7 +110,7 @@ const MiningModule = () => {
         return (
           <div className="step-content intro-step">
             <div className="step-icon">
-              <Pickaxe size={48} />
+              <Hammer size={48} />
             </div>
             <h2>{step.content.title}</h2>
             <p className="intro-text">{step.content.text}</p>
@@ -178,7 +178,7 @@ const MiningModule = () => {
     <div className="module-container">
       <div className="module-header">
         <h1 className="module-title">
-          <Pickaxe className="module-icon" />
+          <Hammer className="module-icon" />
           Mining Simulator
         </h1>
         {isModuleCompleted('mining') && (
@@ -238,7 +238,7 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
   return (
     <div className="step-content warmup-step">
       <div className="step-icon">
-        <Pickaxe size={48} />
+        <Hammer size={48} />
       </div>
       <h2>Mining Quiz</h2>
       <p className="quiz-question">{question}</p>
@@ -355,7 +355,7 @@ const InteractiveChallenge = ({ title, description, challenges, onComplete }) =>
   return (
     <div className="step-content challenge-step">
       <div className="step-icon">
-        <Pickaxe size={48} />
+        <Hammer size={48} />
       </div>
       <h2>{title}</h2>
       <p className="challenge-description">{description}</p>
@@ -394,7 +394,7 @@ const InteractiveChallenge = ({ title, description, challenges, onComplete }) =>
             onClick={startMining}
             disabled={miningState === 'mining'}
           >
-            {miningState === 'idle' && <><Pickaxe size={20} /> Start Mining</>}
+            {miningState === 'idle' && <><Hammer size={20} /> Start Mining</>}
             {miningState === 'mining' && <><Clock size={20} /> Mining...</>}
             {miningState === 'success' && <><CheckCircle size={20} /> Success!</>}
             {miningState === 'failed' && <>❌ Try Again</>}
@@ -468,7 +468,7 @@ const ReflectionStep = ({ question, mainPrompt, subQuestions, placeholder, onCom
   return (
     <div className="step-content reflection-step">
       <div className="step-icon">
-        <Pickaxe size={48} />
+        <Hammer size={48} />
       </div>
       <h2>Reflection</h2>
       <p className="reflection-question">{question}</p>
