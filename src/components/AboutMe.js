@@ -9,7 +9,7 @@ const AboutMe = () => {
         
         <div className="about-text">
           <p>
-            After five years of falling down the Bitcoin rabbit hole, reading, testing, failing, and trying to explain it to others, 
+            After five years of listening,reading,rereading,testing, failing, and trying to explain it to others, 
             I've realized one thing: we all learn differently. Some of us are number nerds. Some need stories. Some just want to 
             know how to keep their money safe. And most of us don't have time for a 600-page Austrian economics textbook.
           </p>
