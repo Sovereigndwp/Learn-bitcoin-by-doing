@@ -14,7 +14,7 @@ export const useProgress = () => {
 const MODULES = [
   {
     id: 'money',
-    title: 'Money Fundamentals: The Foundation of Bitcoin',
+    title: 'If you don\'t define money, it will define you',
     description: 'Start your Bitcoin journey by understanding what money is, how it evolved, and why Bitcoin represents the next leap forward in monetary technology.'
   },
   {

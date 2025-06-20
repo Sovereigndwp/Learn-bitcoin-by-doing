@@ -13,8 +13,8 @@ import ScriptsModule from '../modules/ScriptsModule';
 export const moduleRegistry = {
   money: {
     id: 'money',
-    title: 'Money Fundamentals: The Foundation of Bitcoin',
-    description: 'Start your Bitcoin journey by understanding what money is, how it evolved, and why Bitcoin represents the next leap forward in monetary technology.',
+    title: 'If you don\'t define money, it will define you',
+    description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.',
     component: MoneyModule,
     order: 1,
     group: 'fundamentals'

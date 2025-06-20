@@ -253,7 +253,7 @@ const MoneyModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          Follow the Money Before it Defines You
+          If you don't define money, it will define you
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">
