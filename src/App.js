@@ -4,6 +4,7 @@ import { ProgressProvider } from './contexts/ProgressContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
+import AboutMe from './components/AboutMe';
 import './App.css';
 
 // Import all modules
@@ -27,6 +28,7 @@ function App() {
           <div className="App">
             <Routes>
               <Route path="/" element={<Homepage />} />
+              <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
               <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
               <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />

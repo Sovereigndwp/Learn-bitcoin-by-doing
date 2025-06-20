@@ -23,10 +23,14 @@
   gap: 1rem;
   font-size: 2rem;
   color: #ffffff;
+  text-align: left !important;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .module-icon {
   color: #f7931a;
+  margin-right: 0.5rem;
 }
 
 .completion-badge {
@@ -1849,4 +1853,113 @@
 .feedback.incorrect {
   color: #fff !important;
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* Content alignment */
+.step-content,
+.intro-step,
+.transition-step,
+.quiz-container,
+.properties-summary,
+.interactive-scenario,
+.challenge-step {
+  text-align: left !important;
+}
+
+.step-content h1,
+.step-content h2,
+.step-content h3,
+.step-content h4,
+.step-content h5,
+.step-content h6,
+.step-content p,
+.intro-text,
+.transition-text,
+.quiz-description,
+.summary-description,
+.property-details,
+.challenge-description {
+  text-align: left !important;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Keep specific elements centered if needed */
+.progress-bar,
+.progress-text,
+.quiz-progress,
+.completion-badge {
+  text-align: center;
+}
+
+/* About Me Page Styles */
+.about-me-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: #fff;
+}
+
+.about-content {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.about-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-align: left;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-align: left;
+}
+
+.closing-message {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Language/About Selector Styles */
+.nav-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-select {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.5rem 2rem 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.nav-select:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-select option {
+  background: #2d2d2d;
+  color: #fff;
+}
+
+.signature {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 1.5rem;
+  text-align: right;
+  color: #fff;
 } 

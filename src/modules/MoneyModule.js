@@ -15,7 +15,7 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "This is Where the Rabbit Hole Actually Starts",
+        title: "This Is Where The Rabbit Hole Actually Starts",
         text: "Before diving into Bitcoin, you've got to understand the tool it's trying to fix.\n\n• The Money Problem •\n\nImagine a world without money. You'd face three core problems:\n\n1. Trade\n   • How would you trade your skills for food?\n   • What if the farmer doesn't need your coding skills?\n\n2. Savings\n   • How would you save for the future?\n   • Where would you store your wealth?\n\n3. Value\n   • How would you measure what things are worth?\n   • How would you compare different goods?\n\n• The Evolution •\n\nMoney isn't just coins or credit cards.\nIt's a human invention—a technology built to solve three core problems:\n\n✓ Trust\n   • Can we believe it's real?\n\n✓ Trade\n   • Can we easily exchange it?\n\n✓ Time\n   • Can we save it for later?\n\nLike all technologies, it's evolved—each form solving some problems while creating others:\n\n🐚 Shells & beads\n   • Easy to carry\n   • Easy to cheat\n\n💎 Gold\n   • Hard to fake\n   • Hard to move\n\n📜 Paper money\n   • Convenient\n   • Easy to print into worthlessness\n\n💻 Digital banking\n   • Fast transfers\n   • Full of middlemen\n\n₿ Bitcoin\n   • The first upgrade that fixes the flaws at the root\n   • No middlemen, can't be printed away, easy to move\n\n• Your Journey\n\nIn this module, you'll break down:\n\n1. What makes money trustworthy\n2. Why every past form had trade-offs\n3. How Bitcoin fixes the flaws built into the system\n4. And why this matters for your freedom\n\nLet's fix your money map. 🚀"
       }
     },
@@ -253,7 +253,7 @@ const MoneyModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          If you don't define money, it will define you
+          If You Don't Define Money, It Will Define You
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">

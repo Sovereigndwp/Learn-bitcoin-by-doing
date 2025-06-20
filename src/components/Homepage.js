@@ -213,6 +213,15 @@ const Homepage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Footer Section */}
+      <footer className="homepage-footer">
+        <div className="footer-content">
+          <Link to="/about" className="about-link">
+            About Dalia
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 };

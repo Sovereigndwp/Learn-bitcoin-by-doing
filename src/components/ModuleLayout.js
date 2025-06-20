@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowLeft, Home, Globe } from 'lucide-react';
+import { ArrowLeft, Home, Globe, AlertCircle } from 'lucide-react';
 import './ModuleLayout.css';
 
 const ModuleLayout = ({ children }) => {
@@ -24,9 +24,9 @@ const ModuleLayout = ({ children }) => {
               <Home size={20} />
               Home
             </Link>
-            <Link to="/" className="nav-button">
-              <ArrowLeft size={20} />
-              Back
+            <Link to="/about" className="nav-button">
+              <AlertCircle size={20} />
+              About Dalia
             </Link>
             <button className="language-toggle" onClick={toggleLanguage}>
               <Globe size={20} />

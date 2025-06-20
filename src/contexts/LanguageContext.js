@@ -13,8 +13,8 @@ export const useLanguage = () => {
 const translations = {
   en: {
     // Homepage
-    heroTitle: "Learn Bitcoin by Doing",
-    heroSubtitle: "Master Bitcoin through hands-on coding exercises and real-world challenges",
+    heroTitle: "Bitcoin, Straight Up",
+    heroSubtitle: "Built for people who don't need lectures, just clarity",
     getStarted: "Get Started",
     progressTitle: "Your Progress",
     modulesCompleted: "modules completed",
@@ -66,8 +66,8 @@ const translations = {
   
   es: {
     // Homepage
-    heroTitle: "Aprende Bitcoin Practicando",
-    heroSubtitle: "Domina Bitcoin a través de ejercicios de programación práctica y desafíos del mundo real",
+    heroTitle: "Bitcoin al Grano",
+    heroSubtitle: "Creado para personas que no necesitan lecturas, solo claridad",
     getStarted: "Comenzar",
     progressTitle: "Tu Progreso",
     modulesCompleted: "módulos completados",
