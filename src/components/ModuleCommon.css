@@ -3,7 +3,11 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  color: #ffffff;
+  color: #fff;
+}
+
+.module-container *:not(input):not(button):not(.hex-button):not(.example-buttons button):not(.quick-examples button) {
+  color: #fff;
 }
 
 .module-header {
@@ -112,6 +116,7 @@
 /* Step Styles */
 .step-content {
   animation: fadeIn 0.3s ease;
+  color: #fff;
 }
 
 .step-icon {
@@ -1427,4 +1432,421 @@
   font-style: italic;
   margin: 0;
   padding: 0.5rem;
+}
+
+/* Input fields */
+.hex-button,
+.example-buttons button,
+.quick-examples button {
+  color: #333;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hex-button:hover,
+.example-buttons button:hover,
+.quick-examples button:hover {
+  background: #f0f0f0;
+  border-color: #bbb;
+}
+
+/* Calculator and input areas */
+.calculator input,
+.interactive-section input {
+  color: #333;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px;
+}
+
+/* Conversion displays */
+.conversion-display {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hex-display,
+.decimal-display,
+.normal-display,
+.endian-display {
+  color: #fff;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.equals {
+  color: #888;
+  font-size: 18px;
+  margin: 0 8px;
+}
+
+/* Example cards */
+.example-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.example-card h4 {
+  color: #fff;
+  margin-top: 0;
+}
+
+.calculation .step,
+.calculation .total {
+  color: #fff;
+  margin: 4px 0;
+}
+
+/* Position values */
+.position-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.position {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.pos-label,
+.pos-value {
+  color: #fff;
+  display: block;
+}
+
+.pos-label {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.pos-value {
+  font-weight: bold;
+}
+
+/* Hex mapping */
+.hex-mapping {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.hex-row {
+  color: #fff;
+  margin: 8px 0;
+  display: flex;
+  gap: 12px;
+}
+
+.hex-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+/* Little-endian examples */
+.endian-examples .conversion {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+  margin: 8px 0;
+  text-align: center;
+}
+
+.conversion .normal,
+.conversion .flipped,
+.conversion .arrow {
+  color: #fff;
+  display: block;
+  margin: 4px 0;
+}
+
+.conversion .pair {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin: 0 2px;
+}
+
+/* Progress indicators */
+.substep-progress {
+  margin: 20px 0;
+}
+
+.substep-indicators {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.substep-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.substep-dot.active {
+  background: #fff;
+}
+
+.substep-dot.completed {
+  background: #4CAF50;
+}
+
+.substep-title {
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Navigation buttons */
+.substep-continue,
+.back-button {
+  color: #fff;
+  background: #2196F3;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 16px 0;
+  transition: background 0.2s;
+}
+
+.substep-continue:hover,
+.back-button:hover {
+  background: #1976D2;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Placeholder text color */
+::placeholder {
+  color: #888;
+}
+
+/* Add these styles to ensure all text is white against purple background */
+.step-content h2,
+.step-content h3,
+.step-content h4,
+.step-content p,
+.step-content li,
+.step-content .description,
+.step-content .explanation,
+.step-content .hint,
+.step-content .feedback,
+.step-content .success-message,
+.step-content .error-message {
+  color: #fff;
+}
+
+/* Ensure feedback messages are visible */
+.feedback.correct,
+.feedback.incorrect,
+.success-box,
+.error-box {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+/* Make hint text white */
+.hint-box {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+/* Ensure all step titles and descriptions are white */
+.step-title,
+.step-description,
+.substep-description {
+  color: #fff;
+}
+
+/* Make sure any success/error icons or messages are visible */
+.success-icon,
+.error-icon,
+.hint-icon {
+  color: #fff;
+}
+
+/* Success and error states */
+.quiz-option,
+.quiz-result,
+.result,
+.challenge-result,
+.scenario-result,
+.mining-results,
+.success-message,
+.error-message,
+.action-hint,
+.success-indicator,
+.error-indicator,
+.error-output,
+.error-tips {
+  color: #fff;
+}
+
+.quiz-option.correct,
+.quiz-option.incorrect,
+.quiz-result.correct,
+.quiz-result.incorrect,
+.result.correct,
+.result.incorrect,
+.challenge-result.success,
+.challenge-result.error,
+.scenario-result.correct,
+.scenario-result.incorrect,
+.mining-results.success,
+.mining-results.failed {
+  color: #fff;
+}
+
+/* Make sure feedback states are visible */
+.feedback {
+  color: #fff !important;
+}
+
+.feedback.correct,
+.feedback.incorrect {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 4px;
+}
+
+/* Ensure all text in content areas is white */
+.step-content,
+.intro-step,
+.examples-step,
+.practice-step,
+.reflection-step,
+.warmup-quiz,
+.challenge-step {
+  color: #fff;
+}
+
+/* Override any markdown or emphasized text */
+.step-content em,
+.step-content strong,
+.step-content code,
+.step-content blockquote {
+  color: #fff !important;
+}
+
+/* Ensure list items and their content are white */
+.step-content ul,
+.step-content ol,
+.step-content li,
+.step-content li * {
+  color: #fff;
+}
+
+/* Make sure all headings are white */
+.step-content h1,
+.step-content h2,
+.step-content h3,
+.step-content h4,
+.step-content h5,
+.step-content h6 {
+  color: #fff;
+}
+
+/* Ensure all paragraphs and spans are white */
+.step-content p,
+.step-content span:not(.hex-button *):not(.example-buttons button *):not(.quick-examples button *) {
+  color: #fff;
+}
+
+/* Status indicators - all text should be white */
+.success-box,
+.error-box,
+.warning-box,
+.quiz-result,
+.mining-results,
+.challenge-result,
+.scenario-result,
+.action-hint,
+.success-message,
+.error-message,
+.feedback {
+  color: #fff !important;
+}
+
+/* Quiz options and results */
+.quiz-option {
+  color: #333;  /* Dark text on light background for better readability */
+  background: #fff;
+}
+
+.quiz-option.selected {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.quiz-option.correct,
+.quiz-option.incorrect {
+  color: #fff !important;
+}
+
+/* Result states */
+.result.correct,
+.result.incorrect,
+.quiz-result.correct,
+.quiz-result.incorrect,
+.challenge-result.success,
+.challenge-result.error,
+.scenario-result.correct,
+.scenario-result.incorrect,
+.mining-results.success,
+.mining-results.failed {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Success and error messages */
+.success-message,
+.error-message,
+.action-hint {
+  color: #fff !important;
+}
+
+/* Feedback states */
+.feedback.correct,
+.feedback.incorrect {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
 } 

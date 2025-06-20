@@ -18,7 +18,7 @@ const NumbersModule = () => {
       type: "intro",
       content: {
         title: "The Most Expensive Pizza Ever!",
-        text: "Imagine you're hungry and order a pizza online. You pay with your credit card, and 30 minutes later, your pizza arrives. Simple, right? 🍕\n\nBut in 2010, something amazing happened. A programmer named Laszlo was hungry too, but he tried something different:\n\n\"I'll pay 10,000 Bitcoin for two pizzas\" he posted online.\n\nSomeone took his offer:\n* Ordered two regular pizzas ($40).\n* Delivered them to Laszlo.\n* Got 10,000 Bitcoin in return.\n\nHere's the mind-blowing part: those Bitcoin would be 'hundreds of millions' today! 🤯\n\nBut wait... let's think about something:\n\n🤔 Your Pizza Order:\n* You: \"Here's my credit card number\"\n* Payment Terminal: \"Encrypting and sending card data...\"\n* Payment Processor: \"Validating card details...\"\n* Your Bank: \"Checking if you have $40...\"\n* Card Network: \"Routing payment between banks...\"\n* Pizza Place's Bank: \"Accepting the payment...\"\n* Payment Processor: \"Confirming transaction...\"\n* Pizza Place: \"Got the payment, making pizza!\"\n* Only the banks and processors see this happening\n* Everything is stored in 'one big bank database' (fingers crossed it doesn't get hacked! 🤞)\n* You just have to 'trust!' that the numbers in their database are 'really' correct\n\n🤔 Laszlo's Bitcoin Pizza:\n* Laszlo: \"Here's my Bitcoin payment\"\n* Everyone: \"We can all see and verify this payment!\"\n* No banks needed\n* Can't be changed or hidden\n\nThis brings us to an interesting question:\nHow do thousands of computers around the world agree on who sent what to whom, without any banks in the middle? 🌍\n\nTo understand this, we first need to learn how computers talk to each other. Ready to find out? 💫"
+        text: "Imagine you're hungry and order a pizza online. You pay with your credit card, and 30 minutes later, your pizza arrives. Simple, right? 🍕\n\nBut in 2010, something amazing happened. A programmer named Laszlo was hungry too, but he tried something different:\n\n\"I'll pay 10,000 Bitcoin for two pizzas\" he posted online.\n\nSomeone took his offer:\n* Ordered two regular pizzas ($40).\n* Delivered them to Laszlo.\n* Got 10,000 Bitcoin in return.\n\nHere's the mind-blowing part: those Bitcoin would be 'hundreds of millions' today! 🤯\n\nBut wait... let's think about something:\n\n🤔 Your Pizza Order:\n* You: \"Here's my credit card number\"\n* Payment Terminal: \"Encrypting and sending card data...\"\n* Payment Processor: \"Validating card details...\"\n* Your Bank: \"Checking if you have $40...\"\n* Card Network: \"Routing payment between banks...\"\n* Pizza Place's Bank: \"Accepting the payment...\"\n* Payment Processor: \"Confirming transaction...\"\n* Pizza Place: \"Got the payment, making pizza!\"\n* Only the banks and processors see this happening\n* Everything is stored in 'one big bank database' (fingers crossed it doesn't get hacked! 🤞)\n* You just have to 'trust' that the numbers in their database are 'really' correct\n\n🤔 Laszlo's Bitcoin Pizza:\n* Laszlo: \"Here's my Bitcoin payment\"\n* Everyone: \"We can all see and verify this payment!\"\n* No banks needed\n* Can't be changed or hidden\n\nThis brings us to an interesting question:\nHow do thousands of computers around the world agree on who sent what to whom, without any banks in the middle? 🌍\n\nTo understand this, we first need to learn how computers talk to each other. Ready to find out? 💫\n\n---\n\n_Special thanks to Jack Mallers for the 'aha moment' during his Miami 2021 presentation that inspired this explanation! 🙏_"
       }
     },
     {
@@ -26,7 +26,7 @@ const NumbersModule = () => {
       type: "intro",
       content: {
         title: "How Do Computers Talk to Each Other?",
-        text: "Let's play a game! 🎮\n\nImagine you and your friend want to pass notes in class, but you want to make sure:\n   • Nobody can change the message\n   • Everyone gets the exact same message\n   • No mistakes allowed!\n\nYou might think computers just use regular numbers like we do (0-9). But they actually use 'three different ways' to write numbers. Why? Let's find out!\n\n1. Computer's Native Language ('Binary')\n   • Think of it like this: Computers can only use '0 and 1'\n   • Just like how a light switch can only be 'ON' or 'OFF'\n   • It's simple but takes lots of space!\n\n2. Human-Friendly Format ('Decimal')\n   • This is how 'we' write numbers (0-9)\n   • Easy for humans to read\n   • Bitcoin shows amounts this way\n\n3. Space-Saving Format ('Hexadecimal')\n   • Uses numbers 0-9 and letters 'A-F'\n   • Perfect middle ground\n   • Bitcoin uses this for addresses\n\n🤔 Why Three Different Ways?\n   • Computers 'need' binary (it's the only thing they understand)\n   • Humans like regular numbers (easier for us!)\n   • Shorthand makes long computer numbers easier to read\n\nLet's see this in action:\nWhen Laszlo sent his 10,000 Bitcoin:\n   • You and I see: '10,000'\n   • Computers see: '0000000000002710'\n   • Shorthand writes it as: '2710'\n\nReady to learn how to read and write these different number systems? It's like learning a secret code! 🔍"
+        text: "Let's play a game! 🎮\n\nImagine you and your friend want to pass notes in class, but you want to make sure:\n   • Nobody can change the message\n   • Everyone gets the exact same message\n   • No mistakes allowed!\n\nYou might think computers just use regular numbers like we do (0-9). But they actually use 'three different ways' to write numbers. And here's something interesting: computers sometimes write numbers 'backwards' (right to left, like Hebrew!) because it helps them work more efficiently.\n\nLet's look at the three ways computers handle numbers:\n\n1. Computer's Native Language ('Binary')\n   • Think of it like this: Computers can only use '0 and 1'\n   • Just like how a light switch can only be 'ON' or 'OFF'\n   • It's simple but takes lots of space!\n\n2. Human-Friendly Format ('Decimal')\n   • This is how 'we' write numbers (0-9)\n   • Easy for humans to read\n   • Bitcoin shows amounts this way\n\n3. Space-Saving Format ('Hexadecimal')\n   • Uses numbers 0-9 and letters 'A-F'\n   • Perfect middle ground\n   • Bitcoin uses this for addresses\n\n🤔 Why Three Different Ways?\n   • Computers 'need' binary (it's the only thing they understand)\n   • Humans like regular numbers (easier for us!)\n   • Shorthand makes long computer numbers easier to read\n\nLet's see this in action:\nWhen Laszlo sent his 10,000 Bitcoin:\n   • You and I see: '10,000'\n   • Computers see: '10011100010000'\n   • Shorthand writes it as: '2710'\n   • And sometimes backwards as: '1027' (for efficiency!)\n\nReady to learn how to read and write these different number systems? It's like learning a secret code! 🔍"
       }
     },
     {
@@ -290,12 +290,6 @@ const NumbersModule = () => {
           </button>
         </div>
       </div>
-
-      <div className="module-footer">
-        <p className="thank-you-note">
-          Special thanks to Jack Mallers for the 'aha moment' during his Miami 2021 presentation that inspired this explanation! 🙏
-        </p>
-      </div>
     </div>
   );
 };
@@ -328,14 +322,6 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
     return result;
   };
 
-  const tryHexExample = (hex) => {
-    setHexInput(hex);
-  };
-
-  const tryEndianExample = (normal) => {
-    setEndianInput(normal);
-  };
-
   const markSubStepComplete = (stepIndex) => {
     const newCompleted = new Set(completedSubSteps);
     newCompleted.add(stepIndex);
@@ -344,47 +330,31 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
 
   const subSteps = [
     {
-      title: "🔤 What is Hex?",
+      title: "🔤 Single Hex Digits",
       content: (
         <div className="substep-content">
-          <h3>Let's Start Simple: What is Hex?</h3>
-          <p>Normal counting uses 10 symbols: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</p>
-          <p>Hex counting uses 16 symbols: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F</p>
-          
+          <h3>Let's Start Simple: One Digit at a Time</h3>
+          <p>In hex, we use 16 different symbols:</p>
           <div className="hex-basics">
-            <h4>The Extra Letters Mean:</h4>
             <div className="hex-mapping">
-              A = 10,&nbsp;&nbsp;&nbsp;B = 11,&nbsp;&nbsp;&nbsp;C = 12,&nbsp;&nbsp;&nbsp;D = 13,&nbsp;&nbsp;&nbsp;E = 14,&nbsp;&nbsp;&nbsp;F = 15
+              <div className="hex-row">
+                <span className="hex-label">Numbers (0-9):</span>
+                <span className="hex-value">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</span>
+              </div>
+              <div className="hex-row">
+                <span className="hex-label">Letters (A-F):</span>
+                <span className="hex-value">A = 10, B = 11, C = 12, D = 13, E = 14, F = 15</span>
+              </div>
             </div>
           </div>
           
-          <p><strong>That's it!</strong> A is just another way to write 10, F is another way to write 15.</p>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(0);
-              setCurrentSubStep(1);
-            }}
-          >
-            Got it! Next →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "🎯  Try Single Hex Digits",
-      content: (
-        <div className="substep-content">
-          <h3>Practice: Single Hex Digits</h3>
-          <p>Click these buttons to see what each hex digit means in normal numbers:</p>
-          
-          <div className="single-digit-practice">
-            <div className="digit-grid">
+          <div className="interactive-section">
+            <p>👉 Click any symbol to see its decimal value:</p>
+            <div className="hex-grid">
               {['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'].map(digit => (
                 <button 
                   key={digit}
-                  className="digit-button"
+                  className="hex-button"
                   onClick={() => setHexInput(digit)}
                 >
                   {digit}
@@ -392,24 +362,20 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
               ))}
             </div>
             
-            <div className="practice-result">
-              {hexInput && (
-                <div className="conversion-display">
-                  <span className="hex-value">{hexInput}</span>
-                  <span className="equals">=</span>
-                  <span className="decimal-value">{hexToDecimal(hexInput)}</span>
-                </div>
-              )}
-            </div>
+            {hexInput && (
+              <div className="conversion-display">
+                <span className="hex-display">Hex: {hexInput}</span>
+                <span className="equals">→</span>
+                <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
+              </div>
+            )}
           </div>
-          
-          <p className="encouragement">Click different letters and numbers to see the pattern!</p>
           
           <button 
             className="substep-continue"
             onClick={() => {
-              markSubStepComplete(1);
-              setCurrentSubStep(2);
+              markSubStepComplete(0);
+              setCurrentSubStep(1);
             }}
           >
             I understand single digits! →
@@ -421,40 +387,133 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
       title: "🔢 Two Hex Digits",
       content: (
         <div className="substep-content">
-          <h3>Now: Two Hex Digits Together</h3>
-          <p>When you put two hex digits together, it works like this:</p>
+          <h3>Now: Two Digits Together</h3>
+          <p>When you put two hex digits together, each position has a different value:</p>
           
-          <div className="two-digit-explanation">
-            <div className="example-breakdown">
-              <h4>Example: 1A</h4>
-              <p>First digit (1) × 16 = 16</p>
-              <p>Second digit (A=10) × 1 = 10</p>
-              <p>Total: 16 + 10 = 26</p>
+          <div className="position-explanation">
+            <div className="position-grid">
+              <div className="position">
+                <span className="pos-label">Left digit</span>
+                <span className="pos-value">× 16</span>
+              </div>
+              <div className="position">
+                <span className="pos-label">Right digit</span>
+                <span className="pos-value">× 1</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="example-breakdown">
+            <h4>Example: 2A</h4>
+            <div className="calculation">
+              <div className="step">Left (2): 2 × 16 = 32</div>
+              <div className="step">Right (A=10): 10 × 1 = 10</div>
+              <div className="total">Total: 32 + 10 = 42</div>
             </div>
           </div>
           
-          <div className="calculator-section">
-            <p>Try typing two-digit hex numbers:</p>
-            <div className="calculator-row">
+          <div className="interactive-section">
+            <p>👉 Try these common two-digit hex numbers:</p>
+            <div className="example-buttons">
+              <button onClick={() => setHexInput('1A')}>1A</button>
+              <button onClick={() => setHexInput('2B')}>2B</button>
+              <button onClick={() => setHexInput('FF')}>FF</button>
+            </div>
+            
+            <div className="calculator">
+              <p>Or type your own two-digit hex number:</p>
               <input
                 type="text"
                 value={hexInput}
                 onChange={(e) => setHexInput(e.target.value.toUpperCase().slice(0,2))}
-                placeholder="Like 1A or FF"
-                className="calc-input"
+                placeholder="Example: 2A"
                 maxLength="2"
               />
-              <span className="equals">=</span>
-              <div className="calc-result">
-                {hexToDecimal(hexInput) || '?'}
+              {hexInput && (
+                <div className="conversion-display">
+                  <span className="hex-display">Hex: {hexInput}</span>
+                  <span className="equals">→</span>
+                  <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <button 
+            className="substep-continue"
+            onClick={() => {
+              markSubStepComplete(1);
+              setCurrentSubStep(2);
+            }}
+          >
+            I get two digits! →
+          </button>
+        </div>
+      )
+    },
+    {
+      title: "📊 Bigger Numbers",
+      content: (
+        <div className="substep-content">
+          <h3>Three and Four Digit Numbers</h3>
+          <p>The pattern continues - each position is worth 16 times more than the one to its right:</p>
+          
+          <div className="position-values">
+            <div className="value-grid">
+              <div className="position">
+                <span className="pos-label">4th digit</span>
+                <span className="pos-value">× 4096 (16³)</span>
+              </div>
+              <div className="position">
+                <span className="pos-label">3rd digit</span>
+                <span className="pos-value">× 256 (16²)</span>
+              </div>
+              <div className="position">
+                <span className="pos-label">2nd digit</span>
+                <span className="pos-value">× 16 (16¹)</span>
+              </div>
+              <div className="position">
+                <span className="pos-label">1st digit</span>
+                <span className="pos-value">× 1 (16⁰)</span>
               </div>
             </div>
+          </div>
+
+          <div className="examples-section">
+            <div className="example-card">
+              <h4>Example: ABC (3 digits)</h4>
+              <div className="calculation">
+                <div className="step">A (10) × 256 = 2,560</div>
+                <div className="step">B (11) × 16 = 176</div>
+                <div className="step">C (12) × 1 = 12</div>
+                <div className="total">Total: 2,560 + 176 + 12 = 2,748</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="interactive-section">
+            <p>👉 Try these bigger numbers:</p>
+            <div className="example-buttons">
+              <button onClick={() => setHexInput('ABC')}>ABC</button>
+              <button onClick={() => setHexInput('BEEF')}>BEEF</button>
+              <button onClick={() => setHexInput('1000')}>1000</button>
+            </div>
             
-            <div className="quick-try-buttons">
-              <span>Try these:</span>
-              <button onClick={() => setHexInput('1A')}>1A</button>
-              <button onClick={() => setHexInput('2B')}>2B</button>
-              <button onClick={() => setHexInput('FF')}>FF</button>
+            <div className="calculator">
+              <p>Or type your own hex number:</p>
+              <input
+                type="text"
+                value={hexInput}
+                onChange={(e) => setHexInput(e.target.value.toUpperCase())}
+                placeholder="Try ABC or 1000"
+              />
+              {hexInput && (
+                <div className="conversion-display">
+                  <span className="hex-display">Hex: {hexInput}</span>
+                  <span className="equals">→</span>
+                  <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
+                </div>
+              )}
             </div>
           </div>
           
@@ -465,157 +524,66 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
               setCurrentSubStep(3);
             }}
           >
-            I get two digits! →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "🧮 Bigger Hex Numbers",
-      content: (
-        <div className="substep-content">
-          <h3>Now Let's Try 3 and 4 Digits!</h3>
-          <p>The pattern continues - each position is worth 16 times more than the one to its right:</p>
-          
-          <div className="big-number-examples">
-            <div className="example-card">
-              <h4>3-Digit Example: 1AB</h4>
-              <div className="calculation-steps">
-                <div className="step">Position 3 (1) × 16² = 1 × 256 = 256</div>
-                <div className="step">Position 2 (A=10) × 16¹ = 10 × 16 = 160</div>
-                <div className="step">Position 1 (B=11) × 16⁰ = 11 × 1 = 11</div>
-                <div className="total">Total: 256 + 160 + 11 = <strong>427</strong></div>
-              </div>
-            </div>
-            
-            <div className="example-card">
-              <h4>4-Digit Example: 1ABC</h4>
-              <div className="calculation-steps">
-                <div className="step">Position 4 (1) × 16³ = 1 × 4096 = 4096</div>
-                <div className="step">Position 3 (A=10) × 16² = 10 × 256 = 2560</div>
-                <div className="step">Position 2 (B=11) × 16¹ = 11 × 16 = 176</div>
-                <div className="step">Position 1 (C=12) × 16⁰ = 12 × 1 = 12</div>
-                <div className="total">Total: 4096 + 2560 + 176 + 12 = <strong>6844</strong></div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="pattern-explanation">
-            <h4>🔍 See the Pattern?</h4>
-            <p>Each position is a power of 16:</p>
-            <div className="power-chart">
-              <span>16⁰ = 1</span>
-              <span>16¹ = 16</span>
-              <span>16² = 256</span>
-              <span>16³ = 4096</span>
-            </div>
-          </div>
-          
-          <div className="calculator-section">
-            <p>Try these bigger hex numbers in your head or with a calculator:</p>
-            <div className="try-buttons">
-              <button onClick={() => setHexInput('ABC')}>ABC = ?</button>
-              <button onClick={() => setHexInput('DEF')}>DEF = ?</button>
-              <button onClick={() => setHexInput('1000')}>1000 = ?</button>
-            </div>
-            
-            {hexInput && (
-              <div className="big-result">
-                <span className="hex-display">{hexInput}</span>
-                <span className="equals"> = </span>
-                <span className="decimal-display">{hexToDecimal(hexInput)}</span>
-              </div>
-            )}
-          </div>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(3);
-              setCurrentSubStep(4);
-            }}
-          >
             I understand bigger numbers! →
           </button>
         </div>
       )
     },
     {
-      title: "🎲 What is Little Endian?",
+      title: "🔄 Little Endian",
       content: (
         <div className="substep-content">
-          <h3>Little Endian = Reading Backwards</h3>
-          <p>Bitcoin sometimes flips pairs of hex numbers around. Think of it like reading backwards, but only in pairs.</p>
+          <h3>Reading Numbers Backwards</h3>
+          <p>Sometimes computers store numbers backwards in pairs. This is called "little-endian" format.</p>
           
-          <div className="endian-explanation">
-            <h4>Simple Example:</h4>
-            <div className="endian-demo">
-              <div className="normal">Normal: <span className="highlight">12</span></div>
-              <div className="arrow">↓ flip it ↓</div>
-              <div className="flipped">Little Endian: <span className="highlight">21</span></div>
-            </div>
-            
-            <h4>Longer Example:</h4>
-            <div className="endian-demo">
-              <div className="normal">Normal: <span className="pair">12</span><span className="pair">34</span></div>
-              <div className="arrow">↓ flip each pair ↓</div>
-              <div className="flipped">Little Endian: <span className="pair">34</span><span className="pair">12</span></div>
-            </div>
-          </div>
-          
-          <p><strong>Why?</strong> It's just how Bitcoin likes to store its numbers. Like a secret code!</p>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(4);
-              setCurrentSubStep(5);
-            }}
-          >
-            Got it! →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "🔄 Practice Little Endian",
-      content: (
-        <div className="substep-content">
-          <h3>Practice: Flip the Pairs</h3>
-          <p>Type some hex numbers and watch them get flipped:</p>
-          
-          <div className="calculator-section">
-            <div className="calculator-row">
-              <input
-                type="text"
-                value={endianInput}
-                onChange={(e) => setEndianInput(e.target.value.toUpperCase())}
-                placeholder="Like 1234 or ABCD"
-                className="calc-input"
-              />
-              <span className="arrow">→ flip →</span>
-              <div className="calc-result">
-                {normalToLittleEndian(endianInput) || '?'}
+          <div className="endian-examples">
+            <div className="example-card">
+              <h4>Two Digits: 12</h4>
+              <div className="conversion">
+                <span className="normal">Normal: 12</span>
+                <span className="arrow">↓</span>
+                <span className="flipped">Little-endian: 21</span>
               </div>
             </div>
             
-            <div className="quick-try-buttons">
-              <span>Try these:</span>
-              <button onClick={() => setEndianInput('12')}>12</button>
+            <div className="example-card">
+              <h4>Four Digits: 1234</h4>
+              <div className="conversion">
+                <span className="normal">Normal: <span className="pair">12</span><span className="pair">34</span></span>
+                <span className="arrow">↓</span>
+                <span className="flipped">Little-endian: <span className="pair">34</span><span className="pair">12</span></span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="interactive-section">
+            <p>👉 Try converting to little-endian:</p>
+            <input
+              type="text"
+              value={endianInput}
+              onChange={(e) => setEndianInput(e.target.value.toUpperCase())}
+              placeholder="Type an even number of digits"
+            />
+            {endianInput && (
+              <div className="conversion-display">
+                <span className="normal-display">Normal: {endianInput}</span>
+                <span className="equals">→</span>
+                <span className="endian-display">Little-endian: {normalToLittleEndian(endianInput)}</span>
+              </div>
+            )}
+            
+            <div className="quick-examples">
+              <p>Try these:</p>
               <button onClick={() => setEndianInput('1234')}>1234</button>
               <button onClick={() => setEndianInput('ABCD')}>ABCD</button>
-              <button onClick={() => setEndianInput('123456')}>123456</button>
-            </div>
-            
-            <div className="tip">
-              💡 <strong>Tip:</strong> Each pair (like 12 or AB) flips around, then the whole thing reads backwards!
+              <button onClick={() => setEndianInput('2710')}>2710</button>
             </div>
           </div>
           
           <button 
             className="substep-continue"
             onClick={() => {
-              markSubStepComplete(5);
+              markSubStepComplete(3);
               onComplete();
             }}
           >
