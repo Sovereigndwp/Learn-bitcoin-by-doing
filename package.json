@@ -6,13 +6,13 @@
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "assert": "^2.1.0",
     "bitcoinjs-lib": "^6.1.7",
     "buffer": "^6.0.3",
     "codemirror": "^6.0.1",
-    "craco": "^0.0.3",
+    "@craco/craco": "^7.1.0",
     "crypto-browserify": "^3.12.1",
     "crypto-js": "^4.2.0",
     "events": "^3.3.0",
@@ -20,8 +20,8 @@
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
@@ -54,8 +54,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@craco/craco": "^7.1.0"
   }
 }
