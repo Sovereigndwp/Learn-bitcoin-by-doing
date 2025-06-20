@@ -12,7 +12,7 @@ import MythsModule from '../modules/MythsModule';
 export const moduleRegistry = {
   money: {
     id: 'money',
-    title: 'Follow the Money...Before It Defines You',
+    title: 'If you don\'t define money, it will define you',
     description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.',
     component: MoneyModule,
     order: 1

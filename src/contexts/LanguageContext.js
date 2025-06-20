@@ -21,6 +21,7 @@ const translations = {
     
     // Modules
     modules: {
+      money: "If you don't define money, it will define you",
       numbers: "Numbers & Encoding",
       hashing: "Hashing",
       mining: "Mining Simulator",
@@ -73,6 +74,7 @@ const translations = {
     
     // Modules
     modules: {
+      money: "Si no defines el dinero, él te definirá",
       numbers: "Números y Codificación",
       hashing: "Hashing",
       mining: "Simulador de Minería",
