@@ -128,20 +128,47 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  text-align: left;
 }
 
 .intro-text h3, .transition-text h3 {
   margin: 1.5rem 0 0.75rem 0;
+  text-align: left;
 }
 
 .intro-text ul, .intro-text ol,
 .transition-text ul, .transition-text ol {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
+  text-align: left;
 }
 
 .intro-text li, .transition-text li {
   margin: 0.25rem 0;
+  padding-left: 1rem;
+}
+
+.intro-text .bullet-list {
+  margin: 0.5rem 0;
+}
+
+.intro-text .bullet-point {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.intro-text .bullet-point::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
+
+.intro-text .sub-bullet {
+  padding-left: 2.5rem;
+}
+
+.intro-text strong {
+  font-weight: 600;
 }
 
 .continue-button {
