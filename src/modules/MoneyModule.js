@@ -15,8 +15,8 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "Welcome to Your Bitcoin Journey!",
-        text: "Before we dive into the technical aspects of Bitcoin, let's start with the most fundamental question: What is money, and why do we need it? 🤔\n\nImagine a world without money:\n- How would you trade your skills for food?\n- How would you save for the future?\n- How would you measure value?\n\nMoney isn't just coins and bills - it's a technology that humans invented to solve these problems. And like all technologies, it evolves:\n\n🐚 Shells & Beads: Easy to carry, but too easy to find more\n💎 Precious Metals: Better, but hard to move and verify\n📜 Paper Money: Convenient, but too easy to create more\n💻 Digital Banking: Fast, but requires permission and trust\n₿ Bitcoin: Combines the best of all previous forms\n\nIn this foundational module, you'll discover:\n1. The key properties that make good money\n2. Why previous forms of money had trade-offs\n3. How Bitcoin solves these age-old problems\n4. Why this matters for your future\n\nThis module sets the stage for your entire Bitcoin journey. Once you understand these fundamentals, the technical concepts in later modules will make much more sense.\n\nReady to understand money in a whole new way? Let's begin! 🚀"
+        title: "This is Where the Rabbit Hole Actually Starts",
+        text: "Before diving into Bitcoin, you've got to understand the tool it's trying to fix.\n\n\n• The Money Problem •\n\nImagine a world without money. You'd face three core problems:\n\n\n1. Trade\n\n– How would you trade your skills for food?\n\n– What if the farmer doesn't need your coding skills?\n\n\n2. Savings\n\n– How would you save for the future?\n\n– Where would you store your wealth?\n\n\n3. Value\n\n– How would you measure what things are worth?\n\n– How would you compare different goods?\n\n\n• The Evolution •\n\nMoney isn't just coins or credit cards.\n\nIt's a human invention—a technology built to solve three core problems:\n\n\n✓ Trust\nCan we believe it's real?\n\n✓ Trade\nCan we easily exchange it?\n\n✓ Time\nCan we save it for later?\n\n\nLike all technologies, it's evolved—each form solving some problems while creating others:\n\n\n🐚 Shells & beads\n\n+ Easy to carry\n\n– Easy to cheat\n\n\n💎 Gold\n\n+ Hard to fake\n\n– Hard to move\n\n\n📜 Paper money\n\n+ Convenient\n\n– Easy to print into worthlessness\n\n\n💻 Digital banking\n\n+ Fast transfers\n\n– Full of middlemen\n\n\n₿ Bitcoin\n\n+ The first upgrade that fixes the flaws at the root\n\n+ No middlemen, can't be printed away, easy to move\n\n\n• Your Journey •\n\nIn this module, you'll break down:\n\n\n1. What makes money trustworthy—or manipulable\n\n2. Why every past form had trade-offs\n\n3. How Bitcoin fixes the flaws built into the system\n\n4. And why this matters for *your* freedom\n\n\nUnderstand this, and the rest of Bitcoin stops being confusing—and starts clicking.\n\nLet's fix your money map. 🚀"
       }
     },
     {
@@ -253,7 +253,7 @@ const MoneyModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          Money Fundamentals: The Foundation of Bitcoin
+          Follow the Money Before it Defines You
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">
