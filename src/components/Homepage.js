@@ -101,18 +101,20 @@ const Homepage = () => {
     <div className="homepage">
       {/* Header */}
       <header className="homepage-header">
-        <div className="logo">
-          <span className="bitcoin-symbol">₿</span>
-          <div className="logo-container">
-            <span className="logo-text">Bitcoin, Straight Up</span>
-            <span className="author-text">@Dalia</span>
+        <div className="header-content">
+          <div className="logo">
+            <span className="bitcoin-symbol">₿</span>
+            <div className="logo-container">
+              <span className="logo-text">Bitcoin, Straight Up</span>
+              <span className="author-text">@Dalia</span>
+            </div>
           </div>
-        </div>
-        <div className="header-buttons">
-          <button className="language-toggle" onClick={toggleLanguage}>
-            <Globe size={20} />
-            {language === 'en' ? 'ES' : 'EN'}
-          </button>
+          <div className="nav-buttons">
+            <button className="language-toggle" onClick={toggleLanguage}>
+              <Globe size={20} />
+              {language === 'en' ? 'ES' : 'EN'}
+            </button>
+          </div>
         </div>
       </header>
 

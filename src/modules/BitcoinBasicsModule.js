@@ -16,7 +16,7 @@ const BitcoinBasicsModule = () => {
       type: "intro",
       content: {
         title: "Bitcoin: Digital Money Without Banks",
-        text: "Welcome to Bitcoin Basics! 👋\n\nYou've learned about money's history and properties. Now let's get you started with Bitcoin!\n\nIn this module, you'll learn:\n- How to choose your first Bitcoin wallet\n- Where to buy your first bitcoin\n- Basic safety tips to get started\n- What makes Bitcoin different from regular money\n\nNo complex math or coding required - just practical steps to join the Bitcoin network! 🚀"
+        text: "Welcome to Bitcoin Basics! 👋\n\nYou've learned about money's history and properties. Now let's get you started with Bitcoin!\n\nIn this module, you'll learn:\n\n• How to choose your first Bitcoin wallet\n• Where to buy your first bitcoin\n• Basic safety tips to get started\n• What makes Bitcoin different from regular money\n\nNo complex math or coding required - just practical steps to join the Bitcoin network! 🚀"
       }
     },
     {

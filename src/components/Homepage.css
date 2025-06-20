@@ -6,7 +6,7 @@
 }
 
 /* Header */
-.header {
+.homepage-header {
   padding: 1rem 0;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -16,9 +16,9 @@
 }
 
 .header-content {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,18 +30,13 @@
   gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-left: 0;
-  padding-left: 0;
 }
 
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin-left: auto;
-  padding-right: 2rem;
-  min-width: 300px; /* Ensures consistent spacing */
-  justify-content: flex-end;
 }
 
 .nav-button {
