@@ -1412,4 +1412,19 @@
   color: #2196f3;
   position: absolute;
   left: 0;
+}
+
+.module-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.thank-you-note {
+  font-style: italic;
+  margin: 0;
+  padding: 0.5rem;
 } 

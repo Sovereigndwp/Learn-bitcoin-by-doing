@@ -290,6 +290,12 @@ const NumbersModule = () => {
           </button>
         </div>
       </div>
+
+      <div className="module-footer">
+        <p className="thank-you-note">
+          Special thanks to Jack Mallers for the 'aha moment' during his Miami 2021 presentation that inspired this explanation! 🙏
+        </p>
+      </div>
     </div>
   );
 };
