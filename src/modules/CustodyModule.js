@@ -121,7 +121,7 @@ const CustodyModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Shield className="module-icon" />
-          Protecting Your Bitcoin: A Guide to Custody
+          Custody & Multisig
         </h1>
       </div>
       

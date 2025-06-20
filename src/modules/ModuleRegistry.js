@@ -29,7 +29,7 @@ export const moduleRegistry = {
   },
   transactions: {
     id: 'transactions',
-    title: 'Sending & Receiving Bitcoin',
+    title: 'Building Transactions',
     description: 'Learn how to send, receive, and track your bitcoin transactions safely.',
     component: TransactionsModule,
     order: 3,
@@ -37,7 +37,7 @@ export const moduleRegistry = {
   },
   custody: {
     id: 'custody',
-    title: 'Securing Your Bitcoin',
+    title: 'Custody & Multisig',
     description: 'Essential security practices and different ways to protect your bitcoin investment.',
     component: CustodyModule,
     order: 4,
@@ -61,7 +61,7 @@ export const moduleRegistry = {
   },
   hashing: {
     id: 'hashing',
-    title: 'Digital Fingerprints',
+    title: 'Hashing',
     description: 'Discover how Bitcoin uses hashing to create tamper-proof records.',
     component: HashingModule,
     order: 7,
@@ -69,7 +69,7 @@ export const moduleRegistry = {
   },
   keys: {
     id: 'keys',
-    title: 'Keys & Addresses',
+    title: 'Key Generation',
     description: 'Understand the cryptography that powers Bitcoin security.',
     component: KeysModule,
     order: 8,
@@ -77,7 +77,7 @@ export const moduleRegistry = {
   },
   mining: {
     id: 'mining',
-    title: 'Mining & Network Security',
+    title: 'Mining Simulator',
     description: 'Understand how Bitcoin mining secures the network through proof-of-work.',
     component: MiningModule,
     order: 9,
@@ -85,7 +85,7 @@ export const moduleRegistry = {
   },
   merkle: {
     id: 'merkle',
-    title: 'Merkle Trees & Scaling',
+    title: 'Merkle Trees',
     description: 'Learn how Bitcoin efficiently verifies transactions using Merkle trees.',
     component: MerkleModule,
     order: 10,
@@ -93,7 +93,7 @@ export const moduleRegistry = {
   },
   scripts: {
     id: 'scripts',
-    title: 'Bitcoin Scripts & Smart Contracts',
+    title: 'Script Explorer',
     description: 'Explore how Bitcoin can be programmed for advanced use cases.',
     component: ScriptsModule,
     order: 11,

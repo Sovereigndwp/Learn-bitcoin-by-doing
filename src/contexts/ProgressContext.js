@@ -29,27 +29,27 @@ const MODULES = [
   },
   {
     id: 'hashing',
-    title: 'Digital Fingerprints',
+    title: 'Hashing',
     description: 'Discover how Bitcoin uses SHA-256 hashing to create tamper-proof digital fingerprints.'
   },
   {
     id: 'mining',
-    title: 'Mining & Consensus',
+    title: 'Mining Simulator',
     description: 'Understand how Bitcoin mining works and why it\'s essential for network security.'
   },
   {
     id: 'keys',
-    title: 'Keys & Addresses',
+    title: 'Key Generation',
     description: 'Learn about public key cryptography and how Bitcoin addresses work.'
   },
   {
     id: 'transactions',
-    title: 'Transactions',
+    title: 'Building Transactions',
     description: 'Explore how Bitcoin transactions are created, signed, and verified.'
   },
   {
     id: 'scripts',
-    title: 'Bitcoin Scripts',
+    title: 'Script Explorer',
     description: 'Dive into Bitcoin\'s scripting language and how it enables smart contracts.'
   },
   {
@@ -59,12 +59,12 @@ const MODULES = [
   },
   {
     id: 'custody',
-    title: 'Bitcoin Custody',
+    title: 'Custody & Multisig',
     description: 'Master different ways to secure and manage Bitcoin.'
   },
   {
     id: 'myths',
-    title: 'Myths & Misconceptions',
+    title: 'Bitcoin Myths & Facts',
     description: 'Explore and debunk common Bitcoin myths and misconceptions.'
   }
 ];

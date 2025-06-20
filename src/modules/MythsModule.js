@@ -96,7 +96,7 @@ const MythsModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <AlertCircle className="module-icon" />
-          Bitcoin Myths & Misconceptions
+          Bitcoin Myths & Facts
         </h1>
       </div>
       
