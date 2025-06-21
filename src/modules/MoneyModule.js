@@ -3,7 +3,7 @@ import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Coins, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
-import MoneyGame from '../components/MoneyGame';
+import BuildPerfectMoneyGame from '../components/BuildPerfectMoneyGame';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -126,7 +126,7 @@ const MoneyModule = () => {
       }
     },
     {
-      title: "Why Bitcoin?",
+      title: "Perfect... Until it Wasn't",
       type: "transition",
       content: {
         title: "The Evolution of Money",
@@ -187,7 +187,7 @@ const MoneyModule = () => {
 
       case 'money-game':
         return (
-          <MoneyGame
+          <BuildPerfectMoneyGame
             onComplete={() => handleStepComplete(index)}
           />
         );
