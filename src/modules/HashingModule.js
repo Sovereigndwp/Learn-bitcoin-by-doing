@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
 import CodeEditor from '../components/CodeEditor';
-import { sha256, hash256, simpleHash } from '../utils/bitcoin';
-import { Hash, CheckCircle, Trophy, Shield, Zap } from 'lucide-react';
+import { sha256, hash256 } from '../utils/bitcoin';
+import { Hash, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 // Hash Explorer Component
@@ -15,6 +14,7 @@ const HashExplorer = ({ onComplete }) => {
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [showQuizResult, setShowQuizResult] = useState(false);
   const [isHashing, setIsHashing] = useState(false);
+  const [completedExamples, setCompletedExamples] = useState(new Set());
 
   const examples = [
     { text: 'hello', hash: '' },
@@ -22,8 +22,6 @@ const HashExplorer = ({ onComplete }) => {
     { text: 'Hello', hash: '' },
     { text: 'hello Dalia', hash: '' }
   ];
-
-  const [completedExamples, setCompletedExamples] = useState(new Set());
 
   // Pre-compute hashes for examples
   useEffect(() => {
@@ -33,7 +31,7 @@ const HashExplorer = ({ onComplete }) => {
       }
     };
     computeExampleHashes();
-  }, []);
+  }, []); // This effect only needs to run once on mount since examples is constant
 
   const handleInputChange = async (e) => {
     const newInput = e.target.value;
@@ -164,7 +162,6 @@ const HashExplorer = ({ onComplete }) => {
 
 const HashingModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 

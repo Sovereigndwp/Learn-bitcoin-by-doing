@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
-import { CodeEditor } from '../components/CodeEditor';
-import { hash256, mineBlock, isValidHash } from '../utils/bitcoin';
-import { Hammer, CheckCircle, Trophy, Zap, Target, Clock } from 'lucide-react';
+import { hash256 } from '../utils/bitcoin';
+import { Hammer, CheckCircle, Trophy, Target, Clock } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const MiningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 

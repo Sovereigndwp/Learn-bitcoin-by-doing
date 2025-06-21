@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Coins, CheckCircle, Trophy } from 'lucide-react';
+import { Coins, Trophy, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import BuildPerfectMoneyGame from '../components/BuildPerfectMoneyGame';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -43,6 +41,22 @@ const MoneyModule = () => {
           "- Value comparison\n\n" +
           "And with bad money, those same things break slowly and painfully, trust dies, inflation robs, and the system decays from the inside out.\n\n" +
           "💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them, without using money. What happens?"
+      }
+    },
+    {
+      title: "Perfect... Until it Wasn't",
+      type: "transition",
+      content: {
+        title: "The Evolution of Money",
+        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans.\n- Gold was sound but too heavy to move and easy to confiscate.\n- Paper money started as gold receipts but became unlimited printing.\n- Digital banking brought convenience but with surveillance and control.\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat).\n- Too hard to move (gold, large stones).\n- Too easy to control (digital banking).\n- Too easy to confiscate (gold, cash).\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
+      }
+    },
+    {
+      title: "Properties of Sound Money",
+      type: "money-game",
+      content: {
+        title: "What Makes Money Sound?",
+        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Let's explore how Bitcoin perfects these qualities in ways that were impossible before."
       }
     },
     {
@@ -123,22 +137,6 @@ const MoneyModule = () => {
             explanation: "Bitcoin represents a breakthrough in monetary technology - it combines the scarcity of gold with the convenience of digital transfer, while adding new properties like mathematical certainty and resistance to confiscation. This makes it uniquely suited for an interconnected digital world."
           }
         ]
-      }
-    },
-    {
-      title: "Perfect... Until it Wasn't",
-      type: "transition",
-      content: {
-        title: "The Evolution of Money",
-        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans.\n- Gold was sound but too heavy to move and easy to confiscate.\n- Paper money started as gold receipts but became unlimited printing.\n- Digital banking brought convenience but with surveillance and control.\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat).\n- Too hard to move (gold, large stones).\n- Too easy to control (digital banking).\n- Too easy to confiscate (gold, cash).\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
-      }
-    },
-    {
-      title: "Properties of Sound Money",
-      type: "money-game",
-      content: {
-        title: "What Makes Money Sound?",
-        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Let's explore how Bitcoin perfects these qualities in ways that were impossible before."
       }
     }
   ];

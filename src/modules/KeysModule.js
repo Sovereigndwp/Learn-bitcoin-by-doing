@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
 import CodeEditor from '../components/CodeEditor';
 import { generatePrivateKey, privateKeyToPublicKey, publicKeyToAddress } from '../utils/bitcoin';
 import { Key, CheckCircle, Trophy, Lock, Unlock, MapPin } from 'lucide-react';
@@ -8,7 +7,6 @@ import '../components/ModuleCommon.css';
 
 const KeysModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
