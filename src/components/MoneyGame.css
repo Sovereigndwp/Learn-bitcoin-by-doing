@@ -1,0 +1,213 @@
+.money-game {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.game-description {
+  color: #ffffff;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.properties-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.property-wrapper {
+  position: relative;
+}
+
+.property-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: move;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ffffff;
+}
+
+.property-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.property-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.property-card.in-dropzone {
+  background: rgba(247, 147, 26, 0.2);
+  border-color: #f7931a;
+}
+
+.property-icon {
+  color: #f7931a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(247, 147, 26, 0.1);
+  border-radius: 50%;
+}
+
+.property-content {
+  flex: 1;
+}
+
+.property-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.property-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dropzone {
+  background: rgba(255, 255, 255, 0.05);
+  border: 3px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.dropzone.over {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #f7931a;
+}
+
+.bitcoin-circle {
+  width: 120px;
+  height: 120px;
+  background: #f7931a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.bitcoin-symbol {
+  font-size: 4rem;
+  color: #ffffff;
+}
+
+.dropped-properties {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hint-button {
+  position: absolute;
+  right: 1rem;
+  bottom: -2rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.hint-button:hover {
+  color: #ffffff;
+}
+
+.hint-box {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #ffffff;
+}
+
+.hint-box button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.hint-box button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.feedback-box {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid #4CAF50;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #ffffff;
+}
+
+.feedback-box.complete {
+  background: rgba(247, 147, 26, 0.1);
+  border-color: #f7931a;
+}
+
+.completion-message {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.progress-indicator {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .dropzone {
+    min-height: 300px;
+  }
+  
+  .bitcoin-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .bitcoin-symbol {
+    font-size: 2.5rem;
+  }
+} 

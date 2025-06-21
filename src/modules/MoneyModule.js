@@ -3,6 +3,7 @@ import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Coins, CheckCircle, Trophy, Scale, Lock, Clock, Globe, Zap } from 'lucide-react';
 import '../components/ModuleCommon.css';
+import MoneyGame from '../components/MoneyGame';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -109,54 +110,10 @@ const MoneyModule = () => {
     },
     {
       title: "Properties of Sound Money",
-      type: "interactive-summary",
+      type: "money-game",
       content: {
         title: "What Makes Money Sound?",
-        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Click each property to learn how Bitcoin perfects these qualities in ways that were impossible before.",
-        properties: [
-          {
-            icon: Scale,
-            title: "Scarce & Disinflationary",
-            description: "Supply is limited and growth rate decreases over time.",
-            example: "Bitcoin's supply becomes harder to create every 4 years, unlike fiat money which increases unpredictably."
-          },
-          {
-            icon: Zap,
-            title: "Portable, Divisible & Uniform",
-            description: "Easy to move, split into smaller units, and each piece is identical.",
-            example: "Bitcoin can be split into 100 million pieces called 'sats' (short for satoshis). Just like every dollar is worth the same as any other dollar, every sat is identical. You can send any amount, from 1 sat (0.00000001 BTC) to millions of bitcoin, anywhere in the world."
-          },
-          {
-            icon: Clock,
-            title: "Durable",
-            description: "Maintains its integrity over time without degrading or corrupting.",
-            example: "Unlike physical money that wears out, Bitcoin's digital records are permanent and can be verified by anyone. Every transaction since 2009 is still perfectly intact and readable today."
-          },
-          {
-            icon: Globe,
-            title: "Open & Accessible",
-            description: "Anyone can use it without permission or approval - rich or poor have equal rights.",
-            example: "Bitcoin treats everyone equally - no bank approvals, no minimum balances, no discrimination. A farmer in Africa has the same rights as a banker in New York."
-          },
-          {
-            icon: Lock,
-            title: "Unconfiscatable & Borderless",
-            description: "Your money remains yours no matter where you go.",
-            example: "Cross any border, travel anywhere in the world, and your bitcoin stays with you - no government or bank can freeze or seize it. Access your money from any country, anytime."
-          },
-          {
-            icon: Scale,
-            title: "Rules, Not Rulers",
-            description: "Governed by transparent code, not human decisions.",
-            example: "Bitcoin's rules are fixed and equal for everyone - no special privileges."
-          },
-          {
-            icon: Globe,
-            title: "Decentralized & Secure",
-            description: "Information about who owns what is stored on thousands of computers, not just one bank's database.",
-            example: "Traditional banks keep everyone's money info in one place - one mistake or hack can affect millions. Bitcoin is different: imagine a global notebook with thousands of exact copies - no single point of failure, no accidental deletions, no central computer to hack."
-          }
-        ]
+        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Let's explore how Bitcoin perfects these qualities in ways that were impossible before."
       }
     }
   ];
@@ -215,12 +172,9 @@ const MoneyModule = () => {
           />
         );
 
-      case 'interactive-summary':
+      case 'money-game':
         return (
-          <PropertiesSummary
-            title={step.content.title}
-            description={step.content.description}
-            properties={step.content.properties}
+          <MoneyGame
             onComplete={() => handleStepComplete(index)}
           />
         );
@@ -377,56 +331,6 @@ const MoneyQuiz = ({ title, description, questions, onComplete }) => {
           Question {currentQuestion + 1} of {questions.length}
         </div>
       </div>
-    </div>
-  );
-};
-
-// Properties Summary Component
-const PropertiesSummary = ({ title, description, properties, onComplete }) => {
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [viewedProperties, setViewedProperties] = useState(new Set());
-
-  const handlePropertyClick = (index) => {
-    setSelectedProperty(index);
-    setViewedProperties(prev => new Set(prev).add(index));
-  };
-
-  const allPropertiesViewed = viewedProperties.size === properties.length;
-
-  return (
-    <div className="properties-summary">
-      <h2>{title}</h2>
-      <p className="summary-description">{description}</p>
-
-      <div className="properties-grid">
-        {properties.map((prop, index) => {
-          const IconComponent = prop.icon;
-          return (
-            <div
-              key={index}
-              className={`property-card ${selectedProperty === index ? 'selected' : ''} ${
-                viewedProperties.has(index) ? 'viewed' : ''
-              }`}
-              onClick={() => handlePropertyClick(index)}
-            >
-              <IconComponent size={24} />
-              <h3>{prop.title}</h3>
-              {selectedProperty === index && (
-                <div className="property-details">
-                  <p>{prop.description}</p>
-                  <p className="property-example">{prop.example}</p>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {allPropertiesViewed && (
-        <button className="continue-button" onClick={onComplete}>
-          Continue
-        </button>
-      )}
     </div>
   );
 };
