@@ -16,14 +16,7 @@ import {
   Star,
   Globe,
   AlertCircle,
-  Hammer,
-  FileCode,
-  Scroll,
-  Blocks,
-  Lightbulb,
-  Wallet,
-  Cpu,
-  Bitcoin
+  Hammer
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';

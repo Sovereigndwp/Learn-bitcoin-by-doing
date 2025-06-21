@@ -1,4 +1,5 @@
 import MoneyModule from '../modules/MoneyModule';
+import MoneyDesignerModule from '../modules/MoneyDesignerModule';
 import BitcoinBasicsModule from '../modules/BitcoinBasicsModule';
 import TransactionsModule from '../modules/TransactionsModule';
 import CustodyModule from '../modules/CustodyModule';
@@ -17,6 +18,14 @@ export const moduleRegistry = {
     description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.',
     component: MoneyModule,
     order: 1,
+    group: 'fundamentals'
+  },
+  'money-designer': {
+    id: 'money-designer',
+    title: 'Design Your Perfect Money',
+    description: 'Interactive tool to understand what makes good money by designing your own.',
+    component: MoneyDesignerModule,
+    order: 1.5,
     group: 'fundamentals'
   },
   'bitcoin-basics': {

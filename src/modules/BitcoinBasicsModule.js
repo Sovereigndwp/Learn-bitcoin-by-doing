@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Bitcoin, CheckCircle } from 'lucide-react';
+import { Bitcoin, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const BitcoinBasicsModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
+  const { completeModule } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -56,6 +54,31 @@ const BitcoinBasicsModule = () => {
 
   return (
     <div className="module-container">
+      <div className="module-header">
+        <h1 className="module-title">
+          <Bitcoin className="module-icon" />
+          Bitcoin Basics
+        </h1>
+        {completedSteps.size === steps.length && (
+          <div className="completion-badge">
+            <Trophy size={24} />
+            Completed!
+          </div>
+        )}
+      </div>
+
+      <div className="module-progress">
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
+          />
+        </div>
+        <span className="progress-text">
+          {completedSteps.size} / {steps.length} steps completed
+        </span>
+      </div>
+
       <div className="module-content">
         {currentStep < steps.length ? (
           renderStep(steps[currentStep], currentStep)
