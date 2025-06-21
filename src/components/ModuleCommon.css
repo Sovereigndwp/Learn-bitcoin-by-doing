@@ -6,7 +6,7 @@
   color: #fff;
 }
 
-.module-container *:not(input):not(button):not(.hex-button):not(.example-buttons button):not(.quick-examples button) {
+.module-container *:not(input):not(button):not(.hex-button):not(.example-buttons button):not(.quick-examples button):not(.quiz-option):not(.question-card):not(.explanation-card):not(.question-card *):not(.explanation-card *) {
   color: #fff;
 }
 
@@ -221,10 +221,15 @@
   margin-bottom: 2rem;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+.question-card * {
+  color: #1a1a1a;
 }
 
 .question-prompt {
-  color: #333333;
+  color: #1a1a1a;
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   font-weight: 500;
@@ -248,14 +253,9 @@
   border: 2px solid #e0e0e0;
   border-radius: 8px;
   background: #ffffff;
-  color: #333333;
-  text-align: left;
+  color: #1a1a1a;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 /* Ensure column layout in all modules */
@@ -299,19 +299,19 @@
 .quiz-option.selected {
   background: #e3f2fd;
   border-color: #2196f3;
-  color: #1565c0;
+  color: #ffffff;
 }
 
 .quiz-option.correct {
   background: #e8f5e9;
   border-color: #4caf50;
-  color: #2e7d32;
+  color: #ffffff;
 }
 
 .quiz-option.incorrect {
   background: #ffebee;
   border-color: #f44336;
-  color: #c62828;
+  color: #ffffff;
 }
 
 .answer-indicator {
@@ -356,9 +356,10 @@
 .explanation-card {
   background: #ffffff;
   border-radius: 12px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
+  padding: 2rem;
+  margin: 1rem 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
 }
 
 .explanation-card.correct {
@@ -372,14 +373,14 @@
 }
 
 .explanation-card .feedback-text {
+  color: #1a1a1a;
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 1rem;
-  color: #333333;
 }
 
 .explanation-card .explanation-text {
-  color: #555555;
+  color: #1a1a1a;
   line-height: 1.5;
 }
 
@@ -2160,7 +2161,7 @@
 .feedback-text {
   font-weight: 500;
   margin-bottom: 1rem;
-  color: inherit;
+  color: #1a1a1a;
 }
 
 .next-button {

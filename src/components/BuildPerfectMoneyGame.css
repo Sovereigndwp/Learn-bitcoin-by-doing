@@ -30,7 +30,9 @@
   color: #ffd700;
   font-style: italic;
   font-size: 1.1rem;
-  opacity: 0.9;
+  opacity: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
 }
 
 .hint-box {
@@ -46,11 +48,13 @@
   align-items: center;
   gap: 1rem;
   transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .hint-box:hover {
   background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
+  color: #ffffff;
 }
 
 .game-area {
@@ -76,18 +80,21 @@
   transition: all 0.3s ease;
   text-align: center;
   font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .property-card:hover:not(.disabled) {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
   border-color: #f7931a;
+  color: #ffffff;
 }
 
 .property-card.disabled {
-  opacity: 0.5;
+  opacity: 0.7;
   cursor: not-allowed;
   background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .drop-zone {
@@ -128,7 +135,8 @@
   font-size: 1.1rem;
   margin-top: 1rem;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
 }
 
 .feedback-text {
@@ -150,12 +158,18 @@
   text-align: center;
   color: #ffffff;
   animation: fadeIn 0.5s ease-out;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .completion-box h2 {
   margin: 1rem 0;
   font-size: 1.8rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.completion-box * {
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .continue-button {
