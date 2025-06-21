@@ -16,7 +16,7 @@ const MoneyModule = () => {
       type: "intro",
       content: {
         title: "This Is Where The Rabbit Hole Actually Starts",
-        text: "Before diving into Bitcoin, you've got to understand the tool it's trying to fix.\n\nImagine a world without money. You'd quickly run into three major problems:\n\n1. Trade Becomes a Nightmare\n\n• You're a web designer, but you're hungry.\n• The baker has bread—but he doesn't need a website.\n• Without a common exchange tool, trade grinds to a halt unless you magically find someone who wants exactly what you offer.\n\n2. Saving Is Unsafe and Unreliable\n\n• You want to save for next year's harvest—or your kid's school.\n• But how do you store value? Grain rots. Livestock gets sick.\n• Without durable, reliable money, your future is at risk.\n\n3. Value Becomes a Guessing Game\n\n• Is one chicken worth ten apples or twenty?\n• What if the apples are bruised? Or the chicken is old?\n• Without a shared unit of value, every trade is a confusing negotiation.\n\nLike all technologies, it's evolved—each form solving some problems while creating others:\n\n🐚 Shells & beads\n   • Easy to carry\n   • Easy to cheat\n\n💎 Gold\n   • Hard to fake\n   • Hard to move\n\n📜 Paper money\n   • Convenient\n   • Easy to print into worthlessness\n\n💻 Digital banking\n   • Fast transfers\n   • Full of middlemen\n\n₿ Bitcoin\n   • The first upgrade that fixes the flaws at the root\n   • No middlemen, can't be printed away, easy to move\n\n• Your Journey\n\nIn this module, you'll break down:\n\n1. What makes money trustworthy\n2. Why every past form had trade-offs\n3. How Bitcoin fixes the flaws built into the system\n4. And why this matters for your freedom\n\nLet's fix your money map. 🚀"
+        text: "Before diving into Bitcoin, you've got to understand the tool it's trying to fix.\n\nImagine a world without money. You'd quickly run into three major problems:\n\n1. Trade Becomes a Nightmare\n\n• You're a web designer, but you're hungry.\n• The baker has bread, but he doesn't need a website.\n• Without a common exchange tool, trade grinds to a halt unless you magically find someone who wants exactly what you offer.\n\n2. Saving Is Unsafe and Unreliable\n\n• You want to save for next year's harvest—or your kid's school.\n• But how do you store value? Grain rots. Livestock gets sick. Tools rust.\n• Without durable, reliable money, your future is at risk.\n\n3. Value Becomes a Guessing Game\n\n• Is one chicken worth ten apples or twenty?\n• What if the apples are bruised? Or the chicken is old?\n• Without a shared unit of value, every trade is a confusing negotiation.\n\nLike all technologies, it's evolved—each form solving some problems while creating others:\n\n🐚 Shells & beads\n   • Easy to carry\n   • Easy to cheat\n\n💎 Gold\n   • Hard to fake\n   • Hard to move\n\n📜 Paper money\n   • Convenient\n   • Easy to print into worthlessness\n\n💻 Digital banking\n   • Fast transfers\n   • Full of middlemen\n\n₿ Bitcoin\n   • The first upgrade that fixes the flaws at the root\n   • No middlemen, can't be printed away, easy to move\n\n• Your Journey\n\nIn this module, you'll break down:\n\n1. What makes money trustworthy\n2. Why every past form had trade-offs\n3. How Bitcoin fixes the flaws built into the system\n4. And why this matters for your freedom\n\nLet's fix your money map. 🚀"
       }
     },
     {
@@ -336,22 +336,36 @@ const MoneyQuiz = ({ title, description, questions, onComplete }) => {
             <button
               key={index}
               className={`choice-button ${
-                answers[currentQuestion] === index
+                answers[currentQuestion] === index ? 'selected' : ''
+              } ${
+                showExplanation
                   ? index === question.correct
                     ? 'correct'
-                    : 'incorrect'
+                    : answers[currentQuestion] === index
+                    ? 'incorrect'
+                    : ''
                   : ''
               }`}
               onClick={() => handleAnswer(index)}
               disabled={showExplanation}
             >
               {choice}
+              {showExplanation && index === answers[currentQuestion] && (
+                <span className="answer-indicator">
+                  {index === question.correct ? ' ✅' : ' ❌'}
+                </span>
+              )}
             </button>
           ))}
         </div>
 
         {showExplanation && (
-          <div className="explanation-card">
+          <div className={`explanation-card ${answers[currentQuestion] === question.correct ? 'correct' : 'incorrect'}`}>
+            <p className="feedback-text">
+              {answers[currentQuestion] === question.correct 
+                ? '✅ Correct! Well done!' 
+                : '❌ Not quite right. Here\'s why:'}
+            </p>
             <p className="explanation-text">{question.explanation}</p>
             <button className="next-button" onClick={handleNext}>
               {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}

@@ -268,14 +268,23 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
             disabled={showResult}
           >
             {option}
+            {showResult && index === selectedAnswer && (
+              <span className="answer-indicator">
+                {index === correct ? ' ✅' : ' ❌'}
+              </span>
+            )}
           </button>
         ))}
       </div>
 
       {showResult && (
-        <div className={`quiz-result ${selectedAnswer === correct ? 'correct' : 'incorrect'}`}>
-          <p>{selectedAnswer === correct ? '🔐 Correct!' : '❌ Not quite right.'}</p>
-          <p className="explanation">{explanation}</p>
+        <div className={`explanation-card ${selectedAnswer === correct ? 'correct' : 'incorrect'}`}>
+          <p className="feedback-text">
+            {selectedAnswer === correct 
+              ? '🔐 Correct! Well done!' 
+              : '❌ Not quite right. Here\'s why:'}
+          </p>
+          <p className="explanation-text">{explanation}</p>
           {selectedAnswer !== correct && (
             <button className="try-again-button" onClick={() => {
               setShowResult(false);
