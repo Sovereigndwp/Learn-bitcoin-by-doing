@@ -17,32 +17,32 @@ const MoneyModule = () => {
       type: "intro",
       content: {
         title: "What Happens Without Money?",
-        text: "Before we can fix the money, we need to understand *why it exists* in the first place.\n\n" +
+        text: "Before we can fix the money, we need to understand why it exists in the first place.\n\n" +
           "Imagine waking up in a world with no money. Not broken money. No money at all.\n\n" +
           "🔄 Problem 1: Trade Stops\n" +
           "You're a great baker. I fix shoes. I want bread, but you don't need repairs.\n" +
           "Now we both starve.\n\n" +
           "Without a shared exchange tool, every trade depends on a perfect match of needs. Economies shrink. Cities disappear.\n" +
-          "**Money solves this** by letting people swap value indirectly — I fix the teacher's shoes, she pays me, and I use that to buy your bread.\n\n" +
+          "Money solves this by letting people swap value indirectly, I fix the teacher's shoes, she pays me, and I use that to buy your bread.\n\n" +
 
           "🛑 Problem 2: You Can't Save\n" +
           "Let's say you finally get ahead. You grow extra food. You want to save it for next year.\n" +
           "But it rots. It molds. Rats get it.\n" +
           "Or maybe you raise a goat. Then it gets sick.\n\n" +
-          "**Money solves this** by letting you store your work in something that lasts — and trade it later, when you need it.\n\n" +
+          "Money solves this by letting you store your work in something that lasts, and trade it later, when you need it.\n\n" +
 
           "🎯 Problem 3: You Can't Measure or Compare\n" +
           "I offer you a chicken. You offer me six apples.\n" +
           "Is that fair? Depends. Are they bruised? Is the chicken old?\n" +
           "And what if I want socks, not apples? Or I need schoolbooks?\n\n" +
-          "**Money solves this** by giving us a universal measuring stick. It lets you price everything in the same unit, even across time and space.\n\n" +
+          "Money solves this by giving us a universal measuring stick. It lets you price everything in the same unit, even across time and space.\n\n" +
 
           "Without money, you lose:\n" +
           "- Trade\n" +
           "- Savings\n" +
           "- Value comparison\n\n" +
-          "And with *bad* money, those same things break slowly and painfully — trust dies, inflation robs, and the system decays from the inside out.\n\n" +
-          "💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them — without using money. What happens?"
+          "And with bad money, those same things break slowly and painfully, trust dies, inflation robs, and the system decays from the inside out.\n\n" +
+          "💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them, without using money. What happens?"
       }
     },
     {
