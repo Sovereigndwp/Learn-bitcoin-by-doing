@@ -18,27 +18,10 @@ const allProperties = [
   { text: 'Inflation encourages spending', isCorrect: false }
 ];
 
-const getFeedbackMessage = (score) => {
-  switch(score) {
-    case 1:
-      return "Nice one.";
-    case 2:
-      return "That's 2 of 5.";
-    case 3:
-      return "That's 3 of 5.";
-    case 4:
-      return "Getting closer...";
-    case 5:
-      return "All 5 locked in? Let's see what you just invented.";
-    default:
-      return "🪙 0 / 5 properties identified";
-  }
-};
-
 const BuildPerfectMoneyGame = ({ onComplete }) => {
   const [selected, setSelected] = useState([]);
   const [score, setScore] = useState(0);
-  const [feedback, setFeedback] = useState(getFeedbackMessage(0));
+  const [feedback, setFeedback] = useState('');
 
   const handleDrop = (prop) => {
     if (selected.includes(prop.text)) return;
@@ -46,21 +29,39 @@ const BuildPerfectMoneyGame = ({ onComplete }) => {
     if (prop.isCorrect) {
       const newScore = score + 1;
       setScore(newScore);
-      setFeedback(getFeedbackMessage(newScore));
-      if (newScore >= 5) {
+      const messages = [
+        '✅ That one passes the test of time.',
+        '🧠 Smart. The Romans wish they had this.',
+        '📈 Strong choice. That\'s money muscle.',
+        '🔒 A trait worth locking in.',
+        '🎯 Nailed it. History agrees with you.',
+        '💥 One step closer to bulletproof money.'
+      ];
+      setFeedback(messages[Math.floor(Math.random() * messages.length)]);
+      if (newScore >= 6) {
         onComplete && onComplete();
       }
     } else {
-      setFeedback('Think again… does that make your money safer or more dangerous?');
+      const wrongMsgs = [
+        '🚫 Looks good on paper... until it isn\'t.',
+        '👎 That\'s how inflation sneaks in the back door.',
+        '🧯 This one has burned more economies than fire.',
+        '💸 And that\'s how they quietly stole your savings.',
+        '🤥 Trust-based systems? Cute.',
+        '📉 Bad call. This breaks under pressure.'
+      ];
+      setFeedback(wrongMsgs[Math.floor(Math.random() * wrongMsgs.length)]);
     }
   };
 
   const hintList = [
-    '💡 What happens when money loses value every year?',
-    '💡 Who should decide if you get to use money?',
-    '💡 Can money survive war or theft?',
-    '💡 Should money rely on trust… or math?',
-    '💡 Can anyone stop you from using your money?' 
+    '💬 Design the wrong money, and the whole game falls apart. No pressure.',
+    '💬 If they can print more, is it even yours?',
+    '💬 What happens when your money stops working, but rent is due?',
+    '💬 Trust is great... until someone breaks it.',
+    '💬 Sound money doesn\'t ask for permission.',
+    '💬 If money melts or rusts, it\'s a ticking time bomb.',
+    '💬 They said it was backed. Then they changed the rules.'
   ];
 
   const [hintIndex, setHintIndex] = useState(0);
@@ -73,10 +74,10 @@ const BuildPerfectMoneyGame = ({ onComplete }) => {
     <div className="module-container">
       <h1 className="module-title">Build the Perfect Money</h1>
       <div className="module-description">
-        <p>You've seen what breaks money. Now try building one that actually works.</p>
-        <p>Drag the properties you believe are essential into the circle.</p>
-        <p>What would make a money system strong, fair, and unstoppable?</p>
-        <p className="warning-text">Choose wisely. Some traits may sound helpful… but break things over time.</p>
+        <p>Most money starts strong and ends in disaster.</p>
+        <p>Let's see if you can do better.</p>
+        <p>Choose the traits you think make money work.</p>
+        <p className="warning-text">If you're right, you'll know — and if you're wrong, history's already proven it.</p>
       </div>
 
       <div className="hint-box" onClick={handleHint}>
@@ -99,13 +100,13 @@ const BuildPerfectMoneyGame = ({ onComplete }) => {
         <div className="drop-zone">
           <div className="drop-circle">
             🪙
-            <p>{score} / 5 properties identified</p>
+            <p>{score} / 6 properties identified</p>
           </div>
           <div className="feedback-text">{feedback}</div>
         </div>
       </div>
 
-      {score >= 5 && (
+      {score >= 6 && (
         <div className="completion-box">
           <CheckCircle size={32} />
           <h2>You just built Bitcoin — without even knowing it.</h2>
