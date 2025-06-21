@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components/ModuleCommon.css';
 import './BuildPerfectMoneyGame.css';
 import { CheckCircle, XOctagon, HelpCircle } from 'lucide-react';
 
-const allProperties = [
+const initialProperties = [
   { text: 'Scarce / Hard to Create', isCorrect: true },
   { text: 'Durable', isCorrect: true },
   { text: 'Divisible & Uniform', isCorrect: true },
@@ -18,10 +18,26 @@ const allProperties = [
   { text: 'Inflation encourages spending', isCorrect: false }
 ];
 
+// Fisher-Yates shuffle algorithm
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const BuildPerfectMoneyGame = ({ onComplete }) => {
   const [selected, setSelected] = useState([]);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState('');
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    // Randomize properties when component mounts
+    setProperties(shuffleArray(initialProperties));
+  }, []);
 
   const handleDrop = (prop) => {
     if (selected.includes(prop.text)) return;
@@ -86,7 +102,7 @@ const BuildPerfectMoneyGame = ({ onComplete }) => {
 
       <div className="game-area">
         <div className="property-list">
-          {allProperties.map((prop, i) => (
+          {properties.map((prop, i) => (
             <div
               key={i}
               className={`property-card ${selected.includes(prop.text) ? 'disabled' : ''}`}
