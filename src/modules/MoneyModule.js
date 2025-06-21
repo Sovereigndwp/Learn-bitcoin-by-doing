@@ -16,8 +16,33 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "This Is Where The Rabbit Hole Actually Starts",
-        text: "Before diving into Bitcoin, you've got to understand the tool it's trying to fix.\n\nImagine a world without money. You'd quickly run into three major problems:\n\n1. Trade Becomes a Nightmare\n\n• You're a web designer, but you're hungry.\n• The baker has bread, but he doesn't need a website.\n• Without a common exchange tool, trade grinds to a halt unless you magically find someone who wants exactly what you offer.\n\n2. Saving Is Unsafe and Unreliable\n\n• You want to save for next year's harvest—or your kid's school.\n• But how do you store value? Grain rots. Livestock gets sick. Tools rust.\n• Without durable, reliable money, your future is at risk.\n\n3. Value Becomes a Guessing Game\n\n• Is one chicken worth ten apples or twenty?\n• What if the apples are bruised? Or the chicken is old?\n• Without a shared unit of value, every trade is a confusing negotiation.\n\nLike all technologies, it's evolved—each form solving some problems while creating others:\n\n🐚 Shells & beads\n   • Easy to carry\n   • Easy to cheat\n\n💎 Gold\n   • Hard to fake\n   • Hard to move\n\n📜 Paper money\n   • Convenient\n   • Easy to print into worthlessness\n\n💻 Digital banking\n   • Fast transfers\n   • Full of middlemen\n\n₿ Bitcoin\n   • The first upgrade that fixes the flaws at the root\n   • No middlemen, can't be printed away, easy to move\n\n• Your Journey\n\nIn this module, you'll break down:\n\n1. What makes money trustworthy\n2. Why every past form had trade-offs\n3. How Bitcoin fixes the flaws built into the system\n4. And why this matters for your freedom\n\nLet's fix your money map. 🚀"
+        title: "What Happens Without Money?",
+        text: "Before we can fix the money, we need to understand *why it exists* in the first place.\n\n" +
+          "Imagine waking up in a world with no money. Not broken money. No money at all.\n\n" +
+          "🔄 Problem 1: Trade Stops\n" +
+          "You're a great baker. I fix shoes. I want bread, but you don't need repairs.\n" +
+          "Now we both starve.\n\n" +
+          "Without a shared exchange tool, every trade depends on a perfect match of needs. Economies shrink. Cities disappear.\n" +
+          "**Money solves this** by letting people swap value indirectly — I fix the teacher's shoes, she pays me, and I use that to buy your bread.\n\n" +
+
+          "🛑 Problem 2: You Can't Save\n" +
+          "Let's say you finally get ahead. You grow extra food. You want to save it for next year.\n" +
+          "But it rots. It molds. Rats get it.\n" +
+          "Or maybe you raise a goat. Then it gets sick.\n\n" +
+          "**Money solves this** by letting you store your work in something that lasts — and trade it later, when you need it.\n\n" +
+
+          "🎯 Problem 3: You Can't Measure or Compare\n" +
+          "I offer you a chicken. You offer me six apples.\n" +
+          "Is that fair? Depends. Are they bruised? Is the chicken old?\n" +
+          "And what if I want socks, not apples? Or I need schoolbooks?\n\n" +
+          "**Money solves this** by giving us a universal measuring stick. It lets you price everything in the same unit, even across time and space.\n\n" +
+
+          "Without money, you lose:\n" +
+          "- Trade\n" +
+          "- Savings\n" +
+          "- Value comparison\n\n" +
+          "And with *bad* money, those same things break slowly and painfully — trust dies, inflation robs, and the system decays from the inside out.\n\n" +
+          "💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them — without using money. What happens?"
       }
     },
     {
