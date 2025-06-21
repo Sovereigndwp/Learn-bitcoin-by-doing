@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Coins, CheckCircle, Trophy, Scale, Lock, Clock, Globe, Zap } from 'lucide-react';
+import { Coins, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import MoneyGame from '../components/MoneyGame';
 
@@ -118,24 +118,12 @@ const MoneyModule = () => {
     }
   ];
 
-  const handleStepComplete = (stepIndex) => {
-    try {
-      const newCompleted = new Set(completedSteps);
-      newCompleted.add(stepIndex);
-      setCompletedSteps(newCompleted);
-      
-      // Only advance to next step if there is one
-      if (stepIndex < steps.length - 1) {
-        setCurrentStep(stepIndex + 1);
-      }
-      
-      // Check if all steps are completed
-      if (newCompleted.size === steps.length) {
-        completeModule('money');
-      }
-    } catch (error) {
-      console.error('Error in handleStepComplete:', error);
+  const handleStepComplete = (index) => {
+    setCompletedSteps(prev => new Set(prev).add(index));
+    if (index === steps.length - 1) {
+      completeModule('money');
     }
+    setCurrentStep(index + 1);
   };
 
   const renderStep = (step, index) => {

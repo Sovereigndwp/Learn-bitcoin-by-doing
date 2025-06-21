@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
-import CodeEditor from '../components/CodeEditor';
-import { hexToDec, decToHex, hexToLittleEndian } from '../utils/bitcoin';
 import { Calculator, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const NumbersModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -129,23 +125,12 @@ const NumbersModule = () => {
     }
   ];
 
-  const handleStepComplete = (stepIndex) => {
-    try {
-      if (typeof stepIndex !== 'number' || stepIndex < 0 || stepIndex >= steps.length) {
-        console.error('Invalid step index:', stepIndex);
-        return;
-      }
-
-      const newCompleted = new Set(completedSteps);
-      newCompleted.add(stepIndex);
-      setCompletedSteps(newCompleted);
-      
-      if (newCompleted.size === steps.length && typeof completeModule === 'function') {
-        completeModule('numbers');
-      }
-    } catch (error) {
-      console.error('Error in handleStepComplete:', error);
+  const handleStepComplete = (index) => {
+    setCompletedSteps(prev => new Set(prev).add(index));
+    if (index === steps.length - 1) {
+      completeModule('numbers');
     }
+    setCurrentStep(index + 1);
   };
 
   const renderStep = (step, index) => {
@@ -165,12 +150,9 @@ const NumbersModule = () => {
             <p className="intro-text">{step.content.text}</p>
             <button 
               className="continue-button"
-              onClick={() => {
-                handleStepComplete(index);
-                setCurrentStep(index + 1);
-              }}
+              onClick={() => handleStepComplete(index)}
             >
-              Continue
+              Start Learning
             </button>
           </div>
         );
@@ -180,10 +162,7 @@ const NumbersModule = () => {
           <ExamplesStep
             title={step.content.title}
             sections={step.content.sections}
-            onComplete={() => {
-              handleStepComplete(index);
-              setCurrentStep(index + 1);
-            }}
+            onComplete={() => handleStepComplete(index)}
           />
         );
 
@@ -204,23 +183,20 @@ const NumbersModule = () => {
             title={step.content.title}
             description={step.content.description}
             challenges={step.content.challenges}
-            onComplete={() => {
-              handleStepComplete(index);
-              setCurrentStep(index + 1);
-            }}
+            onComplete={() => handleStepComplete(index)}
           />
         );
 
       case 'reflection':
-                  return (
-            <ReflectionStep
-              question={step.content.question}
-              placeholder={step.content.placeholder}
-              content={step.content}
-              onComplete={() => handleStepComplete(index)}
-              setCurrentStep={setCurrentStep}
-              isLastStep={index === steps.length - 1}
-            />
+        return (
+          <ReflectionStep
+            question={step.content.question}
+            placeholder={step.content.placeholder}
+            content={step.content}
+            onComplete={() => handleStepComplete(index)}
+            setCurrentStep={setCurrentStep}
+            isLastStep={index === steps.length - 1}
+          />
         );
 
       default:
@@ -669,223 +645,6 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
           <p>{selected === correct ? '🎉 Correct!' : '❌ Incorrect'}</p>
           <p className="explanation">{explanation}</p>
         </div>
-      )}
-    </div>
-  );
-};
-
-const ChallengeStep = ({ title, description, content, onComplete }) => {
-  const [currentChallenge, setCurrentChallenge] = useState(0);
-  const [showHint, setShowHint] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [userAnswer, setUserAnswer] = useState('');
-  const [completed, setCompleted] = useState(new Set());
-
-  const validateAnswer = (answer) => {
-    if (!answer) return false;
-    
-    switch (currentChallengeData.inputType) {
-      case 'number':
-        return !isNaN(answer) && answer.toString() === currentChallengeData.answer;
-      case 'sequence':
-        const userSeq = answer.split(',').map(n => n.trim());
-        const correctSeq = currentChallengeData.answer.split(',');
-        return userSeq.length === correctSeq.length && 
-               userSeq.every((n, i) => n === correctSeq[i]);
-      case 'code':
-        return answer.replace(/\s+/g, '') === currentChallengeData.answer;
-      default:
-        return false;
-    }
-  };
-
-  const handleInputChange = (value) => {
-    setUserAnswer(value);
-    setShowError(false);
-  };
-
-  const checkAnswer = () => {
-    if (!userAnswer) {
-      setShowError(true);
-      return;
-    }
-
-    const isCorrect = validateAnswer(userAnswer);
-    
-    if (isCorrect) {
-      setShowSuccess(true);
-      setShowError(false);
-      setShowHint(false);
-    } else {
-      setShowError(true);
-      setTimeout(() => setShowError(false), 2000);
-    }
-  };
-
-  // Validate props and provide defaults
-  const challenges = content?.challenges || [];
-  const currentChallengeData = challenges[currentChallenge] || {
-    title: '',
-    description: '',
-    hint: '',
-    answer: ''
-  };
-
-  const handleNext = () => {
-    if (currentChallenge < challenges.length - 1) {
-      setCurrentChallenge(currentChallenge + 1);
-      resetState();
-    } else if (completed.size === challenges.length) {
-      onComplete?.();
-    }
-  };
-
-  const resetState = () => {
-    setShowHint(false);
-    setShowSuccess(false);
-    setShowError(false);
-    setUserAnswer('');
-  };
-
-  const markCompleted = () => {
-    const newCompleted = new Set(completed);
-    newCompleted.add(currentChallenge);
-    setCompleted(newCompleted);
-    
-    // Show success message briefly before moving on
-    setTimeout(handleNext, 1500);
-  };
-
-  // If no challenges are available, show an error message
-  if (challenges.length === 0) {
-    return (
-      <div className="challenge-step error">
-        <h2>Oops!</h2>
-        <p>No challenges available at the moment. Please try again later.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="challenge-step">
-      <h2>{content.title}</h2>
-      <p className="description">{content.description}</p>
-
-      <div className="challenge-progress">
-        {challenges.map((_, index) => (
-          <div 
-            key={index}
-            className={`progress-dot ${currentChallenge === index ? 'active' : ''} ${completed.has(index) ? 'completed' : ''}`}
-          />
-        ))}
-      </div>
-
-      <div className="challenge-card">
-        <div className="game-header">
-          <span className="game-emoji">{currentChallengeData.gameImage}</span>
-          <h3>{currentChallengeData.title}</h3>
-        </div>
-
-        <p className="game-description">{currentChallengeData.description}</p>
-
-        <div className="answer-input-section">
-          {currentChallengeData.inputType === 'number' && (
-            <div className="number-input">
-              <input
-                type="number"
-                placeholder={`Enter ${currentChallengeData.context}`}
-                onChange={(e) => handleInputChange(e.target.value)}
-                value={userAnswer}
-                className="game-input"
-              />
-              <span className="context-label">{currentChallengeData.context}</span>
-            </div>
-          )}
-
-          {currentChallengeData.inputType === 'sequence' && (
-            <div className="sequence-input">
-              <input
-                type="text"
-                placeholder="Enter numbers separated by commas"
-                onChange={(e) => handleInputChange(e.target.value)}
-                value={userAnswer}
-                className="game-input"
-              />
-              <span className="context-label">{currentChallengeData.context}</span>
-            </div>
-          )}
-
-          {currentChallengeData.inputType === 'code' && (
-            <div className="code-input">
-              <input
-                type="text"
-                placeholder="Enter the flipped code"
-                onChange={(e) => handleInputChange(e.target.value)}
-                value={userAnswer}
-                className="game-input code-style"
-              />
-              <span className="context-label">{currentChallengeData.context}</span>
-            </div>
-          )}
-
-          <button 
-            className="submit-answer"
-            onClick={checkAnswer}
-          >
-            Submit Answer! 🎮
-          </button>
-        </div>
-
-        <div className="game-controls">
-          {!showHint && (
-            <button 
-              className="hint-button"
-              onClick={() => setShowHint(true)}
-            >
-              Need a Hint? 💡
-            </button>
-          )}
-        </div>
-
-        {showHint && (
-          <div className="hint-box">
-            <p>💡 {currentChallengeData.hint}</p>
-          </div>
-        )}
-
-        {showSuccess && (
-          <div className="success-box">
-            <p className="success-message">{currentChallengeData.successMessage}</p>
-            <button 
-              className="next-challenge"
-              onClick={() => {
-                markCompleted();
-                setShowSuccess(false);
-              }}
-            >
-              Next Challenge! →
-            </button>
-          </div>
-        )}
-
-        {showError && (
-          <div className="error-box">
-            <p>Not quite! Try again or use the hint! 🎮</p>
-          </div>
-        )}
-      </div>
-
-      {currentChallenge > 0 && (
-                  <button 
-            className="back-button"
-            onClick={() => {
-              setCurrentChallenge(currentChallenge - 1);
-              resetState();
-            }}
-          >
-            ← Previous Challenge
-          </button>
       )}
     </div>
   );

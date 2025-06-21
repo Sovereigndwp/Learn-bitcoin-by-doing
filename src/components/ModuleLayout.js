@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowLeft, Home, Globe, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Home, Globe, AlertCircle } from 'lucide-react';
 import './ModuleLayout.css';
 
 const ModuleLayout = ({ children }) => {

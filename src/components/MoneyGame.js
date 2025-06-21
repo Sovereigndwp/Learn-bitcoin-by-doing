@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Scale, Zap, Clock, Globe, Lock } from 'lucide-react';
@@ -29,7 +29,7 @@ const moneyProperties = [
     title: 'Durable & Unchangeable',
     description: 'Maintains its integrity over time without degrading.',
     hint: 'Paper money wears out, digital records can be altered - what never changes?',
-    correctFeedback: 'Exactly! Bitcoin's blockchain is permanent and immutable - every transaction since 2009 remains intact.',
+    correctFeedback: 'Exactly! Bitcoin\'s blockchain is permanent and immutable - every transaction since 2009 remains intact.',
     category: 'integrity'
   },
   {
@@ -47,7 +47,7 @@ const moneyProperties = [
     title: 'Unconfiscatable & Borderless',
     description: 'Your money remains yours no matter where you go.',
     hint: 'Can your current money be frozen or seized by others?',
-    correctFeedback: 'Excellent! Bitcoin can't be frozen or seized if you control your private keys.',
+    correctFeedback: 'Excellent! Bitcoin can\'t be frozen or seized if you control your private keys.',
     category: 'sovereignty'
   }
 ];

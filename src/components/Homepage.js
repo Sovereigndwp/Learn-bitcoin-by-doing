@@ -22,7 +22,8 @@ import {
   Blocks,
   Lightbulb,
   Wallet,
-  Cpu
+  Cpu,
+  Bitcoin
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';

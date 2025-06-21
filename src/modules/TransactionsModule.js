@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ArrowLeftRight, Wallet, Send, DollarSign, ShieldCheck, Trophy } from 'lucide-react';
+import { useProgress } from '../contexts/ProgressContext';
+import { Coins, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const TransactionsModule = () => {
@@ -10,7 +11,7 @@ const TransactionsModule = () => {
     {
       id: 'receiving',
       title: 'Receiving Bitcoin',
-      icon: <Wallet size={24} />,
+      icon: <Coins size={24} />,
       description: 'Learn how to safely receive bitcoin from others',
       interactive: {
         scenario: 'Someone wants to send you bitcoin. Let\'s learn the right way to receive it:',
@@ -25,7 +26,7 @@ const TransactionsModule = () => {
     {
       id: 'sending',
       title: 'Sending Bitcoin',
-      icon: <Send size={24} />,
+      icon: <Coins size={24} />,
       description: 'Master the art of sending bitcoin safely and efficiently',
       interactive: {
         scenario: 'You want to send bitcoin to someone. Let\'s do it right:',
@@ -40,7 +41,7 @@ const TransactionsModule = () => {
     {
       id: 'fees',
       title: 'Understanding Fees',
-      icon: <DollarSign size={24} />,
+      icon: <Coins size={24} />,
       description: 'Learn how to choose the right fee for your needs',
       interactive: {
         scenario: 'Current network conditions:',
@@ -55,7 +56,7 @@ const TransactionsModule = () => {
     {
       id: 'privacy',
       title: 'Transaction Privacy',
-      icon: <ShieldCheck size={24} />,
+      icon: <Coins size={24} />,
       description: 'Best practices for maintaining privacy when transacting',
       interactive: {
         scenario: 'Let\'s learn how to keep your transactions private:',
@@ -87,7 +88,7 @@ const TransactionsModule = () => {
     <div className="module-container">
       <div className="module-header">
         <h1 className="module-title">
-          <ArrowLeftRight className="module-icon" />
+          <Coins className="module-icon" />
           The Transaction Journey
         </h1>
       </div>
@@ -95,7 +96,7 @@ const TransactionsModule = () => {
       <div className="step-content-container">
         <div className="intro-step">
           <div className="step-icon">
-            <ArrowLeftRight size={48} />
+            <Coins size={48} />
           </div>
           <h2>Welcome to The Transaction Workshop!</h2>
           <p className="intro-text">

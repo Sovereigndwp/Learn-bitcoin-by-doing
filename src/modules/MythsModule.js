@@ -6,6 +6,7 @@ const MythsModule = () => {
   const [selectedMyth, setSelectedMyth] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [userGuess, setUserGuess] = useState(null);
+  const [viewedMyths, setViewedMyths] = useState(new Set());
 
   const myths = [
     {
@@ -78,18 +79,24 @@ const MythsModule = () => {
     }
   ];
 
-  const handleMythSelect = (mythId) => {
+  const handleMythClick = (mythId) => {
     setSelectedMyth(mythId);
-    setShowExplanation(false);
-    setUserGuess(null);
+    setViewedMyths(prev => new Set(prev).add(mythId));
   };
 
   const handleGuess = (isTrue) => {
-    setUserGuess(isTrue);
-    setShowExplanation(true);
+    const myth = myths.find(m => m.id === selectedMyth);
+    if (myth) {
+      setUserGuess(isTrue);
+      setShowExplanation(true);
+      if (isTrue === myth.isTrue) {
+        // Handle correct answer
+        setViewedMyths(prev => new Set(prev).add(myth.id));
+      }
+    }
   };
 
-  const selectedMythData = myths.find(m => m.id === selectedMyth);
+  const allMythsViewed = myths.every(myth => viewedMyths.has(myth.id));
 
   return (
     <div className="module-container">
@@ -118,7 +125,7 @@ const MythsModule = () => {
             <div 
               key={myth.id}
               className={`myth-card ${selectedMyth === myth.id ? 'active' : ''}`}
-              onClick={() => handleMythSelect(myth.id)}
+              onClick={() => handleMythClick(myth.id)}
             >
               <div className="myth-header">
                 {myth.icon}
