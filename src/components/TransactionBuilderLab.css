@@ -36,6 +36,15 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  color: #1a1a1a;
+}
+
+.input-selection-section h3,
+.output-creation-section h3,
+.fee-calculation-section h3,
+.review-section h3 {
+  color: #1a1a1a;
+  margin-bottom: 1rem;
 }
 
 /* UTXO Selection Styles */
@@ -52,6 +61,8 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
+  background: white;
+  color: #1a1a1a;
 }
 
 .utxo-box:hover {
@@ -149,10 +160,16 @@
   background: #f8f9fa;
   padding: 1.5rem;
   border-radius: 8px;
+  color: #1a1a1a;
 }
 
 .fee-rate-selector {
   margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+.fee-rate-selector label {
+  color: #1a1a1a;
 }
 
 .fee-rate-selector select {
@@ -160,6 +177,8 @@
   padding: 0.5rem;
   border: 2px solid #dee2e6;
   border-radius: 4px;
+  color: #1a1a1a;
+  background: white;
 }
 
 .fee-breakdown {
@@ -173,12 +192,17 @@
   justify-content: space-between;
   padding: 0.5rem 0;
   border-bottom: 1px solid #dee2e6;
+  color: #1a1a1a;
 }
 
 .fee-item.total {
   border-bottom: none;
   font-weight: bold;
   color: #f7931a;
+}
+
+.fee-item span {
+  color: #1a1a1a;
 }
 
 /* Review Section Styles */

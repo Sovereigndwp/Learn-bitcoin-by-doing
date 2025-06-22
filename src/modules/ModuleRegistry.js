@@ -10,31 +10,35 @@ import KeysModule from '../modules/KeysModule';
 import MiningModule from '../modules/MiningModule';
 import MerkleModule from '../modules/MerkleModule';
 import ScriptsModule from '../modules/ScriptsModule';
+import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
   money: {
     id: 'money',
-    title: 'If you don\'t define money, it will define you',
-    description: 'Explore the essential properties of money and discover why Bitcoin is uniquely suited to be the money of the digital age.',
+    title: 'Understanding Money',
+    description: 'Explore why money exists and how it shapes our world.',
     component: MoneyModule,
     order: 1,
-    group: 'fundamentals'
+    group: 'fundamentals',
+    prerequisites: []
   },
   'money-designer': {
     id: 'money-designer',
-    title: 'Design Your Perfect Money',
-    description: 'Interactive tool to understand what makes good money by designing your own.',
+    title: 'Design Perfect Money',
+    description: 'Learn what makes money work or fail through interactive challenges.',
     component: MoneyDesignerModule,
     order: 1.5,
-    group: 'fundamentals'
+    group: 'fundamentals',
+    prerequisites: ['money']
   },
   'bitcoin-basics': {
     id: 'bitcoin-basics',
-    title: 'Bitcoin Basics: Your First Steps',
-    description: 'Learn how to get started with Bitcoin - from choosing a wallet to buying your first bitcoin.',
+    title: 'Bitcoin Basics',
+    description: 'Learn the fundamental concepts of Bitcoin.',
     component: BitcoinBasicsModule,
     order: 2,
-    group: 'practical'
+    group: 'practical',
+    prerequisites: []
   },
   transactions: {
     id: 'transactions',
@@ -107,6 +111,13 @@ export const moduleRegistry = {
     component: ScriptsModule,
     order: 11,
     group: 'advanced'
+  },
+  'bitcoin-toolkit': {
+    id: 'bitcoin-toolkit',
+    title: 'Hands-On Bitcoin Toolkit',
+    description: 'Get practical experience with Bitcoin wallets, keys, and transactions.',
+    component: BitcoinToolkitModule,
+    prerequisites: ['money', 'bitcoin-basics']
   }
 };
 

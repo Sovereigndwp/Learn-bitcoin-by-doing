@@ -16,7 +16,8 @@ import {
   Star,
   Globe,
   AlertCircle,
-  Hammer
+  Hammer,
+  Wrench
 } from 'lucide-react';
 import { getAllModules } from './ModuleRegistry';
 import './Homepage.css';
@@ -31,6 +32,20 @@ const Homepage = () => {
       icon: Coins,
       color: '#F7931A',
       path: '/module/money',
+      isFoundational: true
+    },
+    {
+      id: 'bitcoin-basics',
+      icon: Star,
+      color: '#2563EB',
+      path: '/module/bitcoin-basics',
+      isFoundational: true
+    },
+    {
+      id: 'bitcoin-toolkit',
+      icon: Wrench,
+      color: '#059669',
+      path: '/module/bitcoin-toolkit',
       isFoundational: true
     },
     {
