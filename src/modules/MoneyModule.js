@@ -3,6 +3,7 @@ import { useProgress } from '../contexts/ProgressContext';
 import { Coins, Trophy, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import BuildPerfectMoneyGame from '../components/BuildPerfectMoneyGame';
+import MoneyProblemVisuals from '../components/MoneyProblemVisuals';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -172,7 +173,18 @@ const MoneyModule = () => {
               <Coins size={48} />
             </div>
             <h2>{step.content.title}</h2>
-            <p className="intro-text">{step.content.text}</p>
+            <p className="intro-text">Before we can fix the money, we need to understand why it exists in the first place.</p>
+            <p className="intro-text">Imagine waking up in a world with no money. Not broken money. No money at all.</p>
+            
+            <MoneyProblemVisuals />
+            
+            <p className="intro-text">Without money, you lose:
+              - Trade
+              - Savings
+              - Value comparison</p>
+            <p className="intro-text">And with bad money, those same things break slowly and painfully, trust dies, inflation robs, and the system decays from the inside out.</p>
+            <p className="intro-text">💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them, without using money. What happens?</p>
+            
             <button 
               className="continue-button"
               onClick={() => handleStepComplete(index)}
