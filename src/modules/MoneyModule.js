@@ -138,6 +138,15 @@ const MoneyModule = () => {
           }
         ]
       }
+    },
+    {
+      title: "(Optional Deep Dive)",
+      type: "external-resource",
+      content: {
+        title: "Interactive Timeline: Money's Evolution",
+        description: "Explore an interactive timeline showing how money evolved from barter to Bitcoin, with key historical events and technological breakthroughs that shaped our understanding of value exchange.",
+        link: "https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
+      }
     }
   ];
 
@@ -204,6 +213,33 @@ const MoneyModule = () => {
             >
               Continue to Next Module
             </button>
+          </div>
+        );
+
+      case 'external-resource':
+        return (
+          <div className="step-content external-resource-step">
+            <div className="step-icon">
+              <Coins size={48} />
+            </div>
+            <h2>{step.content.title}</h2>
+            <p className="external-resource-description">{step.content.description}</p>
+            <div className="button-group">
+              <a 
+                href={step.content.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="external-resource-link"
+              >
+                Visit Interactive Timeline
+              </a>
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                Mark as Complete
+              </button>
+            </div>
           </div>
         );
 
