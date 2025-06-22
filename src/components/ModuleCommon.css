@@ -6,6 +6,33 @@
   color: #fff;
 }
 
+/* Override text colors for white background sections */
+.module-container .white-bg,
+.module-container .section-card,
+.module-container .exercise-card,
+.module-container .checklist-card,
+.module-container .guide-section,
+.module-container .demo-section,
+.module-container .checklist-section,
+.module-container .comparison-section {
+  color: #1a1a1a;
+}
+
+.module-container .white-bg h1,
+.module-container .white-bg h2,
+.module-container .white-bg h3,
+.module-container .white-bg h4,
+.module-container .white-bg p,
+.module-container .white-bg span,
+.module-container .section-card h1,
+.module-container .section-card h2,
+.module-container .section-card h3,
+.module-container .section-card h4,
+.module-container .section-card p,
+.module-container .section-card span {
+  color: #1a1a1a;
+}
+
 .module-container *:not(input):not(button):not(.hex-button):not(.example-buttons button):not(.quick-examples button):not(.quiz-option):not(.question-card):not(.explanation-card):not(.question-card *):not(.explanation-card *) {
   color: #fff;
 }

@@ -17,42 +17,25 @@ const BitcoinToolkitModule = () => {
       id: 'seed-lab',
       title: "🗝️ Seed & Wallet Creation Lab",
       type: "interactive-lab",
-      content: {
-        title: "Create Your First Bitcoin Wallet",
-        description: "Let's generate a secure seed phrase - the master key to your Bitcoin wallet.",
-        steps: [
-          "Generate a random 12-word mnemonic",
-          "Learn how it becomes a seed",
-          "Practice securing your seed phrase"
-        ]
-      }
+      component: <div className="white-bg"><SeedLab onComplete={() => handleStepComplete(0)} /></div>
     },
     {
-      id: 'key-derivation',
-      title: "🔐 Private Key → Public Key",
-      type: "interactive-demo",
-      content: {
-        title: "Key Pair Generation",
-        description: "Watch how a private key creates a public key through one-way mathematics."
-      }
-    },
-    {
-      id: 'address-creation',
-      title: "📫 Address Creation",
-      type: "interactive-demo",
-      content: {
-        title: "Create Bitcoin Addresses",
-        description: "Transform public keys into different types of Bitcoin addresses."
-      }
-    },
-    {
-      id: 'transaction-builder',
-      title: "🧩 Transaction Builder Lab",
+      id: 'key-derivation-lab',
+      title: "🔐 Key Derivation Lab",
       type: "interactive-lab",
-      content: {
-        title: "Build Your First Transaction",
-        description: "Learn how Bitcoin transactions work by building one yourself."
-      }
+      component: <div className="white-bg"><KeyDerivationLab onComplete={() => handleStepComplete(1)} /></div>
+    },
+    {
+      id: 'address-creation-lab',
+      title: "📬 Address Creation Lab",
+      type: "interactive-lab",
+      component: <div className="white-bg"><AddressCreationLab onComplete={() => handleStepComplete(2)} /></div>
+    },
+    {
+      id: 'transaction-builder-lab',
+      title: "💸 Transaction Builder Lab",
+      type: "interactive-lab",
+      component: <div className="white-bg"><TransactionBuilderLab onComplete={() => handleStepComplete(3)} /></div>
     },
     {
       id: 'sign-broadcast',
@@ -83,12 +66,14 @@ const BitcoinToolkitModule = () => {
     }
   ];
 
-  const handleStepComplete = (index) => {
-    setCompletedSteps(prev => new Set(prev).add(index));
-    if (index === steps.length - 1) {
+  const handleStepComplete = (stepIndex) => {
+    const newCompletedSteps = new Set(completedSteps);
+    newCompletedSteps.add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+
+    if (newCompletedSteps.size === steps.length) {
       completeModule('bitcoin-toolkit');
     }
-    setCurrentStep(index + 1);
   };
 
   const renderStep = (step, index) => {
@@ -99,16 +84,16 @@ const BitcoinToolkitModule = () => {
             <div className="step-content lab-step">
               <h2>{step.content.title}</h2>
               <p className="step-description">{step.content.description}</p>
-              <SeedLab onComplete={() => handleStepComplete(index)} />
+              {step.component}
             </div>
           );
         }
-        if (step.id === 'transaction-builder') {
+        if (step.id === 'transaction-builder-lab') {
           return (
             <div className="step-content lab-step">
               <h2>{step.content.title}</h2>
               <p className="step-description">{step.content.description}</p>
-              <TransactionBuilderLab onComplete={() => handleStepComplete(index)} />
+              {step.component}
             </div>
           );
         }
@@ -127,21 +112,18 @@ const BitcoinToolkitModule = () => {
         );
 
       case 'interactive-demo':
-        if (step.id === 'key-derivation') {
+        if (step.id === 'sign-broadcast') {
           return (
             <div className="step-content demo-step">
               <h2>{step.content.title}</h2>
               <p className="step-description">{step.content.description}</p>
-              <KeyDerivationLab onComplete={() => handleStepComplete(index)} />
-            </div>
-          );
-        }
-        if (step.id === 'address-creation') {
-          return (
-            <div className="step-content demo-step">
-              <h2>{step.content.title}</h2>
-              <p className="step-description">{step.content.description}</p>
-              <AddressCreationLab onComplete={() => handleStepComplete(index)} />
+              {/* Demo-specific components will be added here */}
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                Continue
+              </button>
             </div>
           );
         }
@@ -195,7 +177,7 @@ const BitcoinToolkitModule = () => {
         <div className="steps-navigation">
           {steps.map((step, index) => (
             <button
-              key={index}
+              key={step.id}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
               onClick={() => setCurrentStep(index)}
             >

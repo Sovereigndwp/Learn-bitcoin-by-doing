@@ -13,10 +13,17 @@
   margin-bottom: 2rem;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #1a1a1a;
+}
+
+.module-container .quiz-container .question-card h2,
+.module-container .quiz-container .question-card h3,
+.module-container .quiz-container .question-card p {
+  color: #1a1a1a;
 }
 
 .module-container .quiz-container .question-prompt {
-  color: #333333;
+  color: #1a1a1a;
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   font-weight: 500;
