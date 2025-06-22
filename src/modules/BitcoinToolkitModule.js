@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Key, Lock, Send, ChartBar, CheckCircle, Trophy } from 'lucide-react';
+import { Key, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import SeedLab from '../components/SeedLab';
 import KeyDerivationLab from '../components/KeyDerivationLab';
