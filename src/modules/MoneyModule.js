@@ -153,7 +153,7 @@ const MoneyModule = () => {
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
-      completeModule('money');
+        completeModule('money');
     }
     setCurrentStep(index + 1);
   };

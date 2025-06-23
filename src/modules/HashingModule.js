@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import CodeEditor from '../components/CodeEditor';
 import { sha256, hash256 } from '../utils/bitcoin';
-import { Hash, CheckCircle, Trophy } from 'lucide-react';
+import { Hash, CheckCircle, Trophy, Shield, Zap } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 // Hash Explorer Component

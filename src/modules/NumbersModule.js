@@ -128,8 +128,8 @@ const NumbersModule = () => {
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
-      completeModule('numbers');
-    }
+        completeModule('numbers');
+      }
     setCurrentStep(index + 1);
   };
 
@@ -188,15 +188,15 @@ const NumbersModule = () => {
         );
 
       case 'reflection':
-        return (
-          <ReflectionStep
-            question={step.content.question}
-            placeholder={step.content.placeholder}
-            content={step.content}
-            onComplete={() => handleStepComplete(index)}
-            setCurrentStep={setCurrentStep}
-            isLastStep={index === steps.length - 1}
-          />
+                  return (
+            <ReflectionStep
+              question={step.content.question}
+              placeholder={step.content.placeholder}
+              content={step.content}
+              onComplete={() => handleStepComplete(index)}
+              setCurrentStep={setCurrentStep}
+              isLastStep={index === steps.length - 1}
+            />
         );
 
       default:

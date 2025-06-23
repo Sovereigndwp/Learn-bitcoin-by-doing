@@ -561,14 +561,14 @@
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   border-left: 4px solid #f7931a;
-}
+  }
 
 .options-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
-}
+  }
 
 .option-button {
   background: rgba(255, 255, 255, 0.1);
@@ -581,7 +581,7 @@
   transition: all 0.3s ease;
   text-align: left;
   width: 100%;
-}
+  }
 
 .option-button:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.15);
@@ -591,7 +591,7 @@
 .option-button.selected {
   border-color: #f7931a;
   background: rgba(247, 147, 26, 0.15);
-}
+  }
 
 .option-button.correct {
   border-color: #4CAF50;
@@ -601,14 +601,14 @@
 .option-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-}
+  }
 
 .explanation-container {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 1.5rem;
+    padding: 1.5rem;
   margin-top: 2rem;
-}
+  }
 
 .explanation-container p {
   color: #ffffff;
@@ -637,7 +637,7 @@
   .properties-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .challenge-container {
     padding: 1rem;
   }

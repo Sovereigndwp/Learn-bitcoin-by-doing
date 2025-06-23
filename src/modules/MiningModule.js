@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { hash256 } from '../utils/bitcoin';
-import { Hammer, CheckCircle, Trophy, Target, Clock } from 'lucide-react';
+import { Hammer, CheckCircle, Trophy, Target, Clock, Zap } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const MiningModule = () => {

@@ -87,8 +87,8 @@ const MythsModule = () => {
   const handleGuess = (isTrue) => {
     const myth = myths.find(m => m.id === selectedMyth);
     if (myth) {
-      setUserGuess(isTrue);
-      setShowExplanation(true);
+    setUserGuess(isTrue);
+    setShowExplanation(true);
       if (isTrue === myth.isTrue) {
         // Handle correct answer
         setViewedMyths(prev => new Set(prev).add(myth.id));
