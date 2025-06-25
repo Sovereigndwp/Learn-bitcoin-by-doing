@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, ArrowRight, Plus, Minus, DollarSign, Calculator } from 'lucide-react';
+import { ArrowRight, Plus, Minus } from 'lucide-react';
 import './TransactionBuilderLab.css';
 
 const mockUTXOs = [
@@ -106,7 +106,7 @@ const TransactionBuilderLab = ({ onComplete }) => {
   useEffect(() => {
     const size = estimateTransactionSize();
     setEstimatedSize(size);
-  }, [selectedInputs, outputs]);
+  }, [selectedInputs, outputs, estimateTransactionSize]);
 
   return (
     <div className="transaction-builder">

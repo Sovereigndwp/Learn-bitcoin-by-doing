@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useProgress } from '../contexts/ProgressContext';
-import { Coins, CheckCircle } from 'lucide-react';
+import { Coins } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const TransactionsModule = () => {

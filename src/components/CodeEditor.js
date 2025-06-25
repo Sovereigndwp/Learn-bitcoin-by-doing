@@ -29,6 +29,7 @@ const CodeEditor = ({
 
     try {
       // Create a function from the user's code
+      // eslint-disable-next-line no-new-func
       const userFunction = new Function('return ' + code)();
       
       let result;

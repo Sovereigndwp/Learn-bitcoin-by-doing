@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Hash, Copy, CheckCircle, ArrowDown } from 'lucide-react';
 import './AddressCreationLab.css';
 

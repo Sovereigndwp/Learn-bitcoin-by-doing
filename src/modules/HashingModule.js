@@ -6,6 +6,13 @@ import { Hash, CheckCircle, Trophy, Shield, Zap } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 // Hash Explorer Component
+const HASH_EXAMPLES = [
+  { text: 'hello', hash: '' },
+  { text: 'hello!', hash: '' },
+  { text: 'Hello', hash: '' },
+  { text: 'hello Dalia', hash: '' }
+];
+
 const HashExplorer = ({ onComplete }) => {
   const [input, setInput] = useState('');
   const [hashResult, setHashResult] = useState('');
@@ -15,23 +22,22 @@ const HashExplorer = ({ onComplete }) => {
   const [showQuizResult, setShowQuizResult] = useState(false);
   const [isHashing, setIsHashing] = useState(false);
   const [completedExamples, setCompletedExamples] = useState(new Set());
-
-  const examples = [
-    { text: 'hello', hash: '' },
-    { text: 'hello!', hash: '' },
-    { text: 'Hello', hash: '' },
-    { text: 'hello Dalia', hash: '' }
-  ];
+  const [examples, setExamples] = useState(HASH_EXAMPLES);
 
   // Pre-compute hashes for examples
   useEffect(() => {
     const computeExampleHashes = async () => {
-      for (const example of examples) {
-        example.hash = await sha256(example.text);
+      const updatedExamples = [...examples];
+      for (let i = 0; i < updatedExamples.length; i++) {
+        updatedExamples[i] = {
+          ...updatedExamples[i],
+          hash: await sha256(updatedExamples[i].text)
+        };
       }
+      setExamples(updatedExamples);
     };
     computeExampleHashes();
-  }, []); // This effect only needs to run once on mount since examples is constant
+  }, []); // Now safe to have empty dependency array as examples are initialized from constant
 
   const handleInputChange = async (e) => {
     const newInput = e.target.value;

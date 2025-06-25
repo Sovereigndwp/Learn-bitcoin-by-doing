@@ -1,58 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Scale, Zap, Clock, Globe, Lock } from 'lucide-react';
+import { Scale, Zap, Clock, Globe, Lock, Shield, HelpCircle, CheckCircle } from 'lucide-react';
 import './MoneyGame.css';
 
 const moneyProperties = [
   {
     id: 'scarce',
     icon: Scale,
-    title: 'Scarce & Disinflationary',
+    title: 'Scarce / Hard to Create',
     description: 'Supply is limited and growth rate decreases over time.',
+    isCorrect: true,
     hint: 'Think about gold vs. paper money - which one can be created endlessly?',
-    correctFeedback: 'Correct! Like gold, Bitcoin has a fixed supply (21 million) and becomes harder to create over time.',
-    category: 'value'
-  },
-  {
-    id: 'portable',
-    icon: Zap,
-    title: 'Portable & Divisible',
-    description: 'Easy to move and can be split into smaller units.',
-    hint: 'Imagine trying to pay for coffee with gold bars vs. digital money.',
-    correctFeedback: 'Right! Bitcoin can be sent globally and divided into 100 million "satoshis" per coin.',
-    category: 'utility'
+    feedback: 'Correct! Like gold, Bitcoin has a fixed supply (21 million) and becomes harder to create over time.'
   },
   {
     id: 'durable',
     icon: Clock,
     title: 'Durable & Unchangeable',
     description: 'Maintains its integrity over time without degrading.',
-    hint: 'Paper money wears out, digital records can be altered - what never changes?',
-    correctFeedback: 'Exactly! Bitcoin\'s blockchain is permanent and immutable - every transaction since 2009 remains intact.',
-    category: 'integrity'
+    isCorrect: true,
+    hint: 'If money melts or rusts, it\'s a ticking time bomb.',
+    feedback: 'Perfect! Bitcoin\'s blockchain is permanent and immutable - every transaction since 2009 remains intact.'
   },
   {
-    id: 'accessible',
-    icon: Globe,
-    title: 'Open & Accessible',
-    description: 'Anyone can use it without permission or approval.',
-    hint: 'Think about who controls access to bank accounts vs. open systems.',
-    correctFeedback: 'Perfect! Bitcoin treats everyone equally - no bank approvals, no discrimination.',
-    category: 'freedom'
+    id: 'portable',
+    icon: Zap,
+    title: 'Portable & Divisible',
+    description: 'Easy to move and can be split into smaller units.',
+    isCorrect: true,
+    hint: 'Imagine trying to pay for coffee with gold bars vs. digital money.',
+    feedback: 'Right! Bitcoin can be sent globally and divided into 100 million "satoshis" per coin.'
+  },
+  {
+    id: 'verifiable',
+    icon: Shield,
+    title: 'Verifiable',
+    description: 'Can be authenticated without trusting a third party.',
+    isCorrect: true,
+    hint: 'Trust is great... until someone breaks it.',
+    feedback: 'Exactly! Bitcoin transactions can be verified by anyone, anywhere, without permission.'
   },
   {
     id: 'unconfiscatable',
     icon: Lock,
-    title: 'Unconfiscatable & Borderless',
+    title: 'Censorship-Resistant / Unconfiscatable',
     description: 'Your money remains yours no matter where you go.',
-    hint: 'Can your current money be frozen or seized by others?',
-    correctFeedback: 'Excellent! Bitcoin can\'t be frozen or seized if you control your private keys.',
-    category: 'sovereignty'
+    isCorrect: true,
+    hint: 'Sound money doesn\'t ask for permission.',
+    feedback: 'Excellent! Bitcoin can\'t be frozen or seized if you control your private keys.'
+  },
+  {
+    id: 'decentralized',
+    icon: Globe,
+    title: 'Decentralized',
+    description: 'No single point of control or failure.',
+    isCorrect: true,
+    hint: 'What happens when your money stops working, but rent is due?',
+    feedback: 'Perfect! Bitcoin\'s decentralized nature means no single entity can control or shut it down.'
+  },
+  {
+    id: 'printable',
+    icon: Scale,
+    title: 'Can be printed to stimulate the economy',
+    description: 'Central banks can create more when needed.',
+    isCorrect: false,
+    hint: 'If they can print more, is it even yours?',
+    feedback: '🚫 That\'s how inflation sneaks in the back door.'
+  },
+  {
+    id: 'government',
+    icon: Shield,
+    title: 'Government-backed',
+    description: 'Requires official support to function.',
+    isCorrect: false,
+    hint: 'They said it was backed. Then they changed the rules.',
+    feedback: '👎 Trust-based systems eventually break under pressure.'
   }
 ];
 
-const PropertyCard = ({ property, isInDropZone }) => {
+// Fisher-Yates shuffle algorithm
+const shuffleArray = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+const PropertyCard = ({ property, isInDropZone, onDrop }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'property',
     item: { id: property.id },
@@ -67,6 +104,7 @@ const PropertyCard = ({ property, isInDropZone }) => {
     <div
       ref={drag}
       className={`property-card ${isDragging ? 'dragging' : ''} ${isInDropZone ? 'in-dropzone' : ''}`}
+      onClick={() => onDrop && onDrop(property)}
     >
       <div className="property-icon">
         <Icon size={24} />
@@ -92,6 +130,7 @@ const DropZone = ({ onDrop, properties }) => {
     <div ref={drop} className={`dropzone ${isOver ? 'over' : ''}`}>
       <div className="bitcoin-circle">
         <span className="bitcoin-symbol">₿</span>
+        <p>{properties.filter(p => p.isCorrect).length} / 6 properties identified</p>
       </div>
       <div className="dropped-properties">
         {properties.map(prop => (
@@ -103,83 +142,82 @@ const DropZone = ({ onDrop, properties }) => {
 };
 
 const MoneyGame = ({ onComplete }) => {
+  const [properties, setProperties] = useState([]);
   const [droppedProperties, setDroppedProperties] = useState([]);
-  const [showHint, setShowHint] = useState(false);
-  const [currentHint, setCurrentHint] = useState('');
   const [feedback, setFeedback] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
+  const [hintIndex, setHintIndex] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+
+  useEffect(() => {
+    setProperties(shuffleArray(moneyProperties));
+  }, []);
 
   const handleDrop = (propertyId) => {
-    const property = moneyProperties.find(p => p.id === propertyId);
+    const property = properties.find(p => p.id === propertyId);
     if (!droppedProperties.find(p => p.id === propertyId)) {
       setDroppedProperties([...droppedProperties, property]);
-      setFeedback(property.correctFeedback);
+      setFeedback(property.feedback);
       
-      if (droppedProperties.length + 1 === moneyProperties.length) {
-        setIsComplete(true);
+      if (property.isCorrect && droppedProperties.filter(p => p.isCorrect).length + 1 >= 6) {
         setTimeout(() => onComplete(), 2000);
       }
     }
   };
 
-  const showPropertyHint = (propertyId) => {
-    const property = moneyProperties.find(p => p.id === propertyId);
-    setCurrentHint(property.hint);
-    setShowHint(true);
+  const handleHint = () => {
+    const availableProperties = properties.filter(
+      prop => !droppedProperties.find(p => p.id === prop.id)
+    );
+    if (availableProperties.length > 0) {
+      setShowHint(true);
+      setHintIndex((hintIndex + 1) % availableProperties.length);
+    }
   };
-
-  const availableProperties = moneyProperties.filter(
-    prop => !droppedProperties.find(p => p.id === prop.id)
-  );
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="money-game">
-        <h2>Build the Perfect Money</h2>
-        <p className="game-description">
-          Drag the properties that you think make money valuable and useful into the Bitcoin circle.
-          Try to identify all the essential characteristics of sound money.
-        </p>
+      <div className="module-container">
+        <h1 className="module-title">Build the Perfect Money</h1>
+        <div className="module-description">
+          <p>Most money starts strong and ends in disaster.</p>
+          <p>Let's see if you can do better.</p>
+          <p>Drag or click the traits you think make money work.</p>
+          <p className="warning-text">If you're right, you'll know — and if you're wrong, history's already proven it.</p>
+        </div>
 
-        <div className="game-container">
+        <div className="hint-box" onClick={handleHint}>
+          <HelpCircle size={20} />
+          {showHint && properties[hintIndex]?.hint}
+        </div>
+
+        <div className="game-area">
           <div className="properties-list">
-            {availableProperties.map(property => (
-              <div key={property.id} className="property-wrapper">
-                <PropertyCard property={property} />
-                <button 
-                  className="hint-button"
-                  onClick={() => showPropertyHint(property.id)}
-                >
-                  Need a hint? 💡
-                </button>
-              </div>
-            ))}
+            {properties
+              .filter(prop => !droppedProperties.find(p => p.id === prop.id))
+              .map(property => (
+                <PropertyCard
+                  key={property.id}
+                  property={property}
+                  onDrop={() => handleDrop(property.id)}
+                />
+              ))}
           </div>
 
           <DropZone onDrop={handleDrop} properties={droppedProperties} />
         </div>
 
-        {showHint && (
-          <div className="hint-box">
-            <p>{currentHint}</p>
-            <button onClick={() => setShowHint(false)}>Got it!</button>
-          </div>
-        )}
-
         {feedback && (
-          <div className={`feedback-box ${isComplete ? 'complete' : ''}`}>
-            <p>{feedback}</p>
-            {isComplete && (
-              <p className="completion-message">
-                🎉 Congratulations! You've identified all the properties that make Bitcoin the perfect form of money!
-              </p>
-            )}
-          </div>
+          <div className="feedback-text">{feedback}</div>
         )}
 
-        <div className="progress-indicator">
-          {droppedProperties.length} / {moneyProperties.length} properties identified
-        </div>
+        {droppedProperties.filter(p => p.isCorrect).length >= 6 && (
+          <div className="completion-box">
+            <CheckCircle size={32} />
+            <h2>You just built Bitcoin — without even knowing it.</h2>
+            <p>Want to see how it works in real life?</p>
+            <button className="continue-button" onClick={onComplete}>Continue</button>
+          </div>
+        )}
       </div>
     </DndProvider>
   );

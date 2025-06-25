@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import CodeEditor from '../components/CodeEditor';
-import { generatePrivateKey, privateKeyToPublicKey, publicKeyToAddress } from '../utils/bitcoin';
 import { Key, CheckCircle, Trophy, Lock, Unlock, MapPin } from 'lucide-react';
 import '../components/ModuleCommon.css';
 

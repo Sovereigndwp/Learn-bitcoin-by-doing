@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AlertCircle, Check, X, Lightbulb, Zap, DollarSign, Lock, Globe } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
-const MythsModule = () => {
+const MythsModule = ({ onComplete }) => {
   const [selectedMyth, setSelectedMyth] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [userGuess, setUserGuess] = useState(null);
@@ -97,6 +97,13 @@ const MythsModule = () => {
   };
 
   const allMythsViewed = myths.every(myth => viewedMyths.has(myth.id));
+
+  // Call onComplete when all myths have been viewed
+  useEffect(() => {
+    if (allMythsViewed && onComplete) {
+      onComplete();
+    }
+  }, [allMythsViewed, onComplete]);
 
   return (
     <div className="module-container">

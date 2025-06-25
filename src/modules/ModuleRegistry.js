@@ -1,21 +1,21 @@
-import MoneyModule from '../modules/MoneyModule';
-import MoneyDesignerModule from '../modules/MoneyDesignerModule';
-import BitcoinBasicsModule from '../modules/BitcoinBasicsModule';
-import TransactionsModule from '../modules/TransactionsModule';
-import CustodyModule from '../modules/CustodyModule';
-import MythsModule from '../modules/MythsModule';
-import NumbersModule from '../modules/NumbersModule';
-import HashingModule from '../modules/HashingModule';
-import KeysModule from '../modules/KeysModule';
-import MiningModule from '../modules/MiningModule';
-import MerkleModule from '../modules/MerkleModule';
-import ScriptsModule from '../modules/ScriptsModule';
+import MoneyModule from './MoneyModule';
+import MoneyDesignerModule from './MoneyDesignerModule';
+import BitcoinBasicsModule from './BitcoinBasicsModule';
+import NumbersModule from './NumbersModule';
+import HashingModule from './HashingModule';
+import MiningModule from './MiningModule';
+import KeysModule from './KeysModule';
+import TransactionsModule from './TransactionsModule';
+import ScriptsModule from './ScriptsModule';
+import MerkleModule from './MerkleModule';
+import CustodyModule from './CustodyModule';
+import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
   money: {
     id: 'money',
-    title: 'Understanding Money',
+    title: 'If you don\'t define money, it will define you',
     description: 'Explore why money exists and how it shapes our world.',
     component: MoneyModule,
     order: 1,
@@ -40,87 +40,111 @@ export const moduleRegistry = {
     group: 'practical',
     prerequisites: []
   },
-  transactions: {
-    id: 'transactions',
-    title: 'Building Transactions',
-    description: 'Learn how to send, receive, and track your bitcoin transactions safely.',
-    component: TransactionsModule,
-    order: 3,
-    group: 'practical'
-  },
-  custody: {
-    id: 'custody',
-    title: 'Custody & Multisig',
-    description: 'Essential security practices and different ways to protect your bitcoin investment.',
-    component: CustodyModule,
-    order: 4,
-    group: 'practical'
-  },
-  myths: {
-    id: 'myths',
-    title: 'Bitcoin Myths & Facts',
-    description: 'Separate fact from fiction - understand what Bitcoin really is and isn\'t.',
-    component: MythsModule,
-    order: 5,
-    group: 'practical'
-  },
   numbers: {
     id: 'numbers',
     title: 'Numbers & Encoding',
-    description: 'Dive into how Bitcoin represents and secures information.',
+    description: 'Learn how computers represent and secure information using different number systems.',
     component: NumbersModule,
-    order: 6,
-    group: 'technical'
+    order: 3,
+    group: 'technical',
+    prerequisites: []
   },
   hashing: {
     id: 'hashing',
-    title: 'Hashing',
-    description: 'Discover how Bitcoin uses hashing to create tamper-proof records.',
+    title: 'Digital Fingerprints',
+    description: 'Discover how Bitcoin uses SHA-256 hashing to create tamper-proof digital fingerprints.',
     component: HashingModule,
-    order: 7,
-    group: 'technical'
-  },
-  keys: {
-    id: 'keys',
-    title: 'Key Generation',
-    description: 'Understand the cryptography that powers Bitcoin security.',
-    component: KeysModule,
-    order: 8,
-    group: 'technical'
+    order: 4,
+    group: 'technical',
+    prerequisites: ['numbers']
   },
   mining: {
     id: 'mining',
-    title: 'Mining Simulator',
+    title: 'The World\'s Most Expensive Puzzle Game',
     description: 'Understand how Bitcoin mining secures the network through proof-of-work.',
     component: MiningModule,
-    order: 9,
-    group: 'advanced'
+    order: 5,
+    group: 'advanced',
+    prerequisites: ['hashing']
   },
-  merkle: {
-    id: 'merkle',
-    title: 'Merkle Trees',
-    description: 'Learn how Bitcoin efficiently verifies transactions using Merkle trees.',
-    component: MerkleModule,
-    order: 10,
-    group: 'advanced'
+  keys: {
+    id: 'keys',
+    title: 'Keys to the Kingdom',
+    description: 'Learn about public key cryptography and how Bitcoin uses digital signatures.',
+    component: KeysModule,
+    order: 6,
+    group: 'technical',
+    prerequisites: ['numbers']
+  },
+  transactions: {
+    id: 'transactions',
+    title: 'Building Blocks',
+    description: 'Explore how Bitcoin transactions work and how they\'re structured.',
+    component: TransactionsModule,
+    order: 7,
+    group: 'practical',
+    prerequisites: ['keys']
   },
   scripts: {
     id: 'scripts',
-    title: 'Script Explorer',
-    description: 'Explore how Bitcoin can be programmed for advanced use cases.',
+    title: 'Digital Spells',
+    description: 'Learn how Bitcoin scripts enable programmable money.',
     component: ScriptsModule,
+    order: 8,
+    group: 'advanced',
+    prerequisites: ['transactions']
+  },
+  merkle: {
+    id: 'merkle',
+    title: 'The Family Tree of Transactions',
+    description: 'Discover how Merkle trees make Bitcoin scalable and verifiable.',
+    component: MerkleModule,
+    order: 9,
+    group: 'advanced',
+    prerequisites: ['hashing', 'transactions']
+  },
+  custody: {
+    id: 'custody',
+    title: 'Securing Your Future',
+    description: 'Learn about different ways to secure and manage your Bitcoin.',
+    component: CustodyModule,
+    order: 10,
+    group: 'practical',
+    prerequisites: ['keys']
+  },
+  myths: {
+    id: 'myths',
+    title: 'Myth Busters: Bitcoin Edition',
+    description: 'Explore and debunk common Bitcoin myths and misconceptions.',
+    component: MythsModule,
     order: 11,
-    group: 'advanced'
+    group: 'practical',
+    prerequisites: []
   },
   'bitcoin-toolkit': {
     id: 'bitcoin-toolkit',
     title: 'Hands-On Bitcoin Toolkit',
     description: 'Get practical experience with Bitcoin wallets, keys, and transactions.',
     component: BitcoinToolkitModule,
+    order: 12,
+    group: 'practical',
     prerequisites: ['money', 'bitcoin-basics']
   }
 };
 
+export const getModuleById = (id) => moduleRegistry[id];
+
 export const getAllModules = () => {
   return Object.values(moduleRegistry).sort((a, b) => a.order - b.order);
+};
+
+export const getModulesByGroup = (group) => {
+  return Object.values(moduleRegistry)
+    .filter(module => module.group === group)
+    .sort((a, b) => a.order - b.order);
+};
+
+export const getPrerequisites = (moduleId) => {
+  const module = moduleRegistry[moduleId];
+  return module ? module.prerequisites : [];
 }; 

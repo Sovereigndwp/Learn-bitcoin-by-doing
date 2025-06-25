@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Shuffle, Eye, EyeOff, CheckCircle } from 'lucide-react';
 import './SeedLab.css';
 

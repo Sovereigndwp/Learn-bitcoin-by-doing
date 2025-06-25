@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Coins, Trophy, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
-import BuildPerfectMoneyGame from '../components/BuildPerfectMoneyGame';
+import MoneyGame from '../components/MoneyGame';
+import brokenTrade from '../assets/images/broken-trade.svg';
+import rottingSavings from '../assets/images/rotting-savings.svg';
+import confusedValue from '../assets/images/confused-value.svg';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -189,75 +192,58 @@ Look around your room. Try to trade three things you own without using money as 
             </div>
             <h2>{step.content.title}</h2>
             <div className="content-text">
-              {step.content.text}
+              <pre>{step.content.text}</pre>
             </div>
           </div>
-        );
-
-      case 'interactive-quiz':
-        return (
-          <MoneyQuiz
-            title={step.content.title}
-            description={step.content.description}
-            questions={step.content.questions}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'money-game':
-        return (
-          <BuildPerfectMoneyGame
-            onComplete={() => handleStepComplete(index)}
-          />
         );
 
       case 'transition':
         return (
           <div className="step-content transition-step">
-            <div className="step-icon">
-              <Coins size={48} />
-            </div>
             <h2>{step.content.title}</h2>
-            <p className="transition-text">{step.content.text}</p>
-            <button 
-              className="continue-button"
-              onClick={() => handleStepComplete(index)}
-            >
-              Continue to Next Module
-            </button>
+            <div className="content-text">
+              <pre>{step.content.text}</pre>
+            </div>
+            <button onClick={() => handleStepComplete(index)}>Continue</button>
+          </div>
+        );
+
+      case 'money-game':
+        return (
+          <div className="step-content game-step">
+            <h2>{step.content.title}</h2>
+            <p>{step.content.description}</p>
+            <MoneyGame onComplete={() => handleStepComplete(index)} />
+          </div>
+        );
+
+      case 'interactive-quiz':
+        return (
+          <div className="step-content quiz-step">
+            <MoneyQuiz
+              title={step.content.title}
+              description={step.content.description}
+              questions={step.content.questions}
+              onComplete={() => handleStepComplete(index)}
+            />
           </div>
         );
 
       case 'external-resource':
         return (
-          <div className="step-content external-resource-step">
-            <div className="step-icon">
-              <Coins size={48} />
-            </div>
+          <div className="step-content resource-step">
             <h2>{step.content.title}</h2>
-            <p className="external-resource-description">{step.content.description}</p>
-            <div className="button-group">
-              <a 
-                href={step.content.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="external-resource-link"
-              >
-                Visit Interactive Timeline
-              </a>
-              <button 
-                className="continue-button"
-                onClick={() => handleStepComplete(index)}
-              >
-                Mark as Complete
-              </button>
-            </div>
+            <p>{step.content.description}</p>
+            <a href={step.content.link} target="_blank" rel="noopener noreferrer">
+              Visit Interactive Timeline
+            </a>
+            <button onClick={() => handleStepComplete(index)}>Continue</button>
           </div>
         );
 
       default:
         console.error('Unknown step type:', step.type);
-        return <div>Unknown step type</div>;
+        return null;
     }
   };
 
@@ -313,82 +299,66 @@ Look around your room. Try to trade three things you own without using money as 
 // Quiz Component
 const MoneyQuiz = ({ title, description, questions, onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [score, setScore] = useState(0);
 
-  const handleAnswer = (answer) => {
-    if (showExplanation) return; // Prevent multiple answers
-    setAnswers({ ...answers, [currentQuestion]: answer });
+  const handleAnswer = (answerIndex) => {
+    setSelectedAnswer(answerIndex);
+    if (answerIndex === questions[currentQuestion].correct) {
+      setScore(score + 1);
+    }
     setShowExplanation(true);
   };
 
   const handleNext = () => {
-    setShowExplanation(false);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
     } else {
-      // Only complete if all questions have been answered
-      if (Object.keys(answers).length === questions.length) {
-        onComplete();
-      }
+      onComplete(score);
     }
   };
-
-  const question = questions[currentQuestion];
-  if (!question) return null;
 
   return (
     <div className="quiz-container">
       <h2>{title}</h2>
-      <p className="quiz-description">{description}</p>
-
-      <div className="question-card">
-        <h3 className="question-prompt">{question.prompt}</h3>
-        <div className="choices-container">
-          {question.choices.map((choice, index) => (
+      <p>{description}</p>
+      
+      <div className="question-container">
+        <h3>Question {currentQuestion + 1} of {questions.length}</h3>
+        <p>{questions[currentQuestion].prompt}</p>
+        
+        <div className="choices">
+          {questions[currentQuestion].choices.map((choice, index) => (
             <button
               key={index}
+              onClick={() => handleAnswer(index)}
+              disabled={showExplanation}
               className={`choice-button ${
-                answers[currentQuestion] === index ? 'selected' : ''
-              } ${
                 showExplanation
-                  ? index === question.correct
+                  ? index === questions[currentQuestion].correct
                     ? 'correct'
-                    : answers[currentQuestion] === index
+                    : selectedAnswer === index
                     ? 'incorrect'
                     : ''
                   : ''
               }`}
-              onClick={() => handleAnswer(index)}
-              disabled={showExplanation}
             >
               {choice}
-              {showExplanation && index === answers[currentQuestion] && (
-                <span className="answer-indicator">
-                  {index === question.correct ? ' ✅' : ' ❌'}
-                </span>
-              )}
             </button>
           ))}
         </div>
-
+        
         {showExplanation && (
-          <div className={`explanation-card ${answers[currentQuestion] === question.correct ? 'correct' : 'incorrect'}`}>
-            <p className="feedback-text">
-              {answers[currentQuestion] === question.correct 
-                ? '✅ Correct! Well done!' 
-                : '❌ Not quite right. Here\'s why:'}
-            </p>
-            <p className="explanation-text">{question.explanation}</p>
-            <button className="next-button" onClick={handleNext}>
-              {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
+          <div className="explanation">
+            <p>{questions[currentQuestion].explanation}</p>
+            <button onClick={handleNext}>
+              {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
             </button>
           </div>
         )}
-
-        <div className="quiz-progress">
-          Question {currentQuestion + 1} of {questions.length}
-        </div>
       </div>
     </div>
   );
