@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(20,20)">
+    <path d="M 50,80 C 50,40 150,40 150,80 C 150,120 50,120 50,80" 
+          fill="#FFB6C1" stroke="#333" stroke-width="4"/>
+    <circle cx="150" cy="80" r="15" fill="#FF9999"/>
+    <path d="M 70,50 Q 80,30 90,50" fill="#FFB6C1" stroke="#333" stroke-width="4"/>
+    <path d="M 80,70 Q 90,65 100,70" fill="none" stroke="#333" stroke-width="4"/>
+    <path d="M 110,70 Q 120,65 130,70" fill="none" stroke="#333" stroke-width="4"/>
+  </g>
+  <g transform="translate(20,20)" fill="none" stroke="#8B4513" stroke-width="3">
+    <path d="M 40,90 Q 30,100 40,110"/>
+    <path d="M 160,90 Q 170,100 160,110"/>
+    <path d="M 100,130 Q 90,140 100,150"/>
+  </g>
+  <g stroke="#333" stroke-width="2">
+    <circle cx="50" cy="50" r="2"/>
+    <path d="M 45,45 L 55,55 M 45,55 L 55,45"/>
+    <circle cx="150" cy="50" r="2"/>
+    <path d="M 145,45 L 155,55 M 145,55 L 155,45"/>
+  </g>
+</svg>

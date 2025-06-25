@@ -14,33 +14,59 @@ const MoneyModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "What Happens Without Money?",
-        text: "Before we can fix the money, we need to understand why it exists in the first place.\n\n" +
-          "Imagine waking up in a world with no money. Not broken money. No money at all.\n\n" +
-          "🔄 Problem 1: Trade Stops\n" +
-          "You're a great baker. I fix shoes. I want bread, but you don't need repairs.\n" +
-          "Now we both starve.\n\n" +
-          "Without a shared exchange tool, every trade depends on a perfect match of needs. Economies shrink. Cities disappear.\n" +
-          "Money solves this by letting people swap value indirectly, I fix the teacher's shoes, she pays me, and I use that to buy your bread.\n\n" +
+        title: "💸 What Happens Without Money?",
+        text: "Before we fix the money, maybe ask:\nWhy did we even invent this stuff in the first place?\n\n" +
+          "😵 Imagine This:\n\n" +
+          "You wake up in a world with no money.\n" +
+          "Not bad money.\n" +
+          "Zero. Zilch. Nada.\n\n" +
+          "Welcome to the barter apocalypse.\n\n" +
 
-          "🛑 Problem 2: You Can't Save\n" +
-          "Let's say you finally get ahead. You grow extra food. You want to save it for next year.\n" +
-          "But it rots. It molds. Rats get it.\n" +
-          "Or maybe you raise a goat. Then it gets sick.\n\n" +
-          "Money solves this by letting you store your work in something that lasts, and trade it later, when you need it.\n\n" +
+          "🔄 Problem #1: Trade Stops\n\n" +
+          "You're a fantastic baker.\n" +
+          "I'm a plumber.\n" +
+          "I want bread.\n" +
+          "But guess what?\n" +
+          "Your pipes are working just fine.\n\n" +
+          "Now you're hungry. I'm hungry.\n" +
+          "We both just sit there, admiring your moldy sourdough and my shiny wrench.\n\n" +
+          "Without money, trade becomes a Tinder date from hell:\n" +
+          "Sorry, no match.\n\n" +
 
-          "🎯 Problem 3: You Can't Measure or Compare\n" +
-          "I offer you a chicken. You offer me six apples.\n" +
-          "Is that fair? Depends. Are they bruised? Is the chicken old?\n" +
-          "And what if I want socks, not apples? Or I need schoolbooks?\n\n" +
-          "Money solves this by giving us a universal measuring stick. It lets you price everything in the same unit, even across time and space.\n\n" +
+          "🛑 Problem #2: You Can't Save\n\n" +
+          "You finally win at life and grow more food than you can eat.\n" +
+          "You try to save it.\n\n" +
+          "Spoiler alert:\n" +
+          "It rots.\n" +
+          "It molds.\n" +
+          "Rats throw a party in it.\n\n" +
+          "You raise a goat instead?\n" +
+          "Congrats. It got sick and died.\n\n" +
+          "Money solves this by letting you store your effort in something that doesn't decay, stink, or scream.\n\n" +
 
-          "Without money, you lose:\n" +
-          "- Trade\n" +
-          "- Savings\n" +
-          "- Value comparison\n\n" +
-          "And with bad money, those same things break slowly and painfully, trust dies, inflation robs, and the system decays from the inside out.\n\n" +
-          "💡 Bonus Challenge: Look around you. Pick 3 things you own. Try to make a fair trade between them, without using money. What happens?"
+          "🎯 Problem #3: No Way to Compare Value\n\n" +
+          "I offer you a chicken.\n" +
+          "You offer me… six apples?\n\n" +
+          "Is that fair?\n" +
+          "Are the apples organic?\n" +
+          "Is the chicken passive-aggressive?\n\n" +
+          "Also, I don't want apples.\n" +
+          "I need socks. And maybe a dentist.\n\n" +
+          "Without money, everything's a confusing mess of 'meh.'\n" +
+          "Money gives us a shared scoreboard. It lets us compare, save, and plan, instead of haggling like it's a flea market in chaos mode.\n\n" +
+
+          "😬 Bottom Line:\n\n" +
+          "Without money, you lose:\n\n" +
+          "• Trade (no one wants your goat)\n" +
+          "• Savings (unless you're cool with rat loot)\n" +
+          "• Value Comparison (is a potato worth a shoe?)\n\n" +
+          "And with bad money, those same things die—just slower.\n" +
+          "Trust fades.\n" +
+          "Prices lie.\n" +
+          "And the system quietly eats itself from the inside.\n\n" +
+
+          "💡 Bonus Challenge:\n" +
+          "Look around your room. Try to trade three things you own without using money as a reference. Watch your brain short-circuit!"
       }
     },
     {
