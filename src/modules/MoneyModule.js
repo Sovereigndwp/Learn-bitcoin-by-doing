@@ -15,58 +15,48 @@ const MoneyModule = () => {
       type: "intro",
       content: {
         title: "💸 What Happens Without Money?",
-        text: "Before we fix the money, maybe ask:\nWhy did we even invent this stuff in the first place?\n\n" +
-          "😵 Imagine This:\n\n" +
-          "You wake up in a world with no money.\n" +
-          "Not bad money.\n" +
-          "Zero. Zilch. Nada.\n\n" +
-          "Welcome to the barter apocalypse.\n\n" +
+        text: 
+`Before we fix the money, maybe ask: Why did we even invent this stuff in the first place?
 
-          "🔄 Problem #1: Trade Stops\n\n" +
-          "You're a fantastic baker.\n" +
-          "I'm a plumber.\n" +
-          "I want bread.\n" +
-          "But guess what?\n" +
-          "Your pipes are working just fine.\n\n" +
-          "Now you're hungry. I'm hungry.\n" +
-          "We both just sit there, admiring your moldy sourdough and my shiny wrench.\n\n" +
-          "Without money, trade becomes a Tinder date from hell:\n" +
-          "Sorry, no match.\n\n" +
+💭 Imagine This:
+You wake up in a world with no money. Not bad money. Zero. Zilch. Nada.
+Welcome to the barter apocalypse.
 
-          "🛑 Problem #2: You Can't Save\n\n" +
-          "You finally win at life and grow more food than you can eat.\n" +
-          "You try to save it.\n\n" +
-          "Spoiler alert:\n" +
-          "It rots.\n" +
-          "It molds.\n" +
-          "Rats throw a party in it.\n\n" +
-          "You raise a goat instead?\n" +
-          "Congrats. It got sick and died.\n\n" +
-          "Money solves this by letting you store your effort in something that doesn't decay, stink, or scream.\n\n" +
+🔄 Problem #1: Trade Stops
+You're a fantastic baker. I'm a plumber. I want bread.
+But guess what? Your pipes are working just fine.
 
-          "🎯 Problem #3: No Way to Compare Value\n\n" +
-          "I offer you a chicken.\n" +
-          "You offer me… six apples?\n\n" +
-          "Is that fair?\n" +
-          "Are the apples organic?\n" +
-          "Is the chicken passive-aggressive?\n\n" +
-          "Also, I don't want apples.\n" +
-          "I need socks. And maybe a dentist.\n\n" +
-          "Without money, everything's a confusing mess of 'meh.'\n" +
-          "Money gives us a shared scoreboard. It lets us compare, save, and plan, instead of haggling like it's a flea market in chaos mode.\n\n" +
+Now you're hungry. I'm hungry.
+We both just sit there, admiring your moldy sourdough and my shiny wrench.
+Without money, trade becomes a Tinder date from hell: Sorry, no match.
 
-          "😬 Bottom Line:\n\n" +
-          "Without money, you lose:\n\n" +
-          "• Trade (no one wants your goat)\n" +
-          "• Savings (unless you're cool with rat loot)\n" +
-          "• Value Comparison (is a potato worth a shoe?)\n\n" +
-          "And with bad money, those same things die—just slower.\n" +
-          "Trust fades.\n" +
-          "Prices lie.\n" +
-          "And the system quietly eats itself from the inside.\n\n" +
+🛑 Problem #2: You Can't Save
+You finally win at life and grow more food than you can eat.
+You try to save it.
 
-          "💡 Bonus Challenge:\n" +
-          "Look around your room. Try to trade three things you own without using money as a reference. Watch your brain short-circuit!"
+Spoiler alert:
+It rots. It molds. Rats throw a party in it.
+You raise a goat instead? Congrats. It got sick and died.
+Money solves this by letting you store your effort in something that doesn't decay, stink, or scream.
+
+🎯 Problem #3: No Way to Compare Value
+I offer you a chicken. You offer me... six apples?
+Is that fair? Are the apples organic? Is the chicken passive-aggressive?
+Also, I don't want apples. I need socks. And maybe a dentist.
+Without money, everything's a confusing mess of 'meh.'
+Money gives us a shared scoreboard.
+
+😬 Bottom Line:
+Without money, you lose:
+• Trade (no one wants your goat)
+• Savings (unless you're cool with rat loot)
+• Value Comparison (is a potato worth a shoe?)
+
+And with bad money, those same things die—just slower.
+Trust fades. Prices lie. And the system quietly eats itself from the inside.
+
+💡 Bonus Challenge:
+Look around your room. Try to trade three things you own without using money as a reference. Watch your brain short-circuit!`
       }
     },
     {
@@ -198,13 +188,9 @@ const MoneyModule = () => {
               <Coins size={48} />
             </div>
             <h2>{step.content.title}</h2>
-            <p className="intro-text">{step.content.text}</p>
-            <button 
-              className="continue-button"
-              onClick={() => handleStepComplete(index)}
-            >
-              Start Learning
-            </button>
+            <div className="content-text">
+              {step.content.text}
+            </div>
           </div>
         );
 
