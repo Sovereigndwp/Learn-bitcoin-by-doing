@@ -3,9 +3,6 @@ import { useProgress } from '../contexts/ProgressContext';
 import { Coins, Trophy, CheckCircle } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import MoneyGame from '../components/MoneyGame';
-import brokenTrade from '../assets/images/broken-trade.svg';
-import rottingSavings from '../assets/images/rotting-savings.svg';
-import confusedValue from '../assets/images/confused-value.svg';
 
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -19,47 +16,68 @@ const MoneyModule = () => {
       content: {
         title: "💸 What Happens Without Money?",
         text: 
-`Before we fix the money, maybe ask: Why did we even invent this stuff in the first place?
+`Before we fix the money, let's ask: Why did humans invent it in the first place?
 
-💭 Imagine This:
-You wake up in a world with no money. Not bad money. Zero. Zilch. Nada.
-Welcome to the barter apocalypse.
+💭 Imagine this:
+You wake up in a world with no money. Not bad money. No money at all.
+Welcome to the barter world.
 
-🔄 Problem #1: Trade Stops
-You're a fantastic baker. I'm a plumber. I want bread.
-But guess what? Your pipes are working just fine.
+🔄 Problem #1: Trade Gets Stuck
+Alice is a baker.
+Bob is a shoemaker.
+Carla fixes roofs.
+Dan grows vegetables.
 
-Now you're hungry. I'm hungry.
-We both just sit there, admiring your moldy sourdough and my shiny wrench.
-Without money, trade becomes a Tinder date from hell: Sorry, no match.
+Now let's say:
+Alice wants shoes.
+Bob needs a new roof.
+Carla wants vegetables.
+And Dan is craving some bread.
 
-🛑 Problem #2: You Can't Save
-You finally win at life and grow more food than you can eat.
-You try to save it.
+See the problem?
 
-Spoiler alert:
-It rots. It molds. Rats throw a party in it.
-You raise a goat instead? Congrats. It got sick and died.
-Money solves this by letting you store your effort in something that doesn't decay, stink, or scream.
+Nobody can trade directly.
+They all need to find the exact person who wants what they have and also has what they need.
+It's called the "double coincidence of wants." And without it, trade becomes a frustrating puzzle that rarely works.
 
-🎯 Problem #3: No Way to Compare Value
-I offer you a chicken. You offer me... six apples?
-Is that fair? Are the apples organic? Is the chicken passive-aggressive?
-Also, I don't want apples. I need socks. And maybe a dentist.
-Without money, everything's a confusing mess of 'meh.'
-Money gives us a shared scoreboard.
+🛑 Problem #2: You Can't Save for Later
+Let's say Carla grows too much food this season.
+She wants to save the extra for the future.
+
+Too bad—most of it spoils, molds, or gets eaten by animals.
+She could try raising a goat instead… until it gets sick or runs away.
+
+Money solves this by storing her work in a form that doesn't rot, die, or chew the furniture.
+
+🎯 Problem #3: No Easy Way to Compare Value
+Dan offers a sack of potatoes.
+Bob offers a pair of shoes.
+Alice offers a dozen loaves of bread.
+
+What's worth more?
+Is a shoe worth more than five loaves?
+Is a potato worth more than a roof repair?
+
+Without money, there's no common way to measure value.
+It's all guesswork and arguments.
+
+Money gives us a shared measuring stick so we can compare things fairly.
 
 😬 Bottom Line:
 Without money, you lose:
-• Trade (no one wants your goat)
-• Savings (unless you're cool with rat loot)
-• Value Comparison (is a potato worth a shoe?)
+• Trade (unless you get really lucky with who wants what)
+• Savings (unless you enjoy hoarding spoiled vegetables)
+• Clear value (because everyone argues over what's worth what)
 
-And with bad money, those same things die—just slower.
-Trust fades. Prices lie. And the system quietly eats itself from the inside.
+And with bad money?
+Those same things slowly break down.
+People lose trust. Prices get weird. The system eats itself from the inside.
 
-💡 Bonus Challenge:
-Look around your room. Try to trade three things you own without using money as a reference. Watch your brain short-circuit!`
+💡 Try This:
+Look around your room.
+Pick three things you own.
+Now try to trade them with someone without using money—or using money as a reference.
+Not so easy, right?`
       }
     },
     {
@@ -172,7 +190,7 @@ Look around your room. Try to trade three things you own without using money as 
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
-        completeModule('money');
+      completeModule('money');
     }
     setCurrentStep(index + 1);
   };
@@ -192,7 +210,9 @@ Look around your room. Try to trade three things you own without using money as 
             </div>
             <h2>{step.content.title}</h2>
             <div className="content-text">
-              <pre>{step.content.text}</pre>
+              {step.content.text.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
           </div>
         );
@@ -202,7 +222,9 @@ Look around your room. Try to trade three things you own without using money as 
           <div className="step-content transition-step">
             <h2>{step.content.title}</h2>
             <div className="content-text">
-              <pre>{step.content.text}</pre>
+              {step.content.text.split('\n\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
             <button onClick={() => handleStepComplete(index)}>Continue</button>
           </div>
