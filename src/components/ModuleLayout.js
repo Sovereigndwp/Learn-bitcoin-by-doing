@@ -26,10 +26,6 @@ const ModuleLayout = ({ children }) => {
               <Home size={20} />
               Home
             </Link>
-            <Link to="/about" className="nav-button">
-              <AlertCircle size={20} />
-              About Dalia
-            </Link>
             <button className="language-toggle" onClick={toggleLanguage}>
               <Globe size={20} />
               {language === 'en' ? 'ES' : 'EN'}
