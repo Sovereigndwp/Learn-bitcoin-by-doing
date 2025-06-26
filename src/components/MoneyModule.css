@@ -408,4 +408,136 @@
 
 .step-nav-button.completed svg {
   color: #4caf50;
+}
+
+/* Barter World Section */
+.step-content {
+  padding: 2rem;
+  background: white;
+  color: #333;
+}
+
+/* External Resource Step */
+.external-resource-step {
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.external-resource-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 1.5rem 0;
+}
+
+.external-resource-link {
+  display: inline-block;
+  background: #f7931a;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+}
+
+.external-resource-link:hover {
+  background: #e17f0d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
+}
+
+.external-resource-step .button-group {
+  margin-top: 2rem;
+}
+
+.animated-icon {
+  display: inline-block;
+  font-size: 1.2em;
+  margin: 0 0.2em;
+  vertical-align: middle;
+}
+
+.animated-icon.bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Add some spacing for the list items */
+.content-text ol li {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+/* Quiz section icons */
+.history-snapshot .animated-icon {
+  font-size: 1.4em;
+  margin: 0 0.3em;
+}
+
+/* Traits section icons */
+.trait-item .animated-icon {
+  font-size: 1.3em;
+  margin-right: 0.5em;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.trait-item .animated-icon.unlocked {
+  opacity: 1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* External resource icons */
+.external-resource-description .animated-icon {
+  font-size: 1.3em;
+  margin-left: 0.3em;
+  vertical-align: middle;
+}
+
+.badge-button .animated-icon {
+  margin-left: 0.5em;
+  animation: bounce 1s infinite;
+}
+
+/* Enhance existing bounce animation */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.quiz-step h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.quiz-step h2 .question-icon {
+  color: black;
+  font-style: normal;
+}
+
+.history-snapshot h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.question-section h3 {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  color: var(--text-primary);
 } 

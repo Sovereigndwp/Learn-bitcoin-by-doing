@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock } from 'lucide-react';
+import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
 
 // Component for the Barter World section
 const BarterWorld = ({ onComplete }) => {
-  const [reflection, setReflection] = useState('');
-
   return (
     <div className="step-content barter-world">
       <div className="step-icon">
@@ -16,35 +15,41 @@ const BarterWorld = ({ onComplete }) => {
       <h2>Imagine a World Without Money</h2>
       <div className="content-text">
         <p>
-          You want shoes. Someone else wants bread. Another needs roof repair.
-          Unless the right match exists, trade doesn't happen. This is barter hell.
+          Imagine waking up in a world with no money.<br/>
+          Not the "I'm broke" kind of no money—the "money doesn't even exist" kind.<br/>
+          You want 👟.<br/>
+          Someone else wants 🥖.<br/>
+          Another person needs their 💧🏠 fixed.<br/>
+          Unless you miraculously find someone who wants exactly what you have and has exactly what you need, you're stuck staring at your pile of… whatever it is you have.<br/>
+          This is called the double coincidence of wants—and it's basically the universe's way of testing your patience.
         </p>
-        <div className="key-points">
-          <p>Without money:</p>
-          <ul>
-            <li>Trade breaks</li>
-            <li>Saving is impossible</li>
-            <li>Valuing things is confusing</li>
-          </ul>
-        </div>
-        <div className="reflection-section">
-          <h3>Reflection</h3>
-          <p>Try to trade 3 items around you without money.</p>
-          <textarea
-            value={reflection}
-            onChange={(e) => setReflection(e.target.value)}
-            placeholder="Type your reflection here..."
-            rows={4}
-          />
-          <div className="button-group">
-            <button onClick={() => onComplete(reflection)} className="primary-button">
-              Submit
-            </button>
-            <button onClick={() => onComplete()} className="secondary-button">
-              Skip
-            </button>
-          </div>
-        </div>
+        <p>
+          But wait! Even if you do manage to barter, your extra food spoils before you can trade it, and nobody can agree if a 🐔 is worth a 🪑 or just a really nice 🎩.<br/>
+          So without money, trade is slow, saving is risky, and everyone ends up arguing over whether a 🐄 is worth three 🐐 or a heartfelt "handshake." 
+        </p>
+        <p>
+          Welcome to the Stone Age of economics, where value is in the eye of the beholder, and the barter system is the original dating app for stuff.<br/>
+          (And just like dating, it's complicated, often messy, and rarely ends well for anyone involved.)
+        </p>
+
+        <h4>Then Along Came Money (Because Barter Was Driving Everyone Nuts)</h4>
+        <p>
+          So, after centuries of awkward bartering—think "Sorry, I don't need your <AnimatedIcon type="chicken" />, but do you want to trade for this slightly used <AnimatedIcon type="spear" />?"—people got creative.<br/>
+          They realized that if everyone agreed on something as a "medium of <AnimatedIcon type="exchange" />," life could be a whole lot easier.<br/>
+          Enter: <AnimatedIcon type="money" className="bounce" />.
+        </p>
+        <p>
+          And just like that <AnimatedIcon type="magic" />, money transformed the way people traded, saved, and valued things:
+        </p>
+        <ol>
+          <li>No more double coincidence of wants: Now you can sell your <AnimatedIcon type="shoes" /> to anyone and buy <AnimatedIcon type="bread" /> from anyone else.</li>
+          <li>Saving is suddenly possible: Extra food spoils, but <AnimatedIcon type="coins" />? They last forever (or at least until you lose them in the <AnimatedIcon type="couch" />).</li>
+          <li>Everyone agrees (sort of) on value: Instead of arguing if a <AnimatedIcon type="sheep" /> is worth a basket of <AnimatedIcon type="apples" /> or a night out, you just slap a <AnimatedIcon type="pricetag" /> on it.</li>
+        </ol>
+
+        <button onClick={onComplete} className="continue-button">
+          Continue
+        </button>
       </div>
     </div>
   );
@@ -59,7 +64,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const questions = [
     {
       id: 1,
-      text: "On the Pacific Islands, rare seashells were used as money—until European traders arrived with boatloads from other shores.",
+      text: `On the Pacific Islands, rare ${<AnimatedIcon type="shell" />} were used as money—until European ${<AnimatedIcon type="trader" />} arrived with boatloads from other shores.`,
       question: "What went wrong?",
       options: [
         "Trade increased",
@@ -72,7 +77,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 2,
-      text: "In ancient Rome, emperors secretly mixed cheaper metals into silver coins to create more money.",
+      text: `In ancient Rome, ${<AnimatedIcon type="emperor" />} secretly mixed cheaper metals into silver coins to create more money.`,
       question: "What happened to people's savings?",
       options: [
         "Nothing changed",
@@ -85,7 +90,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 3,
-      text: "Salt was once used as money, but it would dissolve in rain and rot in humidity.",
+      text: `${<AnimatedIcon type="salt" />} was once used as money, but it would dissolve in rain and rot in humidity.`,
       question: "Why did this cause problems?",
       options: [
         "Salt was too common",
@@ -98,7 +103,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 4,
-      text: "Gold became global money because it was scarce and beautiful, but moving it was dangerous and expensive.",
+      text: `${<AnimatedIcon type="gold" />} became global money because it was scarce and beautiful, but moving it was dangerous and expensive.`,
       question: "What was gold's biggest weakness?",
       options: [
         "Hard to carry",
@@ -111,7 +116,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 5,
-      text: "In 1933, the US government made it illegal for citizens to own gold, forcing them to accept paper dollars instead.",
+      text: `In 1933, the ${<AnimatedIcon type="bank" />} made it illegal for citizens to own gold, forcing them to accept paper dollars instead.`,
       question: "What property of money was violated?",
       options: [
         "Scarcity",
@@ -124,7 +129,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 6,
-      text: "Paper money started as gold receipts, but banks soon printed more receipts than they had gold.",
+      text: `Paper money started as gold receipts, but ${<AnimatedIcon type="bank" />} soon printed more receipts than they had gold.`,
       question: "Why did this break trust?",
       options: [
         "Gold was too heavy",
@@ -137,7 +142,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 7,
-      text: "Digital payments made money faster, but also gave institutions power to freeze accounts and block transactions.",
+      text: `${<AnimatedIcon type="digital" />} payments made money faster, but also gave institutions power to freeze accounts and block transactions.`,
       question: "What's the core issue here?",
       options: [
         "Technology is complex",
@@ -175,7 +180,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
             <div className="step-icon">
         <History size={48} />
       </div>
-      <h2>Money's Greatest Fails (Question {currentQuestion + 1} of {questions.length})</h2>
+      <h2>Money's Greatest Fails (<span className="question-icon">❓</span> {currentQuestion + 1} of {questions.length})</h2>
       
       <div className="quiz-content">
         <div className="history-snapshot">
@@ -225,12 +230,12 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 // Component for the Traits Scorecard
 const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
   const allTraits = [
-    { name: "Scarcity", description: "Hard to reproduce" },
-    { name: "Durability", description: "Doesn't rot or degrade" },
-    { name: "Portability", description: "Easy to carry/send" },
-    { name: "Store of Value", description: "Keeps its worth" },
-    { name: "Censorship Resistance", description: "Can't be frozen" },
-    { name: "Honesty", description: "Can't be debased" }
+    { name: "Scarcity", icon: "scarcity", description: "Hard to reproduce" },
+    { name: "Durability", icon: "durability", description: "Doesn't rot or degrade" },
+    { name: "Portability", icon: "portability", description: "Easy to carry/send" },
+    { name: "Store of Value", icon: "storeOfValue", description: "Keeps its worth" },
+    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Can't be frozen" },
+    { name: "Honesty", icon: "honesty", description: "Can't be debased" }
   ];
 
         return (
@@ -244,6 +249,7 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
         {allTraits.map(trait => (
           <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : ''}`}>
             <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✓' : '○'}</span>
+            <AnimatedIcon type={trait.icon} className={unlockedTraits.includes(trait.name) ? 'unlocked' : ''} />
             <span className="trait-name">{trait.name}</span>
             <span className="trait-description">— {trait.description}</span>
           </div>
@@ -253,45 +259,37 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="summary-section">
         <p className="summary">Summary: Bitcoin is the first money to meet all of these traits in one system.</p>
         <button onClick={onComplete} className="badge-button">
-          Earn Badge: Sound Money Explorer
+          Earn Badge: Sound Money Explorer <AnimatedIcon type="learn" />
         </button>
       </div>
     </div>
   );
 };
 
-// Component for the Money Timeline
-const MoneyTimeline = ({ onComplete }) => {
-  const timelineEras = [
-    { era: "Barter", year: "9000 BCE", description: "Direct trade of goods" },
-    { era: "Commodity", year: "3000 BCE", description: "Shells, salt, cattle" },
-    { era: "Coins", year: "600 BCE", description: "Reliable weight, hard to fake—but heavy" },
-    { era: "Paper", year: "700 CE", description: "Lightweight but needs trust" },
-    { era: "Banking", year: "1400 CE", description: "More efficient but centralized" },
-    { era: "Digital", year: "1950s", description: "Fast but surveillance heavy" },
-    { era: "Bitcoin", year: "2009", description: "Digital scarcity + no rulers" }
-  ];
-
-        return (
-    <div className="step-content timeline-step">
-            <div className="step-icon">
+// Component for External Resource Link
+const ExternalResource = ({ onComplete }) => {
+  return (
+    <div className="step-content external-resource-step">
+      <div className="step-icon">
         <Clock size={48} />
-            </div>
-      <h2>The Evolution of Money</h2>
-      
-      <div className="timeline-scroll">
-        {timelineEras.map((era, index) => (
-          <div key={index} className="timeline-item">
-            <h3>{era.era}</h3>
-            <p className="year">{era.year}</p>
-            <p className="description">{era.description}</p>
-          </div>
-        ))}
       </div>
-
-      <button onClick={onComplete} className="continue-button">
-        Complete Module
-      </button>
+      <h2>Explore the History of Money <AnimatedIcon type="history" /></h2>
+      <p className="external-resource-description">
+        Dive deeper into the fascinating evolution of money through the ages. <AnimatedIcon type="explore" />
+      </p>
+      <a
+        href="https://www.visualcapitalist.com/currency-and-the-collapse-of-the-roman-empire/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="external-resource-link"
+      >
+        Visit Visual History of Money
+      </a>
+      <div className="button-group">
+        <button onClick={onComplete} className="continue-button">
+          Complete Module
+        </button>
+      </div>
     </div>
   );
 };
@@ -362,7 +360,7 @@ const MoneyModule = () => {
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {['Barter World', 'Money Quiz', 'Traits Scorecard', 'Timeline'].map((step, index) => (
+          {['Barter World', 'Money Quiz', 'Traits Scorecard', 'Learn More'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
@@ -378,7 +376,7 @@ const MoneyModule = () => {
           {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
           {currentStep === 1 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
           {currentStep === 2 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-          {currentStep === 3 && <MoneyTimeline onComplete={handleStepComplete} />}
+          {currentStep === 3 && <ExternalResource onComplete={handleStepComplete} />}
         </div>
       </div>
 

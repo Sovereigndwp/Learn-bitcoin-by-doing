@@ -1,5 +1,4 @@
 import MoneyModule from './MoneyModule';
-import MoneyDesignerModule from './MoneyDesignerModule';
 import BitcoinBasicsModule from './BitcoinBasicsModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
@@ -21,15 +20,6 @@ export const moduleRegistry = {
     order: 1,
     group: 'fundamentals',
     prerequisites: []
-  },
-  'money-designer': {
-    id: 'money-designer',
-    title: 'Design Perfect Money',
-    description: 'Learn what makes money work or fail through interactive challenges.',
-    component: MoneyDesignerModule,
-    order: 1.5,
-    group: 'fundamentals',
-    prerequisites: ['money']
   },
   'bitcoin-basics': {
     id: 'bitcoin-basics',
