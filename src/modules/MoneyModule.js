@@ -1,271 +1,258 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Coins, Trophy, CheckCircle } from 'lucide-react';
+import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock } from 'lucide-react';
 import '../components/ModuleCommon.css';
-import MoneyGame from '../components/MoneyGame';
+import '../components/MoneyModule.css';
 
+// Component for the Barter World section
+const BarterWorld = ({ onComplete }) => {
+  const [reflection, setReflection] = useState('');
+
+  return (
+    <div className="step-content barter-world">
+      <div className="step-icon">
+        <Brain size={48} />
+      </div>
+      <h2>🧠 Imagine a World Without Money</h2>
+      <div className="content-text">
+        <p>
+          You want shoes. Someone else wants bread. Another needs roof repair.
+          Unless the right match exists, trade doesn't happen. This is barter hell.
+        </p>
+        <div className="key-points">
+          <p>Without money:</p>
+          <ul>
+            <li>Trade breaks</li>
+            <li>Saving is impossible</li>
+            <li>Valuing things is confusing</li>
+          </ul>
+        </div>
+        <div className="reflection-section">
+          <h3>💬 Reflection</h3>
+          <p>Try to trade 3 items around you without money.</p>
+          <textarea
+            value={reflection}
+            onChange={(e) => setReflection(e.target.value)}
+            placeholder="Type your reflection here..."
+            rows={4}
+          />
+          <div className="button-group">
+            <button onClick={() => onComplete(reflection)} className="primary-button">
+              Submit
+            </button>
+            <button onClick={() => onComplete()} className="secondary-button">
+              Skip
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Component for the Money Quiz
+const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const questions = [
+    {
+      id: 1,
+      text: "On the Pacific Islands, rare seashells were used as money—until European traders arrived with boatloads from other shores.",
+      question: "What went wrong?",
+      options: [
+        "Trade increased",
+        "Shells lost their scarcity",
+        "Islanders chose the wrong shell"
+      ],
+      answer: 1,
+      takeaway: "Shells lost their scarcity, proving money must be hard to reproduce.",
+      trait: "Scarcity"
+    },
+    // ... other questions from the spec
+  ];
+
+  const handleAnswer = (answerIndex) => {
+    setSelectedAnswer(answerIndex);
+    setShowFeedback(true);
+    if (answerIndex === questions[currentQuestion].answer) {
+      onUnlockTrait(questions[currentQuestion].trait);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(null);
+      setShowFeedback(false);
+    } else {
+      onComplete();
+    }
+  };
+
+  const currentQ = questions[currentQuestion];
+
+  return (
+    <div className="step-content quiz-step">
+      <div className="step-icon">
+        <History size={48} />
+      </div>
+      <h2>💰 Money's Greatest Fails (Question {currentQuestion + 1} of {questions.length})</h2>
+      
+      <div className="quiz-content">
+        <div className="history-snapshot">
+          <h3>📜 History Snapshot:</h3>
+          <p>{currentQ.text}</p>
+        </div>
+
+        <div className="question-section">
+          <h3>❓ {currentQ.question}</h3>
+          <div className="options">
+            {currentQ.options.map((option, index) => (
+              <button
+                key={index}
+                className={`option-button ${selectedAnswer === index ? 'selected' : ''}`}
+                onClick={() => handleAnswer(index)}
+                disabled={showFeedback}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {showFeedback && (
+          <div className="feedback-section">
+            <p className="takeaway">✅ {currentQ.takeaway}</p>
+            <p className="trait-unlock">🔓 Trait Unlocked: {currentQ.trait} ✔️</p>
+            <button onClick={handleNext} className="next-button">
+              {currentQuestion < questions.length - 1 ? 'Next Question →' : 'Complete Quiz'}
+            </button>
+          </div>
+        )}
+
+        <div className="progress-dots">
+          {questions.map((_, index) => (
+            <span
+              key={index}
+              className={`dot ${index === currentQuestion ? 'active' : ''} ${index < currentQuestion ? 'completed' : ''}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Component for the Traits Scorecard
+const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
+  const allTraits = [
+    { name: "Scarcity", description: "Hard to reproduce" },
+    { name: "Durability", description: "Doesn't rot or degrade" },
+    { name: "Portability", description: "Easy to carry/send" },
+    { name: "Store of Value", description: "Keeps its worth" },
+    { name: "Censorship Resistance", description: "Can't be frozen" },
+    { name: "Honesty", description: "Can't be debased" }
+  ];
+
+  return (
+    <div className="step-content scorecard-step">
+      <div className="step-icon">
+        <Award size={48} />
+      </div>
+      <h2>✅ The Traits That Matter</h2>
+      
+      <div className="traits-list">
+        {allTraits.map(trait => (
+          <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : ''}`}>
+            <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✔️' : '◯'}</span>
+            <span className="trait-name">{trait.name}</span>
+            <span className="trait-description">— {trait.description}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="summary-section">
+        <p className="summary">🟡 Summary: Bitcoin is the first money to meet all of these traits in one system.</p>
+        <button onClick={onComplete} className="badge-button">
+          🎉 Earn Badge: Sound Money Explorer
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Component for the Money Timeline
+const MoneyTimeline = ({ onComplete }) => {
+  const timelineEras = [
+    { era: "Barter", year: "9000 BCE", description: "Direct trade of goods" },
+    { era: "Commodity", year: "3000 BCE", description: "Shells, salt, cattle" },
+    { era: "Coins", year: "600 BCE", description: "Reliable weight, hard to fake—but heavy" },
+    { era: "Paper", year: "700 CE", description: "Lightweight but needs trust" },
+    { era: "Banking", year: "1400 CE", description: "More efficient but centralized" },
+    { era: "Digital", year: "1950s", description: "Fast but surveillance heavy" },
+    { era: "Bitcoin", year: "2009", description: "Digital scarcity + no rulers" }
+  ];
+
+  return (
+    <div className="step-content timeline-step">
+      <div className="step-icon">
+        <Clock size={48} />
+      </div>
+      <h2>📈 The Evolution of Money</h2>
+      
+      <div className="timeline-scroll">
+        {timelineEras.map((era, index) => (
+          <div key={index} className="timeline-item">
+            <h3>{era.era}</h3>
+            <p className="year">{era.year}</p>
+            <p className="description">{era.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <button onClick={onComplete} className="continue-button">
+        Complete Module
+      </button>
+    </div>
+  );
+};
+
+// Badge Modal Component
+const BadgeModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>🎉 Congratulations!</h2>
+        <p>You've earned the Sound Money Explorer badge!</p>
+        <button onClick={onClose}>Close</button>
+      </div>
+    </div>
+  );
+};
+
+// Main Module Component
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [unlockedTraits, setUnlockedTraits] = useState([]);
+  const [showBadgeModal, setShowBadgeModal] = useState(false);
 
-  const steps = [
-    {
-      title: "Introduction",
-      type: "intro",
-      content: {
-        title: "💸 What Happens Without Money?",
-        text: 
-`Before we fix the money, let's ask: Why did humans invent it in the first place?
-
-💭 Imagine this:
-You wake up in a world with no money. Not bad money. No money at all.
-Welcome to the barter world.
-
-🔄 Problem #1: Trade Gets Stuck
-Alice is a baker.
-Bob is a shoemaker.
-Carla fixes roofs.
-Dan grows vegetables.
-
-Now let's say:
-Alice wants shoes.
-Bob needs a new roof.
-Carla wants vegetables.
-And Dan is craving some bread.
-
-See the problem?
-
-Nobody can trade directly.
-They all need to find the exact person who wants what they have and also has what they need.
-It's called the "double coincidence of wants." And without it, trade becomes a frustrating puzzle that rarely works.
-
-🛑 Problem #2: You Can't Save for Later
-Let's say Carla grows too much food this season.
-She wants to save the extra for the future.
-
-Too bad—most of it spoils, molds, or gets eaten by animals.
-She could try raising a goat instead… until it gets sick or runs away.
-
-Money solves this by storing her work in a form that doesn't rot, die, or chew the furniture.
-
-🎯 Problem #3: No Easy Way to Compare Value
-Dan offers a sack of potatoes.
-Bob offers a pair of shoes.
-Alice offers a dozen loaves of bread.
-
-What's worth more?
-Is a shoe worth more than five loaves?
-Is a potato worth more than a roof repair?
-
-Without money, there's no common way to measure value.
-It's all guesswork and arguments.
-
-Money gives us a shared measuring stick so we can compare things fairly.
-
-😬 Bottom Line:
-Without money, you lose:
-• Trade (unless you get really lucky with who wants what)
-• Savings (unless you enjoy hoarding spoiled vegetables)
-• Clear value (because everyone argues over what's worth what)
-
-And with bad money?
-Those same things slowly break down.
-People lose trust. Prices get weird. The system eats itself from the inside.
-
-💡 Try This:
-Look around your room.
-Pick three things you own.
-Now try to trade them with someone without using money—or using money as a reference.
-Not so easy, right?`
-      }
-    },
-    {
-      title: "Perfect... Until it Wasn't",
-      type: "transition",
-      content: {
-        title: "The Evolution of Money",
-        text: "Throughout history, humans have constantly searched for better forms of money. Each new form seemed perfect at first, but eventually showed its flaws:\n\n- Seashells were great until more were found in other oceans.\n- Gold was sound but too heavy to move and easy to confiscate.\n- Paper money started as gold receipts but became unlimited printing.\n- Digital banking brought convenience but with surveillance and control.\n\nEvery form of money had its moment, but each had weaknesses that led people to seek something better. We've seen how money that was once considered 'perfect' failed because it was either:\n- Too easy to produce more (seashells, fiat).\n- Too hard to move (gold, large stones).\n- Too easy to control (digital banking).\n- Too easy to confiscate (gold, cash).\n\nNow let's explore the properties that make truly sound money, and see how Bitcoin finally combines all these qualities in one system."
-      }
-    },
-    {
-      title: "Properties of Sound Money",
-      type: "money-game",
-      content: {
-        title: "What Makes Money Sound?",
-        description: "Bitcoin is the best form of money humans have ever created because it combines all the essential properties of sound money in one system. Let's explore how Bitcoin perfects these qualities in ways that were impossible before."
-      }
-    },
-    {
-      title: "Money Quiz",
-      type: "interactive-quiz",
-      content: {
-        title: "Judge These as Money",
-        description: "Throughout history, societies have experimented with different forms of money. Let's explore what worked, what failed, and why.",
-        questions: [
-          {
-            prompt: "In ancient Pacific islands, communities used rare seashells as money. When European traders arrived with ships full of shells from other oceans, they were able to buy most of the islands' valuable goods with what felt like 'monopoly money' to them. What does this teach us about money?",
-            choices: [
-              "Trade increased because there was more money.",
-              "The money system failed because shells lost their natural scarcity.",
-              "The islanders should have used different shells."
-            ],
-            correct: 1,
-            explanation: "When Europeans could easily collect shells from other places, they essentially got 'free money' to buy valuable island goods. This shows why money needs natural scarcity - if someone can easily create more of it, they can take real value from others without giving value in return."
-          },
-          {
-            prompt: "The Yap islands used massive stone wheels called 'Rai stones' as money. Even when a stone was lost at sea, everyone kept track of who owned it through community memory. What key lesson about money does this reveal?",
-            choices: [
-              "Money needs to be physically present to work.",
-              "Money is really about community agreement on ownership.",
-              "Lost money should still count as money."
-            ],
-            correct: 1,
-            explanation: "The Rai stones show that money is really about trusted record-keeping. The stones didn't move physically, but ownership changed through community consensus - similar to how Bitcoin's ledger works today."
-          },
-          {
-            prompt: "Gold has been used as money for over 5,000 years across different civilizations that had no contact with each other. Why did such different cultures independently choose gold?",
-            choices: [
-              "Because it's naturally scarce, durable, and universal.",
-              "Because governments forced people to use it.",
-              "Because it was the prettiest metal available."
-            ],
-            correct: 0,
-            explanation: "Gold emerged naturally as money across civilizations because it has properties that make it ideal: it's scarce (can't be easily mined), durable (doesn't rust), divisible (can be split), and universal (same everywhere). These are the same properties we need in modern money."
-          },
-          {
-            prompt: "In 1923 Germany, people had to spend their money immediately because prices doubled every few days. Workers were paid twice a day and rushed to buy bread before prices rose again. What does this teach us about money's role as a store of value?",
-            choices: [
-              "Quick spending stimulates the economy.",
-              "Money fails when it can't hold value over time.",
-              "Prices should be flexible to help commerce."
-            ],
-            correct: 1,
-            explanation: "The German hyperinflation shows that money must be a reliable store of value. When money loses value too quickly, it fails at its core purpose - helping people trade and save across time. This is why inflationary money eventually breaks society's trust."
-          },
-          {
-            prompt: "In 2020, Canadian truckers protesting COVID policies had their bank accounts frozen. If they had used a decentralized currency like Bitcoin instead, what would have been different?",
-            choices: [
-              "Nothing - all money can be controlled.",
-              "Their money would have remained accessible.",
-              "The protest would have been illegal."
-            ],
-            correct: 1,
-            explanation: "This recent event shows why decentralization matters. When money is controlled by central authorities, it can be used as a tool of control. True money should work regardless of whether someone approves of how you're using it."
-          },
-          {
-            prompt: "The Roman Empire gradually made their coins worse by mixing cheap metals into the silver, and people even shaved off the edges of gold coins to make more coins. How did this affect people's trust in the money?",
-            choices: [
-              "People didn't notice because the coins looked similar.",
-              "It helped create more money for trade.",
-              "People lost trust because the money was being secretly weakened."
-            ],
-            correct: 2,
-            explanation: "When authorities secretly reduce money's quality (like mixing cheap metals into silver or shaving gold), it's a form of theft. People eventually realize their money is being weakened, and they lose trust in the entire system. Good money needs to be consistent and honest."
-          },
-          {
-            prompt: "Bitcoin is the first money in history that can be sent instantly worldwide while being impossible to counterfeit or confiscate. How does this change what's possible with money?",
-            choices: [
-              "It combines gold's scarcity with digital convenience.",
-              "It's just another payment app like PayPal.",
-              "It's only useful for small transactions."
-            ],
-            correct: 0,
-            explanation: "Bitcoin represents a breakthrough in monetary technology - it combines the scarcity of gold with the convenience of digital transfer, while adding new properties like mathematical certainty and resistance to confiscation. This makes it uniquely suited for an interconnected digital world."
-          }
-        ]
-      }
-    },
-    {
-      title: "(Optional Deep Dive)",
-      type: "external-resource",
-      content: {
-        title: "Interactive Timeline: Money's Evolution",
-        description: "Explore an interactive timeline showing how money evolved from barter to Bitcoin, with key historical events and technological breakthroughs that shaped our understanding of value exchange.",
-        link: "https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
-      }
-    }
-  ];
-
-  const handleStepComplete = (index) => {
-    setCompletedSteps(prev => new Set(prev).add(index));
-    if (index === steps.length - 1) {
+  const handleStepComplete = () => {
+    if (currentStep === 3) {
       completeModule('money');
+      setShowBadgeModal(true);
+    } else {
+      setCurrentStep(currentStep + 1);
     }
-    setCurrentStep(index + 1);
   };
 
-  const renderStep = (step, index) => {
-    if (!step || !step.type) {
-      console.error('Invalid step data:', step);
-      return null;
-    }
-
-    switch (step.type) {
-      case 'intro':
-        return (
-          <div className="step-content intro-step">
-            <div className="step-icon">
-              <Coins size={48} />
-            </div>
-            <h2>{step.content.title}</h2>
-            <div className="content-text">
-              {step.content.text.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'transition':
-        return (
-          <div className="step-content transition-step">
-            <h2>{step.content.title}</h2>
-            <div className="content-text">
-              {step.content.text.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-            <button onClick={() => handleStepComplete(index)}>Continue</button>
-          </div>
-        );
-
-      case 'money-game':
-        return (
-          <div className="step-content game-step">
-            <h2>{step.content.title}</h2>
-            <p>{step.content.description}</p>
-            <MoneyGame onComplete={() => handleStepComplete(index)} />
-          </div>
-        );
-
-      case 'interactive-quiz':
-        return (
-          <div className="step-content quiz-step">
-            <MoneyQuiz
-              title={step.content.title}
-              description={step.content.description}
-              questions={step.content.questions}
-              onComplete={() => handleStepComplete(index)}
-            />
-          </div>
-        );
-
-      case 'external-resource':
-        return (
-          <div className="step-content resource-step">
-            <h2>{step.content.title}</h2>
-            <p>{step.content.description}</p>
-            <a href={step.content.link} target="_blank" rel="noopener noreferrer">
-              Visit Interactive Timeline
-            </a>
-            <button onClick={() => handleStepComplete(index)}>Continue</button>
-          </div>
-        );
-
-      default:
-        console.error('Unknown step type:', step.type);
-        return null;
+  const handleUnlockTrait = (trait) => {
+    if (!unlockedTraits.includes(trait)) {
+      setUnlockedTraits([...unlockedTraits, trait]);
     }
   };
 
@@ -274,7 +261,7 @@ Not so easy, right?`
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
-          If You Don't Define Money, It Will Define You
+          If You Don't Define It, It Will Define You
         </h1>
         {isModuleCompleted('money') && (
           <div className="completion-badge">
@@ -288,100 +275,37 @@ Not so easy, right?`
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
+            style={{ width: `${(currentStep / 4) * 100}%` }}
           />
         </div>
         <span className="progress-text">
-          {completedSteps.size} / {steps.length} steps completed
+          {currentStep} / 4 steps completed
         </span>
       </div>
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {steps.map((step, index) => (
+          {['Barter World', 'Money Quiz', 'Traits Scorecard', 'Timeline'].map((step, index) => (
             <button
               key={index}
-              className={`step-nav-button ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+              className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
               onClick={() => setCurrentStep(index)}
             >
-              {completedSteps.has(index) && <CheckCircle size={16} />}
-              {step.title}
+              {index < currentStep && <CheckCircle size={16} />}
+              {step}
             </button>
           ))}
         </div>
 
         <div className="step-content-container">
-          {renderStep(steps[currentStep], currentStep)}
+          {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
+          {currentStep === 1 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+          {currentStep === 2 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+          {currentStep === 3 && <MoneyTimeline onComplete={handleStepComplete} />}
         </div>
       </div>
-    </div>
-  );
-};
 
-// Quiz Component
-const MoneyQuiz = ({ title, description, questions, onComplete }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [score, setScore] = useState(0);
-
-  const handleAnswer = (answerIndex) => {
-    setSelectedAnswer(answerIndex);
-    if (answerIndex === questions[currentQuestion].correct) {
-      setScore(score + 1);
-    }
-    setShowExplanation(true);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(null);
-      setShowExplanation(false);
-    } else {
-      onComplete(score);
-    }
-  };
-
-  return (
-    <div className="quiz-container">
-      <h2>{title}</h2>
-      <p>{description}</p>
-      
-      <div className="question-container">
-        <h3>Question {currentQuestion + 1} of {questions.length}</h3>
-        <p>{questions[currentQuestion].prompt}</p>
-        
-        <div className="choices">
-          {questions[currentQuestion].choices.map((choice, index) => (
-            <button
-              key={index}
-              onClick={() => handleAnswer(index)}
-              disabled={showExplanation}
-              className={`choice-button ${
-                showExplanation
-                  ? index === questions[currentQuestion].correct
-                    ? 'correct'
-                    : selectedAnswer === index
-                    ? 'incorrect'
-                    : ''
-                  : ''
-              }`}
-            >
-              {choice}
-            </button>
-          ))}
-        </div>
-        
-        {showExplanation && (
-          <div className="explanation">
-            <p>{questions[currentQuestion].explanation}</p>
-            <button onClick={handleNext}>
-              {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
-            </button>
-          </div>
-        )}
-      </div>
+      <BadgeModal isOpen={showBadgeModal} onClose={() => setShowBadgeModal(false)} />
     </div>
   );
 };

@@ -1,0 +1,356 @@
+/* Barter World Section */
+.barter-world {
+  padding: 2rem;
+}
+
+.key-points {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(247, 147, 26, 0.1);
+  border-radius: 12px;
+}
+
+.key-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.key-points li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.key-points li:before {
+  content: "•";
+  color: #f7931a;
+  position: absolute;
+  left: 0;
+}
+
+.reflection-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reflection-section textarea {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.primary-button, .secondary-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-button {
+  background: #f7931a;
+  color: white;
+}
+
+.secondary-button {
+  background: #eee;
+  color: #333;
+}
+
+.primary-button:hover {
+  background: #e68a17;
+}
+
+.secondary-button:hover {
+  background: #ddd;
+}
+
+/* Quiz Section */
+.quiz-step {
+  padding: 2rem;
+}
+
+.quiz-content {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.history-snapshot {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(247, 147, 26, 0.1);
+  border-radius: 8px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.option-button {
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  text-align: left;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-button:hover:not(:disabled) {
+  border-color: #f7931a;
+}
+
+.option-button.selected {
+  border-color: #f7931a;
+  background: rgba(247, 147, 26, 0.1);
+}
+
+.feedback-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.takeaway {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.trait-unlock {
+  color: #f7931a;
+  margin-top: 1rem;
+}
+
+.next-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.next-button:hover {
+  background: #e68a17;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+.dot.active {
+  background: #f7931a;
+}
+
+.dot.completed {
+  background: #4caf50;
+}
+
+/* Traits Scorecard */
+.scorecard-step {
+  padding: 2rem;
+}
+
+.traits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.trait-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.trait-item.unlocked {
+  border-left: 4px solid #4caf50;
+}
+
+.check-icon {
+  font-size: 1.25rem;
+}
+
+.trait-name {
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.trait-description {
+  color: #666;
+}
+
+.summary-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.summary {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.badge-button {
+  padding: 1rem 2rem;
+  background: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.badge-button:hover {
+  background: #e68a17;
+  transform: translateY(-2px);
+}
+
+/* Timeline Section */
+.timeline-step {
+  padding: 2rem;
+}
+
+.timeline-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 2rem;
+  padding: 2rem 0;
+  margin: 2rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-item {
+  min-width: 250px;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-item h3 {
+  color: #f7931a;
+  margin: 0 0 0.5rem;
+}
+
+.year {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.description {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Badge Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-content h2 {
+  color: #f7931a;
+  margin: 0 0 1rem;
+}
+
+.modal-content button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: #e68a17;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .barter-world,
+  .quiz-step,
+  .scorecard-step,
+  .timeline-step {
+    padding: 1rem;
+  }
+
+  .quiz-content,
+  .reflection-section {
+    padding: 1.5rem;
+  }
+
+  .timeline-item {
+    min-width: 200px;
+  }
+
+  .trait-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .trait-name {
+    min-width: auto;
+  }
+} 
