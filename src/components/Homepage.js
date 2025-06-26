@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Coins, Star, Trophy } from 'lucide-react';
 import { moduleRegistry } from '../modules/ModuleRegistry';
 import './Homepage.css';
 

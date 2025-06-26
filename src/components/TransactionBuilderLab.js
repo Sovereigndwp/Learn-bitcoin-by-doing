@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowRight, Plus, Minus } from 'lucide-react';
 import './TransactionBuilderLab.css';
 
@@ -26,13 +26,13 @@ const TransactionBuilderLab = ({ onComplete }) => {
     return outputs.reduce((sum, output) => sum + (parseFloat(output.amount) || 0), 0);
   };
 
-  const estimateTransactionSize = () => {
+  const estimateTransactionSize = useCallback(() => {
     // Rough size estimation:
     // 10 bytes overhead
     // 148 bytes per input
     // 34 bytes per output
     return 10 + (selectedInputs.length * 148) + (outputs.length * 34);
-  };
+  }, [selectedInputs.length, outputs.length]);
 
   const calculateFee = () => {
     const size = estimateTransactionSize();

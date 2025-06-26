@@ -201,8 +201,8 @@ export const ProgressProvider = ({ children }) => {
     }
   };
 
-  const getProgressPercentage = () => {
-    return (completedModules.length / MODULES.length) * 100;
+  const getModuleProgress = (moduleId) => {
+    return completedModules.includes(moduleId) ? 100 : 0;
   };
 
   const isModuleCompleted = (moduleId) => {
@@ -213,22 +213,20 @@ export const ProgressProvider = ({ children }) => {
     return BADGES.find(badge => badge.id === badgeId);
   };
 
-  const value = {
-    completedModules,
-    earnedBadges,
-    currentStreak,
-    totalPoints,
-    completeModule,
-    earnBadge,
-    getProgressPercentage,
-    isModuleCompleted,
-    getBadgeDetails,
-    modules: MODULES,
-    badges: BADGES
-  };
-
   return (
-    <ProgressContext.Provider value={value}>
+    <ProgressContext.Provider value={{
+      completedModules,
+      earnedBadges,
+      currentStreak,
+      totalPoints,
+      completeModule,
+      earnBadge,
+      getModuleProgress,
+      isModuleCompleted,
+      getBadgeDetails,
+      modules: MODULES,
+      badges: BADGES
+    }}>
       {children}
     </ProgressContext.Provider>
   );

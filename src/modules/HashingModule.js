@@ -37,7 +37,7 @@ const HashExplorer = ({ onComplete }) => {
       setExamples(updatedExamples);
     };
     computeExampleHashes();
-  }, []); // Now safe to have empty dependency array as examples are initialized from constant
+  }, [examples]);
 
   const handleInputChange = async (e) => {
     const newInput = e.target.value;
