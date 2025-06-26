@@ -13,7 +13,7 @@ const BarterWorld = ({ onComplete }) => {
       <div className="step-icon">
         <Brain size={48} />
       </div>
-      <h2>🧠 Imagine a World Without Money</h2>
+      <h2>Imagine a World Without Money</h2>
       <div className="content-text">
         <p>
           You want shoes. Someone else wants bread. Another needs roof repair.
@@ -28,7 +28,7 @@ const BarterWorld = ({ onComplete }) => {
           </ul>
         </div>
         <div className="reflection-section">
-          <h3>💬 Reflection</h3>
+          <h3>Reflection</h3>
           <p>Try to trade 3 items around you without money.</p>
           <textarea
             value={reflection}
@@ -70,7 +70,84 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       takeaway: "Shells lost their scarcity, proving money must be hard to reproduce.",
       trait: "Scarcity"
     },
-    // ... other questions from the spec
+    {
+      id: 2,
+      text: "In ancient Rome, emperors secretly mixed cheaper metals into silver coins to create more money.",
+      question: "What happened to people's savings?",
+      options: [
+        "Nothing changed",
+        "Value increased",
+        "Value was stolen"
+      ],
+      answer: 2,
+      takeaway: "Debasement is theft through money manipulation.",
+      trait: "Honesty"
+    },
+    {
+      id: 3,
+      text: "Salt was once used as money, but it would dissolve in rain and rot in humidity.",
+      question: "Why did this cause problems?",
+      options: [
+        "Salt was too common",
+        "Salt wasn't divisible",
+        "Salt wouldn't last"
+      ],
+      answer: 2,
+      takeaway: "Money must be durable to store value over time.",
+      trait: "Durability"
+    },
+    {
+      id: 4,
+      text: "Gold became global money because it was scarce and beautiful, but moving it was dangerous and expensive.",
+      question: "What was gold's biggest weakness?",
+      options: [
+        "Hard to carry",
+        "Too beautiful",
+        "Too scarce"
+      ],
+      answer: 0,
+      takeaway: "Money needs to be easily portable for global trade.",
+      trait: "Portability"
+    },
+    {
+      id: 5,
+      text: "In 1933, the US government made it illegal for citizens to own gold, forcing them to accept paper dollars instead.",
+      question: "What property of money was violated?",
+      options: [
+        "Scarcity",
+        "Durability",
+        "Censorship Resistance"
+      ],
+      answer: 2,
+      takeaway: "Sound money can't be confiscated or controlled by authorities.",
+      trait: "Censorship Resistance"
+    },
+    {
+      id: 6,
+      text: "Paper money started as gold receipts, but banks soon printed more receipts than they had gold.",
+      question: "Why did this break trust?",
+      options: [
+        "Gold was too heavy",
+        "Banks created fake value",
+        "Receipts were ugly"
+      ],
+      answer: 1,
+      takeaway: "Money must be honest - you can't create value from nothing.",
+      trait: "Store of Value"
+    },
+    {
+      id: 7,
+      text: "Digital payments made money faster, but also gave institutions power to freeze accounts and block transactions.",
+      question: "What's the core issue here?",
+      options: [
+        "Technology is complex",
+        "Speed causes problems",
+        "Central control is risky"
+      ],
+      answer: 2,
+      takeaway: "Money shouldn't depend on trusting intermediaries.",
+      trait: "Censorship Resistance"
+    }
   ];
 
   const handleAnswer = (answerIndex) => {
@@ -93,24 +170,24 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
   const currentQ = questions[currentQuestion];
 
-  return (
+        return (
     <div className="step-content quiz-step">
-      <div className="step-icon">
+            <div className="step-icon">
         <History size={48} />
       </div>
-      <h2>💰 Money's Greatest Fails (Question {currentQuestion + 1} of {questions.length})</h2>
+      <h2>Money's Greatest Fails (Question {currentQuestion + 1} of {questions.length})</h2>
       
       <div className="quiz-content">
         <div className="history-snapshot">
-          <h3>📜 History Snapshot:</h3>
+          <h3>History Snapshot:</h3>
           <p>{currentQ.text}</p>
-        </div>
+            </div>
 
         <div className="question-section">
-          <h3>❓ {currentQ.question}</h3>
+          <h3>{currentQ.question}</h3>
           <div className="options">
             {currentQ.options.map((option, index) => (
-              <button
+            <button 
                 key={index}
                 className={`option-button ${selectedAnswer === index ? 'selected' : ''}`}
                 onClick={() => handleAnswer(index)}
@@ -124,10 +201,10 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
         {showFeedback && (
           <div className="feedback-section">
-            <p className="takeaway">✅ {currentQ.takeaway}</p>
-            <p className="trait-unlock">🔓 Trait Unlocked: {currentQ.trait} ✔️</p>
+            <p className="takeaway">{currentQ.takeaway}</p>
+            <p className="trait-unlock">Trait Unlocked: {currentQ.trait}</p>
             <button onClick={handleNext} className="next-button">
-              {currentQuestion < questions.length - 1 ? 'Next Question →' : 'Complete Quiz'}
+              {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
             </button>
           </div>
         )}
@@ -156,17 +233,17 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
     { name: "Honesty", description: "Can't be debased" }
   ];
 
-  return (
+        return (
     <div className="step-content scorecard-step">
       <div className="step-icon">
         <Award size={48} />
       </div>
-      <h2>✅ The Traits That Matter</h2>
+      <h2>The Traits That Matter</h2>
       
       <div className="traits-list">
         {allTraits.map(trait => (
           <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : ''}`}>
-            <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✔️' : '◯'}</span>
+            <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✓' : '○'}</span>
             <span className="trait-name">{trait.name}</span>
             <span className="trait-description">— {trait.description}</span>
           </div>
@@ -174,9 +251,9 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       </div>
 
       <div className="summary-section">
-        <p className="summary">🟡 Summary: Bitcoin is the first money to meet all of these traits in one system.</p>
+        <p className="summary">Summary: Bitcoin is the first money to meet all of these traits in one system.</p>
         <button onClick={onComplete} className="badge-button">
-          🎉 Earn Badge: Sound Money Explorer
+          Earn Badge: Sound Money Explorer
         </button>
       </div>
     </div>
@@ -195,12 +272,12 @@ const MoneyTimeline = ({ onComplete }) => {
     { era: "Bitcoin", year: "2009", description: "Digital scarcity + no rulers" }
   ];
 
-  return (
+        return (
     <div className="step-content timeline-step">
-      <div className="step-icon">
+            <div className="step-icon">
         <Clock size={48} />
-      </div>
-      <h2>📈 The Evolution of Money</h2>
+            </div>
+      <h2>The Evolution of Money</h2>
       
       <div className="timeline-scroll">
         {timelineEras.map((era, index) => (
@@ -230,8 +307,8 @@ const BadgeModal = ({ isOpen, onClose }) => {
         <p>You've earned the Sound Money Explorer badge!</p>
         <button onClick={onClose}>Close</button>
       </div>
-    </div>
-  );
+          </div>
+        );
 };
 
 // Main Module Component
