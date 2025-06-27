@@ -16,7 +16,7 @@ const BarterWorld = ({ onComplete }) => {
       <div className="content-text">
         <p>
           Imagine waking up in a world with no money.<br/>
-          Not the "I'm broke" kind of no money—the "money doesn't even exist" kind.<br/>
+          Not the "I'm broke" kind of no money...the "money doesn't even exist" kind.<br/>
           You want 👟.<br/>
           Someone else wants 🥖.<br/>
           Another person needs their 💧🏠 fixed.<br/>
@@ -24,7 +24,7 @@ const BarterWorld = ({ onComplete }) => {
           This is called the double coincidence of wants—and it's basically the universe's way of testing your patience.
         </p>
         <p>
-          But wait! Even if you do manage to barter, your extra food spoils before you can trade it, and nobody can agree if a 🐔 is worth a 🪑 or just a really nice 🎩.<br/>
+          But wait! Even if you do manage to swap goods directly, your extra food spoils before you can trade it, and nobody can agree if a 🐔 is worth a 🪑 or just a really nice 🎩.<br/>
           So without money, trade is slow, saving is risky, and everyone ends up arguing over whether a 🐄 is worth three 🐐 or a heartfelt "handshake." 
         </p>
         <p>
@@ -34,8 +34,8 @@ const BarterWorld = ({ onComplete }) => {
 
         <h4>Then Along Came Money (Because Barter Was Driving Everyone Nuts)</h4>
         <p>
-          So, after centuries of awkward bartering—think "Sorry, I don't need your <AnimatedIcon type="chicken" />, but do you want to trade for this slightly used <AnimatedIcon type="spear" />?"—people got creative.<br/>
-          They realized that if everyone agreed on something as a "medium of <AnimatedIcon type="exchange" />," life could be a whole lot easier.<br/>
+          So, after centuries of awkward bartering, people got creative.
+          They realized that if everyone agreed on something as a common "tool", life could be a whole lot easier.<br/>
           Enter: <AnimatedIcon type="money" className="bounce" />.
         </p>
         <p>
@@ -50,6 +50,128 @@ const BarterWorld = ({ onComplete }) => {
         <button onClick={onComplete} className="continue-button">
           Continue
         </button>
+      </div>
+    </div>
+  );
+};
+
+// Component for the "What's Missing Here?" section
+const WhatsWrong = ({ onComplete }) => {
+  const [answers, setAnswers] = useState({});
+  const [feedback, setFeedback] = useState({});
+
+  const scenarios = [
+    {
+      id: 'q1',
+      title: "The Sandwich Stand-Off",
+      description: "You're a hungry web designer. You offer the baker a free website in exchange for a sandwich. He says, 'I need a plumber, not a homepage.'",
+      question: "What's stopping this trade from happening? What could solve it?",
+      options: [
+        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
+        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
+        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+      ],
+      feedback: {
+        A: "✅ Correct! You need a smoother way to trade, not a direct swap.",
+        B: "You're not trying to save food for later—you're just trying to make a trade now.",
+        C: "You know the sandwich is valuable—you just can't exchange your skills for it."
+      },
+      correctAnswer: 'A'
+    },
+    {
+      id: 'q2',
+      title: "The Rotten Paycheck",
+      description: "You grew potatoes to pay your carpenter next month. But by then, they've all rotted or turned into weird sprouts.",
+      question: "Why didn't your payment plan work? What could help preserve your effort over time?",
+      options: [
+        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
+        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
+        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+      ],
+      feedback: {
+        A: "You weren't trying to trade right away. The issue was storing value for later.",
+        B: "✅ Correct! The problem is that your savings (potatoes) didn't last.",
+        C: "You knew what the potatoes were worth—they just didn't last."
+      },
+      correctAnswer: 'B'
+    },
+    {
+      id: 'q3',
+      title: "The Bread-for-Hat Deal",
+      description: "Someone offers five loaves of bread for your hat. Is that a fair deal? Too much? Not enough? Nobody knows.",
+      question: "What's missing to help you both agree on whether this is a fair exchange?",
+      options: [
+        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
+        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
+        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+      ],
+      feedback: {
+        A: "You *can* trade—the issue is figuring out if it's a good trade.",
+        B: "You're not trying to store anything—you just want to know what it's worth.",
+        C: "✅ Correct! You need a clear way to measure value."
+      },
+      correctAnswer: 'C'
+    }
+  ];
+
+  const handleAnswer = (questionId, value) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
+
+    const scenario = scenarios.find(s => s.id === questionId);
+    setFeedback(prev => ({
+      ...prev,
+      [questionId]: scenario.feedback[value]
+    }));
+
+    const allAnswers = { ...answers, [questionId]: value };
+    const allCorrect = scenarios.every(s => allAnswers[s.id] === s.correctAnswer);
+    
+    if (allCorrect) {
+      setTimeout(() => {
+        onComplete();
+      }, 2000);
+    }
+  };
+
+  return (
+    <div className="step-content whats-wrong-step">
+      <div className="step-icon">
+        <Brain size={48} />
+      </div>
+      <h2>What's Missing Here?</h2>
+
+      <div className="scenarios-list">
+        {scenarios.map(scenario => (
+          <div key={scenario.id} className="scenario-item">
+            <div className="scenario-header">
+              <h3>{scenario.title}</h3>
+              <p className="scenario-description">{scenario.description}</p>
+              <p className="scenario-question"><em>{scenario.question}</em></p>
+            </div>
+            <div className="options-grid">
+              {scenario.options.map(option => (
+                <label key={option.value} className="option-label">
+                  <input
+                    type="radio"
+                    name={scenario.id}
+                    value={option.value}
+                    checked={answers[scenario.id] === option.value}
+                    onChange={() => handleAnswer(scenario.id, option.value)}
+                  />
+                  <span className="option-text">{option.label}</span>
+                </label>
+              ))}
+            </div>
+            {feedback[scenario.id] && (
+              <p className={`feedback ${feedback[scenario.id].includes('✅') ? 'correct' : 'incorrect'}`}>
+                {feedback[scenario.id]}
+              </p>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -359,7 +481,7 @@ const MoneyModule = () => {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
 
   const handleStepComplete = () => {
-    if (currentStep === 3) {
+    if (currentStep === 4) {  // Updated to account for new step
       completeModule('money');
       setShowBadgeModal(true);
     } else {
@@ -392,17 +514,17 @@ const MoneyModule = () => {
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(currentStep / 4) * 100}%` }}
+            style={{ width: `${(currentStep / 5) * 100}%` }}
           />
         </div>
         <span className="progress-text">
-          {currentStep} / 4 steps completed
+          {currentStep} / 5 steps completed
         </span>
       </div>
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {['Barter World', 'Money Quiz', 'Traits Scorecard', 'Learn More'].map((step, index) => (
+          {['Barter World', 'What\'s Missing?', 'The Perpetual Patch', 'Traits Scorecard', 'Learn More'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
@@ -416,9 +538,10 @@ const MoneyModule = () => {
 
         <div className="step-content-container">
           {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
-          {currentStep === 1 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-          {currentStep === 2 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-          {currentStep === 3 && <ExternalResource onComplete={handleStepComplete} />}
+          {currentStep === 1 && <WhatsWrong onComplete={handleStepComplete} />}
+          {currentStep === 2 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+          {currentStep === 3 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+          {currentStep === 4 && <ExternalResource onComplete={handleStepComplete} />}
         </div>
       </div>
 
