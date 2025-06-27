@@ -1,0 +1,223 @@
+.transaction-builder {
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-builder h2 {
+  margin: 0 0 30px;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.section h3 {
+  margin: 0 0 20px;
+  color: #444;
+  font-size: 18px;
+}
+
+.person-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr auto;
+  gap: 15px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.person-row input {
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.person-row input:focus {
+  border-color: #0066cc;
+  outline: none;
+}
+
+.amount-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.amount-input input {
+  padding-right: 45px;
+  width: 100%;
+}
+
+.currency {
+  position: absolute;
+  right: 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+  background: #ffeeee;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  background: #e8e8e8;
+  border-color: #999;
+  color: #333;
+}
+
+.arrow-section {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  color: #666;
+}
+
+.fee-section {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fee-explanation {
+  flex: 2;
+}
+
+.fee-explanation h3 {
+  margin: 0 0 10px;
+  color: #444;
+  font-size: 16px;
+}
+
+.fee-explanation p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.fee-amount {
+  flex: 1;
+  text-align: right;
+  font-family: monospace;
+}
+
+.fee-amount span {
+  display: block;
+  font-size: 18px;
+  color: #0066cc;
+}
+
+.fee-sats {
+  font-size: 14px !important;
+  color: #666 !important;
+  margin-top: 5px;
+}
+
+.send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.send-button:hover:not(:disabled) {
+  background: #0052a3;
+}
+
+.send-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.send-button.success {
+  background: #28a745;
+}
+
+.error-message {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fff4f4;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  color: #d32f2f;
+  font-size: 14px;
+}
+
+.helpful-tips {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fff8e1;
+  border-radius: 8px;
+}
+
+.helpful-tips h3 {
+  margin: 0 0 15px;
+  color: #444;
+  font-size: 16px;
+}
+
+.helpful-tips ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.helpful-tips li {
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+.helpful-tips li:last-child {
+  margin-bottom: 0;
+} 
