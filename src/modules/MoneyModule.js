@@ -64,7 +64,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const questions = [
     {
       id: 1,
-      text: `On the Pacific Islands, rare ${<AnimatedIcon type="shell" />} were used as money—until European ${<AnimatedIcon type="trader" />} arrived with boatloads from other shores.`,
+      text: "Rare shells were used as money on Pacific Islands—until traders arrived with boatloads from elsewhere.",
       question: "What went wrong?",
       options: [
         "Trade increased",
@@ -72,86 +72,125 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         "Islanders chose the wrong shell"
       ],
       answer: 1,
-      takeaway: "Shells lost their scarcity, proving money must be hard to reproduce.",
+      takeaway: "Shells lost scarcity. Good money must be hard to reproduce.",
       trait: "Scarcity"
     },
     {
       id: 2,
-      text: `In ancient Rome, ${<AnimatedIcon type="emperor" />} secretly mixed cheaper metals into silver coins to create more money.`,
-      question: "What happened to people's savings?",
+      text: "Salt was used as money, but it dissolved in rain and rotted in humidity.",
+      question: "Why was this a problem?",
       options: [
-        "Nothing changed",
-        "Value increased",
-        "Value was stolen"
+        "Too common",
+        "Not divisible",
+        "Wouldn't last"
       ],
       answer: 2,
-      takeaway: "Debasement is theft through money manipulation.",
-      trait: "Honesty"
-    },
-    {
-      id: 3,
-      text: `${<AnimatedIcon type="salt" />} was once used as money, but it would dissolve in rain and rot in humidity.`,
-      question: "Why did this cause problems?",
-      options: [
-        "Salt was too common",
-        "Salt wasn't divisible",
-        "Salt wouldn't last"
-      ],
-      answer: 2,
-      takeaway: "Money must be durable to store value over time.",
+      takeaway: "Money must be durable to hold value.",
       trait: "Durability"
     },
     {
-      id: 4,
-      text: `${<AnimatedIcon type="gold" />} became global money because it was scarce and beautiful, but moving it was dangerous and expensive.`,
-      question: "What was gold's biggest weakness?",
+      id: 3,
+      text: "Gold was used for centuries but was heavy and risky to transport.",
+      question: "What was its biggest weakness?",
       options: [
-        "Hard to carry",
         "Too beautiful",
+        "Hard to carry",
         "Too scarce"
       ],
-      answer: 0,
-      takeaway: "Money needs to be easily portable for global trade.",
+      answer: 1,
+      takeaway: "Money must be easy to move—portability matters.",
       trait: "Portability"
     },
     {
-      id: 5,
-      text: `In 1933, the ${<AnimatedIcon type="bank" />} made it illegal for citizens to own gold, forcing them to accept paper dollars instead.`,
-      question: "What property of money was violated?",
+      id: 4,
+      text: "Germany in 1923 saw prices doubling every few days. People rushed to spend their money before it lost value.",
+      question: "What's the lesson?",
       options: [
-        "Scarcity",
-        "Durability",
-        "Censorship Resistance"
-      ],
-      answer: 2,
-      takeaway: "Sound money can't be confiscated or controlled by authorities.",
-      trait: "Censorship Resistance"
-    },
-    {
-      id: 6,
-      text: `Paper money started as gold receipts, but ${<AnimatedIcon type="bank" />} soon printed more receipts than they had gold.`,
-      question: "Why did this break trust?",
-      options: [
-        "Gold was too heavy",
-        "Banks created fake value",
-        "Receipts were ugly"
+        "Spending fast is good",
+        "Money must store value",
+        "Prices should be flexible"
       ],
       answer: 1,
-      takeaway: "Money must be honest - you can't create value from nothing.",
+      takeaway: "Money must hold value over time, or it fails.",
       trait: "Store of Value"
     },
     {
-      id: 7,
-      text: `${<AnimatedIcon type="digital" />} payments made money faster, but also gave institutions power to freeze accounts and block transactions.`,
-      question: "What's the core issue here?",
+      id: 5,
+      text: "In ancient Rome, coins were secretly mixed with cheaper metals or clipped around the edges, making them unequal in value.",
+      question: "What happened to trust in money?",
       options: [
-        "Technology is complex",
-        "Speed causes problems",
-        "Central control is risky"
+        "Nothing changed",
+        "People stopped trusting coins",
+        "They made more coins"
+      ],
+      answer: 1,
+      takeaway: "When money isn't uniform, people lose trust. Fungibility is essential.",
+      trait: "Fungibility"
+    },
+    {
+      id: 6,
+      text: "The Yap Islands used massive stone money that never moved. Ownership was remembered by the community.",
+      question: "What does this reveal about money?",
+      options: [
+        "Must be physical",
+        "Community agreement matters",
+        "Lost money still counts"
+      ],
+      answer: 1,
+      takeaway: "Money relies on shared knowledge of ownership—not physical form. Ledger consensus is what really matters.",
+      trait: "Ledger Consensus"
+    },
+    {
+      id: 7,
+      text: "In 2020, protesting Canadian truckers had their bank accounts frozen.",
+      question: "What would change with Bitcoin?",
+      options: [
+        "Nothing",
+        "Funds stay accessible",
+        "Authorities would allow the protest"
+      ],
+      answer: 1,
+      takeaway: "Decentralized money can't be frozen—censorship resistance matters.",
+      trait: "Censorship Resistance"
+    },
+    {
+      id: 8,
+      text: "In Turkey, Argentina, and China, governments have placed strict controls on how much money citizens can withdraw or move abroad. Some families trying to leave must carry gold, hide cash, or pay black market rates.",
+      question: "How does Bitcoin challenge that system?",
+      options: [
+        "It doesn't",
+        "It respects capital controls",
+        "It allows borderless movement of value"
       ],
       answer: 2,
-      takeaway: "Money shouldn't depend on trusting intermediaries.",
-      trait: "Censorship Resistance"
+      takeaway: "Bitcoin moves freely across borders, helping people escape restrictions and protect savings.",
+      trait: "Borderless"
+    },
+    {
+      id: 9,
+      text: "When cattle was used as money, it worked for big trades—but you couldn't pay someone with half a cow.",
+      question: "What did this reveal about money?",
+      options: [
+        "Cows were too smelly",
+        "Money must be divisible",
+        "People wanted beef"
+      ],
+      answer: 1,
+      takeaway: "Money must be divisible to handle both big and small transactions.",
+      trait: "Divisibility"
+    },
+    {
+      id: 10,
+      text: "Bitcoin is the first money that is digital, scarce, portable, divisible, and cannot be confiscated or counterfeited.",
+      question: "What makes Bitcoin different?",
+      options: [
+        "Just another app",
+        "Digital gold with new powers",
+        "Only for small payments"
+      ],
+      answer: 1,
+      takeaway: "Bitcoin combines all traits of sound money with global digital reach—plus neutrality and decentralization.",
+      trait: "All traits"
     }
   ];
 
@@ -232,10 +271,13 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
   const allTraits = [
     { name: "Scarcity", icon: "scarcity", description: "Hard to reproduce" },
     { name: "Durability", icon: "durability", description: "Doesn't rot or degrade" },
-    { name: "Portability", icon: "portability", description: "Easy to carry/send" },
-    { name: "Store of Value", icon: "storeOfValue", description: "Keeps its worth" },
-    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Can't be frozen" },
-    { name: "Honesty", icon: "honesty", description: "Can't be debased" }
+    { name: "Portability", icon: "portability", description: "Easy to move and transfer" },
+    { name: "Store of Value", icon: "storeOfValue", description: "Holds value over time" },
+    { name: "Fungibility", icon: "fungibility", description: "Each unit is equal and interchangeable" },
+    { name: "Ledger Consensus", icon: "consensus", description: "Shared agreement on ownership" },
+    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Can't be frozen or blocked" },
+    { name: "Borderless", icon: "borderless", description: "Moves freely across borders" },
+    { name: "Divisibility", icon: "divisibility", description: "Can be split into smaller units" }
   ];
 
         return (

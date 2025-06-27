@@ -179,48 +179,51 @@
 .progress-dots {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
+  gap: 8px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 1.5rem auto;
 }
 
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ddd;
+  background-color: var(--border-color);
+  transition: all 0.3s ease;
 }
 
 .dot.active {
-  background: #f7931a;
+  background-color: var(--primary-color);
+  transform: scale(1.2);
 }
 
 .dot.completed {
-  background: #4caf50;
+  background-color: var(--success-color);
 }
 
 /* Traits Section */
 .traits-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   margin: 2rem 0;
-  color: #333;
 }
 
 .trait-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
   padding: 1rem;
-  background: white;
+  background: var(--background-secondary);
   border-radius: 8px;
-  border: 1px solid #ddd;
-  color: #333;
+  transition: all 0.3s ease;
 }
 
 .trait-item.unlocked {
-  border-color: #4caf50;
-  background: rgba(76, 175, 80, 0.1);
+  background: var(--success-background);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .check-icon {

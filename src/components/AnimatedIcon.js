@@ -27,14 +27,21 @@ const AnimatedIcon = ({ type, className = '' }) => {
     gold: '🏆',
     bank: '🏦',
     digital: '💳',
+    cattle: '🐄',
+    stone: '🗿',
+    protest: '🚫',
+    border: '🌐',
     
     // Traits section
     scarcity: '💎',
     durability: '🛡️',
     portability: '✈️',
     storeOfValue: '🏺',
+    fungibility: '⚖️',
+    consensus: '🤝',
     censorshipResistance: '🔓',
-    honesty: '⚖️',
+    borderless: '🌍',
+    divisibility: '✂️',
     
     // External resource
     history: '📚',
