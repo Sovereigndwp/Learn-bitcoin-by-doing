@@ -186,29 +186,29 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const questions = [
     {
       id: 1,
-      text: "Rare shells were used as money on Pacific Islands—until traders arrived with boatloads from elsewhere.",
-      question: "What went wrong?",
+      text: "In 2008, banks froze withdrawals during the financial crisis. People couldn't access their own money.",
+      question: "What fundamental problem does this reveal about the banking system?",
       options: [
-        "Trade increased",
-        "Shells lost their scarcity",
-        "Islanders chose the wrong shell"
+        "Banks were just being cautious",
+        "Your money isn't really yours",
+        "People wanted too much money"
       ],
       answer: 1,
-      takeaway: "Shells lost scarcity. Good money must be hard to reproduce.",
-      trait: "Scarcity"
+      takeaway: "When you can't access your money, do you really own it? Bitcoin gives you true ownership.",
+      trait: "Self Custody"
     },
     {
       id: 2,
-      text: "Salt was used as money, but it dissolved in rain and rotted in humidity.",
-      question: "Why was this a problem?",
+      text: "Throughout history, every government-issued currency has eventually lost most or all of its value through inflation.",
+      question: "What does this pattern suggest about money controlled by authorities?",
       options: [
-        "Too common",
-        "Not divisible",
-        "Wouldn't last"
+        "It's just economic cycles",
+        "Printing money is necessary",
+        "Power to create money will always be abused"
       ],
       answer: 2,
-      takeaway: "Money must be durable to hold value.",
-      trait: "Durability"
+      takeaway: "Bitcoin's fixed supply prevents anyone from devaluing your savings through inflation.",
+      trait: "Fixed Supply"
     },
     {
       id: 3,
@@ -313,6 +313,32 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       answer: 1,
       takeaway: "Bitcoin combines all traits of sound money with global digital reach—plus neutrality and decentralization.",
       trait: "All traits"
+    },
+    {
+      id: 11,
+      text: "When governments banned gold ownership in the past, they could physically seize it from citizens. But Bitcoin exists as information.",
+      question: "How does this change the relationship between money and authority?",
+      options: [
+        "It doesn't change anything",
+        "Authorities can still control it",
+        "Information is harder to seize than physical assets"
+      ],
+      answer: 2,
+      takeaway: "Bitcoin's digital nature and cryptography make it resistant to physical confiscation.",
+      trait: "Digital Sovereignty"
+    },
+    {
+      id: 12,
+      text: "In Venezuela, as inflation destroyed the currency's value, the government restricted access to foreign currencies, trapping savings in a dying system.",
+      question: "What fundamental right does this violate?",
+      options: [
+        "The right to stable currency",
+        "The right to choose your money",
+        "The right to government support"
+      ],
+      answer: 1,
+      takeaway: "Bitcoin gives you the freedom to opt out of failing monetary systems.",
+      trait: "Freedom of Choice"
     }
   ];
 

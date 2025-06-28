@@ -151,13 +151,11 @@
 
 /* Step Styles */
 .step-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: white;  /* White background */
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #333;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .intro-step {
@@ -2554,4 +2552,182 @@ li {
   background: #444;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Interactive Step Styles */
+.interactive-step {
+  background: #f8f9fa;
+}
+
+.scenario-steps {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.scenario-steps li {
+  padding: 12px;
+  margin: 8px 0;
+  background: white;
+  border-radius: 8px;
+  border-left: 4px solid #f7931a;
+}
+
+.simulation-container {
+  margin: 20px 0;
+}
+
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.scenario-card {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.scenario-card h4 {
+  color: #f7931a;
+  margin-bottom: 12px;
+}
+
+.outcome {
+  margin-top: 12px;
+  padding: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.option-button {
+  padding: 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.option-button:hover {
+  border-color: #f7931a;
+  background: #fff5e6;
+}
+
+/* Discovery Step Styles */
+.discovery-step {
+  background: #f8f9fa;
+}
+
+.thought-experiment {
+  margin: 20px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.hints-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.hint-card {
+  padding: 16px;
+  background: #fff5e6;
+  border-radius: 8px;
+  position: relative;
+}
+
+.hint-number {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 24px;
+  height: 24px;
+  background: #f7931a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.challenge-section {
+  margin: 20px 0;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.insight-card {
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  position: relative;
+}
+
+.insight-number {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 24px;
+  height: 24px;
+  background: #f7931a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.revelation-section {
+  margin: 20px 0;
+  padding: 20px;
+  background: #fff5e6;
+  border-radius: 8px;
+  border-left: 4px solid #f7931a;
+}
+
+.explanation {
+  margin-top: 16px;
+  padding: 16px;
+  background: #e9ecef;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .scenarios-grid,
+  .hints-container,
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .step-content {
+    padding: 16px;
+  }
 } 
