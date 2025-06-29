@@ -392,9 +392,17 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         </div>
 
         {showFeedback && (
-          <div className="feedback-section">
+          <div className={`feedback-section ${selectedAnswer === currentQ.answer ? 'correct' : 'incorrect'}`}>
+            <p className="feedback-result">
+              {selectedAnswer === currentQ.answer ? '✅ Correct!' : '❌ Not quite right.'}
+            </p>
             <p className="takeaway">{currentQ.takeaway}</p>
-            <p className="trait-unlock">Trait Unlocked: {currentQ.trait}</p>
+            {selectedAnswer === currentQ.answer && (
+              <p className="trait-unlock">Trait Unlocked: {currentQ.trait}</p>
+            )}
+            {selectedAnswer !== currentQ.answer && (
+              <p className="try-again-hint">The correct answer was: "{currentQ.options[currentQ.answer]}"</p>
+            )}
             <button onClick={handleNext} className="next-button">
               {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
             </button>
@@ -447,7 +455,7 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       </div>
 
       <div className="summary-section">
-        <p className="summary">Summary: Bitcoin is the first money to meet all of these traits in one system.</p>
+        <p className="summary">Bitcoin is the first money to meet all of these traits in one system.</p>
         <button onClick={onComplete} className="badge-button">
           Earn Badge: Sound Money Explorer <AnimatedIcon type="learn" />
         </button>

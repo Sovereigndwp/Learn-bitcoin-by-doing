@@ -105,20 +105,20 @@
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 1rem;
-  color: #333333;
+  color: #000000 !important;
 }
 
 .module-container .quiz-container .explanation-card .explanation-text {
-  color: #555555;
+  color: #000000 !important;
   line-height: 1.5;
 }
 
 .module-container .quiz-container .explanation-card.incorrect .explanation-text {
-  color: #c62828;
+  color: #000000 !important;
 }
 
 .module-container .quiz-container .explanation-card.correct .explanation-text {
-  color: #2e7d32;
+  color: #000000 !important;
 }
 
 /* Reflection step styles */
@@ -180,20 +180,20 @@
 }
 
 .module-container .reflection-step .explanation-card .feedback-text {
-  color: #333333;
+  color: #000000 !important;
   font-weight: 600;
 }
 
 .module-container .reflection-step .explanation-card .explanation-text {
-  color: #555555;
+  color: #000000 !important;
 }
 
 .module-container .reflection-step .explanation-card.correct .explanation-text {
-  color: #2e7d32;
+  color: #000000 !important;
 }
 
 .module-container .reflection-step .explanation-card.incorrect .explanation-text {
-  color: #c62828;
+  color: #000000 !important;
 }
 
 /* Global quiz text contrast */

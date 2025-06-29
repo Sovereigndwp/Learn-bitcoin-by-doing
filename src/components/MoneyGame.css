@@ -166,7 +166,8 @@
   margin: 1rem 0;
   background: #d4edda;
   border-radius: 8px;
-  color: #155724;
+  color: #000000 !important;
+  font-weight: 500;
   animation: fadeIn 0.3s ease;
 }
 

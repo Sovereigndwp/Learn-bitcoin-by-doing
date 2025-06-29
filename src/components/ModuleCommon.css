@@ -474,23 +474,23 @@ li {
 }
 
 .explanation-card .feedback-text {
-  color: #1a1a1a;
+  color: #000000 !important;
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .explanation-card .explanation-text {
-  color: #1a1a1a;
+  color: #000000 !important;
   line-height: 1.5;
 }
 
 .explanation-card.incorrect .explanation-text {
-  color: #c62828;
+  color: #000000 !important;
 }
 
 .explanation-card.correct .explanation-text {
-  color: #2e7d32;
+  color: #000000 !important;
 }
 
 /* Try again button styling */
@@ -2065,7 +2065,8 @@ li {
 .error-indicator,
 .error-output,
 .error-tips {
-  color: #fff;
+  color: #000000 !important;
+  font-weight: 500;
 }
 
 .quiz-option.correct,
@@ -2080,18 +2081,22 @@ li {
 .scenario-result.incorrect,
 .mining-results.success,
 .mining-results.failed {
-  color: #fff;
+  color: #000000 !important;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  border-radius: 4px;
 }
 
 /* Make sure feedback states are visible */
 .feedback {
-  color: #fff !important;
+  color: #000000 !important;
+  font-weight: 500;
 }
 
 .feedback.correct,
 .feedback.incorrect {
-  color: #fff !important;
-  background: rgba(255, 255, 255, 0.1);
+  color: #000000 !important;
+  background: rgba(255, 255, 255, 0.9);
   padding: 12px;
   border-radius: 4px;
 }
@@ -2262,7 +2267,7 @@ li {
 .feedback-text {
   font-weight: 500;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: #000000 !important;
 }
 
 .next-button {
@@ -2466,20 +2471,20 @@ li {
 }
 
 .reflection-step .explanation-card .feedback-text {
-  color: #333333;
+  color: #000000 !important;
   font-weight: 600;
 }
 
 .reflection-step .explanation-card .explanation-text {
-  color: #555555;
+  color: #000000 !important;
 }
 
 .reflection-step .explanation-card.correct .explanation-text {
-  color: #2e7d32;
+  color: #000000 !important;
 }
 
 .reflection-step .explanation-card.incorrect .explanation-text {
-  color: #c62828;
+  color: #000000 !important;
 }
 
 /* Ensure all quiz text elements have proper contrast */
