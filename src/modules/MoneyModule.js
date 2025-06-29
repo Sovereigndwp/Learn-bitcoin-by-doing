@@ -12,40 +12,66 @@ const BarterWorld = ({ onComplete }) => {
       <div className="step-icon">
         <Brain size={48} />
       </div>
-      <h2>Imagine a World Without Money</h2>
+      <div className="module-header-box">
+        <h2>Imagine a World Without Money</h2>
+      </div>
       <div className="content-text">
         <p>
-          Imagine waking up in a world with no money.<br/>
-          Not the "I'm broke" kind of no money...the "money doesn't even exist" kind.<br/>
+          Imagine waking up in a world without money.<br/>
+          Not the "I'm broke" kind...<br/>
+          The "money doesn't exist at all" kind.
+        </p>
+        <p>
           You want 👟.<br/>
           Someone else wants 🥖.<br/>
-          Another person needs their 💧🏠 fixed.<br/>
-          Unless you miraculously find someone who wants exactly what you have and has exactly what you need, you're stuck staring at your pile of… whatever it is you have.<br/>
-          This is called the double coincidence of wants—and it's basically the universe's way of testing your patience.
+          Another person needs their 💧🏠 fixed.
         </p>
         <p>
-          But wait! Even if you do manage to swap goods directly, your extra food spoils before you can trade it, and nobody can agree if a 🐔 is worth a 🪑 or just a really nice 🎩.<br/>
-          So without money, trade is slow, saving is risky, and everyone ends up arguing over whether a 🐄 is worth three 🐐 or a heartfelt "handshake." 
+          Unless you magically find someone who wants what you have and has what you need, you're stuck staring at your pile of… whatever.
         </p>
         <p>
-          Welcome to the Stone Age of economics, where value is in the eye of the beholder, and the barter system is the original dating app for stuff.<br/>
-          (And just like dating, it's complicated, often messy, and rarely ends well for anyone involved.)
-        </p>
-
-        <h4>Then Along Came Money (Because Barter Was Driving Everyone Nuts)</h4>
-        <p>
-          So, after centuries of awkward bartering, people got creative.
-          They realized that if everyone agreed on something as a common "tool", life could be a whole lot easier.<br/>
-          Enter: <AnimatedIcon type="money" className="bounce" />.
+          This is called the double coincidence of wants... basically, the universe's least efficient matchmaking system.
         </p>
         <p>
-          And just like that <AnimatedIcon type="magic" />, money transformed the way people traded, saved, and valued things:
+          It's like a dating app, but for bartering:<br/>
+          You have shoes.<br/>
+          You need bread.<br/>
+          You swipe through a sea of people until... boom! Someone finally wants shoes and has sourdough. Good luck with that.
         </p>
-        <ol>
-          <li>No more double coincidence of wants: Now you can sell your <AnimatedIcon type="shoes" /> to anyone and buy <AnimatedIcon type="bread" /> from anyone else.</li>
-          <li>Saving is suddenly possible: Extra food spoils, but <AnimatedIcon type="coins" />? They last forever (or at least until you lose them in the <AnimatedIcon type="couch" />).</li>
-          <li>Everyone agrees (sort of) on value: Instead of arguing if a <AnimatedIcon type="sheep" /> is worth a basket of <AnimatedIcon type="apples" /> or a night out, you just slap a <AnimatedIcon type="pricetag" /> on it.</li>
-        </ol>
+        <p>
+          Without money:
+        </p>
+        <ul>
+          <li>Trading is painfully slow</li>
+          <li>Saving is a gamble (potatoes don't age well)</li>
+          <li>And everyone argues over whether a cow is worth three goats or just a sincere thank-you note</li>
+        </ul>
+        <p>
+          Eventually, humanity got tired of playing this awkward game of economic Tinder.
+        </p>
+        <p>
+          Enter: <AnimatedIcon type="money" className="bounce" />
+        </p>
+        <p>
+          Some brilliant (or just really frustrated) soul finally said,<br/>
+          "What if we just agree on something we can all trade for everything else?"
+        </p>
+        <p>
+          And poof... money was born.<br/>
+          A tool to grease the wheels of trade,<br/>
+          save value for later,<br/>
+          and make deals without needing a PhD in goat valuation.
+        </p>
+        <p>
+          Because deep down, humans are problem solvers...<br/>
+          Even if most of our solutions just lead to new arguments.
+        </p>
+        <p>
+          So what exactly did money fix?
+        </p>
+        <p>
+          Let's go back to some of those barter disasters and find out.
+        </p>
 
         <button onClick={onComplete} className="continue-button">
           Continue
@@ -141,7 +167,15 @@ const WhatsWrong = ({ onComplete }) => {
       <div className="step-icon">
         <Brain size={48} />
       </div>
-      <h2>What's Missing Here?</h2>
+      <div className="module-header-box">
+        <h2>Fix this Trade</h2>
+        <div className="intro-text">
+          <p>
+            Each of these scenarios shows how messy life was before money.<br/>
+            Your challenge? Figure out what role money would've played to fix the problem.
+          </p>
+        </div>
+      </div>
 
       <div className="scenarios-list">
         {scenarios.map(scenario => (
@@ -179,6 +213,7 @@ const WhatsWrong = ({ onComplete }) => {
 
 // Component for the Money Quiz
 const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
+  const [showIntro, setShowIntro] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -362,12 +397,41 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
   const currentQ = questions[currentQuestion];
 
-        return (
+  if (showIntro) {
+    return (
+      <div className="step-content quiz-step">
+        <div className="step-icon">
+          <History size={48} />
+        </div>
+        <div className="module-header-box">
+          <h2>The Perpetual Patch</h2>
+          <div className="intro-text">
+            <p>So now we know:</p>
+            <p>🧩 Money makes trade easier.<br/>
+            🧩 Money lets you save value over time.<br/>
+            🧩 Money gives us a shared way to measure things.</p>
+            <p>But…<br/>
+            Does the money we use today actually do all that?</p>
+            <p>Let's fast-forward to find out with a snapshot of money's greatest fails.</p>
+          </div>
+        </div>
+        <div className="quiz-content">
+          <button onClick={() => setShowIntro(false)} className="continue-button">
+            Start Quiz ({questions.length} questions)
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <div className="step-content quiz-step">
-            <div className="step-icon">
+      <div className="step-icon">
         <History size={48} />
       </div>
-      <h2>Money's Greatest Fails (<span className="question-icon">❓</span> {currentQuestion + 1} of {questions.length})</h2>
+      <div className="module-header-box">
+        <h2>Question {currentQuestion + 1} of {questions.length}</h2>
+      </div>
       
       <div className="quiz-content">
         <div className="history-snapshot">
@@ -441,7 +505,9 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="step-icon">
         <Award size={48} />
       </div>
-      <h2>The Traits That Matter</h2>
+      <div className="module-header-box">
+        <h2>The Traits That Matter</h2>
+      </div>
       
       <div className="traits-list">
         {allTraits.map(trait => (
@@ -471,7 +537,9 @@ const ExternalResource = ({ onComplete }) => {
       <div className="step-icon">
         <Clock size={48} />
       </div>
-      <h2>Explore the History of Money <AnimatedIcon type="history" /></h2>
+      <div className="module-header-box">
+        <h2>Explore the History of Money <AnimatedIcon type="history" /></h2>
+      </div>
       <p className="external-resource-description">
         Dive deeper into the fascinating evolution of money through the ages. <AnimatedIcon type="explore" />
       </p>
@@ -558,7 +626,7 @@ const MoneyModule = () => {
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {['Barter World', 'What\'s Missing?', 'The Perpetual Patch', 'Traits Scorecard', 'Learn More'].map((step, index) => (
+          {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Traits Scorecard', 'Learn More'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}

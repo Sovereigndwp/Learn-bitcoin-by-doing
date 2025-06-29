@@ -2724,6 +2724,43 @@ li {
   font-style: italic;
 }
 
+/* White header box for titles and introductions */
+.module-header-box {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.module-header-box h2 {
+  color: #333333 !important;
+  margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.module-header-box .intro-text {
+  color: #555555;
+  margin: 0;
+}
+
+.module-header-box .intro-text p {
+  color: #555555 !important;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.module-header-box .intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+.module-header-box .intro-text em {
+  color: #333333 !important;
+  font-style: italic;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .scenarios-grid,
@@ -2734,5 +2771,9 @@ li {
   
   .step-content {
     padding: 16px;
+  }
+  
+  .module-header-box {
+    padding: 1.5rem;
   }
 } 
