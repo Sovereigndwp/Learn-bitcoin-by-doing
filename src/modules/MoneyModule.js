@@ -183,7 +183,7 @@ const WhatsWrong = ({ onComplete }) => {
             <div className="scenario-header">
               <h3>{scenario.title}</h3>
               <p className="scenario-description">{scenario.description}</p>
-              <p className="scenario-question"><em>{scenario.question}</em></p>
+                              <p className="scenario-question">{scenario.question}</p>
             </div>
             <div className="options-grid">
               {scenario.options.map(option => (
@@ -514,8 +514,8 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
           <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : ''}`}>
             <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✓' : '○'}</span>
             <AnimatedIcon type={trait.icon} className={unlockedTraits.includes(trait.name) ? 'unlocked' : ''} />
-            <span className="trait-name">{trait.name}</span>
-            <span className="trait-description">— {trait.description}</span>
+            <span className="trait-name"><strong>{trait.name}</strong></span>
+            <span className="trait-description">{trait.description}</span>
           </div>
         ))}
       </div>
@@ -523,7 +523,7 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="summary-section">
         <p className="summary">Bitcoin is the first money to meet all of these traits in one system.</p>
         <button onClick={onComplete} className="badge-button">
-          Earn Badge: Sound Money Explorer <AnimatedIcon type="learn" />
+          Earn Badge: Sound Money Explorer 🎓
         </button>
       </div>
     </div>
@@ -543,14 +543,24 @@ const ExternalResource = ({ onComplete }) => {
       <p className="external-resource-description">
         Dive deeper into the fascinating evolution of money through the ages. <AnimatedIcon type="explore" />
       </p>
-      <a
-        href="https://www.visualcapitalist.com/currency-and-the-collapse-of-the-roman-empire/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="external-resource-link"
-      >
-        Visit Visual History of Money
-      </a>
+      <div className="external-links">
+        <a
+          href="https://www.visualcapitalist.com/currency-and-the-collapse-of-the-roman-empire/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="external-resource-link"
+        >
+          Visit Visual History of Money
+        </a>
+        <a
+          href="https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="external-resource-link timeline-link"
+        >
+          Interactive Timeline: Barter to Bitcoin
+        </a>
+      </div>
       <div className="button-group">
         <button onClick={onComplete} className="continue-button">
           Complete Module
@@ -626,7 +636,7 @@ const MoneyModule = () => {
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Traits Scorecard', 'Learn More'].map((step, index) => (
+          {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Traits Scorecard', 'An Optional Deeper Dive'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}

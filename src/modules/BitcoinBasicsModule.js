@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Bitcoin, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
+import './BitcoinBasicsModule.css';
 
 const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
@@ -18,90 +19,108 @@ const BitcoinBasicsModule = () => {
 
   const steps = [
     {
-      title: "Introduction",
-      type: "intro",
+      title: "What Would Better Money Look Like?",
+      type: "reflection",
       content: {
-        title: "Welcome to Bitcoin Basics",
-        text: "Before we dive into the technical details, let's understand what Bitcoin really is and why it matters.\n\nBitcoin is more than just digital money - it's a revolutionary technology that combines cryptography, computer science, and economics to create the world's first truly decentralized digital currency.\n\nIn this module, you'll discover:\n\n1. What problems Bitcoin solves\n2. How Bitcoin works at a high level\n3. Why Bitcoin is different from traditional money\n4. The key innovations that make Bitcoin possible"
+        title: "What Would Better Money Look Like?",
+        intro: "If money today can be frozen, inflated, or blocked...",
+        questions: [
+          "Then maybe the problem isn't money itself—it's who controls it."
+        ],
+        mainQuestion: "So ask yourself:",
+        socratics: [
+          "What if no one could stop you from using your money?",
+          "What if no one could secretly create more of it?",
+          "What if you didn't need permission to spend, save, or send it?",
+          "What if money could work equally for anyone, anywhere?"
+        ],
+        conclusion: "These questions led to one of the most important innovations of the 21st century. Let's explore what it is—and why it matters."
       }
     },
     {
-      title: "The Trust Problem",
+      title: "So, What Is Bitcoin?",
+      type: "intro",
+      content: {
+        title: "So, What Is Bitcoin?",
+        text: "Bitcoin isn't just digital money.\n\nIt's a radical redesign of money itself—built to solve the very problems traditional money can't.\n\nIt removes the need to trust banks or governments.\nIt can't be inflated, blocked, or seized.\nIt works globally, 24/7, without permission.\n\nHow? It combines cryptography, computer science, and game theory into something entirely new: a decentralized digital currency that runs on rules, not rulers."
+      }
+    },
+    {
+      title: "Sending Money Across Borders",
       type: "interactive",
       content: {
-        scenario: "Imagine you want to send $1000 to a friend in another country. Let's explore what actually happens:",
+        scenario: "Imagine you want to send $1,000 to a friend in another country.",
         steps: [
-          "Your bank deducts $1000 from your account",
-          "Money moves through 2-3 intermediary banks",
-          "Each bank takes a fee",
-          "Process takes 3-5 business days",
-          "Your friend's bank might block it for 'security'"
+          "Your bank deducts the money from your account",
+          "It passes through 2–3 intermediary banks",
+          "Each one takes a cut",
+          "It takes 3–5 business days",
+          "Your friend's bank might even block it"
         ],
-        question: "What are the fundamental problems with this system?",
+        question: "What's the real problem here?",
         options: [
-          "Too many middlemen controlling your money",
-          "High fees for a simple digital transfer",
-          "Artificial delays and restrictions",
+          "Too many middlemen",
+          "High fees and unnecessary delays",
+          "Your money isn't truly yours",
           "All of the above"
         ],
         correctAnswer: 3,
-        explanation: "The traditional financial system is built on layers of trust and control. Each intermediary adds cost, delay, and potential points of failure. Bitcoin removes these intermediaries entirely."
+        explanation: "This is why Bitcoin doesn't just tweak the system—it replaces it."
       }
     },
     {
       title: "The Double-Spend Problem",
       type: "discovery",
       content: {
-        scenario: "Digital Challenge: Copy & Paste Money?\n\nImagine you create a digital coin - just a computer file that says '1 coin'. What's stopping someone from:\n\n1. Copying the file multiple times?\n2. Sending the same coin to different people?\n3. Creating unlimited coins?\n\nThis is called the 'double-spend problem' - and before Bitcoin, it required banks to keep track of all money.",
-        thoughtExperiment: "How would you solve this without using banks?",
+        scenario: "Imagine you create a digital coin—a simple computer file that says '1 Coin.'\n\nWhat's stopping someone from:\n\n• Copying it infinitely?\n\n• Sending the same coin to multiple people?\n\n• Creating new coins out of thin air?\n\nThis is the 'double-spend' problem. Before Bitcoin, the only solution was to trust banks to keep track of everything.",
+        thoughtExperiment: "Can you think of a way to solve this without a bank?",
         hints: [
           "What if everyone kept a copy of all transactions?",
-          "What if we all agreed on the order of transactions?",
-          "What if making fake transactions was extremely expensive?"
+          "What if we agreed on the order of those transactions?",
+          "What if cheating the system was incredibly expensive?"
         ],
-        revelation: "Bitcoin solves this through its blockchain - a public ledger that everyone can verify but no one can cheat. Mining makes it extremely expensive to try to cheat the system."
+        revelation: "That's exactly how Bitcoin works. It uses a shared public ledger (blockchain) and mining to secure the system without trust."
       }
     },
     {
-      title: "Decentralization in Action",
+      title: "The Power of Decentralization",
       type: "interactive",
       content: {
-        scenario: "The Power of Decentralization",
+        scenario: "What happens when one central authority controls the money system?",
         simulation: {
-          setup: "Let's simulate a network with different scenarios:",
+          setup: "Let's simulate a few scenarios:",
           scenarios: [
             {
               title: "Scenario 1: Central Point of Failure",
-              description: "Traditional bank system goes down for maintenance",
-              outcome: "All transactions stop"
+              description: "A traditional bank goes down for maintenance",
+              outcome: "No one can send or receive money"
             },
             {
               title: "Scenario 2: Bitcoin Node Goes Down",
               description: "One or many Bitcoin nodes stop working",
-              outcome: "Network continues normally"
+              outcome: "The network keeps running like nothing happened"
             },
             {
               title: "Scenario 3: Attempted Censorship",
               description: "Someone tries to block certain transactions",
-              outcome: "Transactions route around the censorship"
+              outcome: "Bitcoin routes around the censorship"
             }
           ]
         },
-        question: "Why is decentralization crucial for a global money system?",
-        discussion: "Decentralization isn't just a technical feature - it's fundamental to creating unstoppable money. No single point of failure means no single point of control."
+        question: "Why is this kind of decentralization essential for global money?",
+        discussion: "Decentralization isn't just a technical feature—it's fundamental to creating unstoppable money. No single point of failure means no single point of control."
       }
     },
     {
-      title: "The Innovation of Digital Scarcity",
+      title: "Digital Scarcity",
       type: "discovery",
       content: {
-        scenario: "The Digital Copying Problem",
-        challenge: "Before Bitcoin, everything digital could be copied infinitely:\n- Music files\n- Pictures\n- Documents\n\nBut money can't work if it can be copied freely. Bitcoin solved this through:\n\n1. A public ledger everyone can verify\n2. Proof-of-work mining that makes cheating expensive\n3. A fixed supply that can't be changed\n\nThis created the first truly scarce digital asset in history.",
+        scenario: "Before Bitcoin, anything digital could be copied endlessly—music, photos, PDFs, you name it.\n\nBut money doesn't work if everyone can make their own version.\n\nBitcoin solved this by creating the first digitally scarce asset:\n\nA public ledger anyone can verify\nProof-of-work that makes cheating expensive\nA fixed supply that no one can change",
         reflection: "How does this change what's possible with digital technology?",
         insights: [
-          "Digital scarcity enables digital property rights",
-          "Proof-of-work converts energy into digital security",
-          "Fixed supply creates digital gold-like properties"
+          "Now, we can have true digital property rights",
+          "Now, we can convert energy into security and trust",
+          "Now, we have digital gold that anyone can hold"
         ]
       }
     }
@@ -111,19 +130,68 @@ const BitcoinBasicsModule = () => {
     if (!step) return null;
 
     switch (step.type) {
+      case 'reflection':
+        return (
+          <div className="step-content reflection-step">
+            <div className="step-icon">
+              <Bitcoin size={48} />
+            </div>
+            <div className="module-header-box">
+              <h2>{step.content.title}</h2>
+            </div>
+            
+            <div className="reflection-content">
+              <h3>{step.content.intro}</h3>
+              <div className="problem-questions">
+                {step.content.questions.map((question, i) => (
+                  <p key={i} className="problem-question">{question}</p>
+                ))}
+              </div>
+              
+              <div className="main-question">
+                <h3>{step.content.mainQuestion}</h3>
+              </div>
+              
+              <div className="socratic-questions">
+                {step.content.socratics.map((question, i) => (
+                  <div key={i} className="socratic-question">
+                    <span className="question-mark">🤔</span>
+                    <p>{question}</p>
+                  </div>
+                ))}
+              </div>
+              
+              {step.content.conclusion && (
+                <div className="conclusion-section">
+                  <p>{step.content.conclusion}</p>
+                </div>
+              )}
+              
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                I've Thought About It
+              </button>
+            </div>
+          </div>
+        );
+
       case 'intro':
         return (
           <div className="step-content intro-step">
             <div className="step-icon">
               <Bitcoin size={48} />
             </div>
-            <h2>{step.content.title}</h2>
+            <div className="module-header-box">
+              <h2>{step.content.title}</h2>
+            </div>
             <p className="intro-text">{step.content.text}</p>
             <button 
               className="continue-button"
               onClick={() => handleStepComplete(index)}
             >
-              Start Learning
+              {index === 1 ? 'Continue Learning' : 'Start Learning'}
             </button>
           </div>
         );
@@ -176,7 +244,18 @@ const BitcoinBasicsModule = () => {
                 {step.content.explanation && (
                   <p className="explanation">{step.content.explanation}</p>
                 )}
+                {step.content.discussion && (
+                  <p className="discussion">{step.content.discussion}</p>
+                )}
               </div>
+            )}
+            {step.content.question && !step.content.options && (
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                Continue
+              </button>
             )}
           </div>
         );

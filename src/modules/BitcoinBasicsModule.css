@@ -175,9 +175,12 @@
 
 /* Common Styles */
 .description {
-  color: #4B5563;
+  color: #000000 !important;
+  font-weight: 500 !important;
   margin-bottom: 24px;
   line-height: 1.6;
+  -webkit-font-smoothing: auto !important;
+  -moz-osx-font-smoothing: auto !important;
 }
 
 .complete-button {
@@ -195,6 +198,118 @@
   background: #059669;
 }
 
+/* Reflection Step Styles */
+.reflection-step {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.reflection-content {
+  padding: 2rem 0;
+}
+
+.reflection-content h3 {
+  color: #000000 !important;
+  font-weight: 700 !important;
+  margin: 2rem 0 1.5rem 0;
+  font-size: 1.4rem;
+  text-align: center;
+  -webkit-font-smoothing: auto !important;
+  -moz-osx-font-smoothing: auto !important;
+}
+
+.problem-questions {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.problem-question {
+  font-size: 1.1rem;
+  color: #000000;
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.main-question {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 3rem 0;
+  text-align: center;
+  border-left: 4px solid #f7931a;
+}
+
+.main-question h3 {
+  color: #000000;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.socratic-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.socratic-question {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.socratic-question:hover {
+  transform: translateY(-2px);
+}
+
+.question-mark {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.socratic-question p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #000000;
+  font-weight: 500;
+}
+
+.conclusion-section {
+  margin: 3rem 0 2rem 0;
+  padding: 2rem;
+  background: #e8f4fd;
+  border-radius: 12px;
+  border-left: 4px solid #2196f3;
+  text-align: center;
+}
+
+.conclusion-section p {
+  margin: 0;
+  color: #000000;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.intro-preface {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  background: #e8f4fd;
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+}
+
+.intro-preface p {
+  margin: 0;
+  color: #000000;
+  line-height: 1.6;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sections-grid,
@@ -206,5 +321,19 @@
 
   .comparison-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .reflection-step {
+    padding: 1rem;
+  }
+  
+  .socratic-question {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .main-question {
+    padding: 1.5rem;
   }
 } 
