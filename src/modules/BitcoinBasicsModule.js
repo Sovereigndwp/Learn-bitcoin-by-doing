@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Bitcoin, CheckCircle, Trophy } from 'lucide-react';
+import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
 

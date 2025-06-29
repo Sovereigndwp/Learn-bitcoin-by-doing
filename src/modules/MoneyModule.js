@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
+import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
 

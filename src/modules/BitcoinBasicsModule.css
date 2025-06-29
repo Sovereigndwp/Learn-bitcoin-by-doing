@@ -1,87 +1,46 @@
-.guide-section,
-.demo-section,
-.checklist-section,
-.comparison-section {
-  padding: 24px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Bitcoin Basics Module Specific Styles */
+
+/* Discovery Step Specific Styles */
+.discovery-step {
+  background: #f8f9fa;
 }
 
-/* Guide Section Styles */
-.sections-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+.discovery-step .scenario-section h3 {
+  font-size: 0.9rem !important;
+  line-height: 1.6 !important;
+  font-weight: 400 !important;
 }
 
-.section-card {
-  background: white;
-  border-radius: 12px;
+.thought-experiment {
+  margin: 20px 0;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.section-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.option {
-  border: 1px solid #e5e7eb;
+  background: white;
   border-radius: 8px;
-  padding: 16px;
-  margin-top: 12px;
+  border: 1px solid #e9ecef;
 }
 
-.option.recommended {
-  border-color: #10B981;
-  background: rgba(16, 185, 129, 0.05);
-}
-
-.pros-cons {
+.hints-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
-  margin: 12px 0;
+  margin: 20px 0;
 }
 
-/* Demo Section Styles */
-.exercises-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+.hint-card {
+  padding: 16px;
+  background: #fff5e6;
+  border-radius: 8px;
+  position: relative;
 }
 
-.exercise-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.step-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 8px 0;
-}
-
-.step-number {
+.hint-number {
+  position: absolute;
+  top: -10px;
+  left: -10px;
   width: 24px;
   height: 24px;
-  background: #F3F4F6;
+  background: #f7931a;
+  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -89,251 +48,52 @@
   font-weight: bold;
 }
 
-.tips-section {
-  margin-top: 16px;
-  padding: 16px;
-  background: #F3F4F6;
-  border-radius: 8px;
+.challenge-section {
+  margin: 20px 0;
 }
 
-/* Checklist Section Styles */
-.checklist-container {
+.insights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
 }
 
-.checklist-card {
+.insight-card {
+  padding: 16px;
   background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  position: relative;
 }
 
-.task-item {
+.insight-number {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 24px;
+  height: 24px;
+  background: #f7931a;
+  color: white;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  justify-content: center;
+  font-weight: bold;
 }
 
-.task-item:hover {
-  background: #F3F4F6;
-}
-
-.task-item.completed {
-  color: #10B981;
-  text-decoration: line-through;
-}
-
-/* Comparison Section Styles */
-.comparisons-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
-}
-
-.comparison-card {
-  background: white;
-  border-radius: 12px;
+.revelation-section {
+  margin: 20px 0;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.comparison-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.comparison-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 16px;
-}
-
-.traditional-side,
-.bitcoin-side {
-  padding: 16px;
+  background: #fff5e6;
   border-radius: 8px;
-}
-
-.traditional-side {
-  background: #F3F4F6;
-}
-
-.bitcoin-side {
-  background: rgba(247, 147, 26, 0.1);
-}
-
-/* Common Styles */
-.description {
-  color: #000000 !important;
-  font-weight: 500 !important;
-  margin-bottom: 24px;
-  line-height: 1.6;
-  -webkit-font-smoothing: auto !important;
-  -moz-osx-font-smoothing: auto !important;
-}
-
-.complete-button {
-  margin-top: 16px;
-  padding: 8px 16px;
-  background: #10B981;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.complete-button:hover {
-  background: #059669;
-}
-
-/* Reflection Step Styles */
-.reflection-step {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.reflection-content {
-  padding: 2rem 0;
-}
-
-.reflection-content h3 {
-  color: #000000 !important;
-  font-weight: 700 !important;
-  margin: 2rem 0 1.5rem 0;
-  font-size: 1.4rem;
-  text-align: center;
-  -webkit-font-smoothing: auto !important;
-  -moz-osx-font-smoothing: auto !important;
-}
-
-.problem-questions {
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.problem-question {
-  font-size: 1.1rem;
-  color: #000000;
-  margin: 1rem 0;
-  line-height: 1.6;
-}
-
-.main-question {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 12px;
-  margin: 3rem 0;
-  text-align: center;
   border-left: 4px solid #f7931a;
 }
 
-.main-question h3 {
-  color: #000000;
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-.socratic-questions {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin: 3rem 0;
-}
-
-.socratic-question {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.socratic-question:hover {
-  transform: translateY(-2px);
-}
-
-.question-mark {
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-
-.socratic-question p {
-  margin: 0;
-  font-size: 1.1rem;
-  color: #000000;
-  font-weight: 500;
-}
-
-.conclusion-section {
-  margin: 3rem 0 2rem 0;
-  padding: 2rem;
-  background: #e8f4fd;
-  border-radius: 12px;
-  border-left: 4px solid #2196f3;
-  text-align: center;
-}
-
-.conclusion-section p {
-  margin: 0;
-  color: #000000;
-  font-size: 1.2rem;
-  font-weight: 500;
-  line-height: 1.6;
-}
-
-.intro-preface {
-  margin: 1rem 0;
-  padding: 1.5rem;
-  background: #e8f4fd;
-  border-radius: 8px;
-  border-left: 4px solid #2196f3;
-}
-
-.intro-preface p {
-  margin: 0;
-  color: #000000;
-  line-height: 1.6;
-}
-
-/* Responsive Design */
+/* Bitcoin Basics Module Specific Responsive Styles */
 @media (max-width: 768px) {
-  .sections-grid,
-  .exercises-container,
-  .checklist-container,
-  .comparisons-container {
+  .hints-container,
+  .insights-grid {
     grid-template-columns: 1fr;
-  }
-
-  .comparison-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .reflection-step {
-    padding: 1rem;
-  }
-  
-  .socratic-question {
-    flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
-  }
-  
-  .main-question {
-    padding: 1.5rem;
   }
 } 
