@@ -165,9 +165,11 @@
 .step-content {
   background: white;
   border-radius: 12px;
-  padding: 24px;
+  padding: 2rem;
   margin-bottom: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: none;
 }
 
 .intro-step {
@@ -2797,6 +2799,31 @@ li {
   }
   
   .module-header-box {
+    padding: 1.5rem;
+  }
+}
+
+
+
+/* Large Screen Optimizations */
+@media (min-width: 1200px) {
+  .module-container {
+    padding: 2.5rem;
+  }
+  
+  .step-content {
+    padding: 2.5rem;
+  }
+  
+
+}
+
+@media (max-width: 767px) {
+  .module-container {
+    padding: 1rem;
+  }
+  
+  .step-content {
     padding: 1.5rem;
   }
 } 

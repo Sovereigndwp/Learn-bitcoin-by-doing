@@ -154,8 +154,8 @@
 .checklist-container,
 .comparisons-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
   margin-top: 24px;
 }
 
@@ -166,7 +166,7 @@
 .comparison-card {
   background: white;
   border-radius: 12px;
-  padding: 20px;
+  padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
@@ -567,15 +567,15 @@
 }
 
 .socratic-questions {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1.5rem;
   margin: 3rem 0;
 }
 
 .socratic-question {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1.5rem;
   background: white;
@@ -639,8 +639,8 @@
 
   .nav-buttons {
     gap: 1rem;
+    min-width: 200px;
     padding-right: 1rem;
-    min-width: auto;
   }
   
   .logo-text {
@@ -648,7 +648,7 @@
   }
   
   .nav-button {
-    padding: 0.5rem;
+    padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
   }
 
@@ -657,6 +657,7 @@
   .checklist-container,
   .comparisons-container {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .comparison-grid {
@@ -664,26 +665,32 @@
   }
   
   .reflection-step {
-    padding: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .socratic-questions {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .socratic-question {
     flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
+    align-items: flex-start;
+    text-align: left;
   }
   
   .main-question {
-    padding: 1.5rem;
+    text-align: left;
   }
 
   .step-content {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .barter-world,
   .quiz-content,
-  .quiz-step {
+  .guide-section,
+  .demo-section {
     padding: 1.5rem;
   }
 }
@@ -698,5 +705,54 @@
     width: 100%;
     justify-content: center;
     padding-right: 0;
+  }
+}
+
+/* Large Screen Optimizations */
+@media (min-width: 1200px) {
+  .sections-grid,
+  .exercises-container,
+  .checklist-container,
+  .comparisons-container {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .section-card,
+  .exercise-card,
+  .checklist-card,
+  .comparison-card {
+    padding: 2rem;
+  }
+
+  .step-content {
+    padding: 2.5rem;
+  }
+
+  .barter-world,
+  .quiz-content,
+  .guide-section,
+  .demo-section {
+    padding: 2.5rem;
+  }
+  
+  .socratic-questions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .sections-grid,
+  .exercises-container,
+  .checklist-container,
+  .comparisons-container {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .socratic-questions {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.25rem;
   }
 } 
