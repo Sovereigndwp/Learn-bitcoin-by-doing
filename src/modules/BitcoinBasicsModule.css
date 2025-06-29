@@ -6,31 +6,71 @@
 }
 
 .discovery-step .scenario-section h3 {
-  font-size: 0.9rem !important;
+  font-size: 1.2rem !important;
   line-height: 1.6 !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  margin-bottom: 1rem !important;
+}
+
+.discovery-step .scenario-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
 }
 
 .thought-experiment {
-  margin: 20px 0;
-  padding: 20px;
+  margin: 2rem 0;
+  padding: 2rem;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.thought-experiment h3 {
+  color: #333 !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+}
+
+.thought-experiment p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.thought-experiment h4 {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem 0;
 }
 
 .hints-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0 0;
 }
 
 .hint-card {
-  padding: 16px;
+  padding: 1.5rem;
   background: #fff5e6;
   border-radius: 8px;
   position: relative;
+  border: 1px solid #f7931a20;
+}
+
+.hint-card p {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .hint-number {
@@ -46,25 +86,45 @@
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .challenge-section {
-  margin: 20px 0;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-section h3 {
+  color: #333 !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
 }
 
 .insights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 0 0;
 }
 
 .insight-card {
-  padding: 16px;
-  background: white;
+  padding: 1.5rem;
+  background: #e8f4fd;
   border-radius: 8px;
-  border: 1px solid #e9ecef;
+  border: 1px solid #2196f320;
   position: relative;
+}
+
+.insight-card p {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .insight-number {
@@ -73,27 +133,117 @@
   left: -10px;
   width: 24px;
   height: 24px;
-  background: #f7931a;
+  background: #2196f3;
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .revelation-section {
-  margin: 20px 0;
-  padding: 20px;
+  margin: 2rem 0;
+  padding: 2rem;
   background: #fff5e6;
-  border-radius: 8px;
+  border-radius: 12px;
   border-left: 4px solid #f7931a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.revelation-section h3 {
+  color: #333 !important;
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+}
+
+.revelation-section p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Interactive Step Specific Styles */
+.interactive-step .scenario-steps {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.interactive-step .scenario-steps li {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0.75rem 0;
+  padding-left: 0.5rem;
+}
+
+/* Scenario Grid Specific Styles */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.scenario-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.scenario-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-card h4 {
+  color: #f7931a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.scenario-card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.outcome {
+  background: #e8f5e9;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  border-left: 3px solid #4caf50;
 }
 
 /* Bitcoin Basics Module Specific Responsive Styles */
 @media (max-width: 768px) {
   .hints-container,
-  .insights-grid {
+  .insights-grid,
+  .scenarios-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .thought-experiment,
+  .challenge-section,
+  .revelation-section {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .scenario-card {
+    padding: 1.25rem;
   }
 } 

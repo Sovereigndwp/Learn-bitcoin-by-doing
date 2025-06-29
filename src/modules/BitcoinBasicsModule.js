@@ -187,27 +187,41 @@ const BitcoinBasicsModule = () => {
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
             </div>
-            <p className="intro-text">{step.content.text}</p>
-            <button 
-              className="continue-button"
-              onClick={() => handleStepComplete(index)}
-            >
-              {index === 1 ? 'Continue Learning' : 'Start Learning'}
-            </button>
+            <div className="content-text">
+              <p className="intro-text">{step.content.text}</p>
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                {index === 1 ? 'Continue Learning' : 'Start Learning'}
+              </button>
+            </div>
           </div>
         );
       
       case 'interactive':
         return (
           <div className="step-content interactive-step">
-            <h3>{step.content.scenario}</h3>
+            <div className="step-icon">
+              <Bitcoin size={48} />
+            </div>
+            <div className="module-header-box">
+              <h2>{step.title}</h2>
+              <div className="intro-text">
+                <p>{step.content.scenario}</p>
+              </div>
+            </div>
+
             {step.content.steps && (
-              <ul className="scenario-steps">
-                {step.content.steps.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ul>
+              <div className="scenario-section">
+                <ul className="scenario-steps">
+                  {step.content.steps.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
             )}
+
             {step.content.simulation && (
               <div className="simulation-container">
                 <p>{step.content.simulation.setup}</p>
@@ -222,11 +236,12 @@ const BitcoinBasicsModule = () => {
                 </div>
               </div>
             )}
+
             {step.content.question && (
-              <div className="question-section">
-                <h4>🤔 {step.content.question}</h4>
+              <div className="quiz-content">
+                <h3>🤔 {step.content.question}</h3>
                 {step.content.options && (
-                  <div className="options-grid">
+                  <div className="options">
                     {step.content.options.map((option, i) => (
                       <button
                         key={i}
@@ -243,13 +258,20 @@ const BitcoinBasicsModule = () => {
                   </div>
                 )}
                 {step.content.explanation && (
-                  <p className="explanation">{step.content.explanation}</p>
-                )}
-                {step.content.discussion && (
-                  <p className="discussion">{step.content.discussion}</p>
+                  <div className="feedback-section correct">
+                    <p className="feedback-result">✅ Correct!</p>
+                    <p className="takeaway">{step.content.explanation}</p>
+                  </div>
                 )}
               </div>
             )}
+
+            {step.content.discussion && (
+              <div className="key-points">
+                <p>{step.content.discussion}</p>
+              </div>
+            )}
+
             {step.content.question && !step.content.options && (
               <button 
                 className="continue-button"
@@ -264,50 +286,64 @@ const BitcoinBasicsModule = () => {
       case 'discovery':
         return (
           <div className="step-content discovery-step">
-            <div className="scenario-section">
-              <h3>🔍 {step.content.scenario}</h3>
+            <div className="step-icon">
+              <Bitcoin size={48} />
             </div>
-            {step.content.thoughtExperiment && (
-              <div className="thought-experiment">
-                <h4>💭 {step.content.thoughtExperiment}</h4>
-                <div className="hints-container">
-                  {step.content.hints.map((hint, i) => (
-                    <div key={i} className="hint-card">
-                      <span className="hint-number">{i + 1}</span>
-                      {hint}
-                    </div>
-                  ))}
-                </div>
+            <div className="module-header-box">
+              <h2>{step.title}</h2>
+            </div>
+
+            <div className="quiz-content">
+              <div className="scenario-section">
+                <h3>🔍 Scenario</h3>
+                <p>{step.content.scenario}</p>
               </div>
-            )}
-            {step.content.challenge && (
-              <div className="challenge-section">
-                <p>{step.content.challenge}</p>
-                <div className="reflection-prompt">
-                  <h4>🤔 {step.content.reflection}</h4>
-                  <div className="insights-grid">
-                    {step.content.insights.map((insight, i) => (
-                      <div key={i} className="insight-card">
-                        <span className="insight-number">{i + 1}</span>
-                        {insight}
+
+              {step.content.thoughtExperiment && (
+                <div className="thought-experiment">
+                  <h3>💭 Think About It</h3>
+                  <p>{step.content.thoughtExperiment}</p>
+                  
+                  <div className="hints-container">
+                    <h4>Hints:</h4>
+                    {step.content.hints.map((hint, i) => (
+                      <div key={i} className="hint-card">
+                        <span className="hint-number">{i + 1}</span>
+                        <p>{hint}</p>
                       </div>
                     ))}
                   </div>
                 </div>
-              </div>
-            )}
-            {step.content.revelation && (
-              <div className="revelation-section">
-                <h4>💡 Discovery</h4>
-                <p>{step.content.revelation}</p>
-              </div>
-            )}
-            <button 
-              className="continue-button"
-              onClick={() => handleStepComplete(index)}
-            >
-              I Understand
-            </button>
+              )}
+
+              {step.content.reflection && (
+                <div className="challenge-section">
+                  <h3>🤔 {step.content.reflection}</h3>
+                  <div className="insights-grid">
+                    {step.content.insights.map((insight, i) => (
+                      <div key={i} className="insight-card">
+                        <span className="insight-number">{i + 1}</span>
+                        <p>{insight}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {step.content.revelation && (
+                <div className="revelation-section">
+                  <h3>💡 Discovery</h3>
+                  <p>{step.content.revelation}</p>
+                </div>
+              )}
+
+              <button 
+                className="continue-button"
+                onClick={() => handleStepComplete(index)}
+              >
+                I Understand
+              </button>
+            </div>
           </div>
         );
 
