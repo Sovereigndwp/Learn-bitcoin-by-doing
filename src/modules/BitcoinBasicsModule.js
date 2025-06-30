@@ -9,7 +9,6 @@ const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
-
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
@@ -38,6 +37,7 @@ const BitcoinBasicsModule = () => {
         conclusion: "These questions led to one of the most important innovations of the 21st century. Let's explore what it is—and why it matters."
       }
     },
+
     {
       title: "So, What Is Bitcoin?",
       type: "intro",

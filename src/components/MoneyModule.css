@@ -458,4 +458,174 @@
   .trait-name {
     min-width: auto;
   }
+}
+
+/* Carlos Export Step Styles */
+.carlos-export-step {
+  background: #f8f9fa;
+}
+
+.carlos-export-step .scenario-steps {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  border-left: 4px solid #f7931a;
+}
+
+.carlos-export-step .scenario-steps li {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0.75rem 0;
+  padding-left: 0.5rem;
+}
+
+.demo-container {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #fff5e6;
+  border-radius: 12px;
+  border: 1px solid #f7931a20;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.demo-container p {
+  margin: 0 0 1rem 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+}
+
+.link-button:hover {
+  background: #e8830d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+}
+
+.caption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.return-instructions {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #e8f4fd;
+  border-radius: 6px;
+  border-left: 3px solid #2196f3;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.return-instructions strong {
+  color: #2196f3;
+}
+
+.carlos-export-step .quiz-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.carlos-export-step .quiz-content h3 {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.carlos-export-step .options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.carlos-export-step .option-button {
+  padding: 1rem;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  color: #333;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.carlos-export-step .option-button:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #f7931a;
+}
+
+.carlos-export-step .option-button.selected {
+  background: #fff5e6;
+  border-color: #f7931a;
+  color: #333;
+}
+
+.carlos-export-step .option-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.carlos-export-step .feedback-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #e8f5e9;
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+}
+
+.carlos-export-step .feedback-result {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.carlos-export-step .takeaway {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .carlos-export-step .options-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .demo-container {
+    padding: 1.5rem;
+  }
+  
+  .link-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
 } 

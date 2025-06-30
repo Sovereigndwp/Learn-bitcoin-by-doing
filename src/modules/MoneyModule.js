@@ -82,6 +82,93 @@ const BarterWorld = ({ onComplete }) => {
   );
 };
 
+// Component for Carlos's Flower Export
+const CarlosFlowerExport = ({ onComplete }) => {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const handleAnswerSelect = (answerIndex) => {
+    setSelectedAnswer(answerIndex);
+    if (answerIndex === 3) { // "All of the above" is correct
+      setShowFeedback(true);
+    }
+  };
+
+  return (
+    <div className="step-content carlos-export-step">
+      <div className="step-icon">
+        <Brain size={48} />
+      </div>
+      <div className="module-header-box">
+        <h2>Carlos's Flower Export</h2>
+        <div className="intro-text">
+          <p>Carlos, exporting 1,000 roses to Japan, gets paid in USD but spends in Colombian pesos. Let's walk through what actually happens.</p>
+        </div>
+      </div>
+
+      <div className="scenario-section">
+        <ul className="scenario-steps">
+          <li>Carlos ships the roses and invoices his buyer in USD</li>
+          <li>Bank A converts USD to COP at today's rate (~4,400 COP/USD)</li>
+          <li>Transfer takes 2–5 business days to process</li>
+          <li>By the time funds arrive, the peso has depreciated ~10%</li>
+          <li>Bank fees are deducted during conversion and transfer</li>
+        </ul>
+      </div>
+
+      <div className="demo-container">
+        <p>🔍 Explore Carlos's live USD → COP exchange and fees:</p>
+        <button
+          className="link-button"
+          onClick={() => window.open('https://layer-d.my.canva.site/dagrpelgejq', '_blank')}
+        >
+          Open live Fiat Export Demo
+        </button>
+        <p className="caption">
+          Adjust rates and timing to see Carlos's real payout change in real time.
+        </p>
+        <p className="return-instructions">
+          💡 <strong>Tip:</strong> The demo opens in a new tab. After exploring, simply close that tab or switch back to this tab to continue the lesson.
+        </p>
+      </div>
+
+      <div className="quiz-content">
+        <h3>🤔 What problems do you spot in this fiat transaction?</h3>
+        <div className="options-grid">
+          {[
+            "Currency volatility cut into his earnings",
+            "Transfer delays risk cash flow problems", 
+            "Bank fees decreased his net income",
+            "All of the above"
+          ].map((option, i) => (
+            <button
+              key={i}
+              className={`option-button ${selectedAnswer === i ? 'selected' : ''}`}
+              onClick={() => handleAnswerSelect(i)}
+              disabled={showFeedback}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        
+        {showFeedback && (
+          <div className="feedback-section correct">
+            <p className="feedback-result">✅ Correct!</p>
+            <p className="takeaway">Currency volatility, delays, and fees all chipped away at Carlos's payout before he even saw the money.</p>
+            <button 
+              className="continue-button"
+              onClick={onComplete}
+            >
+              Continue
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // Component for the "What's Missing Here?" section
 const WhatsWrong = ({ onComplete }) => {
   const [answers, setAnswers] = useState({});
@@ -594,7 +681,7 @@ const MoneyModule = () => {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
 
   const handleStepComplete = () => {
-    if (currentStep === 4) {  // Updated to account for new step
+    if (currentStep === 5) {  // Updated to account for new step (now 6 total steps)
       completeModule('money');
       setShowBadgeModal(true);
     } else {
@@ -627,17 +714,17 @@ const MoneyModule = () => {
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(currentStep / 5) * 100}%` }}
+            style={{ width: `${(currentStep / 6) * 100}%` }}
           />
         </div>
         <span className="progress-text">
-          {currentStep} / 5 steps completed
+          {currentStep} / 6 steps completed
         </span>
       </div>
 
       <div className="module-steps">
         <div className="steps-navigation">
-          {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Traits Scorecard', 'An Optional Deeper Dive'].map((step, index) => (
+          {['Barter World', 'Fix this Trade', 'Carlos\'s Flower Export', 'The Perpetual Patch', 'Traits Scorecard', 'An Optional Deeper Dive'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
@@ -652,9 +739,10 @@ const MoneyModule = () => {
         <div className="step-content-container">
           {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
           {currentStep === 1 && <WhatsWrong onComplete={handleStepComplete} />}
-          {currentStep === 2 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-          {currentStep === 3 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-          {currentStep === 4 && <ExternalResource onComplete={handleStepComplete} />}
+          {currentStep === 2 && <CarlosFlowerExport onComplete={handleStepComplete} />}
+          {currentStep === 3 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+          {currentStep === 4 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+          {currentStep === 5 && <ExternalResource onComplete={handleStepComplete} />}
         </div>
       </div>
 
