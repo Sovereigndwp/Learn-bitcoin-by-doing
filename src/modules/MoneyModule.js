@@ -132,30 +132,37 @@ const CarlosFlowerExport = ({ onComplete }) => {
         </p>
       </div>
 
-      <div className="quiz-content">
-        <h3>🤔 What problems do you spot in this fiat transaction?</h3>
-        <div className="options-grid">
-          {[
-            "Currency volatility cut into his earnings",
-            "Transfer delays risk cash flow problems", 
-            "Bank fees decreased his net income",
-            "All of the above"
-          ].map((option, i) => (
-            <button
-              key={i}
-              className={`option-button ${selectedAnswer === i ? 'selected' : ''}`}
-              onClick={() => handleAnswerSelect(i)}
-              disabled={showFeedback}
-            >
-              {option}
-            </button>
-          ))}
+      <div className="quiz-section">
+        <div className="quiz-question-block">
+          <h3>🤔 What problems do you spot in this fiat transaction?</h3>
+          <div className="options-list">
+            {[
+              "Currency volatility cut into his earnings",
+              "Transfer delays risk cash flow problems", 
+              "Bank fees decreased his net income",
+              "All of the above"
+            ].map((option, i) => (
+              <button
+                key={i}
+                className={`option-button ${selectedAnswer === i ? 'selected' : ''}`}
+                onClick={() => handleAnswerSelect(i)}
+                disabled={showFeedback}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          
+          {showFeedback && (
+            <div className="feedback-section correct">
+              <p className="feedback-result">✅ Correct!</p>
+              <p className="takeaway">Currency volatility, delays, and fees all chipped away at Carlos's payout before he even saw the money.</p>
+            </div>
+          )}
         </div>
         
         {showFeedback && (
-          <div className="feedback-section correct">
-            <p className="feedback-result">✅ Correct!</p>
-            <p className="takeaway">Currency volatility, delays, and fees all chipped away at Carlos's payout before he even saw the money.</p>
+          <div className="continue-section">
             <button 
               className="continue-button"
               onClick={onComplete}
@@ -722,28 +729,26 @@ const MoneyModule = () => {
         </span>
       </div>
 
-      <div className="module-steps">
-        <div className="steps-navigation">
-          {['Barter World', 'Fix this Trade', 'Carlos\'s Flower Export', 'The Perpetual Patch', 'Traits Scorecard', 'An Optional Deeper Dive'].map((step, index) => (
-            <button
-              key={index}
-              className={`step-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
-              onClick={() => setCurrentStep(index)}
-            >
-              {index < currentStep && <CheckCircle size={16} />}
-              {step}
-            </button>
-          ))}
-        </div>
+      <div className="top-navigation">
+        {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Carlos\'s Flower Export', 'Traits Scorecard', 'Deep Dive'].map((step, index) => (
+          <button
+            key={index}
+            className={`top-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
+            onClick={() => setCurrentStep(index)}
+          >
+            {index < currentStep && <CheckCircle size={14} />}
+            <span className="nav-text">{step}</span>
+          </button>
+        ))}
+      </div>
 
-        <div className="step-content-container">
-          {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
-          {currentStep === 1 && <WhatsWrong onComplete={handleStepComplete} />}
-          {currentStep === 2 && <CarlosFlowerExport onComplete={handleStepComplete} />}
-          {currentStep === 3 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-          {currentStep === 4 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-          {currentStep === 5 && <ExternalResource onComplete={handleStepComplete} />}
-        </div>
+      <div className="module-content">
+        {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
+        {currentStep === 1 && <WhatsWrong onComplete={handleStepComplete} />}
+        {currentStep === 2 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 3 && <CarlosFlowerExport onComplete={handleStepComplete} />}
+        {currentStep === 4 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+        {currentStep === 5 && <ExternalResource onComplete={handleStepComplete} />}
       </div>
 
       <BadgeModal isOpen={showBadgeModal} onClose={() => setShowBadgeModal(false)} />

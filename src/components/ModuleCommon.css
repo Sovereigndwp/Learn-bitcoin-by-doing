@@ -5,7 +5,7 @@
   padding: 2rem;
   color: #000000 !important;
   font-weight: 500 !important;
-  background: #f8f6ff;  /* Light purple background */
+  background: #f5f5f5;  /* Light gray background */
   -webkit-font-smoothing: auto !important;
   -moz-osx-font-smoothing: auto !important;
 }
@@ -112,7 +112,7 @@
   display: grid;
   grid-template-columns: 250px 1fr;
   gap: 2rem;
-  background: #f0ebff;  /* Slightly darker purple for module steps */
+  background: #eeeeee;  /* Slightly darker gray for module steps */
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 2rem;
