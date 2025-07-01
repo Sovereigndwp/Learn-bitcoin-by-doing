@@ -572,9 +572,7 @@ const ExamplesStep = ({ title, sections, onComplete }) => {
 
   return (
     <div className="step-content examples-step">
-      <div className="step-icon">
-        <Calculator size={48} />
-      </div>
+
       <h2>Let's Learn Step by Step</h2>
       
       <div className="substep-progress">

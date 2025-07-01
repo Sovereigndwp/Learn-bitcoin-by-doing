@@ -18,7 +18,7 @@
 }
 
 .module-header-content {
-  max-width: 1200px; /* Match module-container max-width */
+
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -154,8 +154,8 @@
 .checklist-container,
 .comparisons-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(25vw, 380px), 1fr));
+  gap: min(4vw, 2rem);
   margin-top: 24px;
 }
 
@@ -568,8 +568,8 @@
 
 .socratic-questions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(30vw, 380px), 1fr));
+  gap: min(3vw, 1.5rem);
   margin: 3rem 0;
 }
 
@@ -714,31 +714,31 @@
   .exercises-container,
   .checklist-container,
   .comparisons-container {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(28vw, 400px), 1fr));
+    gap: max(2.5rem, 2.5vw);
   }
 
   .section-card,
   .exercise-card,
   .checklist-card,
   .comparison-card {
-    padding: 2rem;
+    padding: max(2rem, 2vw);
   }
 
   .step-content {
-    padding: 2.5rem;
+    padding: max(2.5rem, 2.5vw);
   }
 
   .barter-world,
   .quiz-content,
   .guide-section,
   .demo-section {
-    padding: 2.5rem;
+    padding: max(2.5rem, 2.5vw);
   }
   
   .socratic-questions {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: max(2rem, 2vw);
   }
 }
 

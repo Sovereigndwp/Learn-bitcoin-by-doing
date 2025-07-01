@@ -134,9 +134,6 @@ const BitcoinBasicsModule = () => {
       case 'reflection':
         return (
           <div className="step-content reflection-step">
-            <div className="step-icon">
-              <Bitcoin size={48} />
-            </div>
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
             </div>
@@ -181,9 +178,6 @@ const BitcoinBasicsModule = () => {
       case 'intro':
         return (
           <div className="step-content intro-step">
-            <div className="step-icon">
-              <Bitcoin size={48} />
-            </div>
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
             </div>
@@ -202,9 +196,6 @@ const BitcoinBasicsModule = () => {
       case 'interactive':
         return (
           <div className="step-content interactive-step">
-            <div className="step-icon">
-              <Bitcoin size={48} />
-            </div>
             <div className="module-header-box">
               <h2>{step.title}</h2>
               <div className="intro-text">
@@ -286,9 +277,6 @@ const BitcoinBasicsModule = () => {
       case 'discovery':
         return (
           <div className="step-content discovery-step">
-            <div className="step-icon">
-              <Bitcoin size={48} />
-            </div>
             <div className="module-header-box">
               <h2>{step.title}</h2>
             </div>

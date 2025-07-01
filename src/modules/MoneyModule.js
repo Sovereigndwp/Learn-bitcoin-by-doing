@@ -10,9 +10,6 @@ import '../components/MoneyModule.css';
 const BarterWorld = ({ onComplete }) => {
   return (
     <div className="step-content barter-world">
-      <div className="step-icon">
-        <Brain size={48} />
-      </div>
       <div className="module-header-box">
         <h2>Imagine a World Without Money</h2>
       </div>
@@ -96,45 +93,23 @@ const CarlosFlowerExport = ({ onComplete }) => {
 
   return (
     <div className="step-content carlos-export-step">
-      <div className="step-icon">
-        <Brain size={48} />
-      </div>
       <div className="module-header-box">
         <h2>Carlos's Flower Export</h2>
         <div className="intro-text">
           <p>Carlos, exporting 1,000 roses to Japan, gets paid in USD but spends in Colombian pesos. Let's walk through what actually happens.</p>
+          <button
+            className="link-button"
+            onClick={() => window.open('https://layer-d.my.canva.site/dagrpelgejq', '_blank')}
+          >
+            Open live Fiat Export Demo
+          </button>
         </div>
       </div>
 
-      <div className="scenario-section">
-        <ul className="scenario-steps">
-          <li>Carlos ships the roses and invoices his buyer in USD</li>
-          <li>Bank A converts USD to COP at today's rate (~4,400 COP/USD)</li>
-          <li>Transfer takes 2–5 business days to process</li>
-          <li>By the time funds arrive, the peso has depreciated ~10%</li>
-          <li>Bank fees are deducted during conversion and transfer</li>
-        </ul>
-      </div>
-
-      <div className="demo-container">
-        <p>🔍 Explore Carlos's live USD → COP exchange and fees:</p>
-        <button
-          className="link-button"
-          onClick={() => window.open('https://layer-d.my.canva.site/dagrpelgejq', '_blank')}
-        >
-          Open live Fiat Export Demo
-        </button>
-        <p className="caption">
-          Adjust rates and timing to see Carlos's real payout change in real time.
-        </p>
-        <p className="return-instructions">
-          💡 <strong>Tip:</strong> The demo opens in a new tab. After exploring, simply close that tab or switch back to this tab to continue the lesson.
-        </p>
-      </div>
-
-      <div className="quiz-section">
-        <div className="quiz-question-block">
-          <h3>🤔 What problems do you spot in this fiat transaction?</h3>
+      <div className="content-grid">
+        <div className="left-column">
+          <h3>What Problems Do You Spot?</h3>
+          <p>🤔 Looking at this fiat transaction, what issues do you notice?</p>
           <div className="options-list">
             {[
               "Currency volatility cut into his earnings",
@@ -157,20 +132,26 @@ const CarlosFlowerExport = ({ onComplete }) => {
             <div className="feedback-section correct">
               <p className="feedback-result">✅ Correct!</p>
               <p className="takeaway">Currency volatility, delays, and fees all chipped away at Carlos's payout before he even saw the money.</p>
+              <button 
+                className="continue-button"
+                onClick={onComplete}
+              >
+                Continue
+              </button>
             </div>
           )}
         </div>
-        
-        {showFeedback && (
-          <div className="continue-section">
-            <button 
-              className="continue-button"
-              onClick={onComplete}
-            >
-              Continue
-            </button>
-          </div>
-        )}
+
+        <div className="right-column">
+          <h3>The Process</h3>
+          <ul className="scenario-steps">
+            <li>Carlos ships the roses and invoices his buyer in USD</li>
+            <li>Bank A converts USD to COP at today's rate (~4,400 COP/USD)</li>
+            <li>Transfer takes 2–5 business days to process</li>
+            <li>By the time funds arrive, the peso has depreciated ~10%</li>
+            <li>Bank fees are deducted during conversion and transfer</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -259,9 +240,6 @@ const WhatsWrong = ({ onComplete }) => {
 
   return (
     <div className="step-content whats-wrong-step">
-      <div className="step-icon">
-        <Brain size={48} />
-      </div>
       <div className="module-header-box">
         <h2>Fix this Trade</h2>
         <div className="intro-text">
@@ -407,7 +385,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 8,
-      text: "In Turkey, Argentina, and China, governments have placed strict controls on how much money citizens can withdraw or move abroad. Some families trying to leave must carry gold, hide cash, or pay black market rates.",
+      text: "In Greece, Russia, Argentina, and China, to name a few, governments have placed strict controls on how much money citizens can withdraw or move abroad. Some families trying to leave must carry gold, hide cash, or pay black market rates.",
       question: "How does Bitcoin challenge that system?",
       options: [
         "It doesn't",
@@ -495,9 +473,6 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   if (showIntro) {
     return (
       <div className="step-content quiz-step">
-        <div className="step-icon">
-          <History size={48} />
-        </div>
         <div className="module-header-box">
           <h2>The Perpetual Patch</h2>
           <div className="intro-text">
@@ -521,9 +496,6 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
   return (
     <div className="step-content quiz-step">
-      <div className="step-icon">
-        <History size={48} />
-      </div>
       <div className="module-header-box">
         <h2>Question {currentQuestion + 1} of {questions.length}</h2>
       </div>
@@ -597,11 +569,11 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
 
         return (
     <div className="step-content scorecard-step">
-      <div className="step-icon">
-        <Award size={48} />
-      </div>
       <div className="module-header-box">
         <h2>The Traits That Matter</h2>
+        <div className="intro-text">
+          <p>Every one of these traits solves a specific failure of past money. Bitcoin, as you will learn, is the first to combine them all in one global, digital system.</p>
+        </div>
       </div>
       
       <div className="traits-list">
@@ -615,12 +587,7 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
         ))}
       </div>
 
-      <div className="summary-section">
-        <p className="summary">Bitcoin is the first money to meet all of these traits in one system.</p>
-        <button onClick={onComplete} className="badge-button">
-          Earn Badge: Sound Money Explorer 🎓
-        </button>
-      </div>
+
     </div>
   );
 };
@@ -629,9 +596,6 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
 const ExternalResource = ({ onComplete }) => {
   return (
     <div className="step-content external-resource-step">
-      <div className="step-icon">
-        <Clock size={48} />
-      </div>
       <div className="module-header-box">
         <h2>Explore the History of Money <AnimatedIcon type="history" /></h2>
       </div>
