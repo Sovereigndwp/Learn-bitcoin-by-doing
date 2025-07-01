@@ -74,7 +74,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background-color: #4CAF50;
+  background-color: #000000;
   color: white;
   border-radius: 20px;
   font-weight: 500;
@@ -150,9 +150,9 @@
 }
 
 .step-nav-button.completed {
-  background: #4caf50;
+  background: #000000;
   color: white;
-  border-color: #4caf50;
+  border-color: #000000;
 }
 
 .step-content-container {
@@ -425,8 +425,8 @@ li {
 }
 
 .quiz-option.correct {
-  background: #e8f5e9;
-  border-color: #4caf50;
+  background: #000000;
+  border-color: #000000;
   color: #ffffff;
 }
 
@@ -457,9 +457,9 @@ li {
 }
 
 .quiz-result.correct {
-  background: #e8f5e9;
-  color: #1b5e20;
-  border: 1px solid #4CAF50;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
 }
 
 .quiz-result.incorrect {
@@ -485,8 +485,8 @@ li {
 }
 
 .explanation-card.correct {
-  background: #e8f5e9;
-  border: 2px solid #4caf50;
+  background: #000000;
+  border: 2px solid #000000;
 }
 
 .explanation-card.incorrect {
@@ -501,6 +501,10 @@ li {
   margin-bottom: 1rem;
 }
 
+.explanation-card.correct .feedback-text {
+  color: #ffffff !important;
+}
+
 .explanation-card .explanation-text {
   color: #000000 !important;
   line-height: 1.5;
@@ -511,7 +515,7 @@ li {
 }
 
 .explanation-card.correct .explanation-text {
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 /* Try again button styling */
@@ -605,8 +609,8 @@ li {
 }
 
 .property-card.correct {
-  border-color: #4CAF50;
-  background: rgba(76, 175, 80, 0.1);
+  border-color: #000000;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .property-card.incorrect {
@@ -689,8 +693,9 @@ li {
 }
 
 .option-button.correct {
-  border-color: #4CAF50;
-  background: rgba(76, 175, 80, 0.1);
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
 }
 
 .option-button:disabled {
@@ -834,9 +839,9 @@ li {
 }
 
 .example-button.completed {
-  background: #dcffe4;
-  border-color: #28a745;
-  color: #165c26;
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
 }
 
 .example-button svg {
@@ -881,9 +886,9 @@ li {
 }
 
 .quiz-option.correct {
-  border-color: #4CAF50;
-  background: #e8f5e9;
-  color: #1b5e20;
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
 }
 
 .quiz-option.incorrect {
@@ -899,9 +904,9 @@ li {
 }
 
 .quiz-result.correct {
-  background: #e8f5e9;
-  color: #1b5e20;
-  border: 1px solid #4CAF50;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
 }
 
 .quiz-result.incorrect {
@@ -956,9 +961,9 @@ li {
 }
 
 .quiz-options button.correct {
-  border-color: #28a745;
-  background: #dcffe4;
-  color: #165c26;
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
 }
 
 .quiz-options button.incorrect {
@@ -989,9 +994,9 @@ li {
 
 /* Submit Button Styles */
 .submit-button {
-  background: #2ea44f;
+  background: #000000;
   color: #ffffff;
-  border: 1px solid rgba(27, 31, 35, 0.15);
+  border: 1px solid #000000;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
   font-size: 1rem;
@@ -1001,11 +1006,11 @@ li {
 }
 
 .submit-button:hover {
-  background: #2c974b;
+  background: #333333;
 }
 
 .submit-button:disabled {
-  background: #94d3a2;
+  background: #666666;
   cursor: not-allowed;
 }
 
@@ -1721,7 +1726,7 @@ li {
 }
 
 .guess-button.true {
-  background: #4caf50;
+  background: #000000;
   color: white;
 }
 
@@ -1749,7 +1754,7 @@ li {
 }
 
 .reality-box {
-  border-left: 4px solid #4caf50;
+  border-left: 4px solid #000000;
 }
 
 .key-points {
@@ -1979,7 +1984,7 @@ li {
 }
 
 .substep-dot.completed {
-  background: #4CAF50;
+  background: #000000;
 }
 
 .substep-title {
@@ -2258,9 +2263,9 @@ li {
 }
 
 .quiz-options button.quiz-option.correct {
-  border-color: #4CAF50;
-  background: #e8f5e9;
-  color: #1b5e20;
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
 }
 
 .quiz-options button.quiz-option.incorrect {
@@ -2322,8 +2327,8 @@ li {
 
 .progress-dot.completed,
 .substep-dot.completed {
-  background: rgba(76, 175, 80, 0.8);  /* Brighter green for better visibility */
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+  background: #000000;  /* Black for completed state */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Tab navigation */
@@ -2346,9 +2351,9 @@ li {
 }
 
 .nav-item.completed {
-  background: rgba(76, 175, 80, 0.3);
+  background: #000000;
   color: #ffffff;
-  border: 1px solid #4CAF50;
+  border: 1px solid #000000;
 }
 
 /* Progress bar */
@@ -2361,7 +2366,7 @@ li {
 
 .progress-fill {
   height: 100%;
-  background: #4CAF50;  /* Use green for progress */
+  background: #000000;  /* Use black for progress */
   transition: width 0.3s ease;
 }
 
@@ -2377,9 +2382,9 @@ li {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(76, 175, 80, 0.3);
+  background: #000000;
   color: #ffffff;
-  border: 1px solid #4CAF50;
+  border: 1px solid #000000;
   border-radius: 20px;
   font-weight: 500;
 }
@@ -2387,8 +2392,8 @@ li {
 /* Success states */
 .success-message,
 .success-box {
-  background: rgba(76, 175, 80, 0.15);
-  border: 1px solid #4CAF50;
+  background: #000000;
+  border: 1px solid #000000;
   color: #ffffff;
   padding: 1rem;
   border-radius: 8px;
@@ -2466,9 +2471,9 @@ li {
 }
 
 .reflection-step .quiz-option.correct {
-  background: #e8f5e9;
-  border-color: #4caf50;
-  color: #2e7d32;
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
 }
 
 .reflection-step .quiz-option.incorrect {
@@ -2483,7 +2488,7 @@ li {
 }
 
 .reflection-step .explanation-card.correct {
-  background: #e8f5e9;
+  background: #000000;
 }
 
 .reflection-step .explanation-card.incorrect {

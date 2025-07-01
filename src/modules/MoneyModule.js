@@ -600,7 +600,7 @@ const ExternalResource = ({ onComplete }) => {
         <h2>Explore the History of Money <AnimatedIcon type="history" /></h2>
       </div>
       <p className="external-resource-description">
-        Dive deeper into the fascinating evolution of money through the ages. <AnimatedIcon type="explore" />
+        Dive deeper into the fascinating evolution of money through the ages. 
       </p>
       <div className="external-links">
         <a
