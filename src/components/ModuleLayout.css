@@ -1,7 +1,7 @@
 /* Module Layout Styles */
 .module-layout {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff8c00 0%, #000000 100%);
   color: white;
   padding-bottom: 2rem; /* Add padding to prevent content from touching bottom */
 }
@@ -603,9 +603,9 @@
 .conclusion-section {
   margin: 3rem 0 2rem 0;
   padding: 2rem;
-  background: #e8f4fd;
+  background: #fff5e6;
   border-radius: 12px;
-  border-left: 4px solid #2196f3;
+  border-left: 4px solid #ff8c00;
   text-align: center;
 }
 
@@ -620,9 +620,9 @@
 .intro-preface {
   margin: 1rem 0;
   padding: 1.5rem;
-  background: #e8f4fd;
+  background: #fff5e6;
   border-radius: 8px;
-  border-left: 4px solid #2196f3;
+  border-left: 4px solid #ff8c00;
 }
 
 .intro-preface p {

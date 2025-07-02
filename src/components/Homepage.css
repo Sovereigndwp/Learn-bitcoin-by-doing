@@ -9,15 +9,21 @@
 .homepage-header {
   text-align: left;
   margin-bottom: 3rem;
-  padding: 2rem;
-  background: linear-gradient(135deg, #f7931a11 0%, #f7931a22 100%);
-  border-radius: 16px;
+  padding: 3rem;
+  background: linear-gradient(135deg, #fff 0%, #fffaf7 100%);
+  border-radius: 20px;
+  border: 2px solid #ff8c00;
+  box-shadow: 0 8px 32px rgba(255, 140, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
 .homepage-header h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin: 0;
-  color: #333;
+  color: #000;
+  font-weight: 900;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .homepage-header p {
@@ -312,6 +318,63 @@
   color: #666;
   padding-top: 0.5rem;
   border-top: 1px solid #eee;
+}
+
+/* Banking Experience Card Styles */
+.banking-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.banking-demo-link {
+  display: inline-block;
+  background: #f8f9fa;
+  color: #333;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.banking-demo-link:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+  text-decoration: none;
+  color: #333;
+}
+
+.banking-completion-button {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.banking-completion-button:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.banking-completion-button.completed {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+  cursor: default;
+}
+
+.banking-completion-button:disabled {
+  cursor: default;
 }
 
 /* CTA Section */

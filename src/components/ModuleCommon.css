@@ -419,9 +419,9 @@ li {
 }
 
 .quiz-option.selected {
-  background: #e3f2fd;
-  border-color: #2196f3;
-  color: #ffffff;
+  background: #fff5e6;
+  border-color: #ff8c00;
+  color: #000000;
 }
 
 .quiz-option.correct {
@@ -1758,7 +1758,7 @@ li {
 }
 
 .key-points {
-  border-left: 4px solid #2196f3;
+  border-left: 4px solid #ff8c00;
 }
 
 .example-box {
@@ -1788,7 +1788,7 @@ li {
 
 .key-points li:before {
   content: "•";
-  color: #2196f3;
+  color: #ff8c00;
   position: absolute;
   left: 0;
 }
@@ -1998,7 +1998,7 @@ li {
 .substep-continue,
 .back-button {
   color: #fff;
-  background: #2196F3;
+  background: #ff8c00;
   border: none;
   padding: 12px 24px;
   border-radius: 4px;
@@ -2465,9 +2465,9 @@ li {
 }
 
 .reflection-step .quiz-option.selected {
-  background: #e3f2fd;
-  border-color: #2196f3;
-  color: #1565c0;
+  background: #fff5e6;
+  border-color: #ff8c00;
+  color: #000000;
 }
 
 .reflection-step .quiz-option.correct {

@@ -6,20 +6,12 @@ import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
 
-
-
-// Component for the Barter World section
-const BarterWorld = ({ onComplete }) => {
+// Component for the Introduction (transition from banking friction)
+const Introduction = ({ onComplete }) => {
   return (
-    <div className="step-content barter-world">
+    <div className="step-content introduction">
       <div className="module-header-box">
         <h2>Why Did We Invent Money in the First Place?</h2>
-        <button
-          className="link-button"
-          onClick={() => window.open('https://layer-d.my.canva.site/challenges-of-double-coincidence-of-wants', '_blank')}
-        >
-          Try It Out
-        </button>
       </div>
       <div className="content-text">
         <p>
@@ -31,6 +23,35 @@ const BarterWorld = ({ onComplete }) => {
         <p>
           Because long before banks, credit scores, and frozen transactions... humans had a simple problem: <strong>We wanted to trade with each other, but we sucked at it.</strong>
         </p>
+        <p>
+          This is the story of why money was invented. Not by governments or corporations, but by ordinary people solving ordinary problems.
+        </p>
+        <p>
+          Let's go back to see how it all began...
+        </p>
+
+        <button onClick={onComplete} className="continue-button">
+          Continue
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Component for the Barter World section
+const BarterWorld = ({ onComplete }) => {
+  return (
+    <div className="step-content barter-world">
+      <div className="module-header-box">
+        <h2>Imagine a World Without Money</h2>
+        <button
+          className="link-button"
+          onClick={() => window.open('https://layer-d.my.canva.site/challenges-of-double-coincidence-of-wants', '_blank')}
+        >
+          Try It Out
+        </button>
+      </div>
+      <div className="content-text">
         <p>
           Imagine waking up in a world without money.<br/>
           Not the "I'm broke" kind...<br/>
@@ -73,11 +94,10 @@ const BarterWorld = ({ onComplete }) => {
         </p>
         <p>
           And poof... money was born.<br/>
-          Not by governments or corporations, but by ordinary people solving ordinary problems.<br/>
           A tool to grease the wheels of trade, save value for later, and make deals without needing a PhD in goat valuation.
         </p>
         <p>
-          This is the story of why money was invented. But as you experienced in that banking demo, even money can develop problems over time.
+          But as you experienced in that banking demo, even money can develop problems over time.
         </p>
         <p>
           Let's start with the basics: What exactly did money solve in the first place?
@@ -664,7 +684,7 @@ const MoneyModule = () => {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
 
   const handleStepComplete = () => {
-    if (currentStep === 5) {  // Back to original 6 steps (0-5)
+    if (currentStep === 6) {  // Now 7 steps (0-6)
       completeModule('money');
       setShowBadgeModal(true);
     } else {
@@ -680,6 +700,18 @@ const MoneyModule = () => {
 
   return (
     <div className="module-container">
+      {/* Override the default layout title for this module only */}
+      <style>{`
+        .module-layout .module-header .logo-text {
+          display: none;
+        }
+        .module-layout .module-header .logo-container::after {
+          content: "Money, Straight Up";
+          font-size: 1.5rem;
+          line-height: 1.2;
+        }
+      `}</style>
+      
       <div className="module-header">
         <h1 className="module-title">
           <Coins className="module-icon" />
@@ -697,16 +729,16 @@ const MoneyModule = () => {
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(currentStep / 6) * 100}%` }}
+            style={{ width: `${(currentStep / 7) * 100}%` }}
           />
         </div>
         <span className="progress-text">
-          {currentStep} / 6 steps completed
+          {currentStep} / 7 steps completed
         </span>
       </div>
 
       <div className="top-navigation">
-        {['Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Carlos\'s Flower Export', 'Traits Scorecard', 'Deep Dive'].map((step, index) => (
+        {['The Origin Story', 'Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Carlos\'s Flower Export', 'Traits Scorecard', 'Deep Dive'].map((step, index) => (
           <button
             key={index}
             className={`top-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
@@ -719,12 +751,13 @@ const MoneyModule = () => {
       </div>
 
       <div className="module-content">
-        {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
-        {currentStep === 1 && <WhatsWrong onComplete={handleStepComplete} />}
-        {currentStep === 2 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 3 && <CarlosFlowerExport onComplete={handleStepComplete} />}
-        {currentStep === 4 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 5 && <ExternalResource onComplete={handleStepComplete} />}
+        {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
+        {currentStep === 1 && <BarterWorld onComplete={handleStepComplete} />}
+        {currentStep === 2 && <WhatsWrong onComplete={handleStepComplete} />}
+        {currentStep === 3 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 4 && <CarlosFlowerExport onComplete={handleStepComplete} />}
+        {currentStep === 5 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+        {currentStep === 6 && <ExternalResource onComplete={handleStepComplete} />}
       </div>
 
       <BadgeModal isOpen={showBadgeModal} onClose={() => setShowBadgeModal(false)} />

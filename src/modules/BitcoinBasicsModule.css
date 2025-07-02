@@ -338,7 +338,7 @@
   padding: 1.5rem;
   background: #e8f4fd;
   border-radius: 8px;
-  border: 1px solid #2196f320;
+  border: 1px solid #ff8c0020;
   position: relative;
 }
 
@@ -355,7 +355,7 @@
   left: -10px;
   width: 24px;
   height: 24px;
-  background: #2196f3;
+  background: #ff8c00;
   color: white;
   border-radius: 50%;
   display: flex;

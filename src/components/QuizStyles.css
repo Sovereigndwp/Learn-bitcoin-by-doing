@@ -54,9 +54,9 @@
 }
 
 .module-container .quiz-container .quiz-option.selected {
-  background: #e3f2fd;
-  border-color: #2196f3;
-  color: #1565c0;
+  background: #fff5e6;
+  border-color: #ff8c00;
+  color: #000000;
 }
 
 .module-container .quiz-container .quiz-option.correct {

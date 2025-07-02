@@ -1,11 +1,5 @@
 .banking-experience-section {
   margin-bottom: 3rem;
-  padding: 0 1rem;
-}
-
-.experience-container {
-  max-width: 1000px;
-  margin: 0 auto;
 }
 
 .experience-header {
@@ -44,20 +38,21 @@
 .demo-content h2 {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  font-size: 1.6rem;
-  color: #000000;
-  font-weight: bold;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
   text-align: left;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0;
   padding: 0;
 }
 
 .demo-content p {
-  color: #000000;
+  color: #666;
   margin-bottom: 1.5rem;
   line-height: 1.6;
   text-align: left;
+  font-size: 0.95rem;
 }
 
 .interactive-section {
@@ -75,24 +70,24 @@
 
 .interactive-demo-link {
   display: inline-block;
-  background: linear-gradient(135deg, #FF6B35, #F7931E);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 12px;
+  background: #f8f9fa;
+  color: #333;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(247, 147, 30, 0.3);
+  border: 1px solid #dee2e6;
   text-align: center;
   width: fit-content;
 }
 
 .interactive-demo-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4);
+  background: #e9ecef;
+  border-color: #adb5bd;
   text-decoration: none;
-  color: white;
+  color: #333;
 }
 
 .link-subtitle {
@@ -117,25 +112,27 @@
 }
 
 .completion-button {
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
+  font-size: 0.95rem;
   width: fit-content;
 }
 
 .completion-button:hover:not(:disabled) {
-  background: #45a049;
-  transform: translateY(-1px);
+  background: #e9ecef;
+  border-color: #adb5bd;
 }
 
 .completion-button.completed {
-  background: #2196F3;
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
   cursor: default;
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { moduleRegistry } from '../modules/ModuleRegistry';
-import BankingExperience from './BankingExperience';
 import './Homepage.css';
 
 const Homepage = () => {
-  const { getModuleProgress, isModuleCompleted } = useProgress();
+  const { getModuleProgress, isModuleCompleted, completeModule } = useProgress();
+  const [hasExperienced, setHasExperienced] = React.useState(false);
 
   const moduleIcons = {
     money: '💰',
@@ -42,6 +42,39 @@ const Homepage = () => {
     return module.prerequisites.every(prereq => isModuleCompleted(prereq));
   };
 
+  const handleExperienceComplete = () => {
+    setHasExperienced(true);
+    completeModule('banking-intro');
+  };
+
+  const renderBankingExperienceCard = () => {
+    return (
+      <div key="banking-intro" className={`module-card ${bankingExperienceCompleted ? 'completed' : ''}`}>
+        <div className="module-icon">🏦</div>
+        <h3>Before We Begin</h3>
+        <p>Experience the friction of traditional banking that millions face daily.</p>
+        
+        <div className="banking-card-actions">
+          <a
+            href="https://layer-d.my.canva.site/traditionalbanking-decodedbydalia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="banking-demo-link"
+            onClick={handleExperienceComplete}
+          >
+            Launch Banking Reality Check
+          </a>
+        </div>
+
+        {bankingExperienceCompleted && (
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: '100%' }} />
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const renderModuleCard = (module) => {
     const unlocked = isModuleUnlocked(module);
     const progress = getModuleProgress(module.id);
@@ -54,7 +87,7 @@ const Homepage = () => {
           <p>{module.description}</p>
           <div className="locked-message">
             {module.id === 'money' && !bankingExperienceCompleted ? 
-              'Complete the banking experience above to unlock' :
+              'Complete the banking experience to unlock' :
               `Complete: ${module.prerequisites.join(', ')}`
             }
           </div>
@@ -98,13 +131,11 @@ const Homepage = () => {
         <p>An interactive hands-on journey that questions everything you thought you knew about money</p>
       </header>
 
-      {/* Banking Experience as the first interactive element */}
-      <BankingExperience />
-
       <div className="module-groups">
         <div className="group-section">
           <h2>🎓 Fundamentals</h2>
           <div className="modules-grid">
+            {renderBankingExperienceCard()}
             {Object.values(moduleRegistry)
               .filter(module => module.group === 'fundamentals')
               .sort((a, b) => a.order - b.order)
