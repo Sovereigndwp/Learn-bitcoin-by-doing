@@ -1,5 +1,227 @@
 /* Bitcoin Basics Module Specific Styles */
 
+/* Top Navigation Styles */
+.top-navigation {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: clamp(0.4rem, 1.5vw, 1.2rem);
+  margin-bottom: clamp(1.5rem, 3vw, 3rem);
+  padding: clamp(0.75rem, 2vw, 2rem);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  justify-content: stretch;
+  overflow-x: auto;
+}
+
+.top-nav-button {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.2rem, 0.8vw, 0.6rem);
+  padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.6rem, 2vw, 1.2rem);
+  border: 2px solid #e9ecef;
+  background: #f8f9fa;
+  color: #555;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: clamp(0.75rem, 1.8vw, 1rem);
+  min-width: clamp(80px, 12vw, 150px);
+  max-width: clamp(120px, 18vw, 200px);
+  justify-content: center;
+  flex: 1;
+}
+
+.top-nav-button:hover {
+  background: #e9ecef;
+  border-color: #f7931a;
+}
+
+.top-nav-button.active {
+  background: #f7931a;
+  color: white;
+  border-color: #f7931a;
+}
+
+.top-nav-button.completed {
+  background: #000000;
+  color: white;
+  border-color: #000000;
+}
+
+.nav-text {
+  font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Responsive Design for Top Navigation */
+@media (max-width: 768px) {
+  .top-navigation {
+    gap: clamp(0.3rem, 1.2vw, 0.6rem);
+    padding: clamp(0.75rem, 2vw, 1.25rem);
+    margin-bottom: clamp(1rem, 2.5vw, 2rem);
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .top-nav-button {
+    padding: clamp(0.4rem, 1.2vw, 0.8rem) clamp(0.6rem, 1.8vw, 1rem);
+    min-width: clamp(70px, 15vw, 120px);
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    flex-shrink: 0;
+  }
+  
+  .nav-text {
+    font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .top-nav-button {
+    min-width: 80px;
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .nav-text {
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+}
+
+/* Reflection Step Specific Styles */
+.reflection-step {
+  background: #f8f9fa;
+  max-width: none;
+  width: 100%;
+}
+
+.reflection-step .module-header-box {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reflection-content {
+  max-width: none;
+  width: 100%;
+  padding: 0;
+}
+
+.reflection-content h3 {
+  font-size: clamp(1.3rem, 3vw, 2rem) !important;
+  color: #333 !important;
+  margin-bottom: 2rem !important;
+  text-align: center;
+  font-weight: 600 !important;
+}
+
+.problem-questions {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.problem-question {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: #555;
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.main-question {
+  text-align: center;
+  margin: 3rem 0 2rem 0;
+}
+
+.main-question h3 {
+  font-size: clamp(1.4rem, 3.2vw, 2.2rem) !important;
+  color: #f7931a !important;
+  margin-bottom: 2rem !important;
+  font-weight: 700 !important;
+}
+
+.socratic-questions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(90vw, 400px), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  margin: 2rem 0 3rem 0;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.socratic-question {
+  background: white;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #f7931a;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.socratic-question:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.socratic-question .question-mark {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.socratic-question p {
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  font-weight: 500;
+}
+
+.conclusion-section {
+  background: white;
+  padding: clamp(2rem, 4vw, 3rem);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 3rem 0 2rem 0;
+  text-align: center;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.conclusion-section p {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  line-height: 1.7;
+  color: #555;
+  margin: 0;
+}
+
+.reflection-step .continue-button {
+  display: block;
+  margin: 3rem auto 0;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+}
+
+@media (max-width: 768px) {
+  .socratic-questions {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .socratic-question {
+    padding: 1.5rem;
+  }
+  
+  .conclusion-section {
+    padding: 2rem;
+  }
+}
+
 /* Discovery Step Specific Styles */
 .discovery-step {
   background: #f8f9fa;
@@ -261,6 +483,160 @@
   .scenarios-grid {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2.5rem;
+  }
+}
+
+/* Comparison Step Styles */
+.comparison-step {
+  background: #f8f9fa;
+}
+
+.comparison-container {
+  margin: 2rem 0;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.traditional-side,
+.bitcoin-side {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.traditional-side {
+  border-left: 4px solid #dc3545;
+}
+
+.bitcoin-side {
+  border-left: 4px solid #f7931a;
+}
+
+.traditional-side h3,
+.bitcoin-side h3 {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
+  color: #333 !important;
+}
+
+.problems-list,
+.benefits-list {
+  margin-bottom: 1.5rem;
+}
+
+.problem-item,
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+}
+
+.problem-item {
+  background: #fee;
+}
+
+.benefit-item {
+  background: #efe;
+}
+
+.problem-icon,
+.benefit-icon {
+  font-size: 1rem;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.problem-item span:last-child,
+.benefit-item span:last-child {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.outcome {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.traditional-outcome {
+  background: #ffebee;
+  border: 1px solid #dc354520;
+  color: #c62828;
+}
+
+.bitcoin-outcome {
+  background: #fff5e6;
+  border: 1px solid #f7931a20;
+  color: #e65100;
+}
+
+.demo-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.demo-section h3 {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+  color: #333 !important;
+}
+
+.demo-section p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.reflection-question {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.reflection-question h3 {
+  font-size: 1.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
+  color: #333 !important;
+}
+
+@media (max-width: 768px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .traditional-side,
+  .bitcoin-side,
+  .demo-section,
+  .reflection-question {
+    padding: 1.5rem;
+  }
+  
+  .problem-item,
+  .benefit-item {
+    gap: 0.5rem;
+    padding: 0.5rem;
   }
 }
 

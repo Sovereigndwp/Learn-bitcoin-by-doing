@@ -9,12 +9,17 @@ const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
+  
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
       completeModule('bitcoin-basics');
     }
     setCurrentStep(index + 1);
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
   };
 
   const steps = [
@@ -67,6 +72,40 @@ const BitcoinBasicsModule = () => {
         ],
         correctAnswer: 3,
         explanation: "This is why Bitcoin doesn't just tweak the system—it replaces it."
+      }
+    },
+    {
+      title: "Carlos's Export: Traditional vs Bitcoin",
+      type: "comparison",
+      content: {
+        title: "Carlos's Export: Traditional vs Bitcoin",
+        intro: "Remember Carlos exporting roses from Colombia to Japan? Let's see how his experience changes with Bitcoin versus traditional banking.",
+        comparison: {
+          traditional: {
+            title: "🏦 Traditional Banking Route",
+            problems: [
+              "USD to COP conversion at bank's rates",
+              "2-5 business day transfer delays",
+              "Multiple intermediary bank fees",
+              "Currency volatility during transfer period",
+              "Potential transaction blocks or freezes"
+            ],
+            outcome: "Carlos loses money to fees, delays, and volatility"
+          },
+          bitcoin: {
+            title: "₿ Bitcoin Route", 
+            benefits: [
+              "Direct peer-to-peer transfer in ~10 minutes",
+              "No currency conversion needed",
+              "Minimal transaction fees (~$1-5)",
+              "No intermediary banks taking cuts",
+              "Unstoppable - no permission required"
+            ],
+            outcome: "Carlos receives full payment value quickly"
+          }
+        },
+        question: "Which system would you choose for international business?",
+        demoLink: "https://layer-d.my.canva.site/bitcoin-transaction-demo-bydalia"
       }
     },
     {
@@ -131,6 +170,73 @@ const BitcoinBasicsModule = () => {
     if (!step) return null;
 
     switch (step.type) {
+      case 'comparison':
+        return (
+          <div className="step-content comparison-step">
+            <div className="module-header-box">
+              <h2>{step.content.title}</h2>
+              <div className="intro-text">
+                <p>{step.content.intro}</p>
+              </div>
+              <div className="demo-section">
+                <h3>🔍 See Bitcoin in Action</h3>
+                <p>Experience how a Bitcoin transaction works compared to traditional banking:</p>
+                <button
+                  className="link-button"
+                  onClick={() => window.open(step.content.demoLink, '_blank')}
+                >
+                  Try Bitcoin Transaction Demo
+                </button>
+              </div>
+            </div>
+
+            <div className="comparison-container">
+
+              <div className="comparison-grid">
+                <div className="traditional-side">
+                  <h3>{step.content.comparison.traditional.title}</h3>
+                  <div className="problems-list">
+                    {step.content.comparison.traditional.problems.map((problem, i) => (
+                      <div key={i} className="problem-item">
+                        <span className="problem-icon">❌</span>
+                        <span>{problem}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="outcome traditional-outcome">
+                    <strong>Result:</strong> {step.content.comparison.traditional.outcome}
+                  </div>
+                </div>
+
+                <div className="bitcoin-side">
+                  <h3>{step.content.comparison.bitcoin.title}</h3>
+                  <div className="benefits-list">
+                    {step.content.comparison.bitcoin.benefits.map((benefit, i) => (
+                      <div key={i} className="benefit-item">
+                        <span className="benefit-icon">✅</span>
+                        <span>{benefit}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="outcome bitcoin-outcome">
+                    <strong>Result:</strong> {step.content.comparison.bitcoin.outcome}
+                  </div>
+                </div>
+              </div>
+
+              <div className="reflection-question">
+                <h3>🤔 {step.content.question}</h3>
+                <button 
+                  className="continue-button"
+                  onClick={() => handleStepComplete(index)}
+                >
+                  I See the Difference
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+
       case 'reflection':
         return (
           <div className="step-content reflection-step">
@@ -365,6 +471,23 @@ const BitcoinBasicsModule = () => {
         <span className="progress-text">
           {completedSteps.size} / {steps.length} steps completed
         </span>
+      </div>
+
+      {/* Horizontal Tab Navigation */}
+      <div className="top-navigation">
+        {steps.map((step, index) => (
+          <button
+            key={index}
+            className={`top-nav-button ${
+              index === currentStep ? 'active' : ''
+            } ${completedSteps.has(index) ? 'completed' : ''}`}
+            onClick={() => handleTabClick(index)}
+          >
+            <span className="nav-text">
+              {index + 1}. {step.title.length > 20 ? `${step.title.substring(0, 17)}...` : step.title}
+            </span>
+          </button>
+        ))}
       </div>
 
       <div className="module-content">

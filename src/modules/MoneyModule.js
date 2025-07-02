@@ -12,6 +12,12 @@ const BarterWorld = ({ onComplete }) => {
     <div className="step-content barter-world">
       <div className="module-header-box">
         <h2>Imagine a World Without Money</h2>
+        <button
+          className="link-button"
+          onClick={() => window.open('https://layer-d.my.canva.site/challenges-of-double-coincidence-of-wants', '_blank')}
+        >
+          Try It Out
+        </button>
       </div>
       <div className="content-text">
         <p>
