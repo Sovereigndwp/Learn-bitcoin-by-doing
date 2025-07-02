@@ -6,12 +6,14 @@ import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
 
+
+
 // Component for the Barter World section
 const BarterWorld = ({ onComplete }) => {
   return (
     <div className="step-content barter-world">
       <div className="module-header-box">
-        <h2>Imagine a World Without Money</h2>
+        <h2>Why Did We Invent Money in the First Place?</h2>
         <button
           className="link-button"
           onClick={() => window.open('https://layer-d.my.canva.site/challenges-of-double-coincidence-of-wants', '_blank')}
@@ -20,6 +22,15 @@ const BarterWorld = ({ onComplete }) => {
         </button>
       </div>
       <div className="content-text">
+        <p>
+          You just felt the friction of modern banking. The approvals, delays, and quiet "no" behind the shiny app screen.
+        </p>
+        <p>
+          But before we jump into how that system got so messy, let's rewind to the beginning.
+        </p>
+        <p>
+          Because long before banks, credit scores, and frozen transactions... humans had a simple problem: <strong>We wanted to trade with each other, but we sucked at it.</strong>
+        </p>
         <p>
           Imagine waking up in a world without money.<br/>
           Not the "I'm broke" kind...<br/>
@@ -62,19 +73,14 @@ const BarterWorld = ({ onComplete }) => {
         </p>
         <p>
           And poof... money was born.<br/>
-          A tool to grease the wheels of trade,<br/>
-          save value for later,<br/>
-          and make deals without needing a PhD in goat valuation.
+          Not by governments or corporations, but by ordinary people solving ordinary problems.<br/>
+          A tool to grease the wheels of trade, save value for later, and make deals without needing a PhD in goat valuation.
         </p>
         <p>
-          Because deep down, humans are problem solvers...<br/>
-          Even if most of our solutions just lead to new arguments.
+          This is the story of why money was invented. But as you experienced in that banking demo, even money can develop problems over time.
         </p>
         <p>
-          So what exactly did money fix?
-        </p>
-        <p>
-          Let's go back to some of those barter disasters and find out.
+          Let's start with the basics: What exactly did money solve in the first place?
         </p>
 
         <button onClick={onComplete} className="continue-button">
@@ -658,7 +664,7 @@ const MoneyModule = () => {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
 
   const handleStepComplete = () => {
-    if (currentStep === 5) {  // Updated to account for new step (now 6 total steps)
+    if (currentStep === 5) {  // Back to original 6 steps (0-5)
       completeModule('money');
       setShowBadgeModal(true);
     } else {

@@ -7,7 +7,7 @@
 
 /* Header */
 .homepage-header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 3rem;
   padding: 2rem;
   background: linear-gradient(135deg, #f7931a11 0%, #f7931a22 100%);
@@ -29,7 +29,7 @@
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -108,7 +108,7 @@
 /* Hero Section */
 .hero {
   padding: 4rem 0;
-  text-align: center;
+  text-align: left;
 }
 
 .hero-content {
@@ -136,7 +136,7 @@
 
 .hero-stats {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2rem;
   margin-bottom: 2rem;
 }
@@ -177,7 +177,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .progress-title {
@@ -283,6 +283,30 @@
   background: #4CAF50;
 }
 
+.module-card.locked {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 2px solid #e9ecef;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transition: none;
+}
+
+.module-card.locked:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.locked-message {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+  font-style: italic;
+  text-align: left;
+}
+
 .prerequisites {
   font-size: 0.85rem;
   color: #666;
@@ -294,7 +318,7 @@
 .cta-section {
   padding: 4rem 0;
   background: rgba(255, 255, 255, 0.05);
-  text-align: center;
+  text-align: left;
 }
 
 .cta-content {

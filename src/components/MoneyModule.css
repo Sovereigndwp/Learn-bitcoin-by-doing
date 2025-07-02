@@ -1,5 +1,51 @@
 /* Money Module Specific Styles */
 
+/* Transitional Intro Section */
+.transitional-intro .content-text {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.transitional-intro .content-text p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  color: #000000;
+}
+
+.transitional-intro .content-text em {
+  font-style: italic;
+  color: #F97316;
+}
+
+.transitional-intro .content-text strong {
+  font-weight: 700;
+  color: #000000;
+}
+
+.transitional-intro .continue-button {
+  background: #F97316;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.transitional-intro .continue-button:hover {
+  background: #EA580C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
 /* Traits Section Specific Styles */
 .traits-intro-block {
   background: #f8f9fa;
