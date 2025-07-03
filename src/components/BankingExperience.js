@@ -24,7 +24,7 @@ const BankingExperience = () => {
           <div className="interactive-section">
             <div className="launch-container">
               <a
-                href="https://layer-d.my.canva.site/traditionalbanking-decodedbydalia"
+                href="https://layer-d.my.canva.site/is-your-money-yours-decoded-by-dalia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="interactive-demo-link"

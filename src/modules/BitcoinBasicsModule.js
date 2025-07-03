@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Bitcoin, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleLayout.css';
@@ -39,7 +39,7 @@ const BitcoinBasicsModule = () => {
           "What if you didn't need permission to spend, save, or send it?",
           "What if money could work equally for anyone, anywhere?"
         ],
-        conclusion: "These questions led to one of the most important innovations of the 21st century. Let's explore what it is—and why it matters."
+        conclusion: "These questions led to one of the most important innovations of the 21st century. Let's explore what it is, how it works, and why it matters."
       }
     },
 
@@ -53,25 +53,17 @@ const BitcoinBasicsModule = () => {
     },
     {
       title: "Sending Money Across Borders",
-      type: "interactive",
+      type: "simulator",
       content: {
-        scenario: "Imagine you want to send $1,000 to a friend in another country.",
-        steps: [
-          "Your bank deducts the money from your account",
-          "It passes through 2–3 intermediary banks",
-          "Each one takes a cut",
-          "It takes 3–5 business days",
-          "Your friend's bank might even block it"
-        ],
-        question: "What's the real problem here?",
+        scenario: "Experience the difference: sending $1,000 to a friend in another country.",
+        instruction: "Click the buttons below to see how each system works:",
+        question: "Which would you choose?",
         options: [
-          "Too many middlemen",
-          "High fees and unnecessary delays",
-          "Your money isn't truly yours",
-          "All of the above"
+          "🏦 Stick with the bank. I like surprises and delays",
+          "₿ Explore more about Bitcoin... this feels like real freedom"
         ],
-        correctAnswer: 3,
-        explanation: "This is why Bitcoin doesn't just tweak the system—it replaces it."
+        correctAnswer: 1,
+        explanation: "This is why Bitcoin doesn't just tweak the system, it replaces it entirely."
       }
     },
     {
@@ -166,10 +158,133 @@ const BitcoinBasicsModule = () => {
     }
   ];
 
+  // Simulator Components
+  const FiatColumn = () => {
+    const [step, setStep] = useState(0);
+    const [delayed, setDelayed] = useState(false);
+
+    useEffect(() => {
+      if ([1, 2, 3].includes(step)) {
+        setDelayed(true);
+        const timeout = setTimeout(() => setDelayed(false), 2000);
+        return () => clearTimeout(timeout);
+      }
+    }, [step]);
+
+    const steps = [
+      "Click 'Send $1,000' to start.",
+      "Your bank is verifying the request...",
+      "Routing through intermediary bank #1... (Fee: $15)",
+      "Routing through intermediary bank #2... (Fee: $22)",
+      "Destination bank requires additional verification.",
+      "Transfer delayed 2–3 business days...",
+      "Funds pending. Your friend might receive: $930."
+    ];
+
+    return (
+      <div className="simulator-column fiat-column">
+        <h3>🏦 Traditional Bank</h3>
+        <div className="simulator-content">
+          <p className="simulator-step">{steps[step]}</p>
+          <button
+            onClick={() => setStep((prev) => Math.min(prev + 1, steps.length - 1))}
+            disabled={delayed || step === steps.length - 1}
+            className={`simulator-button ${delayed ? 'disabled' : ''}`}
+          >
+            {step === 0 ? "Send $1,000" : delayed ? "Processing..." : "Next"}
+          </button>
+          {step === steps.length - 1 && (
+            <div className="final-result fiat-result">
+              <p>❌ Total fees: $70 • Delays: 3-5 days</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  const BitcoinColumn = () => {
+    const [step, setStep] = useState(0);
+
+    const steps = [
+      "Click 'Send $1,000' to start.",
+      "Scan your friend's QR code.",
+      "Transaction broadcast to the network.",
+      "Waiting for confirmations...",
+      "Success! Your friend received 100% of the $1,000."
+    ];
+
+    return (
+      <div className="simulator-column bitcoin-column">
+        <h3>₿ Bitcoin</h3>
+        <div className="simulator-content">
+          <p className="simulator-step">{steps[step]}</p>
+          <button
+            onClick={() => setStep((prev) => Math.min(prev + 1, steps.length - 1))}
+            disabled={step === steps.length - 1}
+            className="simulator-button bitcoin-button"
+          >
+            {step === 0 ? "Send $1,000" : "Next"}
+          </button>
+          {step === steps.length - 1 && (
+            <div className="final-result bitcoin-result">
+              <p>✅ Fee: ~$2 • Time: ~10 minutes</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const renderStep = (step, index) => {
     if (!step) return null;
 
     switch (step.type) {
+      case 'simulator':
+        return (
+          <div className="step-content simulator-step">
+            <div className="module-header-box">
+              <h2>{step.title}</h2>
+              <div className="intro-text">
+                <p>{step.content.scenario}</p>
+                <p>{step.content.instruction}</p>
+              </div>
+            </div>
+
+            <div className="simulator-container">
+              <div className="simulator-grid">
+                <FiatColumn />
+                <BitcoinColumn />
+              </div>
+            </div>
+
+            <div className="quiz-content">
+              <h3>🤔 {step.content.question}</h3>
+              <div className="options">
+                {step.content.options.map((option, i) => (
+                  <button
+                    key={i}
+                    className="option-button"
+                    onClick={() => {
+                      if (i === step.content.correctAnswer) {
+                        handleStepComplete(index);
+                      }
+                    }}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+              {step.content.explanation && (
+                <div className="feedback-section correct">
+                  <p className="feedback-result">✅ Correct!</p>
+                  <p className="takeaway">{step.content.explanation}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
       case 'comparison':
         return (
           <div className="step-content comparison-step">
@@ -275,7 +390,7 @@ const BitcoinBasicsModule = () => {
                 className="continue-button"
                 onClick={() => handleStepComplete(index)}
               >
-                I've Thought About It
+                Continue
               </button>
             </div>
           </div>

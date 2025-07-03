@@ -717,12 +717,6 @@ const MoneyModule = () => {
           <Coins className="module-icon" />
           If You Don't Define It, It Will Define You
         </h1>
-        {isModuleCompleted('money') && (
-          <div className="completion-badge">
-            <Trophy size={24} />
-            Completed!
-          </div>
-        )}
       </div>
 
       <div className="module-progress">

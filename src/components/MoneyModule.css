@@ -250,7 +250,7 @@
 }
 
 .step-nav-button.completed {
-  background: #000000;
+  background: #f7931a;
   color: white;
 }
 
@@ -403,7 +403,7 @@
   background: #f8f9fa;
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #000000;
+  border-left: 4px solid #f7931a;
 }
 
 .scenario-header {
@@ -456,7 +456,7 @@
   display: block;
   margin: 1.5rem auto 0;
   padding: 0.75rem 2rem;
-  background: #000000;
+  background: #f7931a;
   color: white;
   border: none;
   border-radius: 6px;
@@ -466,7 +466,7 @@
 }
 
 .check-answers-button:hover {
-  background: #333333;
+  background: #e68a17;
 }
 
 /* White header box for titles and introductions */
@@ -752,9 +752,9 @@
 .carlos-export-step .feedback-section {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: #000000;
+  background: #f7931a;
   border-radius: 8px;
-  border-left: 4px solid #000000;
+  border-left: 4px solid #f7931a;
 }
 
 .carlos-export-step .feedback-result {
@@ -840,9 +840,9 @@
 }
 
 .top-nav-button.completed {
-  background: #000000;
+  background: #f7931a;
   color: white;
-  border-color: #000000;
+  border-color: #f7931a;
 }
 
 .nav-text {

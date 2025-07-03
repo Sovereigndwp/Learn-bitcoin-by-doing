@@ -56,7 +56,7 @@ const Homepage = () => {
         
         <div className="banking-card-actions">
           <a
-            href="https://layer-d.my.canva.site/traditionalbanking-decodedbydalia"
+            href="https://layer-d.my.canva.site/banking-reality-check-by-dalia"
             target="_blank"
             rel="noopener noreferrer"
             className="banking-demo-link"
@@ -129,6 +129,16 @@ const Homepage = () => {
           <h1>Money's Mess & Bitcoin's Fix</h1>
         </div>
         <p>An interactive hands-on journey that questions everything you thought you knew about money</p>
+        <div className="nav-buttons">
+          <a
+            href="https://www.canva.com/brand/brand-templates/EAGsHcUFp6A"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-button"
+          >
+            <span>By Dalia</span>
+          </a>
+        </div>
       </header>
 
       <div className="module-groups">
