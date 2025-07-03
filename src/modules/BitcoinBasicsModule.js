@@ -101,17 +101,56 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "The Double-Spend Problem",
-      type: "discovery",
+      title: "What If Hiroshi Tried to Be Sneaky?",
+      type: "double-spend-game",
       content: {
-        scenario: "Imagine you create a digital coin—a simple computer file that says '1 Coin.'\n\nWhat's stopping someone from:\n\n• Copying it infinitely?\n\n• Sending the same coin to multiple people?\n\n• Creating new coins out of thin air?\n\nThis is the 'double-spend' problem. Before Bitcoin, the only solution was to trust banks to keep track of everything.",
-        thoughtExperiment: "Can you think of a way to solve this without a bank?",
-        hints: [
-          "What if everyone kept a copy of all transactions?",
-          "What if we agreed on the order of those transactions?",
-          "What if cheating the system was incredibly expensive?"
+        title: "🌸 What If Hiroshi Tried to Be Sneaky?",
+        subtitle: "Remember our flower trader? Let's see what happens if he tries to cheat the system.",
+        scenario: "Hiroshi's digital wallet has $430. He owes Carlos $430 for roses, but he also wants to keep that money for himself.",
+        instruction: "What if Hiroshi opens his wallet app on his phone AND his computer at the same time? Click both buttons quickly:",
+        buttons: ["📱 Phone: Send $430 to Carlos (for roses)", "💻 Computer: Send $430 to himself (to keep it)"],
+        conflictMessage: "💥 Uh-oh: Hiroshi just tried to spend the same $430 twice! Both transactions are being processed...",
+        insight: "Digital files are easy to copy — like photos, emails, or documents. With traditional digital money, what's stopping someone from 'copying' their payment and sending it twice?",
+        question: "In a world without banks watching every transaction, what prevents people like Hiroshi from cheating?",
+        options: [
+          "The wallet app would catch it automatically",
+          "Carlos would notice and complain", 
+          "Hiroshi's phone and computer would sync",
+          "There needs to be some way for everyone to agree on what really happened"
         ],
-        revelation: "That's exactly how Bitcoin works. It uses a shared public ledger (blockchain) and mining to secure the system without trust."
+        correctAnswer: 3,
+        explanation: "Exactly! Without a bank as the middleman, we need a different way to make sure everyone agrees on the truth. Let's see how that works."
+      }
+    },
+    {
+      title: "How Does Everyone Agree on the Truth?",
+      type: "consensus-game",
+      content: {
+        title: "🤝 How Does Everyone Agree on the Truth?",
+        scenario: "After Hiroshi's sneaky attempt, three different people saw different things happen. Carlos, Hiroshi's wife, and a flower shop witness all have different stories.",
+        instruction: "Which version of events should everyone believe? Click on what you think is the truth:",
+        ledgers: [
+          { id: "Carlos", content: "I received $430 from Hiroshi for the roses ✅", valid: false },
+          { id: "Wife", content: "Hiroshi sent me back the $430 he owed me ✅", valid: false },
+          { id: "Witness", content: "Hiroshi tried to send the same money twice - FRAUD ⚠️", valid: true }
+        ],
+        questions: [
+          "How do we figure out who's telling the truth when there's no bank to ask?",
+          "What if thousands of people all saw different things happen?"
+        ],
+        solution: {
+          title: "The Community Watchdogs",
+          steps: [
+            "📱 Everyone keeps a copy of all transactions on their phones",
+            "👥 When someone tries to cheat, the community notices immediately",
+            "🗳️ The majority decides what really happened", 
+            "✅ Everyone updates their records to match the truth",
+            "🏆 Honest record-keepers get rewarded for their work"
+          ],
+          insight: "In Bitcoin, thousands of people around the world keep identical copies of every transaction. When someone tries to cheat, the majority quickly spots it and rejects the fraud.",
+          analogy: "It's like having thousands of security cameras all recording the same event. If one camera shows something different, you know that one is lying.",
+          finalQuestion: "If thousands of people all agree on what happened, and liars get caught immediately, is that more trustworthy than just trusting one bank?"
+        }
       }
     },
     {
@@ -157,6 +196,182 @@ const BitcoinBasicsModule = () => {
       }
     }
   ];
+
+  // Double Spend Game Component
+  const DoubleSpendGame = ({ content, onComplete }) => {
+    const [aliceSent, setAliceSent] = useState(false);
+    const [bobSent, setBobSent] = useState(false);
+    const [showConflict, setShowConflict] = useState(false);
+    const [showQuiz, setShowQuiz] = useState(false);
+
+    useEffect(() => {
+      if (aliceSent && bobSent) {
+        setTimeout(() => setShowConflict(true), 1000);
+        setTimeout(() => setShowQuiz(true), 3000);
+      }
+    }, [aliceSent, bobSent]);
+
+         return (
+       <div className="double-spend-game">
+         <div className="wallet-display">
+           <h3>💰 Hiroshi's Digital Wallet</h3>
+           <div className="balance">Balance: $430</div>
+           <div className="context">Payment needed: $430 for Carlos's roses 🌹</div>
+         </div>
+
+         <div className="device-scenario">
+           <div className="scenario-text">
+             <p>Hiroshi gets a sneaky idea: "What if I open my wallet on both devices and try to send the same money twice?"</p>
+           </div>
+         </div>
+
+         <div className="transaction-buttons">
+           <button
+             className={`transaction-btn carlos-btn ${aliceSent ? 'sent' : ''}`}
+             onClick={() => setAliceSent(true)}
+             disabled={aliceSent}
+           >
+             {aliceSent ? "✅ Sent to Carlos" : content.buttons[0]}
+           </button>
+           <button
+             className={`transaction-btn self-btn ${bobSent ? 'sent' : ''}`}
+             onClick={() => setBobSent(true)}
+             disabled={bobSent}
+           >
+             {bobSent ? "✅ Sent to Self" : content.buttons[1]}
+           </button>
+         </div>
+
+        {(aliceSent || bobSent) && !showConflict && (
+          <div className="processing">
+            <p>⏳ Processing transaction...</p>
+          </div>
+        )}
+
+        {showConflict && (
+          <div className="conflict-message">
+            <h3>{content.conflictMessage}</h3>
+            <div className="insight-box">
+              <p>💡 {content.insight}</p>
+            </div>
+          </div>
+        )}
+
+        {showQuiz && (
+          <div className="quiz-section">
+            <h3>🤔 {content.question}</h3>
+            <div className="options">
+              {content.options.map((option, i) => (
+                <button
+                  key={i}
+                  className="option-button"
+                  onClick={() => onComplete()}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Consensus Game Component
+  const ConsensusGame = ({ content, onComplete }) => {
+    const [selectedLedger, setSelectedLedger] = useState(null);
+    const [showQuestions, setShowQuestions] = useState(false);
+    const [showSolution, setShowSolution] = useState(false);
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const handleLedgerSelect = (ledger) => {
+      setSelectedLedger(ledger);
+      setTimeout(() => setShowQuestions(true), 1000);
+    };
+
+    const showNextStep = () => {
+      if (currentStep < content.solution.steps.length) {
+        setCurrentStep(currentStep + 1);
+      } else {
+        setShowSolution(true);
+      }
+    };
+
+    return (
+      <div className="consensus-game">
+        <div className="scenario-setup">
+          <p>{content.scenario}</p>
+          <p><strong>{content.instruction}</strong></p>
+        </div>
+
+        <div className="ledger-options">
+          {content.ledgers.map((ledger, i) => (
+            <div
+              key={ledger.id}
+              className={`ledger-option ${selectedLedger?.id === ledger.id ? 'selected' : ''}`}
+              onClick={() => handleLedgerSelect(ledger)}
+            >
+              <h4>Ledger {ledger.id}</h4>
+              <p>{ledger.content}</p>
+              {selectedLedger?.id === ledger.id && (
+                <div className="selection-result">
+                  {ledger.valid ? "✅ Correct choice!" : "❌ Not quite..."}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {showQuestions && (
+          <div className="reflection-questions">
+            {content.questions.map((question, i) => (
+              <div key={i} className="question-bubble">
+                <p>❓ {question}</p>
+              </div>
+            ))}
+            <button className="reveal-button" onClick={() => setShowSolution(true)}>
+              Reveal the Answer
+            </button>
+          </div>
+        )}
+
+        {showSolution && (
+          <div className="solution-reveal">
+            <h3>{content.solution.title}</h3>
+            
+            <div className="consensus-steps">
+              {content.solution.steps.map((step, i) => (
+                <div key={i} className={`step-item ${i <= currentStep ? 'revealed' : ''}`}>
+                  {step}
+                </div>
+              ))}
+            </div>
+
+            {currentStep < content.solution.steps.length ? (
+              <button className="next-step-button" onClick={showNextStep}>
+                Next Step
+              </button>
+            ) : (
+              <div className="final-insights">
+                <div className="insight-box">
+                  <p>🧠 {content.solution.insight}</p>
+                </div>
+                <div className="analogy-box">
+                  <p>🗨️ {content.solution.analogy}</p>
+                </div>
+                <div className="final-question">
+                  <h3>🤔 {content.solution.finalQuestion}</h3>
+                  <button className="continue-button" onClick={onComplete}>
+                    Continue to Learn More
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   // Simulator Components
   const FiatColumn = () => {
@@ -240,6 +455,39 @@ const BitcoinBasicsModule = () => {
     if (!step) return null;
 
     switch (step.type) {
+      case 'double-spend-game':
+        return (
+          <div className="step-content game-step">
+            <div className="module-header-box">
+              <h2>{step.content.title}</h2>
+              <div className="intro-text">
+                <p>{step.content.subtitle}</p>
+                <p>{step.content.scenario}</p>
+                <p><strong>{step.content.instruction}</strong></p>
+              </div>
+            </div>
+
+            <DoubleSpendGame 
+              content={step.content} 
+              onComplete={() => handleStepComplete(index)} 
+            />
+          </div>
+        );
+
+      case 'consensus-game':
+        return (
+          <div className="step-content game-step">
+            <div className="module-header-box">
+              <h2>{step.content.title}</h2>
+            </div>
+
+            <ConsensusGame 
+              content={step.content} 
+              onComplete={() => handleStepComplete(index)} 
+            />
+          </div>
+        );
+
       case 'simulator':
         return (
           <div className="step-content simulator-step">
