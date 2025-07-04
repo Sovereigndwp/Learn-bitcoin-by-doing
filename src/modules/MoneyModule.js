@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock } from 'lucide-react';
+import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
@@ -11,27 +11,34 @@ const Introduction = ({ onComplete }) => {
   return (
     <div className="step-content introduction">
       <div className="module-header-box">
-        <h2>Why Did We Invent Money in the First Place?</h2>
+        <h2>The Great Money Mystery: Why Does This Thing Even Exist?</h2>
+        <div className="intro-text">
+          <p className="prime-text">You just experienced how broken modern money feels. But what if I told you money wasn't supposed to be this complicated?</p>
+        </div>
       </div>
       <div className="content-text">
         <p>
-          You just felt the friction of modern banking. The approvals, delays, and quiet "no" behind the shiny app screen.
+          Think about it: You carry around little pieces of paper and plastic rectangles, and somehow everyone agrees they're "valuable."
         </p>
         <p>
-          But before we jump into how that system got so messy, let's rewind to the beginning.
+          You tap your phone on a machine, and invisible numbers move around the world.
         </p>
         <p>
-          Because long before banks, credit scores, and frozen transactions... humans had a simple problem: <strong>We wanted to trade with each other, but we sucked at it.</strong>
+          But behind all that complexity is a surprisingly simple story: <strong>Humans needed to solve the world's most annoying problem.</strong>
         </p>
+        <div className="reflection-prompt">
+          <h3>🤔 Before we reveal the answer...</h3>
+          <p>What do you think was humanity's biggest trading problem before money existed?</p>
+          <div className="thinking-space">
+            <p><em>Take a moment to think about it. What would make trading really, really frustrating?</em></p>
+          </div>
+        </div>
         <p>
-          This is the story of why money was invented. Not by governments or corporations, but by ordinary people solving ordinary problems.
-        </p>
-        <p>
-          Let's go back to see how it all began...
+          Ready to find out? Let's travel back 10,000 years and watch humans struggle with the exact problem that forced them to invent this thing we call "money."
         </p>
 
-        <button onClick={onComplete} className="continue-button">
-          Continue
+        <button onClick={() => onComplete(0)} className="continue-button">
+          Take Me Back in Time
         </button>
       </div>
     </div>
@@ -40,71 +47,154 @@ const Introduction = ({ onComplete }) => {
 
 // Component for the Barter World section
 const BarterWorld = ({ onComplete }) => {
+  const [gameStep, setGameStep] = useState(0);
+  const [selectedTrade, setSelectedTrade] = useState(null);
+  const [tradeAttempts, setTradeAttempts] = useState(0);
+
+  const tradeScenarios = [
+    { id: 1, have: "🥔 Potatoes", want: "👟 Shoes", person: "Farmer", success: false },
+    { id: 2, have: "🍞 Bread", want: "🧱 Bricks", person: "Baker", success: false },
+    { id: 3, have: "👟 Shoes", want: "🥔 Potatoes", person: "Cobbler", success: true },
+    { id: 4, have: "🐟 Fish", want: "🍞 Bread", person: "Fisher", success: false },
+    { id: 5, have: "🧱 Bricks", want: "🐟 Fish", person: "Builder", success: false }
+  ];
+
+  const handleTradeAttempt = (scenario) => {
+    setSelectedTrade(scenario);
+    setTradeAttempts(prev => prev + 1);
+    
+    if (scenario.success) {
+      setTimeout(() => setGameStep(1), 1500);
+    }
+  };
+
+  const resetGame = () => {
+    setGameStep(0);
+    setSelectedTrade(null);
+    setTradeAttempts(0);
+  };
+
+  if (gameStep === 0) {
+    return (
+      <div className="step-content barter-world">
+        <div className="module-header-box">
+          <h2>Welcome to the Stone Age Economy</h2>
+          <div className="intro-text">
+            <p className="prime-text">You're about to experience the most frustrating trading system ever invented: direct bartering.</p>
+            <p>You're a potato farmer who desperately needs shoes. Find someone willing to trade!</p>
+          </div>
+        </div>
+
+        <div className="barter-game">
+          <div className="your-situation">
+            <h3>Your Situation</h3>
+            <p>🥔 You have: <strong>A bag of potatoes</strong></p>
+            <p>👟 You need: <strong>Shoes for winter</strong></p>
+            <p>Attempts: {tradeAttempts}/5</p>
+          </div>
+
+          <div className="trade-options">
+            <h3>Available Traders in Your Village</h3>
+            <div className="traders-grid">
+              {tradeScenarios.map(scenario => (
+                <div 
+                  key={scenario.id} 
+                  className={`trader-card ${selectedTrade?.id === scenario.id ? 'selected' : ''}`}
+                  onClick={() => handleTradeAttempt(scenario)}
+                >
+                  <h4>{scenario.person}</h4>
+                  <p>Has: {scenario.have}</p>
+                  <p>Wants: {scenario.want}</p>
+                  {selectedTrade?.id === scenario.id && (
+                    <div className="trade-result">
+                      {scenario.success ? 
+                        "🎉 SUCCESS! They want your potatoes!" : 
+                        "❌ No deal. They don't want potatoes."
+                      }
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {selectedTrade?.success && (
+            <div className="success-section">
+              <h3>🎉 Finally! A Successful Trade!</h3>
+              <p>After {tradeAttempts} attempts, you found someone who wants potatoes and has shoes.</p>
+              <p>But imagine if this was your life every single day...</p>
+              <button className="continue-button" onClick={() => setGameStep(1)}>
+                See Why This System Failed
+              </button>
+            </div>
+          )}
+
+          {tradeAttempts >= 5 && !selectedTrade?.success && (
+            <div className="failure-section">
+              <h3>😤 You're Stuck!</h3>
+              <p>No one in your village wants potatoes for what they have. You might have to:</p>
+              <ul>
+                <li>Walk to the next village (2 days journey)</li>
+                <li>Try trading potatoes → bread → bricks → shoes (if you can find the chain)</li>
+                <li>Wait until someone needs potatoes</li>
+                <li>Go barefoot this winter</li>
+              </ul>
+              <button className="continue-button" onClick={() => setGameStep(1)}>
+                This System is Broken!
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="step-content barter-world">
       <div className="module-header-box">
-        <h2>Imagine a World Without Money</h2>
-        <button
-          className="link-button"
-          onClick={() => window.open('https://layer-d.my.canva.site/challenges-of-double-coincidence-of-wants', '_blank')}
-        >
-          Try It Out
-        </button>
+        <h2>The Problem That Broke Humanity's Patience</h2>
+        <div className="intro-text">
+          <p className="prime-text">What you just experienced is called "the double coincidence of wants" - basically, the universe's worst matchmaking system.</p>
+        </div>
       </div>
+      
       <div className="content-text">
-        <p>
-          Imagine waking up in a world without money.<br/>
-          Not the "I'm broke" kind...<br/>
-          The "money doesn't exist at all" kind.
-        </p>
-        <p>
-          You want 👟.<br/>
-          Someone else wants 🥖.<br/>
-          Another person needs their 💧🏠 fixed.
-        </p>
-        <p>
-          Unless you magically find someone who wants what you have and has what you need, you're stuck staring at your pile of… whatever.
-        </p>
-        <p>
-          This is called the double coincidence of wants... basically, the universe's least efficient matchmaking system.
-        </p>
-        <p>
-          It's like a dating app, but for bartering:<br/>
-          You have shoes.<br/>
-          You need bread.<br/>
-          You swipe through a sea of people until... boom! Someone finally wants shoes and has sourdough. Good luck with that.
-        </p>
-        <p>
-          Without money:
-        </p>
-        <ul>
-          <li>Trading is painfully slow</li>
-          <li>Saving is a gamble (potatoes don't age well)</li>
-          <li>And everyone argues over whether a cow is worth three goats or just a sincere thank-you note</li>
-        </ul>
-        <p>
-          Eventually, humanity got tired of playing this awkward game of economic Tinder.
-        </p>
-        <p>
-          Enter: <AnimatedIcon type="money" className="bounce" />
-        </p>
-        <p>
-          Some brilliant (or just really frustrated) soul finally said,<br/>
-          "What if we just agree on something we can all trade for everything else?"
-        </p>
-        <p>
-          And poof... money was born.<br/>
-          A tool to grease the wheels of trade, save value for later, and make deals without needing a PhD in goat valuation.
-        </p>
-        <p>
-          But as you experienced in that banking demo, even money can develop problems over time.
-        </p>
-        <p>
-          Let's start with the basics: What exactly did money solve in the first place?
-        </p>
+        <div className="problem-breakdown">
+          <h3>🤔 Why Bartering Was a Nightmare</h3>
+          <div className="problems-grid">
+            <div className="problem-card">
+              <h4>⏰ Time Problem</h4>
+              <p>Finding someone who wants what you have AND has what you want could take days, weeks, or never happen.</p>
+            </div>
+            <div className="problem-card">
+              <h4>🗳️ Value Problem</h4>
+              <p>Is a cow worth 3 goats? 5 chickens? Who decides? Arguments everywhere.</p>
+            </div>
+            <div className="problem-card">
+              <h4>🍎 Storage Problem</h4>
+              <p>Can't save potatoes for next year - they rot. Can't store your wealth over time.</p>
+            </div>
+            <div className="problem-card">
+              <h4>📍 Location Problem</h4>
+              <p>Your trading partner might be in the next village, 50 miles away. Good luck with that.</p>
+            </div>
+          </div>
+        </div>
 
-        <button onClick={onComplete} className="continue-button">
-          Continue
+        <div className="solution-reveal">
+          <h3>💡 The Breakthrough Moment</h3>
+          <p>Some genius finally said: <em>"What if we all just agree on ONE thing that everyone will accept for everything else?"</em></p>
+          <p>And poof... <strong>money was born</strong>.</p>
+          <p>Not by governments. Not by banks. By frustrated humans who were tired of trading goats for shoes.</p>
+        </div>
+
+        <div className="transition-hook">
+          <p className="prime-text">But here's what's fascinating: the problems money was invented to solve? They're back. In our modern banking system.</p>
+          <p>Let's see exactly what money was supposed to fix...</p>
+        </div>
+
+        <button onClick={() => onComplete(1)} className="continue-button">
+          Show Me What Money Fixes
         </button>
       </div>
     </div>
@@ -193,58 +283,66 @@ const CarlosFlowerExport = ({ onComplete }) => {
 const WhatsWrong = ({ onComplete }) => {
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [unlockedFunctions, setUnlockedFunctions] = useState([]);
 
   const scenarios = [
     {
       id: 'q1',
-      title: "The Sandwich Stand-Off",
+      title: "🍞 The Sandwich Stand-Off",
       description: "You're a hungry web designer. You offer the baker a free website in exchange for a sandwich. He says, 'I need a plumber, not a homepage.'",
       question: "What's stopping this trade from happening? What could solve it?",
       options: [
-        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
-        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
-        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+        { value: 'A', label: 'Money as a Medium of Exchange - Everyone accepts it, making trades smooth' },
+        { value: 'B', label: 'Money as a Store of Value - Save your wealth over time' },
+        { value: 'C', label: 'Money as a Unit of Account - Common way to measure value' }
       ],
       feedback: {
-        A: "✅ Correct! You need a smoother way to trade, not a direct swap.",
+        A: "🎉 Correct! You need a smoother way to trade. Money lets you convert your skills into something everyone accepts.",
         B: "You're not trying to save food for later—you're just trying to make a trade now.",
         C: "You know the sandwich is valuable—you just can't exchange your skills for it."
       },
-      correctAnswer: 'A'
+      correctAnswer: 'A',
+      moneyFunction: 'Medium of Exchange',
+      explanation: "Money solves the 'double coincidence of wants' by being universally accepted."
     },
     {
       id: 'q2',
-      title: "The Rotten Paycheck",
+      title: "🥔 The Rotten Paycheck",
       description: "You grew potatoes to pay your carpenter next month. But by then, they've all rotted or turned into weird sprouts.",
       question: "Why didn't your payment plan work? What could help preserve your effort over time?",
       options: [
-        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
-        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
-        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+        { value: 'A', label: 'Money as a Medium of Exchange - Everyone accepts it, making trades smooth' },
+        { value: 'B', label: 'Money as a Store of Value - Save your wealth over time' },
+        { value: 'C', label: 'Money as a Unit of Account - Common way to measure value' }
       ],
       feedback: {
         A: "You weren't trying to trade right away. The issue was storing value for later.",
-        B: "✅ Correct! The problem is that your savings (potatoes) didn't last.",
+        B: "🎉 Correct! Good money doesn't rot, rust, or spoil. It preserves your wealth over time.",
         C: "You knew what the potatoes were worth—they just didn't last."
       },
-      correctAnswer: 'B'
+      correctAnswer: 'B',
+      moneyFunction: 'Store of Value',
+      explanation: "Money must hold its value over time, unlike perishable goods."
     },
     {
       id: 'q3',
-      title: "The Bread-for-Hat Deal",
+      title: "🎩 The Bread-for-Hat Deal",
       description: "Someone offers five loaves of bread for your hat. Is that a fair deal? Too much? Not enough? Nobody knows.",
       question: "What's missing to help you both agree on whether this is a fair exchange?",
       options: [
-        { value: 'A', label: 'Money gives people an easier way to trade what they have for what they want.' },
-        { value: 'B', label: 'Money makes it possible to save your value for the future.' },
-        { value: 'C', label: 'Money gives us a common way to measure how much things are worth.' }
+        { value: 'A', label: 'Money as a Medium of Exchange - Everyone accepts it, making trades smooth' },
+        { value: 'B', label: 'Money as a Store of Value - Save your wealth over time' },
+        { value: 'C', label: 'Money as a Unit of Account - Common way to measure value' }
       ],
       feedback: {
         A: "You *can* trade—the issue is figuring out if it's a good trade.",
         B: "You're not trying to store anything—you just want to know what it's worth.",
-        C: "✅ Correct! You need a clear way to measure value."
+        C: "🎉 Correct! Money gives us a standard ruler for measuring value, like inches for distance."
       },
-      correctAnswer: 'C'
+      correctAnswer: 'C',
+      moneyFunction: 'Unit of Account',
+      explanation: "Money provides a common measuring stick for comparing the value of different things."
     }
   ];
 
@@ -260,12 +358,17 @@ const WhatsWrong = ({ onComplete }) => {
       [questionId]: scenario.feedback[value]
     }));
 
-    const allAnswers = { ...answers, [questionId]: value };
-    const allCorrect = scenarios.every(s => allAnswers[s.id] === s.correctAnswer);
-    
-    if (allCorrect) {
+    if (value === scenario.correctAnswer) {
+      setUnlockedFunctions(prev => [...prev, scenario.moneyFunction]);
+      
+      // Move to next scenario after a delay
       setTimeout(() => {
-        onComplete();
+        if (currentScenario < scenarios.length - 1) {
+          setCurrentScenario(currentScenario + 1);
+        } else {
+          // All completed
+          setTimeout(() => onComplete(2), 1500);
+        }
       }, 2000);
     }
   };
@@ -273,45 +376,78 @@ const WhatsWrong = ({ onComplete }) => {
   return (
     <div className="step-content whats-wrong-step">
       <div className="module-header-box">
-        <h2>Fix this Trade</h2>
+        <h2>Money's Three Superpowers</h2>
         <div className="intro-text">
-          <p>
-            Each of these scenarios shows how messy life was before money.<br/>
-            Your challenge? Figure out what role money would've played to fix the problem.
-          </p>
+          <p className="prime-text">These scenarios reveal why money had to be invented. Each one shows a different superpower money gives us.</p>
+          <p>Can you figure out which superpower each scenario needs?</p>
         </div>
       </div>
 
-      <div className="scenarios-list">
-        {scenarios.map(scenario => (
-          <div key={scenario.id} className="scenario-item">
+      <div className="functions-tracker">
+        <h3>Money Functions Unlocked:</h3>
+        <div className="functions-grid">
+          {['Medium of Exchange', 'Store of Value', 'Unit of Account'].map(func => (
+            <div key={func} className={`function-badge ${unlockedFunctions.includes(func) ? 'unlocked' : 'locked'}`}>
+              {unlockedFunctions.includes(func) ? '✅' : '🔒'} {func}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="scenario-container">
+        {scenarios.map((scenario, index) => (
+          <div 
+            key={scenario.id} 
+            className={`scenario-item ${index === currentScenario ? 'active' : ''} ${index < currentScenario ? 'completed' : ''} ${index > currentScenario ? 'locked' : ''}`}
+          >
             <div className="scenario-header">
               <h3>{scenario.title}</h3>
               <p className="scenario-description">{scenario.description}</p>
-                              <p className="scenario-question">{scenario.question}</p>
+              <p className="scenario-question"><strong>{scenario.question}</strong></p>
             </div>
-            <div className="options-grid">
-              {scenario.options.map(option => (
-                <label key={option.value} className="option-label">
-                  <input
-                    type="radio"
-                    name={scenario.id}
-                    value={option.value}
-                    checked={answers[scenario.id] === option.value}
-                    onChange={() => handleAnswer(scenario.id, option.value)}
-                  />
-                  <span className="option-text">{option.label}</span>
-                </label>
-              ))}
-            </div>
+            
+            {index === currentScenario && (
+              <div className="options-grid">
+                {scenario.options.map(option => (
+                  <button
+                    key={option.value}
+                    className={`option-button ${answers[scenario.id] === option.value ? 'selected' : ''}`}
+                    onClick={() => handleAnswer(scenario.id, option.value)}
+                    disabled={!!feedback[scenario.id]}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+            
             {feedback[scenario.id] && (
-              <p className={`feedback ${feedback[scenario.id].includes('✅') ? 'correct' : 'incorrect'}`}>
-                {feedback[scenario.id]}
-              </p>
+              <div className={`feedback ${feedback[scenario.id].includes('🎉') ? 'correct' : 'incorrect'}`}>
+                <p>{feedback[scenario.id]}</p>
+                {feedback[scenario.id].includes('🎉') && (
+                  <div className="function-explanation">
+                    <h4>💡 Function Unlocked: {scenario.moneyFunction}</h4>
+                    <p>{scenario.explanation}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {index < currentScenario && (
+              <div className="completed-indicator">
+                <p>✅ Completed: {scenario.moneyFunction}</p>
+              </div>
             )}
           </div>
         ))}
       </div>
+
+      {unlockedFunctions.length === 3 && (
+        <div className="completion-section">
+          <h3>🎉 You've Discovered Money's Three Superpowers!</h3>
+          <p>Now you understand why money was such a revolutionary invention. But wait until you see what happened next...</p>
+        </div>
+      )}
     </div>
   );
 };
@@ -322,6 +458,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [score, setScore] = useState(0);
 
   const questions = [
     {
@@ -487,6 +624,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     setShowFeedback(true);
     if (answerIndex === questions[currentQuestion].answer) {
       onUnlockTrait(questions[currentQuestion].trait);
+      setScore(score + 1);
     }
   };
 
@@ -506,20 +644,25 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     return (
       <div className="step-content quiz-step">
         <div className="module-header-box">
-          <h2>The Perpetual Patch</h2>
+          <h2>When Good Money Goes Bad</h2>
           <div className="intro-text">
-            <p>So now we know:</p>
-            <p>🧩 Money makes trade easier.<br/>
-            🧩 Money lets you save value over time.<br/>
-            🧩 Money gives us a shared way to measure things.</p>
-            <p>But…<br/>
-            Does the money we use today actually do all that?</p>
-            <p>Let's fast-forward to find out with a snapshot of money's greatest fails.</p>
+            <p className="prime-text">You now understand money's three superpowers. But here's the plot twist: modern money has lost most of these powers.</p>
+            <p>So what happened? Let's examine the evidence through history's greatest money failures.</p>
+            <div className="quiz-preview">
+              <h3>🔍 What You'll Discover:</h3>
+              <ul>
+                <li>Why every government currency eventually fails</li>
+                <li>How inflation silently steals your savings</li>
+                <li>Why banks can freeze "your" money</li>
+                <li>What traits make money truly sound</li>
+              </ul>
+            </div>
+            <p><strong>Ready to become a money detective?</strong></p>
           </div>
         </div>
         <div className="quiz-content">
           <button onClick={() => setShowIntro(false)} className="continue-button">
-            Start Quiz ({questions.length} questions)
+            Start Investigation ({questions.length} cases)
           </button>
         </div>
       </div>
@@ -529,17 +672,21 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   return (
     <div className="step-content quiz-step">
       <div className="module-header-box">
-        <h2>Question {currentQuestion + 1} of {questions.length}</h2>
+        <h2>🔍 Case {currentQuestion + 1} of {questions.length}</h2>
+        <div className="quiz-score">
+          Score: {score}/{currentQuestion + (showFeedback ? 1 : 0)} • {Math.round((score / questions.length) * 100)}% Sound Money Detective
+        </div>
       </div>
       
       <div className="quiz-content">
         <div className="history-snapshot">
-          <h3>History Snapshot:</h3>
+          <h3>💰 Historical Evidence:</h3>
           <p>{currentQ.text}</p>
-            </div>
+        </div>
 
         <div className="question-section">
-          <h3>{currentQ.question}</h3>
+          <h3>🤔 Your Analysis:</h3>
+          <p className="question-text">{currentQ.question}</p>
           <div className="options">
             {currentQ.options.map((option, index) => (
             <button 
@@ -557,28 +704,40 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         {showFeedback && (
           <div className={`feedback-section ${selectedAnswer === currentQ.answer ? 'correct' : 'incorrect'}`}>
             <p className="feedback-result">
-              {selectedAnswer === currentQ.answer ? '✅ Correct!' : '❌ Not quite right.'}
+              {selectedAnswer === currentQ.answer ? '🎯 Excellent Detective Work!' : '🔍 Not quite right, but keep investigating!'}
             </p>
-            <p className="takeaway">{currentQ.takeaway}</p>
+            <div className="takeaway-box">
+              <h4>💡 Key Insight:</h4>
+              <p>{currentQ.takeaway}</p>
+            </div>
             {selectedAnswer === currentQ.answer && (
-              <p className="trait-unlock">Trait Unlocked: {currentQ.trait}</p>
+              <div className="trait-unlock-box">
+                <h4>🏆 Sound Money Trait Discovered:</h4>
+                <p><strong>{currentQ.trait}</strong></p>
+              </div>
             )}
             {selectedAnswer !== currentQ.answer && (
-              <p className="try-again-hint">The correct answer was: "{currentQ.options[currentQ.answer]}"</p>
+              <div className="correct-answer-box">
+                <h4>📚 The Answer:</h4>
+                <p>"{currentQ.options[currentQ.answer]}"</p>
+              </div>
             )}
             <button onClick={handleNext} className="next-button">
-              {currentQuestion < questions.length - 1 ? 'Next Question' : 'Complete Quiz'}
+              {currentQuestion < questions.length - 1 ? 'Next Case →' : 'Complete Investigation'}
             </button>
           </div>
         )}
 
-        <div className="progress-dots">
-          {questions.map((_, index) => (
-            <span
-              key={index}
-              className={`dot ${index === currentQuestion ? 'active' : ''} ${index < currentQuestion ? 'completed' : ''}`}
-            />
-          ))}
+        <div className="progress-indicator">
+          <div className="progress-dots">
+            {questions.map((_, index) => (
+              <span
+                key={index}
+                className={`dot ${index === currentQuestion ? 'active' : ''} ${index < currentQuestion ? 'completed' : ''}`}
+              />
+            ))}
+          </div>
+          <p className="progress-text">Case {currentQuestion + 1} of {questions.length}</p>
         </div>
       </div>
     </div>
@@ -587,39 +746,89 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
 // Component for the Traits Scorecard
 const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
+  const [showComparison, setShowComparison] = useState(false);
+  
   const allTraits = [
-    { name: "Scarcity", icon: "scarcity", description: "Hard to reproduce" },
-    { name: "Durability", icon: "durability", description: "Doesn't rot or degrade" },
-    { name: "Portability", icon: "portability", description: "Easy to move and transfer" },
-    { name: "Store of Value", icon: "storeOfValue", description: "Holds value over time" },
-    { name: "Fungibility", icon: "fungibility", description: "Each unit is equal and interchangeable" },
-    { name: "Ledger Consensus", icon: "consensus", description: "Shared agreement on ownership" },
-    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Can't be frozen or blocked" },
-    { name: "Borderless", icon: "borderless", description: "Moves freely across borders" },
-    { name: "Divisibility", icon: "divisibility", description: "Can be split into smaller units" }
+    { name: "Scarcity", icon: "scarcity", description: "Hard to reproduce", modernFail: "Central banks print unlimited money" },
+    { name: "Durability", icon: "durability", description: "Doesn't rot or degrade", modernFail: "Digital records can be deleted or hacked" },
+    { name: "Portability", icon: "portability", description: "Easy to move and transfer", modernFail: "International transfers take days and cost fees" },
+    { name: "Store of Value", icon: "storeOfValue", description: "Holds value over time", modernFail: "Inflation erodes purchasing power" },
+    { name: "Fungibility", icon: "fungibility", description: "Each unit is equal and interchangeable", modernFail: "Bills can be tracked, marked, or blacklisted" },
+    { name: "Ledger Consensus", icon: "consensus", description: "Shared agreement on ownership", modernFail: "Banks control the ledger unilaterally" },
+    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Can't be frozen or blocked", modernFail: "Accounts can be frozen by authorities" },
+    { name: "Borderless", icon: "borderless", description: "Moves freely across borders", modernFail: "Capital controls restrict movement" },
+    { name: "Divisibility", icon: "divisibility", description: "Can be split into smaller units", modernFail: "Limited by smallest denomination" }
   ];
 
-        return (
+  const unlockedCount = unlockedTraits.filter(trait => allTraits.some(t => t.name === trait)).length;
+  const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
+
+  return (
     <div className="step-content scorecard-step">
       <div className="module-header-box">
-        <h2>The Traits That Matter</h2>
+        <h2>The Sound Money Blueprint</h2>
         <div className="intro-text">
-          <p>Every one of these traits solves a specific failure of past money. Bitcoin, as you will learn, is the first to combine them all in one global, digital system.</p>
+          <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. But here's the shocking truth: modern money fails at most of these.</p>
+          <div className="scorecard-summary">
+            <h3>Your Discovery Progress</h3>
+            <div className="progress-circle">
+              <span className="score">{unlockedCount}/{allTraits.length}</span>
+              <span className="percentage">{completionPercentage}% Complete</span>
+            </div>
+          </div>
         </div>
       </div>
       
-      <div className="traits-list">
-        {allTraits.map(trait => (
-          <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : ''}`}>
-            <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✓' : '○'}</span>
-            <AnimatedIcon type={trait.icon} className={unlockedTraits.includes(trait.name) ? 'unlocked' : ''} />
-            <span className="trait-name"><strong>{trait.name}</strong></span>
-            <span className="trait-description">{trait.description}</span>
-          </div>
-        ))}
+      <div className="traits-comparison">
+        <div className="comparison-header">
+          <button 
+            className={`view-toggle ${!showComparison ? 'active' : ''}`}
+            onClick={() => setShowComparison(false)}
+          >
+            Sound Money Traits
+          </button>
+          <button 
+            className={`view-toggle ${showComparison ? 'active' : ''}`}
+            onClick={() => setShowComparison(true)}
+          >
+            How Modern Money Fails
+          </button>
+        </div>
+
+        <div className="traits-list">
+          {allTraits.map(trait => (
+            <div key={trait.name} className={`trait-item ${unlockedTraits.includes(trait.name) ? 'unlocked' : 'locked'}`}>
+              <span className="check-icon">{unlockedTraits.includes(trait.name) ? '✅' : '🔒'}</span>
+              <div className="trait-content">
+                <div className="trait-header">
+                  <span className="trait-name"><strong>{trait.name}</strong></span>
+                  {unlockedTraits.includes(trait.name) && <span className="discovered-badge">Discovered!</span>}
+                </div>
+                <div className="trait-details">
+                  {!showComparison ? (
+                    <span className="trait-description">{trait.description}</span>
+                  ) : (
+                    <span className="trait-failure">❌ {trait.modernFail}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="bitcoin-teaser">
+          <h3>🔮 Coming Next...</h3>
+          <p>Now that you understand what makes money truly sound, you're ready to learn about the first technology that combines ALL these traits in one global system.</p>
+          <p><strong>Spoiler alert:</strong> It's called Bitcoin, and it's going to challenge everything you thought you knew about money.</p>
+        </div>
+
+        <button 
+          className="continue-button"
+          onClick={() => onComplete(5)}
+        >
+          Ready for the Solution
+        </button>
       </div>
-
-
     </div>
   );
 };
@@ -680,16 +889,56 @@ const BadgeModal = ({ isOpen, onClose }) => {
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(new Set());
   const [unlockedTraits, setUnlockedTraits] = useState([]);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
 
-  const handleStepComplete = () => {
-    if (currentStep === 6) {  // Now 7 steps (0-6)
+  const handleStepComplete = (stepIndex) => {
+    setCompletedSteps(prev => new Set(prev).add(stepIndex));
+    
+    // Show achievement for key milestones
+    if (stepIndex === 1) {
+      showAchievement("Trade Explorer", "You understand why humans needed to invent money!");
+    } else if (stepIndex === 3) {
+      showAchievement("Money Detective", "You've uncovered the flaws in traditional money systems!");
+    } else if (stepIndex === 5) {
+      showAchievement("Sound Money Scholar", "You know what makes money truly sound!");
+    }
+    
+    if (stepIndex === 6) {  // Final step
       completeModule('money');
       setShowBadgeModal(true);
+      showAchievement("Money Master", "You've mastered the fundamentals of sound money!");
     } else {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(stepIndex + 1);
     }
+  };
+
+  const showAchievement = (title, description) => {
+    // Achievement notification system
+    const achievement = document.createElement('div');
+    achievement.className = 'achievement-popup';
+    achievement.innerHTML = `
+      <div class="achievement-content">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+          <h4>${title}</h4>
+          <p>${description}</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(achievement);
+    
+    setTimeout(() => {
+      achievement.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(achievement);
+      }, 300);
+    }, 3000);
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
   };
 
   const handleUnlockTrait = (trait) => {
@@ -723,23 +972,27 @@ const MoneyModule = () => {
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(currentStep / 7) * 100}%` }}
+            style={{ width: `${(completedSteps.size / 7) * 100}%` }}
           />
         </div>
         <span className="progress-text">
-          {currentStep} / 7 steps completed
+          {completedSteps.size} / 7 steps completed
         </span>
       </div>
 
+      {/* Horizontal Tab Navigation */}
       <div className="top-navigation">
-        {['The Origin Story', 'Barter World', 'Fix this Trade', 'The Perpetual Patch', 'Carlos\'s Flower Export', 'Traits Scorecard', 'Deep Dive'].map((step, index) => (
+        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Superpowers', 'When Money Goes Wrong', 'Real-World Impact', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
           <button
             key={index}
-            className={`top-nav-button ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
-            onClick={() => setCurrentStep(index)}
+            className={`top-nav-button ${
+              index === currentStep ? 'active' : ''
+            } ${completedSteps.has(index) ? 'completed' : ''}`}
+            onClick={() => handleTabClick(index)}
           >
-            {index < currentStep && <CheckCircle size={14} />}
-            <span className="nav-text">{step}</span>
+            <span className="nav-text">
+              {index + 1}. {step.length > 20 ? `${step.substring(0, 17)}...` : step}
+            </span>
           </button>
         ))}
       </div>

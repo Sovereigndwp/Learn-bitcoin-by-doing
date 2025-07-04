@@ -1,5 +1,83 @@
 /* Money Module Specific Styles */
 
+/* Achievement Popup Styles */
+.achievement-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(247, 147, 26, 0.3);
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+  max-width: 300px;
+}
+
+.achievement-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+}
+
+.achievement-text h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.achievement-text p {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Prime Text Callouts */
+.prime-text {
+  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  border: 2px solid #f7931a;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  font-weight: 600;
+  color: #333;
+  position: relative;
+}
+
+.prime-text::before {
+  content: "💡";
+  position: absolute;
+  top: -8px;
+  left: 16px;
+  background: white;
+  padding: 0 8px;
+  font-size: 1.2rem;
+}
+
+/* Reflection Prompts */
+.reflection-prompt {
+  background: #f8f9fa;
+  border-left: 4px solid #f7931a;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.thinking-space {
+  background: white;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #666;
+}
+
 /* Transitional Intro Section */
 .transitional-intro .content-text {
   text-align: left;
@@ -917,6 +995,360 @@
     font-size: 0.7rem;
     line-height: 1.2;
   }
+}
+
+/* Barter Game Styles */
+.barter-game {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.your-situation {
+  background: white;
+  border: 2px solid #f7931a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.your-situation h3 {
+  color: #f7931a;
+  margin-bottom: 1rem;
+}
+
+.traders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.trader-card {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.trader-card:hover {
+  border-color: #f7931a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.trader-card.selected {
+  border-color: #f7931a;
+  background: #fff3e6;
+}
+
+.trader-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.trade-result {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.success-section, .failure-section {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.success-section {
+  border: 2px solid #28a745;
+}
+
+.failure-section {
+  border: 2px solid #dc3545;
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.problem-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.problem-card h4 {
+  color: #f7931a;
+  margin-bottom: 1rem;
+}
+
+.solution-reveal {
+  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.transition-hook {
+  background: #f8f9fa;
+  border-left: 4px solid #f7931a;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Functions Tracker Styles */
+.functions-tracker {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.functions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.function-badge {
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.function-badge.unlocked {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  transform: scale(1.05);
+}
+
+.function-badge.locked {
+  background: #e9ecef;
+  color: #6c757d;
+}
+
+.scenario-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.scenario-item {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.scenario-item.active {
+  border-color: #f7931a;
+  background: #fff3e6;
+}
+
+.scenario-item.completed {
+  border-color: #28a745;
+  background: #f8fff9;
+}
+
+.scenario-item.locked {
+  opacity: 0.5;
+  background: #f8f9fa;
+}
+
+.function-explanation {
+  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.completed-indicator {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  text-align: center;
+  color: #155724;
+}
+
+.completion-section {
+  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  border: 2px solid #f7931a;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+/* Enhanced Quiz Styles */
+.quiz-preview {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.quiz-preview ul {
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.quiz-score {
+  background: #f8f9fa;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: #f7931a;
+  margin-top: 0.5rem;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.takeaway-box, .trait-unlock-box, .correct-answer-box {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.takeaway-box {
+  border-left: 4px solid #17a2b8;
+}
+
+.trait-unlock-box {
+  border-left: 4px solid #28a745;
+  background: #f8fff9;
+}
+
+.correct-answer-box {
+  border-left: 4px solid #6c757d;
+  background: #f8f9fa;
+}
+
+.progress-indicator {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.progress-text {
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Enhanced Scorecard Styles */
+.scorecard-summary {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.progress-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.progress-circle .score {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f7931a;
+}
+
+.progress-circle .percentage {
+  font-size: 1rem;
+  color: #666;
+}
+
+.traits-comparison {
+  margin: 2rem 0;
+}
+
+.comparison-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.view-toggle {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-toggle.active {
+  background: #f7931a;
+  color: white;
+  border-color: #f7931a;
+}
+
+.trait-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trait-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.discovered-badge {
+  background: #28a745;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.trait-failure {
+  color: #dc3545;
+  font-style: italic;
+}
+
+.bitcoin-teaser {
+  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  border: 2px solid #f7931a;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
 }
 
 /* Override old sidebar navigation styles */

@@ -23,7 +23,7 @@ export const moduleRegistry = {
   },
   'bitcoin-basics': {
     id: 'bitcoin-basics',
-    title: 'Bitcoin Basics',
+    title: 'Bitcoin 101, But Actually Useful',
     description: 'Learn the fundamental concepts of Bitcoin.',
     component: BitcoinBasicsModule,
     order: 2,

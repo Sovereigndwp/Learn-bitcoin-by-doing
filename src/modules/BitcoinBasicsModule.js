@@ -15,7 +15,40 @@ const BitcoinBasicsModule = () => {
     if (index === steps.length - 1) {
       completeModule('bitcoin-basics');
     }
+    
+    // Show achievement for key milestones
+    if (index === 2) {
+      showAchievement("First Bitcoin Experience", "You've seen the difference firsthand!");
+    } else if (index === 4) {
+      showAchievement("Security Expert", "You understand how Bitcoin prevents fraud!");
+    } else if (index === 6) {
+      showAchievement("Decentralization Master", "You grasp the power of distributed systems!");
+    }
+    
     setCurrentStep(index + 1);
+  };
+
+  const showAchievement = (title, description) => {
+    // Simple achievement notification - can be enhanced later
+    const achievement = document.createElement('div');
+    achievement.className = 'achievement-popup';
+    achievement.innerHTML = `
+      <div class="achievement-content">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+          <h4>${title}</h4>
+          <p>${description}</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(achievement);
+    
+    setTimeout(() => {
+      achievement.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(achievement);
+      }, 300);
+    }, 3000);
   };
 
   const handleTabClick = (stepIndex) => {
@@ -24,54 +57,58 @@ const BitcoinBasicsModule = () => {
 
   const steps = [
     {
-      title: "What Would Better Money Look Like?",
+      title: "What's Broken Isn't Money, It's Who Controls It",
       type: "reflection",
       content: {
-        title: "What Would Better Money Look Like?",
+        title: "What's Broken Isn't Money, It's Who Controls It",
         intro: "If money today can be frozen, inflated, or blocked...",
         questions: [
-          "Then maybe the problem isn't money itself—it's who controls it."
+          "Maybe the problem isn't money itself.",
+          "Maybe it's HOW it's controlled, and WHO controls it."
         ],
-        mainQuestion: "So ask yourself:",
+        mainQuestion: "What if money was truly yours?",
         socratics: [
           "What if no one could stop you from using your money?",
           "What if no one could secretly create more of it?",
           "What if you didn't need permission to spend, save, or send it?",
           "What if money could work equally for anyone, anywhere?"
         ],
-        conclusion: "These questions led to one of the most important innovations of the 21st century. Let's explore what it is, how it works, and why it matters."
+        conclusion: "These aren't just questions. They're the foundation of one of the most important innovations of the 21st century. Let's explore how it works and why it matters for your freedom."
       }
     },
 
     {
-      title: "So, What Is Bitcoin?",
+      title: "Bitcoin is Money Without Permission",
       type: "intro",
       content: {
-        title: "So, What Is Bitcoin?",
-        text: "Bitcoin isn't just digital money.\n\nIt's a radical redesign of money itself—built to solve the very problems traditional money can't.\n\nIt removes the need to trust banks or governments.\nIt can't be inflated, blocked, or seized.\nIt works globally, 24/7, without permission.\n\nHow? It combines cryptography, computer science, and game theory into something entirely new: a decentralized digital currency that runs on rules, not rulers."
+        title: "Bitcoin is Money Without Permission",
+        subtitle: "Not just digital. Not just fast.",
+        text: "Bitcoin is a system that doesn't ask for permission to exist.\n\nAnd it doesn't give permission lightly either.\n\nIt's money that runs on rules, not rulers.\nMoney that can't be inflated, blocked, or seized.\nMoney that works globally, 24/7, for anyone.\n\nThis isn't just better money. It's a tool for freedom.\n\nBut how does it actually work? Let's see for yourself."
       }
     },
     {
-      title: "Is it really that simple?",
+      title: "Experience the Difference: Try Sending $10",
       type: "simulator",
       content: {
-        scenario: "Experience the difference: sending $10 to a sister in Colombia.",
-        instruction: "Click the buttons below to see how each system works:",
-        question: "Which would you choose?",
+        scenario: "Choose: traditional banking or Bitcoin. Same goal. Very different outcomes.",
+        instruction: "Send $10 to your sister in Colombia and see what happens:",
+        primeText: "You're about to see why millions of people are choosing Bitcoin over banks.",
+        question: "After seeing both options, which would you choose?",
         options: [
-          "Stick with the bank. I like surprises and delays",
-          "₿ Explore more about Bitcoin... this feels like real freedom"
+          "🏦 Traditional banking - I enjoy paying fees and waiting days",
+          "₿ Bitcoin - This feels like actual freedom"
         ],
         correctAnswer: 1,
-        explanation: "This is why Bitcoin doesn't just tweak the system, it replaces it entirely."
+        explanation: "You just experienced why Bitcoin doesn't just improve the system — it replaces it entirely. No intermediaries. No permissions. No borders."
       }
     },
     {
-      title: "Carlos's Export: Traditional vs Bitcoin",
+      title: "Carlos Tries to Export Value",
       type: "comparison",
       content: {
-        title: "Carlos's Export: Traditional vs Bitcoin",
-        intro: "Remember Carlos exporting roses from Colombia to Japan? Let's see how his experience changes with Bitcoin versus traditional banking.",
+        title: "Carlos Tries to Export Value",
+        intro: "Carlos grows roses in Colombia and wants to sell them to Japan. But can he actually move his wealth out of a failing economic system? Let's see what tools he has.",
+        primeText: "This isn't just about Carlos — it's about anyone trying to preserve and transfer value across borders.",
         comparison: {
           traditional: {
             title: " Traditional Banking Route",
@@ -101,11 +138,12 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "What If Hiroshi Tried to Be Sneaky?",
+      title: "Can You Trick the System?",
       type: "double-spend-game",
       content: {
-        title: "🌸 What If Hiroshi Tried to Be Sneaky?",
-        subtitle: "Remember our flower trader? Let's see what happens if he tries to cheat the system.",
+        title: "🕵️ Can You Trick the System?",
+        subtitle: "See if you can pull off a double spend. What does the system do?",
+        primeText: "Every digital money system faces this challenge: how do you prevent someone from spending the same money twice?",
         scenario: "Hiroshi's digital wallet has $430. He owes Carlos $430 for roses, but he also wants to keep that money for himself.",
         instruction: "What if Hiroshi opens his wallet app on his phone AND his computer at the same time? Click both buttons quickly:",
         buttons: ["📱 Phone: Send $430 to Carlos (for roses)", "💻 Computer: Send $430 to himself (to keep it)"],
@@ -123,10 +161,11 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "How Does Everyone Agree on the Truth?",
+      title: "How Does the System Know What's True?",
       type: "consensus-game",
       content: {
-        title: "How Does Everyone Agree on the Truth?",
+        title: "🤝 How Does the System Know What's True?",
+        primeText: "Without a bank to decide what's real, how does everyone agree on the truth?",
         scenario: "After Hiroshi's sneaky attempt, three different people saw different things happen. Carlos, Hiroshi's wife, and a flower shop witness all have different stories.",
         instruction: "Which version of events should everyone believe? Click on what you think is the truth:",
         ledgers: [
@@ -157,7 +196,8 @@ const BitcoinBasicsModule = () => {
       title: "The Power of Decentralization",
       type: "interactive",
       content: {
-        scenario: "What happens when one central authority controls the money system?",
+        primeText: "Hiroshi couldn't cheat. Carlos could move money. And no one had to ask permission. That's the power of decentralization — and it's not just a tech buzzword.",
+        scenario: "What happens when one central authority controls the money system versus when thousands of people share control?",
         simulation: {
           setup: "Let's simulate a few scenarios:",
           scenarios: [
@@ -183,16 +223,39 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "Digital Scarcity",
+      title: "Why Bitcoin Can't Be Copied",
       type: "discovery",
       content: {
+        title: "🧬 Why Bitcoin Can't Be Copied",
+        primeText: "Try to copy this Bitcoin. Go ahead. Try.",
         scenario: "Before Bitcoin, anything digital could be copied endlessly—music, photos, PDFs, you name it.\n\nBut money doesn't work if everyone can make their own version.\n\nBitcoin solved this by creating the first digitally scarce asset:\n\nA public ledger anyone can verify\nProof-of-work that makes cheating expensive\nA fixed supply that no one can change",
-        reflection: "How does this change what's possible with digital technology?",
+        reflection: "If this is what Bitcoin is... what else can it fix?",
         insights: [
           "Now, we can have true digital property rights",
-          "Now, we can convert energy into security and trust",
+          "Now, we can convert energy into security and trust", 
           "Now, we have digital gold that anyone can hold"
-        ]
+        ],
+        finalReflection: "We all want to control our own value. Bitcoin is the first tool that makes that possible."
+      }
+    },
+    {
+      title: "Before You Dismiss It",
+      type: "reflection",
+      content: {
+        title: "Before You Dismiss It",
+        intro: "You've seen how Bitcoin works. You've experienced the difference.",
+        questions: [
+          "Maybe you're thinking: 'This sounds too good to be true.'",
+          "Maybe you're wondering: 'What's the catch?'",
+          "Maybe you're asking: 'If it's so great, why isn't everyone using it?'"
+        ],
+        mainQuestion: "These are fair questions. And they deserve honest answers.",
+        socratics: [
+          "What if the 'catch' is simply that it's new and most people don't understand it yet?",
+          "What if the biggest risk isn't using Bitcoin, but missing out on financial freedom?",
+          "What if the early adopters aren't crazy — they're just early?"
+        ],
+        conclusion: "The next modules will address your concerns directly. Because understanding the challenges is just as important as understanding the opportunities."
       }
     }
   ];
@@ -600,6 +663,9 @@ const BitcoinBasicsModule = () => {
               <h2>{step.content.title}</h2>
               <div className="intro-text">
                 <p>{step.content.subtitle}</p>
+                {step.content.primeText && (
+                  <p className="prime-text">{step.content.primeText}</p>
+                )}
                 <p>{step.content.scenario}</p>
                 <p><strong>{step.content.instruction}</strong></p>
               </div>
@@ -617,6 +683,11 @@ const BitcoinBasicsModule = () => {
           <div className="step-content game-step">
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
+              {step.content.primeText && (
+                <div className="intro-text">
+                  <p className="prime-text">{step.content.primeText}</p>
+                </div>
+              )}
             </div>
 
             <ConsensusGame 
@@ -632,8 +703,11 @@ const BitcoinBasicsModule = () => {
             <div className="module-header-box">
               <h2>{step.title}</h2>
               <div className="intro-text">
+                {step.content.primeText && (
+                  <p className="prime-text">{step.content.primeText}</p>
+                )}
                 <p>{step.content.scenario}</p>
-                <p>{step.content.instruction}</p>
+                <p><strong>{step.content.instruction}</strong></p>
               </div>
             </div>
 
@@ -677,6 +751,9 @@ const BitcoinBasicsModule = () => {
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
               <div className="intro-text">
+                {step.content.primeText && (
+                  <p className="prime-text">{step.content.primeText}</p>
+                )}
                 <p>{step.content.intro}</p>
               </div>
               <div className="demo-section">
@@ -787,6 +864,9 @@ const BitcoinBasicsModule = () => {
           <div className="step-content intro-step">
             <div className="module-header-box">
               <h2>{step.content.title}</h2>
+              {step.content.subtitle && (
+                <p className="subtitle">{step.content.subtitle}</p>
+              )}
             </div>
             <div className="content-text">
               <p className="intro-text">{step.content.text}</p>
@@ -794,7 +874,7 @@ const BitcoinBasicsModule = () => {
                 className="continue-button"
                 onClick={() => handleStepComplete(index)}
               >
-                {index === 1 ? 'Continue Learning' : 'Start Learning'}
+                {index === 1 ? 'I Want to See This' : 'Let\'s Explore'}
               </button>
             </div>
           </div>
@@ -806,6 +886,9 @@ const BitcoinBasicsModule = () => {
             <div className="module-header-box">
               <h2>{step.title}</h2>
               <div className="intro-text">
+                {step.content.primeText && (
+                  <p className="prime-text">{step.content.primeText}</p>
+                )}
                 <p>{step.content.scenario}</p>
               </div>
             </div>
@@ -885,7 +968,12 @@ const BitcoinBasicsModule = () => {
         return (
           <div className="step-content discovery-step">
             <div className="module-header-box">
-              <h2>{step.title}</h2>
+              <h2>{step.content.title || step.title}</h2>
+              {step.content.primeText && (
+                <div className="intro-text">
+                  <p className="prime-text">{step.content.primeText}</p>
+                </div>
+              )}
             </div>
 
             <div className="quiz-content">
@@ -932,11 +1020,18 @@ const BitcoinBasicsModule = () => {
                 </div>
               )}
 
+              {step.content.finalReflection && (
+                <div className="final-reflection">
+                  <h3>💡 The Big Picture</h3>
+                  <p>{step.content.finalReflection}</p>
+                </div>
+              )}
+
               <button 
                 className="continue-button"
                 onClick={() => handleStepComplete(index)}
               >
-                I Understand
+                {step.content.finalReflection ? 'Ready for More' : 'I Understand'}
               </button>
             </div>
           </div>
@@ -952,7 +1047,7 @@ const BitcoinBasicsModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Bitcoin className="module-icon" />
-          Bitcoin Basics
+          Bitcoin 101, But Actually Useful
         </h1>
         {completedSteps.size === steps.length && (
           <div className="completion-badge">
