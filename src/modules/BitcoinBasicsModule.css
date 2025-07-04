@@ -767,10 +767,25 @@
   border: 1px solid #f1aeb5;
 }
 
+.conversion-loss {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  color: #856404;
+  font-style: italic;
+}
+
 .bitcoin-result {
   background: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
+}
+
+.btc-conversion {
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  color: #f7931a;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
@@ -789,6 +804,296 @@
   
   .simulator-content {
     min-height: 120px;
+  }
+}
+
+/* Enhanced Double Spend Game Styles */
+.transaction-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.transaction-box {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.carlos-transaction {
+  border-color: #28a745;
+}
+
+.daughter-transaction {
+  border-color: #6f42c1;
+}
+
+.transaction-box h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.transaction-box p {
+  margin: 0;
+  color: #666;
+}
+
+.attempt-section {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.double-spend-btn {
+  background: linear-gradient(45deg, #dc3545, #fd7e14);
+  color: white;
+  border: none;
+  padding: 1.5rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.double-spend-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.hint {
+  margin: 1rem 0 0 0;
+  color: #666;
+  font-style: italic;
+}
+
+.conflict-detected {
+  background: #f8d7da;
+  border: 2px solid #dc3545;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.conflict-detected h3 {
+  color: #721c24;
+  margin-bottom: 1rem;
+}
+
+.voter-section {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.voter-section h4 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.voters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.voter {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.voter-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.voter-status,
+.vote-choice {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.voter.voted.carlos {
+  border-color: #28a745;
+  background: #d4edda;
+}
+
+.voter.voted.daughter {
+  border-color: #6f42c1;
+  background: #e2d9f3;
+}
+
+.voting-options {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.vote-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vote-btn.honest {
+  background: #28a745;
+  color: white;
+}
+
+.vote-btn.honest:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.vote-btn.bribe {
+  background: #dc3545;
+  color: white;
+}
+
+.vote-btn.bribe:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.voting-results {
+  margin: 2rem 0;
+}
+
+.voting-results h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.winner-announcement {
+  background: #d4edda;
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.winner-announcement.carlos {
+  border-color: #28a745;
+  background: #d4edda;
+}
+
+.winner-announcement.daughter {
+  border-color: #6f42c1;
+  background: #e2d9f3;
+}
+
+.winner-announcement h3 {
+  color: #155724;
+  margin-bottom: 1rem;
+}
+
+.bribe-success {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #856404;
+}
+
+.bribe-failed {
+  background: #f8d7da;
+  border: 1px solid #f1aeb5;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #721c24;
+}
+
+.ledger-update {
+  background: white;
+  border: 2px solid #f7931a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.ledger-update h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.ledger-entry {
+  background: #fff5e6;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: #e65100;
+}
+
+.final-question-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.lesson-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.lesson-btn {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.lesson-btn:hover {
+  border-color: #f7931a;
+  background: #fff5e6;
+  transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+  .transaction-preview {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .voters {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .voting-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .double-spend-btn {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
   }
 }
 

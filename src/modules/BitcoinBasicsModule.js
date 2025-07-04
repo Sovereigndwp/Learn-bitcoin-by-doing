@@ -52,14 +52,14 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "Sending Money Across Borders",
+      title: "Is it really that simple?",
       type: "simulator",
       content: {
-        scenario: "Experience the difference: sending $1,000 to a friend in another country.",
+        scenario: "Experience the difference: sending $10 to a sister in Colombia.",
         instruction: "Click the buttons below to see how each system works:",
         question: "Which would you choose?",
         options: [
-          "🏦 Stick with the bank. I like surprises and delays",
+          "Stick with the bank. I like surprises and delays",
           "₿ Explore more about Bitcoin... this feels like real freedom"
         ],
         correctAnswer: 1,
@@ -74,7 +74,7 @@ const BitcoinBasicsModule = () => {
         intro: "Remember Carlos exporting roses from Colombia to Japan? Let's see how his experience changes with Bitcoin versus traditional banking.",
         comparison: {
           traditional: {
-            title: "🏦 Traditional Banking Route",
+            title: " Traditional Banking Route",
             problems: [
               "USD to COP conversion at bank's rates",
               "2-5 business day transfer delays",
@@ -126,7 +126,7 @@ const BitcoinBasicsModule = () => {
       title: "How Does Everyone Agree on the Truth?",
       type: "consensus-game",
       content: {
-        title: "🤝 How Does Everyone Agree on the Truth?",
+        title: "How Does Everyone Agree on the Truth?",
         scenario: "After Hiroshi's sneaky attempt, three different people saw different things happen. Carlos, Hiroshi's wife, and a flower shop witness all have different stories.",
         instruction: "Which version of events should everyone believe? Click on what you think is the truth:",
         ledgers: [
@@ -199,82 +199,176 @@ const BitcoinBasicsModule = () => {
 
   // Double Spend Game Component
   const DoubleSpendGame = ({ content, onComplete }) => {
-    const [aliceSent, setAliceSent] = useState(false);
-    const [bobSent, setBobSent] = useState(false);
-    const [showConflict, setShowConflict] = useState(false);
-    const [showQuiz, setShowQuiz] = useState(false);
+    const [gameStep, setGameStep] = useState(0); // 0: setup, 1: voting, 2: results
+    const [votedFor, setVotedFor] = useState(Array(9).fill(null));
+    const [bribeUsed, setBribeUsed] = useState(false);
+    const [showFinalQuestion, setShowFinalQuestion] = useState(false);
 
-    useEffect(() => {
-      if (aliceSent && bobSent) {
-        setTimeout(() => setShowConflict(true), 1000);
-        setTimeout(() => setShowQuiz(true), 3000);
-      }
-    }, [aliceSent, bobSent]);
+    const voters = ['🧑‍💼', '🧑‍🌾', '🧕', '🧔‍♂️', '👩‍⚕️', '🧑‍🏫', '🧓', '🧑‍🎨', '👨‍🔬'];
 
-         return (
-       <div className="double-spend-game">
-         <div className="wallet-display">
-           <h3>💰 Hiroshi's Digital Wallet</h3>
-           <div className="balance">Balance: $430</div>
-           <div className="context">Payment needed: $430 for Carlos's roses 🌹</div>
-         </div>
+    const attemptDoubleSpend = () => {
+      setTimeout(() => setGameStep(1), 1500);
+    };
 
-         <div className="device-scenario">
-           <div className="scenario-text">
-             <p>Hiroshi gets a sneaky idea: "What if I open my wallet on both devices and try to send the same money twice?"</p>
-           </div>
-         </div>
+    const castVotes = (withBribe = false) => {
+      setBribeUsed(withBribe);
+      const newVotes = voters.map((_, idx) => {
+        if (withBribe && idx < 3) return 'Daughter'; // Bribe worked on first 3
+        return Math.random() > 0.5 ? 'Carlos' : 'Daughter';
+      });
+      setVotedFor(newVotes);
+      setTimeout(() => setGameStep(2), 2000);
+    };
 
-         <div className="transaction-buttons">
-           <button
-             className={`transaction-btn carlos-btn ${aliceSent ? 'sent' : ''}`}
-             onClick={() => setAliceSent(true)}
-             disabled={aliceSent}
-           >
-             {aliceSent ? "✅ Sent to Carlos" : content.buttons[0]}
-           </button>
-           <button
-             className={`transaction-btn self-btn ${bobSent ? 'sent' : ''}`}
-             onClick={() => setBobSent(true)}
-             disabled={bobSent}
-           >
-             {bobSent ? "✅ Sent to Self" : content.buttons[1]}
-           </button>
-         </div>
+    const countVotes = () => {
+      const carlosVotes = votedFor.filter((v) => v === 'Carlos').length;
+      const daughterVotes = votedFor.filter((v) => v === 'Daughter').length;
+      return carlosVotes > daughterVotes ? 'Carlos' : 'Daughter';
+    };
 
-        {(aliceSent || bobSent) && !showConflict && (
-          <div className="processing">
-            <p>⏳ Processing transaction...</p>
+    const winner = gameStep === 2 ? countVotes() : null;
+
+    if (gameStep === 0) {
+      return (
+        <div className="double-spend-game">
+          <div className="wallet-display">
+            <h3>💰 Hiroshi's Digital Wallet</h3>
+            <div className="balance">Balance: $430</div>
+            <div className="context">He needs to pay Carlos $430 for roses 🌹</div>
           </div>
-        )}
 
-        {showConflict && (
-          <div className="conflict-message">
-            <h3>{content.conflictMessage}</h3>
-            <div className="insight-box">
-              <p>💡 {content.insight}</p>
+          <div className="device-scenario">
+            <div className="scenario-text">
+              <p>Hiroshi gets sneaky: "What if I try to spend this money twice? Once to pay Carlos for the roses, and once as a graduation gift to my daughter?"</p>
             </div>
           </div>
-        )}
 
-        {showQuiz && (
-          <div className="quiz-section">
-            <h3>🤔 {content.question}</h3>
-            <div className="options">
-              {content.options.map((option, i) => (
-                <button
-                  key={i}
-                  className="option-button"
-                  onClick={() => onComplete()}
-                >
-                  {option}
-                </button>
+          <div className="transaction-preview">
+            <div className="transaction-box carlos-transaction">
+              <h4>📱 Transaction A</h4>
+              <p>Send $430 to Carlos (for roses)</p>
+            </div>
+            <div className="transaction-box daughter-transaction">
+              <h4>💻 Transaction B</h4>
+              <p>Send $430 to Daughter (graduation gift)</p>
+            </div>
+          </div>
+
+          <div className="attempt-section">
+            <button className="double-spend-btn" onClick={attemptDoubleSpend}>
+              🎯 Try to Send Both Transactions!
+            </button>
+            <p className="hint">Click to see what happens when Hiroshi tries to cheat...</p>
+          </div>
+        </div>
+      );
+    }
+
+    if (gameStep === 1) {
+      return (
+        <div className="double-spend-game">
+          <div className="conflict-detected">
+            <h3>🚨 Network Detects Conflict!</h3>
+            <p>Two transactions trying to spend the same $430! The network must decide which one is valid.</p>
+          </div>
+
+          <div className="voter-section">
+            <h4>🗳️ 9 Network Participants Are Voting:</h4>
+            <div className="voters">
+              {voters.map((voter, idx) => (
+                <div key={idx} className="voter">
+                  <span className="voter-emoji">{voter}</span>
+                  <div className="voter-status">Deciding...</div>
+                </div>
               ))}
             </div>
           </div>
-        )}
-      </div>
-    );
+
+          <div className="voting-options">
+            <button className="vote-btn honest" onClick={() => castVotes(false)}>
+              Let Them Vote Honestly
+            </button>
+            <button className="vote-btn bribe" onClick={() => castVotes(true)}>
+              💰 Try to Bribe 3 Voters (Risky!)
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (gameStep === 2) {
+      return (
+        <div className="double-spend-game">
+          <div className="voting-results">
+            <h3>🗳️ Votes Are In!</h3>
+            <div className="voters">
+              {votedFor.map((vote, idx) => (
+                <div key={idx} className={`voter voted ${vote.toLowerCase()}`}>
+                  <span className="voter-emoji">{voters[idx]}</span>
+                  <div className="vote-choice">Voted: {vote}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="final-result">
+            <div className={`winner-announcement ${winner?.toLowerCase()}`}>
+              <h3>🏆 Network Decision: {winner} Wins!</h3>
+              <p>
+                {winner === 'Carlos' 
+                  ? "The transaction to Carlos (for roses) was accepted. Hiroshi's daughter got nothing."
+                  : "The transaction to Hiroshi's daughter was accepted. Carlos didn't get paid!"}
+              </p>
+            </div>
+
+            {bribeUsed && winner === 'Daughter' && (
+              <div className="bribe-success">
+                <p>💰 Your bribe worked! But now everyone knows the system can be corrupted...</p>
+              </div>
+            )}
+
+            {bribeUsed && winner === 'Carlos' && (
+              <div className="bribe-failed">
+                <p>💸 Your bribe failed! Not enough corrupt voters, and you lost your bribe money too.</p>
+              </div>
+            )}
+          </div>
+
+          <div className="ledger-update">
+            <h4>📒 Everyone's Ledger Now Shows:</h4>
+            <div className="ledger-entry">
+              Hiroshi → {winner}: $430 {winner === 'Carlos' ? '(roses payment)' : '(graduation gift)'}
+            </div>
+          </div>
+
+          {!showFinalQuestion && (
+            <button 
+              className="continue-button"
+              onClick={() => setShowFinalQuestion(true)}
+            >
+              What's the Problem Here?
+            </button>
+          )}
+
+          {showFinalQuestion && (
+            <div className="final-question-section">
+              <h3>🤔 What did you learn?</h3>
+              <div className="lesson-options">
+                <button className="lesson-btn" onClick={onComplete}>
+                  Only ONE transaction wins, but it's still not fair to the loser
+                </button>
+                <button className="lesson-btn" onClick={onComplete}>
+                  The network can be corrupted if enough people are dishonest
+                </button>
+                <button className="lesson-btn" onClick={onComplete}>
+                  We need a better way to prevent double spending attempts
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
   };
 
   // Consensus Game Component
@@ -379,21 +473,27 @@ const BitcoinBasicsModule = () => {
     const [delayed, setDelayed] = useState(false);
 
     useEffect(() => {
-      if ([1, 2, 3].includes(step)) {
+      if ([1, 2, 3, 4, 5, 6, 7, 8].includes(step)) {
         setDelayed(true);
-        const timeout = setTimeout(() => setDelayed(false), 2000);
+        // Longer delays for more realistic feel
+        const delayTime = step <= 3 ? 2500 : 3000;
+        const timeout = setTimeout(() => setDelayed(false), delayTime);
         return () => clearTimeout(timeout);
       }
     }, [step]);
 
     const steps = [
-      "Click 'Send $1,000' to start.",
-      "Your bank is verifying the request...",
-      "Routing through intermediary bank #1... (Fee: $15)",
-      "Routing through intermediary bank #2... (Fee: $22)",
-      "Destination bank requires additional verification.",
-      "Transfer delayed 2–3 business days...",
-      "Funds pending. Your friend might receive: $930."
+      "Click 'Send $10' to start.",
+      "Your US bank is verifying your identity...",
+      "Checking for fraud and compliance (AML/KYC)...",
+      "Converting USD to Colombian Pesos (Fee: $1.50)...",
+      "Routing through correspondent bank in New York...",
+      "Routing through correspondent bank in Miami...", 
+      "Connecting to Colombian partner bank...",
+      "Your sister's Colombian bank is processing...",
+      "Additional verification for international transfer...",
+      "Transfer delayed 3-5 business days...",
+      "Complete! Your sister received: $6.50 worth in Colombian Pesos."
     ];
 
     return (
@@ -406,11 +506,12 @@ const BitcoinBasicsModule = () => {
             disabled={delayed || step === steps.length - 1}
             className={`simulator-button ${delayed ? 'disabled' : ''}`}
           >
-            {step === 0 ? "Send $1,000" : delayed ? "Processing..." : "Next"}
+            {step === 0 ? "Send $10" : delayed ? "Processing..." : "Next"}
           </button>
           {step === steps.length - 1 && (
             <div className="final-result fiat-result">
-              <p>❌ Total fees: $70 • Delays: 3-5 days</p>
+              <p>❌ Total fees: $3.50 • Delays: 3-5 days</p>
+              <p className="conversion-loss">Exchange rate loss + processing fees</p>
             </div>
           )}
         </div>
@@ -420,30 +521,67 @@ const BitcoinBasicsModule = () => {
 
   const BitcoinColumn = () => {
     const [step, setStep] = useState(0);
+    const [btcPrice, setBtcPrice] = useState(null);
+    const [btcAmount, setBtcAmount] = useState(null);
+    const [loading, setLoading] = useState(false);
 
-    const steps = [
-      "Click 'Send $1,000' to start.",
-      "Scan your friend's QR code.",
-      "Transaction broadcast to the network.",
-      "Waiting for confirmations...",
-      "Success! Your friend received 100% of the $1,000."
-    ];
+    const fetchBitcoinPrice = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        const price = data.bitcoin.usd;
+        setBtcPrice(price);
+        setBtcAmount((10 / price).toFixed(8)); // Convert $10 to BTC
+      } catch (error) {
+        console.error('Error fetching Bitcoin price:', error);
+        setBtcPrice(50000); // Fallback price
+        setBtcAmount((10 / 50000).toFixed(8));
+      }
+      setLoading(false);
+    };
+
+    useEffect(() => {
+      fetchBitcoinPrice();
+    }, []);
+
+    const getStepText = () => {
+      switch(step) {
+        case 0:
+          return "Click 'Send $10' to start.";
+        case 1:
+          return loading ? "Getting current Bitcoin price..." : 
+                 btcPrice ? `Converting $10 → ${btcAmount} BTC (@ $${btcPrice.toLocaleString()})` : 
+                 "Converting $10 to Bitcoin...";
+        case 2:
+          return "Sending Bitcoin directly to your sister in Colombia...";
+        case 3:
+          return "Recording transaction on the global Bitcoin ledger...";
+        case 4:
+          return `Success! Your sister received ${btcAmount} BTC (worth $10 USD)`;
+        default:
+          return "";
+      }
+    };
 
     return (
       <div className="simulator-column bitcoin-column">
         <h3>₿ Bitcoin</h3>
         <div className="simulator-content">
-          <p className="simulator-step">{steps[step]}</p>
+          <p className="simulator-step">{getStepText()}</p>
           <button
-            onClick={() => setStep((prev) => Math.min(prev + 1, steps.length - 1))}
-            disabled={step === steps.length - 1}
+            onClick={() => setStep((prev) => Math.min(prev + 1, 4))}
+            disabled={step === 4 || loading}
             className="simulator-button bitcoin-button"
           >
-            {step === 0 ? "Send $1,000" : "Next"}
+            {step === 0 ? "Send $10" : loading ? "Loading..." : "Next"}
           </button>
-          {step === steps.length - 1 && (
+          {step === 4 && (
             <div className="final-result bitcoin-result">
-              <p>✅ Fee: ~$2 • Time: ~10 minutes</p>
+              <p>✅ Fee: ~$0.50 • Time: ~10 minutes</p>
+              <p className="btc-conversion">
+                Sent: {btcAmount} BTC
+              </p>
             </div>
           )}
         </div>
