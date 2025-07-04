@@ -102,8 +102,8 @@ export const moduleRegistry = {
   // Practical Mastery - Real-world application and advanced topics
   custody: {
     id: 'custody',
-    title: 'Securing Your Future: Bitcoin Custody Mastery',
-    description: 'Learn to securely store and manage your Bitcoin across all scenarios.',
+    title: 'Who Holds the Keys to Your Kingdom?',
+    description: 'Master the art of not losing Bitcoin through advanced custody strategies and real-world scenarios.',
     component: CustodyModule,
     order: 10,
     group: 'practical-mastery',
