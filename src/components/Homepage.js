@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { moduleRegistry } from '../modules/ModuleRegistry';
+import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
 import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Lock, Play } from 'lucide-react';
 import './Homepage.css';
 
@@ -39,11 +39,16 @@ const Homepage = () => {
     const totalProgress = modules.reduce((sum, module) => sum + getModuleProgress(module.id), 0);
     
     const achievements = [];
-    if (isModuleCompleted('banking-intro')) achievements.push('First Steps');
+    if (isModuleCompleted('banking-intro')) achievements.push('Journey Begins');
     if (isModuleCompleted('money')) achievements.push('Money Master');
     if (isModuleCompleted('bitcoin-basics')) achievements.push('Bitcoin Explorer');
+    if (isModuleCompleted('hashing')) achievements.push('Cryptography Student');
+    if (isModuleCompleted('keys')) achievements.push('Digital Sovereign');
+    if (isModuleCompleted('transactions')) achievements.push('Transaction Expert');
+    if (isModuleCompleted('merkle')) achievements.push('Tree Architect');
+    if (isModuleCompleted('mining')) achievements.push('Energy Pioneer');
     if (completed.length >= 3) achievements.push('Learning Streak');
-    if (completed.length >= 5) achievements.push('Dedicated Student');
+    if (completed.length >= 6) achievements.push('Dedicated Student');
     if (completed.length === modules.length) achievements.push('Bitcoin Scholar');
 
     setUserStats({
@@ -275,7 +280,10 @@ const Homepage = () => {
             <div className="locked-message">
               {module.id === 'money' && !bankingExperienceCompleted ? 
                 '🏦 Complete the Reality Check to unlock' :
-                `📋 Prerequisites: ${module.prerequisites.join(', ')}`
+                `📋 Prerequisites: ${module.prerequisites.map(prereq => {
+                  const prereqModule = moduleRegistry[prereq];
+                  return prereqModule ? prereqModule.title : prereq;
+                }).join(', ')}`
               }
             </div>
             <div className="unlock-progress">
@@ -326,7 +334,10 @@ const Homepage = () => {
 
           {module.prerequisites.length > 0 && (
             <div className="prerequisites">
-              <span>Prerequisites: {module.prerequisites.join(', ')}</span>
+              <span>Prerequisites: {module.prerequisites.map(prereq => {
+                const prereqModule = moduleRegistry[prereq];
+                return prereqModule ? prereqModule.title : prereq;
+              }).join(', ')}</span>
             </div>
           )}
 
@@ -344,13 +355,16 @@ const Homepage = () => {
   const renderLearningPath = () => {
     if (!bankingExperienceCompleted) return null;
 
-    const fundamentals = Object.values(moduleRegistry).filter(m => m.group === 'fundamentals');
-    const nextModule = fundamentals.find(m => isModuleUnlocked(m) && getModuleProgress(m.id) < 100);
+    const completedModuleIds = Object.values(moduleRegistry)
+      .filter(module => isModuleCompleted(module.id))
+      .map(module => module.id);
+    
+    const nextModule = getNextModule(completedModuleIds);
 
     return (
       <div className="learning-path">
         <div className="path-header">
-          <h3>🎯 Your Next Step</h3>
+          <h3>🎯 Your Optimal Learning Path</h3>
           {nextModule ? (
             <div className="next-module-spotlight">
               <div className="spotlight-content">
@@ -359,6 +373,9 @@ const Homepage = () => {
                   <div className="preview-text">
                     <h4>{nextModule.title}</h4>
                     <p>{nextModule.description}</p>
+                    <div style={{ fontSize: '0.9rem', color: '#888', marginTop: '0.5rem' }}>
+                      📍 {moduleGroups[nextModule.group]?.title || nextModule.group}
+                    </div>
                   </div>
                 </div>
                 <Link to={`/module/${nextModule.id}`} className="continue-button">
@@ -379,14 +396,18 @@ const Homepage = () => {
     );
   };
 
-  const renderGroupSection = (groupName, groupEmoji, modules) => {
+  const renderGroupSection = (groupKey, groupInfo) => {
+    const modules = Object.values(moduleRegistry).filter(module => module.group === groupKey);
     const unlockedCount = modules.filter(m => isModuleUnlocked(m)).length;
     const completedCount = modules.filter(m => getModuleProgress(m.id) === 100).length;
     
     return (
-      <div key={groupName} className="group-section">
+      <div key={groupKey} className="group-section">
         <div className="group-header">
-          <h2>{groupEmoji} {groupName}</h2>
+          <div>
+            <h2>{groupInfo.title}</h2>
+            <p className="group-description">{groupInfo.description}</p>
+          </div>
           <div className="group-stats">
             <span className="group-progress">{completedCount}/{unlockedCount} completed</span>
             {completedCount === modules.length && modules.length > 0 && (
@@ -413,7 +434,7 @@ const Homepage = () => {
           <span className="bitcoin-symbol">₿</span>
           <div className="logo-content">
             <h1>Money's Mess & Bitcoin's Fix</h1>
-            <p className="tagline">An interactive journey that questions everything you thought you knew about money</p>
+            <p className="tagline">A logical journey from broken money to digital sovereignty</p>
           </div>
         </div>
         <div className="nav-buttons">
@@ -434,42 +455,28 @@ const Homepage = () => {
       {renderLearningPath()}
 
       <div className="module-groups">
+        {/* Banking Experience at the top */}
         <div className="group-section">
           <div className="group-header">
-            <h2>🎓 Fundamentals</h2>
+            <div>
+              <h2>🎬 Start Here</h2>
+              <p className="group-description">Essential reality check before learning begins</p>
+            </div>
             <div className="group-stats">
               <span className="group-progress">
-                {Object.values(moduleRegistry).filter(module => module.group === 'fundamentals' && getModuleProgress(module.id) === 100).length + (bankingExperienceCompleted ? 1 : 0)}/
-                {Object.values(moduleRegistry).filter(module => module.group === 'fundamentals').length + 1} completed
+                {bankingExperienceCompleted ? 1 : 0}/1 completed
               </span>
             </div>
           </div>
           <div className="modules-grid">
             {renderBankingExperienceCard()}
-            {Object.values(moduleRegistry)
-              .filter(module => module.group === 'fundamentals')
-              .sort((a, b) => a.order - b.order)
-              .map(renderModuleCard)}
           </div>
         </div>
         
-        {renderGroupSection(
-          'Practical Applications', 
-          '🔧', 
-          Object.values(moduleRegistry).filter(module => module.group === 'practical')
-        )}
-        
-        {renderGroupSection(
-          'Technical Deep Dive', 
-          '⚙️', 
-          Object.values(moduleRegistry).filter(module => module.group === 'technical')
-        )}
-        
-        {renderGroupSection(
-          'Advanced Mastery', 
-          '🚀', 
-          Object.values(moduleRegistry).filter(module => module.group === 'advanced')
-        )}
+        {/* Render all other groups in order */}
+        {Object.entries(moduleGroups)
+          .sort(([,a], [,b]) => a.order - b.order)
+          .map(([groupKey, groupInfo]) => renderGroupSection(groupKey, groupInfo))}
       </div>
 
       {userStats.completedModules >= 2 && (
@@ -477,64 +484,63 @@ const Homepage = () => {
           <div className="encouragement-content">
             <h3>🔥 You're Building Momentum!</h3>
             <div className="prime-text">
-              Knowledge compounds. Each module you complete makes the next one easier to understand. 
-              You're not just learning about Bitcoin—you're developing financial sovereignty.
+              Knowledge compounds. Each module builds on the previous ones, creating a complete understanding of sound money and Bitcoin's revolutionary approach.
             </div>
             <div className="next-milestone">
-              {userStats.completedModules < 5 ? (
-                <p>🎯 Complete {5 - userStats.completedModules} more modules to earn the "Dedicated Student" achievement!</p>
+              {userStats.completedModules < 6 ? (
+                <p>🎯 Complete {6 - userStats.completedModules} more modules to earn the "Dedicated Student" achievement!</p>
               ) : userStats.completedModules < userStats.totalModules ? (
                 <p>🏆 You're so close to becoming a Bitcoin Scholar! Keep going!</p>
               ) : (
-                <p>🎓 Congratulations! You've mastered the fundamentals of sound money and Bitcoin!</p>
+                <p>🎓 Congratulations! You've mastered the complete Bitcoin education journey!</p>
               )}
             </div>
           </div>
-                  </div>
-        )}
+        </div>
+      )}
 
-        {/* Reset Confirmation Dialog */}
-        {showResetConfirm && (
-          <div className="reset-overlay" onClick={() => setShowResetConfirm(false)}>
-            <div className="reset-dialog" onClick={(e) => e.stopPropagation()}>
-              <div className="reset-dialog-header">
-                <h3>🔄 Restart Learning Journey</h3>
-              </div>
-              <div className="reset-dialog-content">
-                <div className="warning-message">
-                  <div className="warning-icon">⚠️</div>
-                  <div>
-                    <h4>Are you sure you want to restart?</h4>
-                    <p>This will permanently delete all your progress, including:</p>
-                    <ul>
-                      <li>✅ All completed modules ({userStats.completedModules})</li>
-                      <li>🏆 All earned achievements ({userStats.achievements.length})</li>
-                      <li>📊 Your overall progress ({userStats.totalProgress}%)</li>
-                      <li>🔥 Your learning streak</li>
-                    </ul>
-                    <p><strong>This action cannot be undone.</strong></p>
-                  </div>
+      {/* Reset Confirmation Dialog */}
+      {showResetConfirm && (
+        <div className="reset-overlay" onClick={() => setShowResetConfirm(false)}>
+          <div className="reset-dialog" onClick={(e) => e.stopPropagation()}>
+            <div className="reset-dialog-header">
+              <h3>🔄 Restart Learning Journey</h3>
+            </div>
+            <div className="reset-dialog-content">
+              <div className="warning-message">
+                <div className="warning-icon">⚠️</div>
+                <div>
+                  <h4>Are you sure you want to restart?</h4>
+                  <p>This will permanently delete all your progress, including:</p>
+                  <ul>
+                    <li>✅ All completed modules ({userStats.completedModules})</li>
+                    <li>🏆 All earned achievements ({userStats.achievements.length})</li>
+                    <li>📊 Your overall progress ({userStats.totalProgress}%)</li>
+                    <li>🔥 Your learning streak</li>
+                  </ul>
+                  <p><strong>This action cannot be undone.</strong></p>
                 </div>
               </div>
-              <div className="reset-dialog-actions">
-                <button 
-                  className="cancel-button"
-                  onClick={() => setShowResetConfirm(false)}
-                >
-                  Cancel
-                </button>
-                <button 
-                  className="confirm-reset-button"
-                  onClick={handleResetProgress}
-                >
-                  Yes, Restart Journey
-                </button>
-              </div>
+            </div>
+            <div className="reset-dialog-actions">
+              <button 
+                className="cancel-button"
+                onClick={() => setShowResetConfirm(false)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="confirm-reset-button"
+                onClick={handleResetProgress}
+              >
+                Yes, Restart Journey
+              </button>
             </div>
           </div>
-        )}
-      </div>
-    );
-  };
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Homepage; 
