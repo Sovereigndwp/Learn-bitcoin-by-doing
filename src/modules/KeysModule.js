@@ -46,8 +46,8 @@ const KeysModule = () => {
         <div class="achievement-text">
           <h4>${title}</h4>
           <p>${description}</p>
-        </div>
-      </div>
+              </div>
+            </div>
     `;
     document.body.appendChild(achievement);
     
@@ -129,16 +129,16 @@ const KeysModule = () => {
           <Key className="module-icon" />
           Digital Sovereignty: Your Keys, Your Bitcoin
         </h1>
-        <div className="module-progress">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill"
-              style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
-            />
-          </div>
-          <span className="progress-text">
+      <div className="module-progress">
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
+          />
+        </div>
+        <span className="progress-text">
             {completedSteps.size} / {steps.length} steps mastered
-          </span>
+        </span>
         </div>
         {isModuleCompleted('keys') && (
           <div className="completion-badge">
@@ -149,19 +149,19 @@ const KeysModule = () => {
       </div>
 
       <div className="module-tabs">
-        {steps.map((step, index) => (
-          <button
-            key={index}
+          {steps.map((step, index) => (
+            <button
+              key={index}
             className={`tab ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => handleTabClick(index)}
-          >
-            {completedSteps.has(index) && <CheckCircle size={16} />}
+            >
+              {completedSteps.has(index) && <CheckCircle size={16} />}
             <span className="tab-title">{step.title}</span>
-          </button>
-        ))}
-      </div>
+            </button>
+          ))}
+        </div>
 
-      <div className="step-content-container">
+        <div className="step-content-container">
         {renderStep()}
       </div>
     </div>
@@ -314,7 +314,7 @@ const EntropyLab = ({ onComplete }) => {
         <div className="entropy-source">
           {entropySources.map((source, index) => (
             <div 
-              key={index}
+            key={index}
               className={`source-card ${selectedSource === index ? 'active' : ''}`}
               onClick={() => setSelectedSource(index)}
             >
@@ -359,7 +359,7 @@ const EntropyLab = ({ onComplete }) => {
 
       <button className="continue-button" onClick={onComplete}>
         Master the Chaos →
-      </button>
+        </button>
     </div>
   );
 };
@@ -459,7 +459,7 @@ const KeyGenerationPlayground = ({ onComplete }) => {
             <div className="key-label">
               <Lock size={16} />
               Private Key (NEVER SHARE)
-              <button 
+              <button
                 className={`copy-button ${copiedKey === 'private' ? 'copied' : ''}`}
                 onClick={() => copyToClipboard(generatedKeys.privateKey, 'private')}
               >
@@ -473,12 +473,12 @@ const KeyGenerationPlayground = ({ onComplete }) => {
             <div className="key-label">
               <Unlock size={16} />
               Public Key (Safe to Share)
-              <button 
+            <button 
                 className={`copy-button ${copiedKey === 'public' ? 'copied' : ''}`}
                 onClick={() => copyToClipboard(generatedKeys.publicKey, 'public')}
-              >
+            >
                 <Copy size={16} />
-              </button>
+            </button>
             </div>
             <div className="key-value">{generatedKeys.publicKey}</div>
           </div>
@@ -975,7 +975,7 @@ const WalletSetupGuide = ({ onComplete }) => {
 
       <button className="continue-button" onClick={onComplete}>
         Ready for Digital Sovereignty →
-      </button>
+        </button>
     </div>
   );
 };

@@ -418,13 +418,13 @@ const BitcoinBasicsModule = () => {
       setShowComparison(true);
     };
 
-    return (
+        return (
       <div className="evolution-timeline">
         <div className="timeline-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
+              </div>
 
         <div className="money-versions">
           {content.versions.map((version, index) => (
@@ -439,9 +439,9 @@ const BitcoinBasicsModule = () => {
                   <h3>Money {version.version}</h3>
                   <h4>{version.name}</h4>
                   <span className="version-period">{version.period}</span>
-                </div>
               </div>
-              
+            </div>
+
               <div className="version-details">
                 <div className="version-row">
                   <strong>Key Feature:</strong> {version.keyFeature}
@@ -475,15 +475,15 @@ const BitcoinBasicsModule = () => {
               <div key={index} className="socratic-item">
                 <span className="question-bullet">💭</span>
                 <span>{question}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+                      </div>
+                    ))}
+                  </div>
+                  </div>
 
         <button className="continue-button" onClick={onComplete}>
           Understanding Money Evolution ✓
         </button>
-      </div>
+                </div>
     );
   };
 
@@ -505,9 +505,9 @@ const BitcoinBasicsModule = () => {
             {content.analogy.comparison.map((item, index) => (
               <div key={index} className="flow-item">
                 {item}
-              </div>
-            ))}
-          </div>
+                      </div>
+                    ))}
+                  </div>
         </div>
 
         <div className="transformation-demo">
@@ -543,9 +543,9 @@ const BitcoinBasicsModule = () => {
                 <h4>Result</h4>
                 <p>{content.transformation.result}</p>
               </div>
-            </div>
-          </div>
-        </div>
+                  </div>
+                </div>
+              </div>
 
         <div className="cost-comparison">
           <h3>💰 What Does It Cost to Create?</h3>
@@ -606,7 +606,7 @@ const BitcoinBasicsModule = () => {
 
         <div className="chart-comparison">
           <div className="chart-controls">
-            <button 
+                <button 
               className={`chart-btn ${viewMode === 'linear' ? 'active' : ''}`}
               onClick={() => setViewMode('linear')}
             >
@@ -615,10 +615,10 @@ const BitcoinBasicsModule = () => {
             <button 
               className={`chart-btn ${viewMode === 'loglog' ? 'active' : ''}`}
               onClick={() => setViewMode('loglog')}
-            >
+                >
               📈 Log-Log View
-            </button>
-          </div>
+                </button>
+              </div>
 
           <div className="chart-display">
             <div className={`chart ${viewMode}`}>
@@ -629,7 +629,7 @@ const BitcoinBasicsModule = () => {
                 ) : (
                   <div className="steady-line">📈📈📈📈📈📈📈</div>
                 )}
-              </div>
+            </div>
               <p>{viewMode === 'linear' ? content.linearVsLog.linear.description : content.linearVsLog.logLog.description}</p>
               <div className="perception">
                 <strong>Perception:</strong> {viewMode === 'linear' ? content.linearVsLog.linear.perception : content.linearVsLog.logLog.perception}
@@ -697,8 +697,8 @@ const BitcoinBasicsModule = () => {
         <button className="continue-button" onClick={onComplete}>
           Power Law Thinking ✓
         </button>
-      </div>
-    );
+          </div>
+        );
   };
 
   // Energy Double Spend Game Component
@@ -717,14 +717,14 @@ const BitcoinBasicsModule = () => {
       setGameState('blocked');
     };
 
-    return (
+        return (
       <div className="energy-double-spend">
         <div className="game-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
-
+            </div>
+            
         {gameState === 'setup' && (
           <div className="game-setup">
             <div className="scenario">
@@ -739,8 +739,8 @@ const BitcoinBasicsModule = () => {
               <p>{content.scenario.setup}</p>
               <p><strong>Challenge:</strong> {content.scenario.challenge}</p>
               <p><em>Real world analogy:</em> {content.scenario.realWorld}</p>
-            </div>
-
+              </div>
+              
             <div className="mining-blocks">
               <div className="block-option">
                 <h4>🧱 Block A</h4>
@@ -748,7 +748,7 @@ const BitcoinBasicsModule = () => {
                 <button className="mine-button" onClick={attemptDoubleSpend}>
                   Spend 1000 Energy Units
                 </button>
-              </div>
+                  </div>
               
               <div className="block-option">
                 <h4>🧱 Block B</h4>
@@ -781,9 +781,9 @@ const BitcoinBasicsModule = () => {
                 Attempt Block B
               </button>
             </div>
-          </div>
-        )}
-
+                </div>
+              )}
+              
         {gameState === 'blocked' && (
           <div className="game-blocked">
             <div className="error-message">
@@ -826,11 +826,11 @@ const BitcoinBasicsModule = () => {
 
             <button className="continue-button" onClick={onComplete}>
               Energy Physics ✓
-            </button>
-          </div>
+              </button>
+            </div>
         )}
-      </div>
-    );
+          </div>
+        );
   };
 
   // Space Time Conquest Component
@@ -864,13 +864,13 @@ const BitcoinBasicsModule = () => {
       </div>
     );
 
-    return (
+        return (
       <div className="space-time-conquest">
         <div className="conquest-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
+            </div>
 
         <PropertyMatrix />
 
@@ -880,7 +880,7 @@ const BitcoinBasicsModule = () => {
             <div className="conquest-comparison">
               <div className="conquest-item gold">
                 <strong>🥇 Gold:</strong> {content.spaceConquest.gold}
-              </div>
+            </div>
               <div className="conquest-item fiat">
                 <strong>💵 Fiat:</strong> {content.spaceConquest.fiat}
               </div>
@@ -929,21 +929,21 @@ const BitcoinBasicsModule = () => {
         <button className="continue-button" onClick={onComplete}>
           Space & Time Mastery ✓
         </button>
-      </div>
-    );
+          </div>
+        );
   };
-
+      
   // Energy Flow Component
   const EnergyFlow = ({ content, onComplete }) => {
     const [selectedRiver, setSelectedRiver] = useState('bitcoin');
 
-    return (
+        return (
       <div className="energy-flow">
         <div className="flow-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
+              </div>
 
         <div className="river-comparison">
           <h3>🌊 Three Money Rivers</h3>
@@ -957,7 +957,7 @@ const BitcoinBasicsModule = () => {
                 {river.title}
               </button>
             ))}
-          </div>
+            </div>
 
           <div className="river-details">
             {Object.entries(content.riverAnalogy).map(([key, river]) => (
@@ -977,7 +977,7 @@ const BitcoinBasicsModule = () => {
                 </div>
               </div>
             ))}
-          </div>
+              </div>
         </div>
 
         <div className="energy-transformation-flow">
@@ -1053,27 +1053,27 @@ const BitcoinBasicsModule = () => {
                     <em>{phase.example}</em>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+                    </div>
+                  ))}
+                </div>
 
           {selectedPhase !== null && (
             <div className="phase-spotlight">
               <h4>Phase Deep Dive: {content.staircase.phases[selectedPhase].phase}</h4>
               <p>{content.staircase.phases[selectedPhase].description}</p>
               <p><strong>Historical Example:</strong> {content.staircase.phases[selectedPhase].example}</p>
-            </div>
-          )}
+              </div>
+            )}
         </div>
 
         <div className="resilience-section">
           <h3>{content.resilience.title}</h3>
-          <button 
+                      <button
             className="show-resilience-btn"
             onClick={() => setShowResilience(!showResilience)}
-          >
+                      >
             {showResilience ? 'Hide Details' : 'Show How Each Cycle Builds Strength'}
-          </button>
+                      </button>
           
           {showResilience && (
             <div className="resilience-points">
@@ -1082,23 +1082,23 @@ const BitcoinBasicsModule = () => {
                   <div className="point-icon">🏗️</div>
                   <span>{point}</span>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+                    ))}
+                  </div>
+                )}
+                  </div>
 
         <div className="reflection-section">
           <h3>🤔 {content.question}</h3>
           <div className="insight-box">
             <div className="insight-icon">🪜</div>
             <p>{content.insight}</p>
-          </div>
+              </div>
         </div>
 
         <button className="continue-button" onClick={onComplete}>
           Growth Pattern Understanding ✓
         </button>
-      </div>
+              </div>
     );
   };
 
@@ -1177,12 +1177,12 @@ const BitcoinBasicsModule = () => {
 
         <div className="future-possibilities">
           <h3>🔮 {content.finalQuestion}</h3>
-          <button 
+              <button 
             className="show-possibilities-btn"
             onClick={() => setShowPossibilities(!showPossibilities)}
-          >
+              >
             {showPossibilities ? 'Hide Possibilities' : 'Explore What Bitcoin Enables'}
-          </button>
+              </button>
           
           {showPossibilities && (
             <div className="possibilities-grid">
@@ -1199,21 +1199,21 @@ const BitcoinBasicsModule = () => {
         <button className="continue-button" onClick={onComplete}>
           Uniqueness Understanding ✓
         </button>
-      </div>
-    );
+          </div>
+        );
   };
 
   // Actionable Conclusion Component
   const ActionableConclusion = ({ content, onComplete }) => {
     const [selectedTab, setSelectedTab] = useState('insights');
 
-    return (
+        return (
       <div className="actionable-conclusion">
         <div className="conclusion-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
+            </div>
 
         <div className="conclusion-tabs">
           <button
@@ -1234,7 +1234,7 @@ const BitcoinBasicsModule = () => {
           >
             🚀 Take Action
           </button>
-        </div>
+              </div>
 
         <div className="tab-content">
           {selectedTab === 'insights' && (
@@ -1245,11 +1245,11 @@ const BitcoinBasicsModule = () => {
                   <div key={index} className="insight-item">
                     <div className="insight-icon">💡</div>
                     <span>{insight}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </div>
+              )}
 
           {selectedTab === 'modules' && (
             <div className="modules-section">
@@ -1259,11 +1259,11 @@ const BitcoinBasicsModule = () => {
                   <div key={index} className="module-preview">
                     <div className="module-icon">🔥</div>
                     <span>{module}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                </div>
+              )}
 
           {selectedTab === 'practical' && (
             <div className="practical-section">
@@ -1276,22 +1276,22 @@ const BitcoinBasicsModule = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+                </div>
+              )}
         </div>
 
         <div className="final-reflection">
           <div className="reflection-box">
             <div className="reflection-icon">🎯</div>
             <p><strong>Final Thought:</strong> {content.finalReflection}</p>
-          </div>
+            </div>
         </div>
 
         <button className="continue-button" onClick={onComplete}>
           Ready for the Future ✓
         </button>
-      </div>
-    );
+          </div>
+        );
   };
 
   const renderStep = (step, index) => {
@@ -1322,7 +1322,7 @@ const BitcoinBasicsModule = () => {
       
       case 'actionable-conclusion':
         return <ActionableConclusion content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
+
       default:
         return (
           <div className="step-content">
@@ -1337,8 +1337,8 @@ const BitcoinBasicsModule = () => {
   };
 
   if (currentStep >= steps.length) {
-    return (
-      <div className="module-container">
+  return (
+    <div className="module-container">
         <div className="completion-screen">
           <div className="completion-icon">
             <Trophy size={64} />
@@ -1349,7 +1349,7 @@ const BitcoinBasicsModule = () => {
             <div className="stat">
               <span className="stat-number">{steps.length}</span>
               <span className="stat-label">Concepts Mastered</span>
-            </div>
+      </div>
             <div className="stat">
               <span className="stat-number">3.0</span>
               <span className="stat-label">Money Version</span>
@@ -1367,14 +1367,14 @@ const BitcoinBasicsModule = () => {
           <Zap className="module-icon" />
           Bitcoin 3.0: Energy as Money
         </h1>
-        <div className="module-progress">
+      <div className="module-progress">
           <span>Step {currentStep + 1} of {steps.length}</span>
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
               style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-            />
-          </div>
+          />
+        </div>
         </div>
       </div>
 

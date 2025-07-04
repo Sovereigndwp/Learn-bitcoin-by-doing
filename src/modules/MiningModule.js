@@ -538,13 +538,13 @@ const MiningModule = () => {
       }, 10000);
     };
 
-    return (
+        return (
       <div className="mining-simulation">
         <div className="simulation-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-        </div>
+            </div>
 
         <div className="energy-transformation-visual">
           <h3>⚡ Energy → Security Transformation</h3>
@@ -559,18 +559,18 @@ const MiningModule = () => {
                 <div className="step-content">
                   <div className="step-label">{step.label}</div>
                   <div className="step-value">{step.value}</div>
-                </div>
+              </div>
               </div>
             ))}
-          </div>
-        </div>
+              </div>
+            </div>
 
         <div className="mining-controls">
           <div className="level-selector">
             <h3>Choose Mining Level:</h3>
             <div className="level-buttons">
               {content.miningLevels.map((level, index) => (
-                <button
+            <button 
                   key={index}
                   className={`level-button ${selectedLevel === index ? 'selected' : ''}`}
                   onClick={() => setSelectedLevel(index)}
@@ -579,9 +579,9 @@ const MiningModule = () => {
                   <div className="level-title">{level.title}</div>
                   <div className="level-difficulty">Difficulty: {level.difficulty}</div>
                   <div className="level-cost">Energy: {level.energyCost} kWh</div>
-                </button>
+            </button>
               ))}
-            </div>
+          </div>
           </div>
 
           <div className="mining-stats">
@@ -707,7 +707,7 @@ const MiningModule = () => {
   };
 
   if (currentStep >= steps.length) {
-    return (
+        return (
       <div className="module-container">
         <div className="completion-screen">
           <div className="completion-icon">
@@ -737,33 +737,33 @@ const MiningModule = () => {
           <Zap className="module-icon" />
           Energy → Security: How Bitcoin Transforms Physics into Trust
         </h1>
-        <div className="module-progress">
+      <div className="module-progress">
           <span>Step {currentStep + 1} of {steps.length}</span>
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
               style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-            />
-          </div>
+          />
+        </div>
         </div>
       </div>
 
       <div className="module-tabs">
-        {steps.map((step, index) => (
-          <button
-            key={index}
+          {steps.map((step, index) => (
+            <button
+              key={index}
             className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => handleTabClick(index)}
             disabled={index > currentStep}
-          >
-            {completedSteps.has(index) && <CheckCircle size={16} />}
+            >
+              {completedSteps.has(index) && <CheckCircle size={16} />}
             <span className="tab-title">{step.title}</span>
-          </button>
-        ))}
-      </div>
+            </button>
+          ))}
+        </div>
 
-      <div className="step-content-container">
-        {renderStep(steps[currentStep], currentStep)}
+        <div className="step-content-container">
+          {renderStep(steps[currentStep], currentStep)}
       </div>
     </div>
   );
@@ -834,7 +834,7 @@ const DifficultyDemonstration = ({ content, onComplete }) => {
           </div>
         </div>
 
-        <button
+          <button
           className="simulate-button"
           onClick={runSimulation}
           disabled={simulationState === 'running'}
@@ -842,7 +842,7 @@ const DifficultyDemonstration = ({ content, onComplete }) => {
           {simulationState === 'idle' && '⚡ Run Simulation'}
           {simulationState === 'running' && '⏱️ Mining Blocks...'}
           {simulationState === 'adjusted' && '✅ Difficulty Adjusted!'}
-        </button>
+          </button>
       </div>
 
       {blockTimes.length > 0 && (
@@ -857,8 +857,8 @@ const DifficultyDemonstration = ({ content, onComplete }) => {
                 />
                 <span className="time-label">{time.toFixed(1)}m</span>
               </div>
-            ))}
-          </div>
+        ))}
+      </div>
           <div className="chart-legend">
             <span className="legend-item fast">🟢 Fast (&lt;10m)</span>
             <span className="legend-item target">🟡 Target (~10m)</span>
@@ -1278,16 +1278,16 @@ const ConsensusComparison = ({ content, onComplete }) => {
       <div className="mechanism-selector">
         <div className="mechanism-tabs">
           {content.consensusMechanisms.map((mechanism, index) => (
-            <button
-              key={index}
+              <button
+                key={index}
               className={`mechanism-tab ${selectedMechanism === index ? 'active' : ''}`}
               onClick={() => setSelectedMechanism(index)}
-            >
+              >
               {mechanism.name}
-            </button>
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
       <div className="mechanism-details">
         <div className="mechanism-overview">
@@ -1298,7 +1298,7 @@ const ConsensusComparison = ({ content, onComplete }) => {
               <span className={`energy-level ${content.consensusMechanisms[selectedMechanism].energyRequirement.toLowerCase()}`}>
                 {content.consensusMechanisms[selectedMechanism].energyRequirement}
               </span>
-            </div>
+          </div>
             <div className="metric">
               <strong>Security Model:</strong>
               <span>{content.consensusMechanisms[selectedMechanism].securityModel}</span>
@@ -1367,16 +1367,16 @@ const ActionableMining = ({ content, onComplete }) => {
         <h3>🎯 Choose Your Participation Level</h3>
         <div className="level-selector">
           {content.participationLevels.map((level, index) => (
-            <button
+          <button 
               key={index}
               className={`participation-level ${selectedLevel === index ? 'selected' : ''}`}
               onClick={() => setSelectedLevel(index)}
             >
               <h4>{level.level}</h4>
               <p>{level.description}</p>
-            </button>
+          </button>
           ))}
-        </div>
+      </div>
 
         <div className="level-details">
           <div className="level-info">
@@ -1396,8 +1396,8 @@ const ActionableMining = ({ content, onComplete }) => {
             <div className="getting-started">
               <strong>Getting Started:</strong>
               <p>{content.participationLevels[selectedLevel].gettingStarted}</p>
-            </div>
           </div>
+        </div>
         </div>
       </div>
 
@@ -1410,8 +1410,8 @@ const ActionableMining = ({ content, onComplete }) => {
               <span>{learning}</span>
             </div>
           ))}
-        </div>
-      </div>
+            </div>
+                </div>
 
       <div className="next-steps">
         <h3>🚀 Your Next Steps</h3>
@@ -1419,7 +1419,7 @@ const ActionableMining = ({ content, onComplete }) => {
           <div className="step immediate">
             <h4>Immediate</h4>
             <p>{content.nextSteps.immediate}</p>
-          </div>
+                </div>
           <div className="step intermediate">
             <h4>Intermediate</h4>
             <p>{content.nextSteps.intermediate}</p>
@@ -1427,7 +1427,7 @@ const ActionableMining = ({ content, onComplete }) => {
           <div className="step advanced">
             <h4>Advanced</h4>
             <p>{content.nextSteps.advanced}</p>
-          </div>
+        </div>
         </div>
       </div>
 
@@ -1469,7 +1469,7 @@ const EnergySecurityIntro = ({ content, onComplete }) => {
         <div className="insight-content">
           <h3>Key Insight</h3>
           <p>{content.keyInsight}</p>
-        </div>
+      </div>
       </div>
 
       <div className="trust-comparison">
@@ -1488,7 +1488,7 @@ const EnergySecurityIntro = ({ content, onComplete }) => {
 
       <button className="continue-button" onClick={onComplete}>
         Explore Mining Simulation ⚡
-      </button>
+        </button>
     </div>
   );
 };

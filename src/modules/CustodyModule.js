@@ -277,11 +277,11 @@ const CustodyModule = () => {
               { id: 'intermediate', text: 'Comfortable with most technology', weight: { complexity: 2 } },
               { id: 'advanced', text: 'I write code or manage IT systems', weight: { complexity: 3 } }
             ]
-          },
-          {
-            id: 'family',
+    },
+    {
+      id: 'family',
             question: 'Do you have family who should inherit your Bitcoin?',
-            options: [
+      options: [
               { id: 'none', text: 'No close family', weight: { inheritance: 1 } },
               { id: 'some', text: 'Yes, but they\'re not tech-savvy', weight: { inheritance: 2 } },
               { id: 'tech-family', text: 'Yes, and they understand Bitcoin', weight: { inheritance: 3 } }
@@ -497,9 +497,9 @@ const CustodyModule = () => {
     const handleChoiceSelect = (choice) => {
       setSelectedChoice(choice);
       setShowOutcome(true);
-    };
+  };
 
-    return (
+  return (
       <div className="adventure-container">
         <div className="scenario-intro">
           <div className="scenario-character">{content.scenario.character}</div>
@@ -539,8 +539,8 @@ const CustodyModule = () => {
               marginTop: '1rem'
             }}>
               <strong>💡 Lesson:</strong> {selectedChoice.outcome.lesson}
-            </div>
-            
+      </div>
+      
             <button 
               className="continue-button"
               onClick={() => handleStepComplete(currentStep)}
@@ -601,7 +601,7 @@ const CustodyModule = () => {
             >
               Run Test <Zap size={16} />
             </button>
-          </div>
+                      </div>
         )}
 
         {Object.keys(stressResults).length > 0 && (
@@ -643,16 +643,16 @@ const CustodyModule = () => {
                score >= 60 ? 'Good! Some areas for improvement.' :
                'Concerning. Consider upgrading your custody approach.'}
             </p>
-            
-            <button 
+                  
+                  <button 
               className="continue-button"
               onClick={() => handleStepComplete(currentStep)}
-            >
+                  >
               Continue <ArrowRight size={16} />
-            </button>
-          </div>
-        )}
-      </div>
+                  </button>
+                </div>
+              )}
+            </div>
     );
   };
 
@@ -990,7 +990,7 @@ const CustodyModule = () => {
                 {step.content.nextSteps.map((step, i) => (
                   <li key={i} style={{ marginBottom: '0.5rem' }}>{step}</li>
                 ))}
-              </ul>
+          </ul>
             </div>
 
             <button 

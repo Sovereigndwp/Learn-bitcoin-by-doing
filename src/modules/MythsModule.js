@@ -470,31 +470,31 @@ const MythsModule = () => {
     const isActive = selectedMyth === myth.id;
 
     return (
-      <div 
-        key={myth.id}
+            <div 
+              key={myth.id}
         className={`myth-card ${isActive ? 'active' : ''} ${isDebunked ? 'debunked' : ''}`}
-        onClick={() => handleMythClick(myth.id)}
-      >
-        <div className="myth-header">
+              onClick={() => handleMythClick(myth.id)}
+            >
+              <div className="myth-header">
           <div className="myth-icon">{myth.icon}</div>
           <div className="myth-info">
             <h3 className="myth-title">{myth.title}</h3>
             <div className="myth-severity">{myth.severity}</div>
           </div>
-        </div>
-        
+              </div>
+              
         {isActive && (
-          <div className="myth-content">
-            <div className="myth-statement">
+                <div className="myth-content">
+                  <div className="myth-statement">
               <h4>The Myth</h4>
-              <p>{myth.myth}</p>
-            </div>
-
-            <div className="reality-box">
+                    <p>{myth.myth}</p>
+                  </div>
+                  
+                      <div className="reality-box">
               <h4>The Technical Truth</h4>
-              <p>{myth.reality}</p>
-            </div>
-
+                        <p>{myth.reality}</p>
+                      </div>
+                      
             <div className="technical-evidence">
               <div className="evidence-header">
                 <Info size={16} />
@@ -503,10 +503,10 @@ const MythsModule = () => {
               <ul className="evidence-list">
                 {myth.technicalEvidence.map((evidence, index) => (
                   <li key={index}>{evidence}</li>
-                ))}
-              </ul>
-            </div>
-
+                          ))}
+                        </ul>
+                      </div>
+                      
             <div className="data-comparison">
               <div className="comparison-title">{myth.dataComparison.title}</div>
               <div className="comparison-chart">
@@ -537,8 +537,8 @@ const MythsModule = () => {
                   <li key={index}>{source}</li>
                 ))}
               </ul>
-            </div>
-
+                      </div>
+                      
             {!isDebunked && (
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <button 
@@ -548,18 +548,18 @@ const MythsModule = () => {
                   <CheckCircle size={16} />
                   Myth Debunked!
                 </button>
-              </div>
+                      </div>
             )}
 
             {isDebunked && (
               <div className="myth-progress">
                 <div className="progress-indicator completed">✓</div>
                 <span className="progress-text">Myth successfully debunked with facts and evidence</span>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
     );
   };
 

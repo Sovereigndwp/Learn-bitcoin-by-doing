@@ -233,7 +233,7 @@ const BitcoinToolkitModule = () => {
   };
 
   const renderDifficultyIndicator = (difficulty) => {
-    return (
+          return (
       <div className="difficulty-indicator">
         <span>Difficulty:</span>
         <div className="difficulty-dots">
@@ -244,15 +244,15 @@ const BitcoinToolkitModule = () => {
             />
           ))}
         </div>
-      </div>
-    );
+            </div>
+          );
   };
 
   const renderToolCard = (tool) => {
     const isCompleted = completedTools.has(tool.id);
     const isActive = currentTool?.id === tool.id;
 
-    return (
+          return (
       <div 
         key={tool.id}
         className={`tool-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
@@ -307,9 +307,9 @@ const BitcoinToolkitModule = () => {
               Each tool is designed to teach you practical skills while working with real Bitcoin data and concepts.
             </p>
           </div>
-        </div>
-      );
-    }
+            </div>
+          );
+        }
 
     // Render specific tool interface based on tool ID
     return renderSpecificTool(currentTool);
@@ -340,7 +340,7 @@ const BitcoinToolkitModule = () => {
     }
   };
 
-  return (
+        return (
     <div className="module-container toolkit-module">
       <div className="toolkit-content">
         <div className="toolkit-header">
@@ -441,8 +441,8 @@ const BitcoinToolkitModule = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+          </div>
+        );
 };
 
 // Individual Tool Components
@@ -473,7 +473,7 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
     setTimeout(() => onComplete(), 1000);
   };
 
-  return (
+          return (
     <div className="tool-interface">
       <div className="tool-interface-header">
         <div className="tool-interface-title">
@@ -512,7 +512,7 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
             <button className="copy-button" onClick={() => navigator.clipboard.writeText(mnemonic)}>
               <Copy size={14} />
               Copy
-            </button>
+              </button>
           </div>
           <div className="output-content">
             {mnemonic.split(' ').map((word, index) => (
@@ -546,8 +546,8 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
           )}
         </div>
       )}
-    </div>
-  );
+            </div>
+          );
 };
 
 const HashCalculatorTool = ({ tool, onComplete }) => {
@@ -727,7 +727,7 @@ const TransactionDecoderTool = ({ tool, onComplete }) => {
     onComplete();
   };
 
-  return (
+        return (
     <div className="tool-interface">
       <div className="tool-interface-header">
         <div className="tool-interface-title">
@@ -987,13 +987,13 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           <label className="form-label">Script Templates</label>
           <div className="template-buttons">
             {Object.entries(scriptTemplates).map(([key, template]) => (
-              <button
+            <button 
                 key={key}
                 className={`template-button ${selectedTemplate === key ? 'active' : ''}`}
                 onClick={() => loadTemplate(key)}
-              >
+            >
                 {key.toUpperCase()}
-              </button>
+            </button>
             ))}
           </div>
         </div>
@@ -1053,8 +1053,8 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           </div>
         </div>
       )}
-    </div>
-  );
+          </div>
+        );
 };
 
 // QR Code Generator Tool for Bitcoin data
@@ -1134,7 +1134,7 @@ const QRCodeGeneratorTool = ({ tool, onComplete }) => {
         <div className="tool-interface-title">
           <span style={{ fontSize: '2rem' }}>{tool.icon}</span>
           <h2>{tool.title}</h2>
-        </div>
+          </div>
         <div className="tool-controls">
           <button className="tool-button primary" onClick={generateQR} disabled={!inputData.trim() || generating}>
             {generating ? <Clock className="spin" size={16} /> : <Target size={16} />}
@@ -1210,10 +1210,10 @@ const QRCodeGeneratorTool = ({ tool, onComplete }) => {
                 <div className="qr-detail">
                   <strong>Data:</strong> 
                   <code className="qr-data">{qrCode.data}</code>
-                </div>
+        </div>
                 <div className="qr-detail">
                   <strong>Type:</strong> {dataTypes[qrCode.type].label}
-                </div>
+      </div>
                 <div className="qr-detail">
                   <strong>Size:</strong> {qrCode.size}×{qrCode.size}px
                 </div>
@@ -1646,7 +1646,7 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
             <label className="form-label">Recent Searches</label>
             <div className="search-history">
               {searchHistory.map((item, i) => (
-                <button
+            <button
                   key={i}
                   className="history-item"
                   onClick={() => {
@@ -1656,12 +1656,12 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
                 >
                   <span className="history-type">{item.type}</span>
                   <span className="history-term">{item.term.substring(0, 20)}...</span>
-                </button>
-              ))}
+            </button>
+          ))}
             </div>
           </div>
         )}
-      </div>
+        </div>
 
       {!searchResult && !isSearching && (
         <div className="search-examples">

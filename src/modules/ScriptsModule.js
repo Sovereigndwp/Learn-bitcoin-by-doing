@@ -186,7 +186,7 @@ const ScriptsModule = () => {
           💡 Every Bitcoin transaction includes a script—a small program that defines exactly how the coins can be spent. Scripts make Bitcoin programmable money.
         </div>
       </div>
-
+      
       <div className="script-concepts">
         <h3>🔍 Core Concepts</h3>
         <div className="concepts-grid">
@@ -235,7 +235,7 @@ const ScriptsModule = () => {
         <div className="prime-text">
           💡 Bitcoin scripts work like a calculator that uses a stack. Numbers go on top, operations combine them, and the final result determines if the transaction is valid.
         </div>
-      </div>
+        </div>
 
       <div className="script-playground">
         <h3>🎮 Interactive Script Playground</h3>
@@ -425,8 +425,8 @@ const ScriptsModule = () => {
           <p className="subtitle">Multiple Keys, Shared Control</p>
           <div className="prime-text">
             💡 Multisig scripts require multiple signatures to spend funds. Perfect for businesses, families, or any situation requiring shared control.
-          </div>
-        </div>
+                  </div>
+                  </div>
 
         <div className="multisig-setup">
           <h3>🏢 Corporate Treasury: 2-of-3 Multisig</h3>
@@ -505,7 +505,7 @@ const ScriptsModule = () => {
             {timelockEnabled ? 'Disable' : 'Enable'} Timelock
           </button>
         </div>
-        
+
         <div className="playground-container">
           <div style={{ textAlign: 'center', padding: '2rem' }}>
             <h4>🏦 Trust Fund Contract</h4>
