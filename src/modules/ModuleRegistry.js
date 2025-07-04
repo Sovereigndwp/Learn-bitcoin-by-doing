@@ -111,12 +111,12 @@ export const moduleRegistry = {
   },
   'bitcoin-toolkit': {
     id: 'bitcoin-toolkit',
-    title: 'Hands-On Bitcoin Toolkit',
-    description: 'Get practical experience building wallets, creating transactions, and using Bitcoin tools.',
+    title: 'Bitcoin Developer Toolkit',
+    description: 'Master Bitcoin through 19 professional tools: wallets, transactions, network analysis, and development utilities.',
     component: BitcoinToolkitModule,
     order: 11,
     group: 'practical-mastery',
-    prerequisites: ['custody']
+    prerequisites: ['transactions', 'scripts']
   },
   myths: {
     id: 'myths',
