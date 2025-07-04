@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Bitcoin, CheckCircle, Trophy } from 'lucide-react';
+import { Zap, Bitcoin, CheckCircle, Trophy, Clock, Target, BarChart, Globe, Shield, Coins, TrendingUp, Activity, Power } from 'lucide-react';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
@@ -17,19 +17,20 @@ const BitcoinBasicsModule = () => {
     }
     
     // Show achievement for key milestones
-    if (index === 2) {
-      showAchievement("First Bitcoin Experience", "You've seen the difference firsthand!");
-    } else if (index === 4) {
-      showAchievement("Security Expert", "You understand how Bitcoin prevents fraud!");
+    if (index === 1) {
+      showAchievement("Money Evolutionist", "You understand the progression from Gold to Bitcoin!");
+    } else if (index === 3) {
+      showAchievement("Energy Pioneer", "You grasp how Bitcoin transforms energy into digital truth!");
     } else if (index === 6) {
-      showAchievement("Decentralization Master", "You grasp the power of distributed systems!");
+      showAchievement("Power Law Thinker", "You see beyond exponential to true power law growth!");
+    } else if (index === 8) {
+      showAchievement("Bitcoin Scholar", "You understand why Bitcoin conquers both space and time!");
     }
     
     setCurrentStep(index + 1);
   };
 
   const showAchievement = (title, description) => {
-    // Simple achievement notification - can be enhanced later
     const achievement = document.createElement('div');
     achievement.className = 'achievement-popup';
     achievement.innerHTML = `
@@ -57,1047 +58,1342 @@ const BitcoinBasicsModule = () => {
 
   const steps = [
     {
-      title: "What's Broken Isn't Money, It's Who Controls It",
-      type: "reflection",
+      title: "The Great Money Evolution",
+      type: "evolution-timeline",
       content: {
-        title: "What's Broken Isn't Money, It's Who Controls It",
-        intro: "If money today can be frozen, inflated, or blocked...",
-        questions: [
-          "Maybe the problem isn't money itself.",
-          "Maybe it's HOW it's controlled, and WHO controls it."
+        title: "🌀 The Money Timeline: 1.0 → 2.0 → 3.0",
+        subtitle: "Every few centuries, money evolves. We're living through the biggest change yet.",
+        primeText: "If Gold was Money 1.0 and Fiat was 2.0, Bitcoin is 3.0—because now, money runs on energy.",
+        versions: [
+          {
+            version: "1.0",
+            name: "Gold",
+            period: "~5000 years", 
+            keyFeature: "Hard to make, durable",
+            weakness: "Heavy, hard to send",
+            energy: "Physical mining energy",
+            trust: "Natural scarcity",
+            icon: "🥇"
+          },
+          {
+            version: "2.0", 
+            name: "Fiat",
+            period: "~50 years",
+            keyFeature: "Easy to print, scalable", 
+            weakness: "No real cost = abuse",
+            energy: "Government promises",
+            trust: "Trust in institutions",
+            icon: "💵"
+          },
+          {
+            version: "3.0",
+            name: "Bitcoin", 
+            period: "~15 years",
+            keyFeature: "Runs on energy & code",
+            weakness: "Still early",
+            energy: "Computational proof-of-work",
+            trust: "Mathematical certainty",
+            icon: "₿"
+          }
         ],
-        mainQuestion: "What if money was truly yours?",
+        question: "Why do we trust things more when they cost real effort?",
         socratics: [
-          "What if no one could stop you from using your money?",
-          "What if no one could secretly create more of it?",
-          "What if you didn't need permission to spend, save, or send it?",
-          "What if money could work equally for anyone, anywhere?"
-        ],
-        conclusion: "These aren't just questions. They're the foundation of one of the most important innovations of the 21st century. Let's explore how it works and why it matters for your freedom."
+          "What happens when money has no cost to produce?",
+          "Why did gold work for thousands of years?", 
+          "What if we could combine gold's hardness with the internet's speed?"
+        ]
       }
     },
 
     {
-      title: "Bitcoin is Money Without Permission",
-      type: "intro",
+      title: "Energy Becomes Money",
+      type: "energy-transformation",
       content: {
-        title: "Bitcoin is Money Without Permission",
-        subtitle: "Not just digital. Not just fast.",
-        text: "Bitcoin is a system that doesn't ask for permission to exist.\n\nAnd it doesn't give permission lightly either.\n\nIt's money that runs on rules, not rulers.\nMoney that can't be inflated, blocked, or seized.\nMoney that works globally, 24/7, for anyone.\n\nThis isn't just better money. It's a tool for freedom.\n\nBut how does it actually work? Let's see for yourself."
+        title: "🔌 Bitcoin: Energy → Digital Truth",
+        subtitle: "Bitcoin doesn't borrow trust. It earns it, through work.",
+        primeText: "Bitcoin takes real-world energy, passes it through cryptographic math, and produces digital truth.",
+        analogy: {
+          title: "Think of it like a toaster:",
+          comparison: [
+            "🍞 Toaster: Electricity → Heat → Toast",
+            "₿ Bitcoin: Energy → Math → Verifiable Digital Money"
+          ]
+        },
+        transformation: {
+          input: "Electricity from the grid",
+          process: "Specialized computers solve cryptographic puzzles", 
+          output: "Tamper-proof digital records",
+          result: "Money that can't be faked or duplicated"
+        },
+        costComparison: {
+          gold: "Dig holes, move rocks, refine metal",
+          fiat: "Print paper, update database",
+          bitcoin: "Burn electricity, solve math, secure network"
+        },
+        question: "If something takes zero effort to create, should it have value?",
+        insight: "Just like gold had to be mined, Bitcoin must be mined—only now, it's with computational power, not shovels."
       }
     },
+
     {
-      title: "Experience the Difference: Try Sending $10",
-      type: "simulator",
+      title: "Not Exponential—POWER Law",
+      type: "power-law-discovery",
       content: {
-        scenario: "Choose: traditional banking or Bitcoin. Same goal. Very different outcomes.",
-        instruction: "Send $10 to your sister in Colombia and see what happens:",
-        primeText: "You're about to see why millions of people are choosing Bitcoin over banks.",
-        question: "After seeing both options, which would you choose?",
-        options: [
-          "🏦 Traditional banking - I enjoy paying fees and waiting days",
-          "₿ Bitcoin - This feels like actual freedom"
-        ],
-        correctAnswer: 1,
-        explanation: "You just experienced why Bitcoin doesn't just improve the system — it replaces it entirely. No intermediaries. No permissions. No borders."
-      }
-    },
-    {
-      title: "Carlos Tries to Export Value",
-      type: "comparison",
-      content: {
-        title: "Carlos Tries to Export Value",
-        intro: "Carlos grows roses in Colombia and wants to sell them to Japan. But can he actually move his wealth out of a failing economic system? Let's see what tools he has.",
-        primeText: "This isn't just about Carlos — it's about anyone trying to preserve and transfer value across borders.",
-        comparison: {
-          traditional: {
-            title: " Traditional Banking Route",
-            problems: [
-              "USD to COP conversion at bank's rates",
-              "2-5 business day transfer delays",
-              "Multiple intermediary bank fees",
-              "Currency volatility during transfer period",
-              "Potential transaction blocks or freezes"
-            ],
-            outcome: "Carlos loses money to fees, delays, and volatility"
+        title: "📈 Bitcoin Doesn't Grow Like Tech Stocks",
+        subtitle: "Most people think Bitcoin grows exponentially. They're wrong.",
+        primeText: "Bitcoin grows like a power law system. Think: earthquakes, lightning, Internet traffic, wealth distribution.",
+        linearVsLog: {
+          linear: {
+            title: "📊 Linear Chart (What Most People See)",
+            description: "Looks like crazy bubbles and crashes",
+            perception: "Volatile, unpredictable, risky"
           },
-          bitcoin: {
-            title: "₿ Bitcoin Route", 
-            benefits: [
-              "Direct peer-to-peer transfer in ~10 minutes",
-              "No currency conversion needed",
-              "Minimal transaction fees (~$1-5)",
-              "No intermediary banks taking cuts",
-              "Unstoppable - no permission required"
-            ],
-            outcome: "Carlos receives full payment value quickly"
+          logLog: {
+            title: "📈 Log-Log Chart (The Real Pattern)", 
+            description: "Looks like a straight line trending up",
+            perception: "Steady, predictable power law growth"
           }
         },
-        question: "Which system would you choose for international business?",
-        demoLink: "https://layer-d.my.canva.site/bitcoin-transaction-demo-bydalia"
+        systems: {
+          exponential: {
+            title: "Exponential Systems",
+            examples: ["Population booms", "Viral spread", "Debt bubbles"],
+            characteristic: "Fast growth that hits limits and crashes",
+            lifespan: "Short bursts, then collapse"
+          },
+          powerLaw: {
+            title: "Power Law Systems", 
+            examples: ["Earthquakes", "Lightning", "Language use", "Bitcoin"],
+            characteristic: "Starts fast, stabilizes, becomes deeply resilient",
+            lifespan: "Slow, relentless growth over centuries"
+          }
+        },
+        question: "Which would you rather have—fast growth that burns out, or slow, relentless growth that compounds over centuries?",
+        insight: "Bitcoin has bubble behavior... but power law resilience."
       }
     },
+
     {
-      title: "Can You Trick the System?",
-      type: "double-spend-game",
+      title: "Interactive: Try to Double-Spend Energy",
+      type: "energy-double-spend",
       content: {
-        title: "🕵️ Can You Trick the System?",
-        subtitle: "See if you can pull off a double spend. What does the system do?",
-        primeText: "Every digital money system faces this challenge: how do you prevent someone from spending the same money twice?",
-        scenario: "Hiroshi's digital wallet has $430. He owes Carlos $430 for roses, but he also wants to keep that money for himself.",
-        instruction: "What if Hiroshi opens his wallet app on his phone AND his computer at the same time? Click both buttons quickly:",
-        buttons: ["📱 Phone: Send $430 to Carlos (for roses)", "💻 Computer: Send $430 to himself (to keep it)"],
-        conflictMessage: "💥 Uh-oh: Hiroshi just tried to spend the same $430 twice! Both transactions are being processed...",
-        insight: "Digital files are easy to copy — like photos, emails, or documents. With traditional digital money, what's stopping someone from 'copying' their payment and sending it twice?",
-        question: "In a world without banks watching every transaction, what prevents people like Hiroshi from cheating?",
-        options: [
-          "The wallet app would catch it automatically",
-          "Carlos would notice and complain", 
-          "Hiroshi's phone and computer would sync",
-          "There needs to be some way for everyone to agree on what really happened"
-        ],
-        correctAnswer: 3,
-        explanation: "Exactly! Without a bank as the middleman, we need a different way to make sure everyone agrees on the truth. Let's see how that works."
+        title: "⚡ Can You Spend the Same Energy Twice?",
+        subtitle: "Let's see what happens when you try to cheat an energy-based system",
+        primeText: "In the old system, digital money was just numbers in a database. But Bitcoin is different—it's backed by actual energy work.",
+        scenario: {
+          setup: "You're a Bitcoin miner with 1000 units of electricity",
+          challenge: "Try to use the same energy to mine two different blocks",
+          realWorld: "This is like trying to use the same gallon of gas to drive two different cars"
+        },
+        simulation: {
+          step1: "Spend 1000 energy units on Block A",
+          step2: "Try to spend the same 1000 units on Block B", 
+          result: "ERROR: Energy already consumed",
+          insight: "Physical laws prevent energy from being spent twice"
+        },
+        contrast: {
+          traditional: "Copy-paste digital numbers",
+          bitcoin: "Burn real energy that can't be recovered"
+        },
+        question: "What makes Bitcoin impossible to counterfeit?",
+        answer: "It's backed by actual energy work that can't be faked or duplicated."
       }
     },
+
     {
-      title: "How Does the System Know What's True?",
-      type: "consensus-game",
+      title: "Bitcoin Conquers Space AND Time",
+      type: "space-time-conquest", 
       content: {
-        title: "🤝 How Does the System Know What's True?",
-        primeText: "Without a bank to decide what's real, how does everyone agree on the truth?",
-        scenario: "After Hiroshi's sneaky attempt, three different people saw different things happen. Carlos, Hiroshi's wife, and a flower shop witness all have different stories.",
-        instruction: "Which version of events should everyone believe? Click on what you think is the truth:",
-        ledgers: [
-          { id: "Carlos", content: "I received $430 from Hiroshi for the roses ✅", valid: false },
-          { id: "Wife", content: "Hiroshi sent me back the $430 he owed me ✅", valid: false },
-          { id: "Witness", content: "Hiroshi tried to send the same money twice - FRAUD ⚠️", valid: true }
-        ],
-        questions: [
-          "How do we figure out who's telling the truth when there's no bank to ask?",
-          "What if thousands of people all saw different things happen?"
-        ],
-        solution: {
-          title: "The Community Watchdogs",
-          steps: [
-            "📱 Everyone keeps a copy of all transactions on their phones",
-            "👥 When someone tries to cheat, the community notices immediately",
-            "🗳️ The majority decides what really happened", 
-            "✅ Everyone updates their records to match the truth",
-            "🏆 Honest record-keepers get rewarded for their work"
-          ],
-          insight: "In Bitcoin, thousands of people around the world keep identical copies of every transaction. When someone tries to cheat, the majority quickly spots it and rejects the fraud.",
-          analogy: "It's like having thousands of security cameras all recording the same event. If one camera shows something different, you know that one is lying.",
-          finalQuestion: "If thousands of people all agree on what happened, and liars get caught immediately, is that more trustworthy than just trusting one bank?"
+        title: "🌍 Why Aliens Would Accept Bitcoin",
+        subtitle: "The first money that works across both space and time",
+        primeText: "Bitcoin solves problems that gold and fiat couldn't even address.",
+        propertyMatrix: {
+          properties: ["Scarce", "Divisible", "Portable (space)", "Durable (time)", "Verifiable", "Global/Neutral", "Costs to Produce"],
+          gold: [true, false, false, true, false, false, true],
+          fiat: [false, true, true, false, false, false, false], 
+          bitcoin: [true, true, true, true, true, true, true]
+        },
+        spaceConquest: {
+          title: "Conquering Space (Instant Global Transfer)",
+          gold: "❌ Can't send gold to space or across oceans quickly",
+          fiat: "❌ Limited by banking hours, borders, permissions",
+          bitcoin: "✅ Send to anyone, anywhere, anytime in ~10 minutes"
+        },
+        timeConquest: {
+          title: "Conquering Time (Preserving Value)", 
+          gold: "⚠️ Can be confiscated, hard to store securely",
+          fiat: "❌ Loses value to inflation over time",
+          bitcoin: "✅ Fixed supply, self-custody, inflation-proof"
+        },
+        alienTest: {
+          question: "Which money would aliens accept if they landed tomorrow?",
+          analysis: "They'd need something: globally recognized, mathematically verifiable, not controlled by any Earth government, based on universal principles (energy and math)."
         }
       }
     },
+
     {
-      title: "The Power of Decentralization",
-      type: "interactive",
+      title: "Liquidity = Energy Flow",
+      type: "energy-flow",
       content: {
-        primeText: "Hiroshi couldn't cheat. Carlos could move money. And no one had to ask permission. That's the power of decentralization — and it's not just a tech buzzword.",
-        scenario: "What happens when one central authority controls the money system versus when thousands of people share control?",
-        simulation: {
-          setup: "Let's simulate a few scenarios:",
-          scenarios: [
+        title: "🌊 Money as Energy Rivers",
+        subtitle: "Liquidity is like water—it needs pipes. Bitcoin has the deepest pipes.",
+        primeText: "Bitcoin transfers energy value at the speed of light through the deepest global pipes ever built.",
+        riverAnalogy: {
+          goldRiver: {
+            title: "🥇 Gold River",
+            flow: "Slow, blocked by dams (storage costs)",
+            pipes: "Armored trucks, vaults, banks",
+            speed: "Days to weeks for transfers"
+          },
+          fiatRiver: {
+            title: "💵 Fiat River", 
+            flow: "Controlled by gatekeepers (banks)",
+            pipes: "SWIFT network, correspondent banks",
+            speed: "Hours to days, limited by banking hours"
+          },
+          bitcoinRiver: {
+            title: "₿ Bitcoin River",
+            flow: "Unrestricted global flow", 
+            pipes: "Internet infrastructure, global nodes",
+            speed: "~10 minutes, 24/7/365"
+          }
+        },
+        energyFlow: {
+          concept: "When you send Bitcoin, you're transferring stored energy work",
+          process: "Energy → Mining → Secured value → Transfer → Received energy value",
+          advantage: "No energy is lost to middlemen taking cuts"
+        },
+        question: "What happens when more people and capital flow into a system that rewards effort and can't be inflated?",
+        insight: "Network effects compound: more users = more security = more value = more users."
+      }
+    },
+
+    {
+      title: "The Staircase, Not the Elevator",
+      type: "growth-pattern",
+      content: {
+        title: "📊 Bitcoin's Logarithmic Staircase",
+        subtitle: "It's not a straight line up. It's a series of step-functions.",
+        primeText: "Bitcoin grows through trial by fire—each crash cleanses, then the network gets stronger.",
+        staircase: {
+          pattern: "Up, plateau, up higher, plateau, up even higher...",
+          phases: [
             {
-              title: "Scenario 1: Central Point of Failure",
-              description: "A traditional bank goes down for maintenance",
-              outcome: "No one can send or receive money"
+              phase: "Discovery",
+              description: "New use case discovered",
+              example: "2010: Digital payments"
             },
             {
-              title: "Scenario 2: Bitcoin Node Goes Down",
-              description: "One or many Bitcoin nodes stop working",
-              outcome: "The network keeps running like nothing happened"
+              phase: "Adoption",
+              description: "Early adopters rush in", 
+              example: "2011: First exchanges open"
             },
             {
-              title: "Scenario 3: Attempted Censorship",
-              description: "Someone tries to block certain transactions",
-              outcome: "Bitcoin routes around the censorship"
+              phase: "Bubble",
+              description: "Speculation gets ahead of reality",
+              example: "2017: Everyone's talking about Bitcoin"
+            },
+            {
+              phase: "Correction", 
+              description: "Weak hands exit, infrastructure improves",
+              example: "2018: Building continues quietly"
+            },
+            {
+              phase: "Stabilization",
+              description: "New baseline established, stronger foundation",
+              example: "2019: Institutions start watching"
             }
           ]
         },
-        question: "Why is this kind of decentralization essential for global money?",
-        discussion: "Decentralization isn't just a technical feature—it's fundamental to creating unstoppable money. No single point of failure means no single point of control."
+        resilience: {
+          title: "Each Cycle Builds Resilience",
+          points: [
+            "More diverse user base",
+            "Better infrastructure", 
+            "Stronger security (more miners)",
+            "Clearer regulatory framework",
+            "Deeper liquidity pools"
+          ]
+        },
+        question: "Would you rather ride an elevator that might crash, or climb a staircase that gets stronger with each step?",
+        insight: "Bitcoin's volatility isn't a bug—it's how the system builds strength and finds true price discovery."
       }
     },
+
     {
-      title: "Why Bitcoin Can't Be Copied",
-      type: "discovery",
+      title: "Why This Time IS Different",
+      type: "uniqueness",
       content: {
         title: "🧬 Why Bitcoin Can't Be Copied",
-        primeText: "Try to copy this Bitcoin. Go ahead. Try.",
-        scenario: "Before Bitcoin, anything digital could be copied endlessly—music, photos, PDFs, you name it.\n\nBut money doesn't work if everyone can make their own version.\n\nBitcoin solved this by creating the first digitally scarce asset:\n\nA public ledger anyone can verify\nProof-of-work that makes cheating expensive\nA fixed supply that no one can change",
-        reflection: "If this is what Bitcoin is... what else can it fix?",
-        insights: [
-          "Now, we can have true digital property rights",
-          "Now, we can convert energy into security and trust", 
-          "Now, we have digital gold that anyone can hold"
-        ],
-        finalReflection: "We all want to control our own value. Bitcoin is the first tool that makes that possible."
+        subtitle: "Every digital asset before Bitcoin could be copied infinitely. Not anymore.",
+        primeText: "Bitcoin created the first digitally scarce asset. This isn't just innovation—it's a new law of physics for the digital world.",
+        beforeBitcoin: {
+          title: "Before Bitcoin: Everything Digital Could Be Copied",
+          examples: ["Music files", "Photos", "PDFs", "Emails", "Software", "Even 'digital money'"],
+          problem: "If money can be copied, it's not really money"
+        },
+        bitcoinSolution: {
+          title: "Bitcoin's Three-Part Solution",
+          parts: [
+            {
+              component: "Public Ledger",
+              function: "Everyone can verify who owns what",
+              analogy: "Like a transparent bank vault that everyone can audit"
+            },
+            {
+              component: "Proof-of-Work", 
+              function: "Makes cheating expensive (costs real energy)",
+              analogy: "Like requiring actual physical work to create money"
+            },
+            {
+              component: "Fixed Supply",
+              function: "No one can change the rules (21 million cap)",
+              analogy: "Like having natural laws that can't be repealed"
+            }
+          ]
+        },
+        impossibleToCopy: {
+          title: "Why Copies Fail",
+          network: "Bitcoin's network effect is its moat",
+          security: "Security comes from energy invested over time",
+          trust: "Trust is built through years of unstoppable operation"
+        },
+        finalQuestion: "If this is what Bitcoin is... what else can it fix?",
+        possibilities: [
+          "True digital property rights",
+          "Censorship-resistant savings", 
+          "Permissionless global commerce",
+          "Energy → value conversion anywhere on Earth"
+        ]
       }
     },
+
     {
-      title: "Before You Dismiss It",
-      type: "reflection",
+      title: "Your Next Steps Into Money 3.0",
+      type: "actionable-conclusion",
       content: {
-        title: "Before You Dismiss It",
-        intro: "You've seen how Bitcoin works. You've experienced the difference.",
-        questions: [
-          "Maybe you're thinking: 'This sounds too good to be true.'",
-          "Maybe you're wondering: 'What's the catch?'",
-          "Maybe you're asking: 'If it's so great, why isn't everyone using it?'"
+        title: "🚀 You Now Understand Money 3.0",
+        subtitle: "Most people still think in Money 2.0 terms. You see the bigger picture.",
+        primeText: "You're not just learning about Bitcoin—you're developing the mental models for the future of money.",
+        keyInsights: [
+          "Money evolution: Scarcity → Convenience → Energy-backed",
+          "Growth patterns: Not exponential bubbles, but power law resilience", 
+          "Trust models: Not borrowed from institutions, but earned through work",
+          "Network effects: Each user makes the system stronger for everyone"
         ],
-        mainQuestion: "These are fair questions. And they deserve honest answers.",
-        socratics: [
-          "What if the 'catch' is simply that it's new and most people don't understand it yet?",
-          "What if the biggest risk isn't using Bitcoin, but missing out on financial freedom?",
-          "What if the early adopters aren't crazy — they're just early?"
-        ],
-        conclusion: "The next modules will address your concerns directly. Because understanding the challenges is just as important as understanding the opportunities."
+        nextLevel: {
+          title: "Ready to Go Deeper?",
+          modules: [
+            "Proof of Work: See how energy becomes security",
+            "Digital Signatures: Understand true ownership without custodians", 
+            "Network Effects: Why Bitcoin gets stronger over time",
+            "Economic Incentives: How the system stays honest"
+          ]
+        },
+        practicalSteps: {
+          title: "Start Your Bitcoin Journey",
+          steps: [
+            "Download a wallet and secure your first $10 in Bitcoin",
+            "Send a small transaction to experience the difference",
+            "Learn about cold storage for larger amounts",
+            "Understand the difference between trading and hodling"
+          ]
+        },
+        finalReflection: "The question isn't whether Bitcoin will succeed. The question is: will you understand it before everyone else does?"
       }
     }
   ];
 
-  // Double Spend Game Component
-  const DoubleSpendGame = ({ content, onComplete }) => {
-    const [gameStep, setGameStep] = useState(0); // 0: setup, 1: voting, 2: results
-    const [votedFor, setVotedFor] = useState(Array(9).fill(null));
-    const [bribeUsed, setBribeUsed] = useState(false);
-    const [showFinalQuestion, setShowFinalQuestion] = useState(false);
+  // Evolution Timeline Component
+  const EvolutionTimeline = ({ content, onComplete }) => {
+    const [selectedVersion, setSelectedVersion] = useState(null);
+    const [showComparison, setShowComparison] = useState(false);
 
-    const voters = ['🧑‍💼', '🧑‍🌾', '🧕', '🧔‍♂️', '👩‍⚕️', '🧑‍🏫', '🧓', '🧑‍🎨', '👨‍🔬'];
-
-    const attemptDoubleSpend = () => {
-      setTimeout(() => setGameStep(1), 1500);
+    const handleVersionClick = (version) => {
+      setSelectedVersion(version);
     };
 
-    const castVotes = (withBribe = false) => {
-      setBribeUsed(withBribe);
-      const newVotes = voters.map((_, idx) => {
-        if (withBribe && idx < 3) return 'Daughter'; // Bribe worked on first 3
-        return Math.random() > 0.5 ? 'Carlos' : 'Daughter';
-      });
-      setVotedFor(newVotes);
-      setTimeout(() => setGameStep(2), 2000);
-    };
-
-    const countVotes = () => {
-      const carlosVotes = votedFor.filter((v) => v === 'Carlos').length;
-      const daughterVotes = votedFor.filter((v) => v === 'Daughter').length;
-      return carlosVotes > daughterVotes ? 'Carlos' : 'Daughter';
-    };
-
-    const winner = gameStep === 2 ? countVotes() : null;
-
-    if (gameStep === 0) {
-      return (
-        <div className="double-spend-game">
-          <div className="wallet-display">
-            <h3>💰 Hiroshi's Digital Wallet</h3>
-            <div className="balance">Balance: $430</div>
-            <div className="context">He needs to pay Carlos $430 for roses 🌹</div>
-          </div>
-
-          <div className="device-scenario">
-            <div className="scenario-text">
-              <p>Hiroshi gets sneaky: "What if I try to spend this money twice? Once to pay Carlos for the roses, and once as a graduation gift to my daughter?"</p>
-            </div>
-          </div>
-
-          <div className="transaction-preview">
-            <div className="transaction-box carlos-transaction">
-              <h4>📱 Transaction A</h4>
-              <p>Send $430 to Carlos (for roses)</p>
-            </div>
-            <div className="transaction-box daughter-transaction">
-              <h4>💻 Transaction B</h4>
-              <p>Send $430 to Daughter (graduation gift)</p>
-            </div>
-          </div>
-
-          <div className="attempt-section">
-            <button className="double-spend-btn" onClick={attemptDoubleSpend}>
-              🎯 Try to Send Both Transactions!
-            </button>
-            <p className="hint">Click to see what happens when Hiroshi tries to cheat...</p>
-          </div>
-        </div>
-      );
-    }
-
-    if (gameStep === 1) {
-      return (
-        <div className="double-spend-game">
-          <div className="conflict-detected">
-            <h3>🚨 Network Detects Conflict!</h3>
-            <p>Two transactions trying to spend the same $430! The network must decide which one is valid.</p>
-          </div>
-
-          <div className="voter-section">
-            <h4>🗳️ 9 Network Participants Are Voting:</h4>
-            <div className="voters">
-              {voters.map((voter, idx) => (
-                <div key={idx} className="voter">
-                  <span className="voter-emoji">{voter}</span>
-                  <div className="voter-status">Deciding...</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="voting-options">
-            <button className="vote-btn honest" onClick={() => castVotes(false)}>
-              Let Them Vote Honestly
-            </button>
-            <button className="vote-btn bribe" onClick={() => castVotes(true)}>
-              💰 Try to Bribe 3 Voters (Risky!)
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    if (gameStep === 2) {
-      return (
-        <div className="double-spend-game">
-          <div className="voting-results">
-            <h3>🗳️ Votes Are In!</h3>
-            <div className="voters">
-              {votedFor.map((vote, idx) => (
-                <div key={idx} className={`voter voted ${vote.toLowerCase()}`}>
-                  <span className="voter-emoji">{voters[idx]}</span>
-                  <div className="vote-choice">Voted: {vote}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="final-result">
-            <div className={`winner-announcement ${winner?.toLowerCase()}`}>
-              <h3>🏆 Network Decision: {winner} Wins!</h3>
-              <p>
-                {winner === 'Carlos' 
-                  ? "The transaction to Carlos (for roses) was accepted. Hiroshi's daughter got nothing."
-                  : "The transaction to Hiroshi's daughter was accepted. Carlos didn't get paid!"}
-              </p>
-            </div>
-
-            {bribeUsed && winner === 'Daughter' && (
-              <div className="bribe-success">
-                <p>💰 Your bribe worked! But now everyone knows the system can be corrupted...</p>
-              </div>
-            )}
-
-            {bribeUsed && winner === 'Carlos' && (
-              <div className="bribe-failed">
-                <p>💸 Your bribe failed! Not enough corrupt voters, and you lost your bribe money too.</p>
-              </div>
-            )}
-          </div>
-
-          <div className="ledger-update">
-            <h4>📒 Everyone's Ledger Now Shows:</h4>
-            <div className="ledger-entry">
-              Hiroshi → {winner}: $430 {winner === 'Carlos' ? '(roses payment)' : '(graduation gift)'}
-            </div>
-          </div>
-
-          {!showFinalQuestion && (
-            <button 
-              className="continue-button"
-              onClick={() => setShowFinalQuestion(true)}
-            >
-              What's the Problem Here?
-            </button>
-          )}
-
-          {showFinalQuestion && (
-            <div className="final-question-section">
-              <h3>🤔 What did you learn?</h3>
-              <div className="lesson-options">
-                <button className="lesson-btn" onClick={onComplete}>
-                  Only ONE transaction wins, but it's still not fair to the loser
-                </button>
-                <button className="lesson-btn" onClick={onComplete}>
-                  The network can be corrupted if enough people are dishonest
-                </button>
-                <button className="lesson-btn" onClick={onComplete}>
-                  We need a better way to prevent double spending attempts
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-  };
-
-  // Consensus Game Component
-  const ConsensusGame = ({ content, onComplete }) => {
-    const [selectedLedger, setSelectedLedger] = useState(null);
-    const [showQuestions, setShowQuestions] = useState(false);
-    const [showSolution, setShowSolution] = useState(false);
-    const [currentStep, setCurrentStep] = useState(0);
-
-    const handleLedgerSelect = (ledger) => {
-      setSelectedLedger(ledger);
-      setTimeout(() => setShowQuestions(true), 1000);
-    };
-
-    const showNextStep = () => {
-      if (currentStep < content.solution.steps.length) {
-        setCurrentStep(currentStep + 1);
-      } else {
-        setShowSolution(true);
-      }
+    const showFullComparison = () => {
+      setShowComparison(true);
     };
 
     return (
-      <div className="consensus-game">
-        <div className="scenario-setup">
-          <p>{content.scenario}</p>
-          <p><strong>{content.instruction}</strong></p>
+      <div className="evolution-timeline">
+        <div className="timeline-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
         </div>
 
-        <div className="ledger-options">
-          {content.ledgers.map((ledger, i) => (
-            <div
-              key={ledger.id}
-              className={`ledger-option ${selectedLedger?.id === ledger.id ? 'selected' : ''}`}
-              onClick={() => handleLedgerSelect(ledger)}
+        <div className="money-versions">
+          {content.versions.map((version, index) => (
+            <div 
+              key={index}
+              className={`version-card ${selectedVersion?.version === version.version ? 'selected' : ''}`}
+              onClick={() => handleVersionClick(version)}
             >
-              <h4>Ledger {ledger.id}</h4>
-              <p>{ledger.content}</p>
-              {selectedLedger?.id === ledger.id && (
-                <div className="selection-result">
-                  {ledger.valid ? "✅ Correct choice!" : "❌ Not quite..."}
+              <div className="version-header">
+                <span className="version-icon">{version.icon}</span>
+                <div className="version-info">
+                  <h3>Money {version.version}</h3>
+                  <h4>{version.name}</h4>
+                  <span className="version-period">{version.period}</span>
                 </div>
-              )}
+              </div>
+              
+              <div className="version-details">
+                <div className="version-row">
+                  <strong>Key Feature:</strong> {version.keyFeature}
+                </div>
+                <div className="version-row">
+                  <strong>Weakness:</strong> {version.weakness}
+                </div>
+                <div className="version-row">
+                  <strong>Energy Source:</strong> {version.energy}
+                </div>
+                <div className="version-row">
+                  <strong>Trust Model:</strong> {version.trust}
+                </div>
+              </div>
             </div>
           ))}
         </div>
 
-        {showQuestions && (
-          <div className="reflection-questions">
-            {content.questions.map((question, i) => (
-              <div key={i} className="question-bubble">
-                <p>❓ {question}</p>
-              </div>
-            ))}
-            <button className="reveal-button" onClick={() => setShowSolution(true)}>
-              Reveal the Answer
-            </button>
+        {selectedVersion && (
+          <div className="version-spotlight">
+            <h3>Deep Dive: {selectedVersion.name}</h3>
+            <p>{selectedVersion.keyFeature}</p>
+            <p><strong>Challenge:</strong> {selectedVersion.weakness}</p>
           </div>
         )}
 
-        {showSolution && (
-          <div className="solution-reveal">
-            <h3>{content.solution.title}</h3>
-            
-            <div className="consensus-steps">
-              {content.solution.steps.map((step, i) => (
-                <div key={i} className={`step-item ${i <= currentStep ? 'revealed' : ''}`}>
-                  {step}
-                </div>
-              ))}
-            </div>
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+          <div className="socratic-questions">
+            {content.socratics.map((question, index) => (
+              <div key={index} className="socratic-item">
+                <span className="question-bullet">💭</span>
+                <span>{question}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-            {currentStep < content.solution.steps.length ? (
-              <button className="next-step-button" onClick={showNextStep}>
-                Next Step
-              </button>
+        <button className="continue-button" onClick={onComplete}>
+          Understanding Money Evolution ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Energy Transformation Component
+  const EnergyTransformation = ({ content, onComplete }) => {
+    const [currentDemo, setCurrentDemo] = useState('toaster');
+    
+    return (
+      <div className="energy-transformation">
+        <div className="transformation-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="analogy-section">
+          <h3>{content.analogy.title}</h3>
+          <div className="comparison-flow">
+            {content.analogy.comparison.map((item, index) => (
+              <div key={index} className="flow-item">
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="transformation-demo">
+          <h3>⚡ Bitcoin's Energy Transformation</h3>
+          <div className="transformation-steps">
+            <div className="step">
+              <div className="step-icon">🔌</div>
+              <div className="step-content">
+                <h4>Input</h4>
+                <p>{content.transformation.input}</p>
+              </div>
+            </div>
+            <div className="arrow">→</div>
+            <div className="step">
+              <div className="step-icon">🖥️</div>
+              <div className="step-content">
+                <h4>Process</h4>
+                <p>{content.transformation.process}</p>
+              </div>
+            </div>
+            <div className="arrow">→</div>
+            <div className="step">
+              <div className="step-icon">🔐</div>
+              <div className="step-content">
+                <h4>Output</h4>
+                <p>{content.transformation.output}</p>
+              </div>
+            </div>
+            <div className="arrow">→</div>
+            <div className="step">
+              <div className="step-icon">₿</div>
+              <div className="step-content">
+                <h4>Result</h4>
+                <p>{content.transformation.result}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="cost-comparison">
+          <h3>💰 What Does It Cost to Create?</h3>
+          <div className="cost-grid">
+            <div className="cost-item gold">
+              <h4>🥇 Gold</h4>
+              <p>{content.costComparison.gold}</p>
+            </div>
+            <div className="cost-item fiat">
+              <h4>💵 Fiat</h4>
+              <p>{content.costComparison.fiat}</p>
+            </div>
+            <div className="cost-item bitcoin">
+              <h4>₿ Bitcoin</h4>
+              <p>{content.costComparison.bitcoin}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+          <div className="insight-box">
+            <div className="insight-icon">💡</div>
+            <p>{content.insight}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Energy → Money ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Power Law Discovery Component  
+  const PowerLawDiscovery = ({ content, onComplete }) => {
+    const [viewMode, setViewMode] = useState('linear');
+    const [selectedSystemType, setSelectedSystemType] = useState('exponential');
+
+    // Simulated Bitcoin price data for demonstration
+    const generateBitcoinData = (isLogScale = false) => {
+      const years = [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+      const prices = [0.01, 0.1, 1, 10, 100, 400, 400, 600, 10000, 4000, 7000, 20000, 50000, 20000, 30000];
+      
+      return years.map((year, index) => ({
+        year,
+        price: isLogScale ? Math.log10(prices[index]) : prices[index]
+      }));
+    };
+
+    return (
+      <div className="power-law-discovery">
+        <div className="discovery-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="chart-comparison">
+          <div className="chart-controls">
+            <button 
+              className={`chart-btn ${viewMode === 'linear' ? 'active' : ''}`}
+              onClick={() => setViewMode('linear')}
+            >
+              📊 Linear View
+            </button>
+            <button 
+              className={`chart-btn ${viewMode === 'loglog' ? 'active' : ''}`}
+              onClick={() => setViewMode('loglog')}
+            >
+              📈 Log-Log View
+            </button>
+          </div>
+
+          <div className="chart-display">
+            <div className={`chart ${viewMode}`}>
+              <h4>{viewMode === 'linear' ? content.linearVsLog.linear.title : content.linearVsLog.logLog.title}</h4>
+              <div className="chart-visual">
+                {viewMode === 'linear' ? (
+                  <div className="volatile-line">📈📉📈📉📈📉📈</div>
+                ) : (
+                  <div className="steady-line">📈📈📈📈📈📈📈</div>
+                )}
+              </div>
+              <p>{viewMode === 'linear' ? content.linearVsLog.linear.description : content.linearVsLog.logLog.description}</p>
+              <div className="perception">
+                <strong>Perception:</strong> {viewMode === 'linear' ? content.linearVsLog.linear.perception : content.linearVsLog.logLog.perception}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="systems-comparison">
+          <h3>📊 Two Types of Growth Systems</h3>
+          <div className="system-toggles">
+            <button 
+              className={`system-btn ${selectedSystemType === 'exponential' ? 'active' : ''}`}
+              onClick={() => setSelectedSystemType('exponential')}
+            >
+              Exponential Systems
+            </button>
+            <button 
+              className={`system-btn ${selectedSystemType === 'powerLaw' ? 'active' : ''}`}
+              onClick={() => setSelectedSystemType('powerLaw')}
+            >
+              Power Law Systems
+            </button>
+          </div>
+
+          <div className="system-details">
+            {selectedSystemType === 'exponential' ? (
+              <div className="system-info exponential">
+                <h4>{content.systems.exponential.title}</h4>
+                <div className="examples">
+                  <strong>Examples:</strong> {content.systems.exponential.examples.join(', ')}
+                </div>
+                <div className="characteristic">
+                  <strong>Pattern:</strong> {content.systems.exponential.characteristic}
+                </div>
+                <div className="lifespan">
+                  <strong>Lifespan:</strong> {content.systems.exponential.lifespan}
+                </div>
+              </div>
             ) : (
-              <div className="final-insights">
-                <div className="insight-box">
-                  <p>🧠 {content.solution.insight}</p>
+              <div className="system-info power-law">
+                <h4>{content.systems.powerLaw.title}</h4>
+                <div className="examples">
+                  <strong>Examples:</strong> {content.systems.powerLaw.examples.join(', ')}
                 </div>
-                <div className="analogy-box">
-                  <p>🗨️ {content.solution.analogy}</p>
+                <div className="characteristic">
+                  <strong>Pattern:</strong> {content.systems.powerLaw.characteristic}
                 </div>
-                <div className="final-question">
-                  <h3>🤔 {content.solution.finalQuestion}</h3>
-                  <button className="continue-button" onClick={onComplete}>
-                    Continue to Learn More
-                  </button>
+                <div className="lifespan">
+                  <strong>Lifespan:</strong> {content.systems.powerLaw.lifespan}
                 </div>
               </div>
             )}
           </div>
+        </div>
+
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+          <div className="insight-box">
+            <div className="insight-icon">💡</div>
+            <p>{content.insight}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Power Law Thinking ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Energy Double Spend Game Component
+  const EnergyDoubleSpend = ({ content, onComplete }) => {
+    const [gameState, setGameState] = useState('setup');
+    const [energyUsed, setEnergyUsed] = useState(0);
+    const [attempted, setAttempted] = useState(false);
+
+    const attemptDoubleSpend = () => {
+      setAttempted(true);
+      setEnergyUsed(1000);
+      setTimeout(() => setGameState('result'), 2000);
+    };
+
+    const trySecondSpend = () => {
+      setGameState('blocked');
+    };
+
+    return (
+      <div className="energy-double-spend">
+        <div className="game-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        {gameState === 'setup' && (
+          <div className="game-setup">
+            <div className="scenario">
+              <h3>⚡ Your Mining Operation</h3>
+              <div className="energy-display">
+                <div className="energy-meter">
+                  <span className="energy-amount">1000</span>
+                  <span className="energy-unit">Energy Units Available</span>
+                </div>
+              </div>
+              
+              <p>{content.scenario.setup}</p>
+              <p><strong>Challenge:</strong> {content.scenario.challenge}</p>
+              <p><em>Real world analogy:</em> {content.scenario.realWorld}</p>
+            </div>
+
+            <div className="mining-blocks">
+              <div className="block-option">
+                <h4>🧱 Block A</h4>
+                <p>Mine this block first</p>
+                <button className="mine-button" onClick={attemptDoubleSpend}>
+                  Spend 1000 Energy Units
+                </button>
+              </div>
+              
+              <div className="block-option">
+                <h4>🧱 Block B</h4>
+                <p>Try to mine with same energy</p>
+                <button 
+                  className="mine-button disabled"
+                  disabled={!attempted}
+                  onClick={trySecondSpend}
+                >
+                  Spend Same 1000 Units Again?
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {gameState === 'result' && (
+          <div className="game-result">
+            <div className="energy-consumed">
+              <h3>⚡ Energy Consumed</h3>
+              <div className="consumption-display">
+                <div className="consumed">1000 units → Block A ✅</div>
+                <div className="remaining">0 units remaining</div>
+              </div>
+            </div>
+            
+            <div className="next-attempt">
+              <p>Now try to mine Block B with the same energy...</p>
+              <button className="mine-button" onClick={trySecondSpend}>
+                Attempt Block B
+              </button>
+            </div>
+          </div>
+        )}
+
+        {gameState === 'blocked' && (
+          <div className="game-blocked">
+            <div className="error-message">
+              <h3>🚫 ERROR: Energy Already Consumed</h3>
+              <p>The same energy cannot be spent twice!</p>
+            </div>
+
+            <div className="physics-lesson">
+              <h4>⚖️ Physical Laws Apply</h4>
+              <div className="law-explanation">
+                <p>Just like in the physical world:</p>
+                <ul>
+                  <li>You can't burn the same gallon of gas twice</li>
+                  <li>You can't spend the same dollar bill twice</li>
+                  <li>You can't use the same energy to mine two blocks</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="contrast-section">
+              <h4>🔄 Traditional vs Bitcoin</h4>
+              <div className="contrast-grid">
+                <div className="traditional">
+                  <h5>💾 Traditional Digital Money</h5>
+                  <p>{content.contrast.traditional}</p>
+                </div>
+                <div className="bitcoin">
+                  <h5>⚡ Bitcoin</h5>
+                  <p>{content.contrast.bitcoin}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="final-question">
+              <h3>🤔 {content.question}</h3>
+              <div className="answer-box">
+                <p><strong>Answer:</strong> {content.answer}</p>
+              </div>
+            </div>
+
+            <button className="continue-button" onClick={onComplete}>
+              Energy Physics ✓
+            </button>
+          </div>
         )}
       </div>
     );
   };
 
-  // Simulator Components
-  const FiatColumn = () => {
-    const [step, setStep] = useState(0);
-    const [delayed, setDelayed] = useState(false);
+  // Space Time Conquest Component
+  const SpaceTimeConquest = ({ content, onComplete }) => {
+    const [selectedProperty, setSelectedProperty] = useState(null);
+    const [showAlienTest, setShowAlienTest] = useState(false);
 
-    useEffect(() => {
-      if ([1, 2, 3, 4, 5, 6, 7, 8].includes(step)) {
-        setDelayed(true);
-        // Longer delays for more realistic feel
-        const delayTime = step <= 3 ? 2500 : 3000;
-        const timeout = setTimeout(() => setDelayed(false), delayTime);
-        return () => clearTimeout(timeout);
-      }
-    }, [step]);
-
-    const steps = [
-      "Click 'Send $10' to start.",
-      "Your US bank is verifying your identity...",
-      "Checking for fraud and compliance (AML/KYC)...",
-      "Converting USD to Colombian Pesos (Fee: $1.50)...",
-      "Routing through correspondent bank in New York...",
-      "Routing through correspondent bank in Miami...", 
-      "Connecting to Colombian partner bank...",
-      "Your sister's Colombian bank is processing...",
-      "Additional verification for international transfer...",
-      "Transfer delayed 3-5 business days...",
-      "Complete! Your sister received: $6.50 worth in Colombian Pesos."
-    ];
+    const PropertyMatrix = () => (
+      <div className="property-matrix">
+        <div className="matrix-header">
+          <div className="property-cell header">Property</div>
+          <div className="property-cell header gold">🥇 Gold</div>
+          <div className="property-cell header fiat">💵 Fiat</div>
+          <div className="property-cell header bitcoin">₿ Bitcoin</div>
+        </div>
+        
+        {content.propertyMatrix.properties.map((property, index) => (
+          <div key={index} className="matrix-row">
+            <div className="property-cell property-name">{property}</div>
+            <div className={`property-cell ${content.propertyMatrix.gold[index] ? 'yes' : 'no'}`}>
+              {content.propertyMatrix.gold[index] ? '✅' : '❌'}
+            </div>
+            <div className={`property-cell ${content.propertyMatrix.fiat[index] ? 'yes' : 'no'}`}>
+              {content.propertyMatrix.fiat[index] ? '✅' : '❌'}
+            </div>
+            <div className={`property-cell ${content.propertyMatrix.bitcoin[index] ? 'yes' : 'no'}`}>
+              {content.propertyMatrix.bitcoin[index] ? '✅' : '❌'}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
 
     return (
-      <div className="simulator-column fiat-column">
-        <h3>🏦 Traditional Bank</h3>
-        <div className="simulator-content">
-          <p className="simulator-step">{steps[step]}</p>
-          <button
-            onClick={() => setStep((prev) => Math.min(prev + 1, steps.length - 1))}
-            disabled={delayed || step === steps.length - 1}
-            className={`simulator-button ${delayed ? 'disabled' : ''}`}
-          >
-            {step === 0 ? "Send $10" : delayed ? "Processing..." : "Next"}
-          </button>
-          {step === steps.length - 1 && (
-            <div className="final-result fiat-result">
-              <p>❌ Total fees: $3.50 • Delays: 3-5 days</p>
-              <p className="conversion-loss">Exchange rate loss + processing fees</p>
-            </div>
-          )}
+      <div className="space-time-conquest">
+        <div className="conquest-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
         </div>
+
+        <PropertyMatrix />
+
+        <div className="conquest-dimensions">
+          <div className="dimension-card space">
+            <h3>{content.spaceConquest.title}</h3>
+            <div className="conquest-comparison">
+              <div className="conquest-item gold">
+                <strong>🥇 Gold:</strong> {content.spaceConquest.gold}
+              </div>
+              <div className="conquest-item fiat">
+                <strong>💵 Fiat:</strong> {content.spaceConquest.fiat}
+              </div>
+              <div className="conquest-item bitcoin">
+                <strong>₿ Bitcoin:</strong> {content.spaceConquest.bitcoin}
+              </div>
+            </div>
+          </div>
+
+          <div className="dimension-card time">
+            <h3>{content.timeConquest.title}</h3>
+            <div className="conquest-comparison">
+              <div className="conquest-item gold">
+                <strong>🥇 Gold:</strong> {content.timeConquest.gold}
+              </div>
+              <div className="conquest-item fiat">
+                <strong>💵 Fiat:</strong> {content.timeConquest.fiat}
+              </div>
+              <div className="conquest-item bitcoin">
+                <strong>₿ Bitcoin:</strong> {content.timeConquest.bitcoin}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="alien-test">
+          <h3>👽 {content.alienTest.question}</h3>
+          <div className="alien-analysis">
+            <p>{content.alienTest.analysis}</p>
+          </div>
+          
+          <div className="alien-choice">
+            <div className="alien-thinking">
+              <div className="alien-emoji">👽</div>
+              <div className="thought-bubble">
+                "We need money that works across galaxies, is mathematically verifiable, 
+                and isn't controlled by any planetary government..."
+              </div>
+            </div>
+            <div className="alien-conclusion">
+              <strong>Alien Choice:</strong> Bitcoin ₿
+            </div>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Space & Time Mastery ✓
+        </button>
       </div>
     );
   };
 
-  const BitcoinColumn = () => {
-    const [step, setStep] = useState(0);
-    const [btcPrice, setBtcPrice] = useState(null);
-    const [btcAmount, setBtcAmount] = useState(null);
-    const [loading, setLoading] = useState(false);
-
-    const fetchBitcoinPrice = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-        const data = await response.json();
-        const price = data.bitcoin.usd;
-        setBtcPrice(price);
-        setBtcAmount((10 / price).toFixed(8)); // Convert $10 to BTC
-      } catch (error) {
-        console.error('Error fetching Bitcoin price:', error);
-        setBtcPrice(50000); // Fallback price
-        setBtcAmount((10 / 50000).toFixed(8));
-      }
-      setLoading(false);
-    };
-
-    useEffect(() => {
-      fetchBitcoinPrice();
-    }, []);
-
-    const getStepText = () => {
-      switch(step) {
-        case 0:
-          return "Click 'Send $10' to start.";
-        case 1:
-          return loading ? "Getting current Bitcoin price..." : 
-                 btcPrice ? `Converting $10 → ${btcAmount} BTC (@ $${btcPrice.toLocaleString()})` : 
-                 "Converting $10 to Bitcoin...";
-        case 2:
-          return "Sending Bitcoin directly to your sister in Colombia...";
-        case 3:
-          return "Recording transaction on the global Bitcoin ledger...";
-        case 4:
-          return `Success! Your sister received ${btcAmount} BTC (worth $10 USD)`;
-        default:
-          return "";
-      }
-    };
+  // Energy Flow Component
+  const EnergyFlow = ({ content, onComplete }) => {
+    const [selectedRiver, setSelectedRiver] = useState('bitcoin');
 
     return (
-      <div className="simulator-column bitcoin-column">
-        <h3>₿ Bitcoin</h3>
-        <div className="simulator-content">
-          <p className="simulator-step">{getStepText()}</p>
-          <button
-            onClick={() => setStep((prev) => Math.min(prev + 1, 4))}
-            disabled={step === 4 || loading}
-            className="simulator-button bitcoin-button"
-          >
-            {step === 0 ? "Send $10" : loading ? "Loading..." : "Next"}
-          </button>
-          {step === 4 && (
-            <div className="final-result bitcoin-result">
-              <p>✅ Fee: ~$0.50 • Time: ~10 minutes</p>
-              <p className="btc-conversion">
-                Sent: {btcAmount} BTC
-              </p>
+      <div className="energy-flow">
+        <div className="flow-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="river-comparison">
+          <h3>🌊 Three Money Rivers</h3>
+          <div className="river-selector">
+            {Object.entries(content.riverAnalogy).map(([key, river]) => (
+              <button
+                key={key}
+                className={`river-btn ${selectedRiver === key ? 'active' : ''}`}
+                onClick={() => setSelectedRiver(key)}
+              >
+                {river.title}
+              </button>
+            ))}
+          </div>
+
+          <div className="river-details">
+            {Object.entries(content.riverAnalogy).map(([key, river]) => (
+              <div
+                key={key}
+                className={`river-card ${selectedRiver === key ? 'active' : ''}`}
+              >
+                <h4>{river.title}</h4>
+                <div className="river-property">
+                  <strong>Flow:</strong> {river.flow}
+                </div>
+                <div className="river-property">
+                  <strong>Infrastructure:</strong> {river.pipes}
+                </div>
+                <div className="river-property">
+                  <strong>Speed:</strong> {river.speed}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="energy-transformation-flow">
+          <h3>⚡ Bitcoin's Energy Flow Process</h3>
+          <div className="flow-concept">
+            <p>{content.energyFlow.concept}</p>
+          </div>
+          <div className="flow-process">
+            <div className="process-steps">
+              {content.energyFlow.process.split(' → ').map((step, index) => (
+                <div key={index} className="process-step">
+                  <span className="step-number">{index + 1}</span>
+                  <span className="step-text">{step}</span>
+                  {index < content.energyFlow.process.split(' → ').length - 1 && (
+                    <div className="step-arrow">→</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flow-advantage">
+            <div className="advantage-icon">💡</div>
+            <p><strong>Key Advantage:</strong> {content.energyFlow.advantage}</p>
+          </div>
+        </div>
+
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+          <div className="insight-box">
+            <div className="insight-icon">🔄</div>
+            <p>{content.insight}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Energy Flow Mastery ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Growth Pattern Component
+  const GrowthPattern = ({ content, onComplete }) => {
+    const [selectedPhase, setSelectedPhase] = useState(0);
+    const [showResilience, setShowResilience] = useState(false);
+
+    return (
+      <div className="growth-pattern">
+        <div className="pattern-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="staircase-visual">
+          <h3>📊 The Bitcoin Staircase Pattern</h3>
+          <div className="pattern-description">
+            <p><strong>Pattern:</strong> {content.staircase.pattern}</p>
+          </div>
+          
+          <div className="phases-timeline">
+            {content.staircase.phases.map((phase, index) => (
+              <div
+                key={index}
+                className={`phase-card ${selectedPhase === index ? 'active' : ''}`}
+                onClick={() => setSelectedPhase(index)}
+              >
+                <div className="phase-number">{index + 1}</div>
+                <div className="phase-content">
+                  <h4>{phase.phase}</h4>
+                  <p>{phase.description}</p>
+                  <div className="phase-example">
+                    <em>{phase.example}</em>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {selectedPhase !== null && (
+            <div className="phase-spotlight">
+              <h4>Phase Deep Dive: {content.staircase.phases[selectedPhase].phase}</h4>
+              <p>{content.staircase.phases[selectedPhase].description}</p>
+              <p><strong>Historical Example:</strong> {content.staircase.phases[selectedPhase].example}</p>
             </div>
           )}
         </div>
+
+        <div className="resilience-section">
+          <h3>{content.resilience.title}</h3>
+          <button 
+            className="show-resilience-btn"
+            onClick={() => setShowResilience(!showResilience)}
+          >
+            {showResilience ? 'Hide Details' : 'Show How Each Cycle Builds Strength'}
+          </button>
+          
+          {showResilience && (
+            <div className="resilience-points">
+              {content.resilience.points.map((point, index) => (
+                <div key={index} className="resilience-point">
+                  <div className="point-icon">🏗️</div>
+                  <span>{point}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+          <div className="insight-box">
+            <div className="insight-icon">🪜</div>
+            <p>{content.insight}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Growth Pattern Understanding ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Uniqueness Component
+  const Uniqueness = ({ content, onComplete }) => {
+    const [selectedSolution, setSelectedSolution] = useState(0);
+    const [showPossibilities, setShowPossibilities] = useState(false);
+
+    return (
+      <div className="uniqueness">
+        <div className="uniqueness-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="before-bitcoin">
+          <h3>{content.beforeBitcoin.title}</h3>
+          <div className="examples-grid">
+            {content.beforeBitcoin.examples.map((example, index) => (
+              <div key={index} className="example-item">
+                <span className="copy-icon">📋</span>
+                <span>{example}</span>
+              </div>
+            ))}
+          </div>
+          <div className="problem-statement">
+            <div className="problem-icon">⚠️</div>
+            <p><strong>The Problem:</strong> {content.beforeBitcoin.problem}</p>
+          </div>
+        </div>
+
+        <div className="bitcoin-solution">
+          <h3>{content.bitcoinSolution.title}</h3>
+          <div className="solution-parts">
+            {content.bitcoinSolution.parts.map((part, index) => (
+              <div
+                key={index}
+                className={`solution-part ${selectedSolution === index ? 'active' : ''}`}
+                onClick={() => setSelectedSolution(index)}
+              >
+                <div className="part-number">{index + 1}</div>
+                <div className="part-content">
+                  <h4>{part.component}</h4>
+                  <p><strong>Function:</strong> {part.function}</p>
+                  <p><em>Analogy:</em> {part.analogy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="impossible-to-copy">
+          <h3>{content.impossibleToCopy.title}</h3>
+          <div className="copy-reasons">
+            <div className="reason-item">
+              <div className="reason-icon">🌐</div>
+              <div className="reason-content">
+                <strong>Network Effect:</strong> {content.impossibleToCopy.network}
+              </div>
+            </div>
+            <div className="reason-item">
+              <div className="reason-icon">🔒</div>
+              <div className="reason-content">
+                <strong>Security Model:</strong> {content.impossibleToCopy.security}
+              </div>
+            </div>
+            <div className="reason-item">
+              <div className="reason-icon">🤝</div>
+              <div className="reason-content">
+                <strong>Trust Foundation:</strong> {content.impossibleToCopy.trust}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="future-possibilities">
+          <h3>🔮 {content.finalQuestion}</h3>
+          <button 
+            className="show-possibilities-btn"
+            onClick={() => setShowPossibilities(!showPossibilities)}
+          >
+            {showPossibilities ? 'Hide Possibilities' : 'Explore What Bitcoin Enables'}
+          </button>
+          
+          {showPossibilities && (
+            <div className="possibilities-grid">
+              {content.possibilities.map((possibility, index) => (
+                <div key={index} className="possibility-item">
+                  <div className="possibility-icon">🚀</div>
+                  <span>{possibility}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Uniqueness Understanding ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Actionable Conclusion Component
+  const ActionableConclusion = ({ content, onComplete }) => {
+    const [selectedTab, setSelectedTab] = useState('insights');
+
+    return (
+      <div className="actionable-conclusion">
+        <div className="conclusion-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="conclusion-tabs">
+          <button
+            className={`tab-btn ${selectedTab === 'insights' ? 'active' : ''}`}
+            onClick={() => setSelectedTab('insights')}
+          >
+            🧠 Key Insights
+          </button>
+          <button
+            className={`tab-btn ${selectedTab === 'modules' ? 'active' : ''}`}
+            onClick={() => setSelectedTab('modules')}
+          >
+            📚 Next Level
+          </button>
+          <button
+            className={`tab-btn ${selectedTab === 'practical' ? 'active' : ''}`}
+            onClick={() => setSelectedTab('practical')}
+          >
+            🚀 Take Action
+          </button>
+        </div>
+
+        <div className="tab-content">
+          {selectedTab === 'insights' && (
+            <div className="insights-section">
+              <h3>🎯 What You've Mastered</h3>
+              <div className="insights-grid">
+                {content.keyInsights.map((insight, index) => (
+                  <div key={index} className="insight-item">
+                    <div className="insight-icon">💡</div>
+                    <span>{insight}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'modules' && (
+            <div className="modules-section">
+              <h3>{content.nextLevel.title}</h3>
+              <div className="modules-grid">
+                {content.nextLevel.modules.map((module, index) => (
+                  <div key={index} className="module-preview">
+                    <div className="module-icon">🔥</div>
+                    <span>{module}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'practical' && (
+            <div className="practical-section">
+              <h3>{content.practicalSteps.title}</h3>
+              <div className="steps-list">
+                {content.practicalSteps.steps.map((step, index) => (
+                  <div key={index} className="practical-step">
+                    <div className="step-number">{index + 1}</div>
+                    <span>{step}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="final-reflection">
+          <div className="reflection-box">
+            <div className="reflection-icon">🎯</div>
+            <p><strong>Final Thought:</strong> {content.finalReflection}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Ready for the Future ✓
+        </button>
       </div>
     );
   };
 
   const renderStep = (step, index) => {
-    if (!step) return null;
-
     switch (step.type) {
-      case 'double-spend-game':
-        return (
-          <div className="step-content game-step">
-            <div className="module-header-box">
-              <h2>{step.content.title}</h2>
-              <div className="intro-text">
-                <p>{step.content.subtitle}</p>
-                {step.content.primeText && (
-                  <p className="prime-text">{step.content.primeText}</p>
-                )}
-                <p>{step.content.scenario}</p>
-                <p><strong>{step.content.instruction}</strong></p>
-              </div>
-            </div>
-
-            <DoubleSpendGame 
-              content={step.content} 
-              onComplete={() => handleStepComplete(index)} 
-            />
-          </div>
-        );
-
-      case 'consensus-game':
-        return (
-          <div className="step-content game-step">
-            <div className="module-header-box">
-              <h2>{step.content.title}</h2>
-              {step.content.primeText && (
-                <div className="intro-text">
-                  <p className="prime-text">{step.content.primeText}</p>
-                </div>
-              )}
-            </div>
-
-            <ConsensusGame 
-              content={step.content} 
-              onComplete={() => handleStepComplete(index)} 
-            />
-          </div>
-        );
-
-      case 'simulator':
-        return (
-          <div className="step-content simulator-step">
-            <div className="module-header-box">
-              <h2>{step.title}</h2>
-              <div className="intro-text">
-                {step.content.primeText && (
-                  <p className="prime-text">{step.content.primeText}</p>
-                )}
-                <p>{step.content.scenario}</p>
-                <p><strong>{step.content.instruction}</strong></p>
-              </div>
-            </div>
-
-            <div className="simulator-container">
-              <div className="simulator-grid">
-                <FiatColumn />
-                <BitcoinColumn />
-              </div>
-            </div>
-
-            <div className="quiz-content">
-              <h3>🤔 {step.content.question}</h3>
-              <div className="options">
-                {step.content.options.map((option, i) => (
-                  <button
-                    key={i}
-                    className="option-button"
-                    onClick={() => {
-                      if (i === step.content.correctAnswer) {
-                        handleStepComplete(index);
-                      }
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-              {step.content.explanation && (
-                <div className="feedback-section correct">
-                  <p className="feedback-result">✅ Correct!</p>
-                  <p className="takeaway">{step.content.explanation}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-
-      case 'comparison':
-        return (
-          <div className="step-content comparison-step">
-            <div className="module-header-box">
-              <h2>{step.content.title}</h2>
-              <div className="intro-text">
-                {step.content.primeText && (
-                  <p className="prime-text">{step.content.primeText}</p>
-                )}
-                <p>{step.content.intro}</p>
-              </div>
-              <div className="demo-section">
-                <h3>🔍 See Bitcoin in Action</h3>
-                <p>Experience how a Bitcoin transaction works compared to traditional banking:</p>
-                <button
-                  className="link-button"
-                  onClick={() => window.open(step.content.demoLink, '_blank')}
-                >
-                  Try Bitcoin Transaction Demo
-                </button>
-              </div>
-            </div>
-
-            <div className="comparison-container">
-
-              <div className="comparison-grid">
-                <div className="traditional-side">
-                  <h3>{step.content.comparison.traditional.title}</h3>
-                  <div className="problems-list">
-                    {step.content.comparison.traditional.problems.map((problem, i) => (
-                      <div key={i} className="problem-item">
-                        <span className="problem-icon">❌</span>
-                        <span>{problem}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="outcome traditional-outcome">
-                    <strong>Result:</strong> {step.content.comparison.traditional.outcome}
-                  </div>
-                </div>
-
-                <div className="bitcoin-side">
-                  <h3>{step.content.comparison.bitcoin.title}</h3>
-                  <div className="benefits-list">
-                    {step.content.comparison.bitcoin.benefits.map((benefit, i) => (
-                      <div key={i} className="benefit-item">
-                        <span className="benefit-icon">✅</span>
-                        <span>{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="outcome bitcoin-outcome">
-                    <strong>Result:</strong> {step.content.comparison.bitcoin.outcome}
-                  </div>
-                </div>
-              </div>
-
-              <div className="reflection-question">
-                <h3>🤔 {step.content.question}</h3>
-                <button 
-                  className="continue-button"
-                  onClick={() => handleStepComplete(index)}
-                >
-                  I See the Difference
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 'reflection':
-        return (
-          <div className="step-content reflection-step">
-            <div className="module-header-box">
-              <h2>{step.content.title}</h2>
-            </div>
-            
-            <div className="reflection-content">
-              <h3>{step.content.intro}</h3>
-              <div className="problem-questions">
-                {step.content.questions.map((question, i) => (
-                  <p key={i} className="problem-question">{question}</p>
-                ))}
-              </div>
-              
-              <div className="main-question">
-                <h3>{step.content.mainQuestion}</h3>
-              </div>
-              
-              <div className="socratic-questions">
-                {step.content.socratics.map((question, i) => (
-                  <div key={i} className="socratic-question">
-                    <span className="question-mark">🤔</span>
-                    <p>{question}</p>
-                  </div>
-                ))}
-              </div>
-              
-              {step.content.conclusion && (
-                <div className="conclusion-section">
-                  <p>{step.content.conclusion}</p>
-                </div>
-              )}
-              
-              <button 
-                className="continue-button"
-                onClick={() => handleStepComplete(index)}
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-        );
-
-      case 'intro':
-        return (
-          <div className="step-content intro-step">
-            <div className="module-header-box">
-              <h2>{step.content.title}</h2>
-              {step.content.subtitle && (
-                <p className="subtitle">{step.content.subtitle}</p>
-              )}
-            </div>
-            <div className="content-text">
-              <p className="intro-text">{step.content.text}</p>
-              <button 
-                className="continue-button"
-                onClick={() => handleStepComplete(index)}
-              >
-                {index === 1 ? 'I Want to See This' : 'Let\'s Explore'}
-              </button>
-            </div>
-          </div>
-        );
+      case 'evolution-timeline':
+        return <EvolutionTimeline content={step.content} onComplete={() => handleStepComplete(index)} />;
       
-      case 'interactive':
-        return (
-          <div className="step-content interactive-step">
-            <div className="module-header-box">
-              <h2>{step.title}</h2>
-              <div className="intro-text">
-                {step.content.primeText && (
-                  <p className="prime-text">{step.content.primeText}</p>
-                )}
-                <p>{step.content.scenario}</p>
-              </div>
-            </div>
-
-            {step.content.steps && (
-              <div className="scenario-section">
-                <ul className="scenario-steps">
-                  {step.content.steps.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {step.content.simulation && (
-              <div className="simulation-container">
-                <p>{step.content.simulation.setup}</p>
-                <div className="scenarios-grid">
-                  {step.content.simulation.scenarios.map((scenario, i) => (
-                    <div key={i} className="scenario-card">
-                      <h4>{scenario.title}</h4>
-                      <p>{scenario.description}</p>
-                      <div className="outcome">Outcome: {scenario.outcome}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {step.content.question && (
-              <div className="quiz-content">
-                <h3>🤔 {step.content.question}</h3>
-                {step.content.options && (
-                  <div className="options">
-                    {step.content.options.map((option, i) => (
-                      <button
-                        key={i}
-                        className="option-button"
-                        onClick={() => {
-                          if (i === step.content.correctAnswer) {
-                            handleStepComplete(index);
-                          }
-                        }}
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {step.content.explanation && (
-                  <div className="feedback-section correct">
-                    <p className="feedback-result">✅ Correct!</p>
-                    <p className="takeaway">{step.content.explanation}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {step.content.discussion && (
-              <div className="key-points">
-                <p>{step.content.discussion}</p>
-              </div>
-            )}
-
-            {step.content.question && !step.content.options && (
-              <button 
-                className="continue-button"
-                onClick={() => handleStepComplete(index)}
-              >
-                Continue
-              </button>
-            )}
-          </div>
-        );
-
-      case 'discovery':
-        return (
-          <div className="step-content discovery-step">
-            <div className="module-header-box">
-              <h2>{step.content.title || step.title}</h2>
-              {step.content.primeText && (
-                <div className="intro-text">
-                  <p className="prime-text">{step.content.primeText}</p>
-                </div>
-              )}
-            </div>
-
-            <div className="quiz-content">
-              <div className="scenario-section">
-                <h3>🔍 Scenario</h3>
-                <p>{step.content.scenario}</p>
-              </div>
-
-              {step.content.thoughtExperiment && (
-                <div className="thought-experiment">
-                  <h3>💭 Think About It</h3>
-                  <p>{step.content.thoughtExperiment}</p>
-                  
-                  <div className="hints-container">
-                    <h4>Hints:</h4>
-                    {step.content.hints.map((hint, i) => (
-                      <div key={i} className="hint-card">
-                        <span className="hint-number">{i + 1}</span>
-                        <p>{hint}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {step.content.reflection && (
-                <div className="challenge-section">
-                  <h3>🤔 {step.content.reflection}</h3>
-                  <div className="insights-grid">
-                    {step.content.insights.map((insight, i) => (
-                      <div key={i} className="insight-card">
-                        <span className="insight-number">{i + 1}</span>
-                        <p>{insight}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {step.content.revelation && (
-                <div className="revelation-section">
-                  <h3>💡 Discovery</h3>
-                  <p>{step.content.revelation}</p>
-                </div>
-              )}
-
-              {step.content.finalReflection && (
-                <div className="final-reflection">
-                  <h3>💡 The Big Picture</h3>
-                  <p>{step.content.finalReflection}</p>
-                </div>
-              )}
-
-              <button 
-                className="continue-button"
-                onClick={() => handleStepComplete(index)}
-              >
-                {step.content.finalReflection ? 'Ready for More' : 'I Understand'}
-              </button>
-            </div>
-          </div>
-        );
-
+      case 'energy-transformation':
+        return <EnergyTransformation content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'power-law-discovery':
+        return <PowerLawDiscovery content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'energy-double-spend':
+        return <EnergyDoubleSpend content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'space-time-conquest':
+        return <SpaceTimeConquest content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'energy-flow':
+        return <EnergyFlow content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'growth-pattern':
+        return <GrowthPattern content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'uniqueness':
+        return <Uniqueness content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'actionable-conclusion':
+        return <ActionableConclusion content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
       default:
-        return null;
+        return (
+          <div className="step-content">
+            <h2>{step.title}</h2>
+            <p>Step type "{step.type}" not implemented yet.</p>
+            <button className="continue-button" onClick={() => handleStepComplete(index)}>
+              Continue
+            </button>
+          </div>
+        );
     }
   };
+
+  if (currentStep >= steps.length) {
+    return (
+      <div className="module-container">
+        <div className="completion-screen">
+          <div className="completion-icon">
+            <Trophy size={64} />
+          </div>
+          <h1>🎉 Bitcoin 3.0 Mastery Complete!</h1>
+          <p>You now understand why Bitcoin represents the next evolution of money—from energy to digital truth.</p>
+          <div className="completion-stats">
+            <div className="stat">
+              <span className="stat-number">{steps.length}</span>
+              <span className="stat-label">Concepts Mastered</span>
+            </div>
+            <div className="stat">
+              <span className="stat-number">3.0</span>
+              <span className="stat-label">Money Version</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="module-container">
       <div className="module-header">
         <h1 className="module-title">
-          <Bitcoin className="module-icon" />
-          Bitcoin 101, But Actually Useful
+          <Zap className="module-icon" />
+          Bitcoin 3.0: Energy as Money
         </h1>
-        {completedSteps.size === steps.length && (
-          <div className="completion-badge">
-            <Trophy size={24} />
-            Completed!
+        <div className="module-progress">
+          <span>Step {currentStep + 1} of {steps.length}</span>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+            />
           </div>
-        )}
-      </div>
-
-      <div className="module-progress">
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
-            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
-          />
         </div>
-        <span className="progress-text">
-          {completedSteps.size} / {steps.length} steps completed
-        </span>
       </div>
 
-      {/* Horizontal Tab Navigation */}
-      <div className="top-navigation">
+      <div className="module-tabs">
         {steps.map((step, index) => (
           <button
             key={index}
-            className={`top-nav-button ${
-              index === currentStep ? 'active' : ''
-            } ${completedSteps.has(index) ? 'completed' : ''}`}
+            className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => handleTabClick(index)}
+            disabled={index > currentStep}
           >
-            <span className="nav-text">
-              {index + 1}. {step.title.length > 20 ? `${step.title.substring(0, 17)}...` : step.title}
-            </span>
+            {completedSteps.has(index) && <CheckCircle size={16} />}
+            <span className="tab-title">{step.title}</span>
           </button>
         ))}
       </div>
 
-      <div className="module-content">
-        {currentStep < steps.length ? (
-          renderStep(steps[currentStep], currentStep)
-        ) : (
-          <div className="module-complete">
-            <div className="complete-icon">
-              <CheckCircle size={48} />
-            </div>
-            <h2>Module Complete!</h2>
-            <p>You've completed the Bitcoin Basics module. Ready to dive deeper?</p>
-          </div>
-        )}
+      <div className="step-content-container">
+        {renderStep(steps[currentStep], currentStep)}
       </div>
     </div>
   );
