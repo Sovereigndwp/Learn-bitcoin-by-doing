@@ -68,8 +68,8 @@ export const moduleRegistry = {
   },
   transactions: {
     id: 'transactions',
-    title: 'Building Blocks',
-    description: 'Explore how Bitcoin transactions work and how they\'re structured.',
+    title: 'Bitcoin Transactions: Digital Money in Motion',
+    description: 'Master UTXOs, transaction building, fee markets, privacy techniques, and how Bitcoin moves around the world.',
     component: TransactionsModule,
     order: 7,
     group: 'practical',
