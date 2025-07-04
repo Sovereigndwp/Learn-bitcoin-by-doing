@@ -1,0 +1,430 @@
+/* Notification Container */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+/* Notification Card */
+.notification {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 16px 20px;
+  min-width: 320px;
+  max-width: 400px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.notification.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification.leaving {
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
+
+.notification:hover {
+  transform: translateX(-4px) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Notification Content */
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.notification-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.notification-text {
+  flex: 1;
+  color: white;
+}
+
+.notification-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.notification-message {
+  font-size: 14px;
+  margin: 0 0 4px 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.notification-details {
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.3;
+}
+
+.notification-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px;
+  min-width: 60px;
+}
+
+.badge-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.badge-text {
+  font-size: 10px;
+  color: white;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Progress Bar */
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: white;
+  transform-origin: left;
+  animation: progressShrink linear forwards;
+}
+
+@keyframes progressShrink {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* Achievement Sparkles */
+.achievement-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 12px;
+  animation: sparkleFloat 3s ease-out forwards;
+  pointer-events: none;
+}
+
+.sparkle-1 { top: 20%; left: 10%; animation-delay: 0s; }
+.sparkle-2 { top: 30%; right: 15%; animation-delay: 0.2s; }
+.sparkle-3 { bottom: 30%; left: 20%; animation-delay: 0.4s; }
+.sparkle-4 { bottom: 20%; right: 10%; animation-delay: 0.6s; }
+.sparkle-5 { top: 15%; left: 50%; animation-delay: 0.8s; }
+.sparkle-6 { top: 60%; right: 25%; animation-delay: 1s; }
+.sparkle-7 { bottom: 40%; left: 40%; animation-delay: 1.2s; }
+.sparkle-8 { top: 40%; right: 40%; animation-delay: 1.4s; }
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.5);
+  }
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.9) 0%,
+    rgba(255, 140, 0, 0.8) 50%,
+    rgba(220, 20, 60, 0.9) 100%
+  );
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.celebration-overlay.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.celebration-content {
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  padding: 40px;
+}
+
+.celebration-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: celebrationBounce 1s ease-out;
+}
+
+@keyframes celebrationBounce {
+  0% { transform: scale(0) rotate(0deg); }
+  50% { transform: scale(1.2) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+.celebration-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.celebration-message {
+  font-size: 18px;
+  margin: 0 0 30px 0;
+  opacity: 0.9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.celebration-badge {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.badge-showcase {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  animation: badgeGlow 2s ease-in-out infinite;
+}
+
+@keyframes badgeGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.badge-showcase .badge-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.badge-showcase .badge-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.badge-showcase .badge-rarity {
+  font-size: 12px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+/* Celebration Particles */
+.celebration-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  font-size: 24px;
+  animation: particleFloat 4s ease-out forwards;
+  pointer-events: none;
+}
+
+/* Generate random positions for particles */
+.particle-1 { top: 10%; left: 10%; animation-delay: 0s; }
+.particle-2 { top: 20%; left: 80%; animation-delay: 0.2s; }
+.particle-3 { top: 30%; left: 20%; animation-delay: 0.4s; }
+.particle-4 { top: 40%; left: 90%; animation-delay: 0.6s; }
+.particle-5 { top: 50%; left: 5%; animation-delay: 0.8s; }
+.particle-6 { top: 60%; left: 70%; animation-delay: 1s; }
+.particle-7 { top: 70%; left: 30%; animation-delay: 1.2s; }
+.particle-8 { top: 80%; left: 85%; animation-delay: 1.4s; }
+.particle-9 { top: 15%; left: 50%; animation-delay: 1.6s; }
+.particle-10 { top: 25%; left: 60%; animation-delay: 1.8s; }
+.particle-11 { top: 35%; left: 15%; animation-delay: 2s; }
+.particle-12 { top: 45%; left: 75%; animation-delay: 2.2s; }
+.particle-13 { top: 55%; left: 40%; animation-delay: 2.4s; }
+.particle-14 { top: 65%; left: 95%; animation-delay: 2.6s; }
+.particle-15 { top: 75%; left: 10%; animation-delay: 2.8s; }
+.particle-16 { top: 85%; left: 55%; animation-delay: 3s; }
+.particle-17 { top: 5%; left: 35%; animation-delay: 3.2s; }
+.particle-18 { top: 90%; left: 25%; animation-delay: 3.4s; }
+.particle-19 { top: 12%; left: 65%; animation-delay: 3.6s; }
+.particle-20 { top: 88%; left: 45%; animation-delay: 3.8s; }
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200px) scale(0.3) rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .notification-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+  
+  .notification {
+    min-width: auto;
+    max-width: none;
+    margin: 0;
+  }
+  
+  .celebration-content {
+    padding: 20px;
+  }
+  
+  .celebration-title {
+    font-size: 28px;
+  }
+  
+  .celebration-message {
+    font-size: 16px;
+  }
+  
+  .celebration-icon {
+    font-size: 60px;
+  }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+  .notification {
+    box-shadow: 
+      0 10px 25px rgba(0, 0, 0, 0.3),
+      0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  .notification:hover {
+    box-shadow: 
+      0 15px 35px rgba(0, 0, 0, 0.4),
+      0 25px 50px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .notification,
+  .celebration-overlay,
+  .sparkle,
+  .particle,
+  .celebration-icon,
+  .celebration-title,
+  .badge-showcase {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+  
+  .notification-icon {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .notification {
+    border: 2px solid white;
+    background: #000 !important;
+  }
+  
+  .celebration-overlay {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+} 

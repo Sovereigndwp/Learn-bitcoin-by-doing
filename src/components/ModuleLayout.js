@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Home, Globe, AlertCircle } from 'lucide-react';
+import { Home, Globe } from 'lucide-react';
 import './ModuleLayout.css';
 import './ModuleCommon.css';
 import './QuizStyles.css';

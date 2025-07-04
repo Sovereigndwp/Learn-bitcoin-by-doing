@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Zap, Code, Shield, Eye, Brain, Cpu, Network, Globe,
-  Trophy, CheckCircle, ArrowRight, Hash, Key, Lock
+  Trophy, CheckCircle, Hash, Key, Lock, Zap
 } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './AdvancedTopicsModule.css';
