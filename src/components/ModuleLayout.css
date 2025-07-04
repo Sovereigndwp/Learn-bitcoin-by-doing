@@ -13,7 +13,7 @@
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 9999; /* Increased z-index to ensure it's always on top */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -29,10 +29,10 @@
 .nav-buttons {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin-left: auto;
   padding-right: 2rem;
-  min-width: 300px; /* Ensures consistent spacing */
+  min-width: 400px; /* Increased to accommodate back button */
   justify-content: flex-end;
 }
 
@@ -49,12 +49,23 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.875rem;
+  position: relative;
+  z-index: 10000; /* Ensure nav buttons are always clickable */
 }
 
 .nav-button:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
   color: white;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .home-button {
@@ -638,9 +649,10 @@
   }
 
   .nav-buttons {
-    gap: 1rem;
+    gap: 0.5rem;
     min-width: 200px;
     padding-right: 1rem;
+    flex-wrap: wrap;
   }
   
   .logo-text {

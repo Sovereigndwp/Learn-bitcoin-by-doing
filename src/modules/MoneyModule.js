@@ -460,6 +460,92 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
 
+  // Helper function to explain why an incorrect answer is wrong
+  const getIncorrectExplanation = (question, answerIndex) => {
+    const explanations = {
+      1: [
+        "Being cautious doesn't explain why people can't access their own deposits.",
+        "This is the key insight - when banks control access, do you really own your money?",
+        "The problem isn't demand, it's the banking system's structure."
+      ],
+      2: [
+        "If it were just cycles, we'd see currencies recover their value - but they don't.",
+        "Necessity doesn't explain why ALL government currencies eventually fail.",
+        "Exactly! History shows power over money always gets abused."
+      ],
+      3: [
+        "Beauty isn't a practical concern for money.",
+        "Correct! Physical limitations made gold impractical for everyday use.",
+        "Scarcity was actually gold's strength, not its weakness."
+      ],
+      4: [
+        "Fast spending shows the money was failing, not succeeding.",
+        "Exactly! Money must preserve value or people lose trust.",
+        "Flexible prices are good, but hyperinflation destroys the economy."
+      ],
+      5: [
+        "Trust is essential for money to function.",
+        "Exactly! When money units aren't equal, the system breaks down.",
+        "Making more debased coins would make the problem worse."
+      ],
+      6: [
+        "The stones never moved, showing money doesn't need to be physical.",
+        "Exactly! Shared agreement about ownership is what makes money work.",
+        "Even lost stones retained value if the community remembered ownership."
+      ],
+      7: [
+        "Bitcoin's design specifically prevents this kind of control.",
+        "Exactly! Decentralized money can't be frozen by authorities.",
+        "Bitcoin doesn't change political situations, but it protects financial freedom."
+      ],
+      8: [
+        "Bitcoin was specifically designed to move freely across borders.",
+        "Bitcoin operates beyond traditional financial controls.",
+        "Exactly! Bitcoin enables borderless movement of value."
+      ],
+      9: [
+        "The smell isn't the fundamental problem with cattle as money.",
+        "Exactly! Money needs to be divisible for different transaction sizes.",
+        "People needed money for trade, not food."
+      ],
+      10: [
+        "Bitcoin is much more than just another digital payment app.",
+        "Exactly! Bitcoin combines the best properties of gold with digital advantages.",
+        "Bitcoin handles both small and large payments effectively."
+      ],
+      11: [
+        "Bitcoin's digital nature fundamentally changes the game.",
+        "Governments can try to regulate Bitcoin, but can't easily seize it like physical assets.",
+        "Exactly! Information and cryptography are much harder to confiscate."
+      ],
+      12: [
+        "No currency can guarantee stability, but choice provides protection.",
+        "Exactly! The right to choose your money is fundamental to economic freedom.",
+        "Government support often comes with strings attached to control."
+      ]
+    };
+    return explanations[question.id]?.[answerIndex] || "This doesn't address the core issue.";
+  };
+
+  // Helper function to explain why the correct answer is right
+  const getCorrectExplanation = (question) => {
+    const explanations = {
+      1: "When institutions can freeze your access to money, you're dependent on their permission. True ownership means complete control.",
+      2: "Throughout history, those with the power to create money have always eventually abused it for short-term gain, devaluing everyone else's savings.",
+      3: "Money must be easy to transport and transfer, or it becomes impractical for daily commerce and trade.",
+      4: "The primary function of money is to store value over time. If it fails at this, people lose trust and the economy breaks down.",
+      5: "Every unit of money must be identical and interchangeable. When they're not, people lose trust and start rejecting certain units.",
+      6: "Money is ultimately about shared agreement on ownership. Physical possession is less important than community consensus.",
+      7: "Decentralized systems have no central authority that can freeze or block transactions, providing true financial sovereignty.",
+      8: "Bitcoin operates on a global network that doesn't recognize political borders, enabling true financial freedom.",
+      9: "Divisibility allows money to handle transactions of any size, from buying a coffee to purchasing a house.",
+      10: "Bitcoin uniquely combines all the properties of sound money with digital efficiency and global accessibility.",
+      11: "Bitcoin exists as cryptographic information that can be memorized or hidden, making it much harder to confiscate than physical assets.",
+      12: "Freedom includes the right to opt out of failing systems and choose better alternatives for storing and transferring value."
+    };
+    return explanations[question.id] || "This addresses the fundamental issue correctly.";
+  };
+
   const questions = [
     {
       id: 1,
@@ -628,6 +714,11 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     }
   };
 
+  const handleTryAgain = () => {
+    setSelectedAnswer(null);
+    setShowFeedback(false);
+  };
+
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -706,25 +797,44 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
             <p className="feedback-result">
               {selectedAnswer === currentQ.answer ? '🎯 Excellent Detective Work!' : '🔍 Not quite right, but keep investigating!'}
             </p>
-            <div className="takeaway-box">
-              <h4>💡 Key Insight:</h4>
-              <p>{currentQ.takeaway}</p>
-            </div>
-            {selectedAnswer === currentQ.answer && (
-              <div className="trait-unlock-box">
-                <h4>🏆 Sound Money Trait Discovered:</h4>
-                <p><strong>{currentQ.trait}</strong></p>
-              </div>
-            )}
+            
             {selectedAnswer !== currentQ.answer && (
-              <div className="correct-answer-box">
-                <h4>📚 The Answer:</h4>
-                <p>"{currentQ.options[currentQ.answer]}"</p>
+              <div className="incorrect-feedback">
+                <div className="explanation-box">
+                  <h4>🤔 Why this answer isn't quite right:</h4>
+                  <p>"{currentQ.options[selectedAnswer]}" - {getIncorrectExplanation(currentQ, selectedAnswer)}</p>
+                </div>
+                <div className="correct-answer-box">
+                  <h4>✅ The Better Answer:</h4>
+                  <p><strong>"{currentQ.options[currentQ.answer]}"</strong></p>
+                  <p className="explanation">{getCorrectExplanation(currentQ)}</p>
+                </div>
+                <div className="action-buttons">
+                  <button onClick={handleTryAgain} className="try-again-button">
+                    🔄 Try Again
+                  </button>
+                  <button onClick={handleNext} className="continue-anyway-button">
+                    Continue Anyway →
+                  </button>
+                </div>
               </div>
             )}
-            <button onClick={handleNext} className="next-button">
-              {currentQuestion < questions.length - 1 ? 'Next Case →' : 'Complete Investigation'}
-            </button>
+
+            {selectedAnswer === currentQ.answer && (
+              <>
+                <div className="takeaway-box">
+                  <h4>💡 Key Insight:</h4>
+                  <p>{currentQ.takeaway}</p>
+                </div>
+                <div className="trait-unlock-box">
+                  <h4>🏆 Sound Money Trait Discovered:</h4>
+                  <p><strong>{currentQ.trait}</strong></p>
+                </div>
+                <button onClick={handleNext} className="next-button">
+                  {currentQuestion < questions.length - 1 ? 'Next Case →' : 'Complete Investigation'}
+                </button>
+              </>
+            )}
           </div>
         )}
 

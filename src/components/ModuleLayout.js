@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Home, Globe } from 'lucide-react';
+import { Home, Globe, ArrowLeft } from 'lucide-react';
 import './ModuleLayout.css';
 import './ModuleCommon.css';
 import './QuizStyles.css';
@@ -22,7 +22,21 @@ const ModuleLayout = ({ children }) => {
             </div>
           </div>
           <div className="nav-buttons">
-            <Link to="/" className="nav-button">
+            <Link 
+              to="/" 
+              className="nav-button back-button"
+              style={{ zIndex: 1000, position: 'relative' }}
+              title="Go back to homepage"
+            >
+              <ArrowLeft size={18} />
+              Back
+            </Link>
+            <Link 
+              to="/" 
+              className="nav-button home-button"
+              style={{ zIndex: 1000, position: 'relative' }}
+              title="Return to homepage"
+            >
               <Home size={20} />
               Home
             </Link>
