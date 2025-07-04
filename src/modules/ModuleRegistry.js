@@ -50,8 +50,8 @@ export const moduleRegistry = {
   },
   mining: {
     id: 'mining',
-    title: 'The World\'s Most Expensive Puzzle Game',
-    description: 'Understand how Bitcoin mining secures the network through proof-of-work.',
+    title: 'Energy → Security: How Bitcoin Transforms Physics into Trust',
+    description: 'Discover how Bitcoin transforms electrical energy into mathematical proof that creates unbreakable digital security.',
     component: MiningModule,
     order: 5,
     group: 'advanced',
