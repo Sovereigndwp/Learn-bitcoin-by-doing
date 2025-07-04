@@ -77,8 +77,8 @@ export const moduleRegistry = {
   },
   scripts: {
     id: 'scripts',
-    title: 'Digital Spells',
-    description: 'Learn how Bitcoin scripts enable programmable money.',
+    title: 'Bitcoin Scripts: Programming Money',
+    description: 'Master stack operations, script types, multisig, timelocks, smart contracts, and real-world applications of programmable Bitcoin.',
     component: ScriptsModule,
     order: 8,
     group: 'advanced',
