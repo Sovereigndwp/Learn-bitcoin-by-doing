@@ -59,8 +59,8 @@ export const moduleRegistry = {
   },
   keys: {
     id: 'keys',
-    title: 'Keys to the Kingdom',
-    description: 'Learn about public key cryptography and how Bitcoin uses digital signatures.',
+    title: 'Digital Sovereignty: Your Keys, Your Bitcoin',
+    description: 'Master the cryptographic foundations of true financial independence—from entropy to addresses, HD wallets to Lightning Network.',
     component: KeysModule,
     order: 6,
     group: 'technical',
