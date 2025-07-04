@@ -213,6 +213,21 @@ export const ProgressProvider = ({ children }) => {
     return BADGES.find(badge => badge.id === badgeId);
   };
 
+  const resetProgress = () => {
+    // Clear all state
+    setCompletedModules([]);
+    setEarnedBadges([]);
+    setCurrentStreak(0);
+    setTotalPoints(0);
+    
+    // Clear localStorage
+    localStorage.removeItem('completedModules');
+    localStorage.removeItem('earnedBadges');
+    localStorage.removeItem('currentStreak');
+    localStorage.removeItem('totalPoints');
+    localStorage.removeItem('lastActiveDate');
+  };
+
   return (
     <ProgressContext.Provider value={{
       completedModules,
@@ -224,6 +239,7 @@ export const ProgressProvider = ({ children }) => {
       getModuleProgress,
       isModuleCompleted,
       getBadgeDetails,
+      resetProgress,
       modules: MODULES,
       badges: BADGES
     }}>

@@ -6,8 +6,9 @@ import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Loc
 import './Homepage.css';
 
 const Homepage = () => {
-  const { getModuleProgress, isModuleCompleted, completeModule } = useProgress();
+  const { getModuleProgress, isModuleCompleted, completeModule, resetProgress } = useProgress();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [userStats, setUserStats] = useState({
     totalModules: 0,
     completedModules: 0,
@@ -96,6 +97,13 @@ const Homepage = () => {
     }, 3000);
   };
 
+  const handleResetProgress = () => {
+    resetProgress();
+    setShowResetConfirm(false);
+    setShowWelcomeMessage(true);
+    showAchievement("Fresh Start", "Your learning journey has been reset. Ready to begin again!");
+  };
+
   const renderWelcomeSection = () => {
     if (!showWelcomeMessage || bankingExperienceCompleted) return null;
 
@@ -179,6 +187,17 @@ const Homepage = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {userStats.completedModules > 0 && (
+          <div className="reset-section">
+            <button 
+              className="reset-button"
+              onClick={() => setShowResetConfirm(true)}
+            >
+              🔄 Restart Learning Journey
+            </button>
           </div>
         )}
       </div>
@@ -471,10 +490,51 @@ const Homepage = () => {
               )}
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+                  </div>
+        )}
+
+        {/* Reset Confirmation Dialog */}
+        {showResetConfirm && (
+          <div className="reset-overlay" onClick={() => setShowResetConfirm(false)}>
+            <div className="reset-dialog" onClick={(e) => e.stopPropagation()}>
+              <div className="reset-dialog-header">
+                <h3>🔄 Restart Learning Journey</h3>
+              </div>
+              <div className="reset-dialog-content">
+                <div className="warning-message">
+                  <div className="warning-icon">⚠️</div>
+                  <div>
+                    <h4>Are you sure you want to restart?</h4>
+                    <p>This will permanently delete all your progress, including:</p>
+                    <ul>
+                      <li>✅ All completed modules ({userStats.completedModules})</li>
+                      <li>🏆 All earned achievements ({userStats.achievements.length})</li>
+                      <li>📊 Your overall progress ({userStats.totalProgress}%)</li>
+                      <li>🔥 Your learning streak</li>
+                    </ul>
+                    <p><strong>This action cannot be undone.</strong></p>
+                  </div>
+                </div>
+              </div>
+              <div className="reset-dialog-actions">
+                <button 
+                  className="cancel-button"
+                  onClick={() => setShowResetConfirm(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="confirm-reset-button"
+                  onClick={handleResetProgress}
+                >
+                  Yes, Restart Journey
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
 export default Homepage; 
