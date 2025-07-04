@@ -8,6 +8,8 @@ import TransactionsModule from './TransactionsModule';
 import ScriptsModule from './ScriptsModule';
 import MerkleModule from './MerkleModule';
 import CustodyModule from './CustodyModule';
+import LightningModule from './LightningModule';
+import AdvancedTopicsModule from './AdvancedTopicsModule';
 import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
@@ -109,21 +111,39 @@ export const moduleRegistry = {
     group: 'practical-mastery',
     prerequisites: ['keys', 'scripts']
   },
+  lightning: {
+    id: 'lightning',
+    title: 'Lightning Network: Instant Bitcoin',
+    description: 'Master Bitcoin\'s scaling solution: payment channels, routing, network topology, and real-world Lightning applications.',
+    component: LightningModule,
+    order: 11,
+    group: 'practical-mastery',
+    prerequisites: ['transactions', 'scripts']
+  },
+  'advanced-topics': {
+    id: 'advanced-topics',
+    title: 'Advanced Bitcoin Topics',
+    description: 'Cutting-edge Bitcoin technology: Taproot, Schnorr signatures, Layer 2 solutions, consensus mechanisms, and future innovations.',
+    component: AdvancedTopicsModule,
+    order: 12,
+    group: 'practical-mastery',
+    prerequisites: ['lightning', 'scripts', 'merkle']
+  },
   'bitcoin-toolkit': {
     id: 'bitcoin-toolkit',
     title: 'Bitcoin Developer Toolkit',
     description: 'Master Bitcoin through 19 professional tools: wallets, transactions, network analysis, and development utilities.',
     component: BitcoinToolkitModule,
-    order: 11,
+    order: 13,
     group: 'practical-mastery',
     prerequisites: ['transactions', 'scripts']
   },
   myths: {
     id: 'myths',
-    title: 'Myth Busters: Bitcoin Edition',
-    description: 'Debunk common Bitcoin myths with deep technical and economic understanding.',
+    title: 'Bitcoin Myths: The Technical Truth',
+    description: 'Expert-level myth busting with 12 comprehensive debunks, technical evidence, data comparisons, and credible sources.',
     component: MythsModule,
-    order: 12,
+    order: 14,
     group: 'practical-mastery',
     prerequisites: ['mining']
   }

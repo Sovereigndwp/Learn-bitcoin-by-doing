@@ -1,0 +1,732 @@
+/* ================================ */
+/* BITCOIN MYTHS: THE TECHNICAL TRUTH */
+/* Expert-Level Myth Busting with Evidence */
+/* ================================ */
+
+.myths-module {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  min-height: 100vh;
+  color: #f1f5f9;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Fact-Checking Theme Pattern */
+.myths-module::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 10%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.myths-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ================= */
+/* HEADER & NAVIGATION */
+/* ================= */
+
+.myths-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  background: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.myths-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ef4444, #f59e0b, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.myths-subtitle {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.myths-description {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 4px solid #ef4444;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #f1f5f9;
+  margin: 1.5rem 0;
+}
+
+.myths-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.stat-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #10b981;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+/* ================= */
+/* MYTH CATEGORIES */
+/* ================= */
+
+.category-section {
+  margin: 3rem 0;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.category-icon {
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.category-description {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* ================= */
+/* MYTH CARDS */
+/* ================= */
+
+.myths-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.myth-card {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 16px;
+  padding: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.myth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ef4444, #f59e0b);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.myth-card:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.myth-card:hover::before {
+  transform: scaleX(1);
+}
+
+.myth-card.active {
+  border-color: #ef4444;
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
+}
+
+.myth-card.debunked {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.myth-card.debunked::before {
+  background: #10b981;
+  transform: scaleX(1);
+}
+
+.myth-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.myth-icon {
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.myth-info {
+  flex: 1;
+}
+
+.myth-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 0.25rem;
+}
+
+.myth-severity {
+  font-size: 0.8rem;
+  color: #ef4444;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.myth-content {
+  padding: 1.5rem;
+}
+
+.myth-statement {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.myth-statement h4 {
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.myth-statement p {
+  color: #f1f5f9;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ================= */
+/* INTERACTIVE ELEMENTS */
+/* ================= */
+
+.myth-question {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.myth-question p {
+  font-size: 1rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.guess-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.guess-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.guess-button.true {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.guess-button.true:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  transform: translateY(-2px);
+}
+
+.guess-button.false {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.guess-button.false:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  transform: translateY(-2px);
+}
+
+/* ================= */
+/* TECHNICAL EXPLANATION */
+/* ================= */
+
+.myth-explanation {
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reality-box {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reality-box h4 {
+  color: #10b981;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reality-box h4::before {
+  content: '✓';
+  font-size: 1.2rem;
+}
+
+.technical-evidence {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.evidence-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.evidence-title {
+  color: #3b82f6;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.evidence-list {
+  list-style: none;
+  padding: 0;
+}
+
+.evidence-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.evidence-list li:last-child {
+  border-bottom: none;
+}
+
+.evidence-list li::before {
+  content: '📊';
+  margin-right: 0.5rem;
+}
+
+/* ================= */
+/* DATA VISUALIZATION */
+/* ================= */
+
+.data-comparison {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.comparison-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.comparison-chart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.comparison-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.comparison-myth {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.comparison-reality {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.comparison-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.comparison-myth .comparison-label {
+  color: #ef4444;
+}
+
+.comparison-reality .comparison-label {
+  color: #10b981;
+}
+
+.comparison-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.comparison-description {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* ================= */
+/* SOURCES & CITATIONS */
+/* ================= */
+
+.sources-section {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.sources-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sources-list {
+  list-style: none;
+  padding: 0;
+}
+
+.sources-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.sources-list li:last-child {
+  border-bottom: none;
+}
+
+.sources-list a {
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sources-list a:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+/* ================= */
+/* EXPERT QUOTE */
+/* ================= */
+
+.expert-quote {
+  background: rgba(251, 191, 36, 0.1);
+  border-left: 4px solid #fbbf24;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.expert-quote::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-size: 3rem;
+  color: #fbbf24;
+  opacity: 0.3;
+}
+
+.quote-text {
+  font-style: italic;
+  color: #f1f5f9;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.quote-attribution {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+/* ================= */
+/* PROGRESS TRACKING */
+/* ================= */
+
+.myth-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.progress-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(100, 116, 139, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+}
+
+.progress-indicator.completed {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+/* ================= */
+/* ACHIEVEMENT SYSTEM */
+/* ================= */
+
+.achievement-summary {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 3rem 0;
+}
+
+.achievement-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.achievement-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-subtitle {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.achievement-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.achievement-card.earned {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.achievement-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-name {
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 0.25rem;
+}
+
+.achievement-description {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* ================= */
+/* RESPONSIVE DESIGN */
+/* ================= */
+
+@media (max-width: 1200px) {
+  .myths-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .myths-content {
+    padding: 1rem;
+  }
+  
+  .myths-title {
+    font-size: 2rem;
+  }
+  
+  .myths-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .myth-card {
+    margin: 0;
+  }
+  
+  .comparison-chart {
+    grid-template-columns: 1fr;
+  }
+  
+  .guess-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .myths-title {
+    font-size: 1.75rem;
+  }
+  
+  .myth-header {
+    padding: 1rem;
+  }
+  
+  .myth-content {
+    padding: 1rem;
+  }
+  
+  .myths-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} 

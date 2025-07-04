@@ -28,6 +28,8 @@ const Homepage = () => {
     scripts: '📜',
     merkle: '🌳',
     custody: '🛡️',
+    lightning: '⚡',
+    'advanced-topics': '🚀',
     myths: '🎭',
     'bitcoin-toolkit': '🛠️'
   };
