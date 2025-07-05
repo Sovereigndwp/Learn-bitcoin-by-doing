@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { useNotification } from './NotificationSystem';
+import { useNotifications } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
 import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Lock, Play } from 'lucide-react';
 import './Homepage.css';
 
 const Homepage = () => {
   const { getModuleProgress, isModuleCompleted, completeModule, resetProgress } = useProgress();
-  const { showNotification } = useNotification();
+  const { showNotification } = useNotifications();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [userStats, setUserStats] = useState({
@@ -97,6 +97,23 @@ const Homepage = () => {
       title: 'Fresh Start 🔄',
       message: "Your learning journey has been reset. Ready to begin again!"
     });
+  };
+
+  const handleResetBankingExperience = () => {
+    // Reset just the banking experience
+    localStorage.removeItem('completedModules');
+    localStorage.removeItem('moduleProgress');
+    localStorage.removeItem('earnedBadges');
+    localStorage.removeItem('currentStreak');
+    localStorage.removeItem('longestStreak');
+    localStorage.removeItem('totalPoints');
+    localStorage.removeItem('totalTimeSpent');
+    localStorage.removeItem('sessionStartTime');
+    localStorage.removeItem('lastActivityDate');
+    localStorage.removeItem('achievements');
+    
+    // Force a page reload to reset all state
+    window.location.reload();
   };
 
   const renderWelcomeSection = () => {
@@ -222,36 +239,41 @@ const Homepage = () => {
             </div>
           </div>
 
-          {!bankingExperienceCompleted ? (
-            <div className="banking-card-actions">
-              <a
-                href="https://layer-d.my.canva.site/banking-reality-check-by-dalia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="banking-demo-link"
-                onClick={handleExperienceComplete}
-              >
-                <Play size={16} />
-                Start Reality Check
-              </a>
-              <button
-                className="banking-demo-link"
-                onClick={handleExperienceComplete}
-                style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
-              >
+          <div className="banking-card-actions">
+            <a
+              href="https://layer-d.my.canva.site/banking-reality-check-by-dalia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="banking-demo-link"
+              onClick={!bankingExperienceCompleted ? handleExperienceComplete : undefined}
+            >
+              <Play size={16} />
+              {bankingExperienceCompleted ? 'Revisit Reality Check' : 'Start Reality Check'}
+            </a>
+            
+            {!bankingExperienceCompleted && (
+              <>
+                <button
+                  className="banking-demo-link"
+                  onClick={handleExperienceComplete}
+                  style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
+                >
+                  <CheckCircle size={16} />
+                  Mark as Complete
+                </button>
+                <div className="experience-note">
+                  <span>🎯 This will unlock your learning path</span>
+                </div>
+              </>
+            )}
+            
+            {bankingExperienceCompleted && (
+              <div className="completed-indicator">
                 <CheckCircle size={16} />
-                Mark as Complete
-              </button>
-              <div className="experience-note">
-                <span>🎯 This will unlock your learning path</span>
+                <span>Reality Check Complete</span>
               </div>
-            </div>
-          ) : (
-            <div className="completed-indicator">
-              <CheckCircle size={16} />
-              <span>Reality Check Complete</span>
-            </div>
-          )}
+            )}
+          </div>
 
           {bankingExperienceCompleted && (
             <div className="progress-bar">
@@ -358,6 +380,9 @@ const Homepage = () => {
       .map(module => module.id);
     
     const nextModule = getNextModule(completedModuleIds);
+    const allModules = Object.values(moduleRegistry);
+    const totalCompleted = completedModuleIds.length;
+    const totalModules = allModules.length;
 
     return (
       <div className="learning-path">
@@ -373,6 +398,9 @@ const Homepage = () => {
                     <p>{nextModule.description}</p>
                     <div style={{ fontSize: '0.9rem', color: '#888', marginTop: '0.5rem' }}>
                       📍 {moduleGroups[nextModule.group]?.title || nextModule.group}
+                    </div>
+                    <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.5rem' }}>
+                      📊 {totalCompleted} of {totalModules} modules completed ({Math.round((totalCompleted/totalModules)*100)}%)
                     </div>
                   </div>
                 </div>
@@ -462,6 +490,23 @@ const Homepage = () => {
               <span className="group-progress">
                 {bankingExperienceCompleted ? 1 : 0}/1 completed
               </span>
+              {bankingExperienceCompleted && (
+                <button 
+                  onClick={handleResetBankingExperience}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#666',
+                    fontSize: '0.8rem',
+                    cursor: 'pointer',
+                    marginLeft: '1rem',
+                    textDecoration: 'underline'
+                  }}
+                  title="Reset banking experience"
+                >
+                  🔄 Reset
+                </button>
+              )}
             </div>
           </div>
           <div className="modules-grid">
@@ -525,12 +570,12 @@ const Homepage = () => {
               >
                 Cancel
               </button>
-              <button 
-                className="confirm-reset-button"
-                onClick={handleResetProgress}
-              >
-                Yes, Restart Journey
-              </button>
+                              <button 
+                  className="confirm-reset-button"
+                  onClick={handleResetProgress}
+                >
+                  Yes, Restart Journey
+                </button>
             </div>
           </div>
         </div>
