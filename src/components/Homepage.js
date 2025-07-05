@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
+import { useNotification } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
 import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Lock, Play } from 'lucide-react';
 import './Homepage.css';
 
 const Homepage = () => {
   const { getModuleProgress, isModuleCompleted, completeModule, resetProgress } = useProgress();
+  const { showNotification } = useNotification();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [userStats, setUserStats] = useState({
@@ -79,36 +81,22 @@ const Homepage = () => {
 
   const handleExperienceComplete = () => {
     completeModule('banking-intro');
-    showAchievement("Journey Begins", "You've taken your first step toward financial understanding!");
-  };
-
-  const showAchievement = (title, description) => {
-    const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
-    achievement.innerHTML = `
-      <div class="achievement-content">
-        <div class="achievement-icon">🏆</div>
-        <div class="achievement-text">
-          <h4>${title}</h4>
-          <p>${description}</p>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(achievement);
-    
-    setTimeout(() => {
-      achievement.style.opacity = '0';
-      setTimeout(() => {
-        document.body.removeChild(achievement);
-      }, 300);
-    }, 3000);
+    showNotification({
+      type: 'achievement',
+      title: 'Journey Begins! 🎯',
+      message: "You've taken your first step toward financial understanding!"
+    });
   };
 
   const handleResetProgress = () => {
     resetProgress();
     setShowResetConfirm(false);
     setShowWelcomeMessage(true);
-    showAchievement("Fresh Start", "Your learning journey has been reset. Ready to begin again!");
+    showNotification({
+      type: 'insight',
+      title: 'Fresh Start 🔄',
+      message: "Your learning journey has been reset. Ready to begin again!"
+    });
   };
 
   const renderWelcomeSection = () => {
@@ -246,6 +234,14 @@ const Homepage = () => {
                 <Play size={16} />
                 Start Reality Check
               </a>
+              <button
+                className="banking-demo-link"
+                onClick={handleExperienceComplete}
+                style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
+              >
+                <CheckCircle size={16} />
+                Mark as Complete
+              </button>
               <div className="experience-note">
                 <span>🎯 This will unlock your learning path</span>
               </div>
@@ -440,15 +436,13 @@ const Homepage = () => {
           </div>
         </div>
         <div className="nav-buttons">
-          <a
-            href="https://www.canva.com/brand/brand-templates/EAGsHcUFp6A"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/about"
             className="nav-button"
           >
             <Users size={16} />
             <span>By Dalia</span>
-          </a>
+          </Link>
         </div>
       </header>
 
