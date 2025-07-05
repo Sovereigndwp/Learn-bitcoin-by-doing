@@ -1336,13 +1336,13 @@
   }
 
   .overall-progress {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     text-align: center;
   }
 
   .spotlight-content {
-    grid-template-columns: 1fr;
-    text-align: center;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .modules-grid {
@@ -1352,17 +1352,17 @@
   .group-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
   }
 
   .experience-insights {
-    flex-direction: column;
-    gap: 0.5rem;
+    grid-template-columns: 1fr;
   }
 
   .achievement-popup {
-    right: 1rem;
-    left: 1rem;
-    max-width: none;
+    right: 10px;
+    top: 10px;
+    max-width: 250px;
   }
 
   .reset-overlay {
@@ -1370,20 +1370,41 @@
   }
 
   .reset-dialog {
+    width: 95%;
     margin: 0;
   }
 
   .reset-dialog-header {
-    padding: 1.5rem 1.5rem 1rem;
+    padding: 1.5rem 1.5rem 0;
   }
 
   .reset-dialog-content {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .warning-message {
     flex-direction: column;
     text-align: center;
+    gap: 1rem;
+  }
+
+  /* Continue Learning responsive styles */
+  .continue-learning-section {
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .continue-learning-button {
+    padding: 1.25rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  .continue-text {
+    font-size: 1.1rem;
+  }
+
+  .next-module-name {
+    font-size: 0.85rem;
   }
 }
 
@@ -1407,4 +1428,81 @@
   .encouragement-content h3 {
     font-size: 1.5rem;
   }
+}
+
+/* Continue Learning Section - Prominently placed in main journey */
+.continue-learning-section {
+  background: linear-gradient(135deg, #f7931a 0%, #ff8c00 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 3rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(247, 147, 26, 0.4);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.continue-learning-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.8s ease;
+}
+
+.continue-learning-section:hover::before {
+  left: 100%;
+}
+
+.continue-learning-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  padding: 1.5rem 3rem;
+  border-radius: 60px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 3px solid transparent;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.continue-learning-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  border-color: #fff;
+  background: #fff;
+}
+
+.continue-learning-button:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.continue-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.continue-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.next-module-name {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
 } 

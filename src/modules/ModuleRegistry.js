@@ -195,8 +195,13 @@ export const getPrerequisites = (moduleId) => {
 };
 
 // Get the logical next module for a user
-export const getNextModule = (completedModules) => {
+export const getNextModule = (completedModules = []) => {
   const allModules = getAllModules();
+  
+  // Ensure completedModules is an array
+  if (!Array.isArray(completedModules)) {
+    completedModules = [];
+  }
   
   for (const module of allModules) {
     // Check if module is not completed
@@ -216,8 +221,13 @@ export const getNextModule = (completedModules) => {
 };
 
 // Get modules that are currently unlocked for a user
-export const getUnlockedModules = (completedModules) => {
+export const getUnlockedModules = (completedModules = []) => {
   const allModules = getAllModules();
+  
+  // Ensure completedModules is an array
+  if (!Array.isArray(completedModules)) {
+    completedModules = [];
+  }
   
   return allModules.filter(module => {
     return module.prerequisites.every(prereq => 

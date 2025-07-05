@@ -425,7 +425,7 @@
 }
 
 .task-item.completed {
-  color: #10B981;
+  color: #038257;
   text-decoration: line-through;
 }
 
@@ -438,7 +438,7 @@
 }
 
 .option.recommended {
-  border-color: #10B981;
+  border-color: #073928;
   background: rgba(16, 185, 129, 0.05);
 }
 
@@ -467,7 +467,7 @@
 }
 
 .dot.completed {
-  background-color: #4CAF50;
+  background-color: #0c7710;
 }
 
 /* Common Text Styles */

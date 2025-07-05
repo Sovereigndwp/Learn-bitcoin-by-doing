@@ -373,16 +373,12 @@ const Homepage = () => {
   };
 
   const renderLearningPath = () => {
-    if (!bankingExperienceCompleted) return null;
-
     const completedModuleIds = Object.values(moduleRegistry)
-      .filter(module => isModuleCompleted(module.id))
+      .filter(module => getModuleProgress(module.id) === 100)
       .map(module => module.id);
-    
     const nextModule = getNextModule(completedModuleIds);
-    const allModules = Object.values(moduleRegistry);
-    const totalCompleted = completedModuleIds.length;
-    const totalModules = allModules.length;
+    const totalModules = Object.values(moduleRegistry).filter(m => m.id !== 'banking-experience').length;
+    const totalCompleted = Object.values(moduleRegistry).filter(m => m.id !== 'banking-experience' && getModuleProgress(m.id) === 100).length;
 
     return (
       <div className="learning-path">
@@ -404,10 +400,6 @@ const Homepage = () => {
                     </div>
                   </div>
                 </div>
-                <Link to={`/module/${nextModule.id}`} className="continue-button">
-                  <Play size={16} />
-                  Continue Learning
-                </Link>
               </div>
             </div>
           ) : (
@@ -513,7 +505,28 @@ const Homepage = () => {
             {renderBankingExperienceCard()}
           </div>
         </div>
-        
+      </div>
+
+      {/* Continue Learning Button - prominently placed in main journey container */}
+      {(() => {
+        const completedModuleIds = Object.values(moduleRegistry)
+          .filter(module => getModuleProgress(module.id) === 100)
+          .map(module => module.id);
+        const nextModule = getNextModule(completedModuleIds);
+        return nextModule ? (
+          <div className="continue-learning-section">
+            <Link to={`/module/${nextModule.id}`} className="continue-learning-button">
+              <Play size={20} />
+              <div className="continue-content">
+                <span className="continue-text">Continue Learning</span>
+                <span className="next-module-name">{nextModule.title}</span>
+              </div>
+            </Link>
+          </div>
+        ) : null;
+      })()}
+
+      <div className="module-groups">
         {/* Render all other groups in order */}
         {Object.entries(moduleGroups)
           .sort(([,a], [,b]) => a.order - b.order)
