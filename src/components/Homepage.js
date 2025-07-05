@@ -241,7 +241,7 @@ const Homepage = () => {
 
           <div className="banking-card-actions">
             <a
-              href="https://layer-d.my.canva.site/banking-reality-check-by-dalia"
+              href="https://layer-d.my.canva.site/realitycheck-by-dalia"
               target="_blank"
               rel="noopener noreferrer"
               className="banking-demo-link"

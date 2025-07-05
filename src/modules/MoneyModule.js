@@ -26,16 +26,11 @@ const Introduction = ({ onComplete }) => {
         <p>
           But behind all that complexity is a surprisingly simple story: <strong>Humans needed to solve the world's most annoying problem.</strong>
         </p>
-        <div className="reflection-prompt">
-          <h3>🤔 Before we reveal the answer...</h3>
-          <p>What do you think was humanity's biggest trading problem before money existed?</p>
-          <div className="thinking-space">
-            <p><em>Take a moment to think about it. What would make trading really, really frustrating?</em></p>
-          </div>
+        <div className="transition-hook">
+          <h3>🚀 Ready to Experience the Problem?</h3>
+          <p>Instead of telling you, let's travel back 10,000 years and let you experience the frustration firsthand.</p>
+          <p><em>You're about to become a potato farmer who desperately needs shoes. Good luck finding someone to trade with!</em></p>
         </div>
-        <p>
-          Ready to find out? Let's travel back 10,000 years and watch humans struggle with the exact problem that forced them to invent this thing we call "money."
-        </p>
 
         <button onClick={() => onComplete(0)} className="continue-button">
           Take Me Back in Time
@@ -48,80 +43,302 @@ const Introduction = ({ onComplete }) => {
 // Component for the Barter World section
 const BarterWorld = ({ onComplete }) => {
   const [gameStep, setGameStep] = useState(0);
-  const [selectedTrade, setSelectedTrade] = useState(null);
+  const [currentTrader, setCurrentTrader] = useState(0);
   const [tradeAttempts, setTradeAttempts] = useState(0);
+  const [tradeHistory, setTradeHistory] = useState([]);
+  const [inventory, setInventory] = useState("🥔 Potatoes");
+  const [visitedTraders, setVisitedTraders] = useState(new Set());
+  const [frustrationLevel, setFrustrationLevel] = useState(0);
 
-  const tradeScenarios = [
-    { id: 1, have: "🥔 Potatoes", want: "👟 Shoes", person: "Farmer", success: false },
-    { id: 2, have: "🍞 Bread", want: "🧱 Bricks", person: "Baker", success: false },
-    { id: 3, have: "👟 Shoes", want: "🥔 Potatoes", person: "Cobbler", success: true },
-    { id: 4, have: "🐟 Fish", want: "🍞 Bread", person: "Fisher", success: false },
-    { id: 5, have: "🧱 Bricks", want: "🐟 Fish", person: "Builder", success: false }
+  // Helper function for achievements (placeholder for now)
+  const showAchievement = (title, description) => {
+    console.log(`Achievement: ${title} - ${description}`);
+    // This will be replaced by the proper notification system later
+  };
+
+  const tradeRoute = [
+    { 
+      id: 1, 
+      person: "Baker", 
+      location: "Village Square", 
+      have: "🍞 Bread", 
+      want: "🧱 Bricks", 
+      dialogue: "I need bricks to build a new oven. Do you have any?"
+    },
+    { 
+      id: 2, 
+      person: "Fisher", 
+      location: "River Bank", 
+      have: "🐟 Fish", 
+      want: "🍞 Bread", 
+      dialogue: "I'm hungry and need bread. Got any to trade?"
+    },
+    { 
+      id: 3, 
+      person: "Builder", 
+      location: "Construction Site", 
+      have: "🧱 Bricks", 
+      want: "🐟 Fish", 
+      dialogue: "I need fish to feed my workers. Can you help?"
+    },
+    { 
+      id: 4, 
+      person: "Cobbler", 
+      location: "Market Street", 
+      have: "👟 Shoes", 
+      want: "🥔 Potatoes", 
+      dialogue: "Perfect! I love potatoes and I have shoes to trade!"
+    }
   ];
 
-  const handleTradeAttempt = (scenario) => {
-    setSelectedTrade(scenario);
-    setTradeAttempts(prev => prev + 1);
+  const handleTradeAttempt = (trader) => {
+    if (!trader) return;
     
-    if (scenario.success) {
-      setTimeout(() => setGameStep(1), 1500);
+    setTradeAttempts(prev => prev + 1);
+    setVisitedTraders(prev => new Set(prev).add(currentTrader));
+    
+    // Check if this trader wants what we have
+    const canTrade = trader.want === inventory;
+    
+    if (canTrade) {
+      // Successful trade - update inventory
+      const newInventory = trader.have;
+      setInventory(newInventory);
+      setTradeHistory(prev => [...prev, {
+        from: trader.person,
+        traded: inventory,
+        received: newInventory,
+        location: trader.location,
+        success: true
+      }]);
+      
+      // If this was the cobbler, we're done!
+      if (currentTrader === tradeRoute.length - 1) {
+        setTimeout(() => setGameStep(1), 1500);
+      } else {
+        // Move to next trader after successful trade
+        setTimeout(() => setCurrentTrader(prev => prev + 1), 1500);
+      }
+    } else {
+      // Failed trade - record it and move to next trader
+      setTradeHistory(prev => [...prev, {
+        from: trader.person,
+        traded: "Nothing",
+        received: "Nothing",
+        location: trader.location,
+        failed: true,
+        reason: `"I don't want potatoes, I need ${trader.want}"`
+      }]);
+      setFrustrationLevel(prev => prev + 1);
+      
+      // Always move to next trader after failed attempt
+      if (currentTrader < tradeRoute.length - 1) {
+        setTimeout(() => setCurrentTrader(prev => prev + 1), 1500);
+      } else {
+        // We've tried everyone and failed
+        setTimeout(() => setGameStep(1), 1500);
+      }
     }
   };
 
   const resetGame = () => {
     setGameStep(0);
-    setSelectedTrade(null);
+    setCurrentTrader(0);
     setTradeAttempts(0);
+    setTradeHistory([]);
+    setInventory("🥔 Potatoes");
+    setVisitedTraders(new Set());
+    setFrustrationLevel(0);
   };
 
-  if (gameStep === 0) {
+    if (gameStep === 0) {
+    const currentTraderData = tradeRoute[currentTrader];
+    
+    // Guard against undefined trader data
+    if (!currentTraderData) {
+      return (
+        <div className="step-content barter-world">
+          <div className="module-header-box">
+            <h2>Error Loading Trading Game</h2>
+            <p>Please refresh the page to try again.</p>
+          </div>
+        </div>
+      );
+    }
+    
     return (
       <div className="step-content barter-world">
         <div className="module-header-box">
-          <h2>Welcome to the Stone Age Economy</h2>
+          <h2>Your Trading Journey Through the Village</h2>
           <div className="intro-text">
-            <p className="prime-text">You're about to experience the most frustrating trading system ever invented: direct bartering.</p>
-            <p>You're a potato farmer who desperately needs shoes. Find someone willing to trade!</p>
+            <p className="prime-text">You're a potato farmer who needs shoes for winter. You'll visit each trader in the village, offering your potatoes in exchange for what you need.</p>
+            <p>Watch how each trader rejects your potatoes because they want something else entirely!</p>
           </div>
         </div>
 
         <div className="barter-game">
-          <div className="your-situation">
-            <h3>Your Situation</h3>
-            <p>🥔 You have: <strong>A bag of potatoes</strong></p>
-            <p>👟 You need: <strong>Shoes for winter</strong></p>
-            <p>Attempts: {tradeAttempts}/5</p>
-          </div>
-
-          <div className="trade-options">
-            <h3>Available Traders in Your Village</h3>
-            <div className="traders-grid">
-              {tradeScenarios.map(scenario => (
-                <div 
-                  key={scenario.id} 
-                  className={`trader-card ${selectedTrade?.id === scenario.id ? 'selected' : ''}`}
-                  onClick={() => handleTradeAttempt(scenario)}
-                >
-                  <h4>{scenario.person}</h4>
-                  <p>Has: {scenario.have}</p>
-                  <p>Wants: {scenario.want}</p>
-                  {selectedTrade?.id === scenario.id && (
-                    <div className="trade-result">
-                      {scenario.success ? 
-                        "🎉 SUCCESS! They want your potatoes!" : 
-                        "❌ No deal. They don't want potatoes."
-                      }
+          <div className="journey-progress">
+            <h3>🗺️ Your Journey Through the Village</h3>
+            <div className="route-progress">
+              <div className="journey-path">
+                {tradeRoute.map((trader, index) => (
+                  <div 
+                    key={trader.id} 
+                    className={`journey-stop ${index === currentTrader ? 'current' : ''} ${index < currentTrader ? 'completed' : ''} ${index > currentTrader ? 'upcoming' : ''}`}
+                    onClick={() => index <= currentTrader && setCurrentTrader(index)}
+                  >
+                    <div className="stop-marker">
+                      <span className="stop-number">{index + 1}</span>
+                      {index < currentTrader && <span className="checkmark">✅</span>}
+                      {index === currentTrader && <span className="current-indicator">📍</span>}
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div className="stop-info">
+                      <div className="stop-location">{trader.location}</div>
+                      <div className="stop-person">{trader.person}</div>
+                    </div>
+                    {index < tradeRoute.length - 1 && (
+                      <div className="path-arrow">→</div>
+                    )}
+                    <button 
+                      className="visit-trader-btn"
+                      onClick={() => setCurrentTrader(index)}
+                      disabled={index > currentTrader}
+                      title={index > currentTrader ? "You haven't reached this trader yet" : `Visit ${trader.person} at ${trader.location}`}
+                    >
+                      {index <= currentTrader ? "Visit" : "Locked"}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {selectedTrade?.success && (
+          <div className="your-situation">
+            <h3>🎯 Your Current Situation</h3>
+            <div className="situation-grid">
+              <div className="situation-item">
+                <span className="situation-icon">🎒</span>
+                <div className="situation-content">
+                  <span className="situation-label">You have:</span>
+                  <span className="situation-value">{inventory}</span>
+                </div>
+              </div>
+              <div className="situation-item">
+                <span className="situation-icon">👟</span>
+                <div className="situation-content">
+                  <span className="situation-label">You need:</span>
+                  <span className="situation-value">Shoes for winter</span>
+                </div>
+              </div>
+              <div className="situation-item">
+                <span className="situation-icon">📍</span>
+                <div className="situation-content">
+                  <span className="situation-label">Current location:</span>
+                  <span className="situation-value">{currentTraderData.location}</span>
+                </div>
+              </div>
+              <div className="situation-item">
+                <span className="situation-icon">🔄</span>
+                <div className="situation-content">
+                  <span className="situation-label">Trade attempts:</span>
+                  <span className="situation-value">{tradeAttempts}</span>
+                </div>
+              </div>
+              <div className="situation-item">
+                <span className="situation-icon">😤</span>
+                <div className="situation-content">
+                  <span className="situation-label">Frustration level:</span>
+                  <span className="situation-value">{frustrationLevel}/10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="current-trader">
+            <h3>🤝 Meeting: {currentTraderData.person || 'Unknown'}</h3>
+            <div className="trader-card current">
+              <div className="trader-header">
+                <div className="trader-location">
+                  <span className="location-icon">📍</span>
+                  <span className="location-text">{currentTraderData.location || 'Unknown'}</span>
+                </div>
+                <div className="trader-name">
+                  <span className="name-icon">👤</span>
+                  <span className="name-text">{currentTraderData.person || 'Unknown'}</span>
+                </div>
+              </div>
+              
+              <div className="trader-details">
+                <div className="trade-info">
+                  <div className="trade-item">
+                    <span className="trade-label">Has:</span>
+                    <span className="trade-value">{currentTraderData.have || 'Nothing'}</span>
+                  </div>
+                  <div className="trade-item">
+                    <span className="trade-label">Wants:</span>
+                    <span className="trade-value">{currentTraderData.want || 'Nothing'}</span>
+                  </div>
+                </div>
+                
+                <div className="trader-dialogue-box">
+                  <span className="dialogue-icon">💬</span>
+                  <p className="trader-dialogue">"{currentTraderData.dialogue || 'Hello there!'}"</p>
+                </div>
+              </div>
+              
+              <div className="trade-options">
+                <button 
+                  className="trade-button primary"
+                  onClick={() => handleTradeAttempt(currentTraderData)}
+                >
+                  <span className="button-icon">🥔</span>
+                  <span className="button-text">Offer Potatoes for {currentTraderData.have}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {tradeHistory.length > 0 && (
+            <div className="trade-history">
+              <h3>📜 Your Trading History</h3>
+              <div className="history-list">
+                {tradeHistory.map((trade, index) => (
+                  <div key={index} className={`history-item ${trade.failed ? 'failed' : 'success'}`}>
+                    <div className="history-header">
+                      <div className="history-location">
+                        <span className="location-icon">📍</span>
+                        <span className="location-text">{trade.location || 'Unknown'}</span>
+                      </div>
+                      <div className="history-trader">
+                        <span className="trader-icon">👤</span>
+                        <span className="trader-text">{trade.from || 'Unknown'}</span>
+                      </div>
+                    </div>
+                    <div className="history-result">
+                      {trade.failed ? (
+                        <div className="failed-trade">
+                          <span className="result-icon">❌</span>
+                          <span className="result-text">No deal - they don't want {inventory}</span>
+                        </div>
+                      ) : (
+                        <div className="successful-trade">
+                          <span className="result-icon">✅</span>
+                          <span className="result-text">
+                            Traded <strong>{trade.traded || 'Nothing'}</strong> for <strong>{trade.received || 'Nothing'}</strong>
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {currentTrader === tradeRoute.length - 1 && inventory === "🥔 Potatoes" && (
             <div className="success-section">
-              <h3>🎉 Finally! A Successful Trade!</h3>
-              <p>After {tradeAttempts} attempts, you found someone who wants potatoes and has shoes.</p>
+              <h3>🎉 Success! You Found the Cobbler!</h3>
+              <p>After visiting {tradeAttempts} traders and trying {frustrationLevel} frustrating attempts, you finally found someone who wants potatoes and has shoes!</p>
               <p>But imagine if this was your life every single day...</p>
               <button className="continue-button" onClick={() => setGameStep(1)}>
                 See Why This System Failed
@@ -129,14 +346,15 @@ const BarterWorld = ({ onComplete }) => {
             </div>
           )}
 
-          {tradeAttempts >= 5 && !selectedTrade?.success && (
+          {frustrationLevel >= 8 && (
             <div className="failure-section">
-              <h3>😤 You're Stuck!</h3>
-              <p>No one in your village wants potatoes for what they have. You might have to:</p>
+              <h3>😤 You're Getting Frustrated!</h3>
+              <p>You've tried {tradeAttempts} times and visited {visitedTraders.size} different traders. The trading chain is getting complicated!</p>
+              <p>You might have to:</p>
               <ul>
                 <li>Walk to the next village (2 days journey)</li>
-                <li>Try trading potatoes → bread → bricks → shoes (if you can find the chain)</li>
-                <li>Wait until someone needs potatoes</li>
+                <li>Try a different trading route</li>
+                <li>Wait until someone needs what you have</li>
                 <li>Go barefoot this winter</li>
               </ul>
               <button className="continue-button" onClick={() => setGameStep(1)}>
@@ -1002,6 +1220,20 @@ const MoneyModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [unlockedTraits, setUnlockedTraits] = useState([]);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Error boundary for the component
+  if (error) {
+    return (
+      <div className="module-container">
+        <div className="error-boundary">
+          <h2>Something went wrong</h2>
+          <p>Please refresh the page to try again.</p>
+          <button onClick={() => window.location.reload()}>Refresh Page</button>
+        </div>
+      </div>
+    );
+  }
 
   const handleStepComplete = (stepIndex) => {
     setCompletedSteps(prev => new Set(prev).add(stepIndex));
@@ -1068,6 +1300,22 @@ const MoneyModule = () => {
           content: "Money, Straight Up";
           font-size: 1.5rem;
           line-height: 1.2;
+        }
+        .error-boundary {
+          text-align: center;
+          padding: 2rem;
+          background: #fff5f5;
+          border: 1px solid #fed7d7;
+          border-radius: 8px;
+          margin: 2rem;
+        }
+        .error-boundary button {
+          background: #e53e3e;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          cursor: pointer;
         }
       `}</style>
       
