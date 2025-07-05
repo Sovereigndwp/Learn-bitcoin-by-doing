@@ -102,7 +102,7 @@
   margin-top: 0.5rem;
   color: #000000 !important;
   font-weight: 600 !important;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   -webkit-font-smoothing: auto !important;
   -moz-osx-font-smoothing: auto !important;
 }
@@ -634,7 +634,7 @@ li {
 .property-card p {
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   line-height: 1.5;
 }
 
@@ -723,7 +723,7 @@ li {
   border-radius: 8px;
   padding: 1rem;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -988,7 +988,7 @@ li {
 
 .step-action-hint {
   color: #333333;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   margin-top: 1rem;
 }
 
@@ -1798,7 +1798,7 @@ li {
   padding-top: 1rem;
   border-top: 1px solid #eee;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   color: #fff;
 }
 
@@ -2663,7 +2663,7 @@ li {
 }
 
 .discovery-step .scenario-section h3 {
-  font-size: 0.9rem !important;
+  font-size: 0.925rem !important;
   line-height: 1.6 !important;
   font-weight: 400 !important;
 }

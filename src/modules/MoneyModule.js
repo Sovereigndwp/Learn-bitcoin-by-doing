@@ -594,10 +594,10 @@ const WhatsWrong = ({ onComplete }) => {
   return (
     <div className="step-content whats-wrong-step">
       <div className="module-header-box">
-        <h2>Money's Three Superpowers</h2>
+        <h2>The Job of Money</h2>
         <div className="intro-text">
-          <p className="prime-text">These scenarios reveal why money had to be invented. Each one shows a different superpower money gives us.</p>
-          <p>Can you figure out which superpower each scenario needs?</p>
+          <p className="prime-text">These scenarios reveal why money had to be invented. Each one shows a reason we bother with money... when it works.</p>
+          <p>What problem is money solving in each case?</p>
         </div>
       </div>
 

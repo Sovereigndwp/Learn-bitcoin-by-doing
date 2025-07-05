@@ -830,7 +830,7 @@
   border: 1px solid rgba(247, 147, 26, 0.3);
   border-radius: 8px;
   padding: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   color: #666;
   margin-top: 0.5rem;
 }
@@ -848,7 +848,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   color: #666;
   background: white;
   padding: 0.25rem 0.5rem;
@@ -885,7 +885,7 @@
   border-radius: 25px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
 }
@@ -1502,7 +1502,7 @@
 }
 
 .next-module-name {
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   color: #666;
   font-weight: 500;
 } 
