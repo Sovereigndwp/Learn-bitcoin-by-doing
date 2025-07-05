@@ -248,7 +248,7 @@ const Homepage = () => {
               onClick={!bankingExperienceCompleted ? handleExperienceComplete : undefined}
             >
               <Play size={16} />
-              {bankingExperienceCompleted ? 'Revisit Reality Check' : 'Start Reality Check'}
+              {bankingExperienceCompleted ? 'Revisit Reality Check' : 'Take Reality Check'}
             </a>
             
             {!bankingExperienceCompleted && (
@@ -259,10 +259,10 @@ const Homepage = () => {
                   style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
                 >
                   <CheckCircle size={16} />
-                  Mark as Complete
+                  I Understand the Issues
                 </button>
                 <div className="experience-note">
-                  <span>🎯 This will unlock your learning path</span>
+                  <span>🎯 This will unlock the Money module</span>
                 </div>
               </>
             )}

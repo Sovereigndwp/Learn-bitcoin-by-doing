@@ -416,77 +416,35 @@ const BarterWorld = ({ onComplete }) => {
 
 // Component for Carlos's Flower Export
 const CarlosFlowerExport = ({ onComplete }) => {
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  const handleAnswerSelect = (answerIndex) => {
-    setSelectedAnswer(answerIndex);
-    if (answerIndex === 3) { // "All of the above" is correct
-      setShowFeedback(true);
-    }
-  };
 
   return (
     <div className="step-content carlos-export-step">
       <div className="module-header-box">
-        <h2>Carlos's Flower Export</h2>
+        <h2>Real-World Impact</h2>
         <div className="intro-text">
-          <p>Carlos, exporting 1,000 roses to Japan, gets paid in USD but spends in Colombian pesos. Let's walk through what actually happens.</p>
-          <button
-            className="link-button"
-            onClick={() => window.open('https://layer-d.my.canva.site/dagrpelgejq', '_blank')}
-          >
-            Open live Fiat Export Demo
-          </button>
+          <p className="prime-text">Now let's see how these money problems play out in the real world. You've learned about the flaws in traditional money systems—here's what that actually means for people trying to do business.</p>
+          <p>Meet Carlos, a flower exporter in Colombia. His story shows exactly how modern money fails at its core functions.</p>
         </div>
       </div>
 
-      <div className="content-grid">
-        <div className="left-column">
-          <h3>What Problems Do You Spot?</h3>
-          <p>🤔 Looking at this fiat transaction, what issues do you notice?</p>
-          <div className="options-list">
-            {[
-              "Currency volatility cut into his earnings",
-              "Transfer delays risk cash flow problems", 
-              "Bank fees decreased his net income",
-              "All of the above"
-            ].map((option, i) => (
-              <button
-                key={i}
-                className={`option-button ${selectedAnswer === i ? 'selected' : ''}`}
-                onClick={() => handleAnswerSelect(i)}
-                disabled={showFeedback}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-          
-          {showFeedback && (
-            <div className="feedback-section correct">
-              <p className="feedback-result">✅ Correct!</p>
-              <p className="takeaway">Currency volatility, delays, and fees all chipped away at Carlos's payout before he even saw the money.</p>
-              <button 
-                className="continue-button"
-                onClick={onComplete}
-              >
-                Continue
-              </button>
-            </div>
-          )}
-        </div>
+      <div className="transitional-explanation">
+        <h3>Carlos's Flower Export</h3>
+        <p>
+          Carlos exports 1,000 roses to Japan. He gets paid in USD but spends in Colombian pesos. 
+          <button
+            className="inline-link-button"
+            onClick={() => window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank')}
+          >
+            Let's walk through what actually happens when money's core functions break down.
+          </button>
+        </p>
+      </div>
 
-        <div className="right-column">
-          <h3>The Process</h3>
-          <ul className="scenario-steps">
-            <li>Carlos ships the roses and invoices his buyer in USD</li>
-            <li>Bank A converts USD to COP at today's rate (~4,400 COP/USD)</li>
-            <li>Transfer takes 2–5 business days to process</li>
-            <li>By the time funds arrive, the peso has depreciated ~10%</li>
-            <li>Bank fees are deducted during conversion and transfer</li>
-          </ul>
-        </div>
+      <div className="content-text">
+        <p>After exploring Carlos's story, you can see how traditional payment systems create unnecessary friction, delays, and costs that eat into people's earnings and limit economic opportunity.</p>
+        <button onClick={onComplete} className="continue-button">
+          Continue to the Sound Money Blueprint
+        </button>
       </div>
     </div>
   );
@@ -941,7 +899,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       setSelectedAnswer(null);
       setShowFeedback(false);
     } else {
-      onComplete();
+      onComplete(3);
     }
   };
 
@@ -1095,30 +1053,28 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
           <h2>The Sound Money Blueprint</h2>
           <div className="intro-text">
             <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. Modern money fails at most of these.</p>
-            <div className="scorecard-summary">
-              <h3>Your Discovery Progress</h3>
-              <div className="progress-circle">
-                <span className="score">{unlockedCount}/{allTraits.length}</span>
-                <span className="percentage">{completionPercentage}% Complete</span>
-              </div>
-            </div>
           </div>
         </div>
       
       <div className="traits-comparison">
         <div className="comparison-header">
-          <button 
-            className={`view-toggle ${!showComparison ? 'active' : ''}`}
-            onClick={() => setShowComparison(false)}
-          >
-            Sound Money Traits
-          </button>
-          <button 
-            className={`view-toggle ${showComparison ? 'active' : ''}`}
-            onClick={() => setShowComparison(true)}
-          >
-            How Modern Money Fails
-          </button>
+          <div className="header-left">
+            <button 
+              className={`view-toggle ${!showComparison ? 'active' : ''}`}
+              onClick={() => setShowComparison(false)}
+            >
+              Sound Money Traits
+            </button>
+            <button 
+              className={`view-toggle ${showComparison ? 'active' : ''}`}
+              onClick={() => setShowComparison(true)}
+            >
+              How Modern Money Fails
+            </button>
+          </div>
+          <div className="progress-indicator">
+            <span className="progress-text">{unlockedCount}/{allTraits.length} discovered</span>
+          </div>
         </div>
 
         <div className="traits-list">
@@ -1171,24 +1127,24 @@ const ExternalResource = ({ onComplete }) => {
       </p>
       <div className="external-links">
         <a
-          href="https://www.visualcapitalist.com/currency-and-the-collapse-of-the-roman-empire/"
+          href="https://www.investopedia.com/articles/07/currency_history.asp"
           target="_blank"
           rel="noopener noreferrer"
           className="external-resource-link"
         >
-          Visit Visual History of Money
+          History of Money and Currency
         </a>
         <a
-          href="https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
+          href="https://www.federalreserve.gov/faqs/currency_12771.htm"
           target="_blank"
           rel="noopener noreferrer"
           className="external-resource-link timeline-link"
         >
-          Interactive Timeline: Barter to Bitcoin
+          Evolution of Money: From Barter to Digital
         </a>
       </div>
       <div className="button-group">
-        <button onClick={onComplete} className="continue-button">
+        <button onClick={() => onComplete(6)} className="continue-button">
           Complete Module
         </button>
       </div>
@@ -1215,7 +1171,10 @@ const BadgeModal = ({ isOpen, onClose }) => {
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('moneyModuleCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
   const [unlockedTraits, setUnlockedTraits] = useState([]);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [error, setError] = useState(null);
@@ -1234,7 +1193,15 @@ const MoneyModule = () => {
   }
 
   const handleStepComplete = (stepIndex) => {
-    setCompletedSteps(prev => new Set(prev).add(stepIndex));
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    // Save to localStorage - convert Set to array to avoid circular reference
+    try {
+      localStorage.setItem('moneyModuleCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
     
     // Show achievement for key milestones
     if (stepIndex === 1) {
