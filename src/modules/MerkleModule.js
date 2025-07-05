@@ -376,7 +376,7 @@ const MerkleModule = () => {
     return (
       <div className="proof-verification">
         <div className="intro-header">
-          <h2>🔍 Merkle Proof Magic</h2>
+          <h2>🔍 How Merkle Proofs Work</h2>
           <div className="subtitle">Verify any transaction without downloading the entire block</div>
         </div>
 
@@ -544,7 +544,7 @@ const MerkleModule = () => {
   const renderScalability = () => (
     <div className="scalability-demo">
       <div className="intro-header">
-        <h2>📈 Scalability Superpowers</h2>
+        <h2>📈 Scalability Capabilities</h2>
         <div className="subtitle">How Merkle trees make Bitcoin efficient at any scale</div>
       </div>
 

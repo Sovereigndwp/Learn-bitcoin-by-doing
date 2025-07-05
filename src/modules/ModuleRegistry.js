@@ -27,7 +27,7 @@ export const moduleRegistry = {
   'bitcoin-basics': {
     id: 'bitcoin-basics',
     title: 'Bitcoin 101, But Actually Useful',
-    description: 'Learn Bitcoin\'s revolutionary approach to money and why it matters for humanity.',
+    description: 'Learn Bitcoin\'s innovative approach to money and why it matters for humanity.',
     component: BitcoinBasicsModule,
     order: 2,
     group: 'foundations',

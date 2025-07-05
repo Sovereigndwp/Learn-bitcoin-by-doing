@@ -538,7 +538,7 @@ const Homepage = () => {
           <div className="encouragement-content">
             <h3>🔥 You're Building Momentum!</h3>
             <div className="prime-text">
-              Knowledge compounds. Each module builds on the previous ones, creating a complete understanding of sound money and Bitcoin's revolutionary approach.
+              Knowledge compounds. Each module builds on the previous ones, creating a complete understanding of sound money and Bitcoin's innovative approach.
             </div>
             <div className="next-milestone">
               {userStats.completedModules < 6 ? (

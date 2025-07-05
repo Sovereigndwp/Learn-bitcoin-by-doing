@@ -71,7 +71,7 @@ const LearningDashboard = () => {
     } else if (currentStreak < 7) {
       return "Great consistency! You're on fire! 🔥";
     } else if (currentStreak < 30) {
-      return "Incredible dedication! You're unstoppable! 🚀";
+      return "Outstanding dedication! You're unstoppable! 🚀";
     } else {
       return "Legendary streak! You're a Bitcoin master! 👑";
     }

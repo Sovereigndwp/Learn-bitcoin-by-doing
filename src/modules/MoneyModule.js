@@ -400,9 +400,9 @@ const BarterWorld = ({ onComplete }) => {
         </div>
 
         <div className="solution-reveal">
-          <h3>💡 The Breakthrough Moment</h3>
-          <p>Some genius finally said: <em>"What if we all just agree on ONE thing that everyone will accept for everything else?"</em></p>
-          <p>And poof... <strong>money was born</strong>.</p>
+          <h3>💡 The Key Insight</h3>
+          <p>Someone finally realized: <em>"What if we all just agree on ONE thing that everyone will accept for everything else?"</em></p>
+          <p>And thus... <strong>money was born</strong>.</p>
           <p>Not by governments. Not by banks. By frustrated humans who were tired of trading goats for shoes.</p>
         </div>
 
@@ -660,8 +660,8 @@ const WhatsWrong = ({ onComplete }) => {
 
       {unlockedFunctions.length === 3 && (
         <div className="completion-section">
-          <h3>🎉 You've Discovered Money's Three Superpowers!</h3>
-          <p>Now you understand why money was such a revolutionary invention. But wait until you see what happened next...</p>
+          <h3>🎉 You've Discovered Money's Three Core Functions!</h3>
+          <p>Now you understand why money was such a transformative invention. But wait until you see what happened next...</p>
         </div>
       )}
     </div>
@@ -953,7 +953,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         <div className="module-header-box">
           <h2>When Good Money Goes Bad</h2>
           <div className="intro-text">
-            <p className="prime-text">You now understand money's three superpowers. Modern money has lost most of these powers.</p>
+            <p className="prime-text">You now understand money's three core functions. Modern money has lost most of these capabilities.</p>
             <p>Let's examine the evidence through history's greatest money failures.</p>
             <div className="quiz-preview">
               <h3>🔍 What You'll Discover:</h3>
@@ -964,7 +964,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                 <li>What traits make money truly sound</li>
               </ul>
             </div>
-            <p><strong>Ready to become a money detective?</strong></p>
+            <p><strong>Ready to analyze money systems?</strong></p>
           </div>
         </div>
         <div className="quiz-content">
@@ -981,7 +981,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       <div className="module-header-box">
         <h2>🔍 Case {currentQuestion + 1} of {questions.length}</h2>
         <div className="quiz-score">
-          Score: {score}/{currentQuestion + (showFeedback ? 1 : 0)} • {Math.round((score / questions.length) * 100)}% Sound Money Detective
+          Score: {score}/{currentQuestion + (showFeedback ? 1 : 0)} • {Math.round((score / questions.length) * 100)}% Sound Money Analyst
         </div>
       </div>
       
@@ -1011,7 +1011,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         {showFeedback && (
           <div className={`feedback-section ${selectedAnswer === currentQ.answer ? 'correct' : 'incorrect'}`}>
             <p className="feedback-result">
-              {selectedAnswer === currentQ.answer ? '🎯 Excellent Detective Work!' : '🔍 Not quite right, but keep investigating!'}
+              {selectedAnswer === currentQ.answer ? '🎯 Excellent Analysis!' : '🔍 Not quite right, but keep examining!'}
             </p>
             
             {selectedAnswer !== currentQ.answer && (
@@ -1240,7 +1240,7 @@ const MoneyModule = () => {
     if (stepIndex === 1) {
       showAchievement("Trade Explorer", "You understand why humans needed to invent money!");
     } else if (stepIndex === 3) {
-      showAchievement("Money Detective", "You've uncovered the flaws in traditional money systems!");
+      showAchievement("Money Analyst", "You've uncovered the flaws in traditional money systems!");
     } else if (stepIndex === 5) {
       showAchievement("Sound Money Scholar", "You know what makes money truly sound!");
     }
@@ -1338,7 +1338,7 @@ const MoneyModule = () => {
 
       {/* Horizontal Tab Navigation */}
       <div className="top-navigation">
-        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Superpowers', 'When Money Goes Wrong', 'Real-World Impact', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
+        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'When Money Goes Wrong', 'Real-World Impact', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
           <button
             key={index}
             className={`top-nav-button ${
@@ -1368,4 +1368,4 @@ const MoneyModule = () => {
   );
 };
 
-export default MoneyModule; 
+export default MoneyModule;

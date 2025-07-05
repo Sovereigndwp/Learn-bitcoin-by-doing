@@ -19,7 +19,7 @@ const MiningModule = () => {
     if (stepIndex === 1) {
       showAchievement("Energy Pioneer", "You understand how electricity becomes digital security!");
     } else if (stepIndex === 3) {
-      showAchievement("Security Economist", "You grasp Bitcoin's revolutionary security model!");
+      showAchievement("Security Economist", "You grasp Bitcoin's innovative security model!");
     } else if (stepIndex === 5) {
       showAchievement("Energy Innovator", "You see how Bitcoin drives clean energy adoption!");
     } else if (stepIndex === 7) {
@@ -152,7 +152,7 @@ const MiningModule = () => {
     },
 
     {
-      title: "Difficulty Adjustment Magic",
+              title: "How Difficulty Adjusts",
       type: "difficulty-demonstration",
       content: {
         title: "🎯 Self-Adjusting Security: The 10-Minute Heartbeat",

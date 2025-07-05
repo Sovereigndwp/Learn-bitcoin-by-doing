@@ -400,7 +400,7 @@ const KeyGenerationPlayground = ({ onComplete }) => {
       </div>
 
       <div className="prime-text">
-        💡 You're about to witness mathematical magic: How 256 random bits become a Bitcoin address through pure cryptography.
+        💡 You're about to witness a mathematical transformation: How 256 random bits become a Bitcoin address through pure cryptography.
       </div>
 
       <div className="generation-controls">
@@ -512,7 +512,7 @@ const KeyGenerationPlayground = ({ onComplete }) => {
       </div>
 
       <button className="continue-button" onClick={onComplete}>
-        Understand the Magic →
+        Understand the Process →
       </button>
     </div>
   );

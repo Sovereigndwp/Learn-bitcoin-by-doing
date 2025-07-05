@@ -176,8 +176,8 @@ const HashingModule = () => {
       title: "Introduction",
       type: "intro",
       content: {
-        title: "The Magic Paper Shredder 🎭",
-        text: "Let's try a fun experiment! 🔬\n\nGrab a piece of paper and write your name on it. Now, put it through a paper shredder.\n\nThree interesting things happen:\n\n1. Can you put the pieces back together?\n   • **Nope! Once it's shredded, it's impossible to unshred!**\n\n2. What if you change just one letter?\n   • **The shreds look completely different!**\n\n3. Write the same thing again...\n   • **You get exactly the same shreds!**\n\nThis is exactly how Bitcoin's **digital shredder** (called SHA-256) works:\n   • Feed it any message\n   • Get back a unique **fingerprint**\n   • Can't reverse it\n   • Same input = Same fingerprint\n   • Tiny change = Completely different fingerprint\n\nBitcoin has a digital 'paper shredder' that works just like this!\n\nEvery time you:\n   • Send Bitcoin\n   • Receive Bitcoin\n   • Or miners create a new block...\n\nThe computer 'shreds' the information into a unique pattern that:\n   • Can't be unshredded\n   • Changes completely if you change even one tiny thing\n   • Always gives the same pattern for the same information\n\nWant to try Bitcoin's digital shredder yourself? Let's play! 🎮"
+        title: "The One-Way Transformation 🎭",
+        text: "Let's try a fun experiment! 🔬\n\nGrab a piece of paper and write your name on it. Now, put it through a paper shredder.\n\nThree interesting things happen:\n\n1. Can you put the pieces back together?\n   • **Nope! Once it's shredded, it's impossible to unshred!**\n\n2. What if you change just one letter?\n   • **The shreds look completely different!**\n\n3. Write the same thing again...\n   • **You get exactly the same shreds!**\n\nThis is exactly how Bitcoin's **digital shredder** (called SHA-256) works:\n   • Feed it any message\n   • Get back a unique **fingerprint**\n   • Can't reverse it\n   • Same input = Same fingerprint\n   • Tiny change = Completely different fingerprint\n\nBitcoin has a digital 'paper shredder' that works just like this!\n\nEvery time you:\n   • Send Bitcoin\n   • Receive Bitcoin\n   • Or miners create a new block...\n\nThe computer 'shreds' the information into a unique pattern that:\n   • Can't be unshredded\n   • Changes completely if you change even one tiny thing\n   • Always gives the same pattern for the same information\n\nWant to try Bitcoin's digital transformation yourself? Let's experiment! 🎮"
       }
     },
     {
@@ -207,7 +207,7 @@ const HashingModule = () => {
       type: "intro",
       content: {
         title: "From Messages to Blocks",
-        text: "In Bitcoin, SHA-256 is used to create unique fingerprints of blocks of information. Each block contains:\n\n- Transaction details (who sent what to whom).\n- A link to the previous block's fingerprint.\n- Some special numbers the miners use.\n\nAll this information gets blended together to create the block's unique fingerprint. Let's see how it works! 🧱"
+        text: "In Bitcoin, SHA-256 is used to create unique fingerprints of blocks of information. Each block contains:\n\n- Transaction details (who sent what to whom).\n- A link to the previous block's fingerprint.\n- Some special numbers the miners use.\n\nAll this information gets blended together to create the block's unique fingerprint. Let's examine how it works! 🧱"
       }
     },
     {
