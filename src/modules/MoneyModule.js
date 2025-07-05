@@ -406,13 +406,8 @@ const BarterWorld = ({ onComplete }) => {
           <p>Not by governments. Not by banks. By frustrated humans who were tired of trading goats for shoes.</p>
         </div>
 
-        <div className="transition-hook">
-          <p className="prime-text">But here's what's fascinating: the problems money was invented to solve? They're back. In our modern banking system.</p>
-          <p>Let's see exactly what money was supposed to fix...</p>
-        </div>
-
         <button onClick={() => onComplete(1)} className="continue-button">
-          Show Me What Money Fixes
+          Let's See Exactly What Money Was Supposed to Fix
         </button>
       </div>
     </div>
@@ -503,6 +498,7 @@ const WhatsWrong = ({ onComplete }) => {
   const [feedback, setFeedback] = useState({});
   const [currentScenario, setCurrentScenario] = useState(0);
   const [unlockedFunctions, setUnlockedFunctions] = useState([]);
+  const [isLocked, setIsLocked] = useState(false);
 
   const scenarios = [
     {
@@ -565,6 +561,7 @@ const WhatsWrong = ({ onComplete }) => {
   ];
 
   const handleAnswer = (questionId, value) => {
+    if (isLocked) return;
     setAnswers(prev => ({
       ...prev,
       [questionId]: value
@@ -578,16 +575,17 @@ const WhatsWrong = ({ onComplete }) => {
 
     if (value === scenario.correctAnswer) {
       setUnlockedFunctions(prev => [...prev, scenario.moneyFunction]);
-      
-      // Move to next scenario after a delay
+      setIsLocked(true);
       setTimeout(() => {
+        setIsLocked(false);
         if (currentScenario < scenarios.length - 1) {
           setCurrentScenario(currentScenario + 1);
         } else {
-          // All completed
           setTimeout(() => onComplete(2), 1500);
         }
       }, 2000);
+    } else {
+      setIsLocked(false);
     }
   };
 
@@ -631,7 +629,7 @@ const WhatsWrong = ({ onComplete }) => {
                     key={option.value}
                     className={`option-button ${answers[scenario.id] === option.value ? 'selected' : ''}`}
                     onClick={() => handleAnswer(scenario.id, option.value)}
-                    disabled={!!feedback[scenario.id]}
+                    disabled={isLocked}
                   >
                     {option.label}
                   </button>
@@ -955,8 +953,8 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         <div className="module-header-box">
           <h2>When Good Money Goes Bad</h2>
           <div className="intro-text">
-            <p className="prime-text">You now understand money's three superpowers. But here's the plot twist: modern money has lost most of these powers.</p>
-            <p>So what happened? Let's examine the evidence through history's greatest money failures.</p>
+            <p className="prime-text">You now understand money's three superpowers. Modern money has lost most of these powers.</p>
+            <p>Let's examine the evidence through history's greatest money failures.</p>
             <div className="quiz-preview">
               <h3>🔍 What You'll Discover:</h3>
               <ul>
@@ -1093,19 +1091,19 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
 
   return (
     <div className="step-content scorecard-step">
-      <div className="module-header-box">
-        <h2>The Sound Money Blueprint</h2>
-        <div className="intro-text">
-          <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. But here's the shocking truth: modern money fails at most of these.</p>
-          <div className="scorecard-summary">
-            <h3>Your Discovery Progress</h3>
-            <div className="progress-circle">
-              <span className="score">{unlockedCount}/{allTraits.length}</span>
-              <span className="percentage">{completionPercentage}% Complete</span>
+              <div className="module-header-box">
+          <h2>The Sound Money Blueprint</h2>
+          <div className="intro-text">
+            <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. Modern money fails at most of these.</p>
+            <div className="scorecard-summary">
+              <h3>Your Discovery Progress</h3>
+              <div className="progress-circle">
+                <span className="score">{unlockedCount}/{allTraits.length}</span>
+                <span className="percentage">{completionPercentage}% Complete</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       
       <div className="traits-comparison">
         <div className="comparison-header">
