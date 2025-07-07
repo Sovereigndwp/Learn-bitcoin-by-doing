@@ -558,8 +558,8 @@ const MythsModule = () => {
                   <li key={index}>{source}</li>
                 ))}
               </ul>
-            </div>
-            
+                      </div>
+                      
             {/* Visual Capitalist section for tulip mania myth */}
             {myth.id === 'tulip-mania' && (
               <VisualCapitalistSection
@@ -580,7 +580,7 @@ const MythsModule = () => {
                   <CheckCircle size={16} />
                   Myth Debunked!
                 </button>
-              </div>
+                      </div>
             )}
 
             {isDebunked && (

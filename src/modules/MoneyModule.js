@@ -662,64 +662,74 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   const getIncorrectExplanation = (question, answerIndex) => {
     const explanations = {
       1: [
-        "Being cautious doesn't explain why people can't access their own deposits.",
-        "This is the key insight - when banks control access, do you really own your money?",
-        "The problem isn't demand, it's the banking system's structure."
+        "Caution doesn't explain why people couldn't access their own money.",
+        "Exactly! If you can't control your money, you don't truly own it.",
+        "The problem wasn't demand—it was that banks controlled access to people's funds."
       ],
       2: [
-        "If it were just cycles, we'd see currencies recover their value - but they don't.",
-        "Necessity doesn't explain why ALL government currencies eventually fail.",
-        "Exactly! History shows power over money always gets abused."
+        "These patterns repeat across different economic systems throughout history.",
+        "Money printing may seem necessary, but it always ends in wealth transfer from savers to money creators.",
+        "Exactly! Those who control the money supply always eventually abuse that power."
       ],
       3: [
-        "Beauty isn't a practical concern for money.",
-        "Correct! Physical limitations made gold impractical for everyday use.",
-        "Scarcity was actually gold's strength, not its weakness."
+        "No amount of money printing could restore confidence once hyperinflation began.",
+        "Exactly! Mathematical scarcity cannot be faked or manipulated by authorities.",
+        "Money printing destroys wealth—it doesn't create it."
       ],
       4: [
-        "Fast spending shows the money was failing, not succeeding.",
-        "Exactly! Money must preserve value or people lose trust.",
-        "Flexible prices are good, but hyperinflation destroys the economy."
+        "Beauty isn't a monetary flaw—it's actually desirable for money.",
+        "Exactly! Physical transportation limits prevented gold from being ideal money.",
+        "Scarcity is actually a strength, not a weakness of sound money."
       ],
       5: [
-        "Trust is essential for money to function.",
-        "Exactly! When money units aren't equal, the system breaks down.",
-        "Making more debased coins would make the problem worse."
+        "High value isn't a problem—money should be valuable.",
+        "Exactly! Money that decays over time cannot reliably store value.",
+        "Divisibility is actually good—you want to be able to make change."
       ],
       6: [
-        "The stones never moved, showing money doesn't need to be physical.",
-        "Exactly! Shared agreement about ownership is what makes money work.",
-        "Even lost stones retained value if the community remembered ownership."
+        "Fast spending during hyperinflation is a desperate response, not a good strategy.",
+        "Exactly! Money must maintain purchasing power to be useful.",
+        "Flexible prices aren't the issue—unstable money is the problem."
       ],
       7: [
+        "Trust in money changed dramatically when coins became unreliable.",
+        "Exactly! Coin degradation destroyed the uniform value essential for money.",
+        "Making more debased coins would only make the problem worse."
+      ],
+      8: [
+        "The Yap system worked without physical possession of the stones.",
+        "Exactly! Social consensus about ownership is what made their money system work.",
+        "Even lost stones retained value if the community remembered the ownership."
+      ],
+      9: [
         "Bitcoin's design specifically prevents this kind of control.",
         "Exactly! Decentralized money can't be frozen by authorities.",
         "Bitcoin doesn't change political situations, but it protects financial freedom."
       ],
-      8: [
+      10: [
         "Bitcoin was specifically designed to move freely across borders.",
         "Bitcoin operates beyond traditional financial controls.",
         "Exactly! Bitcoin enables borderless movement of value."
       ],
-      9: [
+      11: [
         "The smell isn't the fundamental problem with cattle as money.",
         "Exactly! Money needs to be divisible for different transaction sizes.",
         "People needed money for trade, not food."
       ],
-      10: [
-        "Bitcoin is much more than just another digital payment app.",
-        "Exactly! Bitcoin combines the best properties of gold with digital advantages.",
-        "Bitcoin handles both small and large payments effectively."
-      ],
-      11: [
+      12: [
         "Bitcoin's digital nature fundamentally changes the game.",
         "Governments can try to regulate Bitcoin, but can't easily seize it like physical assets.",
         "Exactly! Information and cryptography are much harder to confiscate."
       ],
-      12: [
+      13: [
         "No currency can guarantee stability, but choice provides protection.",
         "Exactly! The right to choose your money is fundamental to economic freedom.",
         "Government support often comes with strings attached to control."
+      ],
+      14: [
+        "Bitcoin is much more than just another digital payment app.",
+        "Exactly! Bitcoin combines the best properties of all previous forms of money with digital advantages.",
+        "Bitcoin handles both small and large payments effectively."
       ]
     };
     return explanations[question.id]?.[answerIndex] || "This doesn't address the core issue.";
@@ -730,16 +740,18 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     const explanations = {
       1: "When institutions can freeze your access to money, you're dependent on their permission. True ownership means complete control.",
       2: "Throughout history, those with the power to create money have always eventually abused it for short-term gain, devaluing everyone else's savings.",
-      3: "Money must be easy to transport and transfer, or it becomes impractical for daily commerce and trade.",
-      4: "The primary function of money is to store value over time. If it fails at this, people lose trust and the economy breaks down.",
-      5: "Every unit of money must be identical and interchangeable. When they're not, people lose trust and start rejecting certain units.",
-      6: "Money is ultimately about shared agreement on ownership. Physical possession is less important than community consensus.",
-      7: "Decentralized systems have no central authority that can freeze or block transactions, providing true financial sovereignty.",
-      8: "Bitcoin operates on a global network that doesn't recognize political borders, enabling true financial freedom.",
-      9: "Divisibility allows money to handle transactions of any size, from buying a coffee to purchasing a house.",
-      10: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant network.",
-      11: "Bitcoin exists as cryptographic information that can be memorized or hidden, making it much harder to confiscate than physical assets.",
-      12: "Freedom includes the right to opt out of failing systems and choose better alternatives for storing and transferring value."
+      3: "During hyperinflation, scarcity becomes meaningless if supply can be increased at will. True scarcity requires mathematical limits.",
+      4: "Money must be easy to transport and transfer, or it becomes impractical for daily commerce and trade.",
+      5: "Bronze Age societies learned that money must withstand time and elements, or it becomes unreliable for storing wealth.",
+      6: "The primary function of money is to store value over time. If it fails at this, people lose trust and the economy breaks down.",
+      7: "Every unit of money must be identical and interchangeable. When they're not, people lose trust and start rejecting certain units.",
+      8: "Money is ultimately about shared agreement on ownership. Physical possession is less important than community consensus.",
+      9: "Decentralized systems have no central authority that can freeze or block transactions, providing true financial sovereignty.",
+      10: "Bitcoin operates on a global network that doesn't recognize political borders, enabling true financial freedom.",
+      11: "Divisibility allows money to handle transactions of any size, from buying a coffee to purchasing a house.",
+      12: "Bitcoin exists as cryptographic information that can be memorized or hidden, making it much harder to confiscate than physical assets.",
+      13: "Freedom includes the right to opt out of failing systems and choose better alternatives for storing and transferring value.",
+      14: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant, non-corruptible network."
     };
     return explanations[question.id] || "This addresses the fundamental issue correctly.";
   };
@@ -773,6 +785,19 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 3,
+      text: "In Zimbabwe 2008, the government printed 100 trillion dollar bills, but bread still cost billions. Even printing more money couldn't solve the crisis.",
+      question: "What does this reveal about artificial scarcity?",
+      options: [
+        "They didn't print enough money",
+        "Scarcity must be mathematically enforced",
+        "Money printing creates wealth"
+      ],
+      answer: 1,
+      takeaway: "True scarcity cannot be created by promises—it requires mathematical limits that cannot be broken.",
+      trait: "Mathematical Scarcity"
+    },
+    {
+      id: 4,
       text: "Gold was used for centuries but was heavy and risky to transport.",
       question: "What was its biggest weakness?",
       options: [
@@ -785,7 +810,20 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Portability"
     },
     {
-      id: 4,
+      id: 5,
+      text: "In Bronze Age civilizations, grain and livestock were used as money, but they rotted, died, or were eaten by pests over time.",
+      question: "What essential property was missing?",
+      options: [
+        "They were too valuable",
+        "Money must be durable over time",
+        "They were too divisible"
+      ],
+      answer: 1,
+      takeaway: "Money must survive the test of time—durability ensures long-term value storage.",
+      trait: "Durability"
+    },
+    {
+      id: 6,
       text: "Germany in 1923 saw prices doubling every few days. People rushed to spend their money before it lost value.",
       question: "What's the lesson?",
       options: [
@@ -798,7 +836,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Store of Value"
     },
     {
-      id: 5,
+      id: 7,
       text: "In ancient Rome, coins were secretly mixed with cheaper metals or clipped around the edges, making them unequal in value.",
       question: "What happened to trust in money?",
       options: [
@@ -811,7 +849,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Fungibility"
     },
     {
-      id: 6,
+      id: 8,
       text: "The Yap Islands used massive stone money that never moved. Ownership was remembered by the community.",
       question: "What does this reveal about money?",
       options: [
@@ -824,7 +862,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Ledger Consensus"
     },
     {
-      id: 7,
+      id: 9,
       text: "In 2020, protesting Canadian truckers had their bank accounts frozen.",
       question: "What would change with Bitcoin?",
       options: [
@@ -837,7 +875,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Censorship Resistance"
     },
     {
-      id: 8,
+      id: 10,
       text: "In Greece, Russia, Argentina, and China, to name a few, governments have placed strict controls on how much money citizens can withdraw or move abroad. Some families trying to leave must carry gold, hide cash, or pay black market rates.",
       question: "How does Bitcoin challenge that system?",
       options: [
@@ -850,7 +888,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Borderless"
     },
     {
-      id: 9,
+      id: 11,
       text: "When cattle was used as money, it worked for big trades—but you couldn't pay someone with half a cow.",
       question: "What did this reveal about money?",
       options: [
@@ -863,20 +901,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Divisibility"
     },
     {
-      id: 10,
-      text: "Bitcoin is the first money that is digital, scarce, portable, divisible, and cannot be confiscated or counterfeited.",
-      question: "What makes Bitcoin different?",
-      options: [
-        "Just another app",
-        "Digital gold with new powers",
-        "Only for small payments"
-      ],
-      answer: 1,
-      takeaway: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant network.",
-      trait: "All traits"
-    },
-    {
-      id: 11,
+      id: 12,
       text: "When governments banned gold ownership in the past, they could physically seize it from citizens. But Bitcoin exists as information.",
       question: "How does this change the relationship between money and authority?",
       options: [
@@ -889,7 +914,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       trait: "Digital Sovereignty"
     },
     {
-      id: 12,
+      id: 13,
       text: "In Venezuela, as inflation destroyed the currency's value, the government restricted access to foreign currencies, trapping savings in a dying system.",
       question: "What fundamental right does this violate?",
       options: [
@@ -900,6 +925,19 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       answer: 1,
       takeaway: "Bitcoin gives you the freedom to opt out of failing monetary systems.",
       trait: "Freedom of Choice"
+    },
+    {
+      id: 14,
+      text: "Bitcoin is the first money that is mathematically scarce, durable, portable, divisible, non-corruptible, and cannot be confiscated or counterfeited.",
+      question: "What makes Bitcoin different from all previous forms of money?",
+      options: [
+        "Just another digital app",
+        "Combines all sound money traits perfectly",
+        "Only good for small payments"
+      ],
+      answer: 1,
+      takeaway: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant, non-corruptible network.",
+      trait: "All Sound Money Traits + Non-Corruptible"
     }
   ];
 
@@ -961,9 +999,36 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
   return (
     <div className="step-content quiz-step">
       <div className="module-header-box">
-        <h2>🔍 Case {currentQuestion + 1} of {questions.length}</h2>
-        <div className="quiz-score">
-          Score: {score}/{currentQuestion + (showFeedback ? 1 : 0)} • {Math.round((score / questions.length) * 100)}% Sound Money Analyst
+        <div className="quiz-header-top">
+          <h2>🔍 Case {currentQuestion + 1} of {questions.length}</h2>
+          <div className="quiz-score">
+            Score: {score}/{questions.length} • {Math.round((score / questions.length) * 100)}% Sound Money Analyst
+          </div>
+        </div>
+        
+        {/* Horizontal Question Navigation */}
+        <div className="question-navigation">
+          <div className="question-buttons">
+            {questions.map((question, index) => (
+              <button
+                key={index}
+                className={`question-nav-button ${index === currentQuestion ? 'active' : ''} ${
+                  // Check if this question has been answered correctly
+                  index < currentQuestion || (index === currentQuestion && selectedAnswer === currentQ.answer && showFeedback) ? 'completed' : ''
+                }`}
+                onClick={() => {
+                  if (index <= currentQuestion) { // Only allow navigation to current or previous questions
+                    setCurrentQuestion(index);
+                    setSelectedAnswer(null);
+                    setShowFeedback(false);
+                  }
+                }}
+                disabled={index > currentQuestion} // Disable future questions
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       
@@ -1029,8 +1094,8 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                   <p><strong>{currentQ.trait}</strong></p>
                 </div>
                 
-                {/* Visual Capitalist Explore Further - Only for question 10 */}
-                {currentQuestion === 9 && (
+                {/* Visual Capitalist Explore Further - Only for question 14 (Bitcoin question) */}
+                {currentQuestion === 13 && (
                   <VisualCapitalistSection
                     icon="📊"
                     title="Explore Further: Bitcoin's Market Context"
@@ -1047,18 +1112,6 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
             )}
           </div>
         )}
-
-        <div className="progress-indicator">
-          <div className="progress-dots">
-            {questions.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === currentQuestion ? 'active' : ''} ${index < currentQuestion ? 'completed' : ''}`}
-              />
-            ))}
-          </div>
-          <p className="progress-text">Case {currentQuestion + 1} of {questions.length}</p>
-        </div>
       </div>
     </div>
   );

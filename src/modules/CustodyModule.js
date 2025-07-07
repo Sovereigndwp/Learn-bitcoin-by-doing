@@ -276,7 +276,7 @@ const CustodyModule = () => {
               { id: 'basic', text: 'I can use apps but avoid complex tech', weight: { complexity: 1 } },
               { id: 'intermediate', text: 'Comfortable with most technology', weight: { complexity: 2 } },
               { id: 'advanced', text: 'I write code or manage IT systems', weight: { complexity: 3 } }
-            ]
+      ]
     },
     {
       id: 'family',

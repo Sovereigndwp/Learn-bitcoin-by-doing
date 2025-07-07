@@ -1025,16 +1025,16 @@ const EnergyInnovation = ({ content, onComplete }) => {
         <h3>🌱 How Bitcoin Drives Energy Innovation</h3>
         <div className="driver-tabs">
           {content.innovationDrivers.map((driver, index) => (
-            <button
-              key={index}
+              <button
+                key={index}
               className={`driver-tab ${selectedCategory === index ? 'active' : ''}`}
               onClick={() => setSelectedCategory(index)}
-            >
+              >
               <span className="tab-icon">{driver.icon}</span>
               <span className="tab-title">{driver.category}</span>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
 
         <div className="driver-content">
           <div className="driver-examples">
@@ -1049,7 +1049,7 @@ const EnergyInnovation = ({ content, onComplete }) => {
             <strong>Impact:</strong> {content.innovationDrivers[selectedCategory].impact}
           </div>
         </div>
-      </div>
+        </div>
 
       <div className="real-world-examples">
         <h3>🌍 Real-World Examples</h3>
@@ -1058,10 +1058,10 @@ const EnergyInnovation = ({ content, onComplete }) => {
             <div key={location} className="example-card">
               <h4>{location.charAt(0).toUpperCase() + location.slice(1)}</h4>
               <p>{description}</p>
-            </div>
+          </div>
           ))}
+          </div>
         </div>
-      </div>
 
       <div className="future-vision">
         <div className="vision-content">
@@ -1073,8 +1073,8 @@ const EnergyInnovation = ({ content, onComplete }) => {
 
       <button className="continue-button" onClick={onComplete}>
         Explore Global Network 🌍
-      </button>
-    </div>
+          </button>
+        </div>
   );
 };
 
@@ -1102,14 +1102,14 @@ const NetworkVisualization = ({ content, onComplete }) => {
               <div className="region-header">
                 <h4>{region.region}</h4>
                 <span className="percentage">{region.percentage}%</span>
-              </div>
+            </div>
               <div className="hashrate">{region.hashrate}</div>
               
               {selectedRegion === index && (
                 <div className="region-details">
                   <div className="countries">
                     <strong>Key Countries:</strong> {region.countries.join(', ')}
-                  </div>
+            </div>
                   <div className="advantages">
                     <strong>Advantages:</strong>
                     <ul>
@@ -1117,9 +1117,9 @@ const NetworkVisualization = ({ content, onComplete }) => {
                         <li key={i}>{advantage}</li>
                       ))}
                     </ul>
-                  </div>
-                </div>
-              )}
+          </div>
+        </div>
+      )}
             </div>
           ))}
         </div>
@@ -1134,8 +1134,8 @@ const NetworkVisualization = ({ content, onComplete }) => {
               <span>{benefit}</span>
             </div>
           ))}
-        </div>
-      </div>
+            </div>
+                </div>
 
       <div className="comparison-section">
         <h3>⚖️ Comparison to Other Systems</h3>
@@ -1144,10 +1144,10 @@ const NetworkVisualization = ({ content, onComplete }) => {
             <div key={system} className="comparison-card">
               <h4>{system.replace(/([A-Z])/g, ' $1').trim()}</h4>
               <p>{description}</p>
-            </div>
+                </div>
           ))}
+          </div>
         </div>
-      </div>
 
       <button className="continue-button" onClick={onComplete}>
         Learn About Mining Pools 🤝
@@ -1326,7 +1326,7 @@ const ConsensusComparison = ({ content, onComplete }) => {
               <strong>Energy Requirement:</strong>
               <span className={`energy-level ${content.consensusMechanisms[selectedMechanism].energyRequirement.toLowerCase()}`}>
                 {content.consensusMechanisms[selectedMechanism].energyRequirement}
-              </span>
+        </span>
           </div>
             <div className="metric">
               <strong>Security Model:</strong>
@@ -1396,14 +1396,14 @@ const ActionableMining = ({ content, onComplete }) => {
         <h3>🎯 Choose Your Participation Level</h3>
         <div className="level-selector">
           {content.participationLevels.map((level, index) => (
-          <button 
+        <button 
               key={index}
               className={`participation-level ${selectedLevel === index ? 'selected' : ''}`}
               onClick={() => setSelectedLevel(index)}
             >
               <h4>{level.level}</h4>
               <p>{level.description}</p>
-          </button>
+        </button>
           ))}
       </div>
 
