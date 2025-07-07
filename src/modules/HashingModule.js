@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import CodeEditor from '../components/CodeEditor';
 import { sha256, hash256 } from '../utils/bitcoin';
@@ -168,6 +169,7 @@ const HashExplorer = ({ onComplete }) => {
 
 const HashingModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -280,6 +282,16 @@ const HashingModule = () => {
     setCompletedSteps(prevCompletedSteps => {
       const newCompleted = new Set(prevCompletedSteps);
       newCompleted.add(stepIndex);
+      
+      // Check if this was the last step and complete the module
+      if (newCompleted.size === steps.length) {
+        completeModule('hashing');
+        // Redirect to homepage after completing the module
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      }
+      
       return newCompleted;
     });
     

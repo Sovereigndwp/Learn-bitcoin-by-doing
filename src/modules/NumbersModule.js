@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Calculator, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
 
 const NumbersModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -128,8 +130,11 @@ const NumbersModule = () => {
   const handleStepComplete = (index) => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
-        completeModule('numbers');
-      }
+      completeModule('numbers');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    }
     setCurrentStep(index + 1);
   };
 

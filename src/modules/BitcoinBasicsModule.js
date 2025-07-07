@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Zap, Bitcoin, CheckCircle, Trophy, Clock, Target, BarChart, Globe, Shield, Coins, TrendingUp, Activity, Power } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
@@ -28,6 +29,7 @@ const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) 
 
 const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   
@@ -35,6 +37,9 @@ const BitcoinBasicsModule = () => {
     setCompletedSteps(prev => new Set(prev).add(index));
     if (index === steps.length - 1) {
       completeModule('bitcoin-basics');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     }
     
     // Show achievement for key milestones

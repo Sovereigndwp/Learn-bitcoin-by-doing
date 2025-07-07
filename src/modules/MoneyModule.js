@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap, ChevronLeft, ChevronRight, TrendingUp, Globe, Shield, DollarSign, Users, BarChart3, AlertCircle, Star } from 'lucide-react';
@@ -1188,6 +1189,7 @@ const BadgeModal = ({ isOpen, onClose }) => {
 // Main Module Component
 const MoneyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(() => {
     const saved = localStorage.getItem('moneyModuleCompletedSteps');
@@ -1234,6 +1236,10 @@ const MoneyModule = () => {
       completeModule('money');
       setShowBadgeModal(true);
       showAchievement("Money Master", "You've mastered the fundamentals of sound money!");
+      // Redirect to homepage after a delay to allow badge modal to show
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } else {
       setCurrentStep(stepIndex + 1);
     }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { hash256, mineBlock } from '../utils/bitcoin';
 import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -28,6 +29,7 @@ const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) 
 
 const MiningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
@@ -56,6 +58,10 @@ const MiningModule = () => {
     
     if (newCompleted.size === steps.length) {
       completeModule('mining');
+      // Redirect to homepage after completing the module
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     }
   };
 
