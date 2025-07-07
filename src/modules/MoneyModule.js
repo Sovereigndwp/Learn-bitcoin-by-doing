@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap, ChevronLeft, ChevronRight, TrendingUp, Globe, Shield, DollarSign, Users, BarChart3, AlertCircle, Star } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
+
+// Reusable Visual Capitalist Section Component
+const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+  <div className="explore-further-section">
+    <div className="explore-further-header">
+      <span className="explore-further-icon">{icon}</span>
+      <h4 className="explore-further-title">{title}</h4>
+    </div>
+    <p className="explore-further-description">{description}</p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="explore-further-button"
+    >
+      <span className="button-icon">🔍</span>
+      {buttonText}
+    </a>
+  </div>
+);
 
 // Component for the Introduction (transition from banking friction)
 const Introduction = ({ onComplete }) => {
@@ -442,7 +463,10 @@ const CarlosFlowerExport = ({ onComplete }) => {
 
       <div className="content-text">
         <p>After exploring Carlos's story, you can see how traditional payment systems create unnecessary friction, delays, and costs that eat into people's earnings and limit economic opportunity.</p>
-        <button onClick={onComplete} className="continue-button">
+        <button 
+          className="continue-button"
+          onClick={() => onComplete(4)}
+        >
           Continue to the Sound Money Blueprint
         </button>
       </div>
@@ -713,7 +737,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
       7: "Decentralized systems have no central authority that can freeze or block transactions, providing true financial sovereignty.",
       8: "Bitcoin operates on a global network that doesn't recognize political borders, enabling true financial freedom.",
       9: "Divisibility allows money to handle transactions of any size, from buying a coffee to purchasing a house.",
-      10: "Bitcoin uniquely combines all the properties of sound money with digital efficiency and global accessibility.",
+      10: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant network.",
       11: "Bitcoin exists as cryptographic information that can be memorized or hidden, making it much harder to confiscate than physical assets.",
       12: "Freedom includes the right to opt out of failing systems and choose better alternatives for storing and transferring value."
     };
@@ -848,7 +872,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         "Only for small payments"
       ],
       answer: 1,
-      takeaway: "Bitcoin combines all traits of sound money with global digital reach—plus neutrality and decentralization.",
+      takeaway: "Bitcoin uniquely combines every sound money trait in one global, censorship-resistant network.",
       trait: "All traits"
     },
     {
@@ -1004,6 +1028,18 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                   <h4>🏆 Sound Money Trait Discovered:</h4>
                   <p><strong>{currentQ.trait}</strong></p>
                 </div>
+                
+                {/* Visual Capitalist Explore Further - Only for question 10 */}
+                {currentQuestion === 9 && (
+                  <VisualCapitalistSection
+                    icon="📊"
+                    title="Explore Further: Bitcoin's Market Context"
+                    description="See how Bitcoin's $1+ trillion market cap compares to all global assets and markets. This visualization puts Bitcoin's scarcity and growth potential in perspective."
+                    url="https://www.visualcapitalist.com/all-of-the-worlds-money-and-markets-in-one-visualization-2020/"
+                    buttonText="View Global Money Visualization"
+                  />
+                )}
+                
                 <button onClick={handleNext} className="next-button">
                   {currentQuestion < questions.length - 1 ? 'Next Case →' : 'Complete Investigation'}
                 </button>
@@ -1104,6 +1140,14 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
           <p><strong>Spoiler alert:</strong> It's called Bitcoin, and it's going to challenge everything you thought you knew about money.</p>
         </div>
 
+        <VisualCapitalistSection
+          icon="💎"
+          title="Explore Further: Asset Classes Comparison"
+          description="See how different asset classes (stocks, bonds, gold, real estate, Bitcoin) compare as stores of value over time. This visualization shows why sound money properties matter for long-term wealth preservation."
+          url="https://www.visualcapitalist.com/comparing-returns-stocks-bonds-bills-gold/"
+          buttonText="Compare Asset Class Returns"
+        />
+
         <button 
           className="continue-button"
           onClick={() => onComplete(5)}
@@ -1126,14 +1170,6 @@ const ExternalResource = ({ onComplete }) => {
         Dive deeper into the fascinating evolution of money through the ages. 
       </p>
       <div className="external-links">
-        <a
-          href="https://www.investopedia.com/articles/07/currency_history.asp"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="external-resource-link"
-        >
-          History of Money and Currency
-        </a>
         <a
           href="https://www.federalreserve.gov/faqs/currency_12771.htm"
           target="_blank"
@@ -1254,6 +1290,13 @@ const MoneyModule = () => {
     }
   };
 
+  // Reset progress handler
+  const handleResetProgress = () => {
+    localStorage.removeItem('moneyModuleCompletedSteps');
+    setCompletedSteps(new Set());
+    setCurrentStep(0);
+  };
+
   return (
     <div className="module-container">
       {/* Override the default layout title for this module only */}
@@ -1282,6 +1325,21 @@ const MoneyModule = () => {
           border-radius: 4px;
           cursor: pointer;
         }
+        .reset-progress-button {
+          background: #f7931a;
+          color: white;
+          border: none;
+          padding: 0.5rem 1.2rem;
+          border-radius: 6px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          margin: 1rem 0 1.5rem 0;
+          transition: background 0.2s;
+        }
+        .reset-progress-button:hover {
+          background: #ea580c;
+        }
       `}</style>
       
       <div className="module-header">
@@ -1290,6 +1348,11 @@ const MoneyModule = () => {
           If You Don't Define It, It Will Define You
         </h1>
       </div>
+
+      {/* Reset Progress Button */}
+      <button className="reset-progress-button" onClick={handleResetProgress}>
+        Reset Progress
+      </button>
 
       <div className="module-progress">
         <div className="progress-bar">

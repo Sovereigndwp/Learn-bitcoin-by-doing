@@ -3,10 +3,31 @@ import { useProgress } from '../contexts/ProgressContext';
 import { 
   AlertTriangle, CheckCircle, Trophy, Shield, Zap, DollarSign, 
   Lock, Globe, TrendingUp, Cpu, Network, Scale, BarChart, 
-  Database, Server, Coins, Users, Clock, Target, Info
+  Database, Server, Coins, Users, Clock, Target, Info, Award
 } from 'lucide-react';
+import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import './MythsModule.css';
+
+// Reusable Visual Capitalist Section Component
+const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+  <div className="explore-further-section">
+    <div className="explore-further-header">
+      <span className="explore-further-icon">{icon}</span>
+      <h4 className="explore-further-title">{title}</h4>
+    </div>
+    <p className="explore-further-description">{description}</p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="explore-further-button"
+    >
+      <span className="button-icon">🔍</span>
+      {buttonText}
+    </a>
+  </div>
+);
 
 const MythsModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -537,8 +558,19 @@ const MythsModule = () => {
                   <li key={index}>{source}</li>
                 ))}
               </ul>
-                      </div>
-                      
+            </div>
+            
+            {/* Visual Capitalist section for tulip mania myth */}
+            {myth.id === 'tulip-mania' && (
+              <VisualCapitalistSection
+                icon="🌷"
+                title="Explore Further: Historical Bubbles vs Technology Adoption"
+                description="See how Bitcoin's adoption pattern compares to historical bubbles like tulip mania versus genuine technology adoption curves like the internet."
+                url="https://www.visualcapitalist.com/bubbles-in-market-history/"
+                buttonText="View Historical Bubble Analysis"
+              />
+            )}
+            
             {!isDebunked && (
               <div style={{ textAlign: 'center', marginTop: '2rem' }}>
                 <button 
@@ -548,7 +580,7 @@ const MythsModule = () => {
                   <CheckCircle size={16} />
                   Myth Debunked!
                 </button>
-                      </div>
+              </div>
             )}
 
             {isDebunked && (

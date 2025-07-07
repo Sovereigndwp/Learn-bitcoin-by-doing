@@ -1,9 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { hash256, mineBlock } from '../utils/bitcoin';
-import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf } from 'lucide-react';
+import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './MiningModule.css';
+import AnimatedIcon from '../components/AnimatedIcon';
+
+// Reusable Visual Capitalist Section Component
+const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+  <div className="explore-further-section">
+    <div className="explore-further-header">
+      <span className="explore-further-icon">{icon}</span>
+      <h4 className="explore-further-title">{title}</h4>
+    </div>
+    <p className="explore-further-description">{description}</p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="explore-further-button"
+    >
+      <span className="button-icon">🔍</span>
+      {buttonText}
+    </a>
+  </div>
+);
 
 const MiningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -976,6 +997,14 @@ const AttackCostCalculator = ({ content, onComplete }) => {
           </div>
         </div>
       )}
+
+      <VisualCapitalistSection
+        icon="⚡"
+        title="Explore Further: Energy Consumption Context"
+        description="See how Bitcoin's energy consumption compares to other industries like banking, gold mining, and data centers. This puts Bitcoin's energy use in global perspective."
+        url="https://www.visualcapitalist.com/bitcoin-energy-consumption-by-country/"
+        buttonText="View Energy Comparison"
+      />
     </div>
   );
 };

@@ -1,9 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Zap, Bitcoin, CheckCircle, Trophy, Clock, Target, BarChart, Globe, Shield, Coins, TrendingUp, Activity, Power } from 'lucide-react';
+import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
+
+// Reusable Visual Capitalist Section Component
+const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+  <div className="explore-further-section">
+    <div className="explore-further-header">
+      <span className="explore-further-icon">{icon}</span>
+      <h4 className="explore-further-title">{title}</h4>
+    </div>
+    <p className="explore-further-description">{description}</p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="explore-further-button"
+    >
+      <span className="button-icon">🔍</span>
+      {buttonText}
+    </a>
+  </div>
+);
 
 const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
@@ -694,8 +715,16 @@ const BitcoinBasicsModule = () => {
           </div>
         </div>
 
+        <VisualCapitalistSection
+          icon="��"
+          title="Explore Further: Bitcoin's Price Volatility Over Time"
+          description="See how Bitcoin's price volatility has actually decreased over time as it matures. This visualization shows the power law adoption curve in action."
+          url="https://www.visualcapitalist.com/bitcoin-price-volatility-over-time/"
+          buttonText="View Price Volatility Analysis"
+        />
+
         <button className="continue-button" onClick={onComplete}>
-          Power Law Thinking ✓
+          Not Exponential—Power Law ✓
         </button>
           </div>
         );

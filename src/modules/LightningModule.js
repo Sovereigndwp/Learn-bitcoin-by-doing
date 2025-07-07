@@ -2,10 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Zap, Users, ArrowRight, Network, Clock, DollarSign,
-  Trophy, CheckCircle, Target, Globe, Shield, Code
+  Trophy, CheckCircle, Target, Globe, Shield, Code, BarChart3, Award
 } from 'lucide-react';
+import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import './LightningModule.css';
+
+// Reusable Visual Capitalist Section Component
+const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+  <div className="explore-further-section">
+    <div className="explore-further-header">
+      <span className="explore-further-icon">{icon}</span>
+      <h4 className="explore-further-title">{title}</h4>
+    </div>
+    <p className="explore-further-description">{description}</p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="explore-further-button"
+    >
+      <span className="button-icon">🔍</span>
+      {buttonText}
+    </a>
+  </div>
+);
 
 const LightningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -653,6 +674,14 @@ const LightningModule = () => {
           The network effect is accelerating: more users → more liquidity → better routing → lower fees → more users.
         </p>
       </div>
+
+      <VisualCapitalistSection
+        icon="🌍"
+        title="Explore Further: Global Remittance Market"
+        description="See how the $700+ billion global remittance market works and why Lightning Network could revolutionize cross-border payments for millions of families worldwide."
+        url="https://www.visualcapitalist.com/global-remittance-flows/"
+        buttonText="View Global Remittance Data"
+      />
 
       <div className="step-completion">
         <div className="completion-icon">✓</div>

@@ -746,4 +746,159 @@
     height: 30px;
     font-size: 0.8rem;
   }
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .lightning-module {
+    padding: 1rem;
+  }
+  
+  .step-tabs {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .step-tab {
+    justify-content: center;
+  }
+  
+  .lightning-header h1 {
+    font-size: 2rem;
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-showcase {
+    grid-template-columns: 1fr;
+  }
+  
+  .channel-demo {
+    flex-direction: column;
+  }
+  
+  .channel-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .routing-visualization {
+    flex-direction: column;
+  }
+  
+  .routing-steps {
+    flex-direction: column;
+  }
+  
+  .routing-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .security-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .challenge-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .solution-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .liquidity-controls {
+    flex-direction: column;
+  }
+  
+  .capacity-controls {
+    flex-direction: column;
+  }
+  
+  .fee-controls {
+    flex-direction: column;
+  }
+}
+
+/* Visual Capitalist Explore Further Buttons */
+.explore-further-section {
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.explore-further-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.explore-further-icon {
+  font-size: 1.5rem;
+}
+
+.explore-further-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e40af;
+  margin: 0;
+}
+
+.explore-further-description {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.explore-further-button {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25);
+}
+
+.explore-further-button:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.explore-further-button .button-icon {
+  font-size: 0.85rem;
+}
+
+/* Responsive adjustments for Visual Capitalist sections */
+@media (max-width: 768px) {
+  .explore-further-section {
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+  }
+  
+  .explore-further-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
 } 
