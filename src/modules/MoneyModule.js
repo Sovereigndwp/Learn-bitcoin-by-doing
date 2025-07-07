@@ -1153,12 +1153,12 @@ const ExternalResource = ({ onComplete }) => {
       </p>
       <div className="external-links">
         <a
-          href="https://www.federalreserve.gov/faqs/currency_12771.htm"
+          href="https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
           target="_blank"
           rel="noopener noreferrer"
           className="external-resource-link timeline-link"
         >
-          Evolution of Money: From Barter to Digital
+          Evolution of Money: From Barter to Bitcoin
         </a>
       </div>
       <div className="button-group">
