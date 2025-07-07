@@ -54,7 +54,7 @@
 }
 
 .tagline {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #666;
   margin: 0.5rem 0 0;
   font-weight: 400;
@@ -199,7 +199,7 @@
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #666;
   line-height: 1.4;
 }
@@ -710,7 +710,7 @@
 .module-card p {
   margin: 0 0 1rem 0;
   color: #666;
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -727,7 +727,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #666;
 }
 
@@ -787,7 +787,7 @@
 }
 
 .progress-text {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #666;
   font-weight: 500;
   min-width: 35px;
@@ -800,7 +800,7 @@
   justify-content: center;
   gap: 0.5rem;
   color: #f7931a;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   padding: 0.5rem;
   background: rgba(247, 147, 26, 0.1);
@@ -815,7 +815,7 @@
   border-radius: 8px;
   padding: 0.75rem;
   color: #666;
-  font-size: 0.875rem;
+  font-size: 1rem;
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -830,7 +830,7 @@
   border: 1px solid rgba(247, 147, 26, 0.3);
   border-radius: 8px;
   padding: 0.5rem;
-  font-size: 0.825rem;
+  font-size: 0.95rem;
   color: #666;
   margin-top: 0.5rem;
 }
@@ -848,7 +848,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.825rem;
+  font-size: 0.95rem;
   color: #666;
   background: white;
   padding: 0.25rem 0.5rem;
@@ -885,7 +885,7 @@
   border-radius: 25px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.925rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
 }
