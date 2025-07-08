@@ -43,10 +43,12 @@ const BitcoinBasicsModule = () => {
     }
     
     // Show achievement for key milestones
-    if (index === 1) {
+    if (index === 0) {
       showAchievement("Money Evolutionist", "You understand the progression from Gold to Bitcoin!");
-    } else if (index === 2) {
+    } else if (index === 1) {
       showAchievement("Energy Pioneer", "You grasp how energy becomes digital truth!");
+    } else if (index === 2) {
+      showAchievement("Work Explorer", "You experienced how energy turns into work!");
     } else if (index === 3) {
       showAchievement("Double-Spend Defender", "You understand why Bitcoin can't be counterfeited!");
     } else if (index === 4) {
@@ -156,12 +158,25 @@ const BitcoinBasicsModule = () => {
           result: "Money that can't be faked or duplicated"
         },
         costComparison: {
-          gold: "Dig holes, move rocks, refine metal",
-          fiat: "Print paper, update database",
-          bitcoin: "Burn electricity, solve math, secure network"
+          gold: "Human miners use fuel and heavy machinery to dig holes, move and crush rocks, and refine metal",
+          fiat: "Central banks and data operators use ink, paper, electricity and servers to print paper and update centralized databases",
+          bitcoin: "People use powerful computers to help update a public record of transactions that everyone can see but no one can change. In return, they earn new bitcoins as a reward"
         },
         question: "If something takes zero effort to create, should it have value?",
-        insight: "Just like gold had to be mined, Bitcoin must be mined—only now, it's with computational power, not shovels."
+        insight: "Just like gold had to be mined, Bitcoin must be mined, only now, it's with computational power, not shovels."
+      }
+    },
+
+    // Interactive Energy Work Lab now follows Energy Becomes Money
+    {
+      title: "Interactive: Energy Work Lab",
+      type: "energy-work-lab",
+      content: {
+        title: "🏋️‍♂️ Moving the Box: Understanding Work",
+        subtitle: "Use energy to make something happen. This is work.",
+        primeText: "Drag the slider to apply energy (work) and see the box move.",
+        instructions: "The more energy you apply, the farther the box moves.",
+        question: "In traditional finance, you trust people, buildings and back-office computers to keep your money safe. Bitcoin replaces all of that with one open protocol: miners burn real electricity to secure every transaction and mint new coins."
       }
     },
 
@@ -171,7 +186,7 @@ const BitcoinBasicsModule = () => {
       content: {
         title: "⚡ Can You Spend the Same Energy Twice?",
         subtitle: "Let's see what happens when you try to cheat an energy-based system",
-        primeText: "In the old system, digital money was just numbers in a database. But Bitcoin is different—it's backed by actual energy work.",
+        primeText: "In the current financial system, digital money is just numbers in a database. But Bitcoin is different. It's backed by actual energy work.",
         scenario: {
           setup: "You're a Bitcoin miner with 1000 units of electricity",
           challenge: "Try to use the same energy to mine two different blocks",
@@ -867,6 +882,51 @@ const BitcoinBasicsModule = () => {
         );
   };
 
+  // Energy Work Lab Component
+  const EnergyWorkLab = ({ content, onComplete }) => {
+    const [energy, setEnergy] = useState(10);
+    const maxEnergy = 100;
+    const distance = (energy / maxEnergy) * 300; // pixels to move box
+
+    return (
+      <div className="energy-work-lab">
+        <div className="lab-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="lab-interactive">
+          <input
+            type="range"
+            min="0"
+            max={maxEnergy}
+            value={energy}
+            onChange={(e) => setEnergy(parseInt(e.target.value, 10))}
+          />
+          <div className="energy-display">{energy} energy units</div>
+          <div className="lab-floor">
+            <div
+              className="lab-box"
+              style={{ transform: `translateX(${distance}px)` }}
+            >
+              📦
+            </div>
+          </div>
+          <p className="instructions">{content.instructions}</p>
+        </div>
+
+        <div className="reflection-section">
+          <h3>🤔 {content.question}</h3>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Energy Work ✓
+        </button>
+      </div>
+    );
+  };
+
   // Blockchain Discovery Component
   const BlockchainDiscovery = ({ content, onComplete }) => {
     const [currentSection, setCurrentSection] = useState('ledger');
@@ -1371,6 +1431,9 @@ const BitcoinBasicsModule = () => {
       case 'energy-double-spend':
         return <EnergyDoubleSpend content={step.content} onComplete={() => handleStepComplete(index)} />;
       
+      case 'energy-work-lab':
+        return <EnergyWorkLab content={step.content} onComplete={() => handleStepComplete(index)} />;
+
       case 'blockchain-discovery':
         return <BlockchainDiscovery content={step.content} onComplete={() => handleStepComplete(index)} />;
       

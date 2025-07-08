@@ -257,7 +257,7 @@ const MiningModule = () => {
       }
     },
 
-    {
+          {
       title: "Energy Innovation Catalyst",
       type: "energy-innovation",
       content: {
@@ -309,7 +309,7 @@ const MiningModule = () => {
       }
     },
 
-    {
+          {
       title: "Global Security Network",
       type: "network-visualization",
       content: {
@@ -360,7 +360,7 @@ const MiningModule = () => {
           bankingSystem: "No central clearing houses",
           goldStorage: "No Fort Knox equivalent",
           militaryDefense: "More distributed than any defense system"
-        }
+          }
       }
     },
 
@@ -713,7 +713,7 @@ const MiningModule = () => {
       
       case 'pool-simulation':
         return <PoolSimulation content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
+
       case 'consensus-comparison':
         return <ConsensusComparison content={step.content} onComplete={() => handleStepComplete(index)} />;
       
@@ -849,7 +849,7 @@ const DifficultyDemonstration = ({ content, onComplete }) => {
             disabled={simulationState === 'running'}
           />
         </div>
-
+      
         <div className="difficulty-display">
           <div className="metric">
             <span className="metric-label">Current Difficulty:</span>
@@ -1054,7 +1054,7 @@ const EnergyInnovation = ({ content, onComplete }) => {
           <div className="driver-impact">
             <strong>Impact:</strong> {content.innovationDrivers[selectedCategory].impact}
           </div>
-        </div>
+          </div>
         </div>
 
       <div className="real-world-examples">
@@ -1406,7 +1406,7 @@ const ActionableMining = ({ content, onComplete }) => {
               key={index}
               className={`participation-level ${selectedLevel === index ? 'selected' : ''}`}
               onClick={() => setSelectedLevel(index)}
-            >
+        >
               <h4>{level.level}</h4>
               <p>{level.description}</p>
         </button>
