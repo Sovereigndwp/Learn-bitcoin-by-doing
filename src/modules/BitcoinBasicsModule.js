@@ -45,12 +45,16 @@ const BitcoinBasicsModule = () => {
     // Show achievement for key milestones
     if (index === 1) {
       showAchievement("Money Evolutionist", "You understand the progression from Gold to Bitcoin!");
+    } else if (index === 2) {
+      showAchievement("Energy Pioneer", "You grasp how energy becomes digital truth!");
     } else if (index === 3) {
-      showAchievement("Energy Pioneer", "You grasp how Bitcoin transforms energy into digital truth!");
+      showAchievement("Double-Spend Defender", "You understand why Bitcoin can't be counterfeited!");
+    } else if (index === 4) {
+      showAchievement("Blockchain Explorer", "You see how the digital ledger works!");
     } else if (index === 6) {
       showAchievement("Power Law Thinker", "You see beyond exponential to true power law growth!");
     } else if (index === 8) {
-      showAchievement("Bitcoin Scholar", "You understand why Bitcoin conquers both space and time!");
+      showAchievement("Bitcoin Scholar", "You understand the complete Bitcoin ecosystem!");
     }
     
     setCurrentStep(index + 1);
@@ -89,7 +93,7 @@ const BitcoinBasicsModule = () => {
       content: {
         title: "🌀 The Money Timeline: 1.0 → 2.0 → 3.0",
         subtitle: "Every few centuries, money evolves. We're living through the biggest change yet.",
-        primeText: "If Gold was Money 1.0 and Fiat was 2.0, Bitcoin is 3.0—because now, money runs on energy.",
+        primeText: "If Gold was Money 1.0 and Fiat was 2.0, Bitcoin is 3.0. Now, money runs on energy.",
         versions: [
           {
             version: "1.0",
@@ -162,6 +166,95 @@ const BitcoinBasicsModule = () => {
     },
 
     {
+      title: "Interactive: Try to Double-Spend Energy",
+      type: "energy-double-spend",
+      content: {
+        title: "⚡ Can You Spend the Same Energy Twice?",
+        subtitle: "Let's see what happens when you try to cheat an energy-based system",
+        primeText: "In the old system, digital money was just numbers in a database. But Bitcoin is different—it's backed by actual energy work.",
+        scenario: {
+          setup: "You're a Bitcoin miner with 1000 units of electricity",
+          challenge: "Try to use the same energy to mine two different blocks",
+          realWorld: "This is like trying to use the same gallon of gas to drive two different cars"
+        },
+        simulation: {
+          step1: "Spend 1000 energy units on Block A",
+          step2: "Try to spend the same 1000 units on Block B", 
+          result: "ERROR: Energy already consumed",
+          insight: "Physical laws prevent energy from being spent twice"
+        },
+        contrast: {
+          traditional: "Copy-paste digital numbers",
+          bitcoin: "Burn real energy that can't be recovered"
+        },
+        question: "What makes Bitcoin impossible to counterfeit?",
+        answer: "It's backed by actual energy work that can't be faked or duplicated."
+      }
+    },
+
+    {
+      title: "How Bitcoin Actually Works",
+      type: "blockchain-discovery",
+      content: {
+        title: "🔗 The Digital Ledger That Never Lies",
+        subtitle: "Think of it like a shared Google Doc that everyone can see but no one can edit alone",
+        primeText: "Bitcoin is just a list of transactions. But it's the most secure list ever created.",
+        ledgerAnalogy: {
+          title: "Like a Bank Ledger, But Better",
+          traditional: "One bank controls the ledger, you trust them",
+          bitcoin: "Everyone has a copy, math keeps it honest",
+          comparison: "It's like having 10,000 bank branches, all with the same records"
+        },
+        consensus: {
+          title: "How Everyone Agrees",
+          problem: "What if someone tries to cheat?",
+          solution: "Majority rules - if 51% say it's valid, it's valid",
+          analogy: "Like a family vote on where to eat - majority wins"
+        },
+        blocks: {
+          title: "Transactions Come in Blocks",
+          description: "Every 10 minutes, new transactions are grouped together",
+          analogy: "Like pages in a book - each page (block) contains many transactions",
+          timing: "Why 10 minutes? Gives everyone time to agree"
+        },
+        question: "What happens if someone tries to change an old transaction?",
+        insight: "They'd need to change every block after it too - like rewriting an entire book from page 5 onwards."
+      }
+    },
+
+    {
+      title: "Bitcoin Conquers Space AND Time",
+      type: "space-time-conquest", 
+      content: {
+        title: "🌍 Why Aliens Would Accept Bitcoin",
+        subtitle: "The first money that works across both space and time",
+        primeText: "Bitcoin solves problems that gold and fiat couldn't even address.",
+        propertyMatrix: {
+          properties: ["Scarce", "Divisible", "Portable (space)", "Durable (time)", "Verifiable", "Global/Neutral", "Costs to Produce"],
+          gold: [true, false, false, true, false, false, true],
+          fiat: [false, true, true, false, false, false, false], 
+          bitcoin: [true, true, true, true, true, true, true]
+        },
+        spaceConquest: {
+          title: "Conquering Space (Instant Global Transfer)",
+          gold: "❌ Can't send gold to space or across oceans quickly",
+          fiat: "❌ Limited by banking hours, borders, permissions",
+          bitcoin: "✅ Send to anyone, anywhere, anytime in ~10 minutes"
+        },
+        timeConquest: {
+          title: "Conquering Time (Preserving Value)", 
+          gold: "⚠️ Can be confiscated, hard to store securely",
+          fiat: "❌ Loses value to inflation over time",
+          bitcoin: "✅ Fixed supply, self-custody, inflation-proof"
+        },
+        alienTest: {
+          question: "Which money would aliens accept if they landed tomorrow?",
+          analysis: "They'd need something: globally recognized, mathematically verifiable, not controlled by any Earth government, based on universal principles (energy and math)."
+        }
+      }
+    },
+
+    {
       title: "Not Exponential—POWER Law",
       type: "power-law-discovery",
       content: {
@@ -200,61 +293,68 @@ const BitcoinBasicsModule = () => {
     },
 
     {
-      title: "Interactive: Try to Double-Spend Energy",
-      type: "energy-double-spend",
+      title: "The Staircase, Not the Elevator",
+      type: "growth-pattern",
       content: {
-        title: "⚡ Can You Spend the Same Energy Twice?",
-        subtitle: "Let's see what happens when you try to cheat an energy-based system",
-        primeText: "In the old system, digital money was just numbers in a database. But Bitcoin is different—it's backed by actual energy work.",
-        scenario: {
-          setup: "You're a Bitcoin miner with 1000 units of electricity",
-          challenge: "Try to use the same energy to mine two different blocks",
-          realWorld: "This is like trying to use the same gallon of gas to drive two different cars"
+        title: "📊 Bitcoin's Logarithmic Staircase",
+        subtitle: "It's not a straight line up. It's a series of step-functions.",
+        primeText: "Bitcoin grows through fire and failure. Every crash clears out flaws and leaves the network stronger.",
+        staircase: {
+          phases: [
+            {
+              phase: "Discovery",
+              description: "New use case discovered",
+              example: "2010: Digital payments"
+            },
+            {
+              phase: "Adoption",
+              description: "Early adopters rush in", 
+              example: "2011: First exchanges open"
+            },
+            {
+              phase: "Bubble",
+              description: "Speculation gets ahead of reality",
+              example: "2017: Everyone's talking about Bitcoin"
+            },
+            {
+              phase: "Correction", 
+              description: "Weak hands exit, infrastructure improves",
+              example: "2018: Building continues quietly"
+            },
+            {
+              phase: "Stabilization",
+              description: "New baseline established, stronger foundation",
+              example: "2019: Institutions start watching"
+            },
+            {
+              phase: "Legal Tender",
+              description: "Nations adopt Bitcoin as official currency",
+              example: "2021: El Salvador makes Bitcoin legal tender"
+            },
+            {
+              phase: "Institutional",
+              description: "Traditional finance embraces Bitcoin",
+              example: "2024: Spot ETFs approved, BlackRock enters"
+            },
+            {
+              phase: "Financial Infrastructure",
+              description: "Bitcoin becomes accepted collateral and insurance",
+              example: "2025: Bitcoin accepted in loans, retirement accounts, life insurance"
+            }
+          ]
         },
-        simulation: {
-          step1: "Spend 1000 energy units on Block A",
-          step2: "Try to spend the same 1000 units on Block B", 
-          result: "ERROR: Energy already consumed",
-          insight: "Physical laws prevent energy from being spent twice"
+        resilience: {
+          title: "Each Cycle Builds Resilience",
+          points: [
+            "More diverse user base",
+            "Better infrastructure", 
+            "Stronger security (more miners)",
+            "Clearer regulatory framework",
+            "Deeper liquidity pools"
+          ]
         },
-        contrast: {
-          traditional: "Copy-paste digital numbers",
-          bitcoin: "Burn real energy that can't be recovered"
-        },
-        question: "What makes Bitcoin impossible to counterfeit?",
-        answer: "It's backed by actual energy work that can't be faked or duplicated."
-      }
-    },
-
-    {
-      title: "Bitcoin Conquers Space AND Time",
-      type: "space-time-conquest", 
-      content: {
-        title: "🌍 Why Aliens Would Accept Bitcoin",
-        subtitle: "The first money that works across both space and time",
-        primeText: "Bitcoin solves problems that gold and fiat couldn't even address.",
-        propertyMatrix: {
-          properties: ["Scarce", "Divisible", "Portable (space)", "Durable (time)", "Verifiable", "Global/Neutral", "Costs to Produce"],
-          gold: [true, false, false, true, false, false, true],
-          fiat: [false, true, true, false, false, false, false], 
-          bitcoin: [true, true, true, true, true, true, true]
-        },
-        spaceConquest: {
-          title: "Conquering Space (Instant Global Transfer)",
-          gold: "❌ Can't send gold to space or across oceans quickly",
-          fiat: "❌ Limited by banking hours, borders, permissions",
-          bitcoin: "✅ Send to anyone, anywhere, anytime in ~10 minutes"
-        },
-        timeConquest: {
-          title: "Conquering Time (Preserving Value)", 
-          gold: "⚠️ Can be confiscated, hard to store securely",
-          fiat: "❌ Loses value to inflation over time",
-          bitcoin: "✅ Fixed supply, self-custody, inflation-proof"
-        },
-        alienTest: {
-          question: "Which money would aliens accept if they landed tomorrow?",
-          analysis: "They'd need something: globally recognized, mathematically verifiable, not controlled by any Earth government, based on universal principles (energy and math)."
-        }
+        question: "Would you rather ride an elevator that might crash, or climb a staircase that gets stronger with each step?",
+        insight: "Bitcoin's volatility isn't a bug—it's how the system builds strength and finds true price discovery."
       }
     },
 
@@ -292,106 +392,6 @@ const BitcoinBasicsModule = () => {
         },
         question: "What happens when more people and capital flow into a system that rewards effort and can't be inflated?",
         insight: "Network effects compound: more users = more security = more value = more users."
-      }
-    },
-
-    {
-      title: "The Staircase, Not the Elevator",
-      type: "growth-pattern",
-      content: {
-        title: "📊 Bitcoin's Logarithmic Staircase",
-        subtitle: "It's not a straight line up. It's a series of step-functions.",
-        primeText: "Bitcoin grows through trial by fire—each crash cleanses, then the network gets stronger.",
-        staircase: {
-          pattern: "Up, plateau, up higher, plateau, up even higher...",
-          phases: [
-            {
-              phase: "Discovery",
-              description: "New use case discovered",
-              example: "2010: Digital payments"
-            },
-            {
-              phase: "Adoption",
-              description: "Early adopters rush in", 
-              example: "2011: First exchanges open"
-            },
-            {
-              phase: "Bubble",
-              description: "Speculation gets ahead of reality",
-              example: "2017: Everyone's talking about Bitcoin"
-            },
-            {
-              phase: "Correction", 
-              description: "Weak hands exit, infrastructure improves",
-              example: "2018: Building continues quietly"
-            },
-            {
-              phase: "Stabilization",
-              description: "New baseline established, stronger foundation",
-              example: "2019: Institutions start watching"
-            }
-          ]
-        },
-        resilience: {
-          title: "Each Cycle Builds Resilience",
-          points: [
-            "More diverse user base",
-            "Better infrastructure", 
-            "Stronger security (more miners)",
-            "Clearer regulatory framework",
-            "Deeper liquidity pools"
-          ]
-        },
-        question: "Would you rather ride an elevator that might crash, or climb a staircase that gets stronger with each step?",
-        insight: "Bitcoin's volatility isn't a bug—it's how the system builds strength and finds true price discovery."
-      }
-    },
-
-    {
-      title: "Why This Time IS Different",
-      type: "uniqueness",
-      content: {
-        title: "🧬 Why Bitcoin Can't Be Copied",
-        subtitle: "Every digital asset before Bitcoin could be copied infinitely. Not anymore.",
-        primeText: "Bitcoin created the first digitally scarce asset. This isn't just innovation—it's a new law of physics for the digital world.",
-        beforeBitcoin: {
-          title: "Before Bitcoin: Everything Digital Could Be Copied",
-          examples: ["Music files", "Photos", "PDFs", "Emails", "Software", "Even 'digital money'"],
-          problem: "If money can be copied, it's not really money"
-        },
-        bitcoinSolution: {
-          title: "Bitcoin's Three-Part Solution",
-          parts: [
-            {
-              component: "Public Ledger",
-              function: "Everyone can verify who owns what",
-              analogy: "Like a transparent bank vault that everyone can audit"
-            },
-            {
-              component: "Proof-of-Work", 
-              function: "Makes cheating expensive (costs real energy)",
-              analogy: "Like requiring actual physical work to create money"
-            },
-            {
-              component: "Fixed Supply",
-              function: "No one can change the rules (21 million cap)",
-              analogy: "Like having natural laws that can't be repealed"
-            }
-          ]
-        },
-        impossibleToCopy: {
-          title: "Why Copies Fail",
-          network: "Bitcoin's network effect is its moat",
-          security: "Security comes from energy invested over time",
-          trust: "Trust is built through years of unstoppable operation"
-        },
-        finalQuestion: "If this is what Bitcoin is... what else can it fix?",
-        possibilities: [
-          "True digital property rights",
-          "Censorship-resistant savings", 
-          "Permissionless global commerce",
-          "Energy → value conversion anywhere on Earth"
-        ]
       }
     },
 
@@ -721,10 +721,10 @@ const BitcoinBasicsModule = () => {
         </div>
 
         <VisualCapitalistSection
-          icon="��"
+          icon="📈"
           title="Explore Further: Bitcoin's Price Volatility Over Time"
           description="See how Bitcoin's price volatility has actually decreased over time as it matures. This visualization shows the power law adoption curve in action."
-          url="https://www.visualcapitalist.com/bitcoin-price-volatility-over-time/"
+          url="https://bitbo.io/volatility/"
           buttonText="View Price Volatility Analysis"
         />
 
@@ -865,6 +865,146 @@ const BitcoinBasicsModule = () => {
         )}
           </div>
         );
+  };
+
+  // Blockchain Discovery Component
+  const BlockchainDiscovery = ({ content, onComplete }) => {
+    const [currentSection, setCurrentSection] = useState('ledger');
+    const [showConsensus, setShowConsensus] = useState(false);
+    const [showBlocks, setShowBlocks] = useState(false);
+
+    return (
+      <div className="blockchain-discovery">
+        <div className="discovery-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="ledger-comparison">
+          <h3>📋 {content.ledgerAnalogy.title}</h3>
+          <div className="comparison-cards">
+            <div className="comparison-card traditional">
+              <div className="card-icon">🏦</div>
+              <h4>Traditional Banking</h4>
+              <p>{content.ledgerAnalogy.traditional}</p>
+              <div className="trust-model">
+                <span className="trust-label">Trust Model:</span>
+                <span className="trust-value">Trust the Bank</span>
+              </div>
+            </div>
+            
+            <div className="comparison-card bitcoin">
+              <div className="card-icon">₿</div>
+              <h4>Bitcoin Network</h4>
+              <p>{content.ledgerAnalogy.bitcoin}</p>
+              <div className="trust-model">
+                <span className="trust-label">Trust Model:</span>
+                <span className="trust-value">Trust Math</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="analogy-explanation">
+            <div className="analogy-icon">💡</div>
+            <p><strong>Simple Analogy:</strong> {content.ledgerAnalogy.comparison}</p>
+          </div>
+        </div>
+
+        <div className="consensus-section">
+          <h3>🤝 {content.consensus.title}</h3>
+          <div className="consensus-problem">
+            <div className="problem-icon">❓</div>
+            <p><strong>Problem:</strong> {content.consensus.problem}</p>
+          </div>
+          
+          <button 
+            className="show-consensus-btn"
+            onClick={() => setShowConsensus(!showConsensus)}
+          >
+            {showConsensus ? 'Hide Solution' : 'Show How Bitcoin Solves This'}
+          </button>
+          
+          {showConsensus && (
+            <div className="consensus-solution">
+              <div className="solution-card">
+                <h4>Majority Rules</h4>
+                <p>{content.consensus.solution}</p>
+                <div className="family-vote">
+                  <div className="vote-icon">👨‍👩‍👧‍👦</div>
+                  <p><em>Analogy:</em> {content.consensus.analogy}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="blocks-section">
+          <h3>📚 {content.blocks.title}</h3>
+          <div className="blocks-explanation">
+            <p>{content.blocks.description}</p>
+            <div className="book-analogy">
+              <div className="book-icon">📖</div>
+              <p><em>Analogy:</em> {content.blocks.analogy}</p>
+            </div>
+            <div className="timing-explanation">
+              <div className="clock-icon">⏰</div>
+              <p><strong>Why 10 minutes?</strong> {content.blocks.timing}</p>
+            </div>
+          </div>
+          
+          <button 
+            className="show-blocks-btn"
+            onClick={() => setShowBlocks(!showBlocks)}
+          >
+            {showBlocks ? 'Hide Example' : 'See How Blocks Work'}
+          </button>
+          
+          {showBlocks && (
+            <div className="blocks-example">
+              <div className="block-chain">
+                <div className="block">
+                  <div className="block-number">Block 1</div>
+                  <div className="block-content">
+                    <div className="transaction">Alice → Bob: 5 BTC</div>
+                    <div className="transaction">Charlie → Dave: 2 BTC</div>
+                    <div className="transaction">Eve → Frank: 1 BTC</div>
+                  </div>
+                </div>
+                <div className="block-arrow">→</div>
+                <div className="block">
+                  <div className="block-number">Block 2</div>
+                  <div className="block-content">
+                    <div className="transaction">Bob → Grace: 3 BTC</div>
+                    <div className="transaction">Frank → Alice: 0.5 BTC</div>
+                  </div>
+                </div>
+                <div className="block-arrow">→</div>
+                <div className="block">
+                  <div className="block-number">Block 3</div>
+                  <div className="block-content">
+                    <div className="transaction">Grace → Henry: 1 BTC</div>
+                    <div className="transaction">Dave → Alice: 1.5 BTC</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="security-question">
+          <h3>🔒 {content.question}</h3>
+          <div className="security-explanation">
+            <div className="security-icon">🛡️</div>
+            <p>{content.insight}</p>
+          </div>
+        </div>
+
+        <button className="continue-button" onClick={onComplete}>
+          Blockchain Basics ✓
+        </button>
+      </div>
+    );
   };
 
   // Space Time Conquest Component
@@ -1068,9 +1208,6 @@ const BitcoinBasicsModule = () => {
 
         <div className="staircase-visual">
           <h3>📊 The Bitcoin Staircase Pattern</h3>
-          <div className="pattern-description">
-            <p><strong>Pattern:</strong> {content.staircase.pattern}</p>
-          </div>
           
           <div className="phases-timeline">
             {content.staircase.phases.map((phase, index) => (
@@ -1091,13 +1228,7 @@ const BitcoinBasicsModule = () => {
                   ))}
                 </div>
 
-          {selectedPhase !== null && (
-            <div className="phase-spotlight">
-              <h4>Phase Deep Dive: {content.staircase.phases[selectedPhase].phase}</h4>
-              <p>{content.staircase.phases[selectedPhase].description}</p>
-              <p><strong>Historical Example:</strong> {content.staircase.phases[selectedPhase].example}</p>
-              </div>
-            )}
+
         </div>
 
         <div className="resilience-section">
@@ -1136,106 +1267,7 @@ const BitcoinBasicsModule = () => {
     );
   };
 
-  // Uniqueness Component
-  const Uniqueness = ({ content, onComplete }) => {
-    const [selectedSolution, setSelectedSolution] = useState(0);
-    const [showPossibilities, setShowPossibilities] = useState(false);
 
-    return (
-      <div className="uniqueness">
-        <div className="uniqueness-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-        </div>
-
-        <div className="before-bitcoin">
-          <h3>{content.beforeBitcoin.title}</h3>
-          <div className="examples-grid">
-            {content.beforeBitcoin.examples.map((example, index) => (
-              <div key={index} className="example-item">
-                <span className="copy-icon">📋</span>
-                <span>{example}</span>
-              </div>
-            ))}
-          </div>
-          <div className="problem-statement">
-            <div className="problem-icon">⚠️</div>
-            <p><strong>The Problem:</strong> {content.beforeBitcoin.problem}</p>
-          </div>
-        </div>
-
-        <div className="bitcoin-solution">
-          <h3>{content.bitcoinSolution.title}</h3>
-          <div className="solution-parts">
-            {content.bitcoinSolution.parts.map((part, index) => (
-              <div
-                key={index}
-                className={`solution-part ${selectedSolution === index ? 'active' : ''}`}
-                onClick={() => setSelectedSolution(index)}
-              >
-                <div className="part-number">{index + 1}</div>
-                <div className="part-content">
-                  <h4>{part.component}</h4>
-                  <p><strong>Function:</strong> {part.function}</p>
-                  <p><em>Analogy:</em> {part.analogy}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="impossible-to-copy">
-          <h3>{content.impossibleToCopy.title}</h3>
-          <div className="copy-reasons">
-            <div className="reason-item">
-              <div className="reason-icon">🌐</div>
-              <div className="reason-content">
-                <strong>Network Effect:</strong> {content.impossibleToCopy.network}
-              </div>
-            </div>
-            <div className="reason-item">
-              <div className="reason-icon">🔒</div>
-              <div className="reason-content">
-                <strong>Security Model:</strong> {content.impossibleToCopy.security}
-              </div>
-            </div>
-            <div className="reason-item">
-              <div className="reason-icon">🤝</div>
-              <div className="reason-content">
-                <strong>Trust Foundation:</strong> {content.impossibleToCopy.trust}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="future-possibilities">
-          <h3>🔮 {content.finalQuestion}</h3>
-              <button 
-            className="show-possibilities-btn"
-            onClick={() => setShowPossibilities(!showPossibilities)}
-              >
-            {showPossibilities ? 'Hide Possibilities' : 'Explore What Bitcoin Enables'}
-              </button>
-          
-          {showPossibilities && (
-            <div className="possibilities-grid">
-              {content.possibilities.map((possibility, index) => (
-                <div key={index} className="possibility-item">
-                  <div className="possibility-icon">🚀</div>
-                  <span>{possibility}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <button className="continue-button" onClick={onComplete}>
-          Uniqueness Understanding ✓
-        </button>
-          </div>
-        );
-  };
 
   // Actionable Conclusion Component
   const ActionableConclusion = ({ content, onComplete }) => {
@@ -1336,23 +1368,23 @@ const BitcoinBasicsModule = () => {
       case 'energy-transformation':
         return <EnergyTransformation content={step.content} onComplete={() => handleStepComplete(index)} />;
       
-      case 'power-law-discovery':
-        return <PowerLawDiscovery content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
       case 'energy-double-spend':
         return <EnergyDoubleSpend content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'blockchain-discovery':
+        return <BlockchainDiscovery content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'space-time-conquest':
         return <SpaceTimeConquest content={step.content} onComplete={() => handleStepComplete(index)} />;
       
-      case 'energy-flow':
-        return <EnergyFlow content={step.content} onComplete={() => handleStepComplete(index)} />;
+      case 'power-law-discovery':
+        return <PowerLawDiscovery content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'growth-pattern':
         return <GrowthPattern content={step.content} onComplete={() => handleStepComplete(index)} />;
       
-      case 'uniqueness':
-        return <Uniqueness content={step.content} onComplete={() => handleStepComplete(index)} />;
+      case 'energy-flow':
+        return <EnergyFlow content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'actionable-conclusion':
         return <ActionableConclusion content={step.content} onComplete={() => handleStepComplete(index)} />;
