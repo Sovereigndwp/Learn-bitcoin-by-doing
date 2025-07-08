@@ -45,17 +45,17 @@ const BitcoinBasicsModule = () => {
     // Show achievement for key milestones
     if (index === 0) {
       showAchievement("Money Evolutionist", "You understand the progression from Gold to Bitcoin!");
-    } else if (index === 1) {
-      showAchievement("Energy Pioneer", "You grasp how energy becomes digital truth!");
     } else if (index === 2) {
-      showAchievement("Work Explorer", "You experienced how energy turns into work!");
+      showAchievement("Energy Pioneer", "You grasp how energy becomes digital truth!");
     } else if (index === 3) {
-      showAchievement("Double-Spend Defender", "You understand why Bitcoin can't be counterfeited!");
+      showAchievement("Work Explorer", "You experienced how energy turns into work!");
     } else if (index === 4) {
+      showAchievement("Double-Spend Defender", "You understand why Bitcoin can't be counterfeited!");
+    } else if (index === 5) {
       showAchievement("Blockchain Explorer", "You see how the digital ledger works!");
-    } else if (index === 6) {
+    } else if (index === 7) {
       showAchievement("Power Law Thinker", "You see beyond exponential to true power law growth!");
-    } else if (index === 8) {
+    } else if (index === 9) {
       showAchievement("Bitcoin Scholar", "You understand the complete Bitcoin ecosystem!");
     }
     
@@ -96,38 +96,12 @@ const BitcoinBasicsModule = () => {
         title: "🌀 The Money Timeline: 1.0 → 2.0 → 3.0",
         subtitle: "Every few centuries, money evolves. We're living through the biggest change yet.",
         primeText: "If Gold was Money 1.0 and Fiat was 2.0, Bitcoin is 3.0. Now, money runs on energy.",
-        versions: [
-          {
-            version: "1.0",
-            name: "Gold",
-            period: "~5000 years", 
-            keyFeature: "Hard to make, durable",
-            weakness: "Heavy, hard to send",
-            energy: "Physical mining energy",
-            trust: "Natural scarcity",
-            icon: "🥇"
-          },
-          {
-            version: "2.0", 
-            name: "Fiat",
-            period: "~50 years",
-            keyFeature: "Easy to print, scalable", 
-            weakness: "No real cost = abuse",
-            energy: "Government promises",
-            trust: "Trust in institutions",
-            icon: "💵"
-          },
-          {
-            version: "3.0",
-            name: "Bitcoin", 
-            period: "~15 years",
-            keyFeature: "Runs on energy & code",
-            weakness: "Still early",
-            energy: "Computational proof-of-work",
-            trust: "Mathematical certainty",
-            icon: "₿"
-          }
-        ],
+        simpleComparison: {
+          title: "🔄 The Three Ages of Money",
+          gold: "1.0: Gold - Hard to make, heavy to move",
+          fiat: "2.0: Fiat - Easy to print, controlled by governments", 
+          bitcoin: "3.0: Bitcoin - Hard to make, easy to move, no controllers"
+        },
         question: "Why do we trust things more when they cost real effort?",
         socratics: [
           "What happens when money has no cost to produce?",
@@ -135,6 +109,62 @@ const BitcoinBasicsModule = () => {
           "What if we could combine gold's hardness with the internet's speed?"
         ]
       }
+    },
+
+    {
+      title: "What Is Fiat Money?",
+      type: "fiat-definition",
+      content: {
+        title: "💵 The Government Takeover of Money",
+        subtitle: "How we went from Money 1.0 (Gold) to Money 2.0 (Fiat)",
+        primeText: "In 1971, governments broke the promise that backed their money with gold. Now it's just trust.",
+        timeline: {
+          before1971: {
+            title: "Before 1971: Money Backed by Gold",
+            description: "Your dollar was a promise: 'We'll give you gold for this paper'",
+            backing: "Gold reserves",
+            trust: "Physical commodity"
+          },
+          august1971: {
+            title: "August 15, 1971: The Nixon Shock",
+            description: "President Nixon: 'We're not giving you gold anymore'",
+            backing: "Government promise",
+            trust: "Faith in authority"
+          },
+          after1971: {
+            title: "After 1971: Pure Fiat",
+            description: "Your dollar is now just a piece of paper with government backing",
+            backing: "Nothing physical",
+            trust: "Government credibility"
+          }
+        },
+        consequences: {
+          title: "Remember Carlos, Our Flower Exporter? What Did It Mean for Him?",
+          points: [
+            {
+              problem: "Inflation Explosion",
+              description: "Without gold limits, governments could print unlimited money",
+              impact: "Carlos's savings lose value every year"
+            },
+            {
+              problem: "Permission Required", 
+              description: "Banks became gatekeepers - they decide who can transact",
+              impact: "Carlos needs approval to send money internationally"
+            },
+            {
+              problem: "Trust Dependency",
+              description: "Money's value depends entirely on trusting institutions",
+              impact: "If Carlos loses faith in his government, his money becomes worthless"
+            }
+                      ]
+          },
+        comparison: {
+          title: "The Three Ages of Money",
+          gold: "1.0: Gold - Hard to make, heavy to move",
+          fiat: "2.0: Fiat - Easy to print, controlled by governments", 
+          bitcoin: "3.0: Bitcoin - Hard to make, easy to move, no controllers"
+        }
+        }
     },
 
     {
@@ -467,47 +497,23 @@ const BitcoinBasicsModule = () => {
           <div className="prime-text">{content.primeText}</div>
               </div>
 
-        <div className="money-versions">
-          {content.versions.map((version, index) => (
-            <div 
-              key={index}
-              className={`version-card ${selectedVersion?.version === version.version ? 'selected' : ''}`}
-              onClick={() => handleVersionClick(version)}
-            >
-              <div className="version-header">
-                <span className="version-icon">{version.icon}</span>
-                <div className="version-info">
-                  <h3>Money {version.version}</h3>
-                  <h4>{version.name}</h4>
-                  <span className="version-period">{version.period}</span>
-              </div>
+        <div className="simple-money-comparison">
+          <h3>{content.simpleComparison.title}</h3>
+          <div className="simple-comparison-grid">
+            <div className="simple-money-version gold">
+              <div className="version-icon">🥇</div>
+              <p>{content.simpleComparison.gold}</p>
             </div>
-
-              <div className="version-details">
-                <div className="version-row">
-                  <strong>Key Feature:</strong> {version.keyFeature}
-                </div>
-                <div className="version-row">
-                  <strong>Weakness:</strong> {version.weakness}
-                </div>
-                <div className="version-row">
-                  <strong>Energy Source:</strong> {version.energy}
-                </div>
-                <div className="version-row">
-                  <strong>Trust Model:</strong> {version.trust}
-                </div>
-              </div>
+            <div className="simple-money-version fiat">
+              <div className="version-icon">💵</div>
+              <p>{content.simpleComparison.fiat}</p>
             </div>
-          ))}
-        </div>
-
-        {selectedVersion && (
-          <div className="version-spotlight">
-            <h3>Deep Dive: {selectedVersion.name}</h3>
-            <p>{selectedVersion.keyFeature}</p>
-            <p><strong>Challenge:</strong> {selectedVersion.weakness}</p>
+            <div className="simple-money-version bitcoin">
+              <div className="version-icon">₿</div>
+              <p>{content.simpleComparison.bitcoin}</p>
+            </div>
           </div>
-        )}
+        </div>
 
         <div className="reflection-section">
           <h3>🤔 {content.question}</h3>
@@ -520,6 +526,8 @@ const BitcoinBasicsModule = () => {
                     ))}
                   </div>
                   </div>
+
+
 
         <button className="continue-button" onClick={onComplete}>
           Understanding Money Evolution ✓
@@ -922,6 +930,150 @@ const BitcoinBasicsModule = () => {
 
         <button className="continue-button" onClick={onComplete}>
           Energy Work ✓
+        </button>
+      </div>
+    );
+  };
+
+  // Fiat Definition Component
+  const FiatDefinition = ({ content, onComplete }) => {
+    const [selectedTimelineStep, setSelectedTimelineStep] = useState('before1971');
+    const [showConsequences, setShowConsequences] = useState(false);
+
+    return (
+      <div className="fiat-definition">
+        <div className="definition-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+          <div className="prime-text">{content.primeText}</div>
+        </div>
+
+        <div className="timeline-visualization">
+          <h3>📅 The Great Monetary Shift</h3>
+          <div className="timeline-controls">
+            {Object.entries(content.timeline).map(([key, period]) => (
+              <button
+                key={key}
+                className={`timeline-btn ${selectedTimelineStep === key ? 'active' : ''}`}
+                onClick={() => setSelectedTimelineStep(key)}
+              >
+                {period.title}
+              </button>
+            ))}
+          </div>
+          
+          <div className="timeline-content">
+            {selectedTimelineStep && (
+              <div className="timeline-period">
+                <h4>{content.timeline[selectedTimelineStep].title}</h4>
+                <p className="period-description">
+                  {content.timeline[selectedTimelineStep].description}
+                </p>
+                
+                <div className="visual-story">
+                  {selectedTimelineStep === 'before1971' && (
+                    <div className="gold-paper-story before">
+                      <div className="story-row">
+                        <div className="gold-bar">🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bill">💵</div>
+                      </div>
+                      <div className="story-explanation">1 gold bar = 1 piece of paper</div>
+                      <div className="story-row">
+                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills">💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation">5 gold bars = 5 pieces of paper</div>
+                    </div>
+                  )}
+                  
+                  {selectedTimelineStep === 'august1971' && (
+                    <div className="gold-paper-story transition">
+                      <div className="breaking-point">
+                        <div className="before-break">
+                          <div className="gold-bar">🟨</div>
+                          <span className="equals">=</span>
+                          <div className="paper-bill">💵</div>
+                        </div>
+                        <div className="break-symbol">⚡💥⚡</div>
+                        <div className="after-break">
+                          <div className="gold-bar">🟨</div>
+                          <span className="not-equals">≠</span>
+                          <div className="paper-bills">💵💵💵</div>
+                        </div>
+                      </div>
+                      <div className="story-explanation">The promise is broken!</div>
+                    </div>
+                  )}
+                  
+                  {selectedTimelineStep === 'after1971' && (
+                    <div className="gold-paper-story after">
+                      <div className="story-row">
+                        <div className="gold-bar">🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills many">💵💵💵💵💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation">1 gold bar = Many pieces of paper</div>
+                      <div className="story-row">
+                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills infinite">💵💵💵💵💵💵💵💵💵💵💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation sarcastic">5 gold bars = As many as the government says 🤷‍♂️</div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="money-properties">
+                  <div className="property">
+                    <strong>Backing:</strong> {content.timeline[selectedTimelineStep].backing}
+                  </div>
+                  <div className="property">
+                    <strong>Trust:</strong> {content.timeline[selectedTimelineStep].trust}
+                  </div>
+                </div>
+                {selectedTimelineStep === 'august1971' && (
+                  <div className="nixon-shock">
+                    <div className="shock-icon">⚡</div>
+                    <p><em>This moment changed money forever...</em></p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="consequences-section">
+          <button 
+            className="show-consequences-btn"
+            onClick={() => setShowConsequences(!showConsequences)}
+          >
+            {showConsequences ? 'Hide Impact' : 'Show What This Meant for People'}
+          </button>
+          
+          {showConsequences && (
+            <div className="consequences-content">
+              <h3>👤 {content.consequences.title}</h3>
+              <div className="consequences-grid">
+                {content.consequences.points.map((consequence, index) => (
+                  <div key={index} className="consequence-card">
+                    <h4>⚠️ {consequence.problem}</h4>
+                    <p className="consequence-description">{consequence.description}</p>
+                    <div className="consequence-impact">
+                      <strong>Impact:</strong> {consequence.impact}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+
+
+        <button className="continue-button" onClick={onComplete}>
+          Understanding Fiat ✓
         </button>
       </div>
     );
@@ -1424,6 +1576,9 @@ const BitcoinBasicsModule = () => {
     switch (step.type) {
       case 'evolution-timeline':
         return <EvolutionTimeline content={step.content} onComplete={() => handleStepComplete(index)} />;
+      
+      case 'fiat-definition':
+        return <FiatDefinition content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'energy-transformation':
         return <EnergyTransformation content={step.content} onComplete={() => handleStepComplete(index)} />;
