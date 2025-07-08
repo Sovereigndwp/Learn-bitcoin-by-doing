@@ -18,11 +18,10 @@ const ModuleLayout = ({ children }) => {
       {/* Header */}
       <header className="module-header">
         <div className="module-header-content">
-          <div className="logo" style={{ marginLeft: '0', paddingLeft: '0' }}>
+          <div className="logo">
             <span className="bitcoin-symbol">₿</span>
             <div className="logo-container">
               <span className="logo-text">Bitcoin, Straight Up</span>
-              <span className="author-text">@Dalia</span>
             </div>
           </div>
           
@@ -68,6 +67,11 @@ const ModuleLayout = ({ children }) => {
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
+        </div>
+
+        {/* Author Attribution - Bottom Right */}
+        <div className="author-attribution">
+          <span className="author-name">Dalia @Layer_D</span>
         </div>
 
         {/* Mobile Navigation Menu */}
