@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Zap, Bitcoin, CheckCircle, Trophy, Clock, Target, BarChart, Globe, Shield, Coins, TrendingUp, Activity, Power } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
+import { ContinueButton, ButtonGroup, ButtonFlow, ActionButton } from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
@@ -88,6 +89,20 @@ const BitcoinBasicsModule = () => {
     setCurrentStep(stepIndex);
   };
 
+  const handleBackButton = () => {
+    if (currentStep === 0) {
+      navigate('/');
+    } else {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  // Reset progress handler
+  const handleResetProgress = () => {
+    setCompletedSteps(new Set());
+    setCurrentStep(0);
+  };
+
   const steps = [
     {
       title: "The Great Money Evolution",
@@ -158,11 +173,16 @@ const BitcoinBasicsModule = () => {
             }
                       ]
           },
-        comparison: {
-          title: "The Three Ages of Money",
-          gold: "1.0: Gold - Hard to make, heavy to move",
-          fiat: "2.0: Fiat - Easy to print, controlled by governments", 
-          bitcoin: "3.0: Bitcoin - Hard to make, easy to move, no controllers"
+        moneyCreation: {
+          title: "How Fiat Money Gets Created",
+          subtitle: "Watch what happens when someone takes out a loan",
+          scenarios: [
+            {
+              title: "Sarah Wants to Buy a House",
+              description: "She needs $300,000 but only has $30,000 saved",
+              action: "Goes to the bank for a mortgage"
+            }
+          ]
         }
         }
     },
@@ -529,9 +549,13 @@ const BitcoinBasicsModule = () => {
 
 
 
-        <button className="continue-button" onClick={onComplete}>
+        <ContinueButton 
+          onClick={onComplete}
+          completed={true}
+          nextStep="Energy Transformation"
+        >
           Understanding Money Evolution ✓
-        </button>
+        </ContinueButton>
                 </div>
     );
   };
@@ -622,9 +646,13 @@ const BitcoinBasicsModule = () => {
           </div>
         </div>
 
-        <button className="continue-button" onClick={onComplete}>
+        <ContinueButton 
+          onClick={onComplete}
+          completed={true}
+          nextStep="Double-Spend Prevention"
+        >
           Energy → Money ✓
-        </button>
+        </ContinueButton>
       </div>
     );
   };
@@ -935,6 +963,150 @@ const BitcoinBasicsModule = () => {
     );
   };
 
+  // Money Creation Interactive Component
+  const MoneyCreationDemo = ({ moneyCreation }) => {
+    const [step, setStep] = useState(0);
+    const [bankBalance, setBankBalance] = useState(1000000);
+    const [sarahSavings, setSarahSavings] = useState(30000);
+    const [newMoneyCreated, setNewMoneyCreated] = useState(0);
+    const [loanAmount, setLoanAmount] = useState(0);
+
+    const steps = [
+      {
+        title: "🏠 Sarah Needs a House",
+        description: "Sarah has $30,000 saved but needs $300,000 for a house",
+        action: "Let's see what happens when she goes to the bank..."
+      },
+      {
+        title: "🏦 Bank's Magic Trick",
+        description: "Bank doesn't lend existing money - they CREATE new money by issuing a debt certificate",
+        action: "Watch the money supply increase..."
+      },
+      {
+        title: "💰 Money Created From Nothing",
+        description: "Bank types $270,000 into Sarah's account. This money didn't exist before!",
+        action: "New money = New debt certificate"
+      },
+      {
+        title: "🔄 The Multiplier Effect",
+        description: "Sarah spends this newly created money, it gets deposited elsewhere, and the cycle repeats",
+        action: "This is how most money in circulation gets created"
+      }
+    ];
+
+    const handleNextStep = () => {
+      if (step === 1) {
+        setLoanAmount(270000);
+        setNewMoneyCreated(270000);
+      }
+      if (step < steps.length - 1) {
+        setStep(step + 1);
+      }
+    };
+
+    const resetDemo = () => {
+      setStep(0);
+      setLoanAmount(0);
+      setNewMoneyCreated(0);
+    };
+
+    return (
+      <div className="money-creation-demo">
+        <h3>{moneyCreation.title}</h3>
+        <p className="demo-subtitle">{moneyCreation.subtitle}</p>
+        
+        <div className="demo-stage">
+          <div className="demo-header">
+            <h4>{steps[step].title}</h4>
+            <p>{steps[step].description}</p>
+          </div>
+
+          <div className="demo-visual">
+            <div className="demo-actors">
+              <div className="actor sarah">
+                <div className="actor-icon">👩‍💼</div>
+                <div className="actor-name">Sarah</div>
+                <div className="actor-balance">
+                  Savings: ${sarahSavings.toLocaleString()}
+                  {step >= 2 && (
+                    <div className="new-loan">
+                      + Loan: ${loanAmount.toLocaleString()}
+                      <span className="magic-sparkle">✨</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="transfer-arrow">
+                {step >= 1 && <span className="arrow-text">Creates Debt Certificate</span>}
+                →
+              </div>
+
+              <div className="actor bank">
+                <div className="actor-icon">🏦</div>
+                <div className="actor-name">Bank</div>
+                <div className="actor-balance">
+                  Deposits: ${bankBalance.toLocaleString()}
+                  {step >= 2 && (
+                    <div className="debt-certificate">
+                      Debt Certificate: ${loanAmount.toLocaleString()}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {step >= 2 && (
+              <div className="money-creation-visualization">
+                <div className="creation-box">
+                  <h4>💫 Money Created Out of Thin Air</h4>
+                  <div className="created-amount">
+                    ${newMoneyCreated.toLocaleString()}
+                  </div>
+                  <div className="creation-explanation">
+                    This money didn't exist before the loan was signed!
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {step >= 3 && (
+              <div className="multiplier-effect">
+                <h4>🔄 The Debt-Money System</h4>
+                <div className="effect-chain">
+                  <div className="effect-step">Sarah spends → Money circulates</div>
+                  <div className="effect-step">Recipients deposit → Banks can lend more</div>
+                  <div className="effect-step">More loans = More new money created</div>
+                  <div className="effect-step">Most money in circulation = Debt</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="demo-controls">
+            {step < steps.length - 1 ? (
+              <button className="demo-btn next" onClick={handleNextStep}>
+                {steps[step].action}
+              </button>
+            ) : (
+              <button className="demo-btn reset" onClick={resetDemo}>
+                Try Again
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="key-insight">
+          <div className="insight-icon">💡</div>
+          <div className="insight-text">
+            <strong>Key Point:</strong> Banks don't lend existing money - they create new money by issuing debt certificates. 
+            This is why most money in circulation is actually debt, not savings.
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Fiat Definition Component
   const FiatDefinition = ({ content, onComplete }) => {
     const [selectedTimelineStep, setSelectedTimelineStep] = useState('before1971');
@@ -1044,37 +1216,43 @@ const BitcoinBasicsModule = () => {
           </div>
         </div>
 
-        <div className="consequences-section">
-          <button 
-            className="show-consequences-btn"
-            onClick={() => setShowConsequences(!showConsequences)}
-          >
-            {showConsequences ? 'Hide Impact' : 'Show What This Meant for People'}
-          </button>
-          
-          {showConsequences && (
-            <div className="consequences-content">
-              <h3>👤 {content.consequences.title}</h3>
-              <div className="consequences-grid">
-                {content.consequences.points.map((consequence, index) => (
-                  <div key={index} className="consequence-card">
-                    <h4>⚠️ {consequence.problem}</h4>
-                    <p className="consequence-description">{consequence.description}</p>
-                    <div className="consequence-impact">
-                      <strong>Impact:</strong> {consequence.impact}
+        {selectedTimelineStep === 'august1971' && (
+          <div className="consequences-section">
+            <button 
+              className="show-consequences-btn"
+              onClick={() => setShowConsequences(!showConsequences)}
+            >
+              {showConsequences ? 'Hide Impact' : 'Show What This Meant for People'}
+            </button>
+            
+            {showConsequences && (
+              <div className="consequences-content">
+                <h3>👤 {content.consequences.title}</h3>
+                <div className="consequences-grid">
+                  {content.consequences.points.map((consequence, index) => (
+                    <div key={index} className="consequence-card">
+                      <h4>⚠️ {consequence.problem}</h4>
+                      <p className="consequence-description">{consequence.description}</p>
+                      <div className="consequence-impact">
+                        <strong>Impact:</strong> {consequence.impact}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
+        {selectedTimelineStep === 'after1971' && (
+          <MoneyCreationDemo moneyCreation={content.moneyCreation} />
+        )}
 
-
-        <button className="continue-button" onClick={onComplete}>
-          Understanding Fiat ✓
-        </button>
+        {selectedTimelineStep === 'after1971' && (
+          <button className="continue-button" onClick={onComplete}>
+            Understanding Fiat ✓
+          </button>
+        )}
       </div>
     );
   };
@@ -1647,19 +1825,29 @@ const BitcoinBasicsModule = () => {
   return (
     <div className="module-container">
       <div className="module-header">
-        <h1 className="module-title">
-          <Zap className="module-icon" />
-          Bitcoin 3.0: Energy as Money
-        </h1>
-      <div className="module-progress">
+        <div className="header-top">
+          <button className="back-button" onClick={handleBackButton}>
+            ← Back
+          </button>
+          <h1 className="module-title">
+            <Zap className="module-icon" />
+            Bitcoin 3.0: Energy as Money
+          </h1>
+        </div>
+        <div className="module-progress">
           <span>Step {currentStep + 1} of {steps.length}</span>
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
               style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          />
+            />
+          </div>
         </div>
-        </div>
+
+        {/* Reset Progress Button */}
+        <button className="reset-progress-button" onClick={handleResetProgress}>
+          Reset Progress
+        </button>
       </div>
 
       <div className="module-tabs">
