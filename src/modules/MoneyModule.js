@@ -30,6 +30,21 @@ const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) 
 
 // Component for the Introduction (transition from banking friction)
 const Introduction = ({ onComplete }) => {
+  const [showPayment, setShowPayment] = useState(false);
+  const [cardTapped, setCardTapped] = useState(false);
+
+  const handleCardTap = () => {
+    setCardTapped(true);
+    setTimeout(() => {
+      setShowPayment(true);
+    }, 500);
+  };
+
+  const resetAnimation = () => {
+    setCardTapped(false);
+    setShowPayment(false);
+  };
+
   return (
     <div className="step-content introduction">
       <div className="module-header-box">
@@ -42,12 +57,62 @@ const Introduction = ({ onComplete }) => {
         <p>
           Think about it: You carry around little pieces of paper and plastic rectangles, and somehow everyone agrees they're "valuable."
         </p>
+
+        {/* Interactive Credit Card Payment Visual */}
+        <div className="payment-visual-container">
+          <h3>💳 The Magic of Modern Money</h3>
+          <p>Tap the card to see the magic happen:</p>
+          
+          <div className="payment-scene">
+            <div className="card-reader">
+              <div className="reader-screen">
+                {!showPayment ? (
+                  <span className="reader-text">TAP CARD</span>
+                ) : (
+                  <span className="reader-text paid">PAID</span>
+                )}
+              </div>
+              <div className="reader-body"></div>
+            </div>
+            
+            <div className="card-container">
+              <div 
+                className={`credit-card ${cardTapped ? 'tapped' : ''}`}
+                onClick={handleCardTap}
+                style={{ cursor: cardTapped ? 'default' : 'pointer' }}
+              >
+                <div className="card-chip"></div>
+                <div className="card-logo">💳</div>
+                <div className="card-number">**** **** **** 1234</div>
+                <div className="card-name">JANE DOE</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="payment-description">
+            {!cardTapped ? (
+              <p>Click the card to simulate a payment</p>
+            ) : showPayment ? (
+              <p>✨ Invisible numbers moved around the world in seconds!</p>
+            ) : (
+              <p>Processing...</p>
+            )}
+          </div>
+          
+          {showPayment && (
+            <button className="reset-payment-btn" onClick={resetAnimation}>
+              🔄 Try Again
+            </button>
+          )}
+        </div>
+
         <p>
-          You tap your phone on a machine, and invisible numbers move around the world.
+      
         </p>
         <p>
           But behind all that complexity is a surprisingly simple story: <strong>Humans needed to solve the world's most annoying problem.</strong>
         </p>
+
         <div className="transition-hook">
           <h3>🚀 Ready to Experience the Problem?</h3>
           <p>Instead of telling you, let's travel back 10,000 years and let you experience the frustration firsthand.</p>
@@ -438,32 +503,33 @@ const BarterWorld = ({ onComplete }) => {
 
 // Component for Carlos's Flower Export
 const CarlosFlowerExport = ({ onComplete }) => {
-
   return (
     <div className="step-content carlos-export-step">
       <div className="module-header-box">
-        <h2>Real-World Impact</h2>
+        <h2>From Theory to Reality: The Human Cost</h2>
         <div className="intro-text">
-          <p className="prime-text">Now let's see how these money problems play out in the real world. You've learned about the flaws in traditional money systems—here's what that actually means for people trying to do business.</p>
-          <p>Meet Carlos, a flower exporter in Colombia. His story shows exactly how modern money fails at its core functions.</p>
+          <p className="prime-text">Not only has this happened to entire countries, but it affects everyday people in ways we sometimes don't think about.</p>
         </div>
       </div>
 
-      <div className="transitional-explanation">
-        <h3>Carlos's Flower Export</h3>
-        <p>
-          Carlos exports 1,000 roses to Japan. He gets paid in USD but spends in Colombian pesos. 
-          <button
-            className="inline-link-button"
-            onClick={() => window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank')}
-          >
-            Let's walk through what actually happens when money's core functions break down.
-          </button>
-        </p>
-      </div>
-
       <div className="content-text">
+        <div className="carlos-story">
+          <h3>Meet Carlos, a flower exporter in Colombia</h3>
+          <p>
+            Carlos exports 1,000 roses to Japan. He gets paid in USD but spends in Colombian pesos. 
+            <button
+              className="inline-link-button"
+              onClick={() => window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank')}
+            >
+              See exactly what happens when money's core functions break down.
+            </button>
+          </p>
+        </div>
+        
         <p>After exploring Carlos's story, you can see how traditional payment systems create unnecessary friction, delays, and costs that eat into people's earnings and limit economic opportunity.</p>
+        
+        <p><strong>Now that you understand both the historical failures and the real human cost, you're ready to discover what makes money truly sound.</strong></p>
+        
         <button 
           className="continue-button"
           onClick={() => onComplete(4)}
@@ -1356,7 +1422,7 @@ const MoneyModule = () => {
 
       {/* Horizontal Tab Navigation */}
       <div className="top-navigation">
-        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'When Money Goes Wrong', 'Real-World Impact', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
+        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'When Money Goes Wrong', 'From Theory to Reality', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
           <button
             key={index}
             className={`top-nav-button ${

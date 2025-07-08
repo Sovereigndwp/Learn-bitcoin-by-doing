@@ -68,14 +68,15 @@
 }
 
 .prime-text {
-  background: rgba(251, 191, 36, 0.1);
-  border-left: 4px solid #fbbf24;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #f1f5f9;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px solid #f7931a;
+  border-radius: 12px;
+  padding: 1.25rem;
   margin: 1.5rem 0;
+  font-weight: 600;
+  color: #333;
+  position: relative;
+  text-align: center;
 }
 
 /* ================= */

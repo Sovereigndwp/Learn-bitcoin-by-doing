@@ -39,7 +39,7 @@
 
 /* Prime Text Callouts */
 .prime-text {
-  background: linear-gradient(135deg, #fff3e6, #ffe6cc);
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   border: 2px solid #f7931a;
   border-radius: 12px;
   padding: 1.25rem;
@@ -47,16 +47,19 @@
   font-weight: 600;
   color: #333;
   position: relative;
+  text-align: center;
 }
 
 .prime-text::before {
   content: "💡";
   position: absolute;
-  top: -8px;
-  left: 16px;
+  left: 50%;
+  top: -1.2em;
+  transform: translateX(-50%);
   background: white;
   padding: 0 8px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  z-index: 1;
 }
 
 /* Reflection Prompts */
@@ -581,6 +584,11 @@
 
 .module-header-box .intro-text em {
   color: #333333;
+}
+
+.module-header-box .intro-text .prime-text {
+  text-align: center !important;
+  display: block;
 }
 
 /* Money Module Specific Responsive Styles */
@@ -2158,5 +2166,204 @@
     width: 35px;
     height: 35px;
     font-size: 0.8rem;
+  }
+} 
+
+/* Interactive Payment Visual Styles */
+.payment-visual-container {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px solid #f7931a;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.payment-visual-container h3 {
+  color: #f7931a;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.payment-scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin: 2rem 0;
+  min-height: 200px;
+}
+
+.card-reader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reader-screen {
+  background: #1a1a1a;
+  color: #00ff00;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.reader-screen .reader-text {
+  color: #00ff00 !important;
+  display: block !important;
+}
+
+.reader-text {
+  color: #00ff00 !important;
+  display: block !important;
+}
+
+.reader-text.paid {
+  color: #00ff00 !important;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px #fff, 0 0 20px #00ff00, 0 0 30px #00ff00;
+  animation: paidGlow 2s ease-in-out;
+}
+
+@keyframes paidGlow {
+  0%, 100% { text-shadow: 0 0 5px #00ff00; }
+  50% { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+}
+
+.reader-body {
+  width: 80px;
+  height: 20px;
+  background: #333;
+  border-radius: 4px;
+}
+
+.card-container {
+  position: relative;
+}
+
+.credit-card {
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transform-origin: center;
+}
+
+.credit-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.credit-card.tapped {
+  transform: translateX(-50px) translateY(-10px) scale(0.95);
+  transition: all 0.5s ease;
+}
+
+.card-chip {
+  width: 30px;
+  height: 20px;
+  background: #ffd700;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.card-logo {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+}
+
+.card-number {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.card-name {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.payment-description {
+  margin: 1.5rem 0;
+  font-size: 1.1rem;
+  color: #666;
+  min-height: 2rem;
+}
+
+.reset-payment-btn {
+  background: #f7931a;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 1rem;
+}
+
+.reset-payment-btn:hover {
+  background: #ea580c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-scene {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .credit-card {
+    width: 160px;
+    height: 100px;
+    padding: 0.75rem;
+  }
+  
+  .credit-card.tapped {
+    transform: translateY(-30px) scale(0.9);
+  }
+  
+  .reader-screen {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-visual-container {
+    padding: 1.5rem;
+  }
+  
+  .credit-card {
+    width: 140px;
+    height: 85px;
+    padding: 0.5rem;
+  }
+  
+  .card-number {
+    font-size: 0.7rem;
+  }
+  
+  .card-name {
+    font-size: 0.6rem;
   }
 } 

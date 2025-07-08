@@ -153,15 +153,15 @@
 }
 
 .prime-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border: 2px solid #f7931a;
   border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin: 1.5rem auto;
-  max-width: 800px;
-  border-left: 4px solid #ff6b35;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  font-weight: 600;
+  color: #333;
   position: relative;
+  text-align: center;
 }
 
 .prime-text::before {

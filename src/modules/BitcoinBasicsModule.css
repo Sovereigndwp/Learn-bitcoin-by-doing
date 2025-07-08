@@ -798,6 +798,7 @@
   font-style: italic;
   color: #d68910;
   font-weight: 500;
+  text-align: center;
 }
 
 .subtitle {
@@ -1213,6 +1214,7 @@
     .prime-text {
       padding: 0.75rem 1rem;
       margin: 1rem 0;
+      text-align: center;
     }
   }
 
@@ -2894,6 +2896,7 @@
   padding: 1rem 1.5rem;
   border-radius: 8px;
   border-left: 4px solid #f7931a;
+  text-align: center;
 }
 
 .ledger-comparison {
@@ -3351,6 +3354,7 @@
   padding: 0.75rem 1rem;
   border-radius: 8px;
   border-left: 4px solid #f7931a;
+  text-align: center;
 }
 
 .lab-interactive {
@@ -3430,6 +3434,7 @@
   padding: 1rem 1.5rem;
   border-radius: 8px;
   border-left: 4px solid #f7931a;
+  text-align: center;
 }
 
 .timeline-visualization {
