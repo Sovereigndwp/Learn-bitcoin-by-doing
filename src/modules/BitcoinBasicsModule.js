@@ -191,29 +191,122 @@ const BitcoinBasicsModule = () => {
       title: "Energy Becomes Money",
       type: "energy-transformation",
       content: {
-        title: "🔌 Bitcoin: Energy → Digital Truth",
-        subtitle: "Bitcoin doesn't borrow trust. It earns it, through work.",
-        primeText: "Bitcoin takes real-world energy, passes it through cryptographic math, and produces digital truth.",
-        analogy: {
-          title: "Think of it like a toaster:",
-          comparison: [
-            "🍞 Toaster: Electricity → Heat → Toast",
-            "₿ Bitcoin: Energy → Math → Verifiable Digital Money"
+        title: "🔌 The Energy Transformation Story",
+        subtitle: "How Bitcoin turns electricity into unbreakable digital money",
+        primeText: "To understand why Bitcoin uses energy, we first need to understand the fundamental problem with traditional money.",
+        
+        // Start with the problem
+        bankingProblem: {
+          title: "🏦 The Traditional Banking Problem",
+          subtitle: "Why our current money system is fundamentally broken",
+          problem: {
+            title: "The Core Issue: Trust-Based Security",
+            description: "Traditional money relies on expensive buildings, security guards, and trust in institutions to prevent copying and theft. But it's still just numbers in a database that can be changed by anyone with access.",
+            visual: {
+              title: "Traditional Security Costs",
+              elements: [
+                { icon: "🏢", label: "Expensive Buildings", cost: "$Billions" },
+                { icon: "👮", label: "Security Guards", cost: "$Millions" },
+                { icon: "💻", label: "Computer Systems", cost: "$Millions" },
+                { icon: "🔒", label: "Vaults & Safes", cost: "$Millions" }
+              ]
+            },
+            examples: [
+              "Banks spend billions on security systems",
+              "Governments print unlimited money",
+              "Hackers can steal digital money",
+              "You trust strangers to protect your wealth"
+            ]
+          }
+        },
+
+        // Then introduce Bitcoin as the solution
+        bitcoinSolution: {
+          title: "₿ Bitcoin's Revolutionary Solution",
+          subtitle: "Replace expensive human security with cheap mathematical security",
+          solution: {
+            title: "The Innovation: Physics-Based Security",
+            description: "Instead of trusting banks, Bitcoin uses energy work to create mathematical proof that prevents copying or cheating. The math problems are like security guards that can't be bribed.",
+            visual: {
+              title: "Bitcoin Security Costs",
+              elements: [
+                { icon: "⚡", label: "Energy Work", cost: "Physics" },
+                { icon: "🧮", label: "Math Problems", cost: "Computers" },
+                { icon: "🔐", label: "Cryptographic Proof", cost: "Mathematics" },
+                { icon: "🌐", label: "Global Network", cost: "Internet" }
+              ]
+            },
+            examples: [
+              "Energy work creates unbreakable security",
+              "No one can print more Bitcoin",
+              "Hackers can't steal what's mathematically protected",
+              "You trust physics, not people"
+            ]
+          },
+          analogy: {
+            title: "The Security Revolution:",
+            comparison: [
+              "🏦 Traditional: Expensive building + guards + trust = Security",
+              "₿ Bitcoin: Energy + math + physics = Security"
+            ]
+          }
+        },
+
+        // Finally explain the process
+        transformationProcess: {
+          title: "⚡ How Energy Becomes Unbreakable Money",
+          subtitle: "Follow the journey of electricity as it transforms into Bitcoin",
+          intro: "Now let's see how Bitcoin actually turns electricity into unbreakable digital money:",
+          steps: [
+            {
+              step: 1,
+              title: "The Power Plant",
+              description: "Electricity is generated from coal, solar, wind, or nuclear power",
+              icon: "⚡",
+              detail: "This is real energy that costs money to produce"
+            },
+            {
+              step: 2,
+              title: "The Computer",
+              description: "Your computer uses this electricity to update the shared ledger of all transactions",
+              icon: "🖥️",
+              detail: "Like solving a giant mathematical puzzle that gets harder as more people play"
+            },
+            {
+              step: 3,
+              title: "The Proof",
+              description: "When you solve a puzzle, you prove you used real energy",
+              icon: "✅",
+              detail: "This proof is impossible to fake - you either used energy or you didn't"
+            },
+            {
+              step: 4,
+              title: "The Money",
+              description: "Your proof becomes a Bitcoin - digital money backed by real work",
+              icon: "₿",
+              detail: "Now you have money that can't be copied because it's backed by physics"
+            }
           ]
         },
-        transformation: {
-          input: "Electricity from the grid",
-          process: "Specialized computers solve cryptographic puzzles", 
-          output: "Tamper-proof digital records",
-          result: "Money that can't be faked or duplicated"
+
+        interactiveDemo: {
+          title: "Try It Yourself: Energy → Money",
+          description: "Click the button to see energy transform into Bitcoin",
+          buttonText: "Transform Energy → Bitcoin",
+          result: "You just turned electricity into unbreakable digital money!"
         },
-        costComparison: {
-          gold: "Human miners use fuel and heavy machinery to dig holes, move and crush rocks, and refine metal",
-          fiat: "Central banks and data operators use ink, paper, electricity and servers to print paper and update centralized databases",
-          bitcoin: "People use powerful computers to help update a public record of transactions that everyone can see but no one can change. In return, they earn new bitcoins as a reward"
+
+        realWorldConnection: {
+          title: "Why This Matters",
+          examples: [
+            "Traditional money: Just numbers in a database (easy to copy)",
+            "Gold: Physical metal that's hard to fake (but heavy to move)",
+            "Bitcoin: Digital proof of energy work (impossible to fake, easy to move)"
+          ]
         },
-        question: "If something takes zero effort to create, should it have value?",
-        insight: "Just like gold had to be mined, Bitcoin must be mined, only now, it's with computational power, not shovels."
+
+        question: "What makes Bitcoin impossible to counterfeit?",
+        answer: "It's backed by real energy work that can't be faked or duplicated."
       }
     },
 
@@ -562,7 +655,17 @@ const BitcoinBasicsModule = () => {
 
   // Energy Transformation Component
   const EnergyTransformation = ({ content, onComplete }) => {
-    const [currentDemo, setCurrentDemo] = useState('toaster');
+    const [currentStep, setCurrentStep] = useState(0);
+    const [isTransforming, setIsTransforming] = useState(false);
+    const [showResult, setShowResult] = useState(false);
+    
+    const handleTransform = () => {
+      setIsTransforming(true);
+      setTimeout(() => {
+        setIsTransforming(false);
+        setShowResult(true);
+      }, 2000);
+    };
     
     return (
       <div className="energy-transformation">
@@ -572,87 +675,147 @@ const BitcoinBasicsModule = () => {
           <div className="prime-text">{content.primeText}</div>
         </div>
 
-        <div className="analogy-section">
-          <h3>{content.analogy.title}</h3>
-          <div className="comparison-flow">
-            {content.analogy.comparison.map((item, index) => (
-              <div key={index} className="flow-item">
-                {item}
-                      </div>
-                    ))}
+        {/* Step 1: The Problem */}
+        <div className="problem-section">
+          <h3>{content.bankingProblem.title}</h3>
+          <p className="problem-subtitle">{content.bankingProblem.subtitle}</p>
+          
+          <div className="problem-content">
+            <h4>{content.bankingProblem.problem.title}</h4>
+            <p>{content.bankingProblem.problem.description}</p>
+            
+            <div className="security-visual">
+              <h5>{content.bankingProblem.problem.visual.title}</h5>
+              <div className="cost-grid">
+                {content.bankingProblem.problem.visual.elements.map((element, index) => (
+                  <div key={index} className="cost-item traditional">
+                    <div className="cost-icon">{element.icon}</div>
+                    <div className="cost-label">{element.label}</div>
+                    <div className="cost-amount">{element.cost}</div>
                   </div>
-        </div>
-
-        <div className="transformation-demo">
-          <h3>⚡ Bitcoin's Energy Transformation</h3>
-          <div className="transformation-steps">
-            <div className="step">
-              <div className="step-icon">🔌</div>
-              <div className="step-content">
-                <h4>Input</h4>
-                <p>{content.transformation.input}</p>
+                ))}
               </div>
             </div>
-            <div className="arrow">→</div>
-            <div className="step">
-              <div className="step-icon">🖥️</div>
-              <div className="step-content">
-                <h4>Process</h4>
-                <p>{content.transformation.process}</p>
-              </div>
-            </div>
-            <div className="arrow">→</div>
-            <div className="step">
-              <div className="step-icon">🔐</div>
-              <div className="step-content">
-                <h4>Output</h4>
-                <p>{content.transformation.output}</p>
-              </div>
-            </div>
-            <div className="arrow">→</div>
-            <div className="step">
-              <div className="step-icon">₿</div>
-              <div className="step-content">
-                <h4>Result</h4>
-                <p>{content.transformation.result}</p>
-              </div>
-                  </div>
+            
+            <div className="problem-examples">
+              {content.bankingProblem.problem.examples.map((example, index) => (
+                <div key={index} className="example-item problem">
+                  <div className="example-icon">❌</div>
+                  <p>{example}</p>
                 </div>
-              </div>
-
-        <div className="cost-comparison">
-          <h3>💰 What Does It Cost to Create?</h3>
-          <div className="cost-grid">
-            <div className="cost-item gold">
-              <h4>🥇 Gold</h4>
-              <p>{content.costComparison.gold}</p>
-            </div>
-            <div className="cost-item fiat">
-              <h4>💵 Fiat</h4>
-              <p>{content.costComparison.fiat}</p>
-            </div>
-            <div className="cost-item bitcoin">
-              <h4>₿ Bitcoin</h4>
-              <p>{content.costComparison.bitcoin}</p>
+              ))}
             </div>
           </div>
         </div>
 
-        <div className="reflection-section">
+        {/* Step 2: The Solution */}
+        <div className="solution-section">
+          <h3>{content.bitcoinSolution.title}</h3>
+          <p className="solution-subtitle">{content.bitcoinSolution.subtitle}</p>
+          
+          <div className="solution-content">
+            <h4>{content.bitcoinSolution.solution.title}</h4>
+            <p>{content.bitcoinSolution.solution.description}</p>
+            
+            <div className="security-visual">
+              <h5>{content.bitcoinSolution.solution.visual.title}</h5>
+              <div className="cost-grid">
+                {content.bitcoinSolution.solution.visual.elements.map((element, index) => (
+                  <div key={index} className="cost-item bitcoin">
+                    <div className="cost-icon">{element.icon}</div>
+                    <div className="cost-label">{element.label}</div>
+                    <div className="cost-amount">{element.cost}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="solution-examples">
+              {content.bitcoinSolution.solution.examples.map((example, index) => (
+                <div key={index} className="example-item solution">
+                  <div className="example-icon">✅</div>
+                  <p>{example}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="solution-analogy">
+              <h4>{content.bitcoinSolution.analogy.title}</h4>
+              <div className="analogy-comparison">
+                {content.bitcoinSolution.analogy.comparison.map((item, index) => (
+                  <div key={index} className="analogy-item">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Step 3: The Process */}
+        <div className="process-section">
+          <h3>{content.transformationProcess.title}</h3>
+          <p className="process-subtitle">{content.transformationProcess.subtitle}</p>
+          <p className="process-intro">{content.transformationProcess.intro}</p>
+          
+          <div className="process-steps">
+            {content.transformationProcess.steps.map((step, index) => (
+              <div key={step.step} className={`process-step ${index <= currentStep ? 'active' : ''}`}>
+                <div className="step-icon">{step.icon}</div>
+                <div className="step-content">
+                  <h4>{step.title}</h4>
+                  <p>{step.description}</p>
+                  <div className="step-detail">{step.detail}</div>
+                </div>
+                {index < content.transformationProcess.steps.length - 1 && (
+                  <div className="step-arrow">→</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="interactive-demo">
+          <h3>{content.interactiveDemo.title}</h3>
+          <p>{content.interactiveDemo.description}</p>
+          <button 
+            className={`demo-button ${isTransforming ? 'transforming' : ''}`} 
+            onClick={handleTransform}
+            disabled={isTransforming}
+          >
+            {isTransforming ? '⚡ Transforming...' : content.interactiveDemo.buttonText}
+          </button>
+          {showResult && (
+            <div className="result-message">
+              <div className="result-icon">✅</div>
+              <p>{content.interactiveDemo.result}</p>
+            </div>
+          )}
+        </div>
+
+        <div className="real-world-connection">
+          <h3>{content.realWorldConnection.title}</h3>
+          <div className="connection-examples">
+            {content.realWorldConnection.examples.map((example, index) => (
+              <div key={index} className="example-item">
+                <div className="example-icon">💡</div>
+                <p>{example}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="final-question">
           <h3>🤔 {content.question}</h3>
           <div className="insight-box">
             <div className="insight-icon">💡</div>
-            <p>{content.insight}</p>
+            <p>{content.answer}</p>
           </div>
         </div>
 
-        <ContinueButton 
-          onClick={onComplete}
-          completed={true}
-          nextStep="Double-Spend Prevention"
-        >
-          Energy → Money ✓
-        </ContinueButton>
+        <button className="continue-button" onClick={onComplete}>
+          Energy Transformation ✓
+        </button>
       </div>
     );
   };
