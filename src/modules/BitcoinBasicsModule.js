@@ -15,131 +15,145 @@ const BitcoinBasicsModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   
   const handleStepComplete = (index) => {
-    setCompletedSteps(prev => new Set(prev).add(index));
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[StepComplete] index:', index);
+    }
+    const newCompletedSteps = new Set(completedSteps);
+    newCompletedSteps.add(index);
+    setCompletedSteps(newCompletedSteps);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('CompletedSteps after update:', Array.from(newCompletedSteps));
+    }
+    
     if (index === steps.length - 1) {
       completeModule('bitcoin-basics');
       setTimeout(() => navigate('/'), 2000);
+    } else {
+      setCurrentStep(index + 1);
+    }
+  };
+
+  const handleStepChange = (index) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[StepChange attempt] target index:', index, 'current completed:', Array.from(completedSteps));
+    }
+    // Only allow navigation to completed steps or the next uncompleted step
+    const maxCompleted = Math.max(...Array.from(completedSteps), -1);
+    if (completedSteps.has(index) || index === 0 || index <= maxCompleted + 1) {
+      setCurrentStep(index);
     }
   };
 
   // Energy Hook Component
   const EnergyHook = ({ content, onComplete }) => {
-    const [surface, setSurface] = useState('ice');
     const [workInput, setWorkInput] = useState(0);
-    const [boxPosition, setBoxPosition] = useState(0);
-    const [efficiency, setEfficiency] = useState(100);
-    
+
+    // Constants representing each system
+    const efficientEfficiency = 98;   // Ice – almost frictionless
+    const inefficientEfficiency = 40; // Concrete – high friction
+
+    // Box positions based on work applied
+    const efficientPosition = workInput * 3.5;
+    const inefficientPosition = workInput * 0.8;
+
+    // Energy lost calculations
+    const efficientLost = Math.floor(workInput * (1 - efficientEfficiency / 100));
+    const inefficientLost = Math.floor(workInput * (1 - inefficientEfficiency / 100));
+
+    // Percentage of work converted to wasted heat in inefficient system
+    const inefficientHeatPercent = workInput > 0 ? (inefficientLost / workInput) * 100 : 0;
+
     const handleSliderChange = (e) => {
-      const value = parseInt(e.target.value);
-      setWorkInput(value);
-      
-      // Calculate efficiency and movement based on surface
-      if (surface === 'ice') {
-        setEfficiency(98); // 98% efficient - tiny friction
-        setBoxPosition(value * 3.5); // Almost all work converts to movement
-      } else {
-        setEfficiency(40); // 40% efficient - lots of friction
-        setBoxPosition(value * 0.8); // Most work lost to friction/heat
-      }
+      setWorkInput(parseInt(e.target.value));
     };
 
-        return (
+    return (
       <div className="work-efficiency-lab">
         <div className="lab-header">
           <h2>Work Efficiency Experiment</h2>
-          <p className="subtitle">See how the same work produces different results</p>
-              </div>
-
-        <div className="surface-selector">
-          <button
-            className={`surface-btn ${surface === 'ice' ? 'active' : ''}`}
-            onClick={() => setSurface('ice')}
-          >
-            <span className="surface-icon">🧊</span>
-            <span className="surface-name">Efficient System</span>
-            <span className="surface-desc">(Ice - Low Friction)</span>
-          </button>
-                <button
-            className={`surface-btn ${surface === 'concrete' ? 'active' : ''}`}
-            onClick={() => setSurface('concrete')}
-                >
-            <span className="surface-icon">⬛</span>
-            <span className="surface-name">Inefficient System</span>
-            <span className="surface-desc">(Concrete - High Friction)</span>
-                </button>
+          <p className="subtitle">Same work, different outcomes — watch side by side</p>
+          <p className="context-text">When you apply equal effort to two systems, only the efficient one converts most of that effort into useful movement. The inefficient system bleeds energy as wasted heat. Slide the control below and observe.</p>
         </div>
 
-        <div className="experiment-area">
-          <div className="metrics-display">
-            <div className="metric">
-              <span className="metric-label">Work Input:</span>
-              <span className="metric-value">{workInput} units</span>
-            </div>
-            <div className="metric">
-              <span className="metric-label">System Efficiency:</span>
-              <span className={`metric-value ${efficiency < 50 ? 'inefficient' : 'efficient'}`}>
-                {efficiency}%
-              </span>
-            </div>
-            <div className="metric">
-              <span className="metric-label">Energy Lost:</span>
-              <span className="metric-value heat-waste">
-                {Math.floor(workInput * (1 - efficiency/100))} units
-              </span>
-            </div>
-          </div>
-
-          <div className="surface-visual">
-            <div 
+        {/* Side-by-side box movement */}
+        <div className="dual-surface-visual">
+          {/* Efficient system (Ice) */}
+          <div className="surface-visual efficient">
+            <div
               className="moving-box"
-              style={{ 
-                transform: `translateX(${boxPosition}px)`,
-                transition: surface === 'ice' ? 'transform 0.15s linear' : 'transform 0.4s ease-out'
-              }}
+              style={{ transform: `translateX(${efficientPosition}px)` }}
             >
               📦
             </div>
-            <div className="surface-floor">
-              {surface === 'ice' ? '❄️'.repeat(8) : '⬛'.repeat(8)}
-              </div>
-            </div>
+            <div className="surface-floor">{"❄️".repeat(8)}</div>
+          </div>
 
-          <div className="work-controls">
-            <label className="slider-label">Apply Work</label>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={workInput}
-              onChange={handleSliderChange}
-              className="work-slider"
-            />
+          {/* Inefficient system (Concrete) */}
+          <div className="surface-visual inefficient">
+            <div
+              className="moving-box"
+              style={{ transform: `translateX(${inefficientPosition}px)` }}
+            >
+              📦
+            </div>
+            <div className="surface-floor">{"⬛".repeat(8)}</div>
+            {/* Heat bar indicating wasted energy */}
+            {workInput > 0 && (
+              <div
+                className="heat-bar"
+                style={{ width: `${inefficientHeatPercent}%` }}
+                title={`${inefficientLost} units lost to heat`}
+              />
+            )}
           </div>
         </div>
 
-        <div className="reflection-questions">
-          <div className="question-box">
-            <span className="question-number">1</span>
-            <p>Why does the same amount of work move the box different distances?</p>
-                      </div>
-          <div className="question-box">
-            <span className="question-number">2</span>
-            <p>What happens to the "lost" work in the inefficient system?</p>
-                  </div>
-          <div className="question-box">
-            <span className="question-number">3</span>
-            <p>Which system would you trust more with your valuable work?</p>
-                  </div>
-                </div>
+        {/* Metrics for both systems */}
+        <div className="metrics-grid">
+          <div className="system-metrics efficient">
+            <div className="system-label">Efficient System</div>
+            <div className="metric">Efficiency: <span className="metric-value efficient">{efficientEfficiency}%</span></div>
+            <div className="metric">Energy Lost: <span className="metric-value heat-waste">{efficientLost} units</span></div>
+          </div>
+          <div className="system-metrics inefficient">
+            <div className="system-label">Inefficient System</div>
+            <div className="metric">Efficiency: <span className="metric-value inefficient">{inefficientEfficiency}%</span></div>
+            <div className="metric">Energy Lost: <span className="metric-value heat-waste">{inefficientLost} units</span></div>
+          </div>
+        </div>
 
-        <ContinueButton 
+        {/* Socratic guidance */}
+        <div className="socratic-section">
+          <h4>Consider:</h4>
+          <ul>
+            <li>Why does the box on ice glide much farther than on concrete?</li>
+            <li>Where does the “missing” energy go in the concrete system?</li>
+            <li>Can you think of real-world systems where energy is wasted in a similar way?</li>
+            <li>What kind of “surface” does the traditional financial system resemble?</li>
+          </ul>
+        </div>
+        
+        {/* Work input slider */}
+        <div className="work-controls">
+          <label className="slider-label">Apply Work</label>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={workInput}
+            onChange={handleSliderChange}
+            className="work-slider"
+          />
+        </div>
+
+        <ContinueButton
           onClick={onComplete}
           completed={workInput >= 50}
           nextStep="Money From Nothing"
         >
           Continue to Money Creation →
         </ContinueButton>
-                      </div>
+      </div>
     );
   };
 
@@ -161,38 +175,63 @@ const BitcoinBasicsModule = () => {
       }, 100);
     };
 
+    // Socratic questions always visible
     return (
       <div className="fiat-creation">
         <div className="creation-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
-                  </div>
+          <p className="context-text">With a few keyboard strokes, a bank can create brand-new money by issuing debt. Let’s watch this process and ask what it means for everyone holding the old money.</p>
+        </div>
+
+        {/* Pre-action Socratic guidance */}
+        <div className="socratic-section">
+          <h4>Consider before you click:</h4>
+          <ul>
+            <li>How hard is it to create $270,000 compared to pushing a heavy box?</li>
+            <li>Where does this brand-new money come from?</li>
+            <li>Who ultimately pays the cost of this easy money creation?</li>
+          </ul>
+        </div>
 
         <div className="loan-demo">
-          <div className="sarah-profile">
-            <div className="profile-icon">👩‍💼</div>
-            <div className="profile-details">
-              <h3>Sarah's Situation</h3>
-              <div className="money-status">
-                <div className="has">
-                  Has: ${content.loanDemo.initial.savings.toLocaleString()}
-                </div>
-                <div className="needs">
-                  Needs: ${content.loanDemo.initial.needed.toLocaleString()}
-                </div>
-                  </div>
-                </div>
+          {/* Accounts Ledger */}
+          <div className="accounts-ledger">
+            {/* Sarah Account */}
+            <div className="account-box sarah-box">
+              <h3>Sarah's Wallet</h3>
+              <div className="account-balance">
+                <span className="balance-label">Balance:</span>
+                <span className="balance-amount">${(content.loanDemo.initial.savings + newMoney).toLocaleString()}</span>
               </div>
+              <div className="account-note">Initial savings: ${content.loanDemo.initial.savings.toLocaleString()}</div>
+              {showLoanCreation && (
+                <div className="account-note new-credit">+ Loan credit: ${newMoney.toLocaleString()}</div>
+              )}
+            </div>
 
+            {/* Bank Ledger */}
+            <div className="account-box bank-box">
+              <h3>Bank Ledger</h3>
+              <ul className="ledger-list">
+                <li>Customer Deposits: ${content.loanDemo.initial.savings.toLocaleString()}</li>
+                {showLoanCreation && (
+                  <li className="new-loan-row">Loan to Sarah: ${newMoney.toLocaleString()}</li>
+                )}
+              </ul>
+            </div>
+          </div>
+
+          {/* Action + animation */}
           <div className="bank-action">
-                <button 
+            <button
               className="create-loan-btn"
               onClick={createLoan}
               disabled={showLoanCreation}
-                >
+            >
               {content.loanDemo.bankAction}
-                </button>
+            </button>
 
             {showLoanCreation && (
               <div className="money-creation-animation">
@@ -204,22 +243,28 @@ const BitcoinBasicsModule = () => {
                     <span className="sparkles">✨</span>
                   </div>
                 </div>
-                <p className="creation-caption">
-                  New money appears with a few keystrokes...
-                </p>
+                <p className="creation-caption">New money appears with a few keystrokes...</p>
               </div>
             )}
           </div>
+           
+           {showLoanCreation && newMoney >= 270000 && (
+             <div className="reflection-questions">
+               {content.loanDemo.questions.map((question, index) => (
+                 <div key={index} className="question-box">
+                   <span className="question-number">{index + 1}</span>
+                   <p>{question}</p>
+                 </div>
+               ))}
+             </div>
+           )}
 
           {showLoanCreation && newMoney >= 270000 && (
-            <div className="reflection-questions">
-              {content.loanDemo.questions.map((question, index) => (
-                <div key={index} className="question-box">
-                  <span className="question-number">{index + 1}</span>
-                  <p>{question}</p>
-                </div>
-              ))}
-            </div>
+            <ContinueButton 
+              onClick={onComplete}
+            >
+              Continue to Money Evolution →
+            </ContinueButton>
           )}
         </div>
 
@@ -241,17 +286,21 @@ const BitcoinBasicsModule = () => {
     const [selectedVersion, setSelectedVersion] = useState(null);
     const [showQuestion, setShowQuestion] = useState(false);
 
-        return (
-      <div className="money-evolution">
-        <div className="evolution-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-            </div>
-            
-        <div className="versions-timeline">
-          {content.versions.map((version, index) => (
-            <div 
-              key={index}
+    // Automatically reveal the reflection question (and Continue button)
+    // as soon as the learner picks a money version. This removes the extra
+    // “Think About It” click that was preventing some users from progressing.
+    useEffect(() => {
+      if (selectedVersion !== null) {
+        setShowQuestion(true);
+      }
+    }, [selectedVersion]);
+ 
+        // Build timeline with arrows
+        const timelineElements = [];
+        content.versions.forEach((version, index) => {
+          timelineElements.push(
+            <div
+              key={`card-${index}`}
               className={`version-card ${selectedVersion === index ? 'active' : ''}`}
               onClick={() => setSelectedVersion(index)}
             >
@@ -259,7 +308,6 @@ const BitcoinBasicsModule = () => {
                 <span className="version-number">{version.version}</span>
                 <span className="version-icon">{version.icon}</span>
               </div>
-              
               <div className="version-content">
                 <h3>{version.name}</h3>
                 <div className="version-properties">
@@ -272,27 +320,40 @@ const BitcoinBasicsModule = () => {
                 </div>
                 <div className="version-period">{version.period}</div>
               </div>
-                  </div>
-                ))}
-              </div>
+            </div>
+          );
+          if (index < content.versions.length - 1) {
+            timelineElements.push(
+              <div key={`arrow-${index}`} className="timeline-arrow-el">→</div>
+            );
+          }
+        });
+
+        return (
+      <div className="money-evolution">
+        <div className="evolution-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">Each upgrade made money easier to use—but also introduced new trust trade-offs. Select a version below to explore.</p>
+            </div>
+            
+        <div className="versions-timeline">
+          {timelineElements}
+        </div>
               
-        <div className="evolution-arrows">
-          <div className="arrow">
-            <span className="arrow-line">→</span>
-            <span className="arrow-label">Easier to Use</span>
-          </div>
-          <div className="arrow">
-            <span className="arrow-line">→</span>
-            <span className="arrow-label">Harder to Trust</span>
-          </div>
-                </div>
-              
-              <button 
-          className="reflection-btn"
-          onClick={() => setShowQuestion(true)}
-              >
-          Think About It
-              </button>
+
+        {/* The manual “Think About It” button is no longer needed because we
+            auto-reveal the reflection once a card is chosen. Retain it only
+            if you want the extra interaction step. */}
+        {/*
+        {selectedVersion !== null && !showQuestion && (
+          <button
+            className="reflection-btn large-action"
+            onClick={() => setShowQuestion(true)}
+          >
+            Think About It
+          </button>
+        )}
+        */}
 
         {showQuestion && (
           <div className="reflection-section">
@@ -1035,37 +1096,43 @@ const BitcoinBasicsModule = () => {
           <button className="back-button" onClick={() => navigate('/')}>
             ← Back
           </button>
-        <h1 className="module-title">
+          <h1 className="module-title">
             <Zap className="module-icon" />
-            Bitcoin 3.0: Energy as Money
-        </h1>
-      </div>
-      <div className="module-progress">
-          <span>Step {currentStep + 1} of {steps.length}</span>
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
-              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          />
-          </div>
+            Energy & Trust: The Bitcoin Basics
+          </h1>
         </div>
       </div>
 
-      <div className="module-tabs">
+      <div className="module-progress">
+        <div className="progress-bar">
+          <div 
+            className="progress-fill"
+            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
+          />
+        </div>
+        <span className="progress-text">
+          {completedSteps.size} / {steps.length} steps completed
+        </span>
+      </div>
+
+      <div className="top-navigation">
         {steps.map((step, index) => (
           <button
             key={index}
-            className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => setCurrentStep(index)}
-            disabled={!completedSteps.has(index) && index > currentStep}
+            className={`top-nav-button ${
+              index === currentStep ? 'active' : ''
+            } ${completedSteps.has(index) ? 'completed' : ''}`}
+            onClick={() => handleStepChange(index)}
+            disabled={!completedSteps.has(index) && index > Math.max(...Array.from(completedSteps), -1) + 1}
           >
-            {completedSteps.has(index) && <CheckCircle size={16} />}
-            <span className="tab-title">{step.title}</span>
+            <span className="nav-text">
+              {index + 1}. {step.title}
+            </span>
           </button>
         ))}
       </div>
 
-      <div className="step-content-container">
+      <div className="module-content">
         {renderStep(steps[currentStep], currentStep)}
       </div>
     </div>
