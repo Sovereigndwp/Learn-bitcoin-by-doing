@@ -1255,7 +1255,7 @@
 @keyframes shake {
   0%, 100% {
     transform: translateX(0);
-  }
+}
   25% {
     transform: translateX(-5px);
   }
@@ -1413,11 +1413,11 @@
   .homepage-header h1 {
     font-size: 1.75rem;
   }
-
+  
   .tagline {
     font-size: 1rem;
   }
-
+  
   .welcome-content h2 {
     font-size: 1.75rem;
   }
@@ -1425,7 +1425,7 @@
   .stat-value {
     font-size: 1.5rem;
   }
-
+  
   .encouragement-content h3 {
     font-size: 1.5rem;
   }
