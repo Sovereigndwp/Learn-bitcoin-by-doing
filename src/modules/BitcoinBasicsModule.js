@@ -15,28 +15,19 @@ const BitcoinBasicsModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   
   const handleStepComplete = (index) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[StepComplete] index:', index);
-    }
     const newCompletedSteps = new Set(completedSteps);
     newCompletedSteps.add(index);
     setCompletedSteps(newCompletedSteps);
-    if (process.env.NODE_ENV === 'development') {
-      console.log('CompletedSteps after update:', Array.from(newCompletedSteps));
-    }
     
     if (index === steps.length - 1) {
       completeModule('bitcoin-basics');
       setTimeout(() => navigate('/'), 2000);
     } else {
-      setCurrentStep(index + 1);
+    setCurrentStep(index + 1);
     }
   };
 
   const handleStepChange = (index) => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[StepChange attempt] target index:', index, 'current completed:', Array.from(completedSteps));
-    }
     // Only allow navigation to completed steps or the next uncompleted step
     const maxCompleted = Math.max(...Array.from(completedSteps), -1);
     if (completedSteps.has(index) || index === 0 || index <= maxCompleted + 1) {
@@ -176,7 +167,7 @@ const BitcoinBasicsModule = () => {
     };
 
     // Socratic questions always visible
-    return (
+        return (
       <div className="fiat-creation">
         <div className="creation-header">
           <h2>{content.title}</h2>
@@ -193,7 +184,7 @@ const BitcoinBasicsModule = () => {
             <li>Where does this brand-new money come from?</li>
             <li>Who ultimately pays the cost of this easy money creation?</li>
           </ul>
-        </div>
+              </div>
 
         <div className="loan-demo">
           {/* Accounts Ledger */}
@@ -220,8 +211,8 @@ const BitcoinBasicsModule = () => {
                   <li className="new-loan-row">Loan to Sarah: ${newMoney.toLocaleString()}</li>
                 )}
               </ul>
-            </div>
-          </div>
+                  </div>
+                </div>
 
           {/* Action + animation */}
           <div className="bank-action">
@@ -246,8 +237,8 @@ const BitcoinBasicsModule = () => {
                 <p className="creation-caption">New money appears with a few keystrokes...</p>
               </div>
             )}
-          </div>
-           
+              </div>
+
            {showLoanCreation && newMoney >= 270000 && (
              <div className="reflection-questions">
                {content.loanDemo.questions.map((question, index) => (
@@ -260,13 +251,14 @@ const BitcoinBasicsModule = () => {
            )}
 
           {showLoanCreation && newMoney >= 270000 && (
-            <ContinueButton 
+                <button 
+                  className="continue-button"
               onClick={onComplete}
-            >
+                >
               Continue to Money Evolution →
-            </ContinueButton>
+                </button>
           )}
-        </div>
+              </div>
 
         {showLoanCreation && newMoney >= 270000 && (
           <ContinueButton 
@@ -284,23 +276,19 @@ const BitcoinBasicsModule = () => {
   // Money Evolution Component
   const MoneyEvolution = ({ content, onComplete }) => {
     const [selectedVersion, setSelectedVersion] = useState(null);
-    const [showQuestion, setShowQuestion] = useState(false);
+    const [showQuestion, setShowQuestion] = useState(true);  // auto-revealed by default
 
-    // Automatically reveal the reflection question (and Continue button)
-    // as soon as the learner picks a money version. This removes the extra
-    // “Think About It” click that was preventing some users from progressing.
-    useEffect(() => {
-      if (selectedVersion !== null) {
-        setShowQuestion(true);
-      }
-    }, [selectedVersion]);
- 
-        // Build timeline with arrows
-        const timelineElements = [];
-        content.versions.forEach((version, index) => {
-          timelineElements.push(
-            <div
-              key={`card-${index}`}
+        return (
+      <div className="money-evolution">
+        <div className="evolution-header">
+          <h2>{content.title}</h2>
+          <p className="subtitle">{content.subtitle}</p>
+            </div>
+            
+        <div className="versions-timeline">
+          {content.versions.map((version, index) => (
+            <div 
+              key={index}
               className={`version-card ${selectedVersion === index ? 'active' : ''}`}
               onClick={() => setSelectedVersion(index)}
             >
@@ -308,6 +296,7 @@ const BitcoinBasicsModule = () => {
                 <span className="version-number">{version.version}</span>
                 <span className="version-icon">{version.icon}</span>
               </div>
+              
               <div className="version-content">
                 <h3>{version.name}</h3>
                 <div className="version-properties">
@@ -320,40 +309,27 @@ const BitcoinBasicsModule = () => {
                 </div>
                 <div className="version-period">{version.period}</div>
               </div>
-            </div>
-          );
-          if (index < content.versions.length - 1) {
-            timelineElements.push(
-              <div key={`arrow-${index}`} className="timeline-arrow-el">→</div>
-            );
-          }
-        });
-
-        return (
-      <div className="money-evolution">
-        <div className="evolution-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">Each upgrade made money easier to use—but also introduced new trust trade-offs. Select a version below to explore.</p>
-            </div>
-            
-        <div className="versions-timeline">
-          {timelineElements}
-        </div>
+                  </div>
+                ))}
+              </div>
               
-
-        {/* The manual “Think About It” button is no longer needed because we
-            auto-reveal the reflection once a card is chosen. Retain it only
-            if you want the extra interaction step. */}
-        {/*
-        {selectedVersion !== null && !showQuestion && (
-          <button
-            className="reflection-btn large-action"
-            onClick={() => setShowQuestion(true)}
-          >
-            Think About It
-          </button>
-        )}
-        */}
+        <div className="evolution-arrows">
+          <div className="arrow">
+            <span className="arrow-line">→</span>
+            <span className="arrow-label">Easier to Use</span>
+          </div>
+          <div className="arrow">
+            <span className="arrow-line">→</span>
+            <span className="arrow-label">Harder to Trust</span>
+          </div>
+                </div>
+              
+              <button 
+          className="reflection-btn"
+          onClick={() => setShowQuestion(true)}
+              >
+          Think About It
+              </button>
 
         {showQuestion && (
           <div className="reflection-section">
@@ -366,15 +342,13 @@ const BitcoinBasicsModule = () => {
           </div>
         )}
 
-        {showQuestion && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="The 1971 Switch"
-          >
-            Continue to 1971 Story →
-          </ContinueButton>
-        )}
+        <ContinueButton 
+          onClick={onComplete}
+          completed={true}
+          nextStep="The 1971 Switch"
+        >
+          Continue to 1971 Story →
+        </ContinueButton>
           </div>
         );
   };
@@ -1096,11 +1070,11 @@ const BitcoinBasicsModule = () => {
           <button className="back-button" onClick={() => navigate('/')}>
             ← Back
           </button>
-          <h1 className="module-title">
+        <h1 className="module-title">
             <Zap className="module-icon" />
             Energy & Trust: The Bitcoin Basics
-          </h1>
-        </div>
+        </h1>
+          </div>
       </div>
 
       <div className="module-progress">

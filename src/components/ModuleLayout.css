@@ -994,7 +994,7 @@
   .mobile-nav {
     display: block;
   }
-
+  
   .logo-text {
     font-size: 1.25rem;
   }
@@ -1011,7 +1011,7 @@
   .author-name {
     font-size: 0.75rem;
   }
-
+  
   .nav-button {
     font-size: 0.875rem;
     padding: 0.5rem 1rem;
@@ -1028,19 +1028,19 @@
   .comparison-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .reflection-step {
     padding: 1rem;
   }
-
+  
   .socratic-questions {
     gap: 0.75rem;
   }
-
+  
   .socratic-question {
     padding: 1rem;
   }
-
+  
   .main-question {
     padding: 1rem;
   }
@@ -1065,7 +1065,7 @@
     gap: 1rem;
     align-items: flex-start;
   }
-
+  
   .nav-buttons {
     width: 100%;
     justify-content: space-between;

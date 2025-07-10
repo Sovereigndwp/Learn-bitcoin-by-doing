@@ -3,8 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import CodeEditor from '../components/CodeEditor';
 import { sha256, hash256 } from '../utils/bitcoin';
-import { Hash, CheckCircle, Trophy, Shield, Zap } from 'lucide-react';
+import { Hash, CheckCircle, Trophy, Shield, Zap, Target, AlertTriangle, Lightbulb, ArrowRight, ArrowLeft, RotateCcw, Download } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
+import AnimatedIcon from '../components/AnimatedIcon';
 
 // Hash Explorer Component
 const HASH_EXAMPLES = [
@@ -147,9 +155,13 @@ const HashExplorer = ({ onComplete }) => {
           </div>
 
           {quizAnswer !== null && !showQuizResult && (
-            <button className="submit-button" onClick={handleQuizSubmit}>
-              Submit Answer
-            </button>
+                    <Button 
+          variant="primary" 
+          onClick={handleQuizSubmit}
+          className="submit-button"
+        >
+          Submit Answer
+        </Button>
           )}
 
           {showQuizResult && (
@@ -342,13 +354,10 @@ const HashingModule = () => {
             <div className="step-action-hint">
               <p className="action-hint">Read through the introduction and click Continue when ready</p>
             </div>
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(index)}
               aria-label="Continue to next step"
-            >
-              Continue
-            </button>
+            />
           </div>
         );
 
@@ -457,37 +466,31 @@ const HashingModule = () => {
               ))}
             </div>
             
-            <button 
-              className="nav-button prev-button"
+            <NavigationButton
+              direction="prev"
               onClick={() => setCurrentStep(prev => Math.max(0, prev - 1))}
               disabled={currentStep === 0}
               aria-label="Go to previous step"
-            >
-              ← Previous
-            </button>
+            />
             
             <span className="step-label">
               Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
             </span>
             
             {!completedSteps.has(currentStep) && currentStep < steps.length - 1 && (
-              <button 
-                className="nav-button skip-button"
+              <NavigationButton
+                direction="skip"
                 onClick={() => handleSkipStep(currentStep)}
                 aria-label="Skip this step"
-              >
-                Skip this step
-              </button>
+              />
             )}
             
-            <button 
-              className="nav-button next-button"
+            <NavigationButton
+              direction="next"
               onClick={() => setCurrentStep(prev => Math.min(steps.length - 1, prev + 1))}
               disabled={currentStep === steps.length - 1 || (!completedSteps.has(currentStep) && currentStep < steps.length - 1)}
               aria-label="Go to next step"
-            >
-              Next →
-            </button>
+            />
           </div>
         </div>
       </div>
@@ -518,16 +521,16 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
       
       <div className="quiz-options">
         {options.map((option, index) => (
-          <button
+          <OptionButton
             key={index}
-            className={`quiz-option ${selectedAnswer === index ? 'selected' : ''} ${
-              showResult ? (index === correct ? 'correct' : selectedAnswer === index ? 'incorrect' : '') : ''
-            }`}
             onClick={() => !showResult && setSelectedAnswer(index)}
             disabled={showResult}
+            isSelected={selectedAnswer === index}
+            isCorrect={showResult && index === correct}
+            isIncorrect={showResult && selectedAnswer === index && index !== correct}
           >
             {option}
-          </button>
+          </OptionButton>
         ))}
       </div>
 
@@ -536,20 +539,24 @@ const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => 
           <p>{selectedAnswer === correct ? '✅ Correct!' : '❌ Not quite right.'}</p>
           <p className="explanation">{explanation}</p>
           {selectedAnswer !== correct && (
-            <button className="try-again-button" onClick={() => {
-              setShowResult(false);
-              setSelectedAnswer(null);
-            }}>
+            <ActionButton
+              onClick={() => {
+                setShowResult(false);
+                setSelectedAnswer(null);
+              }}
+            >
               Try Again
-            </button>
+            </ActionButton>
           )}
         </div>
       )}
 
       {selectedAnswer !== null && !showResult && (
-        <button className="submit-button" onClick={handleSubmit}>
+        <ActionButton
+          onClick={handleSubmit}
+        >
           Submit Answer
-        </button>
+        </ActionButton>
       )}
     </div>
   );
@@ -664,16 +671,15 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
       </div>
 
       <div className="challenge-actions">
-        <button className="demo-button" onClick={handleDemo}>
+        <ActionButton onClick={handleDemo}>
           Compute Hash
-        </button>
-        <button 
-          className="submit-button" 
+        </ActionButton>
+        <ActionButton 
           onClick={handleSubmit}
           disabled={!userHash.trim()}
         >
           Verify Hash
-        </button>
+        </ActionButton>
       </div>
 
       {result && (
@@ -685,13 +691,12 @@ const ChallengeStep = ({ title, description, data, onComplete }) => {
             </div>
           )}
           {result.success && (
-            <button 
-              className="continue-button"
+            <ActionButton 
               onClick={() => onComplete()}
               style={{ marginTop: '1rem' }}
             >
               Continue to Next Step
-            </button>
+            </ActionButton>
           )}
         </div>
       )}
@@ -743,13 +748,12 @@ const ReflectionStep = ({ question, placeholder, onComplete }) => {
         </span>
         
         {!submitted ? (
-          <button 
-            className="submit-button"
+          <ActionButton
             onClick={handleSubmit}
             disabled={wordCount < 10}
           >
             Complete Reflection
-          </button>
+          </ActionButton>
         ) : (
           <SuccessNotification message="Reflection saved! You can continue to the next module." />
         )}

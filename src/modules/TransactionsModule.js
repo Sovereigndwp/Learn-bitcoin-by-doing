@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { Coins, ArrowRight, DollarSign, Shield, Code, Zap, Trophy, CheckCircle } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import './TransactionsModule.css';
 
 const TransactionsModule = () => {
@@ -153,7 +160,7 @@ const TransactionsModule = () => {
           💡 Unlike bank accounts, Bitcoin doesn't have balances. Instead, it tracks individual "coins" called UTXOs. Think of them as digital cash bills in your wallet.
         </div>
       </div>
-
+      
       <div className="utxo-concepts">
         <h3>🔍 Key Concepts</h3>
         <div className="concepts-grid">
@@ -199,13 +206,13 @@ const TransactionsModule = () => {
       <div className="intro-header">
         <h2>🔨 Building Transactions</h2>
         <p className="subtitle">Combine UTXOs to Create New Payments</p>
-      </div>
+        </div>
 
       <div className="utxo-pool">
         <h3>Your Available UTXOs</h3>
         <div className="utxo-grid">
           {mockUTXOs.map(utxo => (
-            <div
+            <div 
               key={utxo.id}
               className={`utxo-box ${selectedUTXOs.has(utxo.id) ? 'selected' : ''}`}
               onClick={() => handleUTXOSelect(utxo.id)}
@@ -221,7 +228,7 @@ const TransactionsModule = () => {
         <div style={{ textAlign: 'center', margin: '1rem 0', color: '#3b82f6', fontWeight: 'bold' }}>
           Selected: {calculateTotalSelected().toFixed(8)} BTC
         </div>
-      </div>
+        </div>
 
       <div className="transaction-flow">
         <h3>🔄 Transaction Flow</h3>
@@ -487,12 +494,12 @@ const TransactionsModule = () => {
       <div className="interactive-demo">
         <h3>🎮 Mempool Simulator</h3>
         <div className="demo-controls">
-          <button 
+              <button 
             className="demo-button"
             onClick={() => setMempoolDemo(!mempoolDemo)}
-          >
+              >
             {mempoolDemo ? 'Stop' : 'Start'} Live Simulation
-          </button>
+              </button>
         </div>
         
         <div className="mempool-container">
@@ -548,7 +555,7 @@ const TransactionsModule = () => {
       <div className="intro-header">
         <h2>⚡ Lightning Network Preview</h2>
         <p className="subtitle">Bitcoin's Scaling Solution</p>
-      </div>
+        </div>
 
       <div className="lightning-comparison">
         <div className="comparison-item">

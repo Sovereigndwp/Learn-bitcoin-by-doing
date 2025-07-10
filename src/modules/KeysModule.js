@@ -324,7 +324,7 @@ const EntropyLab = ({ onComplete }) => {
               <div className="source-strength">{source.strength}</div>
               <div className="source-example">Example: {source.example}</div>
             </div>
-          ))}
+        ))}
         </div>
       </div>
 

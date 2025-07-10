@@ -29,28 +29,28 @@ function App() {
     <LanguageProvider>
       <ProgressProvider>
         <NotificationProvider>
-          <Router>
-            <div className="App">
-              <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
-                <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
-                <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
-                <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
-                <Route path="/module/hashing" element={<ModuleLayout><HashingModule /></ModuleLayout>} />
-                <Route path="/module/mining" element={<ModuleLayout><MiningModule /></ModuleLayout>} />
-                <Route path="/module/keys" element={<ModuleLayout><KeysModule /></ModuleLayout>} />
-                <Route path="/module/transactions" element={<ModuleLayout><TransactionsModule /></ModuleLayout>} />
-                <Route path="/module/scripts" element={<ModuleLayout><ScriptsModule /></ModuleLayout>} />
-                <Route path="/module/merkle" element={<ModuleLayout><MerkleModule /></ModuleLayout>} />
-                <Route path="/module/custody" element={<ModuleLayout><CustodyModule /></ModuleLayout>} />
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
+              <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
+              <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
+              <Route path="/module/hashing" element={<ModuleLayout><HashingModule /></ModuleLayout>} />
+              <Route path="/module/mining" element={<ModuleLayout><MiningModule /></ModuleLayout>} />
+              <Route path="/module/keys" element={<ModuleLayout><KeysModule /></ModuleLayout>} />
+              <Route path="/module/transactions" element={<ModuleLayout><TransactionsModule /></ModuleLayout>} />
+              <Route path="/module/scripts" element={<ModuleLayout><ScriptsModule /></ModuleLayout>} />
+              <Route path="/module/merkle" element={<ModuleLayout><MerkleModule /></ModuleLayout>} />
+              <Route path="/module/custody" element={<ModuleLayout><CustodyModule /></ModuleLayout>} />
                 <Route path="/module/lightning" element={<ModuleLayout><LightningModule /></ModuleLayout>} />
                 <Route path="/module/advanced-topics" element={<ModuleLayout><AdvancedTopicsModule /></ModuleLayout>} />
-                <Route path="/module/myths" element={<ModuleLayout><MythsModule /></ModuleLayout>} />
-                <Route path="/module/bitcoin-toolkit" element={<ModuleLayout><BitcoinToolkitModule /></ModuleLayout>} />
-              </Routes>
-            </div>
-          </Router>
+              <Route path="/module/myths" element={<ModuleLayout><MythsModule /></ModuleLayout>} />
+              <Route path="/module/bitcoin-toolkit" element={<ModuleLayout><BitcoinToolkitModule /></ModuleLayout>} />
+            </Routes>
+          </div>
+        </Router>
         </NotificationProvider>
       </ProgressProvider>
     </LanguageProvider>

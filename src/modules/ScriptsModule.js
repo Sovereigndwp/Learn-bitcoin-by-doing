@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { FileText, Code, Layers, Users, Clock, Zap, Trophy, CheckCircle, Play, Plus, Minus } from 'lucide-react';
+import { Code, Play, CheckCircle, Trophy, FileText, ArrowRight, Zap, Shield, Lock } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './ScriptsModule.css';
 
 const ScriptsModule = () => {
@@ -22,7 +30,7 @@ const ScriptsModule = () => {
     {
       id: 'stack-operations',
       title: 'Stack Operations',
-      icon: <Layers className="w-6 h-6" />,
+      icon: <Shield className="w-6 h-6" />,
       component: 'stack-operations'
     },
     {
@@ -34,13 +42,13 @@ const ScriptsModule = () => {
     {
       id: 'multisig-explorer',
       title: 'Multisig Scripts',
-      icon: <Users className="w-6 h-6" />,
+      icon: <Shield className="w-6 h-6" />,
       component: 'multisig-explorer'
     },
     {
       id: 'timelock-contracts',
       title: 'Timelock Contracts',
-      icon: <Clock className="w-6 h-6" />,
+      icon: <Lock className="w-6 h-6" />,
       component: 'timelock-contracts'
     },
     {
@@ -52,7 +60,7 @@ const ScriptsModule = () => {
     {
       id: 'real-world-apps',
       title: 'Real-World Applications',
-      icon: <Play className="w-6 h-6" />,
+      icon: <ArrowRight className="w-6 h-6" />,
       component: 'real-world-apps'
     },
     {
@@ -252,19 +260,19 @@ const ScriptsModule = () => {
                 onChange={(e) => setScriptInput(e.target.value)}
                 placeholder="Try: 1 1 OP_ADD, or OP_DUP, or 5 3 OP_ADD"
               />
-              <button 
+              <Button 
                 className="demo-button"
                 onClick={() => executeScript(scriptInput)}
                 style={{ marginTop: '1rem' }}
               >
                 <Play size={16} />
                 Execute Script
-              </button>
+              </Button>
             </div>
             
             <div className="editor-panel">
               <div className="panel-header">
-                <Layers size={20} />
+                <Shield size={20} />
                 Stack State
               </div>
               <div className="stack-container">
@@ -285,18 +293,18 @@ const ScriptsModule = () => {
           </div>
 
           <div className="demo-controls">
-            <button className="demo-button" onClick={() => setScriptInput('1 1 OP_ADD')}>
+            <Button className="demo-button" onClick={() => setScriptInput('1 1 OP_ADD')}>
               Simple Addition
-            </button>
-            <button className="demo-button" onClick={() => setScriptInput('5 OP_DUP')}>
+            </Button>
+            <Button className="demo-button" onClick={() => setScriptInput('5 OP_DUP')}>
               Duplicate Value
-            </button>
-                         <button className="demo-button" onClick={() => setScriptInput('<pubKeyHash> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG')}>
+            </Button>
+                         <Button className="demo-button" onClick={() => setScriptInput('<pubKeyHash> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG')}>
                P2PKH Script
-             </button>
-            <button className="demo-button" onClick={() => { setScriptInput(''); setStack([]); }}>
+             </Button>
+            <Button className="demo-button" onClick={() => { setScriptInput(''); setStack([]); }}>
               Clear All
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -497,13 +505,13 @@ const ScriptsModule = () => {
       <div className="interactive-demo">
         <h3>🎮 Timelock Simulator</h3>
         <div className="demo-controls">
-          <button 
+          <Button 
             className={`demo-button ${timelockEnabled ? 'demo-button' : ''}`}
             onClick={() => setTimelockEnabled(!timelockEnabled)}
           >
-            <Clock size={16} />
+            <Lock size={16} />
             {timelockEnabled ? 'Disable' : 'Enable'} Timelock
-          </button>
+          </Button>
         </div>
 
         <div className="playground-container">
@@ -549,9 +557,9 @@ const ScriptsModule = () => {
             Release funds in stages over time, like a college fund that unlocks each semester.
           </div>
           <div className="contract-conditions">
-            if (time > semester_1) unlock 25%<br/>
-            if (time > semester_2) unlock 50%<br/>
-            if (time > graduation) unlock 100%
+            {`if (time > semester_1) unlock 25%`}<br/>
+            {`if (time > semester_2) unlock 50%`}<br/>
+            {`if (time > graduation) unlock 100%`}
           </div>
         </div>
 
@@ -573,7 +581,7 @@ const ScriptsModule = () => {
           </div>
           <div className="contract-conditions">
             if (primary_key) unlock immediately<br/>
-            if (time > 1_year_inactive) allow backup_key
+            {`if (time > 1_year_inactive) allow backup_key`}
           </div>
         </div>
       </div>
@@ -699,7 +707,7 @@ const ScriptsModule = () => {
           <div className="contract-conditions">
             Lock Bitcoin in multisig<br/>
             Mint wrapped tokens on other chains<br/>
-            Redeem: Burn tokens → unlock Bitcoin<br/>
+            {`Redeem: Burn tokens → unlock Bitcoin`}<br/>
             Security: Distributed key management
           </div>
         </div>
@@ -803,9 +811,9 @@ const ScriptsModule = () => {
         {renderCurrentStep()}
         
         {currentStep < steps.length - 1 && (
-          <button className="continue-button" onClick={handleContinue}>
+          <ContinueButton onClick={handleContinue}>
             Continue to {steps[currentStep + 1].title} →
-          </button>
+          </ContinueButton>
         )}
       </div>
     </div>

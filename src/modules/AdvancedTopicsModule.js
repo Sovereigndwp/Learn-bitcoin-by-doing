@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Trophy, CheckCircle, Hash, Key, Lock, Zap
+  Zap, Code, Cpu, Network, Globe, Shield, Database, 
+  Trophy, CheckCircle, Target, BarChart3, Settings, Award
 } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './AdvancedTopicsModule.css';
 
@@ -297,8 +305,7 @@ const AdvancedTopicsModule = () => {
         <div className="demo-playground">
           <h4 style={{ color: '#f1f5f9', marginBottom: '1rem' }}>🧪 Taproot Demo</h4>
           <div className="demo-controls">
-            <button 
-              className="demo-button"
+            <Button 
               onClick={() => setDemoOutput(`Taproot Address Generation:
 bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297
 
@@ -310,11 +317,10 @@ This address could hide:
 
 From the outside, they ALL look identical! 🎭`)}
             >
-              <Key size={16} />
+              <Code size={16} />
               Generate Taproot Address
-            </button>
-            <button 
-              className="demo-button"
+            </Button>
+            <Button 
               onClick={() => setDemoOutput(`Schnorr Signature Aggregation Demo:
 
 Individual signatures:
@@ -331,7 +337,7 @@ This is revolutionary for multisig and Lightning Network efficiency.`)}
             >
               <Zap size={16} />
               Signature Aggregation
-            </button>
+            </Button>
           </div>
           {demoOutput && (
             <div className="demo-output">{demoOutput}</div>
@@ -347,7 +353,7 @@ This is revolutionary for multisig and Lightning Network efficiency.`)}
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <button 
+          <Button 
             onClick={() => handleTopicComplete(0)}
             style={{
               background: 'linear-gradient(135deg, #10b981, #059669)',
@@ -365,7 +371,7 @@ This is revolutionary for multisig and Lightning Network efficiency.`)}
           >
             <CheckCircle size={16} />
             Master Taproot & Schnorr
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -439,13 +445,25 @@ This is revolutionary for multisig and Lightning Network efficiency.`)}
         <p className="mastery-description">
           You've mastered cutting-edge Bitcoin technology and understand the innovations shaping Bitcoin's future.
         </p>
-        <button 
-          className="mastery-button"
+        <Button 
           onClick={() => handleTopicComplete(5)}
+          style={{
+            background: 'linear-gradient(135deg, #10b981, #059669)',
+            color: '#fff',
+            border: 'none',
+            padding: '1rem 2rem',
+            borderRadius: '8px',
+            fontSize: '1rem',
+            fontWeight: '600',
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
         >
           <Trophy size={20} />
           Complete Advanced Mastery
-        </button>
+        </Button>
       </div>
     );
   }

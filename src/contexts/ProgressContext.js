@@ -580,7 +580,7 @@ export const ProgressProvider = ({ children }) => {
     }
     if (moduleCount >= 10 && !earnedBadges.includes('bitcoin-scholar')) {
       earnBadge('bitcoin-scholar');
-    }
+      }
     if (moduleCount >= MODULES.length && !earnedBadges.includes('bitcoin-expert')) {
       earnBadge('bitcoin-expert');
     }
@@ -699,11 +699,11 @@ export const ProgressProvider = ({ children }) => {
 
   const value = {
     // State
-    completedModules,
-    earnedBadges,
-    currentStreak,
+      completedModules,
+      earnedBadges,
+      currentStreak,
     longestStreak,
-    totalPoints,
+      totalPoints,
     totalTimeSpent,
     moduleScores,
     achievements,
@@ -714,16 +714,16 @@ export const ProgressProvider = ({ children }) => {
     milestones: MILESTONES,
     
     // Actions
-    completeModule,
+      completeModule,
     startSession,
     endSession,
-    earnBadge,
+      earnBadge,
     resetProgress,
     
     // Helpers
-    getModuleProgress,
-    isModuleCompleted,
-    getBadgeDetails,
+      getModuleProgress,
+      isModuleCompleted,
+      getBadgeDetails,
     getLearningStats,
     getNextRecommendation
   };

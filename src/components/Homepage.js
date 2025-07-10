@@ -238,12 +238,12 @@ const Homepage = () => {
               <span>Restricted access</span>
             </div>
           </div>
-
-          <div className="banking-card-actions">
-            <a
+        
+        <div className="banking-card-actions">
+          <a
               href="https://layer-d.my.canva.site/realitycheck-by-dalia"
-              target="_blank"
-              rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
               className="banking-demo-link"
               onClick={!bankingExperienceCompleted ? handleExperienceComplete : undefined}
             >
@@ -254,8 +254,8 @@ const Homepage = () => {
             {!bankingExperienceCompleted && (
               <>
                 <button
-                  className="banking-demo-link"
-                  onClick={handleExperienceComplete}
+            className="banking-demo-link"
+            onClick={handleExperienceComplete}
                   style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
                 >
                   <CheckCircle size={16} />
@@ -273,13 +273,13 @@ const Homepage = () => {
                 <span>Reality Check Complete</span>
               </div>
             )}
-          </div>
+        </div>
 
-          {bankingExperienceCompleted && (
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: '100%' }} />
-            </div>
-          )}
+        {bankingExperienceCompleted && (
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: '100%' }} />
+          </div>
+        )}
         </div>
       </div>
     );
@@ -295,16 +295,16 @@ const Homepage = () => {
         <div key={module.id} className="module-card locked">
           <div className="module-icon">🔒</div>
           <div className="card-content">
-            <h3>{module.title}</h3>
-            <p>{module.description}</p>
-            <div className="locked-message">
-              {module.id === 'money' && !bankingExperienceCompleted ? 
+          <h3>{module.title}</h3>
+          <p>{module.description}</p>
+          <div className="locked-message">
+            {module.id === 'money' && !bankingExperienceCompleted ? 
                 '🏦 Complete the Reality Check to unlock' :
                 `📋 Prerequisites: ${module.prerequisites.map(prereq => {
                   const prereqModule = moduleRegistry[prereq];
                   return prereqModule ? prereqModule.title : prereq;
                 }).join(', ')}`
-              }
+            }
             </div>
             <div className="unlock-progress">
               <div className="progress-bar">
@@ -324,10 +324,10 @@ const Homepage = () => {
       >
         <div className="module-icon">{moduleIcons[module.id]}</div>
         <div className="card-content">
-          <h3>{module.title}</h3>
-          <p>{module.description}</p>
+        <h3>{module.title}</h3>
+        <p>{module.description}</p>
           
-          {progress > 0 && (
+        {progress > 0 && (
             <div className="module-stats">
               <div className="stat-item">
                 <Brain size={14} />
@@ -343,17 +343,17 @@ const Homepage = () => {
           )}
 
           <div className="progress-section">
-            <div className="progress-bar">
-              <div 
-                className="progress-fill"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
             <span className="progress-text">{progress}%</span>
           </div>
 
-          {module.prerequisites.length > 0 && (
-            <div className="prerequisites">
+        {module.prerequisites.length > 0 && (
+          <div className="prerequisites">
               <span>Prerequisites: {module.prerequisites.map(prereq => {
                 const prereqModule = moduleRegistry[prereq];
                 return prereqModule ? prereqModule.title : prereq;
@@ -365,8 +365,8 @@ const Homepage = () => {
             <div className="start-hint">
               <Zap size={14} />
               <span>Click to start</span>
-            </div>
-          )}
+          </div>
+        )}
         </div>
       </Link>
     );
@@ -451,7 +451,7 @@ const Homepage = () => {
         <div className="logo">
           <span className="bitcoin-symbol">₿</span>
           <div className="logo-content">
-            <h1>Money's Mess & Bitcoin's Fix</h1>
+          <h1>Money's Mess & Bitcoin's Fix</h1>
             <p className="tagline">A logical journey from broken money to digital sovereignty</p>
           </div>
         </div>
@@ -504,8 +504,8 @@ const Homepage = () => {
           <div className="modules-grid">
             {renderBankingExperienceCard()}
           </div>
+          </div>
         </div>
-      </div>
 
       {/* Continue Learning Button - prominently placed in main journey container */}
       {(() => {
@@ -531,7 +531,7 @@ const Homepage = () => {
         {Object.entries(moduleGroups)
           .sort(([,a], [,b]) => a.order - b.order)
           .map(([groupKey, groupInfo]) => renderGroupSection(groupKey, groupInfo))}
-      </div>
+        </div>
 
       {userStats.completedModules >= 2 && (
         <div className="encouragement-section">

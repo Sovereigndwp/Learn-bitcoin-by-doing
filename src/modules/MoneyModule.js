@@ -4,6 +4,13 @@ import { useProgress } from '../contexts/ProgressContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap, ChevronLeft, ChevronRight, TrendingUp, Globe, Shield, DollarSign, Users, BarChart3, AlertCircle, Star } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
@@ -243,9 +250,9 @@ const BarterWorld = ({ onComplete }) => {
     
     // Guard against undefined trader data
     if (!currentTraderData) {
-      return (
-        <div className="step-content barter-world">
-          <div className="module-header-box">
+  return (
+    <div className="step-content barter-world">
+      <div className="module-header-box">
             <h2>Error Loading Trading Game</h2>
             <p>Please refresh the page to try again.</p>
           </div>
@@ -286,15 +293,15 @@ const BarterWorld = ({ onComplete }) => {
                     {index < tradeRoute.length - 1 && (
                       <div className="path-arrow">→</div>
                     )}
-                    <button 
+        <button
                       className="visit-trader-btn"
                       onClick={() => setCurrentTrader(index)}
                       disabled={index > currentTrader}
                       title={index > currentTrader ? "You haven't reached this trader yet" : `Visit ${trader.person} at ${trader.location}`}
-                    >
+        >
                       {index <= currentTrader ? "Visit" : "Locked"}
-                    </button>
-                  </div>
+        </button>
+      </div>
                 ))}
               </div>
             </div>
@@ -443,7 +450,7 @@ const BarterWorld = ({ onComplete }) => {
                 <li>Try a different trading route</li>
                 <li>Wait until someone needs what you have</li>
                 <li>Go barefoot this winter</li>
-              </ul>
+        </ul>
               <button className="continue-button" onClick={() => setGameStep(1)}>
                 This System is Broken!
               </button>
@@ -517,25 +524,25 @@ const CarlosFlowerExport = ({ onComplete }) => {
           <h3>Meet Carlos, a flower exporter in Colombia</h3>
           <p>
             Carlos exports 1,000 roses to Japan. He gets paid in USD but spends in Colombian pesos. 
-            <button
+              <button
               className="inline-link-button"
               onClick={() => window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank')}
-            >
+              >
               See exactly what happens when money's core functions break down.
-            </button>
+              </button>
           </p>
-        </div>
-        
+          </div>
+          
         <p>After exploring Carlos's story, you can see how traditional payment systems create unnecessary friction, delays, and costs that eat into people's earnings and limit economic opportunity.</p>
         
         <p><strong>Now that you understand both the historical failures and the real human cost, you're ready to discover what makes money truly sound.</strong></p>
         
-        <button 
-          className="continue-button"
+              <button 
+                className="continue-button"
           onClick={() => onComplete(4)}
-        >
+              >
           Continue to the Sound Money Blueprint
-        </button>
+              </button>
       </div>
     </div>
   );
@@ -672,8 +679,8 @@ const WhatsWrong = ({ onComplete }) => {
             </div>
             
             {index === currentScenario && (
-              <div className="options-grid">
-                {scenario.options.map(option => (
+            <div className="options-grid">
+              {scenario.options.map(option => (
                   <button
                     key={option.value}
                     className={`option-button ${answers[scenario.id] === option.value ? 'selected' : ''}`}
@@ -682,8 +689,8 @@ const WhatsWrong = ({ onComplete }) => {
                   >
                     {option.label}
                   </button>
-                ))}
-              </div>
+              ))}
+            </div>
             )}
             
             {feedback[scenario.id] && (
@@ -979,9 +986,9 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
           </div>
         </div>
         <div className="quiz-content">
-          <button onClick={() => setShowIntro(false)} className="continue-button">
+          <ContinueButton onClick={() => setShowIntro(false)}>
             Start Investigation ({questions.length} cases)
-          </button>
+          </ContinueButton>
         </div>
       </div>
     );
@@ -1001,7 +1008,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         <div className="question-navigation">
           <div className="question-buttons">
             {questions.map((question, index) => (
-              <button
+              <NavigationButton
                 key={index}
                 className={`question-nav-button ${index === currentQuestion ? 'active' : ''} ${
                   // Check if this question has been answered correctly
@@ -1017,7 +1024,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                 disabled={index > currentQuestion} // Disable future questions
               >
                 {index + 1}
-              </button>
+              </NavigationButton>
             ))}
           </div>
         </div>
@@ -1027,21 +1034,21 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
         <div className="history-snapshot">
           <h3>💰 Historical Evidence:</h3>
           <p>{currentQ.text}</p>
-        </div>
+            </div>
 
         <div className="question-section">
           <h3>🤔 Your Analysis:</h3>
           <p className="question-text">{currentQ.question}</p>
           <div className="options">
             {currentQ.options.map((option, index) => (
-            <button 
+            <OptionButton
                 key={index}
                 className={`option-button ${selectedAnswer === index ? 'selected' : ''}`}
                 onClick={() => handleAnswer(index)}
                 disabled={showFeedback}
               >
                 {option}
-              </button>
+              </OptionButton>
             ))}
           </div>
         </div>
@@ -1064,30 +1071,30 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                   <p className="explanation">{getCorrectExplanation(currentQ)}</p>
                 </div>
                 <div className="action-buttons">
-                  <button onClick={handleTryAgain} className="try-again-button">
+                  <Button onClick={handleTryAgain} className="try-again-button">
                     🔄 Try Again
-                  </button>
-                  <button onClick={handleNext} className="continue-anyway-button">
+                  </Button>
+                  <Button onClick={handleNext} className="continue-anyway-button">
                     Continue Anyway →
-                  </button>
+            </Button>
                 </div>
-              </div>
-            )}
+          </div>
+        )}
 
             {selectedAnswer === currentQ.answer && (
               <>
                 <div className="takeaway-box">
                   <h4>💡 Key Insight:</h4>
                   <p>{currentQ.takeaway}</p>
-                </div>
+        </div>
                 <div className="trait-unlock-box">
                   <h4>🏆 Sound Money Trait Discovered:</h4>
                   <p><strong>{currentQ.trait}</strong></p>
                 </div>
                 
-                <button onClick={handleNext} className="next-button">
+                <Button onClick={handleNext} className="next-button">
                   {currentQuestion < questions.length - 1 ? 'Next Case →' : 'Complete Investigation'}
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -1138,11 +1145,11 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
   const unlockedCount = allTraits.filter(trait => isTraitUnlocked(trait)).length;
   const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
 
-  return (
+        return (
     <div className="step-content scorecard-step">
-              <div className="module-header-box">
+      <div className="module-header-box">
           <h2>The Sound Money Blueprint</h2>
-          <div className="intro-text">
+        <div className="intro-text">
             <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. Modern money fails at most of these.</p>
           </div>
         </div>
@@ -1150,44 +1157,44 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="traits-comparison">
         <div className="comparison-header">
           <div className="header-left">
-            <button 
+            <Button 
               className={`view-toggle ${!showComparison ? 'active' : ''}`}
               onClick={() => setShowComparison(false)}
             >
               Sound Money Traits
-            </button>
-            <button 
+            </Button>
+            <Button 
               className={`view-toggle ${showComparison ? 'active' : ''}`}
               onClick={() => setShowComparison(true)}
             >
               How Modern Money Fails
-            </button>
+            </Button>
           </div>
           <div className="progress-indicator">
             <span className="progress-text">{unlockedCount}/{allTraits.length} discovered</span>
-          </div>
         </div>
-
-        <div className="traits-list">
-          {allTraits.map(trait => (
+      </div>
+      
+      <div className="traits-list">
+        {allTraits.map(trait => (
             <div key={trait.name} className={`trait-item ${isTraitUnlocked(trait) ? 'unlocked' : 'locked'}`}>
               <span className="check-icon">{isTraitUnlocked(trait) ? '✅' : '🔒'}</span>
               <div className="trait-content">
                 <div className="trait-header">
-                  <span className="trait-name"><strong>{trait.name}</strong></span>
+            <span className="trait-name"><strong>{trait.name}</strong></span>
                   {isTraitUnlocked(trait) && <span className="discovered-badge">Discovered!</span>}
                 </div>
                 <div className="trait-details">
                   {!showComparison ? (
-                    <span className="trait-description">{trait.description}</span>
+            <span className="trait-description">{trait.description}</span>
                   ) : (
                     <span className="trait-failure">❌ {trait.modernFail}</span>
                   )}
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
         <div className="bitcoin-teaser">
           <h3>🔮 Coming Next...</h3>
@@ -1197,12 +1204,12 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
 
 
 
-        <button 
+        <Button 
           className="continue-button"
           onClick={() => onComplete(5)}
         >
           Ready for the Solution
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -1229,9 +1236,9 @@ const ExternalResource = ({ onComplete }) => {
         </a>
       </div>
       <div className="button-group">
-        <button onClick={() => onComplete(6)} className="continue-button">
+        <Button onClick={() => onComplete(6)} className="continue-button">
           Complete Module
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -1246,7 +1253,7 @@ const BadgeModal = ({ isOpen, onClose }) => {
       <div className="modal-content">
         <h2>🎉 Congratulations!</h2>
         <p>You've earned the Sound Money Explorer badge!</p>
-        <button onClick={onClose}>Close</button>
+        <Button onClick={onClose}>Close</Button>
       </div>
           </div>
         );
@@ -1272,7 +1279,7 @@ const MoneyModule = () => {
         <div className="error-boundary">
           <h2>Something went wrong</h2>
           <p>Please refresh the page to try again.</p>
-          <button onClick={() => window.location.reload()}>Refresh Page</button>
+          <Button onClick={() => window.location.reload()}>Refresh Page</Button>
         </div>
       </div>
     );
@@ -1404,9 +1411,9 @@ const MoneyModule = () => {
       </div>
 
       {/* Reset Progress Button */}
-      <button className="reset-progress-button" onClick={handleResetProgress}>
+      <Button className="reset-progress-button" onClick={handleResetProgress}>
         Reset Progress
-      </button>
+      </Button>
 
       <div className="module-progress">
         <div className="progress-bar">
@@ -1423,7 +1430,7 @@ const MoneyModule = () => {
       {/* Horizontal Tab Navigation */}
       <div className="top-navigation">
         {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'When Money Goes Wrong', 'From Theory to Reality', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
-          <button
+          <Button
             key={index}
             className={`top-nav-button ${
               index === currentStep ? 'active' : ''
@@ -1433,7 +1440,7 @@ const MoneyModule = () => {
             <span className="nav-text">
               {index + 1}. {step.length > 20 ? `${step.substring(0, 17)}...` : step}
             </span>
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -1452,4 +1459,4 @@ const MoneyModule = () => {
   );
 };
 
-export default MoneyModule;
+export default MoneyModule; 

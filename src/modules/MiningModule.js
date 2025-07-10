@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { hash256, mineBlock } from '../utils/bitcoin';
 import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './MiningModule.css';
 import AnimatedIcon from '../components/AnimatedIcon';
@@ -597,16 +604,17 @@ const MiningModule = () => {
             <h3>Choose Mining Level:</h3>
             <div className="level-buttons">
               {content.miningLevels.map((level, index) => (
-            <button 
+            <OptionButton 
                   key={index}
-                  className={`level-button ${selectedLevel === index ? 'selected' : ''}`}
+                  selected={selectedLevel === index}
                   onClick={() => setSelectedLevel(index)}
                   disabled={miningState === 'mining'}
+                  className="level-button"
                 >
                   <div className="level-title">{level.title}</div>
                   <div className="level-difficulty">Difficulty: {level.difficulty}</div>
                   <div className="level-cost">Energy: {level.energyCost} kWh</div>
-            </button>
+            </OptionButton>
               ))}
           </div>
           </div>
@@ -630,15 +638,18 @@ const MiningModule = () => {
           </div>
 
           <div className="mining-action">
-            <button
-              className={`mine-button ${miningState}`}
+            <ActionButton
+              variant={miningState === 'success' ? 'success' : 'primary'}
+              context="demo"
               onClick={startMining}
               disabled={miningState === 'mining'}
+              loading={miningState === 'mining'}
+              className="mine-button"
             >
               {miningState === 'idle' && <>⚡ Start Mining</>}
               {miningState === 'mining' && <>⛏️ Mining in Progress...</>}
               {miningState === 'success' && <>🎉 Block Mined!</>}
-            </button>
+            </ActionButton>
           </div>
         </div>
 
@@ -725,9 +736,9 @@ const MiningModule = () => {
           <div className="step-content">
             <h2>{step.title}</h2>
             <p>Step type "{step.type}" implementation in progress...</p>
-            <button className="continue-button" onClick={() => handleStepComplete(index)}>
-              Continue
-            </button>
+                    <ContinueButton onClick={() => handleStepComplete(index)}>
+          Continue
+        </ContinueButton>
           </div>
         );
     }
@@ -1379,9 +1390,9 @@ const ConsensusComparison = ({ content, onComplete }) => {
         </div>
       </div>
 
-      <button className="continue-button" onClick={onComplete}>
+      <ContinueButton onClick={onComplete}>
         Discover Your Role 🚀
-      </button>
+      </ContinueButton>
     </div>
   );
 };

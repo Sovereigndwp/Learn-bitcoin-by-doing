@@ -6,6 +6,13 @@ import {
   ArrowRight, Info, AlertTriangle, Clock, Settings,
   Layers, Network, Eye, Download, Upload, Target
 } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './BitcoinToolkitModule.css';
 
@@ -481,10 +488,13 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={generateMnemonic}>
-            <Hash size={16} />
-            Generate Seed
-          </button>
+          <ActionButton 
+            icon={<Hash size={16} />} 
+            onClick={generateMnemonic} 
+            disabled={false} 
+            label="Generate Seed" 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -509,10 +519,13 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
         <div className="output-panel">
           <div className="output-header">
             <div className="output-title">Generated Mnemonic Seed</div>
-            <button className="copy-button" onClick={() => navigator.clipboard.writeText(mnemonic)}>
-              <Copy size={14} />
-              Copy
-              </button>
+            <ActionButton 
+              icon={<Copy size={14} />} 
+              onClick={() => navigator.clipboard.writeText(mnemonic)} 
+              disabled={false} 
+              label="Copy" 
+              className="secondary"
+            />
           </div>
           <div className="output-content">
             {mnemonic.split(' ').map((word, index) => (
@@ -534,10 +547,13 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
 
       {mnemonic && (
         <div style={{ marginTop: '2rem' }}>
-          <button className="tool-button success" onClick={validateMnemonic}>
-            <CheckCircle size={16} />
-            Validate & Complete
-          </button>
+          <ActionButton 
+            icon={<CheckCircle size={16} />} 
+            onClick={validateMnemonic} 
+            disabled={false} 
+            label="Validate & Complete" 
+            className="success"
+          />
           {showValidation && (
             <div className="status-indicator status-success" style={{ marginLeft: '1rem' }}>
               <CheckCircle size={16} />
@@ -571,10 +587,13 @@ const HashCalculatorTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={calculateHash} disabled={!input}>
-            <Hash size={16} />
-            Calculate Hash
-          </button>
+          <ActionButton 
+            icon={<Hash size={16} />} 
+            onClick={calculateHash} 
+            disabled={!input} 
+            label="Calculate Hash" 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -610,10 +629,13 @@ const HashCalculatorTool = ({ tool, onComplete }) => {
         <div className="output-panel">
           <div className="output-header">
             <div className="output-title">{hashType.toUpperCase()} Hash Result</div>
-            <button className="copy-button" onClick={() => navigator.clipboard.writeText(result)}>
-              <Copy size={14} />
-              Copy
-            </button>
+            <ActionButton 
+              icon={<Copy size={14} />} 
+              onClick={() => navigator.clipboard.writeText(result)} 
+              disabled={false} 
+              label="Copy" 
+              className="secondary"
+            />
           </div>
           <div className="output-content output-hash">
             {result}
@@ -649,10 +671,13 @@ const AddressGeneratorTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={generateAddress}>
-            <Key size={16} />
-            Generate Address
-          </button>
+          <ActionButton 
+            icon={<Key size={16} />} 
+            onClick={generateAddress} 
+            disabled={false} 
+            label="Generate Address" 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -681,10 +706,13 @@ const AddressGeneratorTool = ({ tool, onComplete }) => {
         <div className="output-panel">
           <div className="output-header">
             <div className="output-title">Generated Address</div>
-            <button className="copy-button" onClick={() => navigator.clipboard.writeText(address)}>
-              <Copy size={14} />
-              Copy
-            </button>
+            <ActionButton 
+              icon={<Copy size={14} />} 
+              onClick={() => navigator.clipboard.writeText(address)} 
+              disabled={false} 
+              label="Copy" 
+              className="secondary"
+            />
           </div>
           <div className="output-content output-address">
             {address}
@@ -735,10 +763,13 @@ const TransactionDecoderTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={decodeTx} disabled={!rawTx}>
-            <Search size={16} />
-            Decode Transaction
-          </button>
+          <ActionButton 
+            icon={<Search size={16} />} 
+            onClick={decodeTx} 
+            disabled={!rawTx} 
+            label="Decode Transaction" 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -758,10 +789,13 @@ const TransactionDecoderTool = ({ tool, onComplete }) => {
         <div className="output-panel">
           <div className="output-header">
             <div className="output-title">Decoded Transaction</div>
-            <button className="copy-button" onClick={() => navigator.clipboard.writeText(JSON.stringify(decodedTx, null, 2))}>
-              <Copy size={14} />
-              Copy JSON
-            </button>
+            <ActionButton 
+              icon={<Copy size={14} />} 
+              onClick={() => navigator.clipboard.writeText(JSON.stringify(decodedTx, null, 2))} 
+              disabled={false} 
+              label="Copy JSON" 
+              className="secondary"
+            />
           </div>
           <div className="output-content output-json">
             {JSON.stringify(decodedTx, null, 2)}
@@ -804,10 +838,13 @@ const FeeCalculatorTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={calculateFee}>
-            <Calculator size={16} />
-            Calculate Fee
-          </button>
+          <ActionButton 
+            icon={<Calculator size={16} />} 
+            onClick={calculateFee} 
+            disabled={false} 
+            label="Calculate Fee" 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -964,10 +1001,13 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={analyzeScript} disabled={!script.trim() || isExecuting}>
-            {isExecuting ? <Clock className="spin" size={16} /> : <Code size={16} />}
-            {isExecuting ? 'Analyzing...' : 'Analyze Script'}
-          </button>
+          <ActionButton 
+            icon={isExecuting ? <Clock className="spin" size={16} /> : <Code size={16} />} 
+            onClick={analyzeScript} 
+            disabled={!script.trim() || isExecuting} 
+            label={isExecuting ? 'Analyzing...' : 'Analyze Script'} 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -987,13 +1027,13 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           <label className="form-label">Script Templates</label>
           <div className="template-buttons">
             {Object.entries(scriptTemplates).map(([key, template]) => (
-            <button 
+            <OptionButton 
                 key={key}
-                className={`template-button ${selectedTemplate === key ? 'active' : ''}`}
                 onClick={() => loadTemplate(key)}
+                className={`template-button ${selectedTemplate === key ? 'active' : ''}`}
             >
                 {key.toUpperCase()}
-            </button>
+            </OptionButton>
             ))}
           </div>
         </div>
@@ -1136,15 +1176,21 @@ const QRCodeGeneratorTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
           </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={generateQR} disabled={!inputData.trim() || generating}>
-            {generating ? <Clock className="spin" size={16} /> : <Target size={16} />}
-            {generating ? 'Generating...' : 'Generate QR'}
-          </button>
+          <ActionButton 
+            icon={generating ? <Clock className="spin" size={16} /> : <Target size={16} />} 
+            onClick={generateQR} 
+            disabled={!inputData.trim() || generating} 
+            label={generating ? 'Generating...' : 'Generate QR'} 
+            className="primary"
+          />
           {qrCode && (
-            <button className="tool-button secondary" onClick={downloadQR}>
-              <Download size={16} />
-              Download SVG
-            </button>
+            <ActionButton 
+              icon={<Download size={16} />} 
+              onClick={downloadQR} 
+              disabled={false} 
+              label="Download SVG" 
+              className="secondary"
+            />
           )}
         </div>
       </div>
@@ -1607,10 +1653,13 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={performSearch} disabled={!searchTerm.trim() || isSearching}>
-            {isSearching ? <Clock className="spin" size={16} /> : <Search size={16} />}
-            {isSearching ? 'Searching...' : 'Search'}
-          </button>
+          <ActionButton 
+            icon={isSearching ? <Clock className="spin" size={16} /> : <Search size={16} />} 
+            onClick={performSearch} 
+            disabled={!searchTerm.trim() || isSearching} 
+            label={isSearching ? 'Searching...' : 'Search'} 
+            className="primary"
+          />
         </div>
       </div>
 
@@ -1646,9 +1695,8 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
             <label className="form-label">Recent Searches</label>
             <div className="search-history">
               {searchHistory.map((item, i) => (
-            <button
+            <ActionButton
                   key={i}
-                  className="history-item"
                   onClick={() => {
                     setSearchTerm(item.term);
                     setSearchType(item.type);
@@ -1656,7 +1704,7 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
                 >
                   <span className="history-type">{item.type}</span>
                   <span className="history-term">{item.term.substring(0, 20)}...</span>
-            </button>
+            </ActionButton>
           ))}
             </div>
           </div>
@@ -1667,18 +1715,18 @@ const BlockExplorerTool = ({ tool, onComplete }) => {
         <div className="search-examples">
           <h4>Try these examples:</h4>
           <div className="example-searches">
-            <button className="example-button" onClick={() => setSearchTerm('000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f')}>
+            <ActionButton className="example-button" onClick={() => setSearchTerm('000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f')}>
               Genesis Block
-            </button>
-            <button className="example-button" onClick={() => setSearchTerm('f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16')}>
+            </ActionButton>
+            <ActionButton className="example-button" onClick={() => setSearchTerm('f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16')}>
               First Transaction
-            </button>
-            <button className="example-button" onClick={() => setSearchTerm('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa')}>
+            </ActionButton>
+            <ActionButton className="example-button" onClick={() => setSearchTerm('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa')}>
               Satoshi's Address
-            </button>
-            <button className="example-button" onClick={() => setSearchTerm('0')}>
+            </ActionButton>
+            <ActionButton className="example-button" onClick={() => setSearchTerm('0')}>
               Block #0
-            </button>
+            </ActionButton>
           </div>
         </div>
       )}
@@ -1713,10 +1761,13 @@ const PlaceholderTool = ({ tool, onComplete }) => {
           <h2>{tool.title}</h2>
         </div>
         <div className="tool-controls">
-          <button className="tool-button primary" onClick={onComplete}>
-            <CheckCircle size={16} />
-            Mark Complete
-          </button>
+          <ActionButton 
+            icon={<CheckCircle size={16} />} 
+            onClick={onComplete} 
+            disabled={false} 
+            label="Mark Complete" 
+            className="primary"
+          />
         </div>
       </div>
 

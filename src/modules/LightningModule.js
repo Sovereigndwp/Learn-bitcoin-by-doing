@@ -4,6 +4,13 @@ import {
   Zap, Users, ArrowRight, Network, Clock, DollarSign,
   Trophy, CheckCircle, Target, Globe, Shield, Code, BarChart3, Award
 } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
 import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import './LightningModule.css';
@@ -231,9 +238,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Lightning Fundamentals</div>
         <div className="completion-message">You understand the basic concept of Lightning Network!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(0)}>
-          Continue to Payment Channels <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(0)}
+          icon={ArrowRight}
+          text="Continue to Payment Channels"
+        />
       </div>
     </div>
   );
@@ -302,9 +311,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Channel Mastery</div>
         <div className="completion-message">You understand how payment channels enable instant Bitcoin transactions!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(1)}>
-          Try the Channel Simulator <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(1)}
+          icon={ArrowRight}
+          text="Try the Channel Simulator"
+        />
       </div>
     </div>
   );

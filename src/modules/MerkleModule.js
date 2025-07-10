@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { TreePine, Hash, Search, CheckCircle, Trophy, Layers, Target, Zap, Code, FileTree, ArrowDown, Plus } from 'lucide-react';
-import { hash256 } from '../utils/bitcoin';
+import { Trees, CheckCircle, Trophy, Target, ArrowRight, Hash, Network, Code, Shield, Zap } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './MerkleModule.css';
+import { hash256 } from '../utils/bitcoin';
 
 const MerkleModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -21,25 +29,25 @@ const MerkleModule = () => {
     {
       id: 'merkle-intro',
       title: 'What Are Merkle Trees?',
-      icon: <TreePine className="w-6 h-6" />,
+      icon: <Trees className="w-6 h-6" />,
       component: 'merkle-intro'
     },
     {
       id: 'tree-structure',
       title: 'Building Trees',
-      icon: <Layers className="w-6 h-6" />,
+      icon: <Network className="w-6 h-6" />,
       component: 'tree-structure'
     },
     {
       id: 'tree-builder',
       title: 'Interactive Tree Builder',
-      icon: <Plus className="w-6 h-6" />,
+      icon: <ArrowRight className="w-6 h-6" />,
       component: 'tree-builder'
     },
     {
       id: 'proof-verification',
       title: 'Proof Verification',
-      icon: <Search className="w-6 h-6" />,
+      icon: <Shield className="w-6 h-6" />,
       component: 'proof-verification'
     },
     {
@@ -181,7 +189,7 @@ const MerkleModule = () => {
           Imagine a tree where every branch helps you instantly verify any leaf exists, without checking all the other leaves. That's the power of Merkle trees.
         </div>
       </div>
-
+      
       <div className="tree-concepts">
         <h3>Core Concepts</h3>
         <div className="concepts-grid">
@@ -207,8 +215,8 @@ const MerkleModule = () => {
             <div className="concept-description">
               All transactions eventually combine into one root hash that represents the entire set of data.
             </div>
-          </div>
-          
+        </div>
+
           <div className="concept-card">
             <span className="concept-icon">🔍</span>
             <h3>Proof (Efficient Verification)</h3>
@@ -223,12 +231,11 @@ const MerkleModule = () => {
         🚀 This elegant structure is why light clients can verify Bitcoin transactions without downloading the entire blockchain.
       </div>
 
-      <button 
-        className="continue-button"
+      <ContinueButton 
         onClick={() => handleStepComplete(0)}
       >
         Build Your First Tree
-      </button>
+      </ContinueButton>
     </div>
   );
 
@@ -261,12 +268,12 @@ const MerkleModule = () => {
                 </div>
                 {levelIndex < merkleTree.length - 1 && (
                   <div style={{ textAlign: 'center', margin: '1rem 0', color: '#10b981' }}>
-                    <ArrowDown size={24} />
+                    <ArrowRight size={24} />
                     <div style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Hash pairs together</div>
                   </div>
                 )}
-              </div>
-            ))}
+            </div>
+          ))}
           </div>
         </div>
 
@@ -280,12 +287,11 @@ const MerkleModule = () => {
           </ol>
         </div>
 
-        <button 
-          className="continue-button"
+        <ContinueButton 
           onClick={() => handleStepComplete(1)}
         >
           Try Building Your Own
-        </button>
+        </ContinueButton>
       </div>
     );
   };
@@ -328,44 +334,43 @@ const MerkleModule = () => {
             ))}
           </div>
           
-          <button className="add-transaction" onClick={addTransaction}>
-            <Plus size={16} />
+          <Button className="add-transaction" onClick={addTransaction}>
+            <ArrowRight size={16} />
             Add Transaction
-          </button>
+          </Button>
         </div>
 
         <div className="tree-visualization">
           <h3>Your Merkle Tree</h3>
-          <div className="tree-container">
+            <div className="tree-container">
             {merkleTree.map((level, levelIndex) => (
-              <div key={levelIndex} className="tree-level">
+                <div key={levelIndex} className="tree-level">
                 <div className="level-label">
                   {levelIndex === 0 ? `Transactions (${level.length})` : 
                    levelIndex === merkleTree.length - 1 ? 'Merkle Root' : 
                    `Level ${levelIndex}`}
                 </div>
-                <div className="level-nodes">
+                  <div className="level-nodes">
                   {level.map((node, nodeIndex) => (
-                    <div key={nodeIndex} className="tree-node">
+                      <div key={nodeIndex} className="tree-node">
                       {levelIndex === 0 ? customTransactions[nodeIndex] : node}
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
         </div>
 
         <div className="prime-text">
           💡 Try changing a transaction above and watch how the entire tree structure updates! This is why Bitcoin blocks are tamper-evident.
         </div>
 
-        <button 
-          className="continue-button"
+        <ContinueButton 
           onClick={() => handleStepComplete(2)}
         >
           Learn About Proofs
-        </button>
+        </ContinueButton>
       </div>
     );
   };
@@ -380,7 +385,7 @@ const MerkleModule = () => {
           <div className="subtitle">Verify any transaction without downloading the entire block</div>
         </div>
 
-        <div className="verification-demo">
+              <div className="verification-demo">
           <h3>Choose a Transaction to Verify</h3>
           <select 
             value={selectedTransaction}
@@ -396,10 +401,10 @@ const MerkleModule = () => {
           >
             {customTransactions.map((tx, index) => (
               <option key={index} value={index} style={{ background: '#1f2937' }}>
-                {tx}
-              </option>
-            ))}
-          </select>
+                      {tx}
+                    </option>
+                  ))}
+                </select>
 
           <h3>Merkle Proof Process</h3>
           <div className="verification-steps">
@@ -451,25 +456,24 @@ const MerkleModule = () => {
             </div>
           </div>
 
-          <button 
+          <Button 
             className="demo-button"
             onClick={() => setProofStep(Math.min(proofStep + 1, 3))}
             disabled={proofStep >= 3}
           >
             {proofStep < 3 ? 'Next Step' : 'Proof Complete'}
-          </button>
+          </Button>
         </div>
 
         <div className="prime-text">
           🎯 This is how SPV (Simple Payment Verification) wallets work—they can verify transactions without storing the entire blockchain!
         </div>
 
-        <button 
-          className="continue-button"
+        <ContinueButton 
           onClick={() => handleStepComplete(3)}
         >
           See Bitcoin Integration
-        </button>
+        </ContinueButton>
       </div>
     );
   };
@@ -514,7 +518,7 @@ const MerkleModule = () => {
           </div>
 
           <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-            <ArrowDown size={32} color="#10b981" />
+            <ArrowRight size={32} color="#10b981" />
             <div style={{ color: '#10b981', fontWeight: 'bold', marginTop: '0.5rem' }}>
               Block header gets hashed for mining
             </div>
@@ -532,12 +536,11 @@ const MerkleModule = () => {
         </div>
       </div>
 
-      <button 
-        className="continue-button"
+      <ContinueButton 
         onClick={() => handleStepComplete(4)}
       >
         Explore Scalability
-      </button>
+      </ContinueButton>
     </div>
   );
 
@@ -615,13 +618,12 @@ const MerkleModule = () => {
         </div>
       </div>
 
-      <button 
-        className="continue-button"
+                <ContinueButton 
         onClick={() => handleStepComplete(5)}
-      >
+                >
         See Real-World Uses
-      </button>
-    </div>
+                </ContinueButton>
+              </div>
   );
 
   const renderRealWorld = () => (
@@ -709,12 +711,11 @@ const MerkleModule = () => {
         🚀 Merkle trees are the unsung heroes of modern technology—enabling trust, efficiency, and scale in distributed systems worldwide.
       </div>
 
-      <button 
-        className="continue-button"
+      <ContinueButton 
         onClick={() => handleStepComplete(6)}
       >
         Complete Your Mastery
-      </button>
+      </ContinueButton>
     </div>
   );
 
@@ -760,12 +761,11 @@ const MerkleModule = () => {
         </div>
       </div>
 
-      <button 
-        className="continue-button"
+      <ContinueButton 
         onClick={() => handleStepComplete(7)}
       >
         🎉 Celebrate Completion
-      </button>
+      </ContinueButton>
     </div>
   );
 
@@ -787,7 +787,7 @@ const MerkleModule = () => {
     <div className="merkle-module">
       <div className="module-header">
         <h1 className="module-title">
-          <TreePine className="module-icon" size={40} />
+          <Trees className="module-icon" size={40} />
           Merkle Trees: Bitcoin's Efficient Data Structure
         </h1>
         <div className="module-progress">

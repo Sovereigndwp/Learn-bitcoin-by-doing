@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Crown, Shield, Key, Users, AlertTriangle, CheckCircle, Trophy, Clock, Target, Zap, ArrowRight, Lock, Unlock, Timer, RefreshCw } from 'lucide-react';
+import { Shield, Lock, Key, Users, AlertTriangle, CheckCircle, Trophy, Target, Globe, Smartphone, Cpu, Zap, Home, Eye, EyeOff, RefreshCw, Timer, Crown } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton,
+  NavigationButton 
+} from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './CustodyModule.css';
 
 const CustodyModule = () => {
@@ -483,12 +491,11 @@ const CustodyModule = () => {
           </div>
         )}
 
-        <button 
-          className="continue-button"
+        <ContinueButton 
           onClick={() => handleStepComplete(currentStep)}
         >
-          Continue <ArrowRight size={16} />
-        </button>
+          Continue
+        </ContinueButton>
       </div>
     );
   };
@@ -541,13 +548,12 @@ const CustodyModule = () => {
               <strong>💡 Lesson:</strong> {selectedChoice.outcome.lesson}
       </div>
       
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
               style={{ marginTop: '1.5rem' }}
             >
-              Continue <ArrowRight size={16} />
-            </button>
+              Continue
+            </ContinueButton>
           </div>
         )}
       </div>
@@ -595,12 +601,11 @@ const CustodyModule = () => {
               </div>
             </div>
             
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => runTest(scenario.id)}
             >
-              Run Test <Zap size={16} />
-            </button>
+              Run Test
+            </ContinueButton>
                       </div>
         )}
 
@@ -644,12 +649,11 @@ const CustodyModule = () => {
                'Concerning. Consider upgrading your custody approach.'}
             </p>
                   
-                  <button 
-              className="continue-button"
+                  <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
                   >
-              Continue <ArrowRight size={16} />
-                  </button>
+              Continue
+                  </ContinueButton>
                 </div>
               )}
             </div>
@@ -736,14 +740,13 @@ const CustodyModule = () => {
             
             <div className="answer-options">
               {question.options.map((option) => (
-                <div
+                <OptionButton
                   key={option.id}
-                  className="answer-option"
                   onClick={() => handleAnswer(option.id, option.weight)}
                 >
                   <div style={{ fontSize: '1.2rem' }}>📋</div>
                   <span>{option.text}</span>
-                </div>
+                </OptionButton>
               ))}
             </div>
           </div>
@@ -768,12 +771,11 @@ const CustodyModule = () => {
               </ol>
             </div>
 
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
             >
-              Perfect! Continue <ArrowRight size={16} />
-            </button>
+              Perfect! Continue
+            </ContinueButton>
           </div>
         )}
       </div>
@@ -819,14 +821,13 @@ const CustodyModule = () => {
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <button 
-            className="continue-button"
+          <ContinueButton 
             onClick={playSimulation}
             disabled={isSimPlaying}
           >
             {isSimPlaying ? <RefreshCw size={16} /> : <Timer size={16} />}
             {isSimPlaying ? 'Running Simulation...' : 'Start 20-Year Simulation'}
-          </button>
+          </ContinueButton>
         </div>
 
         <div className="timeline-container">
@@ -860,12 +861,11 @@ const CustodyModule = () => {
 
         {simCurrentYear >= content.events.length - 1 && (
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
             >
-              Continue to Action Plan <ArrowRight size={16} />
-            </button>
+              Continue to Action Plan
+            </ContinueButton>
           </div>
         )}
       </div>
@@ -898,12 +898,11 @@ const CustodyModule = () => {
               ))}
             </div>
 
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
             >
-              Begin Your Journey <Crown size={16} />
-            </button>
+              Begin Your Journey
+            </ContinueButton>
           </div>
         );
         
@@ -950,12 +949,11 @@ const CustodyModule = () => {
             </div>
 
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <button 
-                className="continue-button"
+              <ContinueButton 
                 onClick={() => handleStepComplete(currentStep)}
               >
-                Ready to Implement <Target size={16} />
-              </button>
+                Ready to Implement
+              </ContinueButton>
             </div>
           </div>
         );
@@ -993,13 +991,12 @@ const CustodyModule = () => {
           </ul>
             </div>
 
-            <button 
-              className="continue-button"
+            <ContinueButton 
               onClick={() => handleStepComplete(currentStep)}
               style={{ marginTop: '2rem' }}
             >
-              Complete Module <Trophy size={16} />
-            </button>
+              Complete Module
+            </ContinueButton>
           </div>
         );
         
