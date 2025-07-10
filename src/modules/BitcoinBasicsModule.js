@@ -448,96 +448,148 @@ const BitcoinBasicsModule = () => {
   };
 
   // Nixon Shock Component
-  const NixonShock = ({ content, onComplete }) => {
-    const [showCarlos, setShowCarlos] = useState(false);
+  // Fiat Definition Component
+  const FiatDefinition = ({ content, onComplete }) => {
+    const [selectedTimelineStep, setSelectedTimelineStep] = useState('before1971');
+    const [showConsequences, setShowConsequences] = useState(false);
 
-        return (
-      <div className="nixon-shock">
-        <div className="shock-header">
+    return (
+      <div className="fiat-definition">
+        <div className="definition-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
         </div>
 
-        <div className="before-after">
-          <div className="timeline-period before">
-            <h3>{content.impact.before.title}</h3>
-            <div className="backing-visual">
-              <div className="gold-bars">🟨🟨🟨</div>
-              <span className="equals">=</span>
-              <div className="dollar-bills">💵💵💵</div>
-            </div>
-            <div className="backing-details">
-              <p><strong>Backing:</strong> {content.impact.before.backing}</p>
-              <p><strong>Trust:</strong> {content.impact.before.trust}</p>
-            </div>
+        <div className="timeline-visualization">
+          <h3>📅 The Great Monetary Shift</h3>
+          <div className="timeline-controls">
+            {Object.entries(content.timeline).map(([key, period]) => (
+              <button
+                key={key}
+                className={`timeline-btn ${selectedTimelineStep === key ? 'active' : ''}`}
+                onClick={() => setSelectedTimelineStep(key)}
+              >
+                {period.title}
+              </button>
+            ))}
           </div>
+          
+          <div className="timeline-content">
+            {selectedTimelineStep && (
+              <div className="timeline-period">
+                <h4>{content.timeline[selectedTimelineStep].title}</h4>
+                <p className="period-description">
+                  {content.timeline[selectedTimelineStep].description}
+                </p>
+                
+                <div className="visual-story">
+                  {selectedTimelineStep === 'before1971' && (
+                    <div className="gold-paper-story before">
+                      <div className="story-row">
+                        <div className="gold-bar">🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bill">💵</div>
+                      </div>
+                      <div className="story-explanation">1 gold bar = 1 piece of paper</div>
+                      <div className="story-row">
+                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills">💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation">5 gold bars = 5 pieces of paper</div>
+                    </div>
+                  )}
+                  
+                  {selectedTimelineStep === 'august1971' && (
+                    <div className="gold-paper-story transition">
+                      <div className="breaking-point">
+                        <div className="before-break">
+                          <div className="gold-bar">🟨</div>
+                          <span className="equals">=</span>
+                          <div className="paper-bill">💵</div>
+                        </div>
+                        <div className="break-symbol">⚡💥⚡</div>
+                        <div className="after-break">
+                          <div className="gold-bar">🟨</div>
+                          <span className="not-equals">≠</span>
+                          <div className="paper-bills">💵💵💵</div>
+                        </div>
+                      </div>
+                      <div className="story-explanation">The promise is broken!</div>
+                    </div>
+                  )}
+                  
+                  {selectedTimelineStep === 'after1971' && (
+                    <div className="gold-paper-story after">
+                      <div className="story-row">
+                        <div className="gold-bar">🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills many">💵💵💵💵💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation">1 gold bar = Many pieces of paper</div>
+                      <div className="story-row">
+                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
+                        <span className="equals">=</span>
+                        <div className="paper-bills infinite">💵💵💵💵💵💵💵💵💵💵💵💵💵💵💵</div>
+                      </div>
+                      <div className="story-explanation sarcastic">5 gold bars = As many as the government says 🤷‍♂️</div>
+                    </div>
+                  )}
+                </div>
 
-          <div className="timeline-arrow">
-            <div className="arrow-date">August 15, 1971</div>
-            <div className="arrow-icon">⚡</div>
-          </div>
-
-          <div className="timeline-period after">
-            <h3>{content.impact.after.title}</h3>
-            <div className="backing-visual">
-              <div className="promise-icon">🤝</div>
-              <span className="equals">=</span>
-              <div className="dollar-bills">💵💵💵💵💵💵</div>
+                <div className="money-properties">
+                  <div className="property">
+                    <strong>Backing:</strong> {content.timeline[selectedTimelineStep].backing}
+                  </div>
+                  <div className="property">
+                    <strong>Trust:</strong> {content.timeline[selectedTimelineStep].trust}
+                  </div>
+                </div>
+                {selectedTimelineStep === 'august1971' && (
+                  <div className="nixon-shock">
+                    <div className="shock-icon">⚡</div>
+                    <p><em>This moment changed money forever...</em></p>
+                  </div>
+                )}
               </div>
-            <div className="backing-details">
-              <p><strong>Backing:</strong> {content.impact.after.backing}</p>
-              <p><strong>Trust:</strong> {content.impact.after.trust}</p>
-            </div>
+            )}
           </div>
         </div>
 
-        <Button 
-          variant="primary"
-          onClick={() => setShowCarlos(true)}
-          className="impact-btn"
-        >
-          Meet Carlos →
-        </Button>
-
-        {showCarlos && (
-          <div className="carlos-story">
-            <div className="carlos-profile">
-              <div className="profile-icon">👨‍🌾</div>
-              <h3>{content.carlosExample.title}</h3>
-              </div>
-
-            <div className="impacts-grid">
-              {content.carlosExample.impacts.map((impact, index) => (
-                <div key={index} className="impact-card">
-                  <div className="impact-icon">{impact.emoji}</div>
-                  <h4>{impact.title}</h4>
-                  <p className="impact-loss">{impact.loss}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-        {showCarlos && (
-          <div className="reflection-section">
-            <h3>🤔 {content.question}</h3>
-            <div className="insight-box">
-              <p>When money isn't backed by anything physical...</p>
-              <p>The only limit is trust in authority.</p>
-            </div>
-          </div>
-        )}
-
-        {showCarlos && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="The Cost of 'Free' Money"
+        <div className="consequences-section">
+          <button 
+            className="show-consequences-btn"
+            onClick={() => setShowConsequences(!showConsequences)}
           >
-            Continue to Hidden Costs →
-          </ContinueButton>
-        )}
+            {showConsequences ? 'Hide Impact' : 'Show What This Meant for People'}
+          </button>
+          
+          {showConsequences && (
+            <div className="consequences-content">
+              <h3>👤 {content.consequences.title}</h3>
+              <div className="consequences-grid">
+                {content.consequences.points.map((consequence, index) => (
+                  <div key={index} className="consequence-card">
+                    <h4>⚠️ {consequence.problem}</h4>
+                    <p className="consequence-description">{consequence.description}</p>
+                    <div className="consequence-impact">
+                      <strong>Impact:</strong> {consequence.impact}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <ContinueButton 
+          onClick={onComplete}
+          completed={true}
+          nextStep="The Cost of 'Free' Money"
+        >
+          Continue to Hidden Costs →
+        </ContinueButton>
       </div>
     );
   };
@@ -911,8 +963,8 @@ const BitcoinBasicsModule = () => {
       case 'money-evolution':
         return <MoneyEvolution content={step.content} onComplete={() => handleStepComplete(index)} />;
       
-      case 'nixon-shock':
-        return <NixonShock content={step.content} onComplete={() => handleStepComplete(index)} />;
+      case 'fiat-definition':
+        return <FiatDefinition content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'bank-waste':
         return <BankWaste content={step.content} onComplete={() => handleStepComplete(index)} />;
@@ -1020,44 +1072,51 @@ const BitcoinBasicsModule = () => {
     },
     {
       title: "The 1971 Switch",
-      type: "nixon-shock",
+      type: "fiat-definition",
       content: {
-        title: "📅 August 15, 1971: The Day Money Changed Forever",
-        subtitle: "When governments broke their golden promise",
-        primeText: "Watch what happened when the US stopped backing dollars with gold",
-        impact: {
-          before: {
-            title: "Before 1971",
-            backing: "Every dollar = fixed amount of gold",
-            trust: "Physical gold in vaults"
+        title: "💵 The Government Takeover of Money",
+        subtitle: "How we went from Money 1.0 (Gold) to Money 2.0 (Fiat)",
+        primeText: "In 1971, governments broke the promise that backed their money with gold. Now it's just trust.",
+        timeline: {
+          before1971: {
+            title: "Before 1971: Money Backed by Gold",
+            description: "Your dollar was a promise: 'We'll give you gold for this paper'",
+            backing: "Gold reserves",
+            trust: "Physical commodity"
           },
-          after: {
-            title: "After 1971",
-            backing: "Every dollar = government promise",
-            trust: "Trust in authority"
+          august1971: {
+            title: "August 15, 1971: The Nixon Shock",
+            description: "President Nixon: 'We're not giving you gold anymore'",
+            backing: "Government promise",
+            trust: "Faith in authority"
+          },
+          after1971: {
+            title: "After 1971: Pure Fiat",
+            description: "Your dollar is now just a piece of paper with government backing",
+            backing: "Nothing physical",
+            trust: "Government credibility"
           }
         },
-        carlosExample: {
-          title: "Meet Carlos, Our Flower Exporter",
-          impacts: [
+        consequences: {
+          title: "Remember Carlos, Our Flower Exporter? What Did It Mean for Him?",
+          points: [
             {
-              title: "Savings Melt Away",
-              emoji: "💸",
-              loss: "Value drops 2% each year"
+              problem: "Inflation Explosion",
+              description: "Without gold limits, governments could print unlimited money",
+              impact: "Carlos's savings lose value every year"
             },
             {
-              title: "Bank Permission Needed",
-              emoji: "🏦",
-              loss: "Can't freely send money"
+              problem: "Permission Required", 
+              description: "Banks became gatekeepers - they decide who can transact",
+              impact: "Carlos needs approval to send money internationally"
             },
             {
-              title: "Government Control",
-              emoji: "👮",
-              loss: "Money frozen without warning"
+              problem: "Trust Dependency",
+              description: "Money's value depends entirely on trusting institutions",
+              impact: "If Carlos loses faith in his government, his money becomes worthless"
             }
           ]
-        },
-        question: "If gold kept governments honest, what keeps them honest now?"
+        }
       }
     },
     {

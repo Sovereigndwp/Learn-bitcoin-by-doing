@@ -3617,6 +3617,385 @@
   margin-bottom: 1.5rem;
 }
 
+.visual-story {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  border: 2px solid #e9ecef;
+}
+
+.gold-paper-story {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.story-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gold-bar, .gold-bars {
+  font-size: 2rem;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+.paper-bill, .paper-bills {
+  font-size: 1.8rem;
+  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+}
+
+.paper-bills.many {
+  animation: multiply 2s ease-in-out infinite alternate;
+}
+
+.paper-bills.infinite {
+  animation: overflow 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+@keyframes multiply {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes overflow {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.equals, .not-equals {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.not-equals {
+  color: #f7931a;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.story-explanation {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #555;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.story-explanation.sarcastic {
+  color: #f7931a;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.breaking-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.before-break, .after-break {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.break-symbol {
+  font-size: 2rem;
+  color: #f7931a;
+  animation: flash 1.5s ease-in-out infinite;
+  margin: 1rem 0;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.money-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.property {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid #6c757d;
+}
+
+.property strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.nixon-shock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff3cd;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid #ffc107;
+  margin-top: 1rem;
+}
+
+.shock-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.nixon-shock p {
+  margin: 0;
+  font-style: italic;
+  color: #333;
+}
+
+.consequences-section {
+  margin-bottom: 3rem;
+}
+
+.show-consequences-btn {
+  background: #f7931a;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.show-consequences-btn:hover {
+  background: #e67e22;
+  transform: translateY(-1px);
+}
+
+.consequences-content h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.consequences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.consequence-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #f7931a;
+}
+
+.consequence-card h4 {
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.consequence-description {
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.consequence-impact {
+  background: #fff3e0;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.consequence-impact strong {
+  color: #b8610a;
+}
+
+/* Responsive Design for Fiat Definition */
+@media (max-width: 768px) {
+  .fiat-definition {
+    padding: 1rem;
+  }
+  
+  .timeline-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .timeline-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .timeline-content,
+  .consequence-card {
+    padding: 1rem;
+  }
+  
+  .consequences-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .money-properties {
+    grid-template-columns: 1fr;
+  }
+  
+  .visual-story {
+    padding: 1rem;
+  }
+  
+  .story-row {
+    font-size: 1.2rem;
+    gap: 0.5rem;
+  }
+  
+  .gold-bar, .gold-bars {
+    font-size: 1.5rem;
+  }
+  
+  .paper-bill, .paper-bills {
+    font-size: 1.3rem;
+  }
+  
+  .equals, .not-equals {
+    font-size: 1.2rem;
+  }
+  
+  .break-symbol {
+    font-size: 1.5rem;
+  }
+  
+  .before-break, .after-break {
+    font-size: 1.2rem;
+    gap: 0.5rem;
+  }
+}
+
+.fiat-definition .definition-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fiat-definition .definition-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.fiat-definition .definition-header .subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.fiat-definition .definition-header .prime-text {
+  font-size: clamp(1.2rem, 2.8vw, 1.4rem);
+  color: #f7931a;
+  font-weight: 600;
+  background: #fff3e0;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #f7931a;
+  text-align: center;
+}
+
+.timeline-visualization {
+  margin-bottom: 3rem;
+}
+
+.timeline-visualization h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.timeline-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.timeline-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.timeline-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.timeline-btn.active {
+  background: #f7931a;
+  box-shadow: 0 2px 8px rgba(247, 147, 26, 0.3);
+}
+
+.timeline-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e9ecef;
+}
+
+.timeline-period h4 {
+  font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.period-description {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
 .money-properties {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
