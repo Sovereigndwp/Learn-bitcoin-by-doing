@@ -16,21 +16,55 @@ const BankingExperience = () => {
     <div className="banking-experience-section">
       <div className="banking-demo-box">
         <div className="demo-content">
-          <h2>Before We Begin:</h2>
+          <h2>Welcome to Your Bitcoin Journey:</h2>
           <p>
-            Try these real scenarios that millions face daily:
+            Discover the hidden mechanics behind our monetary system through this interactive reality check that reveals what they don't teach you about money:
           </p>
           
           <div className="interactive-section">
-            <div className="launch-container">
-              <a
-                href="https://layer-d.my.canva.site/is-your-money-yours-decoded-by-dalia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="interactive-demo-link"
-              >
-                🏦 Launch Banking Reality Check
-              </a>
+            <div className="canva-embed-container">
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: 0,
+                paddingTop: '56.2500%',
+                paddingBottom: 0,
+                boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+                marginTop: '1.6em',
+                marginBottom: '0.9em',
+                overflow: 'hidden',
+                borderRadius: '8px',
+                willChange: 'transform'
+              }}>
+                <iframe 
+                  loading="lazy" 
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    border: 'none',
+                    padding: 0,
+                    margin: 0
+                  }}
+                  src="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?embed"
+                  allowFullScreen="allowfullscreen"
+                  allow="fullscreen"
+                  title="A Reality Check"
+                />
+              </div>
+              <div className="canva-attribution">
+                <a 
+                  href="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?utm_content=DAGsxZ7S7-s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="canva-link"
+                >
+                  A Reality Check
+                </a>
+                <span> by Dalia Platt</span>
+              </div>
             </div>
             
             <div className="completion-container">
@@ -39,7 +73,7 @@ const BankingExperience = () => {
                 onClick={handleExperienceComplete}
                 disabled={hasExperienced}
               >
-                {hasExperienced ? '✓ Done' : '✓ I\'ve seen the friction'}
+                {hasExperienced ? '✓ Ready to Learn' : '✓ I understand the reality'}
               </button>
             </div>
           </div>

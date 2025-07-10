@@ -219,37 +219,84 @@ const Homepage = () => {
   const renderBankingExperienceCard = () => {
     return (
       <div key="banking-intro" className={`module-card experience-card ${bankingExperienceCompleted ? 'completed' : ''}`}>
-        <div className="module-icon">🏦</div>
+        <div className="module-icon">🔍</div>
         <div className="card-content">
-          <h3>The Reality Check</h3>
-          <p>Experience firsthand why 2 billion people are frustrated with traditional banking.</p>
+          <h3>A Reality Check</h3>
+          <p>Uncover what they don't teach you about money through an interactive exploration of our monetary system's biggest secrets.</p>
           
           <div className="experience-insights">
             <div className="insight-item">
               <Clock size={16} />
-              <span>3-5 business days</span>
+              <span>Interactive exploration</span>
             </div>
             <div className="insight-item">
               <Target size={16} />
-              <span>Multiple fees</span>
+              <span>Hidden truths revealed</span>
             </div>
             <div className="insight-item">
               <Lock size={16} />
-              <span>Restricted access</span>
+              <span>Foundation knowledge</span>
             </div>
           </div>
         
         <div className="banking-card-actions">
-          <a
-              href="https://layer-d.my.canva.site/realitycheck-by-dalia"
-            target="_blank"
-            rel="noopener noreferrer"
+          {!bankingExperienceCompleted ? (
+            <div className="canva-embed-container">
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: 0,
+                paddingTop: '56.2500%',
+                paddingBottom: 0,
+                boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+                marginTop: '1em',
+                marginBottom: '0.5em',
+                overflow: 'hidden',
+                borderRadius: '8px',
+                willChange: 'transform'
+              }}>
+                <iframe 
+                  loading="lazy" 
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    border: 'none',
+                    padding: 0,
+                    margin: 0
+                  }}
+                  src="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?embed"
+                  allowFullScreen="allowfullscreen"
+                  allow="fullscreen"
+                  title="A Reality Check"
+                />
+              </div>
+              <div className="canva-attribution" style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1rem' }}>
+                <a 
+                  href="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?utm_content=DAGsxZ7S7-s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="canva-link"
+                  style={{ color: '#007bff', textDecoration: 'none' }}
+                >
+                  A Reality Check
+                </a>
+                <span> by Dalia Platt</span>
+              </div>
+            </div>
+          ) : (
+            <a
+              href="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?utm_content=DAGsxZ7S7-s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+              target="_blank"
+              rel="noopener noreferrer"
               className="banking-demo-link"
-              onClick={!bankingExperienceCompleted ? handleExperienceComplete : undefined}
             >
               <Play size={16} />
-              {bankingExperienceCompleted ? 'Revisit Reality Check' : 'Take Reality Check'}
+              Revisit Reality Check
             </a>
+          )}
             
             {!bankingExperienceCompleted && (
               <>
@@ -259,7 +306,7 @@ const Homepage = () => {
                   style={{ marginTop: '0.5rem', border: 'none', cursor: 'pointer' }}
                 >
                   <CheckCircle size={16} />
-                  I Understand the Issues
+                  I Understand the Reality
                 </button>
                 <div className="experience-note">
                   <span>🎯 This will unlock the Money module</span>
@@ -299,7 +346,7 @@ const Homepage = () => {
           <p>{module.description}</p>
           <div className="locked-message">
             {module.id === 'money' && !bankingExperienceCompleted ? 
-                '🏦 Complete the Reality Check to unlock' :
+                '🔍 Complete A Reality Check to unlock' :
                 `📋 Prerequisites: ${module.prerequisites.map(prereq => {
                   const prereqModule = moduleRegistry[prereq];
                   return prereqModule ? prereqModule.title : prereq;
@@ -475,8 +522,8 @@ const Homepage = () => {
         <div className="group-section">
           <div className="group-header">
             <div>
-              <h2>🎬 Start Here</h2>
-              <p className="group-description">Essential reality check before learning begins</p>
+              <h2>🔍 Begin Your Journey</h2>
+              <p className="group-description">Discover the hidden mechanics behind our monetary system</p>
             </div>
             <div className="group-stats">
               <span className="group-progress">
