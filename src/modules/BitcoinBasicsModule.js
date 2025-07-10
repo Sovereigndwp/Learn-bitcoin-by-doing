@@ -594,88 +594,242 @@ const BitcoinBasicsModule = () => {
     );
   };
 
-  // Bank Waste Component
+  // Enhanced Bank Waste Component - Transforming Wasted Heat into Bitcoin
   const BankWaste = ({ content, onComplete }) => {
-    const [showHeatWaste, setShowHeatWaste] = useState(false);
-    const [selectedCost, setSelectedCost] = useState(null);
+    const [currentPhase, setCurrentPhase] = useState('problem');
+    const [selectedWaste, setSelectedWaste] = useState(null);
+    const [showTransformation, setShowTransformation] = useState(false);
+    const [energyFlow, setEnergyFlow] = useState(0);
+    const [bitcoinCreated, setBitcoinCreated] = useState(0);
+
+    const handleWasteClick = (wasteType) => {
+      setSelectedWaste(wasteType);
+    };
+
+    const startTransformation = () => {
+      setShowTransformation(true);
+      setCurrentPhase('transformation');
+      
+      // Simulate energy flow animation
+      let flow = 0;
+      const interval = setInterval(() => {
+        flow += 2;
+        setEnergyFlow(flow);
+        if (flow >= 100) {
+          clearInterval(interval);
+          setCurrentPhase('solution');
+        }
+      }, 50);
+    };
+
+    const calculateBitcoin = (energy) => {
+      // Simplified calculation: 1 energy unit = 0.001 BTC
+      return (energy * 0.001).toFixed(3);
+    };
 
     return (
-      <div className="bank-waste">
+      <div className="enhanced-bank-waste">
         <div className="waste-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
           <div className="prime-text">{content.primeText}</div>
         </div>
 
-        <div className="costs-grid">
-          {Object.entries(content.costs).map(([key, cost]) => (
-            <div 
-              key={key}
-              className={`cost-card ${selectedCost === key ? 'active' : ''}`}
-              onClick={() => setSelectedCost(key)}
+        {currentPhase === 'problem' && (
+          <>
+            <div className="waste-visualization">
+              <h3>🌡️ The Energy Waste Problem</h3>
+              <p className="visual-description">
+                Traditional banking consumes massive amounts of energy just to maintain trust in digital numbers.
+              </p>
+              
+              <div className="waste-sources">
+                {Object.entries(content.costs).map(([key, cost]) => (
+                  <div 
+                    key={key}
+                    className={`waste-source ${selectedWaste === key ? 'active' : ''}`}
+                    onClick={() => handleWasteClick(key)}
+                  >
+                    <div className="waste-icon">{cost.icon}</div>
+                    <div className="waste-details">
+                      <h4>{cost.label}</h4>
+                      <div className="waste-cost">{cost.cost}</div>
+                      <div className="waste-energy">
+                        <span className="energy-icon">⚡</span>
+                        {cost.energy}
+                      </div>
+                    </div>
+                    {selectedWaste === key && (
+                      <div className="waste-impact">
+                        <div className="impact-bar">
+                          <div className="impact-fill" style={{width: `${cost.impact}%`}}></div>
+                        </div>
+                        <span className="impact-text">{cost.impact}% of total waste</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="energy-flow-demo">
+              <h3>🔄 Where Does All This Energy Go?</h3>
+              <div className="flow-container">
+                <div className="flow-step">
+                  <div className="step-icon">⚡</div>
+                  <div className="step-label">Electricity</div>
+                  <div className="step-amount">100%</div>
+                </div>
+                <div className="flow-arrow">→</div>
+                <div className="flow-step">
+                  <div className="step-icon">🏢</div>
+                  <div className="step-label">Bank Infrastructure</div>
+                  <div className="step-amount">85%</div>
+                </div>
+                <div className="flow-arrow">→</div>
+                <div className="flow-step">
+                  <div className="step-icon">🌡️</div>
+                  <div className="step-label">Wasted Heat</div>
+                  <div className="step-amount">80%</div>
+                </div>
+                <div className="flow-arrow">→</div>
+                <div className="flow-step">
+                  <div className="step-icon">💨</div>
+                  <div className="step-label">Atmosphere</div>
+                  <div className="step-amount">80%</div>
+                </div>
+              </div>
+              
+              <div className="waste-question">
+                <h4>🤔 {content.heatWaste.question}</h4>
+                <p>What if we could capture this waste and turn it into something valuable?</p>
+              </div>
+            </div>
+
+            <ActionButton 
+              onClick={startTransformation}
+              className="transform-btn"
+              variant="primary"
             >
-              <div className="cost-icon">{cost.icon}</div>
-              <div className="cost-content">
-                <h3>{cost.label}</h3>
-                <div className="cost-amount">{cost.cost}</div>
-                <div className="energy-waste">
-                  <span className="waste-icon">🔌</span>
-                  {cost.energy}
+              Transform Waste into Value →
+            </ActionButton>
+          </>
+        )}
+
+        {currentPhase === 'transformation' && (
+          <div className="transformation-demo">
+            <h3>🔄 Energy Transformation in Progress</h3>
+            <div className="transformation-container">
+              <div className="waste-side">
+                <div className="side-header">
+                  <h4>🌡️ Wasted Heat</h4>
+                  <div className="energy-meter">
+                    <div className="meter-fill" style={{width: `${100 - energyFlow}%`}}></div>
+                    <span className="meter-text">{100 - energyFlow}%</span>
+                  </div>
+                </div>
+                <div className="waste-visual">
+                  <div className="heat-particles">
+                    {[...Array(20)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className={`heat-particle ${energyFlow > i * 5 ? 'transformed' : ''}`}
+                        style={{
+                          left: `${Math.random() * 100}%`,
+                          animationDelay: `${Math.random() * 2}s`
+                        }}
+                      >
+                        🔥
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="transformation-center">
+                <div className="transformation-icon">⚡</div>
+                <div className="transformation-label">Bitcoin Mining</div>
+                <div className="transformation-progress">
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{width: `${energyFlow}%`}}></div>
+                  </div>
+                  <span className="progress-text">{energyFlow}%</span>
+                </div>
+              </div>
+
+              <div className="bitcoin-side">
+                <div className="side-header">
+                  <h4>₿ Bitcoin Created</h4>
+                  <div className="bitcoin-amount">
+                    {calculateBitcoin(energyFlow)} BTC
+                  </div>
+                </div>
+                <div className="bitcoin-visual">
+                  <div className="bitcoin-particles">
+                    {[...Array(10)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className={`bitcoin-particle ${energyFlow > i * 10 ? 'created' : ''}`}
+                        style={{
+                          left: `${Math.random() * 100}%`,
+                          animationDelay: `${Math.random() * 1}s`
+                        }}
+                      >
+                        ₿
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-                    ))}
-                  </div>
-
-        <Button 
-          variant="secondary"
-          onClick={() => setShowHeatWaste(true)}
-          className="show-heat-btn"
-        >
-          Where Does All This Energy Go? →
-        </Button>
-
-        {showHeatWaste && (
-          <div className="heat-waste-section">
-            <h3>{content.heatWaste.title}</h3>
-            <div className="waste-flow">
-              <div className="flow-step">
-                <span className="step-icon">⚡</span>
-                <span className="step-label">Electricity</span>
-              </div>
-              <span className="flow-arrow">→</span>
-              <div className="flow-step">
-                <span className="step-icon">💻</span>
-                <span className="step-label">Servers</span>
-                  </div>
-              <span className="flow-arrow">→</span>
-              <div className="flow-step">
-                <span className="step-icon">🌡️</span>
-                <span className="step-label">Heat</span>
-              </div>
-              <span className="flow-arrow">→</span>
-              <div className="flow-step">
-                <span className="step-icon">💨</span>
-                <span className="step-label">Atmosphere</span>
-              </div>
-            </div>
-            <div className="waste-question">
-              <h4>🤔 {content.heatWaste.question}</h4>
-            </div>
-              </div>
-            )}
-
-        {showHeatWaste && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="Energy to Value"
-              >
-            Continue to Energy Transformation →
-          </ContinueButton>
-            )}
           </div>
-        );
+        )}
+
+        {currentPhase === 'solution' && (
+          <div className="solution-section">
+            <h3>✅ Transformation Complete!</h3>
+            <div className="solution-comparison">
+              <div className="comparison-card traditional">
+                <h4>🏦 Traditional Banking</h4>
+                <div className="comparison-points">
+                  <div className="point negative">❌ Energy → Heat → Waste</div>
+                  <div className="point negative">❌ $Billions in infrastructure</div>
+                  <div className="point negative">❌ Still gets hacked</div>
+                  <div className="point negative">❌ Requires trust in institutions</div>
+                </div>
+              </div>
+              
+              <div className="comparison-card bitcoin">
+                <h4>₿ Bitcoin Mining</h4>
+                <div className="comparison-points">
+                  <div className="point positive">✅ Energy → Math → Security</div>
+                  <div className="point positive">✅ Energy cost = Security feature</div>
+                  <div className="point positive">✅ Impossible to counterfeit</div>
+                  <div className="point positive">✅ Trust in math, not people</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="key-insight">
+              <h4>💡 The Key Insight</h4>
+              <p>
+                Bitcoin doesn't waste energy—it <strong>transforms</strong> energy into 
+                unbreakable digital security. The energy cost isn't a bug, it's the feature 
+                that makes Bitcoin impossible to fake.
+              </p>
+            </div>
+
+            <ContinueButton 
+              onClick={onComplete}
+              completed={true}
+              nextStep="Try to Double-Spend"
+            >
+              Continue to Double-Spend Challenge →
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
   };
 
   // Energy Transformation Component
@@ -1131,19 +1285,22 @@ const BitcoinBasicsModule = () => {
             icon: "🏢",
             label: "Bank Buildings",
             cost: "$Billions/year",
-            energy: "Massive AC & servers"
+            energy: "Massive AC & servers",
+            impact: 45
           },
           security: {
             icon: "👮",
             label: "Physical Security",
             cost: "$Millions/year",
-            energy: "24/7 systems"
+            energy: "24/7 systems",
+            impact: 30
           },
           backups: {
             icon: "💾",
             label: "Data Centers",
             cost: "$Millions/year",
-            energy: "Redundant power"
+            energy: "Redundant power",
+            impact: 25
           }
         },
         heatWaste: {

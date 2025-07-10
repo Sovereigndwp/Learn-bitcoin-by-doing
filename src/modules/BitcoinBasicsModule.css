@@ -5259,3 +5259,556 @@
     gap: 1rem;
   }
 }
+
+/* Enhanced Bank Waste Component Styles */
+.enhanced-bank-waste {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.enhanced-bank-waste .waste-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.enhanced-bank-waste .waste-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.enhanced-bank-waste .waste-header .subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.enhanced-bank-waste .waste-header .prime-text {
+  font-size: clamp(1.2rem, 2.8vw, 1.4rem);
+  color: #f7931a;
+  font-weight: 600;
+  background: #fff3e0;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #f7931a;
+  text-align: center;
+}
+
+.waste-visualization {
+  margin-bottom: 3rem;
+}
+
+.waste-visualization h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.visual-description {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #555;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.waste-sources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.waste-source {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.waste-source:hover {
+  border-color: #f7931a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+}
+
+.waste-source.active {
+  border-color: #f7931a;
+  background: #fff5e6;
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
+}
+
+.waste-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.waste-details h4 {
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.waste-cost {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: #dc3545;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.waste-energy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #666;
+}
+
+.energy-icon {
+  font-size: 1.2rem;
+}
+
+.waste-impact {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+  animation: slideInUp 0.3s ease;
+}
+
+.impact-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.impact-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f7931a, #ff6b35);
+  transition: width 0.5s ease;
+}
+
+.impact-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.energy-flow-demo {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.energy-flow-demo h3 {
+  font-size: clamp(1.3rem, 2.8vw, 1.6rem);
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.flow-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+}
+
+.step-icon {
+  font-size: 2rem;
+}
+
+.step-label {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.step-amount {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.flow-arrow {
+  font-size: 1.5rem;
+  color: #f7931a;
+  font-weight: bold;
+}
+
+.waste-question {
+  text-align: center;
+  background: #fff3cd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #ffc107;
+}
+
+.waste-question h4 {
+  color: #856404;
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+}
+
+.waste-question p {
+  color: #856404;
+  margin: 0;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+}
+
+.transform-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f7931a, #ff6b35);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+}
+
+.transform-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(247, 147, 26, 0.4);
+}
+
+/* Transformation Demo Styles */
+.transformation-demo {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.transformation-demo h3 {
+  font-size: clamp(1.3rem, 2.8vw, 1.6rem);
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.transformation-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.waste-side, .bitcoin-side {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.side-header h4 {
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.energy-meter, .bitcoin-amount {
+  background: #e9ecef;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #dc3545, #fd7e14);
+  transition: width 0.1s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.meter-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  color: #333;
+}
+
+.bitcoin-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f7931a;
+  background: #fff5e6;
+  border: 2px solid #f7931a;
+}
+
+.waste-visual, .bitcoin-visual {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.heat-particles, .bitcoin-particles {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.heat-particle, .bitcoin-particle {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: all 0.5s ease;
+  animation: float 2s ease-in-out infinite;
+}
+
+.heat-particle {
+  color: #dc3545;
+}
+
+.bitcoin-particle {
+  color: #f7931a;
+}
+
+.heat-particle.transformed {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.bitcoin-particle.created {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.transformation-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f7931a, #ff6b35);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  min-width: 200px;
+}
+
+.transformation-icon {
+  font-size: 3rem;
+}
+
+.transformation-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.transformation-progress {
+  width: 100%;
+  text-align: center;
+}
+
+.transformation-progress .progress-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.transformation-progress .progress-fill {
+  height: 100%;
+  background: white;
+  transition: width 0.1s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Solution Section Styles */
+.solution-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.solution-section h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.solution-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.comparison-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid;
+}
+
+.comparison-card.traditional {
+  background: #f8d7da;
+  border-color: #dc3545;
+}
+
+.comparison-card.bitcoin {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.comparison-card h4 {
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.comparison-card.traditional h4 {
+  color: #721c24;
+}
+
+.comparison-card.bitcoin h4 {
+  color: #155724;
+}
+
+.comparison-points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.point {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.point.negative {
+  background: rgba(220, 53, 69, 0.1);
+  color: #721c24;
+}
+
+.point.positive {
+  background: rgba(40, 167, 69, 0.1);
+  color: #155724;
+}
+
+.key-insight {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.key-insight h4 {
+  color: #856404;
+  margin-bottom: 1rem;
+  font-size: clamp(1.1rem, 2.3vw, 1.3rem);
+  font-weight: 600;
+}
+
+.key-insight p {
+  color: #856404;
+  margin: 0;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.key-insight strong {
+  color: #f7931a;
+}
+
+/* Responsive Design for Enhanced Bank Waste */
+@media (max-width: 768px) {
+  .enhanced-bank-waste {
+    padding: 1rem;
+  }
+  
+  .waste-sources {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .flow-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .flow-step {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .transformation-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .transformation-center {
+    order: -1;
+  }
+  
+  .solution-comparison {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .waste-visual, .bitcoin-visual {
+    height: 150px;
+  }
+  
+  .heat-particle, .bitcoin-particle {
+    font-size: 1.2rem;
+  }
+}
