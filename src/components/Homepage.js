@@ -267,7 +267,7 @@ const Homepage = () => {
                     padding: 0,
                     margin: 0
                   }}
-                  src="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?embed"
+                  src="https://www.canva.com/design/DAGsyD129SI/zcetY7618dRB7JFrbhLITQ/view?embed"
                   allowFullScreen="allowfullscreen"
                   allow="fullscreen"
                   title="A Reality Check"
@@ -275,7 +275,7 @@ const Homepage = () => {
               </div>
               <div className="canva-attribution" style={{ fontSize: '0.8rem', color: '#666', marginBottom: '1rem' }}>
                 <a 
-                  href="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?utm_content=DAGsxZ7S7-s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                  href="https://www.canva.com/design/DAGsyD129SI/zcetY7618dRB7JFrbhLITQ/view?utm_content=DAGsyD129SI&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="canva-link"
@@ -288,7 +288,7 @@ const Homepage = () => {
             </div>
           ) : (
             <a
-              href="https://www.canva.com/design/DAGsxZ7S7-s/M3o4RMoHJjS_HYRyc43STg/view?utm_content=DAGsxZ7S7-s&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+              href="https://www.canva.com/design/DAGsyD129SI/zcetY7618dRB7JFrbhLITQ/view?utm_content=DAGsyD129SI&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
               target="_blank"
               rel="noopener noreferrer"
               className="banking-demo-link"
