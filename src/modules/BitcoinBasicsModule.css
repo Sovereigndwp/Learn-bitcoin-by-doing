@@ -79,34 +79,36 @@
   color: #ffffff;
 }
 
-/* Header Styles */
-.header-top {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #1a472a 0%, #2d5a40 100%);
-  padding: 1.2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.back-button {
-  padding: 0.5rem 1rem;
+/* Reset Progress Button */
+.reset-progress-button {
+  background: #f7931a;
+  color: white;
   border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
+  padding: 0.5rem 1.2rem;
   border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 1rem 0 1.5rem 0;
+  transition: background 0.2s;
 }
 
-.back-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+.reset-progress-button:hover {
+  background: #ea580c;
+}
+
+/* Header Styles */
+
+.module-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #ffffff;
+}
+
+.module-icon {
   color: #f7931a;
 }
 
@@ -4454,4 +4456,427 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Redesigned Money Evolution Component Styles */
+.money-evolution {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.evolution-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.evolution-header h2 {
+  color: #2d5a40;
+  margin-bottom: 0.5rem;
+}
+
+.evolution-header .subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.interactive-timeline {
+  margin-bottom: 2rem;
+}
+
+.timeline-instruction {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: 12px;
+  border-left: 4px solid #f7931a;
+}
+
+.timeline-instruction p {
+  margin: 0;
+  font-size: 1rem;
+  color: #2d5a40;
+  font-weight: 500;
+}
+
+.versions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.version-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 200px;
+}
+
+.version-card.unexplored {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-color: #d1d5db;
+  transform: scale(0.98);
+}
+
+.version-card.unexplored:hover {
+  border-color: #f7931a;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+}
+
+.version-card.explored {
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+  border-color: #f7931a;
+  transform: scale(1);
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
+}
+
+.version-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.version-number {
+  background: #2d5a40;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.version-icon {
+  font-size: 2rem;
+}
+
+.explored-badge {
+  background: #10b981;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.version-content h3 {
+  color: #2d5a40;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.version-properties {
+  margin-bottom: 1rem;
+}
+
+.property.revealed {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  animation: slideInUp 0.3s ease;
+}
+
+.property-bullet {
+  color: #f7931a;
+  font-weight: bold;
+}
+
+.version-period {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.version-insights .insight {
+  background: #f0f9ff;
+  color: #0c4a6e;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  border: 1px solid #bae6fd;
+}
+
+.version-mystery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-radius: 8px;
+  border: 2px dashed #d1d5db;
+}
+
+.version-mystery p {
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+}
+
+
+
+.comparison-section {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 2px solid #22c55e;
+  animation: fadeInUp 0.5s ease;
+}
+
+.comparison-section h3 {
+  color: #15803d;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.comparison-table {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
+  gap: 0;
+}
+
+.comparison-row.header {
+  background: #2d5a40;
+}
+
+.comparison-row.header .comparison-cell {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.comparison-cell {
+  padding: 1rem;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.comparison-cell:last-child {
+  border-right: none;
+}
+
+.comparison-row:nth-child(even):not(.header) {
+  background: #f9fafb;
+}
+
+.trust-high {
+  color: #059669;
+  font-weight: bold;
+}
+
+.trust-low {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.convenience-high {
+  color: #0891b2;
+  font-weight: bold;
+}
+
+.convenience-low {
+  color: #9333ea;
+  font-weight: bold;
+}
+
+.comparison-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comparison-btn:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+}
+
+.conclusion-section {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border: 2px solid #f59e0b;
+  animation: fadeInUp 0.6s ease;
+}
+
+.conclusion-section h3 {
+  color: #92400e;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.insight-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.insight-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.insight-card.problem {
+  border-left: 4px solid #dc2626;
+}
+
+.insight-card.solution {
+  border-left: 4px solid #10b981;
+}
+
+.insight-card h4 {
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.insight-card.problem h4 {
+  color: #dc2626;
+}
+
+.insight-card.solution h4 {
+  color: #10b981;
+}
+
+.insight-card p {
+  margin: 0.5rem 0;
+  color: #6b7280;
+}
+
+.insight-card strong {
+  color: #2d5a40;
+}
+
+.key-question {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid #f59e0b;
+}
+
+.key-question h4 {
+  color: #92400e;
+  margin-bottom: 1rem;
+}
+
+.answer-hint {
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .money-evolution {
+    padding: 1rem;
+  }
+  
+  .versions-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .version-card {
+    min-height: 180px;
+    padding: 1rem;
+  }
+  
+
+  
+  .comparison-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .comparison-cell {
+    padding: 0.75rem;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .comparison-row.header .comparison-cell:first-child {
+    background: #2d5a40;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .insight-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }

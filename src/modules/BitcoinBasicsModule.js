@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Zap, Bitcoin, CheckCircle, Trophy } from 'lucide-react';
-import AnimatedIcon from '../components/AnimatedIcon';
-import { ContinueButton } from '../components/EnhancedButtons';
+import { Zap } from 'lucide-react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  Button, 
+  OptionButton
+} from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
@@ -28,11 +32,8 @@ const BitcoinBasicsModule = () => {
   };
 
   const handleStepChange = (index) => {
-    // Only allow navigation to completed steps or the next uncompleted step
-    const maxCompleted = Math.max(...Array.from(completedSteps), -1);
-    if (completedSteps.has(index) || index === 0 || index <= maxCompleted + 1) {
-      setCurrentStep(index);
-    }
+    // Allow navigation to any step for better UX
+    setCurrentStep(index);
   };
 
   // Energy Hook Component
@@ -150,7 +151,6 @@ const BitcoinBasicsModule = () => {
 
   // Fiat Creation Component
   const FiatCreation = ({ content, onComplete }) => {
-    const [step, setStep] = useState(0);
     const [showLoanCreation, setShowLoanCreation] = useState(false);
     const [newMoney, setNewMoney] = useState(0);
     
@@ -216,13 +216,15 @@ const BitcoinBasicsModule = () => {
 
           {/* Action + animation */}
           <div className="bank-action">
-            <button
-              className="create-loan-btn"
+            <ActionButton
+              variant="primary"
+              context="demo"
               onClick={createLoan}
               disabled={showLoanCreation}
+              className="create-loan-btn"
             >
               {content.loanDemo.bankAction}
-            </button>
+            </ActionButton>
 
             {showLoanCreation && (
               <div className="money-creation-animation">
@@ -250,14 +252,7 @@ const BitcoinBasicsModule = () => {
              </div>
            )}
 
-          {showLoanCreation && newMoney >= 270000 && (
-                <button 
-                  className="continue-button"
-              onClick={onComplete}
-                >
-              Continue to Money Evolution →
-                </button>
-          )}
+
               </div>
 
         {showLoanCreation && newMoney >= 270000 && (
@@ -273,89 +268,187 @@ const BitcoinBasicsModule = () => {
         );
   };
 
-  // Money Evolution Component
+  // Money Evolution Component - Redesigned
   const MoneyEvolution = ({ content, onComplete }) => {
-    const [selectedVersion, setSelectedVersion] = useState(null);
-    const [showQuestion, setShowQuestion] = useState(true);  // auto-revealed by default
+    const [exploredVersions, setExploredVersions] = useState(new Set());
+    const [showComparison, setShowComparison] = useState(false);
+    const [showConclusion, setShowConclusion] = useState(false);
 
-        return (
+    const handleVersionExplore = (index) => {
+      const newExplored = new Set(exploredVersions);
+      newExplored.add(index);
+      setExploredVersions(newExplored);
+      
+      // If all versions explored, show comparison
+      if (newExplored.size === content.versions.length) {
+        setShowComparison(true);
+      }
+    };
+
+    const handleComparisonComplete = () => {
+      setShowConclusion(true);
+    };
+
+    return (
       <div className="money-evolution">
         <div className="evolution-header">
           <h2>{content.title}</h2>
           <p className="subtitle">{content.subtitle}</p>
+          <div className="progress-indicator">
+            <span className="progress-text">
+              Explored: {exploredVersions.size}/{content.versions.length} versions
+            </span>
+            <div className="progress-bar">
+              <div 
+                className="progress-fill"
+                style={{ width: `${(exploredVersions.size / content.versions.length) * 100}%` }}
+              />
+            </div>
+          </div>
+        </div>
+            
+        <div className="interactive-timeline">
+          <div className="timeline-instruction">
+            <p>👆 Click each version to explore how money evolved over time</p>
+          </div>
+
+          <div className="versions-grid">
+            {content.versions.map((version, index) => (
+              <div 
+                key={index}
+                className={`version-card ${exploredVersions.has(index) ? 'explored' : 'unexplored'}`}
+                onClick={() => handleVersionExplore(index)}
+              >
+                <div className="version-header">
+                  <span className="version-number">{version.version}</span>
+                  <span className="version-icon">{version.icon}</span>
+                  {exploredVersions.has(index) && (
+                    <span className="explored-badge">✓</span>
+                  )}
+                </div>
+                
+                <div className="version-content">
+                  <h3>{version.name}</h3>
+                  
+                  {exploredVersions.has(index) ? (
+                    <>
+                      <div className="version-properties">
+                        {version.properties.map((property, propIndex) => (
+                          <div key={propIndex} className="property revealed">
+                            <span className="property-bullet">•</span>
+                            {property}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="version-period">{version.period}</div>
+                      <div className="version-insights">
+                        {index === 0 && <p className="insight">🏆 Trustworthy but heavy</p>}
+                        {index === 1 && <p className="insight">⚡ Convenient but risky</p>}
+                        {index === 2 && <p className="insight">🚀 Best of both worlds</p>}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="version-mystery">
+                      <p>Click to reveal...</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+
+        </div>
+
+        {/* Comparison Section - Shows when all versions explored */}
+        {showComparison && (
+          <div className="comparison-section">
+            <h3>🔍 Now Compare: What's the Pattern?</h3>
+            
+            <div className="comparison-table">
+              <div className="comparison-row header">
+                <div className="comparison-cell">Version</div>
+                <div className="comparison-cell">Trust Level</div>
+                <div className="comparison-cell">Convenience</div>
+                <div className="comparison-cell">Trade-off</div>
+              </div>
+              
+              {content.versions.map((version, index) => (
+                <div key={index} className="comparison-row">
+                  <div className="comparison-cell">
+                    {version.icon} {version.name}
+                  </div>
+                  <div className="comparison-cell">
+                    {index === 0 && <span className="trust-high">High 🔒</span>}
+                    {index === 1 && <span className="trust-low">Low ⚠️</span>}
+                    {index === 2 && <span className="trust-high">High 🔒</span>}
+                  </div>
+                  <div className="comparison-cell">
+                    {index === 0 && <span className="convenience-low">Low 🐌</span>}
+                    {index === 1 && <span className="convenience-high">High ⚡</span>}
+                    {index === 2 && <span className="convenience-high">High ⚡</span>}
+                  </div>
+                  <div className="comparison-cell">
+                    {index === 0 && "Heavy but honest"}
+                    {index === 1 && "Easy but risky"}
+                    {index === 2 && "Perfect balance"}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Button 
+              variant="primary"
+              onClick={handleComparisonComplete}
+              className="comparison-btn"
+            >
+              I See the Pattern! →
+            </Button>
+          </div>
+        )}
+
+        {/* Conclusion Section - Shows after comparison */}
+        {showConclusion && (
+          <div className="conclusion-section">
+            <h3>💡 The Money Evolution Insight</h3>
+            <div className="insight-cards">
+              <div className="insight-card problem">
+                <h4>The Problem</h4>
+                <p>Each "upgrade" made money easier to use...</p>
+                <p>But harder to trust.</p>
+              </div>
+              <div className="insight-card solution">
+                <h4>The Bitcoin Solution</h4>
+                <p>For the first time in history:</p>
+                <p><strong>Digital convenience + Physical trust</strong></p>
+              </div>
             </div>
             
-        <div className="versions-timeline">
-          {content.versions.map((version, index) => (
-            <div 
-              key={index}
-              className={`version-card ${selectedVersion === index ? 'active' : ''}`}
-              onClick={() => setSelectedVersion(index)}
-            >
-              <div className="version-header">
-                <span className="version-number">{version.version}</span>
-                <span className="version-icon">{version.icon}</span>
-              </div>
-              
-              <div className="version-content">
-                <h3>{version.name}</h3>
-                <div className="version-properties">
-                  {version.properties.map((property, propIndex) => (
-                    <div key={propIndex} className="property">
-                      <span className="property-bullet">•</span>
-                      {property}
-                    </div>
-                  ))}
-                </div>
-                <div className="version-period">{version.period}</div>
-              </div>
-                  </div>
-                ))}
-              </div>
-              
-        <div className="evolution-arrows">
-          <div className="arrow">
-            <span className="arrow-line">→</span>
-            <span className="arrow-label">Easier to Use</span>
-          </div>
-          <div className="arrow">
-            <span className="arrow-line">→</span>
-            <span className="arrow-label">Harder to Trust</span>
-          </div>
-                </div>
-              
-              <button 
-          className="reflection-btn"
-          onClick={() => setShowQuestion(true)}
-              >
-          Think About It
-              </button>
-
-        {showQuestion && (
-          <div className="reflection-section">
-            <h3>🤔 {content.question}</h3>
-            <div className="insight-box">
-              <p>Each upgrade made money more convenient...</p>
-              <p>But convenience came at the cost of trust.</p>
-              <p>Until Bitcoin combined gold's trust with digital convenience.</p>
+            <div className="key-question">
+              <h4>🤔 {content.question}</h4>
+              <p className="answer-hint">
+                The answer lies in what happened next: 1971...
+              </p>
             </div>
           </div>
         )}
 
-        <ContinueButton 
-          onClick={onComplete}
-          completed={true}
-          nextStep="The 1971 Switch"
-        >
-          Continue to 1971 Story →
-        </ContinueButton>
-          </div>
-        );
+        {/* Continue Button - Only shows after exploring everything */}
+        {showConclusion && (
+          <ContinueButton 
+            onClick={onComplete}
+            completed={true}
+            nextStep="The 1971 Switch"
+          >
+            Continue to The 1971 Switch →
+          </ContinueButton>
+        )}
+      </div>
+    );
   };
 
   // Nixon Shock Component
   const NixonShock = ({ content, onComplete }) => {
-    const [showImpact, setShowImpact] = useState(false);
     const [showCarlos, setShowCarlos] = useState(false);
 
         return (
@@ -399,12 +492,13 @@ const BitcoinBasicsModule = () => {
           </div>
         </div>
 
-        <button 
-          className="impact-btn"
+        <Button 
+          variant="primary"
           onClick={() => setShowCarlos(true)}
+          className="impact-btn"
         >
           Meet Carlos →
-        </button>
+        </Button>
 
         {showCarlos && (
           <div className="carlos-story">
@@ -481,12 +575,13 @@ const BitcoinBasicsModule = () => {
                     ))}
                   </div>
 
-        <button 
-          className="show-heat-btn"
+        <Button 
+          variant="secondary"
           onClick={() => setShowHeatWaste(true)}
+          className="show-heat-btn"
         >
           Where Does All This Energy Go? →
-        </button>
+        </Button>
 
         {showHeatWaste && (
           <div className="heat-waste-section">
@@ -650,12 +745,14 @@ const BitcoinBasicsModule = () => {
             <div className="block block-a">
               <h4>Block A</h4>
               {step === 'setup' && (
-                <button 
-                  className="mine-btn"
+                <ActionButton 
+                  variant="primary"
+                  context="demo"
                   onClick={mineBlockA}
+                  className="mine-btn"
                 >
                   Mine Block A (1000 units)
-                </button>
+                </ActionButton>
               )}
               {step === 'mining' && (
                 <div className="mining-progress">
@@ -681,12 +778,14 @@ const BitcoinBasicsModule = () => {
             <div className="block block-b">
               <h4>Block B</h4>
               {step === 'mined' && (
-                <button 
-                  className="mine-btn"
+                <ActionButton 
+                  variant="warning"
+                  context="demo"
                   onClick={tryBlockB}
+                  className="mine-btn"
                 >
                   Try to Mine Block B with Same Energy
-                </button>
+                </ActionButton>
               )}
               {step === 'error' && (
                 <div className="block-error">
@@ -749,13 +848,14 @@ const BitcoinBasicsModule = () => {
               <h3>{content.questions[currentQuestion].question}</h3>
               <div className="answer-options">
                 {content.questions[currentQuestion].options.map((option, index) => (
-                  <button
+                  <OptionButton
                     key={index}
-                    className={`answer-btn ${answers[currentQuestion] === option ? 'selected' : ''}`}
+                    selected={answers[currentQuestion] === option}
                     onClick={() => handleAnswer(option)}
+                    className="answer-btn"
                   >
                     {option}
-                  </button>
+                  </OptionButton>
                 ))}
               </div>
 
@@ -768,12 +868,13 @@ const BitcoinBasicsModule = () => {
                     <p>{content.questions[currentQuestion].explanation}</p>
                   </div>
                   {currentQuestion < content.questions.length - 1 && (
-              <button 
-                      className="next-question-btn"
+                    <Button 
+                      variant="primary"
                       onClick={nextQuestion}
-              >
+                      className="next-question-btn"
+                    >
                       Next Question →
-              </button>
+                    </Button>
                   )}
                 </div>
               )}
@@ -830,9 +931,9 @@ const BitcoinBasicsModule = () => {
           <div className="step-content">
             <h2>{step.title}</h2>
             <p>Step type "{step.type}" not implemented yet.</p>
-            <button className="continue-button" onClick={() => handleStepComplete(index)}>
+            <ContinueButton onClick={() => handleStepComplete(index)}>
               Continue
-            </button>
+            </ContinueButton>
           </div>
         );
     }
@@ -1066,16 +1167,22 @@ const BitcoinBasicsModule = () => {
   return (
     <div className="module-container">
       <div className="module-header">
-        <div className="header-top">
-          <button className="back-button" onClick={() => navigate('/')}>
-            ← Back
-          </button>
         <h1 className="module-title">
-            <Zap className="module-icon" />
-            Energy & Trust: The Bitcoin Basics
+          <Zap className="module-icon" />
+          Energy & Trust: The Bitcoin Basics
         </h1>
-          </div>
       </div>
+
+      {/* Reset Progress Button */}
+      <Button 
+        className="reset-progress-button" 
+        onClick={() => {
+          setCompletedSteps(new Set());
+          setCurrentStep(0);
+        }}
+      >
+        Reset Progress
+      </Button>
 
       <div className="module-progress">
         <div className="progress-bar">
@@ -1091,18 +1198,17 @@ const BitcoinBasicsModule = () => {
 
       <div className="top-navigation">
         {steps.map((step, index) => (
-          <button
+          <Button
             key={index}
             className={`top-nav-button ${
               index === currentStep ? 'active' : ''
             } ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => handleStepChange(index)}
-            disabled={!completedSteps.has(index) && index > Math.max(...Array.from(completedSteps), -1) + 1}
           >
             <span className="nav-text">
               {index + 1}. {step.title}
             </span>
-          </button>
+          </Button>
         ))}
       </div>
 
