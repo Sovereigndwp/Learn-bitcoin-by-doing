@@ -36,111 +36,147 @@ const BitcoinBasicsModule = () => {
     setCurrentStep(index);
   };
 
-  // Energy Hook Component
+  // Energy Hook Component - Streamlined with micro-choices
   const EnergyHook = ({ content, onComplete }) => {
-    const [workInput, setWorkInput] = useState(0);
+    const [selectedScenario, setSelectedScenario] = useState(null);
+    const [reflectionChoice, setReflectionChoice] = useState(null);
 
-    // Constants representing each system
-    const efficientEfficiency = 98;   // Ice – almost frictionless
-    const inefficientEfficiency = 40; // Concrete – high friction
+    const scenarios = [
+      {
+        id: 'ice',
+        title: "The Ice Rink Challenge",
+        description: "You're pushing a heavy box across a frictionless ice rink",
+        action: "Push the Box",
+        result: "The box glides effortlessly across the ice with minimal energy",
+        insight: "Almost no energy lost - but anyone could push it",
+        energy: 5,
+        difficulty: "Easy",
+        security: "None"
+      },
+      {
+        id: 'concrete',
+        title: "The Concrete Floor Test", 
+        description: "You're pushing the same box across rough concrete",
+        action: "Push the Box",
+        result: "The box moves slowly, creating heat from friction",
+        insight: "Lots of energy required - but proves real work was done",
+        energy: 95,
+        difficulty: "Hard",
+        security: "High"
+      },
+      {
+        id: 'quicksand',
+        title: "The Quicksand Trap",
+        description: "You're trying to push the box through thick quicksand",
+        action: "Push the Box",
+        result: "Massive effort needed, but box barely moves",
+        insight: "Maximum energy cost - but maximum proof of work",
+        energy: 150,
+        difficulty: "Extreme",
+        security: "Unbreakable"
+      }
+    ];
 
-    // Box positions based on work applied
-    const efficientPosition = workInput * 3.5;
-    const inefficientPosition = workInput * 0.8;
-
-    // Energy lost calculations
-    const efficientLost = Math.floor(workInput * (1 - efficientEfficiency / 100));
-    const inefficientLost = Math.floor(workInput * (1 - inefficientEfficiency / 100));
-
-    // Percentage of work converted to wasted heat in inefficient system
-    const inefficientHeatPercent = workInput > 0 ? (inefficientLost / workInput) * 100 : 0;
-
-    const handleSliderChange = (e) => {
-      setWorkInput(parseInt(e.target.value));
-    };
+    const reflectionQuestions = [
+      {
+        question: "Which surface would you trust more for securing valuable things?",
+        choices: ["Ice (Easy)", "Concrete (Hard)", "Quicksand (Extreme)"],
+        correct: 2,
+        explanation: "The harder something is to do, the more you can trust it really happened!"
+      }
+    ];
 
     return (
-      <div className="work-efficiency-lab">
-        <div className="lab-header">
-          <h2>Work Efficiency Experiment</h2>
-          <p className="subtitle">Same work, different outcomes — watch side by side</p>
-          <p className="context-text">When you apply equal effort to two systems, only the efficient one converts most of that effort into useful movement. The inefficient system bleeds energy as wasted heat. Slide the control below and observe.</p>
+      <div className="energy-hook-streamlined">
+        <div className="hook-header">
+          <h2>🏋️‍♂️ Feel the Power of Proof-of-Work</h2>
+          <p className="subtitle">You're about to discover why energy cost equals security</p>
         </div>
 
-        {/* Side-by-side box movement */}
-        <div className="dual-surface-visual">
-          {/* Efficient system (Ice) */}
-          <div className="surface-visual efficient">
-            <div
-              className="moving-box"
-              style={{ transform: `translateX(${efficientPosition}px)` }}
+        <div className="scenario-grid">
+          {scenarios.map((scenario) => (
+            <div 
+              key={scenario.id}
+              className={`scenario-card ${selectedScenario === scenario.id ? 'active' : ''}`}
             >
-              📦
-            </div>
-            <div className="surface-floor">{"❄️".repeat(8)}</div>
-          </div>
+              <h3>{scenario.title}</h3>
+              <p className="scenario-description">{scenario.description}</p>
+              
+              <ActionButton
+                variant="primary"
+                onClick={() => setSelectedScenario(scenario.id)}
+                disabled={selectedScenario && selectedScenario !== scenario.id}
+              >
+                {scenario.action}
+              </ActionButton>
 
-          {/* Inefficient system (Concrete) */}
-          <div className="surface-visual inefficient">
-            <div
-              className="moving-box"
-              style={{ transform: `translateX(${inefficientPosition}px)` }}
-            >
-              📦
+              {selectedScenario === scenario.id && (
+                <div className="scenario-result">
+                  <div className="result-visual">
+                    <div className="energy-meter">
+                      <div className="energy-bar">
+                        <div 
+                          className="energy-fill"
+                          style={{ width: `${Math.min(scenario.energy, 100)}%` }}
+                        />
+                      </div>
+                      <span className="energy-amount">{scenario.energy} units</span>
+                    </div>
+                  </div>
+                  
+                  <div className="result-details">
+                    <p className="result-text">{scenario.result}</p>
+                    <div className="result-stats">
+                      <div className="stat">
+                        <span className="stat-label">Difficulty:</span>
+                        <span className={`stat-value ${scenario.difficulty.toLowerCase()}`}>
+                          {scenario.difficulty}
+                        </span>
+                      </div>
+                      <div className="stat">
+                        <span className="stat-label">Security:</span>
+                        <span className={`stat-value ${scenario.security.toLowerCase()}`}>
+                          {scenario.security}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="insight">{scenario.insight}</p>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="surface-floor">{"⬛".repeat(8)}</div>
-            {/* Heat bar indicating wasted energy */}
-            {workInput > 0 && (
-              <div
-                className="heat-bar"
-                style={{ width: `${inefficientHeatPercent}%` }}
-                title={`${inefficientLost} units lost to heat`}
-              />
+          ))}
+        </div>
+
+        {selectedScenario && (
+          <div className="reflection-section">
+            <h3>🤔 What strikes you most?</h3>
+            <div className="reflection-choices">
+              {reflectionQuestions[0].choices.map((choice, index) => (
+                <OptionButton
+                  key={index}
+                  selected={reflectionChoice === index}
+                  onClick={() => setReflectionChoice(index)}
+                >
+                  {choice}
+                </OptionButton>
+              ))}
+            </div>
+
+            {reflectionChoice !== null && (
+              <div className="reflection-result">
+                <div className={`result-indicator ${reflectionChoice === reflectionQuestions[0].correct ? 'correct' : 'partial'}`}>
+                  {reflectionChoice === reflectionQuestions[0].correct ? '🎯' : '💭'}
+                </div>
+                <p>{reflectionQuestions[0].explanation}</p>
+              </div>
             )}
           </div>
-        </div>
-
-        {/* Metrics for both systems */}
-        <div className="metrics-grid">
-          <div className="system-metrics efficient">
-            <div className="system-label">Efficient System</div>
-            <div className="metric">Efficiency: <span className="metric-value efficient">{efficientEfficiency}%</span></div>
-            <div className="metric">Energy Lost: <span className="metric-value heat-waste">{efficientLost} units</span></div>
-          </div>
-          <div className="system-metrics inefficient">
-            <div className="system-label">Inefficient System</div>
-            <div className="metric">Efficiency: <span className="metric-value inefficient">{inefficientEfficiency}%</span></div>
-            <div className="metric">Energy Lost: <span className="metric-value heat-waste">{inefficientLost} units</span></div>
-          </div>
-        </div>
-
-        {/* Socratic guidance */}
-        <div className="socratic-section">
-          <h4>Consider:</h4>
-          <ul>
-            <li>Why does the box on ice glide much farther than on concrete?</li>
-            <li>Where does the “missing” energy go in the concrete system?</li>
-            <li>Can you think of real-world systems where energy is wasted in a similar way?</li>
-            <li>What kind of “surface” does the traditional financial system resemble?</li>
-          </ul>
-        </div>
-        
-        {/* Work input slider */}
-        <div className="work-controls">
-          <label className="slider-label">Apply Work</label>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={workInput}
-            onChange={handleSliderChange}
-            className="work-slider"
-          />
-        </div>
+        )}
 
         <ContinueButton
           onClick={onComplete}
-          completed={workInput >= 50}
+          completed={selectedScenario && reflectionChoice !== null}
           nextStep="Money From Nothing"
         >
           Continue to Money Creation →
@@ -149,961 +185,773 @@ const BitcoinBasicsModule = () => {
     );
   };
 
-  // Fiat Creation Component
+  // Fiat Creation Component - Streamlined with direct engagement
   const FiatCreation = ({ content, onComplete }) => {
-    const [showLoanCreation, setShowLoanCreation] = useState(false);
+    const [currentPhase, setCurrentPhase] = useState('setup');
     const [newMoney, setNewMoney] = useState(0);
+    const [userReaction, setUserReaction] = useState(null);
     
     const createLoan = () => {
-      setShowLoanCreation(true);
+      setCurrentPhase('creating');
       let amount = 0;
       const interval = setInterval(() => {
-        amount += 10000;
+        amount += 15000;
         setNewMoney(amount);
         if (amount >= 270000) {
           clearInterval(interval);
+          setCurrentPhase('complete');
         }
-      }, 100);
+      }, 80);
     };
 
-    // Socratic questions always visible
-        return (
-      <div className="fiat-creation">
+    const reactions = [
+      { text: "That was surprisingly easy...", value: "easy" },
+      { text: "Where did that money come from?", value: "confused" },
+      { text: "What about everyone else's savings?", value: "concerned" }
+    ];
+
+    return (
+      <div className="fiat-creation-streamlined">
         <div className="creation-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-          <p className="context-text">With a few keyboard strokes, a bank can create brand-new money by issuing debt. Let’s watch this process and ask what it means for everyone holding the old money.</p>
+          <h2>💸 Meet Sarah's $270,000 Problem</h2>
+          <p className="subtitle">She has $30,000. She needs $300,000 for a house.</p>
         </div>
 
-        {/* Pre-action Socratic guidance */}
-        <div className="socratic-section">
-          <h4>Consider before you click:</h4>
-          <ul>
-            <li>How hard is it to create $270,000 compared to pushing a heavy box?</li>
-            <li>Where does this brand-new money come from?</li>
-            <li>Who ultimately pays the cost of this easy money creation?</li>
-          </ul>
-              </div>
-
-        <div className="loan-demo">
-          {/* Accounts Ledger */}
-          <div className="accounts-ledger">
-            {/* Sarah Account */}
-            <div className="account-box sarah-box">
-              <h3>Sarah's Wallet</h3>
-              <div className="account-balance">
-                <span className="balance-label">Balance:</span>
-                <span className="balance-amount">${(content.loanDemo.initial.savings + newMoney).toLocaleString()}</span>
-              </div>
-              <div className="account-note">Initial savings: ${content.loanDemo.initial.savings.toLocaleString()}</div>
-              {showLoanCreation && (
-                <div className="account-note new-credit">+ Loan credit: ${newMoney.toLocaleString()}</div>
-              )}
-            </div>
-
-            {/* Bank Ledger */}
-            <div className="account-box bank-box">
-              <h3>Bank Ledger</h3>
-              <ul className="ledger-list">
-                <li>Customer Deposits: ${content.loanDemo.initial.savings.toLocaleString()}</li>
-                {showLoanCreation && (
-                  <li className="new-loan-row">Loan to Sarah: ${newMoney.toLocaleString()}</li>
-                )}
-              </ul>
-                  </div>
-                </div>
-
-          {/* Action + animation */}
-          <div className="bank-action">
-            <ActionButton
-              variant="primary"
-              context="demo"
-              onClick={createLoan}
-              disabled={showLoanCreation}
-              className="create-loan-btn"
-            >
-              {content.loanDemo.bankAction}
-            </ActionButton>
-
-            {showLoanCreation && (
-              <div className="money-creation-animation">
-                <div className="creation-visual">
-                  <div className="bank-icon">🏦</div>
-                  <div className="creation-amount">
-                    <span className="sparkles">✨</span>
-                    ${newMoney.toLocaleString()}
-                    <span className="sparkles">✨</span>
-                  </div>
-                </div>
-                <p className="creation-caption">New money appears with a few keystrokes...</p>
-              </div>
-            )}
-              </div>
-
-           {showLoanCreation && newMoney >= 270000 && (
-             <div className="reflection-questions">
-               {content.loanDemo.questions.map((question, index) => (
-                 <div key={index} className="question-box">
-                   <span className="question-number">{index + 1}</span>
-                   <p>{question}</p>
-                 </div>
-               ))}
-             </div>
-           )}
-
-
-              </div>
-
-        {showLoanCreation && newMoney >= 270000 && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="Three Ages of Money"
-          >
-            Continue to Money Evolution →
-          </ContinueButton>
-        )}
-          </div>
-        );
-  };
-
-  // Money Evolution Component - Redesigned
-  const MoneyEvolution = ({ content, onComplete }) => {
-    const [exploredVersions, setExploredVersions] = useState(new Set());
-    const [showComparison, setShowComparison] = useState(false);
-    const [showConclusion, setShowConclusion] = useState(false);
-
-    const handleVersionExplore = (index) => {
-      const newExplored = new Set(exploredVersions);
-      newExplored.add(index);
-      setExploredVersions(newExplored);
-      
-      // If all versions explored, show comparison
-      if (newExplored.size === content.versions.length) {
-        setShowComparison(true);
-      }
-    };
-
-    const handleComparisonComplete = () => {
-      setShowConclusion(true);
-    };
-
-    return (
-      <div className="money-evolution">
-        <div className="evolution-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="progress-indicator">
-            <span className="progress-text">
-              Explored: {exploredVersions.size}/{content.versions.length} versions
-            </span>
-            <div className="progress-bar">
-              <div 
-                className="progress-fill"
-                style={{ width: `${(exploredVersions.size / content.versions.length) * 100}%` }}
-              />
+        <div className="sarah-story">
+          <div className="character-intro">
+            <div className="character-avatar">👩‍💼</div>
+            <div className="character-details">
+              <h3>Sarah</h3>
+              <p>Software engineer, saved for 5 years</p>
+              <div className="savings-amount">Has: $30,000</div>
+              <div className="need-amount">Needs: $300,000</div>
             </div>
           </div>
-        </div>
-            
-        <div className="interactive-timeline">
-          <div className="timeline-instruction">
-            <p>👆 Click each version to explore how money evolved over time</p>
-          </div>
 
-          <div className="versions-grid">
-            {content.versions.map((version, index) => (
-              <div 
-                key={index}
-                className={`version-card ${exploredVersions.has(index) ? 'explored' : 'unexplored'}`}
-                onClick={() => handleVersionExplore(index)}
-              >
-                <div className="version-header">
-                  <span className="version-number">{version.version}</span>
-                  <span className="version-icon">{version.icon}</span>
-                  {exploredVersions.has(index) && (
-                    <span className="explored-badge">✓</span>
-                  )}
-                </div>
-                
-                <div className="version-content">
-                  <h3>{version.name}</h3>
-                  
-                  {exploredVersions.has(index) ? (
-                    <>
-                      <div className="version-properties">
-                        {version.properties.map((property, propIndex) => (
-                          <div key={propIndex} className="property revealed">
-                            <span className="property-bullet">•</span>
-                            {property}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="version-period">{version.period}</div>
-                      <div className="version-insights">
-                        {index === 0 && <p className="insight">🏆 Trustworthy but heavy</p>}
-                        {index === 1 && <p className="insight">⚡ Convenient but risky</p>}
-                        {index === 2 && <p className="insight">🚀 Best of both worlds</p>}
-                      </div>
-                    </>
-                  ) : (
-                    <div className="version-mystery">
-                      <p>Click to reveal...</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-
-        </div>
-
-        {/* Comparison Section - Shows when all versions explored */}
-        {showComparison && (
-          <div className="comparison-section">
-            <h3>🔍 Now Compare: What's the Pattern?</h3>
-            
-            <div className="comparison-table">
-              <div className="comparison-row header">
-                <div className="comparison-cell">Version</div>
-                <div className="comparison-cell">Trust Level</div>
-                <div className="comparison-cell">Convenience</div>
-                <div className="comparison-cell">Trade-off</div>
-              </div>
+          {currentPhase === 'setup' && (
+            <div className="bank-visit">
+              <h3>🏦 Sarah walks into a bank...</h3>
+              <p>Watch what happens when she asks for a loan:</p>
               
-              {content.versions.map((version, index) => (
-                <div key={index} className="comparison-row">
-                  <div className="comparison-cell">
-                    {version.icon} {version.name}
-                  </div>
-                  <div className="comparison-cell">
-                    {index === 0 && <span className="trust-high">High 🔒</span>}
-                    {index === 1 && <span className="trust-low">Low ⚠️</span>}
-                    {index === 2 && <span className="trust-high">High 🔒</span>}
-                  </div>
-                  <div className="comparison-cell">
-                    {index === 0 && <span className="convenience-low">Low 🐌</span>}
-                    {index === 1 && <span className="convenience-high">High ⚡</span>}
-                    {index === 2 && <span className="convenience-high">High ⚡</span>}
-                  </div>
-                  <div className="comparison-cell">
-                    {index === 0 && "Heavy but honest"}
-                    {index === 1 && "Easy but risky"}
-                    {index === 2 && "Perfect balance"}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <Button 
-              variant="primary"
-              onClick={handleComparisonComplete}
-              className="comparison-btn"
-            >
-              I See the Pattern! →
-            </Button>
-          </div>
-        )}
-
-        {/* Conclusion Section - Shows after comparison */}
-        {showConclusion && (
-          <div className="conclusion-section">
-            <h3>💡 The Money Evolution Insight</h3>
-            <div className="insight-cards">
-              <div className="insight-card problem">
-                <h4>The Problem</h4>
-                <p>Each "upgrade" made money easier to use...</p>
-                <p>But harder to trust.</p>
-              </div>
-              <div className="insight-card solution">
-                <h4>The Bitcoin Solution</h4>
-                <p>For the first time in history:</p>
-                <p><strong>Digital convenience + Physical trust</strong></p>
-              </div>
-            </div>
-            
-            <div className="key-question">
-              <h4>🤔 {content.question}</h4>
-              <p className="answer-hint">
-                The answer lies in what happened next: 1971...
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Continue Button - Only shows after exploring everything */}
-        {showConclusion && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="The 1971 Switch"
-          >
-            Continue to The 1971 Switch →
-          </ContinueButton>
-        )}
-      </div>
-    );
-  };
-
-  // Nixon Shock Component
-  // Fiat Definition Component
-  const FiatDefinition = ({ content, onComplete }) => {
-    const [selectedTimelineStep, setSelectedTimelineStep] = useState('before1971');
-    const [showConsequences, setShowConsequences] = useState(false);
-
-    return (
-      <div className="fiat-definition">
-        <div className="definition-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-        </div>
-
-        <div className="timeline-visualization">
-          <h3>📅 The Great Monetary Shift</h3>
-          <div className="timeline-controls">
-            {Object.entries(content.timeline).map(([key, period]) => (
-              <button
-                key={key}
-                className={`timeline-btn ${selectedTimelineStep === key ? 'active' : ''}`}
-                onClick={() => setSelectedTimelineStep(key)}
+              <ActionButton
+                variant="primary"
+                onClick={createLoan}
+                className="bank-action-btn"
               >
-                {period.title}
-              </button>
-            ))}
-          </div>
-          
-          <div className="timeline-content">
-            {selectedTimelineStep && (
-              <div className="timeline-period">
-                <h4>{content.timeline[selectedTimelineStep].title}</h4>
-                <p className="period-description">
-                  {content.timeline[selectedTimelineStep].description}
-                </p>
-                
-                <div className="visual-story">
-                  {selectedTimelineStep === 'before1971' && (
-                    <div className="gold-paper-story before">
-                      <div className="story-row">
-                        <div className="gold-bar">🟨</div>
-                        <span className="equals">=</span>
-                        <div className="paper-bill">💵</div>
-                      </div>
-                      <div className="story-explanation">1 gold bar = 1 piece of paper</div>
-                      <div className="story-row">
-                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
-                        <span className="equals">=</span>
-                        <div className="paper-bills">💵💵💵💵💵</div>
-                      </div>
-                      <div className="story-explanation">5 gold bars = 5 pieces of paper</div>
-                    </div>
-                  )}
-                  
-                  {selectedTimelineStep === 'august1971' && (
-                    <div className="gold-paper-story transition">
-                      <div className="breaking-point">
-                        <div className="before-break">
-                          <div className="gold-bar">🟨</div>
-                          <span className="equals">=</span>
-                          <div className="paper-bill">💵</div>
-                        </div>
-                        <div className="break-symbol">⚡💥⚡</div>
-                        <div className="after-break">
-                          <div className="gold-bar">🟨</div>
-                          <span className="not-equals">≠</span>
-                          <div className="paper-bills">💵💵💵</div>
-                        </div>
-                      </div>
-                      <div className="story-explanation">The promise is broken!</div>
-                    </div>
-                  )}
-                  
-                  {selectedTimelineStep === 'after1971' && (
-                    <div className="gold-paper-story after">
-                      <div className="story-row">
-                        <div className="gold-bar">🟨</div>
-                        <span className="equals">=</span>
-                        <div className="paper-bills many">💵💵💵💵💵💵💵💵💵</div>
-                      </div>
-                      <div className="story-explanation">1 gold bar = Many pieces of paper</div>
-                      <div className="story-row">
-                        <div className="gold-bars">🟨🟨🟨🟨🟨</div>
-                        <span className="equals">=</span>
-                        <div className="paper-bills infinite">💵💵💵💵💵💵💵💵💵💵💵💵💵💵💵</div>
-                      </div>
-                      <div className="story-explanation sarcastic">5 gold bars = As many as the government says 🤷‍♂️</div>
-                    </div>
-                  )}
+                Banker: "Sure, let me create that money for you"
+              </ActionButton>
+            </div>
+          )}
+
+          {currentPhase === 'creating' && (
+            <div className="money-creation">
+              <h3>⌨️ Banker types on keyboard...</h3>
+              <div className="creation-animation">
+                <div className="typing-effect">💻 tap tap tap...</div>
+                <div className="money-counter">
+                  <span className="sparkles">✨</span>
+                  ${newMoney.toLocaleString()}
+                  <span className="sparkles">✨</span>
+                </div>
+                <div className="creation-caption">New money appearing...</div>
+              </div>
+            </div>
+          )}
+
+          {currentPhase === 'complete' && (
+            <div className="creation-complete">
+              <h3>✅ Done! Sarah now has $300,000</h3>
+              
+              <div className="balance-display">
+                <div className="before-after">
+                  <div className="before">
+                    <span className="label">Before:</span>
+                    <span className="amount">$30,000</span>
+                  </div>
+                  <div className="arrow">→</div>
+                  <div className="after">
+                    <span className="label">After:</span>
+                    <span className="amount">$300,000</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="reaction-prompt">
+                <h4>What's your reaction?</h4>
+                <div className="reaction-buttons">
+                  {reactions.map((reaction) => (
+                    <OptionButton
+                      key={reaction.value}
+                      selected={userReaction === reaction.value}
+                      onClick={() => setUserReaction(reaction.value)}
+                    >
+                      {reaction.text}
+                    </OptionButton>
+                  ))}
                 </div>
 
-                <div className="money-properties">
-                  <div className="property">
-                    <strong>Backing:</strong> {content.timeline[selectedTimelineStep].backing}
-                  </div>
-                  <div className="property">
-                    <strong>Trust:</strong> {content.timeline[selectedTimelineStep].trust}
-                  </div>
-                </div>
-                {selectedTimelineStep === 'august1971' && (
-                  <div className="nixon-shock">
-                    <div className="shock-icon">⚡</div>
-                    <p><em>This moment changed money forever...</em></p>
+                {userReaction && (
+                  <div className="reaction-result">
+                    <div className="result-icon">🎯</div>
+                    <p>
+                      {userReaction === 'easy' && "Exactly! Compare this to pushing a box through quicksand..."}
+                      {userReaction === 'confused' && "Great question! It came from... nowhere. Just computer entries."}
+                      {userReaction === 'concerned' && "You're thinking like an economist! More money = everyone's money worth less."}
+                    </p>
                   </div>
                 )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="consequences-section">
-          <button 
-            className="show-consequences-btn"
-            onClick={() => setShowConsequences(!showConsequences)}
-          >
-            {showConsequences ? 'Hide Impact' : 'Show What This Meant for People'}
-          </button>
-          
-          {showConsequences && (
-            <div className="consequences-content">
-              <h3>👤 {content.consequences.title}</h3>
-              <div className="consequences-grid">
-                {content.consequences.points.map((consequence, index) => (
-                  <div key={index} className="consequence-card">
-                    <h4>⚠️ {consequence.problem}</h4>
-                    <p className="consequence-description">{consequence.description}</p>
-                    <div className="consequence-impact">
-                      <strong>Impact:</strong> {consequence.impact}
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           )}
         </div>
 
-        <ContinueButton 
+        <ContinueButton
           onClick={onComplete}
-          completed={true}
-          nextStep="The Cost of 'Free' Money"
+          completed={currentPhase === 'complete' && userReaction}
+          nextStep="Three Ages of Money"
         >
-          Continue to Hidden Costs →
+          Continue to Money Evolution →
         </ContinueButton>
       </div>
     );
   };
 
-  // Enhanced Bank Waste Component - Transforming Wasted Heat into Bitcoin
-  const BankWaste = ({ content, onComplete }) => {
-    const [currentPhase, setCurrentPhase] = useState('problem');
-    const [selectedWaste, setSelectedWaste] = useState(null);
-    const [showTransformation, setShowTransformation] = useState(false);
-    const [energyFlow, setEnergyFlow] = useState(0);
-    const [bitcoinCreated, setBitcoinCreated] = useState(0);
+  // Money Evolution Component - Streamlined with focused progression
+  const MoneyEvolution = ({ content, onComplete }) => {
+    const [currentVersion, setCurrentVersion] = useState(0);
+    const [userInsight, setUserInsight] = useState(null);
 
-    const handleWasteClick = (wasteType) => {
-      setSelectedWaste(wasteType);
-    };
+    const versions = [
+      {
+        id: 'gold',
+        name: "Money v1.0: Gold",
+        icon: "🥇",
+        story: "You're a merchant in ancient Rome carrying gold coins",
+        challenge: "These coins are heavy but everyone trusts them",
+        tradeoff: "Trust ↑ Convenience ↓",
+        properties: ["Impossible to fake", "Heavy to carry", "Limited supply"],
+        verdict: "Trustworthy but clunky"
+      },
+      {
+        id: 'fiat',
+        name: "Money v2.0: Paper",
+        icon: "💵",
+        story: "You're holding a paper bill promising gold backing",
+        challenge: "Light and easy but requires trusting the government",
+        tradeoff: "Trust ↓ Convenience ↑",
+        properties: ["Easy to transport", "Requires trust", "Can be printed"],
+        verdict: "Convenient but risky"
+      },
+      {
+        id: 'bitcoin',
+        name: "Money v3.0: Bitcoin",
+        icon: "₿",
+        story: "You're sending digital money secured by energy",
+        challenge: "Digital convenience with physical security",
+        tradeoff: "Trust ↑ Convenience ↑",
+        properties: ["Digital transfer", "Energy-secured", "Fixed supply"],
+        verdict: "Best of both worlds"
+      }
+    ];
 
-    const startTransformation = () => {
-      setShowTransformation(true);
-      setCurrentPhase('transformation');
-      
-      // Simulate energy flow animation
-      let flow = 0;
-      const interval = setInterval(() => {
-        flow += 2;
-        setEnergyFlow(flow);
-        if (flow >= 100) {
-          clearInterval(interval);
-          setCurrentPhase('solution');
-        }
-      }, 50);
-    };
+    const insights = [
+      { text: "Each upgrade traded security for convenience", value: "tradeoff" },
+      { text: "Bitcoin breaks the old trade-off pattern", value: "breakthrough" },
+      { text: "Energy cost creates digital scarcity", value: "energy" }
+    ];
 
-    const calculateBitcoin = (energy) => {
-      // Simplified calculation: 1 energy unit = 0.001 BTC
-      return (energy * 0.001).toFixed(3);
+    const nextVersion = () => {
+      if (currentVersion < versions.length - 1) {
+        setCurrentVersion(currentVersion + 1);
+      }
     };
 
     return (
-      <div className="enhanced-bank-waste">
-        <div className="waste-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
+      <div className="money-evolution-streamlined">
+        <div className="evolution-header">
+          <h2>🌀 The Great Money Trade-off</h2>
+          <p className="subtitle">Each "upgrade" came with a hidden cost</p>
         </div>
 
-        {currentPhase === 'problem' && (
-          <>
-            <div className="waste-visualization">
-              <h3>🌡️ The Energy Waste Problem</h3>
-              <p className="visual-description">
-                Traditional banking consumes massive amounts of energy just to maintain trust in digital numbers.
-              </p>
-              
-              <div className="waste-sources">
-                {Object.entries(content.costs).map(([key, cost]) => (
-                  <div 
-                    key={key}
-                    className={`waste-source ${selectedWaste === key ? 'active' : ''}`}
-                    onClick={() => handleWasteClick(key)}
-                  >
-                    <div className="waste-icon">{cost.icon}</div>
-                    <div className="waste-details">
-                      <h4>{cost.label}</h4>
-                      <div className="waste-cost">{cost.cost}</div>
-                      <div className="waste-energy">
-                        <span className="energy-icon">⚡</span>
-                        {cost.energy}
-                      </div>
+        <div className="version-journey">
+          <div className="progress-dots">
+            {versions.map((_, index) => (
+              <div 
+                key={index}
+                className={`progress-dot ${index <= currentVersion ? 'active' : ''}`}
+              />
+            ))}
+          </div>
+
+          <div className="current-version">
+            <div className="version-card-large">
+              <div className="version-header">
+                <span className="version-icon">{versions[currentVersion].icon}</span>
+                <h3>{versions[currentVersion].name}</h3>
+              </div>
+
+              <div className="version-story">
+                <p className="story-text">{versions[currentVersion].story}</p>
+                <div className="challenge-box">
+                  <strong>The Challenge:</strong> {versions[currentVersion].challenge}
+                </div>
+              </div>
+
+              <div className="version-analysis">
+                <div className="tradeoff-visual">
+                  <span className="tradeoff-label">Trade-off:</span>
+                  <span className={`tradeoff-value ${versions[currentVersion].id}`}>
+                    {versions[currentVersion].tradeoff}
+                  </span>
+                </div>
+
+                <div className="properties-list">
+                  {versions[currentVersion].properties.map((property, index) => (
+                    <div key={index} className="property-item">
+                      <span className="property-bullet">•</span>
+                      {property}
                     </div>
-                    {selectedWaste === key && (
-                      <div className="waste-impact">
-                        <div className="impact-bar">
-                          <div className="impact-fill" style={{width: `${cost.impact}%`}}></div>
-                        </div>
-                        <span className="impact-text">{cost.impact}% of total waste</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+                  ))}
+                </div>
 
-            <div className="energy-flow-demo">
-              <h3>🔄 Where Does All This Energy Go?</h3>
-              <div className="flow-container">
-                <div className="flow-step">
-                  <div className="step-icon">⚡</div>
-                  <div className="step-label">Electricity</div>
-                  <div className="step-amount">100%</div>
-                </div>
-                <div className="flow-arrow">→</div>
-                <div className="flow-step">
-                  <div className="step-icon">🏢</div>
-                  <div className="step-label">Bank Infrastructure</div>
-                  <div className="step-amount">85%</div>
-                </div>
-                <div className="flow-arrow">→</div>
-                <div className="flow-step">
-                  <div className="step-icon">🌡️</div>
-                  <div className="step-label">Wasted Heat</div>
-                  <div className="step-amount">80%</div>
-                </div>
-                <div className="flow-arrow">→</div>
-                <div className="flow-step">
-                  <div className="step-icon">💨</div>
-                  <div className="step-label">Atmosphere</div>
-                  <div className="step-amount">80%</div>
-                </div>
-              </div>
-              
-              <div className="waste-question">
-                <h4>🤔 {content.heatWaste.question}</h4>
-                <p>What if we could capture this waste and turn it into something valuable?</p>
-              </div>
-            </div>
-
-            <ActionButton 
-              onClick={startTransformation}
-              className="transform-btn"
-              variant="primary"
-            >
-              Transform Waste into Value →
-            </ActionButton>
-          </>
-        )}
-
-        {currentPhase === 'transformation' && (
-          <div className="transformation-demo">
-            <h3>🔄 Energy Transformation in Progress</h3>
-            <div className="transformation-container">
-              <div className="waste-side">
-                <div className="side-header">
-                  <h4>🌡️ Wasted Heat</h4>
-                  <div className="energy-meter">
-                    <div className="meter-fill" style={{width: `${100 - energyFlow}%`}}></div>
-                    <span className="meter-text">{100 - energyFlow}%</span>
-                  </div>
-                </div>
-                <div className="waste-visual">
-                  <div className="heat-particles">
-                    {[...Array(20)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className={`heat-particle ${energyFlow > i * 5 ? 'transformed' : ''}`}
-                        style={{
-                          left: `${Math.random() * 100}%`,
-                          animationDelay: `${Math.random() * 2}s`
-                        }}
-                      >
-                        🔥
-                      </div>
-                    ))}
-                  </div>
+                <div className="verdict">
+                  <strong>Verdict:</strong> {versions[currentVersion].verdict}
                 </div>
               </div>
 
-              <div className="transformation-center">
-                <div className="transformation-icon">⚡</div>
-                <div className="transformation-label">Bitcoin Mining</div>
-                <div className="transformation-progress">
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{width: `${energyFlow}%`}}></div>
-                  </div>
-                  <span className="progress-text">{energyFlow}%</span>
-                </div>
-              </div>
-
-              <div className="bitcoin-side">
-                <div className="side-header">
-                  <h4>₿ Bitcoin Created</h4>
-                  <div className="bitcoin-amount">
-                    {calculateBitcoin(energyFlow)} BTC
-                  </div>
-                </div>
-                <div className="bitcoin-visual">
-                  <div className="bitcoin-particles">
-                    {[...Array(10)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className={`bitcoin-particle ${energyFlow > i * 10 ? 'created' : ''}`}
-                        style={{
-                          left: `${Math.random() * 100}%`,
-                          animationDelay: `${Math.random() * 1}s`
-                        }}
-                      >
-                        ₿
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {currentPhase === 'solution' && (
-          <div className="solution-section">
-            <h3>✅ Transformation Complete!</h3>
-            <div className="solution-comparison">
-              <div className="comparison-card traditional">
-                <h4>🏦 Traditional Banking</h4>
-                <div className="comparison-points">
-                  <div className="point negative">❌ Energy → Heat → Waste</div>
-                  <div className="point negative">❌ $Billions in infrastructure</div>
-                  <div className="point negative">❌ Still gets hacked</div>
-                  <div className="point negative">❌ Requires trust in institutions</div>
-                </div>
-              </div>
-              
-              <div className="comparison-card bitcoin">
-                <h4>₿ Bitcoin Mining</h4>
-                <div className="comparison-points">
-                  <div className="point positive">✅ Energy → Math → Security</div>
-                  <div className="point positive">✅ Energy cost = Security feature</div>
-                  <div className="point positive">✅ Impossible to counterfeit</div>
-                  <div className="point positive">✅ Trust in math, not people</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="key-insight">
-              <h4>💡 The Key Insight</h4>
-              <p>
-                Bitcoin doesn't waste energy—it <strong>transforms</strong> energy into 
-                unbreakable digital security. The energy cost isn't a bug, it's the feature 
-                that makes Bitcoin impossible to fake.
-              </p>
-            </div>
-
-            <ContinueButton 
-              onClick={onComplete}
-              completed={true}
-              nextStep="Try to Double-Spend"
-            >
-              Continue to Double-Spend Challenge →
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  // Energy Transformation Component
-  const EnergyTransformation = ({ content, onComplete }) => {
-    const [sliderValue, setSliderValue] = useState(0);
-
-    const handleSliderChange = (e) => {
-      setSliderValue(parseInt(e.target.value));
-    };
-
-        return (
-      <div className="energy-transformation">
-        <div className="transformation-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-        </div>
-
-        <div className="transformation-slider">
-          <div className="slider-sides">
-            <div 
-              className="slider-side left"
-              style={{ opacity: 1 - (sliderValue / 100) }}
-            >
-              <div className="side-icon">{content.slider.left.icon}</div>
-              <div className="side-label">{content.slider.left.label}</div>
-            </div>
-
-            <div 
-              className="slider-side right"
-              style={{ opacity: sliderValue / 100 }}
-            >
-              <div className="side-icon">{content.slider.right.icon}</div>
-              <div className="side-label">{content.slider.right.label}</div>
-            </div>
-          </div>
-
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={sliderValue}
-            onChange={handleSliderChange}
-            className="transformation-range"
-          />
-        </div>
-
-        {sliderValue > 80 && (
-          <div className="insight-section">
-            <div className="insight-box">
-              <p>{content.insight}</p>
-            </div>
-          </div>
-        )}
-
-        {sliderValue > 80 && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="Try to Double-Spend"
-          >
-            Continue to Double-Spend Challenge →
-          </ContinueButton>
-        )}
-      </div>
-    );
-  };
-
-  // Double Spend Lab Component
-  const DoubleSpendLab = ({ content, onComplete }) => {
-    const [step, setStep] = useState('setup');
-    const [energyUsed, setEnergyUsed] = useState(0);
-    const [showInsight, setShowInsight] = useState(false);
-
-    const mineBlockA = () => {
-      setStep('mining');
-      let energy = 0;
-      const interval = setInterval(() => {
-        energy += 100;
-        setEnergyUsed(energy);
-        if (energy >= 1000) {
-          clearInterval(interval);
-          setStep('mined');
-        }
-      }, 100);
-    };
-
-    const tryBlockB = () => {
-      setStep('error');
-      setTimeout(() => setShowInsight(true), 2000);
-    };
-
-    return (
-      <div className="double-spend-lab">
-        <div className="lab-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-        </div>
-
-        <div className="lab-setup">
-          <div className="setup-info">
-            <h3>Your Mining Setup</h3>
-            <p>{content.challenge.setup}</p>
-            <div className="energy-meter">
-              <div className="energy-bar">
-                <div 
-                  className="energy-fill"
-                  style={{ width: `${(1000 - energyUsed) / 10}%` }}
-                />
-              </div>
-              <div className="energy-amount">
-                {1000 - energyUsed} units remaining
-              </div>
-            </div>
-          </div>
-
-          <div className="mining-blocks">
-            <div className="block block-a">
-              <h4>Block A</h4>
-              {step === 'setup' && (
-                <ActionButton 
+              {currentVersion < versions.length - 1 && (
+                <ActionButton
                   variant="primary"
-                  context="demo"
-                  onClick={mineBlockA}
-                  className="mine-btn"
+                  onClick={nextVersion}
+                  className="next-version-btn"
                 >
-                  Mine Block A (1000 units)
+                  See Next Evolution →
                 </ActionButton>
-              )}
-              {step === 'mining' && (
-                <div className="mining-progress">
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill"
-                      style={{ width: `${energyUsed / 10}%` }}
-                    />
-                      </div>
-                  <div className="progress-text">
-                    Mining... {energyUsed}/1000 units used
-                  </div>
-                </div>
-              )}
-              {(step === 'mined' || step === 'error') && (
-                <div className="block-mined">
-                  <span className="success-icon">✅</span>
-                  Mined with 1000 units
-                </div>
-              )}
-            </div>
-
-            <div className="block block-b">
-              <h4>Block B</h4>
-              {step === 'mined' && (
-                <ActionButton 
-                  variant="warning"
-                  context="demo"
-                  onClick={tryBlockB}
-                  className="mine-btn"
-                >
-                  Try to Mine Block B with Same Energy
-                </ActionButton>
-              )}
-              {step === 'error' && (
-                <div className="block-error">
-                  <span className="error-icon">❌</span>
-                  ERROR: Energy already spent!
-                </div>
               )}
             </div>
           </div>
         </div>
 
-        {showInsight && (
-          <div className="lab-insight">
-            <h3>Why Did That Fail?</h3>
-            <div className="insight-box">
-              <p>{content.insight}</p>
+        {currentVersion === versions.length - 1 && (
+          <div className="evolution-insight">
+            <h3>💡 What's the breakthrough?</h3>
+            <div className="insight-choices">
+              {insights.map((insight) => (
+                <OptionButton
+                  key={insight.value}
+                  selected={userInsight === insight.value}
+                  onClick={() => setUserInsight(insight.value)}
+                >
+                  {insight.text}
+                </OptionButton>
+              ))}
             </div>
+
+            {userInsight && (
+              <div className="insight-result">
+                <div className="result-icon">
+                  {userInsight === 'breakthrough' ? '🎯' : '💭'}
+                </div>
+                <p>
+                  {userInsight === 'tradeoff' && "True! For centuries, money makers had to choose: secure OR convenient."}
+                  {userInsight === 'breakthrough' && "Exactly! Bitcoin is the first money that's both secure AND convenient."}
+                  {userInsight === 'energy' && "You're getting it! Energy cost makes digital bits as scarce as physical gold."}
+                </p>
+              </div>
+            )}
           </div>
         )}
 
-        {showInsight && (
-          <ContinueButton 
-            onClick={onComplete}
-            completed={true}
-            nextStep="Final Reflection"
-          >
-            Continue to Final Thoughts →
-          </ContinueButton>
-        )}
+        <ContinueButton
+          onClick={onComplete}
+          completed={currentVersion === versions.length - 1 && userInsight}
+          nextStep="The 1971 Switch"
+        >
+          Continue to The 1971 Switch →
+        </ContinueButton>
       </div>
     );
   };
 
-  // Reflection Component
-  const Reflection = ({ content, onComplete }) => {
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [answers, setAnswers] = useState({});
-    const [showExplanation, setShowExplanation] = useState(false);
+  // Fiat Definition Component - Streamlined with focused narrative
+  const FiatDefinition = ({ content, onComplete }) => {
+    const [currentStep, setCurrentStep] = useState(0);
+    const [userRealization, setUserRealization] = useState(null);
 
-    const handleAnswer = (answer) => {
-      setAnswers({ ...answers, [currentQuestion]: answer });
-      setShowExplanation(true);
-    };
+    const nixonStory = [
+      {
+        title: "August 15, 1971 - Sunday Evening",
+        scene: "President Nixon appears on TV",
+        dialogue: "\"We're temporarily suspending the conversion of dollars into gold...\"",
+        impact: "The promise that backed all money was broken",
+        visual: "📺🎭"
+      },
+      {
+        title: "Monday Morning, August 16",
+        scene: "People wake up to a new world",
+        dialogue: "\"Wait... our dollars aren't backed by anything anymore?\"",
+        impact: "Money became pure government promise",
+        visual: "😳💸"
+      },
+      {
+        title: "52 Years Later - Today",
+        scene: "The consequences are clear",
+        dialogue: "\"Why does everything cost so much more than it used to?\"",
+        impact: "Unlimited money printing = inflated prices",
+        visual: "📈💰"
+      }
+    ];
 
-    const nextQuestion = () => {
-      setShowExplanation(false);
-      setCurrentQuestion(currentQuestion + 1);
+    const realizations = [
+      { text: "Money isn't backed by anything real anymore", value: "unbacked" },
+      { text: "Governments can create money without limits", value: "unlimited" },
+      { text: "This explains why prices keep rising", value: "inflation" }
+    ];
+
+    const nextStep = () => {
+      if (currentStep < nixonStory.length - 1) {
+        setCurrentStep(currentStep + 1);
+      }
     };
 
     return (
-      <div className="final-reflection">
-        <div className="reflection-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
+      <div className="fiat-definition-streamlined">
+        <div className="definition-header">
+          <h2>📺 The Day Money Changed Forever</h2>
+          <p className="subtitle">One Sunday evening in 1971, everything changed</p>
         </div>
 
-        {currentQuestion < content.questions.length ? (
-          <div className="question-section">
-            <div className="question-card">
-              <h3>{content.questions[currentQuestion].question}</h3>
-              <div className="answer-options">
-                {content.questions[currentQuestion].options.map((option, index) => (
-                  <OptionButton
-                    key={index}
-                    selected={answers[currentQuestion] === option}
-                    onClick={() => handleAnswer(option)}
-                    className="answer-btn"
-                  >
-                    {option}
-                  </OptionButton>
-                ))}
+        <div className="nixon-story">
+          <div className="story-progress">
+            {nixonStory.map((_, index) => (
+              <div 
+                key={index}
+                className={`story-dot ${index <= currentStep ? 'active' : ''}`}
+              />
+            ))}
+          </div>
+
+          <div className="story-scene">
+            <div className="scene-visual">
+              <span className="scene-icon">{nixonStory[currentStep].visual}</span>
+            </div>
+            
+            <div className="scene-content">
+              <h3>{nixonStory[currentStep].title}</h3>
+              <div className="scene-description">
+                <p>{nixonStory[currentStep].scene}</p>
+              </div>
+              
+              <div className="dialogue-box">
+                <p>"{nixonStory[currentStep].dialogue}"</p>
+              </div>
+              
+              <div className="impact-reveal">
+                <strong>The Impact:</strong> {nixonStory[currentStep].impact}
+              </div>
+            </div>
+          </div>
+
+          {currentStep < nixonStory.length - 1 && (
+            <ActionButton
+              variant="primary"
+              onClick={nextStep}
+              className="next-scene-btn"
+            >
+              What Happened Next? →
+            </ActionButton>
+          )}
+        </div>
+
+        {currentStep === nixonStory.length - 1 && (
+          <div className="realization-section">
+            <h3>💡 What's your biggest realization?</h3>
+            <div className="realization-choices">
+              {realizations.map((realization) => (
+                <OptionButton
+                  key={realization.value}
+                  selected={userRealization === realization.value}
+                  onClick={() => setUserRealization(realization.value)}
+                >
+                  {realization.text}
+                </OptionButton>
+              ))}
+            </div>
+
+            {userRealization && (
+              <div className="realization-result">
+                <div className="result-icon">🎯</div>
+                <p>
+                  {userRealization === 'unbacked' && "Exactly! From that day forward, money became pure trust in government."}
+                  {userRealization === 'unlimited' && "Right! No gold limit means no printing limit. Sarah's $270,000 was just the beginning."}
+                  {userRealization === 'inflation' && "You've connected the dots! More money chasing the same goods = higher prices."}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        <ContinueButton
+          onClick={onComplete}
+          completed={currentStep === nixonStory.length - 1 && userRealization}
+          nextStep="Energy: Waste vs. Security"
+        >
+          Continue to Energy Analysis →
+        </ContinueButton>
+      </div>
+    );
+  };
+
+  // Bank Waste Component - Streamlined with direct comparison
+  const BankWaste = ({ content, onComplete }) => {
+    const [selectedSystem, setSelectedSystem] = useState(null);
+    const [userInsight, setUserInsight] = useState(null);
+
+    const systems = [
+      {
+        id: 'banking',
+        name: "Traditional Banking",
+        icon: "🏦",
+        energyUse: "Massive office buildings, 24/7 data centers, security systems",
+        outcome: "Heat escapes into atmosphere",
+        efficiency: "~15%",
+        security: "Still gets hacked",
+        waste: "85% of energy becomes waste heat",
+        visual: "🌡️💨"
+      },
+      {
+        id: 'bitcoin',
+        name: "Bitcoin Mining",
+        icon: "₿",
+        energyUse: "Computers solving math puzzles",
+        outcome: "Unbreakable digital security",
+        efficiency: "~95%",
+        security: "Never been hacked",
+        waste: "5% waste, 95% becomes security",
+        visual: "🔒⚡"
+      }
+    ];
+
+    const insights = [
+      { text: "Bitcoin transforms energy into security", value: "transformation" },
+      { text: "Banks waste more energy than Bitcoin", value: "comparison" },
+      { text: "Energy cost makes Bitcoin impossible to fake", value: "unfakeable" }
+    ];
+
+    return (
+      <div className="bank-waste-streamlined">
+        <div className="waste-header">
+          <h2>🌡️ The Great Energy Waste Mystery</h2>
+          <p className="subtitle">Which system actually wastes more energy?</p>
+        </div>
+
+        <div className="systems-comparison">
+          {systems.map((system) => (
+            <div 
+              key={system.id}
+              className={`system-card ${selectedSystem === system.id ? 'selected' : ''}`}
+              onClick={() => setSelectedSystem(system.id)}
+            >
+              <div className="system-header">
+                <span className="system-icon">{system.icon}</span>
+                <h3>{system.name}</h3>
               </div>
 
-              {showExplanation && (
-                <div className="answer-explanation">
-                  <div className="explanation-box">
-                    <div className="result-icon">
-                      {answers[currentQuestion] === content.questions[currentQuestion].correct ? '✅' : '❌'}
+              <div className="energy-flow">
+                <div className="flow-item">
+                  <span className="flow-label">Energy Input:</span>
+                  <p>{system.energyUse}</p>
+                </div>
+                <div className="flow-arrow">↓</div>
+                <div className="flow-item">
+                  <span className="flow-label">Outcome:</span>
+                  <p>{system.outcome}</p>
+                </div>
+              </div>
+
+              {selectedSystem === system.id && (
+                <div className="system-details">
+                  <div className="detail-stats">
+                    <div className="stat">
+                      <span className="stat-label">Efficiency:</span>
+                      <span className={`stat-value ${system.id}`}>{system.efficiency}</span>
                     </div>
-                    <p>{content.questions[currentQuestion].explanation}</p>
+                    <div className="stat">
+                      <span className="stat-label">Security:</span>
+                      <span className={`stat-value ${system.id}`}>{system.security}</span>
+                    </div>
                   </div>
-                  {currentQuestion < content.questions.length - 1 && (
-                    <Button 
-                      variant="primary"
-                      onClick={nextQuestion}
-                      className="next-question-btn"
-                    >
-                      Next Question →
-                    </Button>
-                  )}
+                  
+                  <div className="waste-analysis">
+                    <div className="waste-visual">{system.visual}</div>
+                    <p className="waste-description">{system.waste}</p>
+                  </div>
                 </div>
               )}
             </div>
-          </div>
-        ) : (
-          <div className="completion-section">
-            <div className="completion-message">
-              <h3>{content.nextModule.title}</h3>
-              <p>{content.nextModule.description}</p>
+          ))}
+        </div>
+
+        {selectedSystem && (
+          <div className="insight-section">
+            <h3>💡 What's the key insight?</h3>
+            <div className="insight-choices">
+              {insights.map((insight) => (
+                <OptionButton
+                  key={insight.value}
+                  selected={userInsight === insight.value}
+                  onClick={() => setUserInsight(insight.value)}
+                >
+                  {insight.text}
+                </OptionButton>
+              ))}
             </div>
 
-            <ContinueButton 
-              onClick={onComplete}
-              completed={true}
-              nextStep="Module Complete"
-            >
-              {content.nextModule.buttonText}
-            </ContinueButton>
+            {userInsight && (
+              <div className="insight-result">
+                <div className="result-icon">
+                  {userInsight === 'transformation' ? '🎯' : '💭'}
+                </div>
+                <p>
+                  {userInsight === 'transformation' && "Exactly! Bitcoin turns energy into mathematical proof that can't be faked."}
+                  {userInsight === 'comparison' && "True! Banks waste energy on buildings and still get hacked. Bitcoin's energy creates actual security."}
+                  {userInsight === 'unfakeable' && "You've got it! The energy cost is what makes Bitcoin impossible to counterfeit."}
+                </p>
+              </div>
+            )}
           </div>
         )}
+
+        <ContinueButton
+          onClick={onComplete}
+          completed={selectedSystem && userInsight}
+          nextStep="The Double-Spend Challenge"
+        >
+          Continue to Double-Spend Challenge →
+        </ContinueButton>
+      </div>
+    );
+  };
+
+  // Double Spend Lab Component - Streamlined with direct experimentation
+  const DoubleSpendLab = ({ content, onComplete }) => {
+    const [userChoice, setUserChoice] = useState(null);
+    const [attemptResult, setAttemptResult] = useState(null);
+    const [userRealization, setUserRealization] = useState(null);
+
+    const scenarios = [
+      {
+        id: 'physical',
+        title: "Physical World: Your Energy",
+        description: "You just spent 1000 calories pushing that heavy box through quicksand",
+        question: "Can you use those same 1000 calories to push another box?",
+        action: "Try to Use Same Energy Again",
+        result: "❌ IMPOSSIBLE! You're exhausted - energy is spent"
+      },
+      {
+        id: 'digital',
+        title: "Digital World: Bank Balance",
+        description: "You just spent $1000 from your bank account",
+        question: "Can you spend that same $1000 again?",
+        action: "Try to Double-Spend",
+        result: "🤔 MAYBE... if you hack the system or bank messes up"
+      },
+      {
+        id: 'bitcoin',
+        title: "Bitcoin World: Energy-Backed Bits",
+        description: "You just spent 1000 energy units to create a Bitcoin transaction",
+        question: "Can you use those same energy units again?",
+        action: "Try to Double-Spend Bitcoin",
+        result: "❌ IMPOSSIBLE! Energy is physically spent, transaction is locked"
+      }
+    ];
+
+    const realizations = [
+      { text: "Bitcoin is like physical energy - can't be spent twice", value: "physical" },
+      { text: "Bank money is just numbers - easier to manipulate", value: "digital" },
+      { text: "Energy cost makes Bitcoin unfakeable", value: "energy" }
+    ];
+
+    const handleScenarioClick = (scenarioId) => {
+      setUserChoice(scenarioId);
+      setAttemptResult(scenarios.find(s => s.id === scenarioId));
+    };
+
+    return (
+      <div className="double-spend-lab-streamlined">
+        <div className="lab-header">
+          <h2>⚡ The Double-Spend Challenge</h2>
+          <p className="subtitle">Try to spend the same thing twice</p>
+        </div>
+
+        <div className="scenarios-grid">
+          {scenarios.map((scenario) => (
+            <div 
+              key={scenario.id}
+              className={`scenario-card ${userChoice === scenario.id ? 'selected' : ''}`}
+            >
+              <h3>{scenario.title}</h3>
+              <p className="scenario-description">{scenario.description}</p>
+              
+              <div className="scenario-challenge">
+                <strong>{scenario.question}</strong>
+              </div>
+
+              <ActionButton
+                variant={scenario.id === 'digital' ? 'warning' : 'primary'}
+                onClick={() => handleScenarioClick(scenario.id)}
+                disabled={userChoice && userChoice !== scenario.id}
+                className="scenario-btn"
+              >
+                {scenario.action}
+              </ActionButton>
+
+              {userChoice === scenario.id && (
+                <div className="scenario-result">
+                  <div className="result-box">
+                    <p className="result-text">{scenario.result}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {attemptResult && (
+          <div className="realization-section">
+            <h3>💡 What's the pattern you notice?</h3>
+            <div className="realization-choices">
+              {realizations.map((realization) => (
+                <OptionButton
+                  key={realization.value}
+                  selected={userRealization === realization.value}
+                  onClick={() => setUserRealization(realization.value)}
+                >
+                  {realization.text}
+                </OptionButton>
+              ))}
+            </div>
+
+            {userRealization && (
+              <div className="realization-result">
+                <div className="result-icon">
+                  {userRealization === 'physical' ? '🎯' : '💭'}
+                </div>
+                <p>
+                  {userRealization === 'physical' && "Exactly! Bitcoin brings physical scarcity to the digital world."}
+                  {userRealization === 'digital' && "True! Traditional digital money is just database entries that can be changed."}
+                  {userRealization === 'energy' && "Perfect! The energy spent to secure Bitcoin can't be spent again - just like calories."}
+                </p>
+              </div>
+            )}
           </div>
-        );
+        )}
+
+        <ContinueButton
+          onClick={onComplete}
+          completed={attemptResult && userRealization}
+          nextStep="Your Bitcoin Journey"
+        >
+          Continue to Final Thoughts →
+        </ContinueButton>
+      </div>
+    );
+  };
+
+  // Reflection Component - Streamlined with key insights
+  const Reflection = ({ content, onComplete }) => {
+    const [selectedInsight, setSelectedInsight] = useState(null);
+    const [finalChoice, setFinalChoice] = useState(null);
+
+    const keyInsights = [
+      {
+        id: 'energy',
+        title: "Energy = Security",
+        description: "Bitcoin uses energy cost to make digital money unfakeable",
+        icon: "⚡🔒"
+      },
+      {
+        id: 'physics',
+        title: "Digital Physics",
+        description: "Bitcoin brings physical scarcity to the digital world",
+        icon: "🌐🏋️‍♂️"
+      },
+      {
+        id: 'trust',
+        title: "Trust in Math, Not People",
+        description: "No need to trust banks when math does the work",
+        icon: "🧮💯"
+      }
+    ];
+
+    const finalChoices = [
+      { text: "I want to learn more about how Bitcoin actually works", value: "continue" },
+      { text: "I need to think about this before going deeper", value: "pause" },
+      { text: "I'm ready to explore Bitcoin's code and design", value: "advanced" }
+    ];
+
+    return (
+      <div className="final-reflection-streamlined">
+        <div className="reflection-header">
+          <h2>🎯 The Bitcoin Breakthrough</h2>
+          <p className="subtitle">You've discovered why Bitcoin is different</p>
+        </div>
+
+        <div className="insights-summary">
+          <h3>💡 Which insight resonates most with you?</h3>
+          <div className="insights-grid">
+            {keyInsights.map((insight) => (
+              <div 
+                key={insight.id}
+                className={`insight-card ${selectedInsight === insight.id ? 'selected' : ''}`}
+                onClick={() => setSelectedInsight(insight.id)}
+              >
+                <div className="insight-icon">{insight.icon}</div>
+                <h4>{insight.title}</h4>
+                <p>{insight.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {selectedInsight && (
+          <div className="journey-continuation">
+            <h3>🚀 What's next on your Bitcoin journey?</h3>
+            <div className="final-choices">
+              {finalChoices.map((choice) => (
+                <OptionButton
+                  key={choice.value}
+                  selected={finalChoice === choice.value}
+                  onClick={() => setFinalChoice(choice.value)}
+                  className="journey-choice"
+                >
+                  {choice.text}
+                </OptionButton>
+              ))}
+            </div>
+
+            {finalChoice && (
+              <div className="journey-result">
+                <div className="result-icon">🎯</div>
+                <p>
+                  {finalChoice === 'continue' && "Perfect! The next modules will dive deeper into Bitcoin's design and how it all fits together."}
+                  {finalChoice === 'pause' && "Smart approach! Take time to let these concepts sink in. Bitcoin will be here when you're ready."}
+                  {finalChoice === 'advanced' && "Excellent! You're ready to explore the technical magic that makes Bitcoin work."}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        <ContinueButton
+          onClick={onComplete}
+          completed={selectedInsight && finalChoice}
+          nextStep="Module Complete"
+        >
+          Complete Bitcoin Basics →
+        </ContinueButton>
+      </div>
+    );
   };
 
   const renderStep = (step, index) => {
@@ -1122,9 +970,6 @@ const BitcoinBasicsModule = () => {
       
       case 'bank-waste':
         return <BankWaste content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'energy-transformation':
-        return <EnergyTransformation content={step.content} onComplete={() => handleStepComplete(index)} />;
       
       case 'double-spend-lab':
         return <DoubleSpendLab content={step.content} onComplete={() => handleStepComplete(index)} />;
@@ -1150,9 +995,9 @@ const BitcoinBasicsModule = () => {
       title: "Energy & Trust",
       type: "energy-hook",
       content: {
-        title: "🏋️‍♂️ Feel the Difference Between Real Work and Magic",
-        subtitle: "Some things should cost energy. Here's why.",
-        primeText: "Try moving the box on two different surfaces:",
+        title: "🏋️‍♂️ Feel the Power of Proof-of-Work",
+        subtitle: "You're about to discover why energy cost equals security",
+        primeText: "Try moving the box across two different surfaces:",
         surfaces: {
           ice: {
             name: "Ice Rink",
@@ -1176,8 +1021,8 @@ const BitcoinBasicsModule = () => {
       title: "Money From Nothing",
       type: "fiat-creation",
       content: {
-        title: "💸 Watch Money Appear From Thin Air",
-        subtitle: "Meet Sarah. She needs $300,000 for a house but only has $30,000.",
+        title: "💸 Meet Sarah's $270,000 Problem",
+        subtitle: "She has $30,000. She needs $300,000 for a house.",
         primeText: "Let's see what happens when she visits the bank...",
         loanDemo: {
           initial: {
@@ -1274,108 +1119,28 @@ const BitcoinBasicsModule = () => {
       }
     },
     {
-      title: "The Cost of 'Free' Money",
+      title: "Energy: Waste vs. Security",
       type: "bank-waste",
       content: {
-        title: "🏢 The Hidden Energy Cost of Digital IOUs",
-        subtitle: "Traditional banking wastes more electricity than you think",
-        primeText: "All this infrastructure just to secure numbers in a database:",
-        costs: {
-          buildings: {
-            icon: "🏢",
-            label: "Bank Buildings",
-            cost: "$Billions/year",
-            energy: "Massive AC & servers",
-            impact: 45
-          },
-          security: {
-            icon: "👮",
-            label: "Physical Security",
-            cost: "$Millions/year",
-            energy: "24/7 systems",
-            impact: 30
-          },
-          backups: {
-            icon: "💾",
-            label: "Data Centers",
-            cost: "$Millions/year",
-            energy: "Redundant power",
-            impact: 25
-          }
-        },
-        heatWaste: {
-          title: "All This Energy Becomes... Heat",
-          description: "Electricity → Servers → Heat → Atmosphere",
-          question: "Could we capture this waste and turn it into value?"
-        }
+        title: "🌡️ The Great Energy Waste Mystery",
+        subtitle: "Which system actually wastes more energy?",
+        primeText: "Time to compare how different systems use energy:"
       }
     },
     {
-      title: "Energy to Value",
-      type: "energy-transformation",
-      content: {
-        title: "Could we bottle that energy instead of wasting it?",
-        subtitle: "Move the slider to transform wasted energy into Bitcoin value",
-        primeText: "Bitcoin mining turns spare power into unbreakable digital money.",
-        slider: {
-          left: {
-            icon: "🌡️💨",
-            label: "Wasted Heat"
-          },
-          right: {
-            icon: "₿₿₿",
-            label: "Bitcoin Value"
-          }
-        },
-        insight: "Instead of guards and passwords, Bitcoin locks your money with math puzzles that cost electricity to solve—and can't be faked."
-      }
-    },
-    {
-      title: "Try to Double-Spend",
+      title: "The Double-Spend Challenge",
       type: "double-spend-lab",
       content: {
-        title: "⚡ Can You Spend the Same Energy Twice?",
-        subtitle: "Try to cheat the laws of physics",
-        primeText: "You have 1000 energy units. Try to use them to mine two blocks.",
-        challenge: {
-          setup: "You're a Bitcoin miner with 1000 units of electricity",
-          task: "Try to use the same energy to mine two different blocks",
-          realWorld: "This is like trying to use the same gallon of gas to drive two different cars"
-        },
-        insight: "Bitcoin is impossible to counterfeit because it's backed by real energy work that can't be faked or duplicated."
+        title: "⚡ The Double-Spend Challenge",
+        subtitle: "Try to spend the same thing twice"
       }
     },
     {
-      title: "Final Reflection",
+      title: "Your Bitcoin Journey",
       type: "reflection",
       content: {
-        title: "🤔 Which System Makes More Sense?",
-        subtitle: "Let's review what we've learned",
-        questions: [
-          {
-            question: "Which system wasted the most energy?",
-            options: ["Traditional Banking", "Bitcoin Mining"],
-            correct: "Traditional Banking",
-            explanation: "Banks waste energy on buildings, security, and servers that still get hacked."
-          },
-          {
-            question: "Which system was easiest to copy?",
-            options: ["Digital Bank Money", "Bitcoin"],
-            correct: "Digital Bank Money",
-            explanation: "Bank numbers can be changed; energy work can't be faked."
-          },
-          {
-            question: "Which system treated energy cost as a feature?",
-            options: ["Traditional Banking", "Bitcoin"],
-            correct: "Bitcoin",
-            explanation: "Bitcoin turns energy cost into unbreakable security."
-          }
-        ],
-        nextModule: {
-          title: "Ready to design the money of the future?",
-          description: "Next up: Learn how Bitcoin's code keeps everyone honest",
-          buttonText: "Start Next Module →"
-        }
+        title: "🎯 The Bitcoin Breakthrough",
+        subtitle: "You've discovered why Bitcoin is different"
       }
     }
   ];
