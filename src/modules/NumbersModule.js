@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Calculator, CheckCircle, Trophy } from 'lucide-react';
 import '../components/ModuleCommon.css';
+import './NumbersModule.css';
 
 const NumbersModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -12,117 +13,223 @@ const NumbersModule = () => {
 
   const steps = [
     {
-      title: "The $600M Pizza 🍕",
-      type: "intro",
+      title: "The Pizza That Changed Everything 🍕",
+      type: "pizza_story",
       content: {
-        title: "The Most Expensive Pizza Ever!",
-        text: "Imagine you're hungry and order a pizza online. You pay with your credit card, and 30 minutes later, your pizza arrives. Simple, right? 🍕\n\nBut in 2010, something significant happened. A programmer named Laszlo was hungry too, but he tried something different:\n\n\"I'll pay 10,000 Bitcoin for two pizzas\" he posted online.\n\nSomeone took his offer:\n* Ordered two regular pizzas ($40).\n* Delivered them to Laszlo.\n* Got 10,000 Bitcoin in return.\n\nHere's the remarkable part: those Bitcoin would be 'hundreds of millions' today! 🤯\n\nBut wait... let's think about something:\n\n🤔 Your Pizza Order:\n* You: \"Here's my credit card number\"\n* Payment Terminal: \"Encrypting and sending card data...\"\n* Payment Processor: \"Validating card details...\"\n* Your Bank: \"Checking if you have $40...\"\n* Card Network: \"Routing payment between banks...\"\n* Pizza Place's Bank: \"Accepting the payment...\"\n* Payment Processor: \"Confirming transaction...\"\n* Pizza Place: \"Got the payment, making pizza!\"\n* Only the banks and processors see this happening\n* Everything is stored in 'one big bank database' (fingers crossed it doesn't get hacked! 🤞)\n* You just have to 'trust' that the numbers in their database are 'really' correct\n\n🤔 Laszlo's Bitcoin Pizza:\n* Laszlo: \"Here's my Bitcoin payment\"\n* Everyone: \"We can all see and verify this payment!\"\n* No banks needed\n* Can't be changed or hidden\n\nHow do thousands of computers around the world agree on who sent what to whom, without any banks in the middle? 🌍\n\nTo understand this, we first need to learn how computers talk to each other. Ready to find out? 💫\n\n---\n\n_Special thanks to Jack Mallers for the 'aha moment' during his Miami 2021 presentation that inspired this explanation! 🙏_"
-      }
-    },
-    {
-      title: "Computer Language",
-      type: "intro",
-      content: {
-        title: "How Do Computers Talk to Each Other?",
-        text: "Consider this example: 🎮\n\nImagine you and your friend want to pass notes in class, but you want to make sure:\n   • Nobody can change the message\n   • Everyone gets the exact same message\n   • No mistakes allowed!\n\nYou might think computers just use regular numbers like we do (0-9). But they actually use 'three different ways' to write numbers. And here's something interesting: computers sometimes write numbers 'backwards' (right to left, like Hebrew!) because it helps them work more efficiently.\n\nLet's look at the three ways computers handle numbers:\n\n1. Computer's Native Language ('Binary')\n   • Think of it like this: Computers can only use '0 and 1'\n   • Just like how a light switch can only be 'ON' or 'OFF'\n   • It's simple but takes lots of space!\n\n2. Human-Friendly Format ('Decimal')\n   • This is how 'we' write numbers (0-9)\n   • Easy for humans to read\n   • Bitcoin shows amounts this way\n\n3. Space-Saving Format ('Hexadecimal')\n   • Uses numbers 0-9 and letters 'A-F'\n   • Perfect middle ground\n   • Bitcoin uses this for addresses\n\n🤔 Why Three Different Ways?\n   • Computers 'need' binary (it's the only thing they understand)\n   • Humans like regular numbers (easier for us!)\n   • Shorthand makes long computer numbers easier to read\n\nLet's see this in action:\nWhen Laszlo sent his 10,000 Bitcoin:\n   • You and I see: '10,000'\n   • Computers see: '10011100010000'\n   • Shorthand writes it as: '2710'\n   • And sometimes backwards as: '1027' (for efficiency!)\n\nReady to learn how to read and write these different number systems? It's like learning a new language! 🔍"
-      }
-    },
-    {
-      title: "Examples: Hex & Little Endian",
-      type: "examples",
-      content: {
-        title: "Let's Practice Different Number Systems",
-        sections: [
+        title: "May 22, 2010: Computer History in the Making",
+        story: "You're a programmer named Laszlo. You're hungry and want pizza, but you have an idea that will change digital money forever...",
+        scenarios: [
           {
-            title: "Hex Numbers",
-            description: "Hex (short for hexadecimal) is like a secret code that uses 16 different symbols: the numbers 0-9 and letters A-F. It's a shorter way to write the long numbers that computers use.",
-            examples: [
-              { hex: "A", decimal: 10, explanation: "When you see 'A' in hex, it means '10' in regular numbers." },
-              { hex: "F", decimal: 15, explanation: "The letter 'F' is the highest digit in hex, meaning '15'." },
-              { hex: "10", decimal: 16, explanation: "Just like we write '10' when we run out of single digits, hex uses '10' to mean '16'." }
-            ]
+            id: "traditional_payment",
+            title: "🏦 The Traditional Way",
+            description: "You grab your credit card and order online",
+            process: [
+              "Your card number travels through 6 different companies",
+              "Each company checks, validates, and records",
+              "Everything happens in private databases",
+              "You trust the banks got it right"
+            ],
+            insight: "Traditional payments require trusting many middlemen"
           },
           {
-            title: "Little Endian",
-            description: "Sometimes computers read numbers backwards in pairs - like reading 'desserts' as 'stressed'. It might seem strange, but it helps computers work faster with these numbers.",
-            examples: [
-              { 
-                normal: "12", 
-                reversed: "21", 
-                explanation: "Think of it like flipping a two-digit number: 12 becomes 21." 
-              },
-              { 
-                normal: "1234", 
-                reversed: "3412", 
-                explanation: "With more digits, we flip them in pairs: '12 34' becomes '34 12'." 
-              }
-            ]
+            id: "bitcoin_experiment", 
+            title: "⚡ Laszlo's Experiment",
+            description: "You post: 'I'll pay 10,000 Bitcoin for two pizzas'",
+            process: [
+              "Your transaction goes to thousands of computers",
+              "Everyone can see and verify the payment",
+              "No banks or middlemen needed",
+              "The payment becomes permanent history"
+            ],
+            insight: "Bitcoin payments are transparent and verifiable by anyone"
+          },
+          {
+            id: "future_shock",
+            title: "💰 The Plot Twist",
+            description: "Those 10,000 Bitcoin become worth $600+ million",
+            process: [
+              "The pizza cost: $40 in 2010",
+              "The Bitcoin value: $600+ million today",
+              "Laszlo proved digital money could work",
+              "The first real-world Bitcoin purchase"
+            ],
+            insight: "This 'expensive pizza' proved Bitcoin's real-world value"
           }
         ]
       }
     },
     {
-      title: "Warm-up: Hex Quiz",
-      type: "warmup",
+      title: "Computer Languages",
+      type: "computer_language",
       content: {
-        question: "What is the decimal value of hex 'FF'?",
-        options: ["255", "256", "15", "16"],
-        correct: 0,
-        explanation: "FF in hex = (15 × 16¹) + (15 × 16⁰) = 240 + 15 = 255."
-      }
-    },
-    {
-      title: "Practice: Hex Calculator",
-      type: "practice",
-      content: {
-        title: "Your Turn: Convert These Numbers!",
-        description: "Let's practice converting real Bitcoin numbers:",
-        challenges: [
+        title: "How Computers Actually Talk",
+        challenge: "You want to send a secret message that computers can read, but humans can also understand. How do you write it?",
+        languages: [
           {
-            title: "🎯 Challenge 1: Block Version",
-            description: "Convert this block version number from hex:",
-            hex: "01",
-            hint: "Remember: 01 in hex equals 1 in decimal.",
-            expected: 1
+            id: "binary",
+            name: "Binary (Computer Native)",
+            example: "Hello",
+            encoded: "01001000 01100101 01101100 01101100 01101111",
+            pros: ["Only language computers understand", "Impossible to misinterpret"],
+            cons: ["Very long", "Hard for humans to read"],
+            usage: "Computer processors work entirely in binary"
           },
           {
-            title: "🎯 Challenge 2: Transaction Fee",
-            description: "Convert this transaction fee from hex:",
-            hex: "2A",
-            hint: "2A = (2 × 16) + (10).",
-            expected: 42
+            id: "decimal", 
+            name: "Decimal (Human Friendly)",
+            example: "10,000",
+            encoded: "10,000",
+            pros: ["Easy for humans", "What we use daily"],
+            cons: ["Not how computers think", "Can be ambiguous"],
+            usage: "Bitcoin amounts shown to users"
           },
           {
-            title: "🎯 Challenge 3: Block Reward",
-            description: "Convert this early block reward from hex:",
-            hex: "FF",
-            hint: "FF = (15 × 16) + 15.",
-            expected: 255
+            id: "hexadecimal",
+            name: "Hexadecimal (Best of Both)",
+            example: "Hello",
+            encoded: "48656C6C6F",
+            pros: ["Much shorter than binary", "Computers can easily convert", "Clear and precise"],
+            cons: ["Uses letters A-F", "Need to learn the system"],
+            usage: "Bitcoin addresses and transaction IDs"
           }
         ]
       }
     },
     {
-      title: "Digital Security",
-      type: "intro",
+      title: "Hex Discovery Lab",
+      type: "hex_discovery",
       content: {
-        title: "How Computers Protect Information",
-        text: "Let's explore how computers secure information 🔒\n\nComputers write data in different formats:\n\n1. Binary (native language):\n   'Hi' → 01001000 01101001\n\n2. Hexadecimal (compact format):\n   01001000 01101001 → 4869\n\nUsing these formats, computers create secure patterns that can't be reversed:\n\n'Hello Bitcoin'\n→ Binary: 01001000 01100101 01101100...\n→ Secure Pattern: 9595c9bca95d...\n\nThis process has three key features:\n\n1. Consistency:\n   Same input = Same pattern, always.\n\n2. Sensitivity:\n   Tiny change = Completely different pattern.\n\n3. One-Way:\n   Can't reverse the pattern back to the original.\n\nReal-World Uses:\n- Password security\n- Digital signatures\n- Bitcoin transactions\n\nNext, we'll practice working with these number systems! 💫"
+        title: "Crack the Hex Code",
+        mission: "You're investigating Bitcoin transactions. Each has a hex address like '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'. Can you decode what the letters mean?",
+        discoveries: [
+          {
+            phase: "basic_digits",
+            title: "🔢 The Number Part",
+            question: "In hex, what do the regular numbers 0-9 mean?",
+            revelation: "They mean exactly the same as in regular numbers! 0=0, 1=1, 2=2... 9=9",
+            examples: ["5 in hex = 5 in decimal", "7 in hex = 7 in decimal"]
+          },
+          {
+            phase: "letter_code", 
+            title: "🔤 The Letter Mystery",
+            question: "But what about A, B, C, D, E, F?",
+            revelation: "They're just more numbers! A=10, B=11, C=12, D=13, E=14, F=15",
+            examples: ["A in hex = 10 in decimal", "F in hex = 15 in decimal"]
+          },
+          {
+            phase: "position_power",
+            title: "🚀 The Position Secret", 
+            question: "Why is hex '10' different from decimal '10'?",
+            revelation: "Position matters! Each spot is worth 16 times more than the one to its right",
+            examples: ["Hex '10' = (1×16) + (0×1) = 16 decimal", "Hex 'FF' = (15×16) + (15×1) = 255 decimal"]
+          }
+        ]
       }
     },
     {
-      title: "Reflection: Bitcoin's Time-Stamped History Book",
+      title: "Bitcoin's Backward Trick",
+      type: "endian_discovery",
+      content: {
+        title: "Why Bitcoin Sometimes Reads Backwards",
+        scenario: "You're examining a Bitcoin transaction and notice something strange...",
+        mystery: "The same number appears differently in different parts of Bitcoin's code. Sometimes '1234' becomes '3412'. Why?",
+        explanation: {
+          title: "Little-Endian: Reading in Reverse",
+          reason: "Computers sometimes read numbers backwards in pairs to work more efficiently",
+          examples: [
+            {
+              normal: "12",
+              flipped: "21", 
+              process: "Two digits: just flip them"
+            },
+            {
+              normal: "1234",
+              flipped: "3412",
+              process: "Four digits: flip each pair, then reverse the pairs"
+            },
+            {
+              normal: "ABCDEF",
+              flipped: "EFCDAB", 
+              process: "Six digits: flip each pair (AB→BA, CD→DC, EF→FE), then reverse"
+            }
+          ]
+        },
+        insight: "This 'backward reading' helps computers process large numbers faster, which is crucial for Bitcoin's security calculations."
+      }
+    },
+    {
+      title: "Security Through Numbers",
+      type: "security_demo",
+      content: {
+        title: "How Numbers Create Unbreakable Security",
+        challenge: "You need to prove you own Bitcoin without revealing your private key. How do math and encoding make this possible?",
+        demonstrations: [
+          {
+            type: "consistency",
+            title: "🎯 Always the Same",
+            input: "Hello Bitcoin",
+            process: "Put through security algorithm",
+            output: "9595c9bca95d8ef8...",
+            rule: "Same input → Same output, every time"
+          },
+          {
+            type: "sensitivity", 
+            title: "🦋 Butterfly Effect",
+            input: "Hello bitcoin", 
+            process: "Just changed one letter case",
+            output: "completely different hash...",
+            rule: "Tiny change → Completely different output"
+          },
+          {
+            type: "one_way",
+            title: "🔒 One-Way Street", 
+            input: "9595c9bca95d8ef8...",
+            process: "Try to reverse the algorithm",
+            output: "Impossible to get back to 'Hello Bitcoin'",
+            rule: "Can't reverse the process, no matter how hard you try"
+          }
+        ]
+      }
+    },
+    {
+      title: "Your Bitcoin Insights",
       type: "reflection",
       content: {
-        question: "How would you organize a giant digital history book so computers can quickly find any past transaction? 📚",
-        mainPrompt: "Bitcoin works like a time-stamped ledger where each page has a unique hex number label (like '000000000003ba27...'). Sometimes these numbers are stored backwards for efficiency! 🔄",
-        subQuestions: [
-          "What's unusual about this numbering system?",
-          "What makes it clever?",
-          "What aspects still puzzle you?",
-          "How would you explain this system to a friend?"
+        question: "What's your biggest insight about how Bitcoin uses numbers and encoding?",
+        insights: [
+          {
+            id: "encoding_bridge",
+            title: "🌉 Encoding as Universal Language",
+            description: "Hex and binary let humans and computers communicate about the same information"
+          },
+          {
+            id: "transparency_power",
+            title: "👁️ Transparency Creates Trust", 
+            description: "When everyone can verify the math, we don't need to trust authorities"
+          },
+          {
+            id: "efficiency_matters",
+            title: "⚡ Efficiency Enables Scale",
+            description: "Clever encoding tricks (like little-endian) help Bitcoin handle millions of transactions"
+          }
         ],
-        placeholder: "Share your thoughts about Bitcoin's unique way of organizing its transaction history. Does it remind you of other systems you know? What questions do you have about how it works?"
+        nextSteps: [
+          {
+            id: "explore_hashing",
+            title: "🔐 Explore Cryptographic Hashing",
+            description: "Dive deeper into how Bitcoin uses mathematical functions for security"
+          },
+          {
+            id: "learn_keys",
+            title: "🗝️ Understand Keys and Addresses", 
+            description: "Learn how your Bitcoin address is created from your private key"
+          },
+          {
+            id: "study_transactions",
+            title: "💸 Study Transaction Structure",
+            description: "See exactly how Bitcoin transactions are encoded and verified"
+          }
+        ]
       }
     }
   ];
@@ -145,49 +252,54 @@ const NumbersModule = () => {
     }
 
     switch (step.type) {
-      case 'intro':
+      case 'pizza_story':
         return (
-          <div className="step-content intro-step">
-            <div className="step-icon">
-              <Calculator size={48} />
-            </div>
-            <h2>{step.content.title}</h2>
-            <p className="intro-text">{step.content.text}</p>
-            <button 
-              className="continue-button"
-              onClick={() => handleStepComplete(index)}
-            >
-              Start Learning
-            </button>
-          </div>
-        );
-
-      case 'examples':
-        return (
-          <ExamplesStep
+          <PizzaStoryStep
             title={step.content.title}
-            sections={step.content.sections}
+            story={step.content.story}
+            scenarios={step.content.scenarios}
             onComplete={() => handleStepComplete(index)}
           />
         );
 
-      case 'warmup':
+      case 'computer_language':
         return (
-          <WarmupQuiz 
-            question={step.content.question}
-            options={step.content.options}
-            correct={step.content.correct}
+          <ComputerLanguageStep
+            title={step.content.title}
+            challenge={step.content.challenge}
+            languages={step.content.languages}
+            onComplete={() => handleStepComplete(index)}
+          />
+        );
+
+      case 'hex_discovery':
+        return (
+          <HexDiscoveryStep
+            title={step.content.title}
+            mission={step.content.mission}
+            discoveries={step.content.discoveries}
+            onComplete={() => handleStepComplete(index)}
+          />
+        );
+
+      case 'endian_discovery':
+        return (
+          <EndianDiscoveryStep
+            title={step.content.title}
+            scenario={step.content.scenario}
+            mystery={step.content.mystery}
             explanation={step.content.explanation}
+            insight={step.content.insight}
             onComplete={() => handleStepComplete(index)}
           />
         );
 
-      case 'practice':
+      case 'security_demo':
         return (
-          <PracticeStep
+          <SecurityDemoStep
             title={step.content.title}
-            description={step.content.description}
-            challenges={step.content.challenges}
+            challenge={step.content.challenge}
+            demonstrations={step.content.demonstrations}
             onComplete={() => handleStepComplete(index)}
           />
         );
@@ -196,8 +308,8 @@ const NumbersModule = () => {
                   return (
             <ReflectionStep
               question={step.content.question}
-              placeholder={step.content.placeholder}
-              content={step.content}
+              insights={step.content.insights}
+              nextSteps={step.content.nextSteps}
               onComplete={() => handleStepComplete(index)}
               setCurrentStep={setCurrentStep}
               isLastStep={index === steps.length - 1}
@@ -276,504 +388,283 @@ const NumbersModule = () => {
 };
 
 // Helper Components
-const ExamplesStep = ({ title, sections, onComplete }) => {
-  const [currentSubStep, setCurrentSubStep] = useState(0);
-  const [hexInput, setHexInput] = useState('');
-  const [endianInput, setEndianInput] = useState('');
-  const [completedSubSteps, setCompletedSubSteps] = useState(new Set());
+const PizzaStoryStep = ({ title, story, scenarios, onComplete }) => {
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showResult, setShowResult] = useState(false);
 
-  // Convert hex to decimal
-  const hexToDecimal = (hex) => {
-    if (!hex) return '';
-    const cleaned = hex.replace(/[^0-9A-Fa-f]/g, '');
-    if (!cleaned) return '';
-    return parseInt(cleaned, 16).toString();
+  const handleScenarioComplete = (scenarioIndex) => {
+    setSelectedOption(null);
+    setShowResult(false);
+    setCurrentScenario(scenarioIndex + 1);
   };
 
-  // Convert normal to little endian (reverse pairs of characters)
-  const normalToLittleEndian = (input) => {
-    if (!input) return '';
-    const cleaned = input.replace(/[^0-9A-Fa-f]/g, '');
-    if (cleaned.length % 2 !== 0) return cleaned; // Need even number of chars
-    
-    let result = '';
-    for (let i = cleaned.length - 2; i >= 0; i -= 2) {
-      result += cleaned.substr(i, 2);
-    }
-    return result;
-  };
-
-  const markSubStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSubSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSubSteps(newCompleted);
-  };
-
-  const subSteps = [
-    {
-      title: "🔤 Single Hex Digits",
-      content: (
-        <div className="substep-content">
-          <h3>Let's Start Simple: One Digit at a Time</h3>
-          <p>In hex, we use 16 different symbols:</p>
-          <div className="hex-basics">
-            <div className="hex-mapping">
-              <div className="hex-row">
-                <span className="hex-label">Numbers (0-9):</span>
-                <span className="hex-value">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</span>
-              </div>
-              <div className="hex-row">
-                <span className="hex-label">Letters (A-F):</span>
-                <span className="hex-value">A = 10, B = 11, C = 12, D = 13, E = 14, F = 15</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="interactive-section">
-            <p>👉 Click any symbol to see its decimal value:</p>
-            <div className="hex-grid">
-              {['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'].map(digit => (
-                <button 
-                  key={digit}
-                  className="hex-button"
-                  onClick={() => setHexInput(digit)}
-                >
-                  {digit}
-                </button>
-              ))}
-            </div>
-            
-            {hexInput && (
-              <div className="conversion-display">
-                <span className="hex-display">Hex: {hexInput}</span>
-                <span className="equals">→</span>
-                <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
-              </div>
-            )}
-          </div>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(0);
-              setCurrentSubStep(1);
-            }}
-          >
-            I understand single digits! →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "🔢 Two Hex Digits",
-      content: (
-        <div className="substep-content">
-          <h3>Now: Two Digits Together</h3>
-          <p>When you put two hex digits together, each position has a different value:</p>
-          
-          <div className="position-explanation">
-            <div className="position-grid">
-              <div className="position">
-                <span className="pos-label">Left digit</span>
-                <span className="pos-value">× 16</span>
-              </div>
-              <div className="position">
-                <span className="pos-label">Right digit</span>
-                <span className="pos-value">× 1</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="example-breakdown">
-            <h4>Example: 2A</h4>
-            <div className="calculation">
-              <div className="step">Left (2): 2 × 16 = 32</div>
-              <div className="step">Right (A=10): 10 × 1 = 10</div>
-              <div className="total">Total: 32 + 10 = 42</div>
-            </div>
-          </div>
-          
-          <div className="interactive-section">
-            <p>👉 Try these common two-digit hex numbers:</p>
-            <div className="example-buttons">
-              <button onClick={() => setHexInput('1A')}>1A</button>
-              <button onClick={() => setHexInput('2B')}>2B</button>
-              <button onClick={() => setHexInput('FF')}>FF</button>
-            </div>
-            
-            <div className="calculator">
-              <p>Or type your own two-digit hex number:</p>
-              <input
-                type="text"
-                value={hexInput}
-                onChange={(e) => setHexInput(e.target.value.toUpperCase().slice(0,2))}
-                placeholder="Example: 2A"
-                maxLength="2"
-              />
-              {hexInput && (
-                <div className="conversion-display">
-                  <span className="hex-display">Hex: {hexInput}</span>
-                  <span className="equals">→</span>
-                  <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(1);
-              setCurrentSubStep(2);
-            }}
-          >
-            I get two digits! →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "📊 Bigger Numbers",
-      content: (
-        <div className="substep-content">
-          <h3>Three and Four Digit Numbers</h3>
-          <p>The pattern continues - each position is worth 16 times more than the one to its right:</p>
-          
-          <div className="position-values">
-            <div className="value-grid">
-              <div className="position">
-                <span className="pos-label">4th digit</span>
-                <span className="pos-value">× 4096 (16³)</span>
-              </div>
-              <div className="position">
-                <span className="pos-label">3rd digit</span>
-                <span className="pos-value">× 256 (16²)</span>
-              </div>
-              <div className="position">
-                <span className="pos-label">2nd digit</span>
-                <span className="pos-value">× 16 (16¹)</span>
-              </div>
-              <div className="position">
-                <span className="pos-label">1st digit</span>
-                <span className="pos-value">× 1 (16⁰)</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="examples-section">
-            <div className="example-card">
-              <h4>Example: ABC (3 digits)</h4>
-              <div className="calculation">
-                <div className="step">A (10) × 256 = 2,560</div>
-                <div className="step">B (11) × 16 = 176</div>
-                <div className="step">C (12) × 1 = 12</div>
-                <div className="total">Total: 2,560 + 176 + 12 = 2,748</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="interactive-section">
-            <p>👉 Try these bigger numbers:</p>
-            <div className="example-buttons">
-              <button onClick={() => setHexInput('ABC')}>ABC</button>
-              <button onClick={() => setHexInput('BEEF')}>BEEF</button>
-              <button onClick={() => setHexInput('1000')}>1000</button>
-            </div>
-            
-            <div className="calculator">
-              <p>Or type your own hex number:</p>
-              <input
-                type="text"
-                value={hexInput}
-                onChange={(e) => setHexInput(e.target.value.toUpperCase())}
-                placeholder="Try ABC or 1000"
-              />
-              {hexInput && (
-                <div className="conversion-display">
-                  <span className="hex-display">Hex: {hexInput}</span>
-                  <span className="equals">→</span>
-                  <span className="decimal-display">Decimal: {hexToDecimal(hexInput)}</span>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(2);
-              setCurrentSubStep(3);
-            }}
-          >
-            I understand bigger numbers! →
-          </button>
-        </div>
-      )
-    },
-    {
-      title: "🔄 Little Endian",
-      content: (
-        <div className="substep-content">
-          <h3>Reading Numbers Backwards</h3>
-          <p>Sometimes computers store numbers backwards in pairs. This is called "little-endian" format.</p>
-          
-          <div className="endian-examples">
-            <div className="example-card">
-              <h4>Two Digits: 12</h4>
-              <div className="conversion">
-                <span className="normal">Normal: 12</span>
-                <span className="arrow">↓</span>
-                <span className="flipped">Little-endian: 21</span>
-              </div>
-            </div>
-            
-            <div className="example-card">
-              <h4>Four Digits: 1234</h4>
-              <div className="conversion">
-                <span className="normal">Normal: <span className="pair">12</span><span className="pair">34</span></span>
-                <span className="arrow">↓</span>
-                <span className="flipped">Little-endian: <span className="pair">34</span><span className="pair">12</span></span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="interactive-section">
-            <p>👉 Try converting to little-endian:</p>
-            <input
-              type="text"
-              value={endianInput}
-              onChange={(e) => setEndianInput(e.target.value.toUpperCase())}
-              placeholder="Type an even number of digits"
-            />
-            {endianInput && (
-              <div className="conversion-display">
-                <span className="normal-display">Normal: {endianInput}</span>
-                <span className="equals">→</span>
-                <span className="endian-display">Little-endian: {normalToLittleEndian(endianInput)}</span>
-              </div>
-            )}
-            
-            <div className="quick-examples">
-              <p>Try these:</p>
-              <button onClick={() => setEndianInput('1234')}>1234</button>
-              <button onClick={() => setEndianInput('ABCD')}>ABCD</button>
-              <button onClick={() => setEndianInput('2710')}>2710</button>
-            </div>
-          </div>
-          
-          <button 
-            className="substep-continue"
-            onClick={() => {
-              markSubStepComplete(3);
-              onComplete();
-            }}
-          >
-            I'm ready for the quiz! →
-          </button>
-        </div>
-      )
-    }
-  ];
+  const currentScenarioData = scenarios[currentScenario];
 
   return (
-    <div className="step-content examples-step">
+    <div className="pizza-story-step">
+      <h2>{title}</h2>
+      <p>{story}</p>
 
-      <h2>Let's Learn Step by Step</h2>
-      
-      <div className="substep-progress">
-        <div className="substep-indicators">
-          {subSteps.map((_, index) => (
+      <div className="scenario-progress">
+        <div className="scenario-indicators">
+          {scenarios.map((_, index) => (
             <div 
               key={index}
-              className={`substep-dot ${currentSubStep === index ? 'active' : ''} ${completedSubSteps.has(index) ? 'completed' : ''}`}
+              className={`scenario-dot ${currentScenario === index ? 'active' : ''}`}
             />
           ))}
         </div>
-        <p className="substep-title">{subSteps[currentSubStep].title}</p>
+        <p className="scenario-title">{currentScenarioData.title}</p>
       </div>
-      
-      <div className="substep-container">
-        {subSteps[currentSubStep].content}
+
+      <div className="scenario-content">
+        <p>{currentScenarioData.description}</p>
+        <ul>
+          {currentScenarioData.process.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ul>
+        <p className="insight-text">{currentScenarioData.insight}</p>
       </div>
-      
-      {currentSubStep > 0 && (
+
+      {currentScenario < scenarios.length - 1 && (
         <button 
-          className="back-button"
-          onClick={() => setCurrentSubStep(currentSubStep - 1)}
+          className="continue-button"
+          onClick={() => handleScenarioComplete(currentScenario)}
         >
-          ← Back
+          Next Scenario →
+        </button>
+      )}
+      {currentScenario === scenarios.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={onComplete}
+        >
+          I understand the story! →
         </button>
       )}
     </div>
   );
 };
 
-const WarmupQuiz = ({ question, options, correct, explanation, onComplete }) => {
-  const [selected, setSelected] = useState(null);
+const ComputerLanguageStep = ({ title, challenge, languages, onComplete }) => {
+  const [currentLanguage, setCurrentLanguage] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [showResult, setShowResult] = useState(false);
 
-  const handleSubmit = () => {
-    setShowResult(true);
-    if (selected === correct) {
-      setTimeout(() => onComplete(), 2000);
-    }
+  const handleLanguageComplete = (languageIndex) => {
+    setSelectedOption(null);
+    setShowResult(false);
+    setCurrentLanguage(languageIndex + 1);
   };
+
+  const currentLanguageData = languages[currentLanguage];
 
   return (
-    <div className="warmup-quiz">
-      <h3>{question}</h3>
-      <div className="quiz-options">
-        {options.map((option, index) => (
-          <button
-            key={index}
-            className={`quiz-option ${selected === index ? 'selected' : ''} ${showResult ? (index === correct ? 'correct' : selected === index ? 'incorrect' : '') : ''}`}
-            onClick={() => !showResult && setSelected(index)}
-            disabled={showResult}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-      {!showResult && (
-        <button 
-          className="submit-button"
-          onClick={handleSubmit}
-          disabled={selected === null}
-        >
-          Submit Answer
-        </button>
-      )}
-      {showResult && (
-        <div className={`result ${selected === correct ? 'correct' : 'incorrect'}`}>
-          <p>{selected === correct ? '🎉 Correct!' : '❌ Incorrect'}</p>
-          <p className="explanation">{explanation}</p>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const PracticeStep = ({ title, description, challenges, onComplete }) => {
-  const [currentChallenge, setCurrentChallenge] = useState(0);
-  const [userAnswers, setUserAnswers] = useState({});
-  const [showHints, setShowHints] = useState({});
-  const [feedback, setFeedback] = useState({});
-
-  const handleAnswerSubmit = (challengeIndex, answer) => {
-    if (!answer) return;
-
-    const numAnswer = parseInt(answer);
-    if (isNaN(numAnswer)) {
-      setFeedback({
-        ...feedback,
-        [challengeIndex]: {
-          isCorrect: false,
-          message: "Please enter a valid number"
-        }
-      });
-      return;
-    }
-
-    const isCorrect = numAnswer === challenges[challengeIndex].expected;
-    
-    setFeedback({
-      ...feedback,
-      [challengeIndex]: {
-        isCorrect,
-        message: isCorrect ? "🎉 Correct!" : "Try again! Use the hint if you need help."
-      }
-    });
-
-    if (isCorrect) {
-      setUserAnswers({
-        ...userAnswers,
-        [challengeIndex]: answer
-      });
-
-      // If all challenges are completed correctly
-      if (Object.keys(userAnswers).length === challenges.length - 1) {
-        setTimeout(() => onComplete(), 1000);
-      } else {
-        // Move to next challenge after a short delay
-        setTimeout(() => setCurrentChallenge(challengeIndex + 1), 1000);
-      }
-    }
-  };
-
-  const toggleHint = (challengeIndex) => {
-    setShowHints({
-      ...showHints,
-      [challengeIndex]: !showHints[challengeIndex]
-    });
-  };
-
-  const challenge = challenges[currentChallenge];
-
-  return (
-    <div className="practice-step">
+    <div className="computer-language-step">
       <h2>{title}</h2>
-      <p className="description">{description}</p>
+      <p>{challenge}</p>
 
-      <div className="challenge-progress">
-        {challenges.map((_, index) => (
-          <div 
-            key={index}
-            className={`progress-dot ${currentChallenge === index ? 'active' : ''} ${userAnswers[index] ? 'completed' : ''}`}
-          />
-        ))}
+      <div className="language-progress">
+        <div className="language-indicators">
+          {languages.map((_, index) => (
+            <div 
+              key={index}
+              className={`language-dot ${currentLanguage === index ? 'active' : ''}`}
+            />
+          ))}
+        </div>
+        <p className="language-title">{currentLanguageData.name}</p>
       </div>
 
-      <div className="challenge-card">
-        <h3>{challenge.title}</h3>
-        <p>{challenge.description}</p>
-        
-        <div className="hex-display">
-          <span className="hex-label">Hex:</span>
-          <span className="hex-value">{challenge.hex}</span>
-        </div>
-
-        <div className="answer-section">
-          <input
-            type="number"
-            placeholder="Enter decimal number"
-            onChange={(e) => handleAnswerSubmit(currentChallenge, e.target.value)}
-            className="answer-input"
-          />
-          
-          <button 
-            className="hint-button"
-            onClick={() => toggleHint(currentChallenge)}
-          >
-            Need a hint? 💡
-          </button>
-          
-          {showHints[currentChallenge] && (
-            <div className="hint-box">
-              {challenge.hint}
-            </div>
-          )}
-          
-          {feedback[currentChallenge] && (
-            <div className={`feedback ${feedback[currentChallenge].isCorrect ? 'correct' : 'incorrect'}`}>
-              {feedback[currentChallenge].message}
-            </div>
-          )}
-        </div>
+      <div className="language-content">
+        <p>Example: {currentLanguageData.example}</p>
+        <p>Encoded: {currentLanguageData.encoded}</p>
+        <p>Pros: {currentLanguageData.pros.join(', ')}</p>
+        <p>Cons: {currentLanguageData.cons.join(', ')}</p>
+        <p>Usage: {currentLanguageData.usage}</p>
       </div>
 
-      {currentChallenge > 0 && (
+      {currentLanguage < languages.length - 1 && (
         <button 
-          className="back-button"
-          onClick={() => setCurrentChallenge(currentChallenge - 1)}
+          className="continue-button"
+          onClick={() => handleLanguageComplete(currentLanguage)}
         >
-          ← Previous Challenge
+          Next Language →
+        </button>
+      )}
+      {currentLanguage === languages.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={onComplete}
+        >
+          I understand the languages! →
         </button>
       )}
     </div>
   );
 };
 
-const ReflectionStep = ({ question, placeholder, onComplete, content, setCurrentStep, isLastStep }) => {
+const HexDiscoveryStep = ({ title, mission, discoveries, onComplete }) => {
+  const [currentDiscovery, setCurrentDiscovery] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleDiscoveryComplete = (discoveryIndex) => {
+    setSelectedOption(null);
+    setShowResult(false);
+    setCurrentDiscovery(discoveryIndex + 1);
+  };
+
+  const currentDiscoveryData = discoveries[currentDiscovery];
+
+  return (
+    <div className="hex-discovery-step">
+      <h2>{title}</h2>
+      <p>{mission}</p>
+
+      <div className="discovery-progress">
+        <div className="discovery-indicators">
+          {discoveries.map((_, index) => (
+            <div 
+              key={index}
+              className={`discovery-dot ${currentDiscovery === index ? 'active' : ''}`}
+            />
+          ))}
+        </div>
+        <p className="discovery-title">{currentDiscoveryData.title}</p>
+      </div>
+
+      <div className="discovery-content">
+        <p>{currentDiscoveryData.question}</p>
+        <p>Revelation: {currentDiscoveryData.revelation}</p>
+        <p>Examples:</p>
+        <ul>
+          {currentDiscoveryData.examples.map((example, index) => (
+            <li key={index}>{example}</li>
+          ))}
+        </ul>
+      </div>
+
+      {currentDiscovery < discoveries.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={() => handleDiscoveryComplete(currentDiscovery)}
+        >
+          Next Discovery →
+        </button>
+      )}
+      {currentDiscovery === discoveries.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={onComplete}
+        >
+          I understand hex! →
+        </button>
+      )}
+    </div>
+  );
+};
+
+const EndianDiscoveryStep = ({ title, scenario, mystery, explanation, insight, onComplete }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleComplete = () => {
+    setSelectedOption(null);
+    setShowResult(false);
+    onComplete();
+  };
+
+  return (
+    <div className="endian-discovery-step">
+      <h2>{title}</h2>
+      <p>{scenario}</p>
+      <p>{mystery}</p>
+
+      <div className="explanation-content">
+        <p>{explanation.title}</p>
+        <p>{explanation.reason}</p>
+        <p>Examples:</p>
+        <ul>
+          {explanation.examples.map((example, index) => (
+            <li key={index}>
+              Normal: {example.normal}, Flipped: {example.flipped}, Process: {example.process}
+            </li>
+          ))}
+        </ul>
+        <p className="insight-text">{insight}</p>
+      </div>
+
+      <button 
+        className="continue-button"
+        onClick={handleComplete}
+      >
+        I understand the trick! →
+      </button>
+    </div>
+  );
+};
+
+const SecurityDemoStep = ({ title, challenge, demonstrations, onComplete }) => {
+  const [currentDemo, setCurrentDemo] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleDemoComplete = (demoIndex) => {
+    setSelectedOption(null);
+    setShowResult(false);
+    setCurrentDemo(demoIndex + 1);
+  };
+
+  const currentDemoData = demonstrations[currentDemo];
+
+  return (
+    <div className="security-demo-step">
+      <h2>{title}</h2>
+      <p>{challenge}</p>
+
+      <div className="demo-progress">
+        <div className="demo-indicators">
+          {demonstrations.map((_, index) => (
+            <div 
+              key={index}
+              className={`demo-dot ${currentDemo === index ? 'active' : ''}`}
+            />
+          ))}
+        </div>
+        <p className="demo-title">{currentDemoData.title}</p>
+      </div>
+
+      <div className="demo-content">
+        <p>Input: {currentDemoData.input}</p>
+        <p>Process: {currentDemoData.process}</p>
+        <p>Output: {currentDemoData.output}</p>
+        <p>Rule: {currentDemoData.rule}</p>
+      </div>
+
+      {currentDemo < demonstrations.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={() => handleDemoComplete(currentDemo)}
+        >
+          Next Demo →
+        </button>
+      )}
+      {currentDemo === demonstrations.length - 1 && (
+        <button 
+          className="continue-button"
+          onClick={onComplete}
+        >
+          I understand security! →
+        </button>
+      )}
+    </div>
+  );
+};
+
+const ReflectionStep = ({ question, insights, nextSteps, onComplete, setCurrentStep, isLastStep }) => {
   const [reflection, setReflection] = useState('');
   const [isSkipped, setIsSkipped] = useState(false);
   const minLength = 100; // Requiring more thoughtful responses
@@ -832,29 +723,35 @@ const ReflectionStep = ({ question, placeholder, onComplete, content, setCurrent
             <h3>🤔 Think About This...</h3>
             <div className="reflection-header">
               <p className="main-question">{question || 'Time to reflect on what you learned!'}</p>
-              {content?.mainPrompt && <p className="main-prompt">{content.mainPrompt}</p>}
+              {insights && insights.length > 0 && (
+                <>
+                  <p className="prompt-header">✨ Consider these insights:</p>
+                  {insights.map((insight, index) => (
+                    <div key={index} className="insight-item">
+                      <p>• {insight.title}: {insight.description}</p>
+                    </div>
+                  ))}
+                </>
+              )}
+              {nextSteps && nextSteps.length > 0 && (
+                <>
+                  <p className="prompt-header">🚀 Next Steps:</p>
+                  {nextSteps.map((step, index) => (
+                    <div key={index} className="next-step-item">
+                      <p>• {step.title}: {step.description}</p>
+                    </div>
+                  ))}
+                </>
+              )}
               <p className="optional-note">(This reflection is optional - feel free to skip if you prefer to continue learning!)</p>
             </div>
-          </div>
-
-          <div className="sub-questions">
-            {content?.subQuestions?.length > 0 && (
-              <>
-                <p className="prompt-header">✨ Consider these points:</p>
-                {content.subQuestions.map((subQ, index) => (
-                  <div key={index} className="sub-question">
-                    <p>• {subQ || `Question ${index + 1}`}</p>
-                  </div>
-                ))}
-              </>
-            )}
           </div>
 
           <div className="reflection-input">
             <textarea
               value={reflection}
               onChange={(e) => setReflection(e.target.value)}
-              placeholder={placeholder}
+              placeholder={`Share your thoughts about how Bitcoin uses numbers and encoding. What's your biggest insight? What questions do you have?`}
               rows={10}
               className="reflection-textarea"
             />
