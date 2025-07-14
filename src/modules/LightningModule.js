@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Zap, ArrowRight, Trophy
+  Zap, Clock, DollarSign, TrendingUp, Globe, Trophy,
+  AlertTriangle, CheckCircle, ArrowRight, Target,
+  Users, Layers, Activity, BarChart3
 } from 'lucide-react';
 import { 
   ContinueButton,
@@ -10,805 +12,1330 @@ import {
 import '../components/ModuleCommon.css';
 import './LightningModule.css';
 
-// Reusable Visual Capitalist Section Component
-const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
-  <div className="explore-further-section">
-    <div className="explore-further-header">
-      <span className="explore-further-icon">{icon}</span>
-      <h4 className="explore-further-title">{title}</h4>
-    </div>
-    <p className="explore-further-description">{description}</p>
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="explore-further-button"
-    >
-      <span className="button-icon">🔍</span>
-      {buttonText}
-    </a>
-  </div>
-);
-
 const LightningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [completedPhases, setCompletedPhases] = useState(new Set());
+  const [achievements, setAchievements] = useState([]);
   
-  // Payment Channel State
-  const [aliceBalance, setAliceBalance] = useState(0.7);
-  const [bobBalance, setBobBalance] = useState(0.3);
-  const [paymentAmount, setPaymentAmount] = useState(0.1);
-  const [paymentDirection, setPaymentDirection] = useState('alice-to-bob');
+  // Crisis Investigation State
+  const [investigationProgress, setInvestigationProgress] = useState(0);
+  const [crisisData, setCrisisData] = useState({
+    paymentFailures: 0,
+    costAnalysis: 0,
+    speedComparison: 0
+  });
   
-  // Network State
-  // const [selectedRoute, setSelectedRoute] = useState([]);
-  // const [networkDemo, setNetworkDemo] = useState(false);
+  // Channel Architecture State
+  const [channelBalance, setChannelBalance] = useState({ alice: 50000, bob: 50000 });
+  const [paymentQueue, setPaymentQueue] = useState([]);
+  const [channelEfficiency, setChannelEfficiency] = useState(0);
+  
+  // Network Engineering State
+  const [networkNodes, setNetworkNodes] = useState(8);
+  const [routingSuccess, setRoutingSuccess] = useState(0);
+  const [networkLiquidity, setNetworkLiquidity] = useState(500000);
+  
+  // Economics Mastery State
+  const [feeOptimization, setFeeOptimization] = useState(0);
+  const [liquidityProvision, setLiquidityProvision] = useState(0);
+  const [profitability, setProfitability] = useState(0);
+  
+  // Commerce Implementation State
+  const [commerceSolutions, setCommerceSolutions] = useState(0);
+  const [globalAdoption, setGlobalAdoption] = useState(0);
+  const [micropaymentVolume, setMicropaymentVolume] = useState(0);
+  
+  // Sovereignty Achievement State
+  const [masteryLevel, setMasteryLevel] = useState(0);
+  const [sovereigntyScore, setSovereigntyScore] = useState(0);
 
-  const steps = [
+  const architectPhases = [
     {
-      id: 'intro',
-      title: 'Lightning Basics',
-      icon: '⚡',
-      description: 'What is Lightning Network and why it matters'
+      id: 'crisis-detective',
+      title: 'Payment Crisis Detective',
+      icon: <AlertTriangle className="phase-icon" />,
+      crisis: 'Payment Speed & Cost Nightmare',
+      description: 'Investigate the $50B+ payment processing crisis destroying financial opportunities',
+      challenge: 'Analyze real payment failures and discover Lightning solutions',
+      skills: ['Crisis Analysis', 'Payment System Investigation', 'Solution Discovery'],
+      tools: ['Payment Failure Database', 'Cost Analysis Engine', 'Speed Comparison Matrix']
     },
     {
-      id: 'payment-channels',
-      title: 'Payment Channels',
-      icon: '🔗',
-      description: 'Understanding the foundation of Lightning'
+      id: 'speed-alchemist',
+      title: 'Speed Alchemist',
+      icon: <Zap className="phase-icon" />,
+      crisis: 'Time-Critical Payment Construction',
+      description: 'Build instant payment channels under extreme time pressure',
+      challenge: 'Architect payment channels that enable millisecond transactions',
+      skills: ['Channel Architecture', 'Instant Settlements', 'Time Optimization'],
+      tools: ['Channel Builder', 'Speed Simulator', 'Performance Monitor']
     },
     {
-      id: 'channel-simulator',
-      title: 'Channel Simulator', 
-      icon: '🎮',
-      description: 'Interactive payment channel experience'
+      id: 'network-architect',
+      title: 'Network Architect',
+      icon: <Layers className="phase-icon" />,
+      crisis: 'Routing Through Network Chaos',
+      description: 'Design optimal payment paths through complex network topology',
+      challenge: 'Engineer routing solutions for multi-hop payment success',
+      skills: ['Network Topology', 'Routing Algorithms', 'Path Optimization'],
+      tools: ['Network Designer', 'Route Optimizer', 'Topology Analyzer']
     },
     {
-      id: 'multi-hop-routing',
-      title: 'Multi-Hop Routing',
-      icon: '🌐',
-      description: 'How payments find their way through the network'
+      id: 'liquidity-engineer',
+      title: 'Liquidity Engineer',
+      icon: <TrendingUp className="phase-icon" />,
+      crisis: 'Economic Viability Crisis',
+      description: 'Master Lightning economics and fee optimization strategies',
+      challenge: 'Balance liquidity provision with profitable operations',
+      skills: ['Fee Strategy', 'Liquidity Management', 'Economic Modeling'],
+      tools: ['Fee Calculator', 'Liquidity Optimizer', 'Profit Analyzer']
     },
     {
-      id: 'network-topology',
-      title: 'Network Topology',
-      icon: '🕸️',
-      description: 'Lightning Network graph and visualization'
+      id: 'commerce-pioneer',
+      title: 'Commerce Pioneer',
+      icon: <Globe className="phase-icon" />,
+      crisis: 'Global Payment Revolution',
+      description: 'Build Lightning commerce solutions for worldwide adoption',
+      challenge: 'Enable micropayments and instant global commerce',
+      skills: ['Commerce Integration', 'Global Scaling', 'Micropayment Systems'],
+      tools: ['Payment Gateway', 'Commerce Builder', 'Adoption Tracker']
     },
     {
-      id: 'economics',
-      title: 'Lightning Economics',
-      icon: '💰',
-      description: 'Fees, liquidity, and economic incentives'
-    },
-    {
-      id: 'real-world',
-      title: 'Real-World Usage',
-      icon: '🌍',
-      description: 'Lightning in action today'
-    },
-    {
-      id: 'mastery',
-      title: 'Lightning Mastery',
-      icon: '🏆',
-      description: 'Complete understanding achievement'
+      id: 'lightning-sovereign',
+      title: 'Lightning Sovereign',
+      icon: <Trophy className="phase-icon" />,
+      crisis: 'Complete Financial Sovereignty',
+      description: 'Achieve mastery of instant, global Bitcoin payments',
+      challenge: 'Demonstrate complete Lightning Network command',
+      skills: ['Complete Mastery', 'Financial Sovereignty', 'Global Impact'],
+      tools: ['Mastery Dashboard', 'Sovereignty Metrics', 'Impact Calculator']
     }
   ];
 
-  const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
+  useEffect(() => {
+    // Simulate real-time crisis data updates
+    const interval = setInterval(() => {
+      if (currentPhase === 0) {
+        setCrisisData(prev => ({
+          paymentFailures: Math.min(prev.paymentFailures + Math.random() * 1000, 50000),
+          costAnalysis: Math.min(prev.costAnalysis + Math.random() * 100, 10000),
+          speedComparison: Math.min(prev.speedComparison + Math.random() * 10, 100)
+        }));
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [currentPhase]);
+
+  const handlePhaseComplete = (phaseIndex) => {
+    const newCompleted = new Set(completedPhases);
+    newCompleted.add(phaseIndex);
+    setCompletedPhases(newCompleted);
     
-    // Show achievements
-    if (stepIndex === 1) {
-      showAchievement("Channel Pioneer", "You understand Bitcoin payment channels!");
-    } else if (stepIndex === 3) {
-      showAchievement("Network Navigator", "You've mastered Lightning routing!");
-    } else if (stepIndex === 5) {
-      showAchievement("Lightning Economist", "You understand Lightning economics!");
-    } else if (stepIndex === 7) {
-      showAchievement("Lightning Master", "Complete Lightning Network mastery achieved!");
+    // Award achievements based on phase completion
+    const phase = architectPhases[phaseIndex];
+    const achievement = {
+      id: `phase-${phaseIndex}`,
+      title: `${phase.title} Mastered`,
+      description: `You've mastered ${phase.skills.join(', ')}`,
+      icon: phase.icon,
+      timestamp: Date.now()
+    };
+    
+    setAchievements(prev => [...prev, achievement]);
+    showAchievementPopup(achievement);
+    
+    // Update mastery progression
+    setMasteryLevel(prev => prev + (100 / architectPhases.length));
+    
+    if (phaseIndex === architectPhases.length - 1) {
+      setSovereigntyScore(100);
       completeModule('lightning');
-    }
-    
-    if (stepIndex < steps.length - 1) {
-      setTimeout(() => setCurrentStep(stepIndex + 1), 1000);
+      showSovereigntyAchievement();
+    } else {
+      setTimeout(() => setCurrentPhase(phaseIndex + 1), 2000);
     }
   };
 
-  const showAchievement = (title, description) => {
-    const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
-    achievement.innerHTML = `
+  const showAchievementPopup = (achievement) => {
+    const popup = document.createElement('div');
+    popup.className = 'achievement-popup lightning-achievement';
+    popup.innerHTML = `
       <div class="achievement-content">
-        <div class="achievement-icon">🏆</div>
+        <div class="achievement-icon">${achievement.icon?.type?.name || '🏆'}</div>
         <div class="achievement-text">
-          <h4>${title}</h4>
-          <p>${description}</p>
+          <h4>${achievement.title}</h4>
+          <p>${achievement.description}</p>
+        </div>
+        <div class="achievement-lightning">⚡</div>
+      </div>
+    `;
+    document.body.appendChild(popup);
+    
+    setTimeout(() => {
+      popup.style.opacity = '0';
+      setTimeout(() => document.body.removeChild(popup), 500);
+    }, 4000);
+  };
+
+  const showSovereigntyAchievement = () => {
+    const popup = document.createElement('div');
+    popup.className = 'sovereignty-popup';
+    popup.innerHTML = `
+      <div class="sovereignty-content">
+        <div class="sovereignty-crown">👑</div>
+        <h3>Lightning Sovereign Achieved!</h3>
+        <p>You now command instant, global Bitcoin payments</p>
+        <div class="sovereignty-stats">
+          <div>⚡ Instant Settlements</div>
+          <div>🌍 Global Reach</div>
+          <div>💰 Micropenny Fees</div>
         </div>
       </div>
     `;
-    document.body.appendChild(achievement);
+    document.body.appendChild(popup);
     
     setTimeout(() => {
-      achievement.style.opacity = '0';
-      setTimeout(() => document.body.removeChild(achievement), 300);
-    }, 3000);
+      popup.style.opacity = '0';
+      setTimeout(() => document.body.removeChild(popup), 500);
+    }, 6000);
   };
 
-  const makePayment = () => {
-    const amount = parseFloat(paymentAmount);
-    if (paymentDirection === 'alice-to-bob' && aliceBalance >= amount) {
-      setAliceBalance(prev => prev - amount);
-      setBobBalance(prev => prev + amount);
-    } else if (paymentDirection === 'bob-to-alice' && bobBalance >= amount) {
-      setBobBalance(prev => prev - amount);
-      setAliceBalance(prev => prev + amount);
-    }
-  };
-
-  const renderStep = () => {
-    const step = steps[currentStep];
+  const renderPhaseContent = () => {
+    const phase = architectPhases[currentPhase];
     
-    switch (step.id) {
-      case 'intro':
-        return renderIntroStep();
-      case 'payment-channels':
-        return renderPaymentChannelsStep();
-      case 'channel-simulator':
-        return renderChannelSimulator();
-      case 'multi-hop-routing':
-        return renderMultiHopRouting();
-      case 'network-topology':
-        return renderNetworkTopology();
-      case 'economics':
-        return renderEconomics();
-      case 'real-world':
-        return renderRealWorld();
-      case 'mastery':
-        return renderMastery();
+    switch (phase.id) {
+      case 'crisis-detective':
+        return renderCrisisDetective();
+      case 'speed-alchemist':
+        return renderSpeedAlchemist();
+      case 'network-architect':
+        return renderNetworkArchitect();
+      case 'liquidity-engineer':
+        return renderLiquidityEngineer();
+      case 'commerce-pioneer':
+        return renderCommercePioneer();
+      case 'lightning-sovereign':
+        return renderLightningSovereign();
       default:
         return null;
     }
   };
 
-  const renderIntroStep = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">⚡</div>
-        <div>
-          <h2 className="step-title">Lightning Network Basics</h2>
-          <p className="step-subtitle">Instant Bitcoin payments at the speed of light</p>
+  const renderCrisisDetective = () => (
+    <div className="architect-phase crisis-detective">
+      <div className="crisis-alert">
+        <AlertTriangle className="crisis-icon pulsing" />
+        <div className="crisis-content">
+          <h3>PAYMENT CRISIS DETECTED</h3>
+          <p>Traditional payment systems are failing billions of people worldwide. Investigate the crisis and discover Lightning solutions.</p>
         </div>
       </div>
 
-      <div className="lightning-description">
-        💡 Lightning Network is Bitcoin's scaling solution that enables instant, cheap payments by creating "payment channels" between users.
-      </div>
-
-      <div className="comparison-table">
-        <div className="comparison-header">
-          <h3 className="comparison-title">Bitcoin vs Lightning Network</h3>
-        </div>
-        <div className="comparison-grid">
-          <div className="comparison-item">
-            <div className="comparison-label">Bitcoin Base Layer</div>
-            <div className="comparison-value onchain">~7 TPS</div>
-            <div className="comparison-description">10-60 minute confirmations, $1-50+ fees</div>
+      <div className="crisis-investigation">
+        <div className="investigation-grid">
+          <div className="crisis-metric">
+            <div className="metric-header">
+              <Clock className="metric-icon" />
+              <h4>Payment Failures</h4>
+            </div>
+            <div className="metric-value">
+              ${Math.floor(crisisData.paymentFailures).toLocaleString()}M
+            </div>
+            <div className="metric-description">
+              Daily losses from slow payment settlements
+            </div>
+            <div className="crisis-examples">
+              <div className="crisis-example">
+                <strong>Real Case:</strong> Small business loses $2,400 monthly due to 3-day payment delays
+              </div>
+              <div className="crisis-example">
+                <strong>Global Impact:</strong> $1.2T locked in slow payment systems daily
+              </div>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Lightning Network</div>
-            <div className="comparison-value lightning">Millions TPS</div>
-            <div className="comparison-description">Instant confirmations, pennies in fees</div>
+
+          <div className="crisis-metric">
+            <div className="metric-header">
+              <DollarSign className="metric-icon" />
+              <h4>Processing Costs</h4>
+            </div>
+            <div className="metric-value">
+              ${Math.floor(crisisData.costAnalysis).toLocaleString()}B
+            </div>
+            <div className="metric-description">
+              Annual fees paid to payment processors
+            </div>
+            <div className="crisis-examples">
+              <div className="crisis-example">
+                <strong>Credit Cards:</strong> 2.9% + $0.30 per transaction
+              </div>
+              <div className="crisis-example">
+                <strong>Wire Transfers:</strong> $15-50 + 1-3% international fees
+              </div>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Traditional Banking</div>
-            <div className="comparison-value traditional">~1,700 TPS</div>
-            <div className="comparison-description">3-5 business days, 2-3% fees</div>
+
+          <div className="crisis-metric">
+            <div className="metric-header">
+              <Target className="metric-icon" />
+              <h4>Speed Comparison</h4>
+            </div>
+            <div className="metric-value">
+              {Math.floor(crisisData.speedComparison)}%
+            </div>
+            <div className="metric-description">
+              Payments that could be Lightning-fast
+            </div>
+            <div className="crisis-examples">
+              <div className="crisis-example">
+                <strong>Traditional:</strong> 3-5 business days settlement
+              </div>
+              <div className="crisis-example">
+                <strong>Lightning:</strong> Millisecond settlement ⚡
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="lightning-solution">
+          <h3>🌩️ Lightning Network Solution Discovery</h3>
+          <div className="solution-comparison">
+            <div className="solution-side traditional">
+              <h4>Traditional Payments</h4>
+              <div className="solution-metrics">
+                <div className="metric">Speed: 3-5 days</div>
+                <div className="metric">Cost: 2-3% + fees</div>
+                <div className="metric">Reach: Limited hours</div>
+                <div className="metric">Size: $1+ minimums</div>
+              </div>
+            </div>
+            
+            <div className="solution-arrow">
+              <ArrowRight className="solution-icon" />
+              <span>Lightning Revolution</span>
+            </div>
+            
+            <div className="solution-side lightning">
+              <h4>Lightning Network</h4>
+              <div className="solution-metrics">
+                <div className="metric lightning-advantage">Speed: Milliseconds ⚡</div>
+                <div className="metric lightning-advantage">Cost: Fractions of pennies</div>
+                <div className="metric lightning-advantage">Reach: 24/7 global</div>
+                <div className="metric lightning-advantage">Size: Any amount</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="investigation-results">
+          <div className="result-header">
+            <CheckCircle className="result-icon" />
+            <h4>Crisis Investigation Complete</h4>
+          </div>
+          <p>You've uncovered the massive payment crisis affecting billions. Lightning Network emerges as the revolutionary solution enabling instant, cheap, global Bitcoin payments.</p>
+          
+          <div className="detective-skills">
+            <h5>Detective Skills Acquired:</h5>
+            <div className="skills-grid">
+              <div className="skill">🔍 Payment Crisis Analysis</div>
+              <div className="skill">📊 Cost-Benefit Evaluation</div>
+              <div className="skill">⚡ Lightning Solution Recognition</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="feature-showcase">
-        <div className="feature-card">
-          <div className="feature-icon">⚡</div>
-          <div className="feature-title">Instant Payments</div>
-          <div className="feature-description">Payments settle in milliseconds, not minutes</div>
-        </div>
-        <div className="feature-card">
-          <div className="feature-icon">💰</div>
-          <div className="feature-title">Micro Fees</div>
-          <div className="feature-description">Send any amount for fractions of a penny</div>
-        </div>
-        <div className="feature-card">
-          <div className="feature-icon">🔒</div>
-          <div className="feature-title">Bitcoin Security</div>
-          <div className="feature-description">Inherits all of Bitcoin's security guarantees</div>
-        </div>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Lightning Fundamentals</div>
-        <div className="completion-message">You understand the basic concept of Lightning Network!</div>
+      <div className="phase-completion">
         <Button
-          onClick={() => handleStepComplete(0)}
+          onClick={() => handlePhaseComplete(0)}
           icon={ArrowRight}
-          text="Continue to Payment Channels"
+          text="Become Speed Alchemist"
+          className="crisis-continue-btn"
         />
       </div>
     </div>
   );
 
-  const renderPaymentChannelsStep = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🔗</div>
-        <div>
-          <h2 className="step-title">Payment Channels</h2>
-          <p className="step-subtitle">The building blocks of Lightning Network</p>
+  const renderSpeedAlchemist = () => (
+    <div className="architect-phase speed-alchemist">
+      <div className="phase-header">
+        <Zap className="phase-icon-large pulsing" />
+        <div className="phase-info">
+          <h2>Speed Alchemist</h2>
+          <p>Transform slow payments into lightning-fast channels under extreme time pressure</p>
         </div>
       </div>
 
-      <div className="lightning-description">
-        💡 A payment channel is like a shared Bitcoin wallet between two people that they can update instantly without broadcasting every transaction to the blockchain.
-      </div>
+      <div className="speed-challenge">
+        <div className="challenge-alert">
+          <h3>⏰ TIME-CRITICAL MISSION</h3>
+          <p>A business needs instant payments operational in 60 seconds. Build payment channels that enable millisecond transactions!</p>
+        </div>
 
-      <div className="channel-visualization">
-        <h3 style={{ textAlign: 'center', marginBottom: '2rem' }}>How Payment Channels Work</h3>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-          <div style={{ background: 'rgba(252, 211, 77, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#fcd34d', marginBottom: '1rem' }}>1. Channel Opening</h4>
-            <p>Alice and Bob each lock 0.5 BTC in a 2-of-2 multisig address on the Bitcoin blockchain.</p>
-            <div style={{ margin: '1rem 0', padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace' }}>
-              Alice: 0.5 BTC → Channel<br/>
-              Bob: 0.5 BTC → Channel<br/>
-              Total: 1.0 BTC locked
+        <div className="channel-construction">
+          <h4>Payment Channel Architecture</h4>
+          <div className="channel-builder">
+            <div className="channel-participants">
+              <div className="participant alice">
+                <div className="participant-avatar">A</div>
+                <div className="participant-info">
+                  <div className="participant-name">Alice (Merchant)</div>
+                  <div className="participant-balance">{channelBalance.alice.toLocaleString()} sats</div>
+                </div>
+              </div>
+
+              <div className="channel-visualization">
+                <div className="channel-bar">
+                  <div 
+                    className="balance-alice" 
+                    style={{ width: `${(channelBalance.alice / (channelBalance.alice + channelBalance.bob)) * 100}%` }}
+                  />
+                  <div 
+                    className="balance-bob"
+                    style={{ width: `${(channelBalance.bob / (channelBalance.alice + channelBalance.bob)) * 100}%` }}
+                  />
+                </div>
+                <div className="channel-capacity">
+                  Total Capacity: {(channelBalance.alice + channelBalance.bob).toLocaleString()} sats
+                </div>
+                <div className="channel-status">
+                  <div className="status-indicator active"></div>
+                  Channel Status: Active & Lightning Fast ⚡
+                </div>
+              </div>
+
+              <div className="participant bob">
+                <div className="participant-avatar">B</div>
+                <div className="participant-info">
+                  <div className="participant-name">Bob (Customer)</div>
+                  <div className="participant-balance">{channelBalance.bob.toLocaleString()} sats</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="payment-simulator">
+              <h5>Lightning Payment Simulator</h5>
+              <div className="payment-controls">
+                <div className="payment-scenarios">
+                  <button 
+                    className="scenario-btn"
+                    onClick={() => simulatePayment(1000, 'bob-to-alice')}
+                  >
+                    Coffee Purchase (1,000 sats)
+                  </button>
+                  <button 
+                    className="scenario-btn"
+                    onClick={() => simulatePayment(5000, 'bob-to-alice')}
+                  >
+                    Lunch Payment (5,000 sats)
+                  </button>
+                  <button 
+                    className="scenario-btn"
+                    onClick={() => simulatePayment(25000, 'alice-to-bob')}
+                  >
+                    Refund (25,000 sats)
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div style={{ background: 'rgba(96, 165, 250, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#60a5fa', marginBottom: '1rem' }}>2. Off-Chain Payments</h4>
-            <p>They can now send Bitcoin back and forth instantly by updating the channel balance.</p>
-            <div style={{ margin: '1rem 0', padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace' }}>
-              Alice sends 0.2 BTC to Bob<br/>
-              New balance:<br/>
-              Alice: 0.3 BTC | Bob: 0.7 BTC
+        <div className="speed-metrics">
+          <div className="speed-comparison-grid">
+            <div className="speed-metric">
+              <Activity className="speed-icon" />
+              <h5>Settlement Speed</h5>
+              <div className="speed-value">
+                <span className="speed-number">&lt; 100ms</span>
+                <span className="speed-label">Lightning</span>
+              </div>
+              <div className="vs-traditional">vs 3-5 days traditional</div>
+            </div>
+
+            <div className="speed-metric">
+              <BarChart3 className="speed-icon" />
+              <h5>Channel Efficiency</h5>
+              <div className="speed-value">
+                <span className="speed-number">{channelEfficiency}%</span>
+                <span className="speed-label">Optimized</span>
+              </div>
+              <div className="vs-traditional">Instant bidirectional flow</div>
+            </div>
+
+            <div className="speed-metric">
+              <Zap className="speed-icon" />
+              <h5>Transaction Throughput</h5>
+              <div className="speed-value">
+                <span className="speed-number">1M+</span>
+                <span className="speed-label">TPS</span>
+              </div>
+              <div className="vs-traditional">vs 7 TPS Bitcoin base layer</div>
             </div>
           </div>
+        </div>
 
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#10b981', marginBottom: '1rem' }}>3. Channel Closing</h4>
-            <p>When finished, they broadcast the final state to the blockchain and withdraw their funds.</p>
-            <div style={{ margin: '1rem 0', padding: '1rem', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace' }}>
-              Final settlement:<br/>
-              Alice receives: 0.3 BTC<br/>
-              Bob receives: 0.7 BTC
+        <div className="alchemist-achievement">
+          <h4>⚡ Speed Alchemy Mastered</h4>
+          <p>You've successfully transformed slow payment systems into lightning-fast channels. Your channel architecture enables instant settlements with perfect efficiency.</p>
+          
+          <div className="alchemist-skills">
+            <div className="skill-acquired">
+              <CheckCircle className="skill-icon" />
+              <span>Instant Channel Architecture</span>
+            </div>
+            <div className="skill-acquired">
+              <CheckCircle className="skill-icon" />
+              <span>Millisecond Settlement Mastery</span>
+            </div>
+            <div className="skill-acquired">
+              <CheckCircle className="skill-icon" />
+              <span>Payment Speed Optimization</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '1.5rem', borderRadius: '12px', margin: '2rem 0' }}>
-        <h4 style={{ color: '#ef4444', marginBottom: '1rem' }}>🔒 Security Features</h4>
-        <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-          <li><strong>Commitment Transactions:</strong> Each party holds a transaction that can close the channel with the current balance</li>
-          <li><strong>Revocation Keys:</strong> Old channel states are revoked to prevent cheating</li>
-          <li><strong>Time Locks:</strong> Disputes have a window for the other party to prove fraud</li>
-          <li><strong>Hash Locks:</strong> Payments are cryptographically guaranteed to be atomic</li>
-        </ul>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Channel Mastery</div>
-        <div className="completion-message">You understand how payment channels enable instant Bitcoin transactions!</div>
+      <div className="phase-completion">
         <Button
-          onClick={() => handleStepComplete(1)}
+          onClick={() => handlePhaseComplete(1)}
           icon={ArrowRight}
-          text="Try the Channel Simulator"
+          text="Advance to Network Architect"
+          className="alchemist-continue-btn"
         />
       </div>
     </div>
   );
 
-  const renderChannelSimulator = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🎮</div>
-        <div>
-          <h2 className="step-title">Channel Simulator</h2>
-          <p className="step-subtitle">Experience Lightning payments hands-on</p>
+  const simulatePayment = (amount, direction) => {
+    if (direction === 'bob-to-alice' && channelBalance.bob >= amount) {
+      setChannelBalance(prev => ({
+        alice: prev.alice + amount,
+        bob: prev.bob - amount
+      }));
+      setChannelEfficiency(prev => Math.min(prev + 5, 100));
+    } else if (direction === 'alice-to-bob' && channelBalance.alice >= amount) {
+      setChannelBalance(prev => ({
+        alice: prev.alice - amount,
+        bob: prev.bob + amount
+      }));
+      setChannelEfficiency(prev => Math.min(prev + 5, 100));
+    }
+    
+    // Add payment to queue with instant settlement
+    const payment = {
+      id: Date.now(),
+      amount,
+      direction,
+      status: 'settled',
+      timestamp: new Date().toLocaleTimeString()
+    };
+    
+    setPaymentQueue(prev => [payment, ...prev.slice(0, 4)]);
+  };
+
+  const renderNetworkArchitect = () => (
+    <div className="architect-phase network-architect">
+      <div className="phase-header">
+        <Layers className="phase-icon-large pulsing" />
+        <div className="phase-info">
+          <h2>Network Architect</h2>
+          <p>Design optimal routing paths through complex Lightning Network topology</p>
         </div>
       </div>
 
-      <div className="channel-visualization">
-        <h3 style={{ textAlign: 'center', marginBottom: '2rem' }}>Alice ↔ Bob Payment Channel</h3>
-        
-        <div className="channel-participants">
-          <div className="participant">
-            <div className="participant-avatar">A</div>
-            <div className="participant-name">Alice</div>
-            <div className="participant-balance">{aliceBalance.toFixed(2)} BTC</div>
-          </div>
+      <div className="network-challenge">
+        <div className="challenge-alert">
+          <h3>🌐 NETWORK ROUTING CRISIS</h3>
+          <p>Payment needs to route from Alaska to Argentina through network congestion. Design the optimal path!</p>
+        </div>
 
-          <div className="channel-bar">
-            <div className="channel-balance">
-              <div 
-                className="balance-alice" 
-                style={{ width: `${(aliceBalance / (aliceBalance + bobBalance)) * 100}%` }}
-              />
-              <div 
-                className="balance-bob"
-                style={{ width: `${(bobBalance / (aliceBalance + bobBalance)) * 100}%` }}
-              />
+        <div className="network-topology">
+          <h4>Lightning Network Topology</h4>
+          <div className="network-grid">
+            <div className="network-stats">
+              <div className="network-stat">
+                <Users className="stat-icon" />
+                <div className="stat-info">
+                  <div className="stat-value">{networkNodes.toLocaleString()}</div>
+                  <div className="stat-label">Active Nodes</div>
+                </div>
+              </div>
+              <div className="network-stat">
+                <Activity className="stat-icon" />
+                <div className="stat-info">
+                  <div className="stat-value">{Math.floor(networkNodes * 4.7).toLocaleString()}</div>
+                  <div className="stat-label">Payment Channels</div>
+                </div>
+              </div>
+              <div className="network-stat">
+                <DollarSign className="stat-icon" />
+                <div className="stat-info">
+                  <div className="stat-value">{networkLiquidity.toLocaleString()} BTC</div>
+                  <div className="stat-label">Network Capacity</div>
+                </div>
+              </div>
             </div>
-            <div className="channel-amount">
-              Total: {(aliceBalance + bobBalance).toFixed(1)} BTC
-            </div>
-          </div>
 
-          <div className="participant">
-            <div className="participant-avatar">B</div>
-            <div className="participant-name">Bob</div>
-            <div className="participant-balance">{bobBalance.toFixed(2)} BTC</div>
+            <div className="routing-simulator">
+              <h5>Multi-Hop Routing Simulation</h5>
+              <div className="routing-path">
+                <div className="route-node source">
+                  <div className="node-indicator">A</div>
+                  <div className="node-label">Alaska</div>
+                </div>
+                
+                <div className="route-hop">
+                  <div className="hop-connection active">
+                    <div className="connection-line"></div>
+                    <div className="connection-fee">0.01%</div>
+                  </div>
+                  <div className="route-node intermediate">
+                    <div className="node-indicator">B</div>
+                    <div className="node-label">Seattle Hub</div>
+                  </div>
+                </div>
+
+                <div className="route-hop">
+                  <div className="hop-connection active">
+                    <div className="connection-line"></div>
+                    <div className="connection-fee">0.01%</div>
+                  </div>
+                  <div className="route-node intermediate">
+                    <div className="node-indicator">C</div>
+                    <div className="node-label">Miami Router</div>
+                  </div>
+                </div>
+
+                <div className="route-hop">
+                  <div className="hop-connection active">
+                    <div className="connection-line"></div>
+                    <div className="connection-fee">0.01%</div>
+                  </div>
+                  <div className="route-node destination">
+                    <div className="node-indicator">D</div>
+                    <div className="node-label">Argentina</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="routing-metrics">
+                <div className="routing-metric">
+                  <div className="metric-label">Route Length</div>
+                  <div className="metric-value">3 hops</div>
+                </div>
+                <div className="routing-metric">
+                  <div className="metric-label">Total Fees</div>
+                  <div className="metric-value">0.03%</div>
+                </div>
+                <div className="routing-metric">
+                  <div className="metric-label">Success Rate</div>
+                  <div className="metric-value">{routingSuccess}%</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="payment-controls">
-          <div className="payment-form">
-            <div className="payment-input">
-              <label>Amount (BTC)</label>
-              <input 
-                type="number" 
-                step="0.01" 
-                min="0.01" 
-                max="1" 
-                value={paymentAmount}
-                onChange={(e) => setPaymentAmount(e.target.value)}
-              />
-            </div>
-            <div className="payment-input">
-              <label>Direction</label>
-              <select 
-                value={paymentDirection}
-                onChange={(e) => setPaymentDirection(e.target.value)}
-              >
-                <option value="alice-to-bob">Alice → Bob</option>
-                <option value="bob-to-alice">Bob → Alice</option>
-              </select>
-            </div>
-            <button className="payment-button" onClick={makePayment}>
-              <Zap size={16} />
-              Send Payment
+        <div className="network-optimization">
+          <h4>Network Optimization Tools</h4>
+          <div className="optimization-grid">
+            <button 
+              className="optimization-tool"
+              onClick={() => optimizeRouting()}
+            >
+              <Target className="tool-icon" />
+              <div className="tool-info">
+                <div className="tool-name">Optimize Routing</div>
+                <div className="tool-description">Find best path through network</div>
+              </div>
+            </button>
+
+            <button 
+              className="optimization-tool"
+              onClick={() => addNetworkCapacity()}
+            >
+              <TrendingUp className="tool-icon" />
+              <div className="tool-info">
+                <div className="tool-name">Add Capacity</div>
+                <div className="tool-description">Increase network liquidity</div>
+              </div>
+            </button>
+
+            <button 
+              className="optimization-tool"
+              onClick={() => expandNetwork()}
+            >
+              <Users className="tool-icon" />
+              <div className="tool-info">
+                <div className="tool-name">Expand Network</div>
+                <div className="tool-description">Add more routing nodes</div>
+              </div>
             </button>
           </div>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '2rem', padding: '1rem', background: 'rgba(252, 211, 77, 0.1)', borderRadius: '8px' }}>
-          <p style={{ color: '#f1f5f9', marginBottom: '0.5rem' }}>
-            ⚡ <strong>Instant Settlement:</strong> Payments update the channel balance immediately
-          </p>
-          <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>
-            No blockchain fees, no waiting for confirmations. Just instant value transfer!
-          </p>
-        </div>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Hands-On Experience</div>
-        <div className="completion-message">You've experienced Lightning payments firsthand!</div>
-        <Button
-          onClick={() => handleStepComplete(2)}
-          icon={ArrowRight}
-          text="Learn Multi-Hop Routing"
-        />
-      </div>
-    </div>
-  );
-
-  const renderMultiHopRouting = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🌐</div>
-        <div>
-          <h2 className="step-title">Multi-Hop Routing</h2>
-          <p className="step-subtitle">Payments through the Lightning Network</p>
-        </div>
-      </div>
-
-      <div className="lightning-description">
-        💡 You don't need a direct channel with everyone. Lightning Network routes payments through multiple hops, connecting the entire network.
-      </div>
-
-      <div className="network-graph">
-        <h3 style={{ textAlign: 'center', marginBottom: '2rem' }}>Network Routing Example</h3>
-        <div className="graph-canvas">
-          {/* Simplified network visualization */}
-          <div className="network-node source" style={{ top: '50%', left: '10%' }}>A</div>
-          <div className="network-node" style={{ top: '20%', left: '35%' }}>B</div>
-          <div className="network-node" style={{ top: '80%', left: '35%' }}>C</div>
-          <div className="network-node" style={{ top: '50%', left: '65%' }}>D</div>
-          <div className="network-node destination" style={{ top: '50%', left: '90%' }}>E</div>
+        <div className="architect-achievement">
+          <h4>🌐 Network Architecture Mastered</h4>
+          <p>You've successfully designed optimal routing paths through the Lightning Network. Your network architecture ensures reliable, efficient global payments.</p>
           
-          {/* Connections */}
-          <div className="network-connection" style={{ 
-            top: '50%', left: '15%', width: '20%', 
-            transform: 'rotate(-15deg) translateY(-50%)'
-          }} />
-          <div className="network-connection" style={{ 
-            top: '50%', left: '15%', width: '20%', 
-            transform: 'rotate(15deg) translateY(-50%)'
-          }} />
-          <div className="network-connection active" style={{ 
-            top: '35%', left: '40%', width: '20%', 
-            transform: 'rotate(15deg) translateY(-50%)'
-          }} />
-          <div className="network-connection active" style={{ 
-            top: '50%', left: '70%', width: '20%'
-          }} />
-        </div>
-        
-        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-          <p style={{ color: '#f1f5f9', marginBottom: '1rem' }}>
-            <strong>Route:</strong> Alice → Bob → David → Eve
-          </p>
-          <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>
-            Payment finds the best path through available channels with sufficient liquidity
-          </p>
+          <div className="network-progress">
+            <div className="progress-metric">
+              <div className="progress-label">Network Efficiency</div>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill"
+                  style={{ width: `${routingSuccess}%` }}
+                ></div>
+              </div>
+              <div className="progress-value">{routingSuccess}%</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '2rem 0' }}>
-        <div style={{ background: 'rgba(96, 165, 250, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#60a5fa', marginBottom: '1rem' }}>🔍 Path Finding</h4>
-          <p>Lightning nodes automatically find the best route based on fees, liquidity, and reliability.</p>
-        </div>
-        <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#10b981', marginBottom: '1rem' }}>🔐 Atomic Payments</h4>
-          <p>Hash Time-Locked Contracts ensure payments either succeed completely or fail completely.</p>
-        </div>
-        <div style={{ background: 'rgba(252, 211, 77, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#fcd34d', marginBottom: '1rem' }}>🕵️ Privacy</h4>
-          <p>Intermediate nodes can't see payment details - only that they're forwarding encrypted data.</p>
-        </div>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Routing Master</div>
-        <div className="completion-message">You understand how Lightning connects the world!</div>
+      <div className="phase-completion">
         <Button
-          onClick={() => handleStepComplete(3)}
+          onClick={() => handlePhaseComplete(2)}
           icon={ArrowRight}
-          text="Explore Network Topology"
+          text="Advance to Liquidity Engineer"
+          className="architect-continue-btn"
         />
       </div>
     </div>
   );
 
-  const renderNetworkTopology = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🕸️</div>
-        <div>
-          <h2 className="step-title">Network Topology</h2>
-          <p className="step-subtitle">The structure of Lightning Network</p>
+  const optimizeRouting = () => {
+    setRoutingSuccess(prev => Math.min(prev + 15, 99));
+  };
+
+  const addNetworkCapacity = () => {
+    setNetworkLiquidity(prev => prev + 100);
+    setRoutingSuccess(prev => Math.min(prev + 10, 99));
+  };
+
+  const expandNetwork = () => {
+    setNetworkNodes(prev => prev + 2);
+    setRoutingSuccess(prev => Math.min(prev + 8, 99));
+  };
+
+  const renderLiquidityEngineer = () => (
+    <div className="architect-phase liquidity-engineer">
+      <div className="phase-header">
+        <TrendingUp className="phase-icon-large pulsing" />
+        <div className="phase-info">
+          <h2>Liquidity Engineer</h2>
+          <p>Master Lightning economics and build profitable routing operations</p>
         </div>
       </div>
 
-      <div className="comparison-table">
-        <div className="comparison-header">
-          <h3 className="comparison-title">Lightning Network Stats (Current)</h3>
+      <div className="liquidity-challenge">
+        <div className="challenge-alert">
+          <h3>💰 ECONOMIC VIABILITY CRISIS</h3>
+          <p>Your Lightning node needs to become profitable while maintaining competitive fees. Engineer the perfect economic balance!</p>
         </div>
-        <div className="comparison-grid">
-          <div className="comparison-item">
-            <div className="comparison-label">Total Nodes</div>
-            <div className="comparison-value lightning">15,000+</div>
-            <div className="comparison-description">Distributed globally</div>
+
+        <div className="economics-dashboard">
+          <div className="economics-grid">
+            <div className="economics-metric">
+              <div className="metric-header">
+                <DollarSign className="metric-icon" />
+                <h5>Fee Optimization</h5>
+              </div>
+              <div className="metric-display">
+                <div className="metric-value">{feeOptimization}%</div>
+                <div className="metric-label">Optimized</div>
+              </div>
+              <div className="metric-details">
+                <div className="detail">Base Fee: 1 sat</div>
+                <div className="detail">Rate: 0.01%</div>
+                <div className="detail">Competitive: ✓</div>
+              </div>
+            </div>
+
+            <div className="economics-metric">
+              <div className="metric-header">
+                <Activity className="metric-icon" />
+                <h5>Liquidity Provision</h5>
+              </div>
+              <div className="metric-display">
+                <div className="metric-value">{liquidityProvision}%</div>
+                <div className="metric-label">Efficient</div>
+              </div>
+              <div className="metric-details">
+                <div className="detail">Inbound: 2.5 BTC</div>
+                <div className="detail">Outbound: 2.5 BTC</div>
+                <div className="detail">Balanced: ✓</div>
+              </div>
+            </div>
+
+            <div className="economics-metric">
+              <div className="metric-header">
+                <Target className="metric-icon" />
+                <h5>Node Profitability</h5>
+              </div>
+              <div className="metric-display">
+                <div className="metric-value">{profitability}%</div>
+                <div className="metric-label">ROI</div>
+              </div>
+              <div className="metric-details">
+                <div className="detail">Revenue: 0.05 BTC/month</div>
+                <div className="detail">Costs: 0.01 BTC/month</div>
+                <div className="detail">Profit: 0.04 BTC/month</div>
+              </div>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Payment Channels</div>
-            <div className="comparison-value lightning">75,000+</div>
-            <div className="comparison-description">Active connections</div>
+
+          <div className="liquidity-strategy">
+            <h4>Liquidity Management Strategy</h4>
+            <div className="strategy-tools">
+              <button 
+                className="strategy-btn"
+                onClick={() => optimizeFees()}
+              >
+                <BarChart3 className="strategy-icon" />
+                <div className="strategy-info">
+                  <div className="strategy-name">Optimize Fee Structure</div>
+                  <div className="strategy-description">Balance competitiveness with profitability</div>
+                </div>
+              </button>
+
+              <button 
+                className="strategy-btn"
+                onClick={() => rebalanceChannels()}
+              >
+                <Activity className="strategy-icon" />
+                <div className="strategy-info">
+                  <div className="strategy-name">Rebalance Channels</div>
+                  <div className="strategy-description">Maintain optimal liquidity distribution</div>
+                </div>
+              </button>
+
+              <button 
+                className="strategy-btn"
+                onClick={() => expandLiquidity()}
+              >
+                <TrendingUp className="strategy-icon" />
+                <div className="strategy-info">
+                  <div className="strategy-name">Expand Liquidity</div>
+                  <div className="strategy-description">Open new high-capacity channels</div>
+                </div>
+              </button>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Network Capacity</div>
-            <div className="comparison-value lightning">5,000+ BTC</div>
-            <div className="comparison-description">~$200M+ in channels</div>
+
+          <div className="revenue-projection">
+            <h4>Revenue Projection</h4>
+            <div className="projection-chart">
+              <div className="chart-bars">
+                {[20, 35, 55, 75, 90].map((height, index) => (
+                  <div key={index} className="revenue-bar">
+                    <div 
+                      className="bar-fill"
+                      style={{ height: `${height}%` }}
+                    ></div>
+                    <div className="bar-label">Month {index + 1}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="projection-details">
+                <div className="projection-metric">
+                  <span className="metric-label">Projected Annual Revenue:</span>
+                  <span className="metric-value">0.6 BTC</span>
+                </div>
+                <div className="projection-metric">
+                  <span className="metric-label">ROI Timeline:</span>
+                  <span className="metric-value">8-12 months</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="engineer-achievement">
+          <h4>⚖️ Liquidity Engineering Mastered</h4>
+          <p>You've mastered Lightning economics, balancing competitive fees with profitable operations. Your node is now a key piece of Lightning infrastructure.</p>
+          
+          <div className="engineering-skills">
+            <div className="skill-category">
+              <h5>Economic Mastery</h5>
+              <div className="skills-list">
+                <div className="skill-item">✓ Fee Optimization Strategies</div>
+                <div className="skill-item">✓ Liquidity Management</div>
+                <div className="skill-item">✓ Profitability Analysis</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '2rem', borderRadius: '12px', margin: '2rem 0' }}>
-        <h3 style={{ color: '#f1f5f9', marginBottom: '1.5rem' }}>🌐 Network Properties</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-          <div>
-            <strong style={{ color: '#fcd34d' }}>Small World Network:</strong>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Most nodes connected within 2-3 hops</p>
-          </div>
-          <div>
-            <strong style={{ color: '#fcd34d' }}>Hub Architecture:</strong>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Large routing nodes provide connectivity</p>
-          </div>
-          <div>
-            <strong style={{ color: '#fcd34d' }}>Redundant Paths:</strong>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Multiple routes ensure reliability</p>
-          </div>
-          <div>
-            <strong style={{ color: '#fcd34d' }}>Growing Network:</strong>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Adding nodes increases connectivity exponentially</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Network Understanding</div>
-        <div className="completion-message">You grasp Lightning's global network structure!</div>
+      <div className="phase-completion">
         <Button
-          onClick={() => handleStepComplete(4)}
+          onClick={() => handlePhaseComplete(3)}
           icon={ArrowRight}
-          text="Learn Lightning Economics"
+          text="Advance to Commerce Pioneer"
+          className="engineer-continue-btn"
         />
       </div>
     </div>
   );
 
-  const renderEconomics = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">💰</div>
-        <div>
-          <h2 className="step-title">Lightning Economics</h2>
-          <p className="step-subtitle">Fees, liquidity, and economic incentives</p>
+  const optimizeFees = () => {
+    setFeeOptimization(prev => Math.min(prev + 20, 100));
+    setProfitability(prev => Math.min(prev + 15, 100));
+  };
+
+  const rebalanceChannels = () => {
+    setLiquidityProvision(prev => Math.min(prev + 25, 100));
+    setProfitability(prev => Math.min(prev + 10, 100));
+  };
+
+  const expandLiquidity = () => {
+    setLiquidityProvision(prev => Math.min(prev + 15, 100));
+    setFeeOptimization(prev => Math.min(prev + 10, 100));
+    setProfitability(prev => Math.min(prev + 12, 100));
+  };
+
+  const renderCommercePioneer = () => (
+    <div className="architect-phase commerce-pioneer">
+      <div className="phase-header">
+        <Globe className="phase-icon-large pulsing" />
+        <div className="phase-info">
+          <h2>Commerce Pioneer</h2>
+          <p>Build Lightning commerce solutions for global micropayment revolution</p>
         </div>
       </div>
 
-      <div className="comparison-table">
-        <div className="comparison-header">
-          <h3 className="comparison-title">Fee Comparison</h3>
+      <div className="commerce-challenge">
+        <div className="challenge-alert">
+          <h3>🚀 GLOBAL PAYMENT REVOLUTION</h3>
+          <p>Launch Lightning commerce solutions that enable micropayments and instant global transactions for millions of users!</p>
         </div>
-        <div className="comparison-grid">
-          <div className="comparison-item">
-            <div className="comparison-label">Bitcoin On-Chain</div>
-            <div className="comparison-value onchain">$1-50+</div>
-            <div className="comparison-description">Depends on network congestion</div>
+
+        <div className="commerce-solutions">
+          <div className="solution-grid">
+            <div className="commerce-solution">
+              <div className="solution-header">
+                <div className="solution-icon">🛒</div>
+                <h4>E-Commerce Integration</h4>
+              </div>
+              <div className="solution-metrics">
+                <div className="metric">
+                  <span className="metric-label">Merchants:</span>
+                  <span className="metric-value">{Math.floor(commerceSolutions * 100).toLocaleString()}</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Avg Transaction:</span>
+                  <span className="metric-value">$12.50</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Success Rate:</span>
+                  <span className="metric-value">99.8%</span>
+                </div>
+              </div>
+              <div className="solution-features">
+                <div className="feature">✓ Instant checkout</div>
+                <div className="feature">✓ No chargebacks</div>
+                <div className="feature">✓ Global reach</div>
+              </div>
+            </div>
+
+            <div className="commerce-solution">
+              <div className="solution-header">
+                <div className="solution-icon">📱</div>
+                <h4>Micropayment Platform</h4>
+              </div>
+              <div className="solution-metrics">
+                <div className="metric">
+                  <span className="metric-label">Micro-transactions:</span>
+                  <span className="metric-value">{Math.floor(micropaymentVolume * 10000).toLocaleString()}/day</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Avg Amount:</span>
+                  <span className="metric-value">$0.05</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Content Views:</span>
+                  <span className="metric-value">2.3M/day</span>
+                </div>
+              </div>
+              <div className="solution-features">
+                <div className="feature">✓ Pay-per-article</div>
+                <div className="feature">✓ Streaming payments</div>
+                <div className="feature">✓ Creator monetization</div>
+              </div>
+            </div>
+
+            <div className="commerce-solution">
+              <div className="solution-header">
+                <div className="solution-icon">🌍</div>
+                <h4>Global Remittances</h4>
+              </div>
+              <div className="solution-metrics">
+                <div className="metric">
+                  <span className="metric-label">Daily Volume:</span>
+                  <span className="metric-value">${Math.floor(globalAdoption * 50000).toLocaleString()}</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Countries:</span>
+                  <span className="metric-value">150+</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-label">Avg Fee:</span>
+                  <span className="metric-value">0.1%</span>
+                </div>
+              </div>
+              <div className="solution-features">
+                <div className="feature">✓ Instant transfers</div>
+                <div className="feature">✓ 24/7 availability</div>
+                <div className="feature">✓ No intermediaries</div>
+              </div>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Lightning Network</div>
-            <div className="comparison-value lightning">$0.001-0.01</div>
-            <div className="comparison-description">Fractions of pennies</div>
+
+          <div className="commerce-tools">
+            <h4>Commerce Development Tools</h4>
+            <div className="tools-grid">
+              <button 
+                className="commerce-tool"
+                onClick={() => buildEcommerce()}
+              >
+                <div className="tool-icon">🛍️</div>
+                <div className="tool-info">
+                  <div className="tool-name">Build E-Commerce Solution</div>
+                  <div className="tool-description">Enable instant checkout for online stores</div>
+                </div>
+              </button>
+
+              <button 
+                className="commerce-tool"
+                onClick={() => deployMicropayments()}
+              >
+                <div className="tool-icon">💰</div>
+                <div className="tool-info">
+                  <div className="tool-name">Deploy Micropayment System</div>
+                  <div className="tool-description">Enable content monetization with tiny payments</div>
+                </div>
+              </button>
+
+              <button 
+                className="commerce-tool"
+                onClick={() => expandGlobally()}
+              >
+                <div className="tool-icon">🌐</div>
+                <div className="tool-info">
+                  <div className="tool-name">Expand Global Reach</div>
+                  <div className="tool-description">Connect more countries to Lightning network</div>
+                </div>
+              </button>
+            </div>
           </div>
-          <div className="comparison-item">
-            <div className="comparison-label">Traditional Banking</div>
-            <div className="comparison-value traditional">2-3%</div>
-            <div className="comparison-description">Plus fixed fees</div>
+
+          <div className="global-impact">
+            <h4>Global Lightning Impact</h4>
+            <div className="impact-metrics">
+              <div className="impact-stat">
+                <div className="stat-value">2.3M+</div>
+                <div className="stat-label">Daily Active Users</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-value">$50M+</div>
+                <div className="stat-label">Monthly Volume</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-value">150+</div>
+                <div className="stat-label">Countries Connected</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-value">99.8%</div>
+                <div className="stat-label">Success Rate</div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div className="pioneer-achievement">
+          <h4>🌟 Commerce Pioneer Achievement</h4>
+          <p>You've successfully built Lightning commerce solutions that enable global micropayments and instant transactions. Your innovations are driving Lightning adoption worldwide.</p>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', margin: '2rem 0' }}>
-        <div style={{ background: 'rgba(252, 211, 77, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#fcd34d', marginBottom: '1rem' }}>💧 Liquidity Management</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li>Channels need adequate balance on both sides</li>
-            <li>Routing nodes earn fees for providing liquidity</li>
-            <li>Liquidity can be rebalanced through circular payments</li>
-            <li>Submarine swaps connect on-chain and Lightning liquidity</li>
-          </ul>
-        </div>
-
-        <div style={{ background: 'rgba(96, 165, 250, 0.1)', padding: '1.5rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#60a5fa', marginBottom: '1rem' }}>🏪 Business Models</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li><strong>Routing Fees:</strong> Earn by forwarding payments</li>
-            <li><strong>Liquidity Services:</strong> Provide channel capacity</li>
-            <li><strong>Lightning Service Providers:</strong> Managed node services</li>
-            <li><strong>Payment Processors:</strong> Lightning-enabled commerce</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Economic Mastery</div>
-        <div className="completion-message">You understand Lightning's economic incentives!</div>
+      <div className="phase-completion">
         <Button
-          onClick={() => handleStepComplete(5)}
+          onClick={() => handlePhaseComplete(4)}
           icon={ArrowRight}
-          text="See Real-World Usage"
+          text="Achieve Lightning Sovereignty"
+          className="pioneer-continue-btn"
         />
       </div>
     </div>
   );
 
-  const renderRealWorld = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🌍</div>
-        <div>
-          <h2 className="step-title">Lightning in the Real World</h2>
-          <p className="step-subtitle">How Lightning is being used today</p>
+  const buildEcommerce = () => {
+    setCommerceSolutions(prev => Math.min(prev + 0.2, 1));
+    setGlobalAdoption(prev => Math.min(prev + 0.15, 1));
+  };
+
+  const deployMicropayments = () => {
+    setMicropaymentVolume(prev => Math.min(prev + 0.25, 1));
+    setCommerceSolutions(prev => Math.min(prev + 0.1, 1));
+  };
+
+  const expandGlobally = () => {
+    setGlobalAdoption(prev => Math.min(prev + 0.3, 1));
+    setMicropaymentVolume(prev => Math.min(prev + 0.1, 1));
+  };
+
+  const renderLightningSovereign = () => (
+    <div className="architect-phase lightning-sovereign">
+      <div className="sovereignty-header">
+        <Trophy className="sovereignty-crown pulsing" />
+        <div className="sovereignty-info">
+          <h2>Lightning Sovereign</h2>
+          <p>Master of instant, global Bitcoin payments</p>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem', margin: '2rem 0' }}>
-        <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#10b981', marginBottom: '1rem' }}>🏪 E-Commerce</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li><strong>Bitrefill:</strong> Buy gift cards with Lightning</li>
-            <li><strong>BTCPayServer:</strong> Lightning merchant payments</li>
-            <li><strong>OpenNode:</strong> E-commerce payment processing</li>
-            <li><strong>Shopify Apps:</strong> Lightning plugins for stores</li>
-          </ul>
+      <div className="sovereignty-display">
+        <div className="mastery-dashboard">
+          <h3>⚡ Lightning Mastery Achieved</h3>
+          <div className="mastery-grid">
+            <div className="mastery-category">
+              <div className="category-header">
+                <AlertTriangle className="category-icon" />
+                <h4>Crisis Analysis</h4>
+              </div>
+              <div className="mastery-level">Master</div>
+              <div className="category-skills">
+                <div className="skill">Payment System Investigation</div>
+                <div className="skill">Cost-Benefit Analysis</div>
+                <div className="skill">Solution Recognition</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <Zap className="category-icon" />
+                <h4>Speed Engineering</h4>
+              </div>
+              <div className="mastery-level">Master</div>
+              <div className="category-skills">
+                <div className="skill">Channel Architecture</div>
+                <div className="skill">Instant Settlements</div>
+                <div className="skill">Performance Optimization</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <Layers className="category-icon" />
+                <h4>Network Design</h4>
+              </div>
+              <div className="mastery-level">Master</div>
+              <div className="category-skills">
+                <div className="skill">Topology Optimization</div>
+                <div className="skill">Routing Algorithms</div>
+                <div className="skill">Path Finding</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <TrendingUp className="category-icon" />
+                <h4>Economic Mastery</h4>
+              </div>
+              <div className="mastery-level">Master</div>
+              <div className="category-skills">
+                <div className="skill">Fee Optimization</div>
+                <div className="skill">Liquidity Management</div>
+                <div className="skill">Profitability Analysis</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <Globe className="category-icon" />
+                <h4>Global Impact</h4>
+              </div>
+              <div className="mastery-level">Master</div>
+              <div className="category-skills">
+                <div className="skill">Commerce Solutions</div>
+                <div className="skill">Micropayment Systems</div>
+                <div className="skill">Global Adoption</div>
+              </div>
+            </div>
+
+            <div className="mastery-category sovereignty-special">
+              <div className="category-header">
+                <Trophy className="category-icon" />
+                <h4>Lightning Sovereignty</h4>
+              </div>
+              <div className="mastery-level">Achieved</div>
+              <div className="category-skills">
+                <div className="skill">Complete Lightning Mastery</div>
+                <div className="skill">Financial Sovereignty</div>
+                <div className="skill">Global Payment Freedom</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div style={{ background: 'rgba(252, 211, 77, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#fcd34d', marginBottom: '1rem' }}>📱 Mobile Apps</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li><strong>Strike:</strong> Lightning-native payments</li>
-            <li><strong>Cash App:</strong> Lightning integration</li>
-            <li><strong>Phoenix:</strong> Non-custodial Lightning wallet</li>
-            <li><strong>Breez:</strong> Lightning point-of-sale</li>
-          </ul>
+        <div className="sovereignty-powers">
+          <h3>👑 Sovereign Powers Unlocked</h3>
+          <div className="powers-grid">
+            <div className="sovereign-power">
+              <div className="power-icon">⚡</div>
+              <div className="power-info">
+                <h4>Instant Settlements</h4>
+                <p>Send any amount globally in milliseconds</p>
+              </div>
+            </div>
+            <div className="sovereign-power">
+              <div className="power-icon">💰</div>
+              <div className="power-info">
+                <h4>Micropenny Fees</h4>
+                <p>Pay fractions of pennies for any transaction</p>
+              </div>
+            </div>
+            <div className="sovereign-power">
+              <div className="power-icon">🌍</div>
+              <div className="power-info">
+                <h4>Global Reach</h4>
+                <p>Connect to anyone, anywhere, anytime</p>
+              </div>
+            </div>
+            <div className="sovereign-power">
+              <div className="power-icon">🏗️</div>
+              <div className="power-info">
+                <h4>Infrastructure Builder</h4>
+                <p>Deploy Lightning solutions at scale</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div style={{ background: 'rgba(139, 92, 246, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#8b5cf6', marginBottom: '1rem' }}>🎮 Gaming & Content</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li><strong>Fountain:</strong> Lightning-powered podcasts</li>
-            <li><strong>Stacker News:</strong> Lightning social media</li>
-            <li><strong>THNDR Games:</strong> Lightning gaming rewards</li>
-            <li><strong>Streaming Sats:</strong> Real-time micropayments</li>
-          </ul>
-        </div>
-
-        <div style={{ background: 'rgba(236, 72, 153, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-          <h4 style={{ color: '#ec4899', marginBottom: '1rem' }}>🌍 Global Impact</h4>
-          <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            <li><strong>El Salvador:</strong> National Lightning adoption</li>
-            <li><strong>Remittances:</strong> Instant global transfers</li>
-            <li><strong>Financial Inclusion:</strong> Banking the unbanked</li>
-            <li><strong>Micropayments:</strong> Enabling new business models</li>
-          </ul>
+        <div className="sovereignty-impact">
+          <h3>🌟 Your Lightning Impact</h3>
+          <div className="impact-summary">
+            <div className="impact-metric">
+              <div className="metric-value">100%</div>
+              <div className="metric-label">Mastery Level</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">6</div>
+              <div className="metric-label">Phases Completed</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">∞</div>
+              <div className="metric-label">Payment Speed</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">0.001%</div>
+              <div className="metric-label">Transaction Fees</div>
+            </div>
+          </div>
+          
+          <div className="sovereignty-message">
+            <p>You have achieved complete mastery of the Lightning Network. You understand how to solve the global payments crisis through instant, cheap Bitcoin transactions. You can build Lightning infrastructure, optimize economic models, and deploy solutions that connect the world through instant value transfer.</p>
+            
+            <div className="final-achievement">
+              <Trophy className="achievement-trophy" />
+              <span>Lightning Sovereign Status: ACHIEVED</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '2rem', borderRadius: '12px', margin: '2rem 0' }}>
-        <h4 style={{ color: '#ef4444', marginBottom: '1rem' }}>🚀 Growing Ecosystem</h4>
-        <p style={{ color: '#f1f5f9', lineHeight: '1.6', marginBottom: '1rem' }}>
-          Lightning Network is rapidly expanding with new applications launching monthly. From micropayments for content creators to instant cross-border remittances, Lightning is enabling use cases that were impossible with traditional Bitcoin or legacy payment systems.
-        </p>
-        <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>
-          The network effect is accelerating: more users → more liquidity → better routing → lower fees → more users.
-        </p>
-      </div>
-
-      <VisualCapitalistSection
-        icon="🌍"
-        title="Explore Further: Global Remittance Market"
-        description="See how the $700+ billion global remittance market works and why Lightning Network could revolutionize cross-border payments for millions of families worldwide."
-        url="https://www.visualcapitalist.com/global-remittance-flows/"
-        buttonText="View Global Remittance Data"
-      />
-
-      <div className="step-completion">
-        <div className="completion-icon">✓</div>
-        <div className="completion-title">Real-World Expert</div>
-        <div className="completion-message">You know how Lightning is transforming payments today!</div>
+      <div className="phase-completion sovereignty-completion">
         <Button
-          onClick={() => handleStepComplete(6)}
-          icon={ArrowRight}
-          text="Achieve Lightning Mastery"
-        />
-      </div>
-    </div>
-  );
-
-  const renderMastery = () => (
-    <div className="step-container">
-      <div className="step-header">
-        <div className="step-icon">🏆</div>
-        <div>
-          <h2 className="step-title">Lightning Network Mastery</h2>
-          <p className="step-subtitle">Complete understanding achieved!</p>
-        </div>
-      </div>
-
-      <div style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-        <div style={{ fontSize: '4rem', marginBottom: '2rem' }}>⚡</div>
-        <h3 style={{ color: '#fcd34d', fontSize: '2rem', marginBottom: '1rem' }}>
-          Lightning Master Achieved!
-        </h3>
-        <p style={{ color: '#f1f5f9', fontSize: '1.2rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-          You now understand Bitcoin's scaling solution that enables instant, cheap payments worldwide.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '2rem 0' }}>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '8px' }}>
-            <div style={{ color: '#10b981', fontWeight: 'bold' }}>8 Concepts</div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Mastered</div>
-          </div>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '8px' }}>
-            <div style={{ color: '#10b981', fontWeight: 'bold' }}>Payment Channels</div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Understood</div>
-          </div>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '8px' }}>
-            <div style={{ color: '#10b981', fontWeight: 'bold' }}>Network Routing</div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Expert Level</div>
-          </div>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1rem', borderRadius: '8px' }}>
-            <div style={{ color: '#10b981', fontWeight: 'bold' }}>Real-World Apps</div>
-            <div style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>Ready to Use</div>
-          </div>
-        </div>
-
-        <div style={{ background: 'rgba(252, 211, 77, 0.1)', padding: '2rem', borderRadius: '12px', margin: '2rem 0' }}>
-          <h4 style={{ color: '#fcd34d', marginBottom: '1rem' }}>🎯 What You've Learned</h4>
-          <ul style={{ color: '#f1f5f9', textAlign: 'left', lineHeight: '1.6' }}>
-            <li>How payment channels enable instant Bitcoin transfers</li>
-            <li>Multi-hop routing through the Lightning Network</li>
-            <li>Network topology and economic incentives</li>
-            <li>Real-world applications and growing ecosystem</li>
-            <li>The technical security model of Lightning</li>
-            <li>How Lightning scales Bitcoin globally</li>
-          </ul>
-        </div>
-
-        <Button 
-          onClick={() => handleStepComplete(7)}
+          onClick={() => handlePhaseComplete(5)}
           icon={Trophy}
-          text="Complete Lightning Mastery"
-          style={{ fontSize: '1.1rem', padding: '1rem 3rem' }}
+          text="Complete Lightning Sovereignty"
+          className="sovereignty-complete-btn"
         />
       </div>
     </div>
   );
 
   return (
-    <div className="module-container lightning-module">
+    <div className="module-container lightning-crisis-module">
       <div className="lightning-content">
-        <div className="lightning-header">
-          <h1 className="lightning-title">Lightning Network</h1>
-          <p className="lightning-subtitle">Instant Bitcoin Payments at the Speed of Light</p>
-          <div className="lightning-description">
-            Master Bitcoin's scaling solution that enables millions of transactions per second with instant confirmations and micropenny fees.
+        <div className="module-header">
+          <div className="header-content">
+            <div className="module-icon">⚡</div>
+            <div className="header-text">
+              <h1 className="module-title">Lightning Crisis Architect</h1>
+              <p className="module-subtitle">Master instant Bitcoin payments through crisis-driven discovery</p>
+              <div className="crisis-tagline">
+                Transform the global payment nightmare into Lightning-fast solutions
+              </div>
+            </div>
           </div>
+          
           {isModuleCompleted('lightning') && (
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              gap: '0.5rem',
-              marginTop: '1rem',
-              color: '#10b981',
-              fontWeight: 'bold'
-            }}>
-              <Trophy size={24} />
-              <span>Lightning Master Achieved!</span>
+            <div className="completion-badge">
+              <Trophy className="completion-icon" />
+              <span>Lightning Sovereign Achieved!</span>
             </div>
           )}
         </div>
 
-        <div className="step-navigation">
-          {steps.map((step, index) => (
+        <div className="architect-navigation">
+          {architectPhases.map((phase, index) => (
             <div
-              key={step.id}
-              className={`step-nav-item ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-              onClick={() => setCurrentStep(index)}
+              key={phase.id}
+              className={`architect-tab ${currentPhase === index ? 'active' : ''} ${completedPhases.has(index) ? 'completed' : ''}`}
+              onClick={() => setCurrentPhase(index)}
             >
-              <span>{step.icon}</span>
-              <span>{step.title}</span>
+              <div className="tab-icon">{phase.icon}</div>
+              <div className="tab-info">
+                <div className="tab-title">{phase.title}</div>
+                <div className="tab-crisis">{phase.crisis}</div>
+              </div>
+              {completedPhases.has(index) && (
+                <div className="tab-completion">
+                  <CheckCircle className="completion-check" />
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-        {renderStep()}
+        <div className="mastery-progress">
+          <div className="progress-header">
+            <span>Lightning Mastery Progress</span>
+            <span>{Math.floor(masteryLevel)}%</span>
+          </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${masteryLevel}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className="architect-content">
+          {renderPhaseContent()}
+        </div>
+
+        {achievements.length > 0 && (
+          <div className="achievements-display">
+            <h3>🏆 Achievements Unlocked</h3>
+            <div className="achievements-grid">
+              {achievements.slice(-3).map((achievement) => (
+                <div key={achievement.id} className="achievement-card">
+                  <div className="achievement-icon">{achievement.icon}</div>
+                  <div className="achievement-info">
+                    <div className="achievement-title">{achievement.title}</div>
+                    <div className="achievement-description">{achievement.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -94,11 +94,11 @@ const MerkleModule = () => {
     achievement.className = 'strategic-achievement';
     achievement.innerHTML = `
       <div class="achievement-glow">
-        <div class="achievement-content">
+      <div class="achievement-content">
           <div class="achievement-emoji">${emoji}</div>
-          <div class="achievement-text">
+        <div class="achievement-text">
             <h3>${title}</h3>
-            <p>${description}</p>
+          <p>${description}</p>
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@ const MerkleModule = () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
         if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
+        document.body.removeChild(achievement);
         }
       }, 500);
     }, 4000);
@@ -203,20 +203,20 @@ const MerkleModule = () => {
         <div className="crisis-header">
           <div className="crisis-icon">
             <AlertTriangle className="w-16 h-16 text-red-500" />
-          </div>
+        </div>
           <h2>🚨 THE DATA VERIFICATION CRISIS</h2>
           <p className="crisis-subtitle">Billions lost because we can't verify data fast enough when it matters...</p>
-        </div>
-
+      </div>
+      
         {crisisPhase === 'discovery' && (
           <div className="crisis-scenarios">
             <div className="crisis-explanation">
               <div className="prime-text">
                 📊 Every day, critical systems fail because they can't verify massive datasets quickly enough. 
                 The cost isn't just money—it's lives, security, and trust in digital systems.
-              </div>
             </div>
-
+          </div>
+          
             <h3>Choose a data verification crisis to investigate:</h3>
             <div className="crisis-grid">
               {dataCrises.map(crisis => (
@@ -228,9 +228,9 @@ const MerkleModule = () => {
                   <div className="crisis-title">{crisis.title}</div>
                   <div className="crisis-problem">{crisis.problem}</div>
                   <div className="crisis-cost">{crisis.cost}</div>
-                </div>
-              ))}
             </div>
+              ))}
+          </div>
           </div>
         )}
 
@@ -244,26 +244,26 @@ const MerkleModule = () => {
               <div className="investigation-step">
                 <h4>📋 The System Requirement</h4>
                 <p>{selectedCrisis.problem}</p>
-              </div>
-              
+        </div>
+
               <div className="investigation-step">
                 <h4>💥 The Verification Failure</h4>
                 <p>{selectedCrisis.crisis}</p>
-              </div>
+            </div>
 
               <div className="investigation-loading">
                 <div className="loading-spinner"></div>
                 <p>Analyzing scalability bottleneck...</p>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
         )}
 
         {crisisPhase === 'revelation' && selectedCrisis && investigationResult && (
           <div className="crisis-revelation">
             <div className="revelation-header">
               <h3>⚡ REVELATION: The Scalability Bottleneck Exposed</h3>
-            </div>
+      </div>
 
             <div className="revelation-analysis">
               <div className="flaw-identified">
@@ -271,8 +271,8 @@ const MerkleModule = () => {
                 <div className="flaw-box">
                   <strong>{investigationResult.rootCause}</strong>
                   <p>{selectedCrisis.lesson}</p>
-                </div>
-              </div>
+    </div>
+        </div>
 
               <div className="solution-preview">
                 <h4>💡 The Merkle Tree Solution</h4>
@@ -286,19 +286,19 @@ const MerkleModule = () => {
                     <li>✅ Mathematically guaranteed integrity</li>
                   </ul>
                 </div>
-              </div>
-            </div>
+                    </div>
+                </div>
 
             <div className="revelation-impact">
               <div className="prime-text">
                 🔥 What if you could verify any piece of data in a billion-record database 
                 with just 30 mathematical operations? That's what Merkle trees make possible.
-              </div>
-            </div>
+          </div>
+        </div>
 
             <ContinueButton onClick={() => handleContinue()}>
               Transform Linear Into Logarithmic →
-            </ContinueButton>
+        </ContinueButton>
           </div>
         )}
       </div>
@@ -427,9 +427,9 @@ const MerkleModule = () => {
                       <span>Transformation Complete</span>
                     </div>
                   )}
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
           </div>
         )}
 
@@ -438,31 +438,31 @@ const MerkleModule = () => {
             <div className="demonstration-header">
               <h3>🌳 Tree Transformation in Progress</h3>
               <p>Watch linear verification become logarithmic magic...</p>
-            </div>
+        </div>
 
             <div className="tree-building">
               <div className="tree-display">
                 <h4>📊 Data to Tree Structure</h4>
-                <div className="tree-visualization">
+        <div className="tree-visualization">
                   {treeVisualization.map((level, levelIndex) => (
-                    <div key={levelIndex} className="tree-level">
-                      <div className="level-label">
+                <div key={levelIndex} className="tree-level">
+                <div className="level-label">
                         {levelIndex === 0 ? 'Original Data' : 
                          levelIndex === treeVisualization.length - 1 ? 'Merkle Root' : 
-                         `Level ${levelIndex}`}
-                      </div>
-                      <div className="level-nodes">
-                        {level.map((node, nodeIndex) => (
-                          <div key={nodeIndex} className="tree-node">
+                   `Level ${levelIndex}`}
+                </div>
+                  <div className="level-nodes">
+                  {level.map((node, nodeIndex) => (
+                      <div key={nodeIndex} className="tree-node">
                             {levelIndex === 0 && nodeIndex < 4 ? 
                               currentTree.dataSet[nodeIndex] : node}
-                          </div>
-                        ))}
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+        </div>
 
               <div className="efficiency-comparison">
                 <h4>⚡ Efficiency Transformation</h4>
@@ -486,11 +486,11 @@ const MerkleModule = () => {
             </div>
 
             <div className="transformation-insight">
-              <div className="prime-text">
+        <div className="prime-text">
                 🎯 The transformation is complete! Linear verification is now logarithmic magic. 
                 As datasets grow larger, the efficiency advantage becomes astronomical.
               </div>
-            </div>
+        </div>
 
             <div className="demonstration-controls">
               <ActionButton onClick={() => setAlchemyPhase('learning')}>
@@ -500,7 +500,7 @@ const MerkleModule = () => {
               {completedTransformations.size >= 2 && (
                 <ContinueButton onClick={() => handleContinue()}>
                   Architect Minimal Proofs →
-                </ContinueButton>
+        </ContinueButton>
               )}
             </div>
           </div>
@@ -591,7 +591,7 @@ const MerkleModule = () => {
         setArchitectPhase('validation');
       }, 3000);
     };
-
+    
     return (
       <div className="proof-architect">
         <div className="architect-header">
@@ -629,8 +629,8 @@ const MerkleModule = () => {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
-          </div>
         )}
 
         {architectPhase === 'design' && proofScenario && (
@@ -638,7 +638,7 @@ const MerkleModule = () => {
             <div className="design-header">
               <h3>🏗️ Designing: {proofScenario.title}</h3>
             </div>
-
+            
             <div className="proof-construction">
               <div className="proof-challenge">
                 <h4>⚡ The Challenge</h4>
@@ -646,9 +646,9 @@ const MerkleModule = () => {
                   <p><strong>Problem:</strong> {proofScenario.problem}</p>
                   <p><strong>Traditional approach:</strong> {proofScenario.challenge}</p>
                   <p><strong>Merkle solution:</strong> {proofScenario.solution}</p>
-                </div>
               </div>
-
+            </div>
+            
               <div className="proof-path">
                 <h4>🛤️ Merkle Proof Path</h4>
                 <div className="proof-steps">
@@ -662,9 +662,9 @@ const MerkleModule = () => {
                       </div>
                     </div>
                   ))}
-                </div>
               </div>
             </div>
+          </div>
 
             <div className="proof-efficiency">
               <h4>📊 Efficiency Analysis</h4>
@@ -676,19 +676,19 @@ const MerkleModule = () => {
                 <div className="metric">
                   <span className="metric-label">Data Reduction:</span>
                   <span className="metric-value">{proofScenario.dataReduction}</span>
-                </div>
+            </div>
                 <div className="metric">
                   <span className="metric-label">Verification Steps:</span>
                   <span className="metric-value">{proofPath.length} hashes</span>
                 </div>
-              </div>
             </div>
+          </div>
 
             <ActionButton onClick={handleProofVerification}>
               <Play className="w-4 h-4" />
               Verify Proof Validity
             </ActionButton>
-          </div>
+        </div>
         )}
 
         {architectPhase === 'validation' && (
@@ -717,16 +717,16 @@ const MerkleModule = () => {
             </div>
 
             <div className="validation-insight">
-              <div className="prime-text">
+        <div className="prime-text">
                 🔍 Proof architecture mastered! You've designed a verification system that 
                 proves data integrity with minimal information transfer—the foundation of 
                 efficient distributed systems.
               </div>
-            </div>
+        </div>
 
             <ContinueButton onClick={() => handleContinue()}>
               Engineer Global Scale →
-            </ContinueButton>
+        </ContinueButton>
           </div>
         )}
 
@@ -791,7 +791,7 @@ const MerkleModule = () => {
           </div>
           <h2>⚡ GLOBAL SCALE ENGINEERING</h2>
           <p className="engineer-subtitle">Engineer systems that handle millions of records instantly...</p>
-        </div>
+      </div>
 
         {engineerPhase === 'discovery' && (
           <div className="scale-discovery">
@@ -801,21 +801,21 @@ const MerkleModule = () => {
                 <div className="stat">
                   <span className="stat-value">Linear O(n)</span>
                   <span className="stat-label">Traditional verification grows with every record</span>
-                </div>
+            </div>
                 <div className="stat">
                   <span className="stat-value">Logarithmic O(log n)</span>
                   <span className="stat-label">Merkle verification barely grows at all</span>
-                </div>
+            </div>
                 <div className="stat">
                   <span className="stat-value">Billions</span>
                   <span className="stat-label">Records that need instant verification</span>
-                </div>
-              </div>
+            </div>
+            </div>
               
               <div className="prime-text">
                 🚀 Test how Merkle trees maintain blazing speed even as datasets grow to massive scales. 
                 Experience the logarithmic magic that powers global systems.
-              </div>
+            </div>
             </div>
 
             <div className="scale-testing">
@@ -830,24 +830,24 @@ const MerkleModule = () => {
                     {test.label}
                   </ActionButton>
                 ))}
-              </div>
+          </div>
 
               {scaleDemo && (
                 <div className="scale-results">
                   <div className="scale-scenario">
                     <h4>📊 Testing: {scaleDemo.size.toLocaleString()} Records</h4>
                     <p>{scaleTests.find(t => t.size === scaleDemo.size)?.scenario}</p>
-                  </div>
-                  
+          </div>
+
                   <div className="performance-comparison">
                     <div className="performance-metric">
                       <span className="metric-label">Linear Verification:</span>
                       <span className="metric-value bad">{scaleDemo.linearTime?.toLocaleString()} operations</span>
-                    </div>
+          </div>
                     <div className="performance-metric">
                       <span className="metric-label">Merkle Verification:</span>
                       <span className="metric-value good">{scaleDemo.merkleTime} operations</span>
-                    </div>
+        </div>
                     <div className="performance-metric">
                       <span className="metric-label">Efficiency Gain:</span>
                       <span className="metric-value amazing">{scaleDemo.efficiency}x faster</span>
@@ -855,19 +855,19 @@ const MerkleModule = () => {
                   </div>
                 </div>
               )}
-            </div>
+      </div>
 
             {scaleDemo?.size >= 1000000 && (
               <div className="discovery-insight">
                 <div className="prime-text">
                   🎯 Notice: Even with a million records, Merkle verification takes just 20 operations! 
                   This is how Bitcoin handles massive transaction volumes...
-                </div>
+    </div>
                 
                 <ActionButton onClick={handleBitcoinReveal}>
                   Reveal Bitcoin's Scale Engineering →
                 </ActionButton>
-              </div>
+      </div>
             )}
           </div>
         )}
@@ -884,24 +884,24 @@ const MerkleModule = () => {
                   <span className="stat-icon">📊</span>
                   <span className="stat-value">{bitcoinMetrics.total_transactions}</span>
                   <span className="stat-label">Total Transactions Processed</span>
-                </div>
+            </div>
                 <div className="network-stat">
                   <span className="stat-icon">⚡</span>
                   <span className="stat-value">{bitcoinMetrics.daily_transactions}</span>
                   <span className="stat-label">Daily Transactions</span>
-                </div>
+            </div>
                 <div className="network-stat">
                   <span className="stat-icon">🔍</span>
                   <span className="stat-value">{bitcoinMetrics.block_verification}</span>
                   <span className="stat-label">Block Verification Time</span>
-                </div>
+            </div>
                 <div className="network-stat">
                   <span className="stat-icon">📱</span>
                   <span className="stat-value">{bitcoinMetrics.spv_verification}</span>
                   <span className="stat-label">Mobile Wallet Verification</span>
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+        </div>
 
             <div className="engineering-applications">
               <h4>🏗️ Scale Engineering Applications</h4>
@@ -911,21 +911,21 @@ const MerkleModule = () => {
                   <div className="app-details">
                     <strong>SPV Wallets</strong>
                     <p>Mobile wallets verify payments instantly without downloading blockchain</p>
-                  </div>
-                </div>
+            </div>
+            </div>
                 <div className="application">
                   <span className="app-icon">⚡</span>
                   <div className="app-details">
                     <strong>Block Validation</strong>
                     <p>Nodes verify blocks with thousands of transactions in seconds</p>
-                  </div>
-                </div>
+            </div>
+            </div>
                 <div className="application">
                   <span className="app-icon">🌐</span>
                   <div className="app-details">
                     <strong>Global Network</strong>
                     <p>15,000+ nodes maintain consensus on 850M+ transactions</p>
-                  </div>
+          </div>
                 </div>
                 <div className="application">
                   <span className="app-icon">🔒</span>
@@ -933,25 +933,25 @@ const MerkleModule = () => {
                     <strong>Fraud Prevention</strong>
                     <p>Detect tampered transactions instantly across the entire network</p>
                   </div>
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             <div className="mastery-insight">
-              <div className="prime-text">
+      <div className="prime-text">
                 ⚡ You've engineered scalable verification systems! Merkle trees enable Bitcoin 
                 to process hundreds of thousands of transactions daily while allowing instant 
                 verification on mobile devices worldwide.
-              </div>
-            </div>
+        </div>
+      </div>
 
             <ContinueButton onClick={() => handleContinue()}>
               Pioneer Global Innovations →
-            </ContinueButton>
+                </ContinueButton>
           </div>
         )}
-      </div>
-    );
+              </div>
+  );
   }
 
   function InnovationPioneer() {
@@ -1028,7 +1028,7 @@ const MerkleModule = () => {
           </div>
           <h2>🚀 GLOBAL INNOVATION MASTERY</h2>
           <p className="pioneer-subtitle">Master how Merkle trees power global-scale innovations...</p>
-        </div>
+      </div>
 
         {pioneerPhase === 'exploration' && (
           <div className="innovation-exploration">
@@ -1037,8 +1037,8 @@ const MerkleModule = () => {
                 🌍 Merkle trees aren't just theory—they power the most critical systems in our 
                 digital world. From the code you write to the websites you visit, Merkle magic 
                 is working behind the scenes.
-              </div>
-            </div>
+          </div>
+          </div>
 
             <h3>Explore global Merkle tree innovations:</h3>
             <div className="innovations-grid">
@@ -1051,24 +1051,24 @@ const MerkleModule = () => {
                   <div className="innovation-header">
                     <span className="innovation-icon">{innovation.icon}</span>
                     <span className="innovation-name">{innovation.name}</span>
-                  </div>
-                  
+        </div>
+
                   <div className="innovation-description">
                     {innovation.description}
-                  </div>
+          </div>
                   
                   <div className="innovation-impact">
                     <strong>Global Impact:</strong> {innovation.impact}
-                  </div>
-                  
+        </div>
+
                   <div className="innovation-features">
                     {innovation.features.map(feature => (
                       <span key={feature} className="feature-tag">{feature}</span>
                     ))}
-                  </div>
-                </div>
+          </div>
+          </div>
               ))}
-            </div>
+        </div>
           </div>
         )}
 
@@ -1076,7 +1076,7 @@ const MerkleModule = () => {
           <div className="innovation-analysis">
             <div className="analysis-header">
               <h3>🔬 Deep Dive: {selectedInnovation.name}</h3>
-            </div>
+          </div>
 
             <div className="innovation-implementation">
               <div className="implementation-details">
@@ -1089,8 +1089,8 @@ const MerkleModule = () => {
                 </div>
                 <div className="detail-item">
                   <strong>Global Impact:</strong> {selectedInnovation.impact}
-                </div>
-              </div>
+          </div>
+        </div>
 
               <div className="performance-metrics">
                 <h4>📊 Performance Metrics</h4>
@@ -1101,9 +1101,9 @@ const MerkleModule = () => {
                       className="metric-fill" 
                       style={{ width: `${implementationDemo.efficiency}%` }}
                     ></div>
-                  </div>
+          </div>
                   <span className="metric-value">{implementationDemo.efficiency}%</span>
-                </div>
+          </div>
                 <div className="metric-item">
                   <span className="metric-label">Scalability:</span>
                   <div className="metric-bar">
@@ -1111,9 +1111,9 @@ const MerkleModule = () => {
                       className="metric-fill" 
                       style={{ width: `${implementationDemo.scalability}%` }}
                     ></div>
-                  </div>
+        </div>
                   <span className="metric-value">{implementationDemo.scalability}%</span>
-                </div>
+          </div>
                 <div className="metric-item">
                   <span className="metric-label">Security:</span>
                   <div className="metric-bar">
@@ -1123,9 +1123,9 @@ const MerkleModule = () => {
                     ></div>
                   </div>
                   <span className="metric-value">{implementationDemo.security}%</span>
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             <div className="innovation-features-detail">
               <h4>✨ Key Features Enabled by Merkle Trees</h4>
@@ -1140,12 +1140,12 @@ const MerkleModule = () => {
             </div>
 
             <div className="analysis-insight">
-              <div className="prime-text">
+      <div className="prime-text">
                 🚀 {selectedInnovation.name} demonstrates how Merkle trees enable global-scale 
                 systems to maintain efficiency, security, and verifiability. This is innovation 
                 powered by elegant data structures.
               </div>
-            </div>
+      </div>
 
             <div className="analysis-controls">
               <ActionButton onClick={() => setPioneerPhase('exploration')}>
@@ -1155,13 +1155,13 @@ const MerkleModule = () => {
               {userInsights.innovationMastery >= 60 && (
                 <ContinueButton onClick={() => handleContinue()}>
                   Achieve Efficiency Sovereignty →
-                </ContinueButton>
+      </ContinueButton>
               )}
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   function EfficiencySovereign() {
@@ -1216,7 +1216,7 @@ const MerkleModule = () => {
         <div className="sovereign-header">
           <div className="sovereign-icon">
             <Crown className="w-20 h-20 text-yellow-500" />
-          </div>
+      </div>
           <h2>👑 EFFICIENCY SOVEREIGNTY ACHIEVED</h2>
           <p className="sovereign-subtitle">You command optimal data structures for global-scale systems...</p>
         </div>
@@ -1230,24 +1230,24 @@ const MerkleModule = () => {
                   <span className="metric-icon">🌳</span>
                   <span className="metric-value">{impactMetrics.trees_mastered}</span>
                   <span className="metric-label">Tree Architectures Mastered</span>
-                </div>
+        </div>
                 <div className="impact-metric">
                   <span className="metric-icon">🏗️</span>
                   <span className="metric-value">{impactMetrics.systems_designed}</span>
                   <span className="metric-label">Efficient Systems Designed</span>
-                </div>
+        </div>
                 <div className="impact-metric">
                   <span className="metric-icon">⚡</span>
                   <span className="metric-value">{impactMetrics.efficiency_level}</span>
                   <span className="metric-label">Efficiency Level</span>
-                </div>
+        </div>
                 <div className="impact-metric">
                   <span className="metric-icon">🌍</span>
                   <span className="metric-value">{sovereigntyLevel.toFixed(0)}%</span>
                   <span className="metric-label">Data Structure Mastery</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="global-impact">
               <h3>🌎 Your Knowledge Powers Global Data Systems</h3>
@@ -1263,7 +1263,7 @@ const MerkleModule = () => {
                   </div>
                 ))}
               </div>
-            </div>
+      </div>
 
             <div className="sovereignty-powers">
               <h3>👑 Your Data Crisis Architect Powers</h3>
@@ -1292,8 +1292,8 @@ const MerkleModule = () => {
                   <CheckCircle className="power-icon" />
                   <span>Command logarithmic data structures for any application</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="final-insight">
               <div className="prime-text">
@@ -1306,12 +1306,12 @@ const MerkleModule = () => {
             <div className="sovereignty-navigation">
               <ContinueButton onClick={() => handleContinue()}>
                 Command Global Data Infrastructure →
-              </ContinueButton>
+      </ContinueButton>
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   const renderCurrentStep = () => {
@@ -1332,7 +1332,7 @@ const MerkleModule = () => {
         <div className="module-progress">
           <div className="progress-bar">
             <div 
-              className="progress-fill"
+              className="progress-fill" 
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
@@ -1342,7 +1342,7 @@ const MerkleModule = () => {
 
       <div className="module-tabs">
         {architectSteps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
             className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => index <= currentStep && setCurrentStep(index)}

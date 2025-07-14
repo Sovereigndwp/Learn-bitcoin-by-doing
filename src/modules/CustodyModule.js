@@ -299,7 +299,7 @@ const CustodyModule = () => {
       );
       handleStepComplete(0);
     };
-
+    
     return (
       <div className="crisis-detective-phase">
         <div className="phase-header">
@@ -309,7 +309,7 @@ const CustodyModule = () => {
             <div className="stat">
               <span className="label">Total Losses Investigated:</span>
               <span className="value">${totalLosses.toLocaleString()}M+</span>
-            </div>
+        </div>
             <div className="stat">
               <span className="label">Victims Affected:</span>
               <span className="value">2M+ people</span>
@@ -327,13 +327,13 @@ const CustodyModule = () => {
               <div className="crisis-header">
                 <h4>{crisis.title}</h4>
                 <span className="crisis-year">{crisis.year}</span>
-              </div>
+                </div>
               <div className="crisis-impact">
                 <div className="loss-amount">
                   <span className="crypto-loss">{crisis.loss}</span>
                   <span className="dollar-loss">{crisis.dollarValue}</span>
                   <span className="current-value">Worth today: {crisis.currentValue}</span>
-                </div>
+              </div>
                 <div className="victims">
                   <Users size={16} />
                   <span>{crisis.victims}</span>
@@ -341,10 +341,10 @@ const CustodyModule = () => {
               </div>
               <div className="crisis-lesson">
                 <span className="lesson-type">{crisis.lessonType.replace('-', ' ')}</span>
+                </div>
               </div>
-            </div>
           ))}
-        </div>
+              </div>
 
         {selectedCrisis && (
           <div className="crisis-detail">
@@ -423,9 +423,9 @@ const CustodyModule = () => {
         'Designed multi-layered security system',
         250
       );
-    };
+  };
 
-    return (
+  return (
       <div className="risk-architect-phase">
         <div className="phase-header">
           <h3>Custody Method Analysis</h3>
@@ -452,14 +452,14 @@ const CustodyModule = () => {
                   <span>Security</span>
                   <div className="bar">
                     <div className="fill" style={{ width: `${method.security * 10}%`, backgroundColor: '#16a34a' }}></div>
-                  </div>
+      </div>
                   <span>{method.security}/10</span>
-                </div>
+          </div>
                 <div className="score-bar">
                   <span>Convenience</span>
                   <div className="bar">
                     <div className="fill" style={{ width: `${method.convenience * 10}%`, backgroundColor: '#2563eb' }}></div>
-                  </div>
+      </div>
                   <span>{method.convenience}/10</span>
                 </div>
                 <div className="score-bar">
@@ -483,11 +483,11 @@ const CustodyModule = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
-          ))}
         </div>
-
+              </div>
+          ))}
+            </div>
+            
         {selectedMethod && (
           <div className="security-analysis">
             <h4>Security Analysis: {selectedMethod.name}</h4>
@@ -495,18 +495,18 @@ const CustodyModule = () => {
               <div className="metric">
                 <span className="metric-label">Overall Security Score:</span>
                 <span className="metric-value">{securityAnalysis.securityScore}/100</span>
-              </div>
+                      </div>
               <div className="metric">
                 <span className="metric-label">Risk Level:</span>
                 <span className={`metric-value ${securityAnalysis.riskLevel <= 2 ? 'low' : securityAnalysis.riskLevel <= 5 ? 'medium' : 'high'}`}>
                   {securityAnalysis.riskLevel <= 2 ? 'Low' : securityAnalysis.riskLevel <= 5 ? 'Medium' : 'High'}
                 </span>
-              </div>
+                    </div>
               <div className="metric">
                 <span className="metric-label">Recommendation:</span>
                 <span className="metric-value">{securityAnalysis.recommendation}</span>
-              </div>
-            </div>
+                  </div>
+                </div>
           </div>
         )}
 
@@ -544,9 +544,9 @@ const CustodyModule = () => {
               Engineer Self-Custody
               <ArrowRight size={20} />
             </button>
-          </div>
-        )}
-      </div>
+                </div>
+              )}
+            </div>
     );
   };
 
@@ -582,17 +582,17 @@ const CustodyModule = () => {
           <div className="sovereignty-progress">
             <div className="progress-bar">
               <div className="progress-fill" style={{ width: `${sovereigntyProgress}%` }}></div>
-            </div>
-            <span>{sovereigntyProgress}% Financial Independence</span>
-          </div>
         </div>
+            <span>{sovereigntyProgress}% Financial Independence</span>
+            </div>
+          </div>
 
         <div className="sovereignty-steps">
           {sovereigntySteps.map((step, index) => (
             <div key={step.id} className={`sovereignty-step ${step.completed ? 'completed' : ''}`}>
               <div className="step-indicator">
                 {step.completed ? <CheckCircle size={24} /> : <span>{index + 1}</span>}
-              </div>
+            </div>
               <div className="step-content">
                 <h4>{step.title}</h4>
                 {!step.completed && (
@@ -606,7 +606,7 @@ const CustodyModule = () => {
               </div>
             </div>
           ))}
-        </div>
+            </div>
 
         {allStepsComplete && (
           <div className="sovereignty-achievement">
@@ -668,7 +668,7 @@ const CustodyModule = () => {
                 <span className={`urgency-badge ${emergency.urgency}`}>
                   {emergency.urgency.toUpperCase()}
                 </span>
-              </div>
+        </div>
               <div className="emergency-actions">
                 {!emergencyPlans.find(p => p.id === emergency.id) ? (
                   <button 
@@ -684,10 +684,10 @@ const CustodyModule = () => {
                   <div className="plan-created">
                     <CheckCircle size={16} />
                     Plan Created
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
           ))}
         </div>
 
@@ -742,7 +742,7 @@ const CustodyModule = () => {
       );
     };
 
-    return (
+        return (
       <div className="scale-commander-phase">
         <div className="phase-header">
           <h3>Institutional-Grade Custody Mastery</h3>
@@ -753,7 +753,7 @@ const CustodyModule = () => {
             </div>
             <span>Compliance Level: {Math.round(complianceLevel)}%</span>
           </div>
-        </div>
+            </div>
 
         <div className="institutional-solutions">
           {institutionalSolutions.map((solution, index) => (
@@ -781,9 +781,9 @@ const CustodyModule = () => {
                   Deployed
                 </div>
               )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
         {institutionalSetups.length === institutionalSolutions.length && (
           <button className="continue-btn" onClick={handleContinue}>
@@ -792,8 +792,8 @@ const CustodyModule = () => {
             <ArrowRight size={20} />
           </button>
         )}
-      </div>
-    );
+          </div>
+        );
   };
 
   // Custody Sovereign Phase
@@ -806,7 +806,7 @@ const CustodyModule = () => {
       globalInfluence: custodyScore / 50
     };
 
-    return (
+        return (
       <div className="custody-sovereign-phase">
         <div className="phase-header">
           <h3>🏆 Custody Sovereignty Achieved</h3>
@@ -821,24 +821,24 @@ const CustodyModule = () => {
                 <h5>Personal Security</h5>
                 <div className="metric-value">{globalImpactMetrics.personalSecurity}%</div>
                 <p>Complete self-custody mastery</p>
-              </div>
+                    </div>
               <div className="metric-card">
                 <h5>Family Protection</h5>
                 <div className="metric-value">{globalImpactMetrics.familyProtection}%</div>
                 <p>Emergency & inheritance systems</p>
-              </div>
+                  </div>
               <div className="metric-card">
                 <h5>Business Solutions</h5>
                 <div className="metric-value">{globalImpactMetrics.businessSolutions}%</div>
                 <p>Corporate custody architecture</p>
-              </div>
+                </div>
               <div className="metric-card">
                 <h5>Institutional Mastery</h5>
                 <div className="metric-value">{globalImpactMetrics.institutionalMastery}%</div>
                 <p>Enterprise-grade solutions</p>
               </div>
             </div>
-          </div>
+            </div>
 
           <div className="sovereignty-declaration">
             <h4>🎯 Sovereignty Declaration</h4>
@@ -850,17 +850,17 @@ const CustodyModule = () => {
                 <li>✅ Architect business custody solutions for any scale</li>
                 <li>✅ Command institutional-grade security protocols</li>
                 <li>✅ Lead the global transition to self-sovereign finance</li>
-              </ul>
+          </ul>
             </div>
-            
+
             <div className="final-score">
               <h5>Total Custody Score: {custodyScore.toLocaleString()}</h5>
               <p>Rank: Custody Sovereign 👑</p>
             </div>
           </div>
         </div>
-      </div>
-    );
+          </div>
+        );
   };
 
   const renderCurrentPhase = () => {
@@ -888,7 +888,7 @@ const CustodyModule = () => {
       subtitle="Master Bitcoin Self-Custody Through Crisis-Driven Discovery"
       description="Transform from custody victim to sovereignty architect by learning from $50+ billion in real custody failures and building unbreakable security systems."
     >
-      <div className="custody-module">
+    <div className="custody-module">
         {/* Achievement Popup */}
         {showAchievement && achievements.length > 0 && (
           <div className="achievement-popup">
@@ -898,7 +898,7 @@ const CustodyModule = () => {
                 <h4>{achievements[0].title}</h4>
                 <p>{achievements[0].description}</p>
                 <span className="points">+{achievements[0].points} points</span>
-              </div>
+        </div>
             </div>
           </div>
         )}
@@ -936,25 +936,25 @@ const CustodyModule = () => {
               >
                 <div className="step-icon">
                   <StepIcon size={20} />
-                </div>
+            </div>
                 <div className="step-info">
                   <h4>{step.title}</h4>
                   <p>{step.subtitle}</p>
-                </div>
+        </div>
                 {isCompleted && (
                   <div className="completion-badge">
                     <CheckCircle size={16} />
-                  </div>
+        </div>
                 )}
-              </div>
+        </div>
             );
           })}
-        </div>
+      </div>
 
         {/* Current Phase Content */}
         <div className="phase-content">
           {renderCurrentPhase()}
-        </div>
+    </div>
       </div>
     </ModuleLayout>
   );
