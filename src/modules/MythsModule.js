@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  AlertTriangle, CheckCircle, Trophy, Shield, Zap, DollarSign, 
-  Lock, Globe, TrendingUp, Cpu, Network, Scale, BarChart, 
-  Database, Server, Coins, Users, Clock, Target, Info, Award
+  CheckCircle, Info
 } from 'lucide-react';
-import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import './MythsModule.css';
 
@@ -30,10 +27,10 @@ const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) 
 );
 
 const MythsModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule } = useProgress();
   const [selectedMyth, setSelectedMyth] = useState(null);
   const [debunkedMyths, setDebunkedMyths] = useState(new Set());
-  const [currentCategory, setCurrentCategory] = useState('energy');
+  // const [currentCategory, setCurrentCategory] = useState('energy');
 
   // Myth Categories
   const mythCategories = {
@@ -650,12 +647,12 @@ const MythsModule = () => {
             Arm yourself with facts, data, and expert analysis to counter the most persistent Bitcoin myths. 
             Each myth is thoroughly debunked with technical evidence, real-world data, and credible sources.
           </div>
-          {isModuleCompleted('myths') && (
+          {/* isModuleCompleted('myths') && (
             <div className="completion-badge">
               <Trophy size={24} />
               <span>Truth Master Achieved!</span>
             </div>
-          )}
+          ) */}
           <div className="myths-stats">
             <div className="stat-card">
               <span className="stat-value">{debunkedMyths.size}</span>

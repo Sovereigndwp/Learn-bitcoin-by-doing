@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Calculator, CheckCircle, Trophy } from 'lucide-react';
@@ -390,8 +390,8 @@ const NumbersModule = () => {
 // Helper Components
 const PizzaStoryStep = ({ title, story, scenarios, onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [/* selectedOption */, setSelectedOption] = useState(null);
+  const [/* showResult */, setShowResult] = useState(false);
 
   const handleScenarioComplete = (scenarioIndex) => {
     setSelectedOption(null);
@@ -450,8 +450,8 @@ const PizzaStoryStep = ({ title, story, scenarios, onComplete }) => {
 
 const ComputerLanguageStep = ({ title, challenge, languages, onComplete }) => {
   const [currentLanguage, setCurrentLanguage] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [/* selectedOption */, setSelectedOption] = useState(null);
+  const [/* showResult */, setShowResult] = useState(false);
 
   const handleLanguageComplete = (languageIndex) => {
     setSelectedOption(null);
@@ -508,8 +508,8 @@ const ComputerLanguageStep = ({ title, challenge, languages, onComplete }) => {
 
 const HexDiscoveryStep = ({ title, mission, discoveries, onComplete }) => {
   const [currentDiscovery, setCurrentDiscovery] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [/* selectedOption */, setSelectedOption] = useState(null);
+  const [/* showResult */, setShowResult] = useState(false);
 
   const handleDiscoveryComplete = (discoveryIndex) => {
     setSelectedOption(null);
@@ -568,8 +568,8 @@ const HexDiscoveryStep = ({ title, mission, discoveries, onComplete }) => {
 };
 
 const EndianDiscoveryStep = ({ title, scenario, mystery, explanation, insight, onComplete }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [/* selectedOption */, setSelectedOption] = useState(null);
+  const [/* showResult */, setShowResult] = useState(false);
 
   const handleComplete = () => {
     setSelectedOption(null);
@@ -609,8 +609,8 @@ const EndianDiscoveryStep = ({ title, scenario, mystery, explanation, insight, o
 
 const SecurityDemoStep = ({ title, challenge, demonstrations, onComplete }) => {
   const [currentDemo, setCurrentDemo] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [/* selectedOption */, setSelectedOption] = useState(null);
+  const [/* showResult */, setShowResult] = useState(false);
 
   const handleDemoComplete = (demoIndex) => {
     setSelectedOption(null);

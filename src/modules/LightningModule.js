@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Zap, Users, ArrowRight, Network, Clock, DollarSign,
-  Trophy, CheckCircle, Target, Globe, Shield, Code, BarChart3, Award
+  Zap, ArrowRight, Trophy
 } from 'lucide-react';
 import { 
-  ContinueButton, 
-  ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton 
+  ContinueButton,
+  Button 
 } from '../components/EnhancedButtons';
-import AnimatedIcon from '../components/AnimatedIcon';
 import '../components/ModuleCommon.css';
 import './LightningModule.css';
 
@@ -47,8 +42,8 @@ const LightningModule = () => {
   const [paymentDirection, setPaymentDirection] = useState('alice-to-bob');
   
   // Network State
-  const [selectedRoute, setSelectedRoute] = useState([]);
-  const [networkDemo, setNetworkDemo] = useState(false);
+  // const [selectedRoute, setSelectedRoute] = useState([]);
+  // const [networkDemo, setNetworkDemo] = useState(false);
 
   const steps = [
     {
@@ -407,9 +402,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Hands-On Experience</div>
         <div className="completion-message">You've experienced Lightning payments firsthand!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(2)}>
-          Learn Multi-Hop Routing <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(2)}
+          icon={ArrowRight}
+          text="Learn Multi-Hop Routing"
+        />
       </div>
     </div>
   );
@@ -485,9 +482,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Routing Master</div>
         <div className="completion-message">You understand how Lightning connects the world!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(3)}>
-          Explore Network Topology <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(3)}
+          icon={ArrowRight}
+          text="Explore Network Topology"
+        />
       </div>
     </div>
   );
@@ -551,9 +550,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Network Understanding</div>
         <div className="completion-message">You grasp Lightning's global network structure!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(4)}>
-          Learn Lightning Economics <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(4)}
+          icon={ArrowRight}
+          text="Learn Lightning Economics"
+        />
       </div>
     </div>
   );
@@ -617,9 +618,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Economic Mastery</div>
         <div className="completion-message">You understand Lightning's economic incentives!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(5)}>
-          See Real-World Usage <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(5)}
+          icon={ArrowRight}
+          text="See Real-World Usage"
+        />
       </div>
     </div>
   );
@@ -698,9 +701,11 @@ const LightningModule = () => {
         <div className="completion-icon">✓</div>
         <div className="completion-title">Real-World Expert</div>
         <div className="completion-message">You know how Lightning is transforming payments today!</div>
-        <button className="continue-button" onClick={() => handleStepComplete(6)}>
-          Achieve Lightning Mastery <ArrowRight size={16} />
-        </button>
+        <Button
+          onClick={() => handleStepComplete(6)}
+          icon={ArrowRight}
+          text="Achieve Lightning Mastery"
+        />
       </div>
     </div>
   );
@@ -755,14 +760,12 @@ const LightningModule = () => {
           </ul>
         </div>
 
-        <button 
-          className="continue-button"
+        <Button 
           onClick={() => handleStepComplete(7)}
+          icon={Trophy}
+          text="Complete Lightning Mastery"
           style={{ fontSize: '1.1rem', padding: '1rem 3rem' }}
-        >
-          <Trophy size={20} />
-          Complete Lightning Mastery
-        </button>
+        />
       </div>
     </div>
   );

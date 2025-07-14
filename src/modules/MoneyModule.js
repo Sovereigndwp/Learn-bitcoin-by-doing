@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { useLanguage } from '../contexts/LanguageContext';
-import { Coins, Trophy, CheckCircle, Brain, History, Award, Clock, Lightbulb, Target, Zap, ChevronLeft, ChevronRight, TrendingUp, Globe, Shield, DollarSign, Users, BarChart3, AlertCircle, Star } from 'lucide-react';
+import { Coins } from 'lucide-react';
 import AnimatedIcon from '../components/AnimatedIcon';
 import { 
   ContinueButton, 
-  ActionButton, 
   Button, 
   OptionButton,
   NavigationButton 
@@ -16,24 +14,24 @@ import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
 
 // Reusable Visual Capitalist Section Component
-const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
-  <div className="explore-further-section">
-    <div className="explore-further-header">
-      <span className="explore-further-icon">{icon}</span>
-      <h4 className="explore-further-title">{title}</h4>
-    </div>
-    <p className="explore-further-description">{description}</p>
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="explore-further-button"
-    >
-      <span className="button-icon">🔍</span>
-      {buttonText}
-    </a>
-  </div>
-);
+// const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
+//   <div className="explore-further-section">
+//     <div className="explore-further-header">
+//       <span className="explore-further-icon">{icon}</span>
+//       <h4 className="explore-further-title">{title}</h4>
+//     </div>
+//     <p className="explore-further-description">{description}</p>
+//     <a
+//       href={url}
+//       target="_blank"
+//       rel="noopener noreferrer"
+//       className="explore-further-button"
+//     >
+//       <span className="button-icon">🔍</span>
+//       {buttonText}
+//     </a>
+//   </div>
+// );
 
 // Component for the Introduction (transition from banking friction)
 const Introduction = ({ onComplete }) => {
@@ -915,7 +913,7 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
   };
 
   const unlockedCount = allTraits.filter(trait => isTraitUnlocked(trait)).length;
-  const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
+  // const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
 
         return (
     <div className="step-content scorecard-step">
@@ -1033,7 +1031,7 @@ const BadgeModal = ({ isOpen, onClose }) => {
 
 // Main Module Component
 const MoneyModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(() => {
@@ -1042,7 +1040,7 @@ const MoneyModule = () => {
   });
   const [unlockedTraits, setUnlockedTraits] = useState([]);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, /* setError */] = useState(null);
 
   // Error boundary for the component
   if (error) {

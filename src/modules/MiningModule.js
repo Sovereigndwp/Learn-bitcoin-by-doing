@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight, AlertTriangle, Eye, EyeOff, Flame, Bolt, Factory, Recycle, Banknote, Calculator, ArrowRight } from 'lucide-react';
+import { Zap, Trophy, Cpu, ArrowRight } from 'lucide-react';
 import { 
-  ContinueButton, 
-  ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton 
+  ActionButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './MiningModule.css';
 
 const MiningModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
@@ -864,7 +860,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
 // 🎯 Step 4: Difficulty Master Control
 const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) => {
   const [controlPhase, setControlPhase] = useState('learning'); // learning, simulation, mastery
-  const [networkState, setNetworkState] = useState({
+  const [networkState, /* setNetworkState */] = useState({
     currentHashrate: 450, // EH/s
     targetBlockTime: 600, // 10 minutes in seconds
     actualBlockTime: 600,
@@ -910,7 +906,7 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
     const simulationSteps = [];
     let currentDifficulty = networkState.difficulty;
     let currentBlockTime = newBlockTime;
-    let blocksRemaining = 2016;
+    // let blocksRemaining = 2016;
     
     for (let week = 1; week <= 4; week++) {
       if (week === 3) {
@@ -918,7 +914,7 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
         const timeRatio = currentBlockTime / networkState.targetBlockTime;
         currentDifficulty = currentDifficulty / timeRatio;
         currentBlockTime = networkState.targetBlockTime; // Back to 10 minutes
-        blocksRemaining = 2016; // Reset counter
+        // blocksRemaining = 2016; // Reset counter
       }
       
       simulationSteps.push({
