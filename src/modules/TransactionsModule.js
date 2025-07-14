@@ -9,26 +9,50 @@ import {
   TrendingUp,
   Target,
   Clock,
-  DollarSign,
-  Lock,
-  Unlock,
-  Eye,
-  EyeOff,
   RefreshCw,
   ArrowDown,
-  ArrowUp,
   CheckCircle,
   Crown,
-  Flame,
   Activity,
   Globe
 } from 'lucide-react';
 import { 
   ContinueButton, 
-  ActionButton,
+  ActionButton, 
   OptionButton 
 } from '../components/EnhancedButtons';
 import './TransactionsModule.css';
+
+// Fee strategies shared across multiple components
+const feeStrategies = [
+  {
+    id: 'budget',
+    name: '🐌 Budget Warrior',
+    feeRate: 2,
+    cost: 0.00004,
+    time: '2-6 hours',
+    risk: 'May get stuck in low-priority queue',
+    color: '#ef4444'
+  },
+  {
+    id: 'balanced',
+    name: '⚖️ Balanced Tactician', 
+    feeRate: 10,
+    cost: 0.0002,
+    time: '10-30 minutes',
+    risk: 'Moderate priority during congestion',
+    color: '#f59e0b'
+  },
+  {
+    id: 'premium',
+    name: '🚀 Priority Commander',
+    feeRate: 25,
+    cost: 0.0005,
+    time: '1-3 blocks (~15 min)',
+    risk: 'Nearly guaranteed next block',
+    color: '#10b981'
+  }
+];
 
 const TransactionsModule = () => {
   const { completeModule, isModuleCompleted, updatePersonalInsights } = useProgress();
@@ -36,8 +60,8 @@ const TransactionsModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
   // Transaction Architect Journey State
-  const [paymentAmount, setPaymentAmount] = useState(0.847);
-  const [availableUTXOs, setAvailableUTXOs] = useState([
+  const [paymentAmount] = useState(0.847);
+  const [availableUTXOs] = useState([
     { id: 1, amount: 0.234, age: 15, privacy: 'low' },
     { id: 2, amount: 0.089, age: 3, privacy: 'medium' },
     { id: 3, amount: 0.445, age: 28, privacy: 'high' },
@@ -54,10 +78,10 @@ const TransactionsModule = () => {
     networkCommand: 0
   });
   const [feeRate, setFeeRate] = useState(10);
-  const [networkCongestion, setNetworkCongestion] = useState(65);
-  const [privacyMode, setPrivacyMode] = useState(false);
-  const [scriptType, setScriptType] = useState('p2pkh');
-  const [mempoolPosition, setMempoolPosition] = useState(null);
+  const [networkCongestion] = useState(65);
+  // const [privacyMode, setPrivacyMode] = useState(false);
+  // const [scriptType, setScriptType] = useState('p2pkh');
+  // const [mempoolPosition, setMempoolPosition] = useState(null);
 
   const strategicSteps = [
     {
@@ -114,18 +138,18 @@ const TransactionsModule = () => {
         '👑'
       );
     }
-  }, [currentStep, completeModule, isModuleCompleted, updatePersonalInsights, userInsights]);
+  }, [currentStep, completeModule, isModuleCompleted, updatePersonalInsights, userInsights, strategicSteps.length]);
 
   const showStrategicAchievement = (title, description, emoji = '⚡') => {
     const achievement = document.createElement('div');
     achievement.className = 'strategic-achievement';
     achievement.innerHTML = `
       <div class="achievement-glow">
-        <div class="achievement-content">
+      <div class="achievement-content">
           <div class="achievement-emoji">${emoji}</div>
-          <div class="achievement-text">
+        <div class="achievement-text">
             <h3>${title}</h3>
-            <p>${description}</p>
+          <p>${description}</p>
           </div>
         </div>
       </div>
@@ -144,7 +168,6 @@ const TransactionsModule = () => {
 
   const handleStepComplete = (stepIndex) => {
     setCompletedSteps(prev => new Set([...prev, stepIndex]));
-    const step = strategicSteps[stepIndex];
     
     const achievements = [
       { title: 'Crisis Detective', desc: 'You diagnosed payment failures like a forensic expert!', emoji: '🕵️' },
@@ -311,23 +334,23 @@ const TransactionsModule = () => {
   }
 
   function UTXOAlchemist() {
-    const [alchemyStage, setAlchemyStage] = useState('workshop');
+    // const [alchemyStage, setAlchemyStage] = useState('workshop');
     const [selectedAmount, setSelectedAmount] = useState(0);
     const [combinationAttempts, setCombinationAttempts] = useState(0);
     const [perfectCombination, setPerfectCombination] = useState(false);
 
     const handleUTXOSelection = (utxoId) => {
-      const newSelected = new Set(selectedUTXOs);
-      if (newSelected.has(utxoId)) {
-        newSelected.delete(utxoId);
-      } else {
-        newSelected.add(utxoId);
-      }
-      setSelectedUTXOs(newSelected);
-      
+    const newSelected = new Set(selectedUTXOs);
+    if (newSelected.has(utxoId)) {
+      newSelected.delete(utxoId);
+    } else {
+      newSelected.add(utxoId);
+    }
+    setSelectedUTXOs(newSelected);
+
       const totalSelected = availableUTXOs
         .filter(utxo => newSelected.has(utxo.id))
-        .reduce((sum, utxo) => sum + utxo.amount, 0);
+      .reduce((sum, utxo) => sum + utxo.amount, 0);
       setSelectedAmount(totalSelected);
       
       setCombinationAttempts(prev => prev + 1);
@@ -340,7 +363,7 @@ const TransactionsModule = () => {
       } else {
         setPerfectCombination(false);
       }
-    };
+  };
 
     const isValidCombination = selectedAmount >= paymentAmount;
     const efficiency = perfectCombination ? 
@@ -352,11 +375,11 @@ const TransactionsModule = () => {
         <div className="alchemy-header">
           <div className="alchemy-icon">
             <Coins className="w-16 h-16 text-orange-500" />
-          </div>
+        </div>
           <h2>🔨 UTXO Alchemy Workshop</h2>
           <p className="alchemy-subtitle">Transform scattered digital coins into precise payment amounts</p>
-        </div>
-
+      </div>
+      
         <div className="alchemy-mission">
           <div className="mission-box">
             <h3>🎯 Your Alchemy Mission</h3>
@@ -364,12 +387,12 @@ const TransactionsModule = () => {
               <div className="mission-target">
                 <Target className="w-6 h-6" />
                 <span>Target Payment: <strong>{paymentAmount} BTC</strong></span>
-              </div>
+          </div>
               <div className="mission-status">
                 <span>Selected: <strong className={selectedAmount >= paymentAmount ? 'text-green-400' : 'text-orange-400'}>{selectedAmount.toFixed(3)} BTC</strong></span>
                 <span>Efficiency: <strong className={efficiency > 90 ? 'text-green-400' : efficiency > 70 ? 'text-orange-400' : 'text-red-400'}>{efficiency}%</strong></span>
-              </div>
-            </div>
+          </div>
+          </div>
           </div>
         </div>
 
@@ -415,8 +438,8 @@ const TransactionsModule = () => {
                     <p>Your selection works! Efficiency: {efficiency}%</p>
                     <p className="efficiency-tip">
                       {efficiency < 80 && "💡 Tip: Try reducing excess to improve efficiency!"}
-                    </p>
-                  </div>
+            </p>
+          </div>
                 )
               ) : (
                 <div className="invalid-alchemy">
@@ -425,8 +448,8 @@ const TransactionsModule = () => {
                   <p>Need {(paymentAmount - selectedAmount).toFixed(3)} BTC more. Keep combining!</p>
                 </div>
               )}
-            </div>
-          </div>
+        </div>
+      </div>
 
           {selectedUTXOs.size > 0 && (
             <div className="transaction-preview">
@@ -439,7 +462,7 @@ const TransactionsModule = () => {
                     .map(utxo => (
                       <div key={utxo.id} className="tx-input">
                         <span>{utxo.amount} BTC</span>
-                      </div>
+      </div>
                     ))}
                   <div className="tx-total">Total: {selectedAmount.toFixed(3)} BTC</div>
                 </div>
@@ -475,45 +498,18 @@ const TransactionsModule = () => {
             </ContinueButton>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   function FeeMarketStrategist() {
-    const [strategyStage, setStrategyStage] = useState('battlefield');
+    const [strategyStage] = useState('battlefield');
     const [selectedStrategy, setSelectedStrategy] = useState(null);
     const [battleResult, setBattleResult] = useState(null);
     const [mempoolBattle, setMempoolBattle] = useState(false);
+    const [, setMempoolPosition] = useState(null);
 
-    const feeStrategies = [
-      {
-        id: 'budget',
-        name: '🐌 Budget Warrior',
-        feeRate: 2,
-        cost: 0.00004,
-        time: '2-6 hours',
-        risk: 'May get stuck in low-priority queue',
-        color: '#ef4444'
-      },
-      {
-        id: 'balanced',
-        name: '⚖️ Balanced Tactician', 
-        feeRate: 10,
-        cost: 0.0002,
-        time: '10-30 minutes',
-        risk: 'Moderate priority during congestion',
-        color: '#f59e0b'
-      },
-      {
-        id: 'premium',
-        name: '🚀 Priority Commander',
-        feeRate: 25,
-        cost: 0.0005,
-        time: '1-3 blocks (~15 min)',
-        risk: 'Nearly guaranteed next block',
-        color: '#10b981'
-      }
-    ];
+
 
     const handleStrategyChoice = (strategy) => {
       setSelectedStrategy(strategy);
@@ -593,11 +589,11 @@ const TransactionsModule = () => {
               <h3>⚔️ Choose Your Battle Strategy</h3>
               <div className="strategy-grid">
                 {feeStrategies.map(strategy => (
-                  <div 
+            <div 
                     key={strategy.id}
                     className={`strategy-card ${selectedStrategy?.id === strategy.id ? 'selected' : ''}`}
                     onClick={() => handleStrategyChoice(strategy)}
-                  >
+            >
                     <div className="strategy-header-card">
                       <span className="strategy-emoji">{strategy.name.split(' ')[0]}</span>
                       <h4>{strategy.name.substring(2)}</h4>
@@ -620,19 +616,19 @@ const TransactionsModule = () => {
                       <div className="strategy-risk">
                         <span>Risk: {strategy.risk}</span>
                       </div>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
-          </div>
+          ))}
+        </div>
+        </div>
+        </div>
         )}
 
         {mempoolBattle && battleResult && (
           <div className="mempool-battle">
             <div className="battle-header">
               <h3>⚔️ Mempool Battle Results</h3>
-            </div>
+                  </div>
             
             <div className="battle-outcome">
               <div className={`outcome-box ${battleResult.status}`}>
@@ -648,15 +644,15 @@ const TransactionsModule = () => {
                         backgroundColor: selectedStrategy.color
                       }}
                     ></div>
-                  </div>
+                </div>
                   <div className="position-labels">
                     <span>Back of Line</span>
                     <span>Front Priority</span>
                   </div>
                 </div>
-              </div>
             </div>
-
+          </div>
+          
             <div className="strategic-insight">
               <h4>🧠 Strategic Insight</h4>
               <p>
@@ -674,22 +670,22 @@ const TransactionsModule = () => {
                   <span className={selectedStrategy.id === 'budget' ? 'text-green-400' : selectedStrategy.id === 'balanced' ? 'text-orange-400' : 'text-red-400'}>
                     {selectedStrategy.id === 'budget' ? '95%' : selectedStrategy.id === 'balanced' ? '75%' : '45%'}
                   </span>
-                </div>
+              </div>
                 <div className="mastery-stat">
                   <span>Speed Mastery:</span>
                   <span className={selectedStrategy.id === 'premium' ? 'text-green-400' : selectedStrategy.id === 'balanced' ? 'text-orange-400' : 'text-red-400'}>
                     {selectedStrategy.id === 'premium' ? '95%' : selectedStrategy.id === 'balanced' ? '75%' : '25%'}
                   </span>
-                </div>
+            </div>
                 <div className="mastery-stat">
                   <span>Strategic Balance:</span>
                   <span className={selectedStrategy.id === 'balanced' ? 'text-green-400' : 'text-orange-400'}>
                     {selectedStrategy.id === 'balanced' ? '90%' : '60%'}
                   </span>
-                </div>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
+        </div>
         )}
 
         {battleResult && (
@@ -699,12 +695,12 @@ const TransactionsModule = () => {
             </ContinueButton>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   function PrivacyGuardian() {
-    const [guardianStage, setGuardianStage] = useState('threat-assessment');
+    // const [guardianStage] = useState('threat-assessment');
     const [privacyChoices, setPrivacyChoices] = useState({
       addressReuse: null,
       utxoSelection: null,
@@ -742,7 +738,7 @@ const TransactionsModule = () => {
       protected: { emoji: '🛡️', color: '#3b82f6', title: 'Well Protected' },
       sovereign: { emoji: '👑', color: '#10b981', title: 'Digital Sovereign' }
     };
-
+    
     return (
       <div className="privacy-guardian">
         <div className="guardian-header">
@@ -762,8 +758,8 @@ const TransactionsModule = () => {
               <span className="threat-score">{surveillanceScore}% Privacy</span>
             </div>
           </div>
-        </div>
-
+          </div>
+          
         <div className="privacy-challenges">
           <h3>🔒 Privacy Defense Choices</h3>
           
@@ -783,14 +779,14 @@ const TransactionsModule = () => {
               >
                 🆕 Generate New Address (Private)
               </OptionButton>
-            </div>
+              </div>
             {privacyChoices.addressReuse && (
               <div className={`choice-result ${privacyChoices.addressReuse === 'reuse' ? 'danger' : 'safe'}`}>
                 {privacyChoices.addressReuse === 'reuse' ? 
                   '⚠️ Address reuse links all your transactions! Surveillance can track your entire financial history.' :
                   '✅ New addresses break transaction linkability! Each payment appears disconnected.'
                 }
-              </div>
+            </div>
             )}
           </div>
 
@@ -819,7 +815,7 @@ const TransactionsModule = () => {
                 }
               </div>
             )}
-          </div>
+        </div>
 
           <div className="challenge">
             <h4>3. Advanced Privacy Enhancement</h4>
@@ -837,16 +833,16 @@ const TransactionsModule = () => {
               >
                 🌀 Use CoinJoin (Maximum Privacy)
               </OptionButton>
-            </div>
+                </div>
             {privacyChoices.coinJoin && (
               <div className={`choice-result ${privacyChoices.coinJoin === 'skip' ? 'danger' : 'safe'}`}>
                 {privacyChoices.coinJoin === 'skip' ? 
                   '⚠️ Direct payment exposes the transaction flow between you and recipient!' :
                   '✅ CoinJoin mixes your coins with others, breaking transaction surveillance!'
                 }
-              </div>
+                </div>
             )}
-          </div>
+              </div>
 
           <div className="challenge">
             <h4>4. Timing Strategy</h4>
@@ -864,17 +860,17 @@ const TransactionsModule = () => {
               >
                 ⏰ Strategic Timing
               </OptionButton>
-            </div>
+                </div>
             {privacyChoices.timing && (
               <div className={`choice-result ${privacyChoices.timing === 'immediate' ? 'danger' : 'safe'}`}>
                 {privacyChoices.timing === 'immediate' ? 
                   '⚠️ Immediate broadcast can reveal your timezone and activity patterns!' :
                   '✅ Strategic timing obscures when and where you initiated the transaction!'
                 }
-              </div>
+                </div>
             )}
-          </div>
-        </div>
+              </div>
+                </div>
 
         <div className="privacy-mastery">
           <h4>🏆 Privacy Guardian Mastery</h4>
@@ -887,7 +883,7 @@ const TransactionsModule = () => {
                   backgroundColor: privacyLevels[privacyLevel].color
                 }}
               ></div>
-            </div>
+                </div>
             <div className="mastery-details">
               <p><strong>Surveillance Resistance:</strong> {surveillanceScore}%</p>
               <p><strong>Privacy Level:</strong> {privacyLevels[privacyLevel].title}</p>
@@ -897,26 +893,26 @@ const TransactionsModule = () => {
                 privacyLevel === 'vulnerable' ? 'Apprentice Guardian - Some protection but gaps remain!' :
                 'Exposed Target - Urgent privacy upgrade needed!'
               }</p>
+              </div>
             </div>
           </div>
-        </div>
 
         {Object.values(privacyChoices).every(choice => choice !== null) && (
           <div className="continue-section">
             <ContinueButton onClick={handleContinue}>
               ⚙️ Architect Programmable Scripts
             </ContinueButton>
-          </div>
+        </div>
         )}
       </div>
     );
   }
 
   function ScriptArchitect() {
-    const [architectStage, setArchitectStage] = useState('blueprint');
+    // const [architectStage] = useState('blueprint');
     const [selectedScript, setSelectedScript] = useState(null);
     const [scriptChallenge, setScriptChallenge] = useState(null);
-    const [blueprintMastery, setBlueprintMastery] = useState(0);
+    const [, setBlueprintMastery] = useState(0);
 
     const scriptBlueprints = [
       {
@@ -1011,16 +1007,16 @@ const TransactionsModule = () => {
         <div className="architect-header">
           <div className="architect-icon">
             <Settings className="w-16 h-16 text-purple-500" />
-          </div>
+        </div>
           <h2>⚙️ Script Architect Laboratory</h2>
           <p className="architect-subtitle">Design programmable money conditions that execute automatically</p>
-        </div>
+      </div>
 
         <div className="architect-mission">
           <div className="mission-briefing">
             <h3>🎯 Architect Mission</h3>
             <p>Your property payment needs specific execution conditions. Choose the right script architecture to ensure secure, automated execution. Different blueprints offer different security models and capabilities.</p>
-          </div>
+        </div>
         </div>
 
         <div className="blueprint-library">
@@ -1035,7 +1031,7 @@ const TransactionsModule = () => {
                 <div className="blueprint-header">
                   <span className="blueprint-emoji">{blueprint.name.split(' ')[0]}</span>
                   <h4>{blueprint.name.substring(2)}</h4>
-                </div>
+        </div>
                 
                 <div className="blueprint-details">
                   <p className="blueprint-description">{blueprint.description}</p>
@@ -1046,27 +1042,27 @@ const TransactionsModule = () => {
                       <span className={`spec-value ${blueprint.security.toLowerCase()}`}>
                         {blueprint.security}
                       </span>
-                    </div>
+        </div>
                     <div className="spec">
                       <span>Complexity:</span>
                       <span className={`spec-value ${blueprint.complexity.toLowerCase()}`}>
                         {blueprint.complexity}
                       </span>
-                    </div>
-                  </div>
+        </div>
+        </div>
                   
                   <div className="blueprint-usecase">
                     <strong>Use Case:</strong> {blueprint.useCase}
-                  </div>
-                  
+      </div>
+
                   <div className="blueprint-unlock">
                     <strong>Unlock:</strong> {blueprint.unlock}
-                  </div>
-                </div>
+      </div>
+    </div>
               </div>
             ))}
-          </div>
         </div>
+      </div>
 
         {selectedScript && (
           <div className="script-workshop">
@@ -1076,7 +1072,7 @@ const TransactionsModule = () => {
               <div className="script-code">
                 <h5>📜 Script Code:</h5>
                 <code className="code-block">{selectedScript.code}</code>
-              </div>
+          </div>
               
               <div className="script-breakdown">
                 <h5>🔍 How It Works:</h5>
@@ -1113,9 +1109,9 @@ const TransactionsModule = () => {
                       <div className="step">4. OR: Check timelock + backup signature</div>
                     </>
                   )}
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+          </div>
           </div>
         )}
 
@@ -1137,16 +1133,16 @@ const TransactionsModule = () => {
                     <span>{step}</span>
                   </div>
                 ))}
-              </div>
-              
+        </div>
+        
               <div className="challenge-result">
                 <h4>✅ Result:</h4>
                 <p>{scriptChallenge.result}</p>
-              </div>
-            </div>
           </div>
+          </div>
+        </div>
         )}
-
+        
         <div className="architect-mastery">
           <h4>🏗️ Script Architect Mastery</h4>
           <div className="mastery-progress">
@@ -1155,7 +1151,7 @@ const TransactionsModule = () => {
                 className="mastery-fill"
                 style={{width: `${userInsights.scriptUnderstanding}%`}}
               ></div>
-            </div>
+          </div>
             <p>Blueprint Mastery: {userInsights.scriptUnderstanding}%</p>
             <p className="mastery-insight">
               {userInsights.scriptUnderstanding >= 80 && "🏆 Master Architect - You understand programmable money!"}
@@ -1163,25 +1159,25 @@ const TransactionsModule = () => {
               {userInsights.scriptUnderstanding >= 40 && userInsights.scriptUnderstanding < 60 && "📐 Apprentice Architect - Learning the fundamentals!"}
               {userInsights.scriptUnderstanding < 40 && "🎓 Script Student - Keep exploring to master the craft!"}
             </p>
-          </div>
         </div>
+      </div>
 
         {selectedScript && scriptChallenge && (
           <div className="continue-section">
             <ContinueButton onClick={handleContinue}>
               🌐 Command the Global Network
             </ContinueButton>
-          </div>
-        )}
       </div>
-    );
+        )}
+    </div>
+  );
   }
 
   function NetworkCommander() {
-    const [commandStage, setCommandStage] = useState('control-center');
+    // const [commandStage] = useState('control-center');
     const [mempoolView, setMempoolView] = useState('layers');
     const [lightningDemo, setLightningDemo] = useState(false);
-    const [commandMastery, setCommandMastery] = useState(0);
+    const [, setCommandMastery] = useState(0);
 
     const mempoolLayers = [
       { id: 1, feeRange: '25+ sat/vB', count: 1247, color: '#10b981', priority: 'High Priority' },
@@ -1208,10 +1204,10 @@ const TransactionsModule = () => {
         <div className="commander-header">
           <div className="commander-icon">
             <Globe className="w-16 h-16 text-blue-400" />
-          </div>
+        </div>
           <h2>🌐 Global Network Command Center</h2>
           <p className="commander-subtitle">Master the pulse of the global Bitcoin payment network</p>
-        </div>
+      </div>
 
         <div className="command-dashboard">
           <h3>📊 Network Status Dashboard</h3>
@@ -1263,18 +1259,18 @@ const TransactionsModule = () => {
             <ActionButton onClick={() => setMempoolView('layers')}>
               🏗️ View Priority Layers
             </ActionButton>
-          </div>
-
+        </div>
+        
           {mempoolView === 'layers' && (
             <div className="mempool-visualization">
-              <div className="mempool-layers">
+          <div className="mempool-layers">
                 {mempoolLayers.map(layer => (
                   <div key={layer.id} className="mempool-layer">
-                    <div className="layer-info">
+              <div className="layer-info">
                       <span className="layer-priority">{layer.priority}</span>
                       <span className="layer-fee">{layer.feeRange}</span>
                       <span className="layer-count">{layer.count.toLocaleString()} txs</span>
-                    </div>
+              </div>
                     <div className="layer-visualization">
                       <div 
                         className="layer-bar"
@@ -1283,8 +1279,8 @@ const TransactionsModule = () => {
                           backgroundColor: layer.color
                         }}
                       ></div>
-                    </div>
-                  </div>
+              </div>
+            </div>
                 ))}
               </div>
               <div className="mempool-insight">
@@ -1303,24 +1299,24 @@ const TransactionsModule = () => {
                   <div>
                     <h5>Market Trend</h5>
                     <p>Fees are trending upward due to increased DeFi activity and institutional adoption</p>
-                  </div>
-                </div>
+              </div>
+              </div>
                 <div className="insight-card">
                   <Clock className="w-6 h-6" />
                   <div>
                     <h5>Optimal Timing</h5>
                     <p>Weekend transactions typically see 20-30% lower fees due to reduced business activity</p>
-                  </div>
-                </div>
+            </div>
+          </div>
                 <div className="insight-card">
                   <Target className="w-6 h-6" />
                   <div>
                     <h5>Strategic Recommendation</h5>
                     <p>For your urgency level, {feeRate}+ sat/vB ensures next-block confirmation</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        </div>
+      </div>
+      </div>
+    </div>
           )}
         </div>
 
@@ -1335,7 +1331,7 @@ const TransactionsModule = () => {
             >
               🚀 Demonstrate Lightning Speed
             </ActionButton>
-          </div>
+        </div>
 
           {lightningDemo && (
             <div className="lightning-demonstration">
@@ -1347,34 +1343,34 @@ const TransactionsModule = () => {
                     <div className="stat">
                       <span>Confirmation Time:</span>
                       <span>~10 minutes</span>
-                    </div>
+        </div>
                     <div className="stat">
                       <span>Fee Cost:</span>
                       <span>$3.50 - $15.00</span>
-                    </div>
+        </div>
                     <div className="stat">
                       <span>Finality:</span>
                       <span>6 confirmations (~1 hour)</span>
-                    </div>
+      </div>
                     <div className="stat">
                       <span>Best For:</span>
                       <span>Large amounts, settlements</span>
-                    </div>
-                  </div>
-                </div>
-                
+      </div>
+    </div>
+      </div>
+
                 <div className="comparison-item lightning">
                   <h5>⚡ Lightning Payment</h5>
                   <div className="comparison-stats">
-                    <div className="stat">
+        <div className="stat">
                       <span>Confirmation Time:</span>
                       <span className="highlight">Instant!</span>
-                    </div>
-                    <div className="stat">
+        </div>
+        <div className="stat">
                       <span>Fee Cost:</span>
                       <span className="highlight">$0.001 - $0.01</span>
-                    </div>
-                    <div className="stat">
+        </div>
+        <div className="stat">
                       <span>Finality:</span>
                       <span className="highlight">Immediate</span>
                     </div>
@@ -1383,8 +1379,8 @@ const TransactionsModule = () => {
                       <span className="highlight">Daily payments, streaming</span>
                     </div>
                   </div>
-                </div>
-              </div>
+        </div>
+      </div>
 
               <div className="lightning-insight">
                 <h4>🧠 Network Commander Insight</h4>
@@ -1458,9 +1454,9 @@ const TransactionsModule = () => {
           <ContinueButton onClick={handleContinue}>
             🎭 Master Bitcoin Scripts Next
           </ContinueButton>
-        </div>
       </div>
-    );
+    </div>
+  );
   }
 
   const renderCurrentStep = () => {
@@ -1481,7 +1477,7 @@ const TransactionsModule = () => {
         <div className="module-progress">
           <div className="progress-bar">
             <div 
-              className="progress-fill"
+              className="progress-fill" 
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
@@ -1491,7 +1487,7 @@ const TransactionsModule = () => {
 
       <div className="module-tabs">
         {strategicSteps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
             className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => index <= currentStep && setCurrentStep(index)}

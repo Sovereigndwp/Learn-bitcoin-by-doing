@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Crown, Shield, Key, Dice1, Lock, Globe, Zap, Trophy, Target, AlertTriangle, Eye, EyeOff, Copy, RefreshCw, Cpu, Flame, Castle, Swords, ChevronRight, ChevronLeft, Award, Lightbulb, Calculator, ArrowRight } from 'lucide-react';
+import { Crown, Shield, Dice1, Lock, Globe, Eye, Flame, Castle, Swords, ChevronRight, ChevronLeft, Lightbulb } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  Button, 
   OptionButton,
   NavigationButton 
 } from '../components/EnhancedButtons';
@@ -13,7 +12,7 @@ import '../components/ModuleCommon.css';
 import './KeysModule.css';
 
 const KeysModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
@@ -121,7 +120,8 @@ const KeysModule = () => {
   };
 
   // Progress tracking
-  const progressPercentage = (completedSteps.size / sovereigntySteps.length) * 100;
+  // Progress tracking for visual feedback
+  // const progressPercentage = (completedSteps.size / sovereigntySteps.length) * 100;
 
   return (
     <div className="sovereignty-module">
@@ -709,9 +709,10 @@ const SecretGuardianStep = ({ onComplete }) => {
 
 // Step 4: Sovereign Constructor - Build hierarchy from master seed
 const SovereignConstructorStep = ({ onComplete }) => {
-  const [seedPhrase, setSeedPhrase] = useState('');
+  const [, setSeedPhrase] = useState('');
   const [generatedSeed, setGeneratedSeed] = useState(null);
-  const [derivationPath, setDerivationPath] = useState("m/44'/0'/0'/0/0");
+  // Derivation path for advanced users
+  // const [derivationPath, setDerivationPath] = useState("m/44'/0'/0'/0/0");
   const [hierarchyLevel, setHierarchyLevel] = useState(0);
   const [showConstruction, setShowConstruction] = useState(false);
 
@@ -1139,7 +1140,7 @@ const IndependenceWarriorStep = ({ onComplete }) => {
 const DigitalSovereignStep = ({ onComplete, userInsights }) => {
   const [sovereigntyLevel, setSovereigntyLevel] = useState(0);
   const [showManifesto, setShowManifesto] = useState(false);
-  const [readyForTransactions, setReadyForTransactions] = useState(false);
+  const [, setReadyForTransactions] = useState(false);
 
   useEffect(() => {
     // Auto-advance sovereignty level

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { sha256, hash256 } from '../utils/bitcoin';
-import { Hash, CheckCircle, Trophy, Shield, Zap, Target, AlertTriangle, Lightbulb, ArrowRight, ArrowLeft, RotateCcw, Download, Eye, Lock, Unlock, Search, Brain, Cpu } from 'lucide-react';
+import { sha256 } from '../utils/bitcoin';
+import { CheckCircle, Trophy, AlertTriangle, Lightbulb, ArrowRight } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './HashingModule.css';
 
 const HashingModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
@@ -445,7 +445,7 @@ const ImpossibleChallengeStep = ({ onComplete }) => {
   const [challenge, setChallenge] = useState('collision');
   const [attempts, setAttempts] = useState([]);
   const [currentAttempt, setCurrentAttempt] = useState('');
-  const [targetHash, setTargetHash] = useState('');
+  const [targetHash] = useState('');
   const [showHint, setShowHint] = useState(false);
   const [gaveUp, setGaveUp] = useState(false);
 

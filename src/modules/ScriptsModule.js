@@ -1,92 +1,104 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import { Code, Play, CheckCircle, Trophy, FileText, ArrowRight, Zap, Shield, Lock } from 'lucide-react';
+import { 
+  AlertTriangle, 
+  Code, 
+  Shield, 
+  Zap, 
+  TrendingUp,
+  Crown,
+  CheckCircle,
+  Play
+} from 'lucide-react';
 import { 
   ContinueButton, 
-  ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton 
+  ActionButton
 } from '../components/EnhancedButtons';
-import '../components/ModuleCommon.css';
 import './ScriptsModule.css';
 
 const ScriptsModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
+  const { completeModule, updatePersonalInsights } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
-  const [scriptInput, setScriptInput] = useState('1 1 OP_ADD');
-  const [stack, setStack] = useState([]);
-  const [multisigSignatures, setMultisigSignatures] = useState(new Set());
-  const [timelockEnabled, setTimelockEnabled] = useState(false);
 
-  const steps = [
+  // Script Architect Journey State (initial state for future features)
+  const [userInsights, setUserInsights] = useState({
+    crisisAwareness: 0,
+    codeCreativity: 0,
+    securityDesign: 0,
+    liquidityEngineering: 0,
+    protocolMastery: 0,
+    economicSovereignty: 0
+  });
+
+  const architectSteps = [
     {
-      id: 'script-intro',
-      title: 'What Are Scripts?',
-      icon: <FileText className="w-6 h-6" />,
-      component: 'script-intro'
+      id: 'contract-crisis',
+      title: '🚨 Contract Crisis Detective',
+      subtitle: 'Billion-dollar failures expose the fatal flaw in traditional contracts...',
+      icon: <AlertTriangle className="w-6 h-6" />,
+      component: ContractCrisisDetective
     },
     {
-      id: 'stack-operations',
-      title: 'Stack Operations',
-      icon: <Shield className="w-6 h-6" />,
-      component: 'stack-operations'
-    },
-    {
-      id: 'script-types',
-      title: 'Script Types',
+      id: 'code-alchemist',
+      title: '⚡ Code Alchemist', 
+      subtitle: 'Transform human logic into unstoppable mathematical law',
       icon: <Code className="w-6 h-6" />,
-      component: 'script-types'
+      component: CodeAlchemist
     },
     {
-      id: 'multisig-explorer',
-      title: 'Multisig Scripts',
+      id: 'security-architect',
+      title: '🛡️ Security Architect',
+      subtitle: 'Design bulletproof contracts that no single party can break',
       icon: <Shield className="w-6 h-6" />,
-      component: 'multisig-explorer'
+      component: SecurityArchitect
     },
     {
-      id: 'timelock-contracts',
-      title: 'Timelock Contracts',
-      icon: <Lock className="w-6 h-6" />,
-      component: 'timelock-contracts'
-    },
-    {
-      id: 'smart-contracts',
-      title: 'Smart Contracts',
+      id: 'liquidity-engineer',
+      title: '🌊 Liquidity Engineer',
+      subtitle: 'Build payment channels and instant global money flows',
       icon: <Zap className="w-6 h-6" />,
-      component: 'smart-contracts'
+      component: LiquidityEngineer
     },
     {
-      id: 'real-world-apps',
-      title: 'Real-World Applications',
-      icon: <ArrowRight className="w-6 h-6" />,
-      component: 'real-world-apps'
+      id: 'protocol-designer',
+      title: '🏛️ Protocol Designer',
+      subtitle: 'Master privacy-preserving scripts and next-generation protocols',
+      icon: <TrendingUp className="w-6 h-6" />,
+      component: ProtocolDesigner
     },
     {
-      id: 'completion',
-      title: 'Script Mastery',
-      icon: <Trophy className="w-6 h-6" />,
-      component: 'completion'
+      id: 'economic-sovereign',
+      title: '💰 Economic Sovereign',
+      subtitle: 'Command global financial infrastructure through programmable money',
+      icon: <Crown className="w-6 h-6" />,
+      component: EconomicSovereign
     }
   ];
 
   useEffect(() => {
-    if (currentStep === steps.length - 1 && !isModuleCompleted('scripts')) {
+    if (currentStep === architectSteps.length - 1) {
       completeModule('scripts');
-      showAchievement('Script Master', 'You understand how to program money with Bitcoin scripts!');
+      updatePersonalInsights('scripts', userInsights);
+      showStrategicAchievement(
+        'Script Architect Mastery',
+        'You can now program unstoppable money contracts that reshape global finance!',
+        '👑'
+      );
     }
-  }, [currentStep, completeModule, isModuleCompleted]);
+  }, [currentStep, completeModule, updatePersonalInsights, userInsights, architectSteps.length]);
 
-  const showAchievement = (title, description) => {
+  const showStrategicAchievement = (title, description, emoji = '⚡') => {
     const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
+    achievement.className = 'strategic-achievement';
     achievement.innerHTML = `
-      <div class="achievement-content">
-        <div class="achievement-icon">🏆</div>
-        <div class="achievement-text">
-          <h4>${title}</h4>
-          <p>${description}</p>
+      <div class="achievement-glow">
+        <div class="achievement-content">
+          <div class="achievement-emoji">${emoji}</div>
+          <div class="achievement-text">
+            <h3>${title}</h3>
+            <p>${description}</p>
+          </div>
         </div>
       </div>
     `;
@@ -98,723 +110,1238 @@ const ScriptsModule = () => {
         if (document.body.contains(achievement)) {
           document.body.removeChild(achievement);
         }
-      }, 300);
-    }, 3000);
+      }, 500);
+    }, 4000);
   };
 
   const handleStepComplete = (stepIndex) => {
     setCompletedSteps(prev => new Set([...prev, stepIndex]));
-    if (stepIndex === 0) showAchievement('Script Explorer', 'You understand Bitcoin\'s programming language!');
-    if (stepIndex === 1) showAchievement('Stack Master', 'You can visualize script execution!');
-    if (stepIndex === 2) showAchievement('Type Scholar', 'You know all Bitcoin script types!');
-    if (stepIndex === 3) showAchievement('Multisig Expert', 'You can create multi-party contracts!');
-    if (stepIndex === 4) showAchievement('Time Traveler', 'You understand temporal constraints!');
-    if (stepIndex === 5) showAchievement('Contract Creator', 'You can build smart contracts!');
-    if (stepIndex === 6) showAchievement('Real-World Builder', 'You see practical applications!');
-  };
-
-  const handleContinue = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(prev => prev + 1);
-      handleStepComplete(currentStep);
-    }
-  };
-
-  const executeScript = (script) => {
-    const newStack = [];
-    const operations = script.split(' ');
     
-    try {
-      operations.forEach(op => {
-        if (op.startsWith('OP_')) {
-          switch (op) {
-            case 'OP_ADD':
-              if (newStack.length >= 2) {
-                const b = newStack.pop();
-                const a = newStack.pop();
-                newStack.push(a + b);
-              }
-              break;
-            case 'OP_DUP':
-              if (newStack.length >= 1) {
-                newStack.push(newStack[newStack.length - 1]);
-              }
-              break;
-            case 'OP_HASH160':
-              if (newStack.length >= 1) {
-                const value = newStack.pop();
-                newStack.push(`hash160(${value})`);
-              }
-              break;
-            case 'OP_EQUALVERIFY':
-              if (newStack.length >= 2) {
-                const b = newStack.pop();
-                const a = newStack.pop();
-                if (a === b) {
-                  newStack.push('TRUE');
-                } else {
-                  throw new Error('EQUALVERIFY failed');
-                }
-              }
-              break;
-            case 'OP_CHECKSIG':
-              newStack.push('SIG_VALID');
-              break;
-            default:
-              newStack.push(op);
-          }
-        } else {
-          newStack.push(isNaN(op) ? op : parseInt(op));
-        }
-      });
-      setStack([...newStack]);
-    } catch (error) {
-      setStack(['ERROR: ' + error.message]);
-    }
-  };
-
-  const handleMultisigSign = (signerId) => {
-    const newSignatures = new Set(multisigSignatures);
-    if (newSignatures.has(signerId)) {
-      newSignatures.delete(signerId);
-    } else {
-      newSignatures.add(signerId);
-    }
-    setMultisigSignatures(newSignatures);
-  };
-
-  const progressPercentage = ((currentStep + 1) / steps.length) * 100;
-
-  const renderScriptIntro = () => (
-    <div className="script-intro">
-      <div className="intro-header">
-        <h2>📜 Bitcoin Scripts</h2>
-        <p className="subtitle">The Programming Language of Money</p>
-        <div className="prime-text">
-          💡 Every Bitcoin transaction includes a script—a small program that defines exactly how the coins can be spent. Scripts make Bitcoin programmable money.
-        </div>
-      </div>
-      
-      <div className="script-concepts">
-        <h3>🔍 Core Concepts</h3>
-        <div className="concepts-grid">
-          <div className="concept-card">
-            <span className="concept-icon">🔒</span>
-            <h3>Locking Scripts</h3>
-            <p className="concept-description">
-              Define the conditions that must be met to spend Bitcoin. Like a lock that requires the right key.
-            </p>
-          </div>
-          <div className="concept-card">
-            <span className="concept-icon">🔓</span>
-            <h3>Unlocking Scripts</h3>
-            <p className="concept-description">
-              Provide the data needed to satisfy the locking script conditions. Like the key that opens the lock.
-            </p>
-          </div>
-          <div className="concept-card">
-            <span className="concept-icon">📚</span>
-            <h3>Stack-Based</h3>
-            <p className="concept-description">
-              Scripts use a stack data structure. Operations push and pop data from the stack until validation is complete.
-            </p>
-          </div>
-          <div className="concept-card">
-            <span className="concept-icon">⚡</span>
-            <h3>Deterministic</h3>
-            <p className="concept-description">
-              Scripts always produce the same result. No randomness, no network calls—pure mathematical certainty.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="prime-text">
-        🎯 Think of scripts as conditional statements: "IF you provide a valid signature AND it matches this public key, THEN you can spend these coins."
-      </div>
-    </div>
-  );
-
-  const renderStackOperations = () => (
-    <div className="stack-visualization">
-      <div className="intro-header">
-        <h2>📚 Stack Operations</h2>
-        <p className="subtitle">See How Scripts Execute Step by Step</p>
-        <div className="prime-text">
-          💡 Bitcoin scripts work like a calculator that uses a stack. Numbers go on top, operations combine them, and the final result determines if the transaction is valid.
-        </div>
-        </div>
-
-      <div className="script-playground">
-        <h3>🎮 Interactive Script Playground</h3>
-        <div className="playground-container">
-          <div className="script-editor">
-            <div className="editor-panel">
-              <div className="panel-header">
-                <Code size={20} />
-                Script Input
-              </div>
-              <textarea
-                className="script-input"
-                value={scriptInput}
-                onChange={(e) => setScriptInput(e.target.value)}
-                placeholder="Try: 1 1 OP_ADD, or OP_DUP, or 5 3 OP_ADD"
-              />
-              <Button 
-                className="demo-button"
-                onClick={() => executeScript(scriptInput)}
-                style={{ marginTop: '1rem' }}
-              >
-                <Play size={16} />
-                Execute Script
-              </Button>
-            </div>
-            
-            <div className="editor-panel">
-              <div className="panel-header">
-                <Shield size={20} />
-                Stack State
-              </div>
-              <div className="stack-container">
-                <div className="stack-display">
-                  {stack.map((item, index) => (
-                    <div key={index} className="stack-item">
-                      {item}
-                    </div>
-                  ))}
-                  {stack.length === 0 && (
-                    <div style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}>
-                      Stack is empty
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="demo-controls">
-            <Button className="demo-button" onClick={() => setScriptInput('1 1 OP_ADD')}>
-              Simple Addition
-            </Button>
-            <Button className="demo-button" onClick={() => setScriptInput('5 OP_DUP')}>
-              Duplicate Value
-            </Button>
-                         <Button className="demo-button" onClick={() => setScriptInput('<pubKeyHash> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG')}>
-               P2PKH Script
-             </Button>
-            <Button className="demo-button" onClick={() => { setScriptInput(''); setStack([]); }}>
-              Clear All
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div className="prime-text">
-        🎯 Try modifying the script above! Most Bitcoin scripts are combinations of these basic operations.
-      </div>
-    </div>
-  );
-
-  const renderScriptTypes = () => (
-    <div className="script-types">
-      <div className="intro-header">
-        <h2>🔧 Script Types Evolution</h2>
-        <p className="subtitle">From Simple to Sophisticated</p>
-        <div className="prime-text">
-          💡 Bitcoin's script types have evolved to be more efficient, private, and flexible while maintaining backward compatibility.
-        </div>
-      </div>
-
-      <div className="script-types-grid">
-        <div className="script-type-card">
-          <div className="script-type-header">
-            <span className="script-type-icon">🏛️</span>
-            <span className="script-type-name">P2PKH (Legacy)</span>
-          </div>
-          <div className="script-type-description">
-            Pay to Public Key Hash. The original Bitcoin script type that requires a signature matching a specific public key hash.
-          </div>
-          <div className="script-code">
-            OP_DUP OP_HASH160 &lt;pubKeyHash&gt; OP_EQUALVERIFY OP_CHECKSIG
-          </div>
-          <div className="script-features">
-            <ul className="feature-list">
-              <li>Simple and reliable</li>
-              <li>Widely supported</li>
-              <li>Higher transaction fees</li>
-              <li>Addresses start with "1"</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="script-type-card">
-          <div className="script-type-header">
-            <span className="script-type-icon">📦</span>
-            <span className="script-type-name">P2SH (Script Hash)</span>
-          </div>
-          <div className="script-type-description">
-            Pay to Script Hash. Allows complex scripts to be wrapped in a simple format, enabling multisig and other advanced features.
-          </div>
-          <div className="script-code">
-            OP_HASH160 &lt;scriptHash&gt; OP_EQUAL
-          </div>
-          <div className="script-features">
-            <ul className="feature-list">
-              <li>Enables complex conditions</li>
-              <li>Multisig support</li>
-              <li>Addresses start with "3"</li>
-              <li>Shifts complexity to recipient</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="script-type-card">
-          <div className="script-type-header">
-            <span className="script-type-icon">⚡</span>
-            <span className="script-type-name">P2WPKH (SegWit)</span>
-          </div>
-          <div className="script-type-description">
-            Pay to Witness Public Key Hash. Native SegWit format that separates signature data for better efficiency and lower fees.
-          </div>
-          <div className="script-code">
-            OP_0 &lt;pubKeyHash&gt;
-          </div>
-          <div className="script-features">
-            <ul className="feature-list">
-              <li>Lower transaction fees</li>
-              <li>Malleability protection</li>
-              <li>Addresses start with "bc1q"</li>
-              <li>Better scalability</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="script-type-card">
-          <div className="script-type-header">
-            <span className="script-type-icon">🌳</span>
-            <span className="script-type-name">P2TR (Taproot)</span>
-          </div>
-          <div className="script-type-description">
-            Pay to Taproot. The newest format enabling complex smart contracts while looking like simple payments for enhanced privacy.
-          </div>
-          <div className="script-code">
-            OP_1 &lt;taprootOutput&gt;
-          </div>
-          <div className="script-features">
-            <ul className="feature-list">
-              <li>Maximum privacy</li>
-              <li>Complex script capabilities</li>
-              <li>Addresses start with "bc1p"</li>
-              <li>Schnorr signatures</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="prime-text">
-        🚀 Each evolution maintains backward compatibility while adding new capabilities—just like software updates that don't break old programs.
-      </div>
-    </div>
-  );
-
-  const renderMultisigExplorer = () => {
-    const signers = [
-      { id: 'alice', name: 'Alice', role: 'CEO' },
-      { id: 'bob', name: 'Bob', role: 'CTO' },
-      { id: 'carol', name: 'Carol', role: 'CFO' }
+    const achievements = [
+      { title: 'Crisis Detective', desc: 'You exposed the trillion-dollar flaw in traditional contracts!', emoji: '🕵️' },
+      { title: 'Code Alchemist', desc: 'You transform human logic into mathematical law!', emoji: '⚡' },
+      { title: 'Security Architect', desc: 'You design unbreakable multi-party contracts!', emoji: '🛡️' },
+      { title: 'Liquidity Engineer', desc: 'You build the infrastructure for instant global payments!', emoji: '🌊' },
+      { title: 'Protocol Designer', desc: 'You master privacy-preserving financial protocols!', emoji: '🏛️' },
+      { title: 'Economic Sovereign', desc: 'You command global money flows through code!', emoji: '💰' }
     ];
-    const requiredSigs = 2;
-    const canExecute = multisigSignatures.size >= requiredSigs;
 
-    return (
-      <div className="multisig-simulator">
-        <div className="intro-header">
-          <h2>👥 Multisig Scripts</h2>
-          <p className="subtitle">Multiple Keys, Shared Control</p>
-          <div className="prime-text">
-            💡 Multisig scripts require multiple signatures to spend funds. Perfect for businesses, families, or any situation requiring shared control.
-                  </div>
-                  </div>
-
-        <div className="multisig-setup">
-          <h3>🏢 Corporate Treasury: 2-of-3 Multisig</h3>
-          <p style={{ textAlign: 'center', color: '#cbd5e1', marginBottom: '2rem' }}>
-            Require {requiredSigs} signatures from {signers.length} executives to approve large payments
-          </p>
-
-          <div className="signature-grid">
-            {signers.map(signer => (
-              <div
-                key={signer.id}
-                className={`signature-slot ${multisigSignatures.has(signer.id) ? 'signed' : ''} ${
-                  multisigSignatures.size < requiredSigs && !multisigSignatures.has(signer.id) ? 'required' : ''
-                }`}
-                onClick={() => handleMultisigSign(signer.id)}
-              >
-                <div className="signer-info">
-                  <div className="signer-name">{signer.name}</div>
-                  <div className="signer-status">{signer.role}</div>
-                  <div style={{ marginTop: '0.5rem' }}>
-                    {multisigSignatures.has(signer.id) ? (
-                      <span style={{ color: '#10b981' }}>✓ Signed</span>
-                    ) : (
-                      <span style={{ color: '#6b7280' }}>Click to sign</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className={`signature-status ${canExecute ? 'status-complete' : 'status-pending'}`}>
-            {canExecute ? (
-              <span>✅ Transaction approved! {multisigSignatures.size}/{signers.length} signatures collected</span>
-            ) : (
-              <span>⏳ Pending approval: {multisigSignatures.size}/{requiredSigs} required signatures</span>
-            )}
-          </div>
-
-          <div style={{ marginTop: '2rem' }}>
-            <h4>🔧 Multisig Script Structure</h4>
-            <div className="script-code">
-              OP_2 &lt;pubkey1&gt; &lt;pubkey2&gt; &lt;pubkey3&gt; OP_3 OP_CHECKMULTISIG
-            </div>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', marginTop: '1rem' }}>
-              This creates a 2-of-3 multisig: any 2 out of 3 keys can authorize spending.
-            </p>
-          </div>
-        </div>
-
-        <div className="prime-text">
-          🎯 Multisig eliminates single points of failure. Even if one key is compromised, funds remain secure.
-        </div>
-      </div>
+    showStrategicAchievement(
+      achievements[stepIndex].title,
+      achievements[stepIndex].desc,
+      achievements[stepIndex].emoji
     );
   };
 
-  const renderTimelockContracts = () => (
-    <div className="timelock-contracts">
-      <div className="intro-header">
-        <h2>⏰ Timelock Contracts</h2>
-        <p className="subtitle">Programming Time into Money</p>
-        <div className="prime-text">
-          💡 Timelock scripts let you program time constraints into Bitcoin. Create inheritance plans, vesting schedules, or escrow contracts.
-        </div>
-      </div>
+  const handleContinue = () => {
+    if (currentStep < architectSteps.length - 1) {
+      handleStepComplete(currentStep);
+      setCurrentStep(prev => prev + 1);
+    }
+  };
 
-      <div className="interactive-demo">
-        <h3>🎮 Timelock Simulator</h3>
-        <div className="demo-controls">
-          <Button 
-            className={`demo-button ${timelockEnabled ? 'demo-button' : ''}`}
-            onClick={() => setTimelockEnabled(!timelockEnabled)}
-          >
-            <Lock size={16} />
-            {timelockEnabled ? 'Disable' : 'Enable'} Timelock
-          </Button>
+  const progressPercentage = ((currentStep + 1) / architectSteps.length) * 100;
+
+  // Strategic Step Components
+  function ContractCrisisDetective() {
+    const [crisisPhase, setCrisisPhase] = useState('discovery');
+    const [selectedCrisis, setSelectedCrisis] = useState(null);
+    const [investigationResult, setInvestigationResult] = useState(null);
+
+    const contractCrises = [
+      {
+        id: 'equifax',
+        title: '💳 Equifax Data Breach Settlement',
+        problem: 'Your personal data was exposed. The settlement contract promised $125 cash to millions.',
+        crisis: 'Only $31 million was allocated. Actual payouts: $6.75 per person maximum.',
+        insight: 'Traditional contracts can change terms when inconvenient',
+        cost: '$31M insufficient for 147M affected people',
+        lesson: 'Contract terms were dependent on human discretion'
+      },
+      {
+        id: 'insurance',
+        title: '🏠 Hurricane Insurance Denial',
+        problem: 'Your home was destroyed. Insurance contract clearly covers storm damage.',
+        crisis: 'Company classified it as "flood damage" (not covered) despite wind destruction.',
+        insight: 'Humans interpret contracts to benefit themselves',
+        cost: '$2.7T in denied claims annually',
+        lesson: 'Contract interpretation is subjective and biased'
+      },
+      {
+        id: 'bank_freeze',
+        title: '🏦 Bank Account Freeze',
+        problem: 'You need emergency funds for medical bills. Money is yours, account is active.',
+        crisis: 'Bank flags "suspicious activity" and freezes account for 30+ days.',
+        insight: 'Contracts give institutions power to override your rights',
+        cost: '$40B in frozen legitimate funds yearly',
+        lesson: 'Contract enforcement depends on centralized authority'
+      }
+    ];
+
+    const handleCrisisChoice = (crisis) => {
+      setSelectedCrisis(crisis);
+      setCrisisPhase('investigation');
+      
+      setTimeout(() => {
+        setInvestigationResult({
+          rootCause: 'Human Interpretation Problem',
+          solution: 'Mathematical Contract Execution',
+          impact: 'Removes human discretion and bias'
+        });
+        setCrisisPhase('revelation');
+        
+        // Update user insights
+        const insights = { ...userInsights };
+        insights.crisisAwareness = Math.min(insights.crisisAwareness + 25, 100);
+        setUserInsights(insights);
+      }, 2000);
+    };
+
+    return (
+      <div className="crisis-detective">
+        <div className="crisis-header">
+          <div className="crisis-icon">
+            <AlertTriangle className="w-16 h-16 text-red-500" />
+          </div>
+          <h2>🚨 THE CONTRACT CRISIS EPIDEMIC</h2>
+          <p className="crisis-subtitle">Billions lost to broken promises and human interpretation...</p>
         </div>
 
-        <div className="playground-container">
-          <div style={{ textAlign: 'center', padding: '2rem' }}>
-            <h4>🏦 Trust Fund Contract</h4>
-            <p style={{ color: '#cbd5e1', marginBottom: '2rem' }}>
-              Funds locked until beneficiary turns 21 (January 1, 2030)
-            </p>
+        {crisisPhase === 'discovery' && (
+          <div className="crisis-scenarios">
+            <div className="crisis-explanation">
+              <div className="prime-text">
+                💰 Every year, trillions of dollars are lost to contract failures. Not because the contracts 
+                were unclear, but because humans get to decide what they mean.
+              </div>
+            </div>
+
+            <h3>Choose a contract crisis to investigate:</h3>
+            <div className="crisis-grid">
+              {contractCrises.map(crisis => (
+                <div 
+                  key={crisis.id}
+                  className="crisis-card"
+                  onClick={() => handleCrisisChoice(crisis)}
+                >
+                  <div className="crisis-title">{crisis.title}</div>
+                  <div className="crisis-problem">{crisis.problem}</div>
+                  <div className="crisis-cost">{crisis.cost}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {crisisPhase === 'investigation' && selectedCrisis && (
+          <div className="crisis-investigation">
+            <div className="investigation-header">
+              <h3>🔍 Investigating: {selectedCrisis.title}</h3>
+            </div>
             
-            <div style={{ 
-              background: timelockEnabled ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-              border: `1px solid ${timelockEnabled ? '#10b981' : '#ef4444'}`,
-              borderRadius: '8px',
-              padding: '2rem',
-              margin: '2rem 0'
-            }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-                {timelockEnabled ? '🔓' : '🔒'}
+            <div className="investigation-details">
+              <div className="investigation-step">
+                <h4>📋 The Contract Promise</h4>
+                <p>{selectedCrisis.problem}</p>
               </div>
-              <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-                Status: {timelockEnabled ? 'UNLOCKED' : 'LOCKED'}
+              
+              <div className="investigation-step">
+                <h4>💥 What Actually Happened</h4>
+                <p>{selectedCrisis.crisis}</p>
               </div>
-              <div style={{ fontSize: '0.9rem', color: '#cbd5e1', marginTop: '0.5rem' }}>
-                Current time: {timelockEnabled ? 'After 2030' : 'Before 2030'}
+
+              <div className="investigation-loading">
+                <div className="loading-spinner"></div>
+                <p>Analyzing root cause...</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {crisisPhase === 'revelation' && selectedCrisis && investigationResult && (
+          <div className="crisis-revelation">
+            <div className="revelation-header">
+              <h3>⚡ REVELATION: The Fatal Flaw Exposed</h3>
+            </div>
+
+            <div className="revelation-analysis">
+              <div className="flaw-identified">
+                <h4>🎯 Root Cause Identified</h4>
+                <div className="flaw-box">
+                  <strong>{investigationResult.rootCause}</strong>
+                  <p>{selectedCrisis.lesson}</p>
+                </div>
+              </div>
+
+              <div className="solution-preview">
+                <h4>💡 The Bitcoin Script Solution</h4>
+                <div className="solution-box">
+                  <strong>Mathematical Contract Execution</strong>
+                  <p>Code that executes exactly as written, with no human interpretation</p>
+                  <ul>
+                    <li>✅ No subjective interpretation</li>
+                    <li>✅ No centralized control</li>
+                    <li>✅ No ability to change terms</li>
+                    <li>✅ Mathematically guaranteed execution</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="script-code">
-              &lt;signature&gt; &lt;pubkey&gt; OP_CHECKSIG<br/>
-              1893456000 OP_CHECKLOCKTIMEVERIFY OP_DROP
+            <div className="revelation-impact">
+              <div className="prime-text">
+                🔥 What if contracts could execute automatically, exactly as agreed, with no human 
+                able to override or reinterpret them? That's what Bitcoin scripts make possible.
+              </div>
             </div>
-            <p style={{ color: '#cbd5e1', fontSize: '0.9rem', marginTop: '1rem' }}>
-              This script requires both a valid signature AND the current time to be after January 1, 2030.
-            </p>
+
+            <ContinueButton onClick={() => handleContinue()}>
+              Transform Crisis Into Code →
+            </ContinueButton>
           </div>
-        </div>
+        )}
       </div>
+    );
+  }
 
-      <div className="contract-examples">
-        <div className="contract-card">
-          <div className="contract-title">🎓 Gradual Release</div>
-          <div className="contract-description">
-            Release funds in stages over time, like a college fund that unlocks each semester.
+  function CodeAlchemist() {
+    const [alchemyPhase, setAlchemyPhase] = useState('learning');
+    const [currentScript, setCurrentScript] = useState('');
+    const [executionSteps, setExecutionSteps] = useState([]);
+    const [completedTransformations, setCompletedTransformations] = useState(new Set());
+
+    const logicTransformations = [
+      {
+        id: 'simple_payment',
+        title: '💰 Simple Payment',
+        humanLogic: 'If Alice provides a valid signature proving she owns this key, then she can spend the money.',
+        scriptCode: 'OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        explanation: 'Duplicate signature, hash it, compare to stored hash, verify signature',
+        difficulty: 'Beginner'
+      },
+      {
+        id: 'multisig',
+        title: '👥 Corporate Approval',
+        humanLogic: 'If any 2 out of 3 executives provide valid signatures, then approve the payment.',
+        scriptCode: 'OP_2 <pubKey1> <pubKey2> <pubKey3> OP_3 OP_CHECKMULTISIG',
+        explanation: 'Require 2 signatures from 3 possible public keys',
+        difficulty: 'Intermediate'
+      },
+      {
+        id: 'timelock',
+        title: '⏰ Time Release',
+        humanLogic: 'If the current time is after January 1, 2025, AND Alice provides a valid signature, then release the funds.',
+        scriptCode: '1735689600 OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        explanation: 'Check timestamp, then verify signature if time requirement met',
+        difficulty: 'Advanced'
+      }
+    ];
+
+    const executeScriptStep = (script) => {
+      const steps = [];
+      const stack = [];
+      const operations = script.split(' ');
+      
+      operations.forEach((op, index) => {
+        if (op.startsWith('OP_')) {
+          switch (op) {
+            case 'OP_DUP':
+              if (stack.length > 0) {
+                const top = stack[stack.length - 1];
+                stack.push(top);
+                steps.push({ step: index + 1, operation: op, action: `Duplicate top item: ${top}`, stack: [...stack] });
+              }
+              break;
+            case 'OP_HASH160':
+              if (stack.length > 0) {
+                const value = stack.pop();
+                const hashed = `hash160(${value})`;
+                stack.push(hashed);
+                steps.push({ step: index + 1, operation: op, action: `Hash ${value} → ${hashed}`, stack: [...stack] });
+              }
+              break;
+            case 'OP_EQUALVERIFY':
+              if (stack.length >= 2) {
+                const b = stack.pop();
+                const a = stack.pop();
+                steps.push({ step: index + 1, operation: op, action: `Verify ${a} equals ${b}`, stack: [...stack] });
+              }
+              break;
+            case 'OP_CHECKSIG':
+              steps.push({ step: index + 1, operation: op, action: 'Verify signature is valid', stack: [...stack] });
+              break;
+            default:
+              steps.push({ step: index + 1, operation: op, action: `Execute ${op}`, stack: [...stack] });
+          }
+        } else if (!op.startsWith('<')) {
+          stack.push(op);
+          steps.push({ step: index + 1, operation: 'PUSH', action: `Push ${op} to stack`, stack: [...stack] });
+        }
+      });
+      
+      return steps;
+    };
+
+    const handleTransformLogic = (transformation) => {
+      setCurrentScript(transformation.scriptCode);
+      const steps = executeScriptStep(transformation.scriptCode);
+      setExecutionSteps(steps);
+      setAlchemyPhase('demonstration');
+      
+      // Mark transformation as completed
+      setCompletedTransformations(prev => new Set([...prev, transformation.id]));
+      
+      // Update user insights
+      const insights = { ...userInsights };
+      insights.codeCreativity = Math.min(insights.codeCreativity + 30, 100);
+      setUserInsights(insights);
+    };
+
+    return (
+      <div className="code-alchemist">
+        <div className="alchemist-header">
+          <div className="alchemist-icon">
+            <Code className="w-16 h-16 text-blue-500" />
           </div>
-          <div className="contract-conditions">
-            {`if (time > semester_1) unlock 25%`}<br/>
-            {`if (time > semester_2) unlock 50%`}<br/>
-            {`if (time > graduation) unlock 100%`}
-          </div>
+          <h2>⚡ TRANSFORM LOGIC INTO LAW</h2>
+          <p className="alchemist-subtitle">Watch human intentions become unstoppable mathematical operations...</p>
         </div>
 
-        <div className="contract-card">
-          <div className="contract-title">💍 Escrow Service</div>
-          <div className="contract-description">
-            Hold funds in escrow with automatic release if not disputed within 30 days.
-          </div>
-          <div className="contract-conditions">
-            if (dispute_period_expired) unlock to buyer<br/>
-            else require (buyer_sig AND seller_sig)
-          </div>
-        </div>
+        {alchemyPhase === 'learning' && (
+          <div className="alchemy-workshop">
+            <div className="workshop-explanation">
+              <div className="prime-text">
+                🧪 Every Bitcoin script starts as human logic: "If this, then that." 
+                Your job as a Code Alchemist is to transform fuzzy human intentions into 
+                precise mathematical operations that execute exactly as specified.
+              </div>
+            </div>
 
-        <div className="contract-card">
-          <div className="contract-title">🏦 Emergency Access</div>
-          <div className="contract-description">
-            Normal access requires your key, but emergency backup activates after 1 year of inactivity.
+            <h3>Choose a logic transformation to master:</h3>
+            <div className="transformations-grid">
+              {logicTransformations.map(transformation => (
+                <div 
+                  key={transformation.id}
+                  className={`transformation-card ${completedTransformations.has(transformation.id) ? 'completed' : ''}`}
+                  onClick={() => handleTransformLogic(transformation)}
+                >
+                  <div className="transformation-header">
+                    <span className="transformation-title">{transformation.title}</span>
+                    <span className="transformation-difficulty">{transformation.difficulty}</span>
+                  </div>
+                  
+                  <div className="human-logic">
+                    <h4>🧠 Human Logic</h4>
+                    <p>{transformation.humanLogic}</p>
+                  </div>
+                  
+                  {completedTransformations.has(transformation.id) && (
+                    <div className="transformation-status">
+                      <CheckCircle className="w-5 h-5" />
+                      <span>Transformation Complete</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="contract-conditions">
-            if (primary_key) unlock immediately<br/>
-            {`if (time > 1_year_inactive) allow backup_key`}
+        )}
+
+        {alchemyPhase === 'demonstration' && (
+          <div className="alchemy-demonstration">
+            <div className="demonstration-header">
+              <h3>⚡ Transformation in Progress</h3>
+              <p>Watch logic become mathematical law...</p>
+            </div>
+
+            <div className="script-execution">
+              <div className="script-display">
+                <h4>📜 Generated Script</h4>
+                <div className="script-code">
+                  {currentScript}
+                </div>
+              </div>
+
+              <div className="execution-visualization">
+                <h4>🔥 Step-by-Step Execution</h4>
+                <div className="execution-steps">
+                  {executionSteps.map((step, index) => (
+                    <div key={index} className="execution-step">
+                      <div className="step-number">{step.step}</div>
+                      <div className="step-details">
+                        <div className="step-operation">{step.operation}</div>
+                        <div className="step-action">{step.action}</div>
+                        <div className="step-stack">
+                          Stack: [{step.stack.join(', ')}]
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="transformation-insight">
+              <div className="prime-text">
+                🎯 The transformation is complete! Human logic is now mathematical law. 
+                No court, no judge, no interpretation—just pure, unstoppable execution.
+              </div>
+            </div>
+
+            <div className="demonstration-controls">
+              <ActionButton onClick={() => setAlchemyPhase('learning')}>
+                Transform More Logic
+              </ActionButton>
+              
+              {completedTransformations.size >= 2 && (
+                <ContinueButton onClick={() => handleContinue()}>
+                  Master Security Architecture →
+                </ContinueButton>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
+    );
+  }
 
-      <div className="prime-text">
-        ⏰ Time becomes a programmable element of money. No lawyers, no courts—just mathematical certainty.
+  function SecurityArchitect() {
+    const [architectPhase, setArchitectPhase] = useState('challenge');
+    const [securityScenario, setSecurityScenario] = useState(null);
+    const [contractDesign, setContractDesign] = useState(null);
+    const [simulationActive, setSimulationActive] = useState(false);
+
+    const securityChallenges = [
+      {
+        id: 'corporate_treasury',
+        title: '🏢 Corporate Treasury Protection',
+        problem: 'Your company holds $50M in Bitcoin. Single signature = single point of failure.',
+        threat: 'CEO could go rogue, key could be compromised, or executive could be coerced.',
+        solution: '2-of-3 multisig',
+        participants: ['CEO', 'CFO', 'Board Chair'],
+        requirement: 'Any 2 executives must approve large transactions',
+        script: 'OP_2 <CEO_key> <CFO_key> <Chair_key> OP_3 OP_CHECKMULTISIG'
+      },
+      {
+        id: 'inheritance_planning',
+        title: '👨‍👩‍👧‍👦 Inheritance Time Lock',
+        problem: 'You want to pass Bitcoin to your children, but not until they mature.',
+        threat: 'Kids could access funds too early, or you could lose access due to accident.',
+        solution: 'Time-locked inheritance',
+        participants: ['Parent', 'Child (after 21)', 'Emergency Backup'],
+        requirement: 'Child can access after 21st birthday, parent has emergency override',
+        script: '2025-01-01 OP_CHECKLOCKTIMEVERIFY OP_DROP <child_key> OP_CHECKSIG'
+      },
+      {
+        id: 'escrow_protection',
+        title: '🤝 High-Stakes Escrow',
+        problem: 'Buying a $2M property with Bitcoin. Neither party should be able to steal.',
+        threat: 'Seller could disappear, buyer could reverse payment, or dispute could arise.',
+        solution: '2-of-3 escrow with timelock',
+        participants: ['Buyer', 'Seller', 'Escrow Agent'],
+        requirement: 'Any 2 parties can release, or automatic release after 90 days',
+        script: 'OP_IF OP_2 <buyer> <seller> <agent> OP_3 OP_CHECKMULTISIG OP_ELSE 90 OP_CHECKLOCKTIMEVERIFY OP_DROP <buyer> OP_CHECKSIG OP_ENDIF'
+      }
+    ];
+
+    const handleSecurityChallenge = (challenge) => {
+      setSecurityScenario(challenge);
+      setArchitectPhase('design');
+      
+      // Update user insights
+      const insights = { ...userInsights };
+      insights.securityDesign = Math.min(insights.securityDesign + 25, 100);
+      setUserInsights(insights);
+    };
+
+    const handleContractTest = () => {
+      setSimulationActive(true);
+      
+      // Simulate contract testing
+      setTimeout(() => {
+        setContractDesign({
+          security_rating: 'MAXIMUM',
+          attack_vectors: 0,
+          single_points_failure: 0,
+          trust_requirements: 'MINIMIZED'
+        });
+        setSimulationActive(false);
+        setArchitectPhase('validation');
+      }, 3000);
+    };
+
+    return (
+      <div className="security-architect">
+        <div className="architect-header">
+          <div className="architect-icon">
+            <Shield className="w-16 h-16 text-green-500" />
+          </div>
+          <h2>🛡️ BULLETPROOF CONTRACTS</h2>
+          <p className="architect-subtitle">Design security that no single party can break...</p>
+        </div>
+
+        {architectPhase === 'challenge' && (
+          <div className="security-challenges">
+            <div className="challenge-explanation">
+              <div className="prime-text">
+                🎯 Single signatures are security disasters waiting to happen. Your mission: 
+                architect contracts so secure that even coordinated attacks fail.
+              </div>
+            </div>
+
+            <h3>Choose a security challenge to solve:</h3>
+            <div className="challenges-grid">
+              {securityChallenges.map(challenge => (
+                <div 
+                  key={challenge.id}
+                  className="challenge-card"
+                  onClick={() => handleSecurityChallenge(challenge)}
+                >
+                  <div className="challenge-title">{challenge.title}</div>
+                  <div className="challenge-problem">{challenge.problem}</div>
+                  <div className="challenge-threat">
+                    <strong>Threat:</strong> {challenge.threat}
+                  </div>
+                  <div className="challenge-solution">
+                    <strong>Solution:</strong> {challenge.solution}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {architectPhase === 'design' && securityScenario && (
+          <div className="contract-design">
+            <div className="design-header">
+              <h3>🏗️ Designing: {securityScenario.title}</h3>
+            </div>
+
+            <div className="design-requirements">
+              <div className="requirement-analysis">
+                <h4>📋 Security Requirements</h4>
+                <ul>
+                  <li><strong>Participants:</strong> {securityScenario.participants.join(', ')}</li>
+                  <li><strong>Requirement:</strong> {securityScenario.requirement}</li>
+                  <li><strong>Solution Type:</strong> {securityScenario.solution}</li>
+                </ul>
+              </div>
+
+              <div className="script-blueprint">
+                <h4>⚡ Security Script</h4>
+                <div className="script-code">
+                  {securityScenario.script}
+                </div>
+              </div>
+            </div>
+
+            <div className="security-analysis">
+              <h4>🔒 Security Properties</h4>
+              <div className="security-properties">
+                <div className="property">
+                  <span className="property-icon">✅</span>
+                  <span>No single point of failure</span>
+                </div>
+                <div className="property">
+                  <span className="property-icon">✅</span>
+                  <span>Resistance to coercion</span>
+                </div>
+                <div className="property">
+                  <span className="property-icon">✅</span>
+                  <span>Transparent verification</span>
+                </div>
+                <div className="property">
+                  <span className="property-icon">✅</span>
+                  <span>Immutable execution</span>
+                </div>
+              </div>
+            </div>
+
+            <ActionButton onClick={handleContractTest}>
+              <Play className="w-4 h-4" />
+              Test Contract Security
+            </ActionButton>
+          </div>
+        )}
+
+        {architectPhase === 'validation' && contractDesign && (
+          <div className="security-validation">
+            <div className="validation-header">
+              <h3>🎯 Security Validation Complete</h3>
+            </div>
+
+            <div className="security-metrics">
+              <div className="metric">
+                <span className="metric-label">Security Rating:</span>
+                <span className="metric-value">{contractDesign.security_rating}</span>
+              </div>
+              <div className="metric">
+                <span className="metric-label">Attack Vectors:</span>
+                <span className="metric-value">{contractDesign.attack_vectors}</span>
+              </div>
+              <div className="metric">
+                <span className="metric-label">Single Points of Failure:</span>
+                <span className="metric-value">{contractDesign.single_points_failure}</span>
+              </div>
+              <div className="metric">
+                <span className="metric-label">Trust Requirements:</span>
+                <span className="metric-value">{contractDesign.trust_requirements}</span>
+              </div>
+            </div>
+
+            <div className="validation-insight">
+              <div className="prime-text">
+                🛡️ Contract security achieved! You've eliminated single points of failure 
+                and created a system where no individual can compromise the funds.
+              </div>
+            </div>
+
+            <ContinueButton onClick={() => handleContinue()}>
+              Engineer Global Liquidity →
+            </ContinueButton>
+          </div>
+        )}
+
+        {simulationActive && (
+          <div className="security-simulation">
+            <div className="simulation-status">
+              <div className="loading-spinner"></div>
+              <p>Testing contract against attack vectors...</p>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  );
+    );
+  }
 
-  const renderSmartContracts = () => (
-    <div className="smart-contracts">
-      <div className="intro-header">
-        <h2>⚡ Smart Contracts on Bitcoin</h2>
-        <p className="subtitle">Complex Logic, Simple Execution</p>
-        <div className="prime-text">
-          💡 While Bitcoin's scripting is simpler than Ethereum, it can still create powerful smart contracts that are secure, predictable, and efficient.
+  function LiquidityEngineer() {
+    const [engineerPhase, setEngineerPhase] = useState('discovery');
+    const [channelDemo, setChannelDemo] = useState({ alice: 5, bob: 5, payments: [] });
+    const [lightningMetrics, setLightningMetrics] = useState(null);
+
+    const handleChannelPayment = (amount, direction) => {
+      const newChannel = { ...channelDemo };
+      const payment = {
+        id: Date.now(),
+        amount,
+        direction,
+        timestamp: new Date().toLocaleTimeString()
+      };
+
+      if (direction === 'alice_to_bob') {
+        newChannel.alice -= amount;
+        newChannel.bob += amount;
+      } else {
+        newChannel.bob -= amount;
+        newChannel.alice += amount;
+      }
+
+      newChannel.payments = [...newChannel.payments, payment];
+      setChannelDemo(newChannel);
+
+      // Update user insights
+      const insights = { ...userInsights };
+      insights.liquidityEngineering = Math.min(insights.liquidityEngineering + 10, 100);
+      setUserInsights(insights);
+    };
+
+    const handleLightningReveal = () => {
+      setLightningMetrics({
+        total_nodes: '15,000+',
+        total_capacity: '5,000+ BTC',
+        daily_payments: '1M+',
+        avg_fee: '0.001%',
+        settlement_time: '<1 second'
+      });
+      setEngineerPhase('mastery');
+    };
+
+    return (
+      <div className="liquidity-engineer">
+        <div className="engineer-header">
+          <div className="engineer-icon">
+            <Zap className="w-16 h-16 text-yellow-500" />
+          </div>
+          <h2>🌊 GLOBAL LIQUIDITY INFRASTRUCTURE</h2>
+          <p className="engineer-subtitle">Build the pipes that carry instant money worldwide...</p>
         </div>
+
+        {engineerPhase === 'discovery' && (
+          <div className="liquidity-discovery">
+            <div className="discovery-problem">
+              <h3>💸 The Liquidity Problem</h3>
+              <div className="problem-stats">
+                <div className="stat">
+                  <span className="stat-value">$40</span>
+                  <span className="stat-label">Average Bitcoin transaction fee during congestion</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-value">10-60 min</span>
+                  <span className="stat-label">Transaction confirmation time</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-value">7 TPS</span>
+                  <span className="stat-label">Bitcoin's base layer transaction limit</span>
+                </div>
+              </div>
+              
+              <div className="prime-text">
+                🚫 These limitations make Bitcoin unusable for daily payments. But what if we could 
+                build a second layer that enables millions of instant, cheap transactions?
+              </div>
+            </div>
+
+            <div className="channel-introduction">
+              <h3>⚡ Payment Channel Solution</h3>
+              <p>Create a shared account that enables instant payments without touching the blockchain:</p>
+              
+              <div className="channel-demo">
+                <div className="channel-participants">
+                  <div className="participant">
+                    <div className="participant-name">Alice</div>
+                    <div className="participant-balance">{channelDemo.alice} BTC</div>
+                  </div>
+                  
+                  <div className="channel-connection">
+                    <div className="channel-capacity">
+                      Total: {channelDemo.alice + channelDemo.bob} BTC
+                    </div>
+                  </div>
+                  
+                  <div className="participant">
+                    <div className="participant-name">Bob</div>
+                    <div className="participant-balance">{channelDemo.bob} BTC</div>
+                  </div>
+                </div>
+
+                <div className="payment-controls">
+                  <ActionButton 
+                    onClick={() => handleChannelPayment(1, 'alice_to_bob')}
+                    disabled={channelDemo.alice < 1}
+                  >
+                    Alice → Bob (1 BTC)
+                  </ActionButton>
+                  <ActionButton 
+                    onClick={() => handleChannelPayment(1, 'bob_to_alice')}
+                    disabled={channelDemo.bob < 1}
+                  >
+                    Bob → Alice (1 BTC)
+                  </ActionButton>
+                </div>
+
+                {channelDemo.payments.length > 0 && (
+                  <div className="payment-history">
+                    <h4>Payment History</h4>
+                    {channelDemo.payments.slice(-3).map(payment => (
+                      <div key={payment.id} className="payment-record">
+                        {payment.direction === 'alice_to_bob' ? 'Alice → Bob' : 'Bob → Alice'}: 
+                        {payment.amount} BTC at {payment.timestamp}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {channelDemo.payments.length >= 2 && (
+              <div className="discovery-insight">
+                <div className="prime-text">
+                  🎯 Notice: Instant payments, zero fees, no blockchain congestion! 
+                  Now imagine connecting millions of these channels...
+                </div>
+                
+                <ActionButton onClick={handleLightningReveal}>
+                  Reveal the Lightning Network →
+                </ActionButton>
+              </div>
+            )}
+          </div>
+        )}
+
+        {engineerPhase === 'mastery' && lightningMetrics && (
+          <div className="lightning-mastery">
+            <div className="mastery-header">
+              <h3>⚡ Lightning Network: Global Payment Infrastructure</h3>
+            </div>
+
+            <div className="lightning-stats">
+              <div className="stat-grid">
+                <div className="network-stat">
+                  <span className="stat-icon">🌐</span>
+                  <span className="stat-value">{lightningMetrics.total_nodes}</span>
+                  <span className="stat-label">Active Nodes</span>
+                </div>
+                <div className="network-stat">
+                  <span className="stat-icon">💰</span>
+                  <span className="stat-value">{lightningMetrics.total_capacity}</span>
+                  <span className="stat-label">Total Capacity</span>
+                </div>
+                <div className="network-stat">
+                  <span className="stat-icon">⚡</span>
+                  <span className="stat-value">{lightningMetrics.daily_payments}</span>
+                  <span className="stat-label">Daily Payments</span>
+                </div>
+                <div className="network-stat">
+                  <span className="stat-icon">💸</span>
+                  <span className="stat-value">{lightningMetrics.avg_fee}</span>
+                  <span className="stat-label">Average Fee</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="engineering-achievements">
+              <h4>🏗️ Your Engineering Impact</h4>
+              <div className="achievements-grid">
+                <div className="achievement">
+                  <span className="achievement-icon">🚀</span>
+                  <span>Enabled instant global payments</span>
+                </div>
+                <div className="achievement">
+                  <span className="achievement-icon">💰</span>
+                  <span>Reduced fees by 99.9%</span>
+                </div>
+                <div className="achievement">
+                  <span className="achievement-icon">🌍</span>
+                  <span>Connected global liquidity pools</span>
+                </div>
+                <div className="achievement">
+                  <span className="achievement-icon">⚡</span>
+                  <span>Powered millions of micropayments</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mastery-insight">
+              <div className="prime-text">
+                🌊 You've engineered the infrastructure for global instant payments! 
+                Payment channels and routing create a parallel financial system that 
+                settles instantly and scales infinitely.
+              </div>
+            </div>
+
+            <ContinueButton onClick={() => handleContinue()}>
+              Design Advanced Protocols →
+            </ContinueButton>
+          </div>
+        )}
       </div>
+    );
+  }
 
-      <div className="contract-examples">
-        <div className="contract-card">
-          <div className="contract-title">⚖️ Atomic Swaps</div>
-          <div className="contract-description">
-            Exchange different cryptocurrencies without trusting a centralized exchange. Both parties get their coins or no one does.
+  function ProtocolDesigner() {
+    const [designPhase, setDesignPhase] = useState('evolution');
+    const [selectedProtocol, setSelectedProtocol] = useState(null);
+    const [privacyComparison, setPrivacyComparison] = useState(null);
+
+    const protocolEvolution = [
+      {
+        id: 'p2pkh',
+        name: 'P2PKH (Legacy)',
+        era: '2009-2012',
+        privacy: 'Low',
+        efficiency: 'Basic',
+        features: ['Simple payments', 'Single signature'],
+        address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+        description: 'The original Bitcoin script type'
+      },
+      {
+        id: 'p2sh',
+        name: 'P2SH (Script Hash)',
+        era: '2012-2017',
+        privacy: 'Medium',
+        efficiency: 'Better',
+        features: ['Multisig support', 'Complex conditions', 'Smaller transactions'],
+        address: '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
+        description: 'Enabled complex scripts with simpler addresses'
+      },
+      {
+        id: 'segwit',
+        name: 'SegWit (Witness)',
+        era: '2017-2021',
+        privacy: 'Medium',
+        efficiency: 'Much Better',
+        features: ['Lower fees', 'Malleability fix', 'Lightning ready'],
+        address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+        description: 'Separated signatures for better scaling'
+      },
+      {
+        id: 'taproot',
+        name: 'Taproot (Privacy)',
+        era: '2021-Present',
+        privacy: 'Maximum',
+        efficiency: 'Optimal',
+        features: ['Schnorr signatures', 'Script privacy', 'Smart contract hiding'],
+        address: 'bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297',
+        description: 'Complex scripts look like simple payments'
+      }
+    ];
+
+    const handleProtocolSelect = (protocol) => {
+      setSelectedProtocol(protocol);
+      setDesignPhase('analysis');
+      
+      // Generate privacy comparison
+      setPrivacyComparison({
+        public_visibility: protocol.id === 'taproot' ? 'Simple payment only' : 'Script structure visible',
+        key_aggregation: protocol.id === 'taproot' ? 'Multiple keys → Single key' : 'Individual keys visible',
+        smart_contracts: protocol.id === 'taproot' ? 'Hidden until used' : 'Always visible',
+        analysis_resistance: protocol.id === 'taproot' ? 'Maximum' : 'Limited'
+      });
+
+      // Update user insights
+      const insights = { ...userInsights };
+      insights.protocolMastery = Math.min(insights.protocolMastery + 20, 100);
+      setUserInsights(insights);
+    };
+
+    return (
+      <div className="protocol-designer">
+        <div className="designer-header">
+          <div className="designer-icon">
+            <TrendingUp className="w-16 h-16 text-purple-500" />
           </div>
-          <div className="contract-conditions">
-            Alice locks Bitcoin with secret hash<br/>
-            Bob locks Litecoin with same hash<br/>
-            Alice reveals secret → gets Litecoin<br/>
-            Bob uses secret → gets Bitcoin
-          </div>
+          <h2>🏛️ PROTOCOL EVOLUTION MASTERY</h2>
+          <p className="designer-subtitle">Design privacy-preserving protocols that scale to global adoption...</p>
         </div>
 
-        <div className="contract-card">
-          <div className="contract-title">🎰 Provably Fair Betting</div>
-          <div className="contract-description">
-            Create gambling contracts where neither party can cheat. The outcome is determined by blockchain data.
-          </div>
-          <div className="contract-conditions">
-            Use future block hash as randomness<br/>
-            If hash % 2 == 0: Player A wins<br/>
-            If hash % 2 == 1: Player B wins<br/>
-            Winner gets all funds
-          </div>
-        </div>
+        {designPhase === 'evolution' && (
+          <div className="protocol-evolution">
+            <div className="evolution-explanation">
+              <div className="prime-text">
+                🚀 Bitcoin scripts have evolved from simple payments to sophisticated privacy-preserving 
+                protocols. Each generation solves new problems while maintaining backward compatibility.
+              </div>
+            </div>
 
-        <div className="contract-card">
-          <div className="contract-title">💰 Payment Channels</div>
-          <div className="contract-description">
-            Lock funds in a channel for instant, cheap payments. Foundation of the Lightning Network.
-          </div>
-          <div className="contract-conditions">
-            Open: Both parties lock funds<br/>
-            Transact: Update balances off-chain<br/>
-            Close: Final state goes on-chain<br/>
-            Dispute: Penalty for old states
-          </div>
-        </div>
+            <h3>Explore the protocol evolution:</h3>
+            <div className="evolution-timeline">
+              {protocolEvolution.map((protocol, index) => (
+                <div 
+                  key={protocol.id}
+                  className="protocol-era"
+                  onClick={() => handleProtocolSelect(protocol)}
+                >
+                  <div className="era-header">
+                    <span className="era-name">{protocol.name}</span>
+                    <span className="era-period">{protocol.era}</span>
+                  </div>
+                  
+                  <div className="era-metrics">
+                    <div className="metric">
+                      <span className="metric-label">Privacy:</span>
+                      <span className={`metric-value ${protocol.privacy.toLowerCase()}`}>
+                        {protocol.privacy}
+                      </span>
+                    </div>
+                    <div className="metric">
+                      <span className="metric-label">Efficiency:</span>
+                      <span className="metric-value">{protocol.efficiency}</span>
+                    </div>
+                  </div>
 
-        <div className="contract-card">
-          <div className="contract-title">🏠 Decentralized Oracles</div>
-          <div className="contract-description">
-            Connect Bitcoin to real-world data through cryptographic commitments and economic incentives.
+                  <div className="era-features">
+                    {protocol.features.map(feature => (
+                      <span key={feature} className="feature-tag">{feature}</span>
+                    ))}
+                  </div>
+
+                  <div className="era-address">
+                    <code>{protocol.address}</code>
+                  </div>
+
+                  <div className="era-description">
+                    {protocol.description}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="contract-conditions">
-            Oracle commits to data with bond<br/>
-            If correct: Oracle keeps bond + fee<br/>
-            If incorrect: Bond slashed<br/>
-            Multiple oracles for redundancy
+        )}
+
+        {designPhase === 'analysis' && selectedProtocol && privacyComparison && (
+          <div className="protocol-analysis">
+            <div className="analysis-header">
+              <h3>🔬 Deep Dive: {selectedProtocol.name}</h3>
+            </div>
+
+            <div className="privacy-analysis">
+              <h4>🔒 Privacy Analysis</h4>
+              <div className="privacy-metrics">
+                <div className="privacy-metric">
+                  <span className="metric-label">Public Visibility:</span>
+                  <span className="metric-value">{privacyComparison.public_visibility}</span>
+                </div>
+                <div className="privacy-metric">
+                  <span className="metric-label">Key Aggregation:</span>
+                  <span className="metric-value">{privacyComparison.key_aggregation}</span>
+                </div>
+                <div className="privacy-metric">
+                  <span className="metric-label">Smart Contracts:</span>
+                  <span className="metric-value">{privacyComparison.smart_contracts}</span>
+                </div>
+                <div className="privacy-metric">
+                  <span className="metric-label">Analysis Resistance:</span>
+                  <span className="metric-value">{privacyComparison.analysis_resistance}</span>
+                </div>
+              </div>
+            </div>
+
+            {selectedProtocol.id === 'taproot' && (
+              <div className="taproot-innovation">
+                <h4>🌳 Taproot Innovation Breakthrough</h4>
+                <div className="innovation-grid">
+                  <div className="innovation-item">
+                    <span className="innovation-icon">🎭</span>
+                    <div className="innovation-text">
+                      <strong>Script Privacy</strong>
+                      <p>Complex smart contracts look identical to simple payments</p>
+                    </div>
+                  </div>
+                  <div className="innovation-item">
+                    <span className="innovation-icon">🔑</span>
+                    <div className="innovation-text">
+                      <strong>Key Aggregation</strong>
+                      <p>Multiple signers appear as a single signature</p>
+                    </div>
+                  </div>
+                  <div className="innovation-item">
+                    <span className="innovation-icon">⚡</span>
+                    <div className="innovation-text">
+                      <strong>Schnorr Signatures</strong>
+                      <p>Smaller, faster, more private signatures</p>
+                    </div>
+                  </div>
+                  <div className="innovation-item">
+                    <span className="innovation-icon">🌿</span>
+                    <div className="innovation-text">
+                      <strong>Script Trees</strong>
+                      <p>Reveal only the execution path used</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="design-insight">
+              <div className="prime-text">
+                🎯 {selectedProtocol.id === 'taproot' 
+                  ? 'You\'ve mastered the pinnacle of Bitcoin script evolution! Taproot enables maximum privacy while maintaining unlimited functionality.'
+                  : `This protocol was a crucial step in Bitcoin's evolution, enabling ${selectedProtocol.features.join(', ').toLowerCase()}.`
+                }
+              </div>
+            </div>
+
+            <div className="analysis-controls">
+              <ActionButton onClick={() => setDesignPhase('evolution')}>
+                Explore More Protocols
+              </ActionButton>
+              
+              {userInsights.protocolMastery >= 60 && (
+                <ContinueButton onClick={() => handleContinue()}>
+                  Achieve Economic Sovereignty →
+                </ContinueButton>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
+    );
+  }
 
-      <div className="prime-text">
-        🔮 Bitcoin's conservative approach to smart contracts prioritizes security and predictability over complexity. Every operation is carefully considered.
+  function EconomicSovereign() {
+    const [sovereignPhase] = useState('revelation');
+    const [impactMetrics, setImpactMetrics] = useState(null);
+    const [sovereigntyLevel, setSovereigntyLevel] = useState(0);
+
+    useEffect(() => {
+      if (sovereignPhase === 'revelation') {
+        // Calculate impact based on user journey
+        const totalInsights = Object.values(userInsights).reduce((sum, val) => sum + val, 0);
+        setImpactMetrics({
+          scripts_mastered: completedSteps.size,
+          contracts_designed: Math.floor(totalInsights / 50),
+          security_level: 'MAXIMUM',
+          global_impact: 'TRANSFORMATIONAL'
+        });
+        
+        setSovereigntyLevel(Math.min(totalInsights / 4, 100));
+      }
+    }, [sovereignPhase]);
+
+    const globalApplications = [
+      {
+        icon: '⚡',
+        title: 'Lightning Network',
+        impact: '$5B+ in payment capacity',
+        description: 'Your script knowledge powers instant global payments'
+      },
+      {
+        icon: '🏢',
+        title: 'Corporate Treasury',
+        impact: '$100B+ in multisig protection',
+        description: 'Companies secure billions using scripts you now understand'
+      },
+      {
+        icon: '🌉',
+        title: 'Cross-Chain Bridges',
+        impact: '$50B+ in locked value',
+        description: 'Script contracts enable value transfer between blockchains'
+      },
+      {
+        icon: '🏦',
+        title: 'DeFi Protocols',
+        impact: '$200B+ total value locked',
+        description: 'Smart contracts built on script foundations you\'ve mastered'
+      }
+    ];
+
+    return (
+      <div className="economic-sovereign">
+        <div className="sovereign-header">
+          <div className="sovereign-icon">
+            <Crown className="w-20 h-20 text-yellow-500" />
+          </div>
+          <h2>💰 ECONOMIC SOVEREIGNTY ACHIEVED</h2>
+          <p className="sovereign-subtitle">You command the global financial infrastructure through code...</p>
+        </div>
+
+        {sovereignPhase === 'revelation' && impactMetrics && (
+          <div className="sovereignty-revelation">
+            <div className="achievement-metrics">
+              <h3>📊 Your Script Architect Impact</h3>
+              <div className="metrics-grid">
+                <div className="impact-metric">
+                  <span className="metric-icon">📜</span>
+                  <span className="metric-value">{impactMetrics.scripts_mastered}</span>
+                  <span className="metric-label">Script Types Mastered</span>
+                </div>
+                <div className="impact-metric">
+                  <span className="metric-icon">🏗️</span>
+                  <span className="metric-value">{impactMetrics.contracts_designed}</span>
+                  <span className="metric-label">Contracts Designed</span>
+                </div>
+                <div className="impact-metric">
+                  <span className="metric-icon">🛡️</span>
+                  <span className="metric-value">{impactMetrics.security_level}</span>
+                  <span className="metric-label">Security Level</span>
+                </div>
+                <div className="impact-metric">
+                  <span className="metric-icon">🌍</span>
+                  <span className="metric-value">{sovereigntyLevel.toFixed(0)}%</span>
+                  <span className="metric-label">Sovereignty Mastery</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="global-impact">
+              <h3>🌎 Your Knowledge Powers Global Finance</h3>
+              <div className="applications-grid">
+                {globalApplications.map((app, index) => (
+                  <div key={index} className="application-card">
+                    <span className="app-icon">{app.icon}</span>
+                    <div className="app-content">
+                      <h4>{app.title}</h4>
+                      <div className="app-impact">{app.impact}</div>
+                      <p>{app.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="sovereignty-powers">
+              <h3>👑 Your Script Architect Powers</h3>
+              <div className="powers-grid">
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Design unbreakable multisig contracts</span>
+                </div>
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Program time-locked inheritance plans</span>
+                </div>
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Build instant payment channels</span>
+                </div>
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Create atomic swap contracts</span>
+                </div>
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Implement privacy-preserving protocols</span>
+                </div>
+                <div className="power-item">
+                  <CheckCircle className="power-icon" />
+                  <span>Engineer global financial infrastructure</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="final-insight">
+              <div className="prime-text">
+                🎓 You are now a Script Architect! You understand how code becomes law, 
+                how logic becomes money, and how programmable contracts reshape global finance. 
+                The power to design unstoppable financial systems is in your hands.
+              </div>
+            </div>
+
+            <div className="sovereignty-navigation">
+              <ContinueButton onClick={() => handleContinue()}>
+                Command Global Financial Networks →
+              </ContinueButton>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  );
-
-  const renderRealWorldApps = () => (
-    <div className="real-world-apps">
-      <div className="intro-header">
-        <h2>🌍 Real-World Applications</h2>
-        <p className="subtitle">Scripts in Action Today</p>
-        <div className="prime-text">
-          💡 Bitcoin scripts aren't just theory—they're being used right now for everything from Lightning payments to corporate treasury management.
-        </div>
-      </div>
-
-      <div className="contract-examples">
-        <div className="contract-card">
-          <div className="contract-title">⚡ Lightning Network</div>
-          <div className="contract-description">
-            Millions of instant, cheap Bitcoin payments powered by sophisticated script contracts and payment channels.
-          </div>
-          <div className="contract-conditions">
-            Active nodes: 15,000+<br/>
-            Total capacity: 5,000+ BTC<br/>
-            Used by: Strike, Cash App, Kraken<br/>
-            Enables: Instant global payments
-          </div>
-        </div>
-
-        <div className="contract-card">
-          <div className="contract-title">🏢 Corporate Multisig</div>
-          <div className="contract-description">
-            Companies like MicroStrategy and Tesla use multisig scripts to secure billions in Bitcoin treasury holdings.
-          </div>
-          <div className="contract-conditions">
-            Typical setup: 3-of-5 or 5-of-7<br/>
-            Signers: Board members, executives<br/>
-            Security: No single point of failure<br/>
-            Compliance: Audit trail for all actions
-          </div>
-        </div>
-
-        <div className="contract-card">
-          <div className="contract-title">🌉 Cross-Chain Bridges</div>
-          <div className="contract-description">
-            Move Bitcoin value to other blockchains while keeping the underlying Bitcoin secure through script contracts.
-          </div>
-          <div className="contract-conditions">
-            Lock Bitcoin in multisig<br/>
-            Mint wrapped tokens on other chains<br/>
-            {`Redeem: Burn tokens → unlock Bitcoin`}<br/>
-            Security: Distributed key management
-          </div>
-        </div>
-
-        <div className="contract-card">
-          <div className="contract-title">👨‍👩‍👧‍👦 Estate Planning</div>
-          <div className="contract-description">
-            Families use timelock scripts for inheritance planning, ensuring funds transfer automatically when needed.
-          </div>
-          <div className="contract-conditions">
-            Normal access: Primary owner key<br/>
-            Emergency: Backup keys after timelock<br/>
-            Inheritance: Automatic after time period<br/>
-            Privacy: No probate court needed
-          </div>
-        </div>
-      </div>
-
-      <div className="prime-text">
-        🚀 These aren't futuristic concepts—they're working today, securing billions of dollars worth of Bitcoin through the power of programmable money.
-      </div>
-    </div>
-  );
-
-  const renderCompletion = () => (
-    <div className="completion-screen">
-      <div className="completion-icon">
-        <Trophy size={80} />
-      </div>
-      <h1>🎉 Script Mastery Achieved!</h1>
-      <p className="subtitle">You now understand how to program money with Bitcoin</p>
-
-      <div className="completion-stats">
-        <div className="stat">
-          <span className="stat-number">8</span>
-          <span className="stat-label">Script Concepts Mastered</span>
-        </div>
-        <div className="stat">
-          <span className="stat-number">6</span>
-          <span className="stat-label">Interactive Demos</span>
-        </div>
-        <div className="stat">
-          <span className="stat-number">100%</span>
-          <span className="stat-label">Programming Fluency</span>
-        </div>
-      </div>
-
-      <div className="prime-text">
-        🎓 You now understand Bitcoin's scripting system from basic operations to complex smart contracts. You can see how code becomes money and money becomes programmable!
-      </div>
-    </div>
-  );
+    );
+  }
 
   const renderCurrentStep = () => {
-    switch (steps[currentStep].component) {
-      case 'script-intro': return renderScriptIntro();
-      case 'stack-operations': return renderStackOperations();
-      case 'script-types': return renderScriptTypes();
-      case 'multisig-explorer': return renderMultisigExplorer();
-      case 'timelock-contracts': return renderTimelockContracts();
-      case 'smart-contracts': return renderSmartContracts();
-      case 'real-world-apps': return renderRealWorldApps();
-      case 'completion': return renderCompletion();
-      default: return renderScriptIntro();
-    }
+    const StepComponent = architectSteps[currentStep].component;
+    return <StepComponent />;
   };
 
   return (
     <div className="scripts-module">
       <div className="module-header">
         <h1 className="module-title">
-          <FileText className="module-icon" size={48} />
-          Bitcoin Scripts: Programming Money
+          <div className="module-icon">
+            <Code className="w-12 h-12" />
+          </div>
+          Script Architect: Program Unstoppable Money Contracts
         </h1>
+        <p className="module-subtitle">Transform crisis into code, logic into law, and contracts into mathematical certainty</p>
         <div className="module-progress">
           <div className="progress-bar">
             <div 
-              className="progress-fill" 
+              className="progress-fill"
               style={{ width: `${progressPercentage}%` }}
-            />
+            ></div>
           </div>
-          <div>Step {currentStep + 1} of {steps.length}</div>
+          <span>{Math.round(progressPercentage)}% Complete</span>
         </div>
       </div>
 
       <div className="module-tabs">
-        {steps.map((step, index) => (
-          <div
+        {architectSteps.map((step, index) => (
+          <div 
             key={step.id}
             className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => setCurrentStep(index)}
+            onClick={() => index <= currentStep && setCurrentStep(index)}
           >
             {step.icon}
-            <span>{step.title}</span>
-            {completedSteps.has(index) && <CheckCircle size={16} />}
+            <div className="tab-content">
+              <span className="tab-title">{step.title}</span>
+              <span className="tab-subtitle">{step.subtitle}</span>
+            </div>
           </div>
         ))}
       </div>
 
       <div className="step-content-container">
         {renderCurrentStep()}
-        
-        {currentStep < steps.length - 1 && (
-          <ContinueButton onClick={handleContinue}>
-            Continue to {steps[currentStep + 1].title} →
-          </ContinueButton>
-        )}
       </div>
     </div>
   );
