@@ -1,469 +1,993 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Zap, Code, Cpu, Network, Globe, Shield, Database, 
-  Trophy, CheckCircle, Target, BarChart3, Settings, Award
+  AlertTriangle, Shield, Zap, Cpu, Globe, Crown, Trophy,
+  TrendingUp, Lock, Network, Users, Target, Database,
+  CheckCircle, ArrowRight, Activity, BarChart3, Settings,
+  Eye, EyeOff, Clock, Layers, Code, FileText, Award,
+  DollarSign, Coins, Building, Smartphone, Server
 } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton 
+  Button 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './AdvancedTopicsModule.css';
 
 const AdvancedTopicsModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
-  const [currentTopic, setCurrentTopic] = useState(0);
-  const [completedTopics, setCompletedTopics] = useState(new Set());
-  const [demoOutput, setDemoOutput] = useState('');
+  const { completeModule, updatePersonalInsights } = useProgress();
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [completedPhases, setCompletedPhases] = useState(new Set());
+  const [achievements, setAchievements] = useState([]);
+  
+  // Innovation Crisis Investigation State
+  const [innovationFailures, setInnovationFailures] = useState(0);
+  const [crisisInsights, setCrisisInsights] = useState({});
+  const [investigationProgress, setInvestigationProgress] = useState(0);
+  
+  // Privacy Architecture State
+  const [privacyThreat, setPrivacyThreat] = useState(0);
+  const [confidentialSolutions, setConfidentialSolutions] = useState([]);
+  const [surveillanceResistance, setSurveillanceResistance] = useState(0);
+  
+  // Scaling Engineering State
+  const [networkCongestion, setNetworkCongestion] = useState(75);
+  const [scalingSolutions, setScalingSolutions] = useState({});
+  const [throughputAchieved, setThroughputAchieved] = useState(7);
+  
+  // Protocol Innovation State
+  const [consensusProgress, setConsensusProgress] = useState(0);
+  const [protocolImprovements, setProtocolImprovements] = useState([]);
+  const [innovationScore, setInnovationScore] = useState(0);
+  
+  // Infrastructure Sovereignty State
+  const [infrastructureControl, setInfrastructureControl] = useState(0);
+  const [economicSystems, setEconomicSystems] = useState([]);
+  const [globalImpact, setGlobalImpact] = useState(0);
+  
+  // Bitcoin Apex Mastery State
+  const [masteryLevel, setMasteryLevel] = useState(0);
+  const [apexAchievements, setApexAchievements] = useState([]);
+  const [sovereigntyScore, setSovereigntyScore] = useState(0);
+  
+  // Phase-specific UI State
+  const [crisisPhase, setCrisisPhase] = useState('discovery');
+  const [selectedCrisis, setSelectedCrisis] = useState(null);
+  const [investigationResult, setInvestigationResult] = useState(null);
+  const [privacyPhase, setPrivacyPhase] = useState('threat-assessment');
+  const [selectedThreat, setSelectedThreat] = useState(null);
+  const [privacySolution, setPrivacySolution] = useState(null);
 
-  const topics = [
+  const architectPhases = [
     {
-      id: 'taproot',
-      title: 'Taproot & Schnorr',
-      icon: '🌳',
-      description: 'Privacy-preserving smart contracts with signature aggregation',
-      difficulty: 'Advanced'
+      id: 'innovation-crisis-detective',
+      title: 'Innovation Crisis Detective',
+      icon: <AlertTriangle className="phase-icon" />,
+      crisis: 'Financial Innovation Stagnation',
+      description: 'Investigate why traditional finance fails to innovate while Bitcoin leads revolutionary development',
+      challenge: 'Analyze innovation failures and discover Bitcoin\'s technological superiority',
+      skills: ['Crisis Investigation', 'Innovation Analysis', 'Technology Assessment'],
+      tools: ['Innovation Tracker', 'Crisis Database', 'Technology Comparator']
     },
     {
-      id: 'privacy',
-      title: 'Privacy Techniques',
-      icon: '🔒',
-      description: 'CoinJoin, PayJoin, and advanced privacy methods',
-      difficulty: 'Expert'
+      id: 'privacy-crisis-architect',
+      title: 'Privacy Crisis Architect',
+      icon: <Shield className="phase-icon" />,
+      crisis: 'Financial Surveillance Crisis',
+      description: 'Master confidential transactions and privacy-preserving protocols under surveillance pressure',
+      challenge: 'Build unbreakable privacy solutions that resist global financial surveillance',
+      skills: ['Privacy Engineering', 'Cryptographic Design', 'Surveillance Resistance'],
+      tools: ['Privacy Builder', 'Confidential Transactions', 'CoinJoin Coordinator']
     },
     {
-      id: 'layer2',
-      title: 'Layer 2 Solutions',
-      icon: '⚡',
-      description: 'Sidechains, state channels, and scaling innovations',
-      difficulty: 'Advanced'
+      id: 'scaling-solution-engineer',
+      title: 'Scaling Solution Engineer',
+      icon: <Zap className="phase-icon" />,
+      crisis: 'Global Adoption Bottleneck',
+      description: 'Design Layer 2 solutions for global Bitcoin adoption under network congestion crisis',
+      challenge: 'Engineer scaling solutions that enable billions of users without compromising security',
+      skills: ['Layer 2 Architecture', 'Throughput Optimization', 'Security Engineering'],
+      tools: ['Scaling Simulator', 'Channel Designer', 'Sidechain Builder']
     },
     {
-      id: 'consensus',
-      title: 'Consensus Mechanisms',
-      icon: '🤝',
-      description: 'Understanding Bitcoin\'s consensus rules and upgrades',
-      difficulty: 'Expert'
+      id: 'protocol-innovation-pioneer',
+      title: 'Protocol Innovation Pioneer',
+      icon: <Cpu className="phase-icon" />,
+      crisis: 'Protocol Evolution Challenge',
+      description: 'Build next-generation Bitcoin improvements through consensus mechanisms',
+      challenge: 'Pioneer protocol innovations while maintaining Bitcoin\'s security and decentralization',
+      skills: ['Consensus Design', 'Protocol Engineering', 'Backward Compatibility'],
+      tools: ['Protocol Designer', 'Consensus Simulator', 'Upgrade Coordinator']
     },
     {
-      id: 'future',
-      title: 'Future Developments',
-      icon: '🚀',
-      description: 'Upcoming Bitcoin innovations and research areas',
-      difficulty: 'Research'
+      id: 'infrastructure-sovereign',
+      title: 'Infrastructure Sovereign',
+      icon: <Globe className="phase-icon" />,
+      crisis: 'Financial Infrastructure Control',
+      description: 'Command advanced Bitcoin economic systems and future developments',
+      challenge: 'Build sovereign financial infrastructure independent of traditional systems',
+      skills: ['Infrastructure Design', 'Economic Systems', 'Global Coordination'],
+      tools: ['Infrastructure Builder', 'Economic Modeler', 'Sovereignty Dashboard']
     },
     {
-      id: 'mastery',
-      title: 'Advanced Mastery',
-      icon: '🏆',
-      description: 'Complete understanding achievement',
-      difficulty: 'Master'
+      id: 'bitcoin-apex-master',
+      title: 'Bitcoin Apex Master',
+      icon: <Crown className="phase-icon" />,
+      crisis: 'Complete Technological Mastery',
+      description: 'Achieve absolute mastery of Bitcoin\'s cutting-edge technology and innovation leadership',
+      challenge: 'Demonstrate complete command of Bitcoin\'s technological frontier',
+      skills: ['Complete Mastery', 'Innovation Leadership', 'Technological Sovereignty'],
+      tools: ['Mastery Dashboard', 'Innovation Hub', 'Sovereignty Metrics']
     }
   ];
 
-  const handleTopicComplete = (topicIndex) => {
-    const newCompleted = new Set(completedTopics);
-    newCompleted.add(topicIndex);
-    setCompletedTopics(newCompleted);
+  useEffect(() => {
+    // Simulate real-time innovation crisis data
+    const interval = setInterval(() => {
+      if (currentPhase === 0) {
+        setInnovationFailures(prev => Math.min(prev + Math.random() * 500, 25000));
+        setInvestigationProgress(prev => Math.min(prev + Math.random() * 2, 100));
+      } else if (currentPhase === 1) {
+        setPrivacyThreat(prev => Math.min(prev + Math.random() * 3, 100));
+      } else if (currentPhase === 2) {
+        setNetworkCongestion(prev => Math.max(prev - Math.random() * 1, 25));
+        setThroughputAchieved(prev => Math.min(prev + Math.random() * 1000, 1000000));
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [currentPhase]);
+
+  const handlePhaseComplete = (phaseIndex, insights = {}) => {
+    const newCompleted = new Set(completedPhases);
+    newCompleted.add(phaseIndex);
+    setCompletedPhases(newCompleted);
     
-    // Show achievements
-    if (topicIndex === 0) {
-      showAchievement("Taproot Pioneer", "You understand Bitcoin's privacy revolution!");
-    } else if (topicIndex === 1) {
-      showAchievement("Privacy Expert", "You've mastered advanced privacy techniques!");
-    } else if (topicIndex === 2) {
-      showAchievement("Layer 2 Architect", "You understand Bitcoin's scaling solutions!");
-    } else if (topicIndex === 3) {
-      showAchievement("Consensus Scholar", "You grasp Bitcoin's governance model!");
-    } else if (topicIndex === 4) {
-      showAchievement("Future Visionary", "You see Bitcoin's technological horizon!");
-    } else if (topicIndex === 5) {
-      showAchievement("Bitcoin Advanced Master", "Complete mastery of cutting-edge Bitcoin!");
+    // Award achievements
+    const phaseData = architectPhases[phaseIndex];
+    const achievement = {
+      id: `advanced_${phaseData.id}`,
+      title: `${phaseData.title} Mastery`,
+      description: `Mastered ${phaseData.crisis.toLowerCase()} through ${phaseData.skills[0].toLowerCase()}`,
+      icon: phaseData.icon,
+      timestamp: Date.now()
+    };
+    
+    setAchievements(prev => [...prev, achievement]);
+    showAchievementPopup(achievement);
+    
+    // Update insights
+    updatePersonalInsights('advanced-topics', {
+      ...insights,
+      phase: phaseData.id,
+      masteryLevel: ((phaseIndex + 1) / architectPhases.length) * 100
+    });
+    
+    if (phaseIndex === architectPhases.length - 1) {
       completeModule('advanced-topics');
-    }
-    
-    if (topicIndex < topics.length - 1) {
-      setTimeout(() => setCurrentTopic(topicIndex + 1), 1000);
+      showSovereigntyAnimation();
+    } else {
+      setTimeout(() => {
+        setCurrentPhase(phaseIndex + 1);
+        // Reset phase-specific state for next phase
+        setCrisisPhase('discovery');
+        setSelectedCrisis(null);
+        setInvestigationResult(null);
+        setPrivacyPhase('threat-assessment');
+        setSelectedThreat(null);
+        setPrivacySolution(null);
+      }, 1500);
     }
   };
 
-  const showAchievement = (title, description) => {
-    const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
-    achievement.innerHTML = `
-      <div class="achievement-content">
-        <div class="achievement-icon">🏆</div>
-        <div class="achievement-text">
-          <h4>${title}</h4>
-          <p>${description}</p>
+  const showAchievementPopup = (achievement) => {
+    const popup = document.createElement('div');
+    popup.className = 'achievement-popup-advanced';
+    popup.innerHTML = `
+      <div class="achievement-content-advanced">
+        <div class="achievement-icon-advanced">🏆</div>
+        <div class="achievement-text-advanced">
+          <h4>${achievement.title}</h4>
+          <p>${achievement.description}</p>
         </div>
       </div>
     `;
-    document.body.appendChild(achievement);
+    document.body.appendChild(popup);
     
     setTimeout(() => {
-      achievement.style.opacity = '0';
-      setTimeout(() => document.body.removeChild(achievement), 300);
-    }, 3000);
+      popup.style.opacity = '0';
+      setTimeout(() => document.body.removeChild(popup), 300);
+    }, 4000);
   };
 
-  return (
-    <div className="module-container advanced-module">
-      <div className="advanced-content">
-        <div className="advanced-header">
-          <h1 className="advanced-title">Advanced Bitcoin Topics</h1>
-          <p className="advanced-subtitle">Cutting-Edge Bitcoin Technology & Research</p>
-          <div className="advanced-description">
-            Explore the frontier of Bitcoin development: Taproot privacy, Schnorr signatures, Layer 2 scaling, and emerging innovations shaping Bitcoin's future.
-          </div>
-          {isModuleCompleted('advanced-topics') && (
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              gap: '0.5rem',
-              marginTop: '1rem',
-              color: '#8b5cf6',
-              fontWeight: 'bold'
-            }}>
-              <Trophy size={24} />
-              <span>Advanced Master Achieved!</span>
-            </div>
-          )}
+  const showSovereigntyAnimation = () => {
+    const sovereignty = document.createElement('div');
+    sovereignty.className = 'sovereignty-celebration-advanced';
+    sovereignty.innerHTML = `
+      <div class="sovereignty-content-advanced">
+        <div class="sovereignty-crown">👑</div>
+        <h2>BITCOIN APEX MASTER ACHIEVED!</h2>
+        <p>You command the technological frontier of Bitcoin innovation!</p>
+        <div class="sovereignty-stats">
+          <div>🏆 All 6 Phases Mastered</div>
+          <div>🚀 Innovation Leadership Unlocked</div>
+          <div>👑 Technological Sovereignty Achieved</div>
         </div>
+      </div>
+    `;
+    document.body.appendChild(sovereignty);
+    
+    setTimeout(() => {
+      sovereignty.style.opacity = '0';
+      setTimeout(() => document.body.removeChild(sovereignty), 500);
+    }, 8000);
+  };
 
-        <div className="topic-navigation">
-          {topics.map((topic, index) => (
-            <div
-              key={topic.id}
-              className={`topic-nav-card ${currentTopic === index ? 'active' : ''} ${completedTopics.has(index) ? 'completed' : ''}`}
-              onClick={() => setCurrentTopic(index)}
+  const progressPercentage = ((currentPhase + 1) / architectPhases.length) * 100;
+
+  return (
+    <div className="module-container advanced-bitcoin-architect">
+      <div className="architect-header">
+        <div className="crisis-alert">
+          <AlertTriangle className="crisis-icon animate-pulse" />
+          <div className="crisis-text">
+            <h1>Advanced Bitcoin Architect</h1>
+            <p>Master Bitcoin's cutting-edge technology and lead the innovation frontier</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="architect-progress">
+        <div className="progress-header">
+          <h3>🏗️ Innovation Architecture Progress</h3>
+          <span className="progress-percentage">{Math.round(progressPercentage)}%</span>
+        </div>
+        <div className="progress-bar-advanced">
+          <div 
+            className="progress-fill-advanced"
+            style={{ width: `${progressPercentage}%` }}
+          />
+        </div>
+        <div className="progress-phases">
+          {architectPhases.map((phase, index) => (
+            <div 
+              key={phase.id}
+              className={`phase-indicator ${index <= currentPhase ? 'active' : ''} ${completedPhases.has(index) ? 'completed' : ''}`}
             >
-              <span className="topic-icon">{topic.icon}</span>
-              <div className="topic-title">{topic.title}</div>
-              <div className="topic-description">{topic.description}</div>
-              <div style={{ 
-                fontSize: '0.7rem', 
-                color: '#6b7280', 
-                marginTop: '0.5rem',
-                fontWeight: 'bold'
-              }}>
-                {topic.difficulty}
-              </div>
+              {phase.icon}
+              <span>{phase.title}</span>
             </div>
           ))}
         </div>
-
-        {renderCurrentTopic()}
       </div>
+
+      <div className="architect-content">
+        {currentPhase === 0 && renderInnovationCrisisDetective()}
+        {currentPhase === 1 && renderPrivacyCrisisArchitect()}
+        {currentPhase === 2 && renderScalingSolutionEngineer()}
+        {currentPhase === 3 && renderProtocolInnovationPioneer()}
+        {currentPhase === 4 && renderInfrastructureSovereign()}
+        {currentPhase === 5 && renderBitcoinApexMaster()}
+      </div>
+
+      {achievements.length > 0 && (
+        <div className="achievements-section">
+          <h3>🏆 Architect Achievements</h3>
+          <div className="achievements-grid">
+            {achievements.map((achievement, index) => (
+              <div key={achievement.id} className="achievement-card">
+                <div className="achievement-icon">{achievement.icon}</div>
+                <div className="achievement-title">{achievement.title}</div>
+                <div className="achievement-desc">{achievement.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 
-  function renderCurrentTopic() {
-    const topic = topics[currentTopic];
-    
-    switch (topic.id) {
-      case 'taproot':
-        return renderTaprootTopic();
-      case 'privacy':
-        return renderPrivacyTopic();
-      case 'layer2':
-        return renderLayer2Topic();
-      case 'consensus':
-        return renderConsensusTopic();
-      case 'future':
-        return renderFutureTopic();
-      case 'mastery':
-        return renderMasteryTopic();
-      default:
-        return null;
-    }
+  // Phase 1: Innovation Crisis Detective
+  function renderInnovationCrisisDetective() {
+
+    const innovationCrises = [
+      {
+        id: 'payment_stagnation',
+        title: '💳 Payment System Stagnation',
+        problem: 'Traditional payment systems haven\'t fundamentally improved in 50+ years',
+        crisis: 'ACH transfers still take 3-5 days. Credit cards still charge 3% fees. International transfers cost $50+ and take days.',
+        insight: 'Financial institutions have no incentive to innovate when they profit from inefficiency',
+        cost: '$1.2T in payment processing fees annually that could be eliminated',
+        bitcoinSolution: 'Lightning Network enables instant, near-zero-fee payments globally'
+      },
+      {
+        id: 'currency_innovation',
+        title: '💸 Currency Innovation Failure',
+        problem: 'Fiat currencies become less valuable over time with no technological improvement',
+        crisis: '99% purchasing power lost over 100 years. No programmability. No audit trail. Subject to political manipulation.',
+        insight: 'Central banks maintain control by preventing monetary innovation',
+        cost: '$15T in wealth destroyed by inflation over decades',
+        bitcoinSolution: 'Programmable money with fixed supply and cryptographic auditability'
+      },
+      {
+        id: 'settlement_antiquity',
+        title: '🏦 Settlement System Antiquity',
+        problem: 'Global settlement systems use technology from the 1970s',
+        crisis: 'T+2 settlement means trades don\'t finalize for days. Counterparty risk throughout. Manual processes everywhere.',
+        insight: 'Legacy systems resist change because institutions profit from float and complexity',
+        cost: '$500B in settlement risk and inefficiency annually',
+        bitcoinSolution: 'Final settlement in 10 minutes with cryptographic proof'
+      }
+    ];
+
+    const handleCrisisInvestigation = (crisis) => {
+      setSelectedCrisis(crisis);
+      setCrisisPhase('investigation');
+      
+      setTimeout(() => {
+        setInvestigationResult({
+          rootCause: 'Institutional Resistance to Innovation',
+          bitcoinAdvantage: crisis.bitcoinSolution,
+          transformativePotential: 'Revolutionary technology adoption'
+        });
+        setCrisisPhase('revelation');
+        
+        setCrisisInsights(prev => ({
+          ...prev,
+          [crisis.id]: {
+            investigated: true,
+            insight: crisis.insight,
+            solution: crisis.bitcoinSolution
+          }
+        }));
+      }, 2500);
+    };
+
+    const handleInvestigationComplete = () => {
+      const insights = {
+        crisisesInvestigated: Object.keys(crisisInsights).length,
+        innovationAwareness: 100,
+        technologyLeadership: 'Bitcoin'
+      };
+      handlePhaseComplete(0, insights);
+    };
+
+    return (
+      <div className="crisis-detective-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <AlertTriangle className="w-16 h-16 text-red-500" />
+          </div>
+          <div className="phase-title">
+            <h2>🚨 Innovation Crisis Detective</h2>
+            <p className="phase-subtitle">Financial Innovation Stagnation Crisis</p>
+          </div>
+        </div>
+
+        <div className="crisis-metrics">
+          <div className="metric-card">
+            <div className="metric-icon">📊</div>
+            <div className="metric-value">${Math.round(innovationFailures).toLocaleString()}</div>
+            <div className="metric-label">Innovation Failures Detected</div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-icon">🔍</div>
+            <div className="metric-value">{Math.round(investigationProgress)}%</div>
+            <div className="metric-label">Investigation Progress</div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-icon">🏆</div>
+            <div className="metric-value">Bitcoin</div>
+            <div className="metric-label">Innovation Leader</div>
+          </div>
+        </div>
+
+        {crisisPhase === 'discovery' && (
+          <div className="crisis-investigation-grid">
+            <div className="crisis-overview">
+              <div className="prime-insight">
+                🚨 While traditional finance stagnates with 50-year-old technology, Bitcoin has pioneered 
+                revolutionary innovations: programmable money, instant global payments, cryptographic audits, 
+                and financial sovereignty. Your mission: investigate why traditional systems resist innovation.
+              </div>
+            </div>
+
+            <h3>Choose an innovation crisis to investigate:</h3>
+            <div className="crisis-cards-grid">
+              {innovationCrises.map(crisis => (
+                <div 
+                  key={crisis.id}
+                  className="crisis-investigation-card"
+                  onClick={() => handleCrisisInvestigation(crisis)}
+                >
+                  <div className="crisis-card-header">
+                    <div className="crisis-card-title">{crisis.title}</div>
+                    <div className="crisis-card-cost">{crisis.cost}</div>
+                  </div>
+                  <div className="crisis-card-problem">{crisis.problem}</div>
+                  <div className="crisis-card-action">🔍 Investigate Crisis</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {crisisPhase === 'investigation' && selectedCrisis && (
+          <div className="crisis-investigation-detail">
+            <div className="investigation-header">
+              <h3>🔍 Investigating: {selectedCrisis.title}</h3>
+              <div className="investigation-status">Analysis in progress...</div>
+            </div>
+            
+            <div className="investigation-analysis">
+              <div className="analysis-section">
+                <h4>📋 The System Promise</h4>
+                <p>{selectedCrisis.problem}</p>
+              </div>
+              
+              <div className="analysis-section">
+                <h4>💥 Reality Check</h4>
+                <p>{selectedCrisis.crisis}</p>
+              </div>
+
+              <div className="investigation-loading">
+                <div className="loading-spinner-advanced"></div>
+                <p>Analyzing innovation bottlenecks...</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {crisisPhase === 'revelation' && selectedCrisis && investigationResult && (
+          <div className="crisis-revelation-advanced">
+            <div className="revelation-header">
+              <h3>⚡ INNOVATION CRISIS EXPOSED!</h3>
+            </div>
+
+            <div className="revelation-analysis">
+              <div className="crisis-insight">
+                <h4>🎯 Root Cause Identified</h4>
+                <div className="insight-box">
+                  <strong>{investigationResult.rootCause}</strong>
+                  <p>{selectedCrisis.insight}</p>
+                </div>
+              </div>
+
+              <div className="bitcoin-solution">
+                <h4>🚀 Bitcoin's Innovation Response</h4>
+                <div className="solution-box">
+                  <strong>Revolutionary Technology Leadership</strong>
+                  <p>{selectedCrisis.bitcoinSolution}</p>
+                  <div className="innovation-advantages">
+                    <div className="advantage">✅ Breakthrough technology</div>
+                    <div className="advantage">✅ No institutional gatekeepers</div>
+                    <div className="advantage">✅ Open-source innovation</div>
+                    <div className="advantage">✅ Global accessibility</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="investigation-impact">
+              <div className="prime-insight">
+                🔥 Bitcoin represents the greatest financial innovation in centuries, while traditional 
+                systems deliberately stagnate to maintain control. As an Advanced Bitcoin Architect, 
+                you'll master these breakthrough technologies that legacy systems can't match.
+              </div>
+            </div>
+
+            <ContinueButton onClick={() => handleInvestigationComplete()}>
+              Master Bitcoin's Innovation Leadership →
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
   }
 
-  function renderTaprootTopic() {
+  // Phase 2: Privacy Crisis Architect
+  function renderPrivacyCrisisArchitect() {
+
+    const surveillanceThreats = [
+      {
+        id: 'cbdc_surveillance',
+        title: '👁️ CBDC Total Surveillance',
+        threat: 'Central Bank Digital Currencies enable real-time monitoring of every transaction',
+        impact: 'Complete elimination of financial privacy. Government control over spending.',
+        resistance: 'Bitcoin + Privacy protocols provide unbreakable financial confidentiality',
+        solution: 'Confidential Transactions + CoinJoin'
+      },
+      {
+        id: 'blockchain_analysis',
+        title: '🕵️ Blockchain Analysis Tracking',
+        threat: 'Chain analysis companies track Bitcoin transactions across addresses',
+        impact: 'Financial history becomes public record. Privacy violations.',
+        resistance: 'Advanced privacy techniques break transaction graph analysis',
+        solution: 'Taproot + PayJoin + Coin Selection'
+      },
+      {
+        id: 'exchange_kyc',
+        title: '🏛️ Exchange KYC Surveillance',
+        threat: 'All regulated exchanges collect identity and transaction data',
+        impact: 'Financial surveillance through mandatory identity verification',
+        resistance: 'P2P trading and privacy-preserving protocols',
+        solution: 'Bisq + Lightning + Submarine Swaps'
+      }
+    ];
+
+    const privacyTechniques = [
+      {
+        id: 'confidential_transactions',
+        name: 'Confidential Transactions',
+        description: 'Hide transaction amounts while maintaining verifiability',
+        effectiveness: 95,
+        complexity: 'Advanced'
+      },
+      {
+        id: 'coinjoin',
+        name: 'CoinJoin Coordination',
+        description: 'Mix your coins with others to break transaction links',
+        effectiveness: 85,
+        complexity: 'Intermediate'
+      },
+      {
+        id: 'payjoin',
+        name: 'PayJoin Transactions',
+        description: 'Collaborative transactions that confuse chain analysis',
+        effectiveness: 80,
+        complexity: 'Beginner'
+      }
+    ];
+
+    const handleThreatAnalysis = (threat) => {
+      setSelectedThreat(threat);
+      setPrivacyPhase('solution-design');
+      
+      setTimeout(() => {
+        setPrivacySolution({
+          technique: threat.solution,
+          effectiveness: 95,
+          implementation: 'Advanced cryptographic protocols'
+        });
+        setPrivacyPhase('privacy-mastery');
+        setSurveillanceResistance(prev => Math.min(prev + 30, 100));
+      }, 2000);
+    };
+
+    const handlePrivacyMastery = () => {
+      const insights = {
+        threatsAnalyzed: selectedThreat ? 1 : 0,
+        privacyMastery: surveillanceResistance,
+        surveillanceResistance: 'Advanced Cryptographic Protocols'
+      };
+      handlePhaseComplete(1, insights);
+    };
+
     return (
-      <div className="topic-container">
-        <div className="topic-header">
-          <div className="topic-header-icon">🌳</div>
-          <div>
-            <h2 className="topic-header-title">Taproot & Schnorr Signatures</h2>
-            <p className="topic-header-subtitle">Bitcoin's privacy and efficiency revolution</p>
+      <div className="privacy-architect-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <Shield className="w-16 h-16 text-blue-500" />
+          </div>
+          <div className="phase-title">
+            <h2>🛡️ Privacy Crisis Architect</h2>
+            <p className="phase-subtitle">Financial Surveillance Crisis Response</p>
           </div>
         </div>
 
-        <div className="advanced-description">
-          💡 Taproot (activated November 2021) represents Bitcoin's most significant upgrade since SegWit, enabling complex smart contracts that look like simple payments.
-        </div>
-
-        <div className="signature-comparison">
-          <div className="signature-type ecdsa">
-            <div className="signature-header">
-              <div className="signature-icon">📝</div>
-              <div className="signature-title">ECDSA (Legacy)</div>
-            </div>
-            <ul className="signature-features">
-              <li><span className="feature-icon good">✓</span> Battle-tested security</li>
-              <li><span className="feature-icon good">✓</span> Widely supported</li>
-              <li><span className="feature-icon">⚠</span> Larger signature size</li>
-              <li><span className="feature-icon">⚠</span> No signature aggregation</li>
-              <li><span className="feature-icon">⚠</span> Complex scripts are visible</li>
-            </ul>
+        <div className="privacy-metrics">
+          <div className="metric-card privacy">
+            <div className="metric-icon">🎭</div>
+            <div className="metric-value">{Math.round(privacyThreat)}%</div>
+            <div className="metric-label">Surveillance Threat Level</div>
           </div>
-          
-          <div className="signature-type schnorr">
-            <div className="signature-header">
-              <div className="signature-icon">✨</div>
-              <div className="signature-title">Schnorr (Taproot)</div>
-            </div>
-            <ul className="signature-features">
-              <li><span className="feature-icon better">★</span> Smaller signatures</li>
-              <li><span className="feature-icon better">★</span> Signature aggregation</li>
-              <li><span className="feature-icon better">★</span> Perfect privacy</li>
-              <li><span className="feature-icon better">★</span> Complex = Simple</li>
-              <li><span className="feature-icon better">★</span> Lower fees</li>
-            </ul>
+          <div className="metric-card">
+            <div className="metric-icon">🛡️</div>
+            <div className="metric-value">{Math.round(surveillanceResistance)}%</div>
+            <div className="metric-label">Resistance Built</div>
+          </div>
+          <div className="metric-card">
+            <div className="metric-icon">🔒</div>
+            <div className="metric-value">{confidentialSolutions.length}</div>
+            <div className="metric-label">Privacy Solutions</div>
           </div>
         </div>
 
-        <div className="taproot-tree">
-          <h3 style={{ textAlign: 'center', marginBottom: '2rem', color: '#f1f5f9' }}>
-            Taproot Tree Structure
-          </h3>
-          <div className="tree-structure">
-            <div className="tree-level">
-              <div className="tree-node taproot-key">
-                <div className="node-label">Taproot Output</div>
-                <div className="node-content">32-byte key</div>
+        {privacyPhase === 'threat-assessment' && (
+          <div className="threat-assessment-grid">
+            <div className="privacy-overview">
+              <div className="prime-insight">
+                🚨 Financial surveillance is expanding globally through CBDCs, KYC requirements, and 
+                blockchain analysis. Your mission: architect unbreakable privacy solutions that restore 
+                financial confidentiality using Bitcoin's advanced cryptographic protocols.
               </div>
             </div>
-            <div className="tree-level">
-              <div className="tree-node taproot-key">
-                <div className="node-label">Key Path</div>
-                <div className="node-content">Simple spend</div>
-              </div>
-              <div className="tree-node script-path">
-                <div className="node-label">Script Path</div>
-                <div className="node-content">Complex conditions</div>
-              </div>
-            </div>
-            <div className="tree-level">
-              <div className="tree-node script-path">
-                <div className="node-label">Multisig 2-of-3</div>
-                <div className="node-content">Script A</div>
-              </div>
-              <div className="tree-node script-path">
-                <div className="node-label">Timelock + Key</div>
-                <div className="node-content">Script B</div>
-              </div>
-              <div className="tree-node script-path">
-                <div className="node-label">HTLCs</div>
-                <div className="node-content">Script C</div>
-              </div>
+
+            <h3>Analyze surveillance threats to architect privacy solutions:</h3>
+            <div className="threat-cards-grid">
+              {surveillanceThreats.map(threat => (
+                <div 
+                  key={threat.id}
+                  className="threat-card"
+                  onClick={() => handleThreatAnalysis(threat)}
+                >
+                  <div className="threat-header">
+                    <div className="threat-title">{threat.title}</div>
+                    <div className="threat-level">⚠️ Critical</div>
+                  </div>
+                  <div className="threat-description">{threat.threat}</div>
+                  <div className="threat-impact">{threat.impact}</div>
+                  <div className="threat-action">🛡️ Design Privacy Solution</div>
+                </div>
+              ))}
             </div>
           </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem', color: '#cbd5e1' }}>
-            <p><strong>Key Insight:</strong> Only the executed path is revealed on-chain. Unused scripts remain private forever.</p>
+        )}
+
+        {privacyPhase === 'solution-design' && selectedThreat && (
+          <div className="privacy-solution-design">
+            <div className="design-header">
+              <h3>🏗️ Architecting Privacy Solution for: {selectedThreat.title}</h3>
+              <div className="design-status">Analyzing cryptographic countermeasures...</div>
+            </div>
+
+            <div className="solution-analysis">
+              <div className="threat-breakdown">
+                <h4>🎯 Surveillance Threat Analysis</h4>
+                <p><strong>Attack Vector:</strong> {selectedThreat.threat}</p>
+                <p><strong>Privacy Impact:</strong> {selectedThreat.impact}</p>
+              </div>
+
+              <div className="privacy-techniques-grid">
+                <h4>🛠️ Available Privacy Techniques</h4>
+                {privacyTechniques.map(technique => (
+                  <div key={technique.id} className="technique-card">
+                    <div className="technique-header">
+                      <div className="technique-name">{technique.name}</div>
+                      <div className="technique-effectiveness">{technique.effectiveness}% effective</div>
+                    </div>
+                    <div className="technique-description">{technique.description}</div>
+                    <div className="technique-complexity">Complexity: {technique.complexity}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="solution-loading">
+                <div className="loading-spinner-advanced"></div>
+                <p>Integrating cryptographic protocols...</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {privacyPhase === 'privacy-mastery' && selectedThreat && privacySolution && (
+          <div className="privacy-mastery-advanced">
+            <div className="mastery-header">
+              <h3>🏆 PRIVACY SOLUTION ARCHITECTED!</h3>
+            </div>
+
+            <div className="solution-overview">
+              <div className="solution-success">
+                <h4>✅ Privacy Protocol Deployed</h4>
+                <div className="protocol-box">
+                  <strong>{privacySolution.technique}</strong>
+                  <p>Effectiveness: {privacySolution.effectiveness}% surveillance resistance</p>
+                  <div className="protocol-features">
+                    <div className="feature">🔒 Cryptographic confidentiality</div>
+                    <div className="feature">🎭 Transaction unlinkability</div>
+                    <div className="feature">🛡️ Surveillance resistance</div>
+                    <div className="feature">✨ Verifiable privacy</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="privacy-impact">
+                <h4>🌟 Financial Sovereignty Restored</h4>
+                <div className="impact-metrics">
+                  <div className="impact-stat">
+                    <div className="stat-value">95%</div>
+                    <div className="stat-label">Surveillance Resistance</div>
+                  </div>
+                  <div className="impact-stat">
+                    <div className="stat-value">100%</div>
+                    <div className="stat-label">Transaction Privacy</div>
+                  </div>
+                  <div className="impact-stat">
+                    <div className="stat-value">∞</div>
+                    <div className="stat-label">Financial Freedom</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="privacy-insight">
+              <div className="prime-insight">
+                🔥 You've architected unbreakable financial privacy using Bitcoin's advanced cryptographic 
+                protocols. Traditional surveillance systems cannot penetrate these mathematical guarantees. 
+                This is the foundation of true financial sovereignty.
+              </div>
+            </div>
+
+            <ContinueButton onClick={() => handlePrivacyMastery()}>
+              Master Scaling Solutions Engineering →
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Phase 3: Scaling Solution Engineer (simplified for space)
+  function renderScalingSolutionEngineer() {
+    const handleScalingMastery = () => {
+      const insights = {
+        scalingSolutions: Object.keys(scalingSolutions).length,
+        throughputAchieved: throughputAchieved,
+        networkOptimization: 'Layer 2 Engineering'
+      };
+      handlePhaseComplete(2, insights);
+    };
+
+    return (
+      <div className="scaling-engineer-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <Zap className="w-16 h-16 text-yellow-500" />
+          </div>
+          <div className="phase-title">
+            <h2>⚡ Scaling Solution Engineer</h2>
+            <p className="phase-subtitle">Global Adoption Bottleneck Crisis</p>
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', margin: '2rem 0' }}>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#10b981', marginBottom: '1rem' }}>🔒 Privacy Benefits</h4>
-            <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-              <li>All spends look identical on-chain</li>
-              <li>Complex scripts hidden until used</li>
-              <li>Multisig indistinguishable from single-sig</li>
-              <li>Lightning channels gain perfect privacy</li>
-            </ul>
+        <div className="scaling-metrics">
+          <div className="metric-card">
+            <div className="metric-icon">📈</div>
+            <div className="metric-value">{Math.round(throughputAchieved).toLocaleString()}</div>
+            <div className="metric-label">TPS Achieved</div>
           </div>
-
-          <div style={{ background: 'rgba(139, 92, 246, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#8b5cf6', marginBottom: '1rem' }}>⚡ Efficiency Gains</h4>
-            <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-              <li>~10-15% smaller transaction sizes</li>
-              <li>Signature aggregation saves space</li>
-              <li>Lower fees for complex scripts</li>
-              <li>Batch verification speedup</li>
-            </ul>
+          <div className="metric-card">
+            <div className="metric-icon">🚦</div>
+            <div className="metric-value">{Math.round(networkCongestion)}%</div>
+            <div className="metric-label">Network Congestion</div>
           </div>
-
-          <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '2rem', borderRadius: '12px' }}>
-            <h4 style={{ color: '#f59e0b', marginBottom: '1rem' }}>🚀 Smart Contract Power</h4>
-            <ul style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-              <li>Complex conditions without revealing them</li>
-              <li>Threshold signatures with privacy</li>
-              <li>Time-locked inheritance planning</li>
-              <li>Advanced Lightning Network features</li>
-            </ul>
+          <div className="metric-card">
+            <div className="metric-icon">⚡</div>
+            <div className="metric-value">Layer 2</div>
+            <div className="metric-label">Solution Type</div>
           </div>
         </div>
 
-        <div className="demo-playground">
-          <h4 style={{ color: '#f1f5f9', marginBottom: '1rem' }}>🧪 Taproot Demo</h4>
-          <div className="demo-controls">
-            <Button 
-              onClick={() => setDemoOutput(`Taproot Address Generation:
-bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297
-
-This address could hide:
-• A simple single signature spend
-• A 2-of-3 multisig requirement  
-• A timelock + backup key
-• Complex Lightning Network scripts
-
-From the outside, they ALL look identical! 🎭`)}
-            >
-              <Code size={16} />
-              Generate Taproot Address
-            </Button>
-            <Button 
-              onClick={() => setDemoOutput(`Schnorr Signature Aggregation Demo:
-
-Individual signatures:
-Alice: 64 bytes
-Bob:   64 bytes  
-Carol: 64 bytes
-Total: 192 bytes
-
-Aggregated signature:
-Combined: 64 bytes
-Savings: 67% smaller! ⚡
-
-This is revolutionary for multisig and Lightning Network efficiency.`)}
-            >
-              <Zap size={16} />
-              Signature Aggregation
-            </Button>
+        <div className="scaling-challenge">
+          <div className="prime-insight">
+            🚨 Bitcoin's base layer processes 7 transactions per second while Visa processes 65,000 TPS. 
+            Your mission: engineer Layer 2 scaling solutions that enable global adoption without 
+            compromising security or decentralization. Master Lightning Network, sidechains, and state channels.
           </div>
-          {demoOutput && (
-            <div className="demo-output">{demoOutput}</div>
-          )}
         </div>
 
-        <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '2rem', borderRadius: '12px', margin: '2rem 0', textAlign: 'center' }}>
-          <h4 style={{ color: '#10b981', marginBottom: '1rem' }}>🎯 Real-World Impact</h4>
-          <p style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-            Taproot enables privacy-preserving smart contracts that are indistinguishable from simple payments. 
-            This is crucial for Bitcoin's future as a global settlement layer while protecting user privacy.
+        <div className="scaling-solutions-grid">
+          <div className="solution-card lightning">
+            <div className="solution-header">
+              <div className="solution-icon">⚡</div>
+              <div className="solution-title">Lightning Network</div>
+            </div>
+            <div className="solution-stats">
+              <div className="stat">Instant payments</div>
+              <div className="stat">Millions of TPS</div>
+              <div className="stat">Micropayment capable</div>
+            </div>
+            <div className="solution-status">Engineered ✅</div>
+          </div>
+
+          <div className="solution-card sidechains">
+            <div className="solution-header">
+              <div className="solution-icon">🔗</div>
+              <div className="solution-title">Sidechains</div>
+            </div>
+            <div className="solution-stats">
+              <div className="stat">Parallel processing</div>
+              <div className="stat">Specialized features</div>
+              <div className="stat">Bitcoin-backed</div>
+            </div>
+            <div className="solution-status">Engineering ⚙️</div>
+          </div>
+
+          <div className="solution-card channels">
+            <div className="solution-header">
+              <div className="solution-icon">🌊</div>
+              <div className="solution-title">State Channels</div>
+            </div>
+            <div className="solution-stats">
+              <div className="stat">Off-chain computation</div>
+              <div className="stat">Instant finality</div>
+              <div className="stat">Privacy preserved</div>
+            </div>
+            <div className="solution-status">Ready 🚀</div>
+          </div>
+        </div>
+
+        <div className="engineering-impact">
+          <h4>🏗️ Scaling Engineering Achievement</h4>
+          <p>
+            You've engineered Layer 2 solutions that scale Bitcoin to billions of users while maintaining 
+            the security and decentralization of the base layer. This breakthrough enables global adoption 
+            without the trade-offs traditional payment systems require.
           </p>
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-          <Button 
-            onClick={() => handleTopicComplete(0)}
-            style={{
-              background: 'linear-gradient(135deg, #10b981, #059669)',
-              color: '#fff',
-              border: 'none',
-              padding: '1rem 2rem',
-              borderRadius: '8px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}
-          >
-            <CheckCircle size={16} />
-            Master Taproot & Schnorr
-          </Button>
-        </div>
+        <ContinueButton onClick={() => handleScalingMastery()}>
+          Pioneer Protocol Innovation →
+        </ContinueButton>
       </div>
     );
   }
 
-  function renderPrivacyTopic() {
+  // Phase 4: Protocol Innovation Pioneer (simplified for space)
+  function renderProtocolInnovationPioneer() {
+    const handleProtocolMastery = () => {
+      const insights = {
+        protocolImprovements: protocolImprovements.length,
+        consensusProgress: consensusProgress,
+        innovationLeadership: 'Protocol Engineering'
+      };
+      handlePhaseComplete(3, insights);
+    };
+
     return (
-      <div className="topic-container">
-        <div className="topic-header">
-          <div className="topic-header-icon">🔒</div>
-          <div>
-            <h2 className="topic-header-title">Advanced Privacy Techniques</h2>
-            <p className="topic-header-subtitle">Protecting your financial sovereignty</p>
+      <div className="protocol-pioneer-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <Cpu className="w-16 h-16 text-green-500" />
+          </div>
+          <div className="phase-title">
+            <h2>🏛️ Protocol Innovation Pioneer</h2>
+            <p className="phase-subtitle">Protocol Evolution Challenge</p>
           </div>
         </div>
-        {/* Content will be added */}
-      </div>
-    );
-  }
 
-  function renderLayer2Topic() {
-    return (
-      <div className="topic-container">
-        <div className="topic-header">
-          <div className="topic-header-icon">⚡</div>
-          <div>
-            <h2 className="topic-header-title">Layer 2 Solutions</h2>
-            <p className="topic-header-subtitle">Scaling Bitcoin beyond base layer</p>
+        <div className="protocol-challenge">
+          <div className="prime-insight">
+            🚨 Protocol innovation requires balancing breakthrough features with Bitcoin's security 
+            and backward compatibility. Your mission: pioneer next-generation Bitcoin improvements 
+            through consensus mechanisms, soft forks, and cryptographic innovations.
           </div>
         </div>
-        {/* Content will be added */}
-      </div>
-    );
-  }
 
-  function renderConsensusTopic() {
-    return (
-      <div className="topic-container">
-        <div className="topic-header">
-          <div className="topic-header-icon">🤝</div>
-          <div>
-            <h2 className="topic-header-title">Consensus Mechanisms</h2>
-            <p className="topic-header-subtitle">How Bitcoin upgrades and evolves</p>
+        <div className="innovation-areas">
+          <div className="innovation-card taproot">
+            <h4>🌳 Taproot Mastery</h4>
+            <p>Privacy-preserving smart contracts with Schnorr signatures</p>
+            <div className="innovation-status">Activated ✅</div>
+          </div>
+
+          <div className="innovation-card covenant">
+            <h4>📜 Covenant Protocols</h4>
+            <p>Advanced spending conditions and vault architectures</p>
+            <div className="innovation-status">Research 🔬</div>
+          </div>
+
+          <div className="innovation-card quantum">
+            <h4>🔮 Quantum Resistance</h4>
+            <p>Post-quantum cryptographic preparations</p>
+            <div className="innovation-status">Future 🚀</div>
           </div>
         </div>
-        {/* Content will be added */}
+
+        <ContinueButton onClick={() => handleProtocolMastery()}>
+          Command Infrastructure Sovereignty →
+        </ContinueButton>
       </div>
     );
   }
 
-  function renderFutureTopic() {
+  // Phase 5: Infrastructure Sovereign (simplified for space)
+  function renderInfrastructureSovereign() {
+    const handleInfrastructureMastery = () => {
+      const insights = {
+        infrastructureControl: infrastructureControl,
+        economicSystems: economicSystems.length,
+        globalImpact: globalImpact
+      };
+      handlePhaseComplete(4, insights);
+    };
+
     return (
-      <div className="topic-container">
-        <div className="topic-header">
-          <div className="topic-header-icon">🚀</div>
-          <div>
-            <h2 className="topic-header-title">Future Developments</h2>
-            <p className="topic-header-subtitle">Bitcoin's technological horizon</p>
+      <div className="infrastructure-sovereign-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <Globe className="w-16 h-16 text-purple-500" />
+          </div>
+          <div className="phase-title">
+            <h2>🌍 Infrastructure Sovereign</h2>
+            <p className="phase-subtitle">Financial Infrastructure Control</p>
           </div>
         </div>
-        {/* Content will be added */}
+
+        <div className="sovereignty-challenge">
+          <div className="prime-insight">
+            🚨 Traditional financial infrastructure is controlled by centralized institutions. 
+            Your mission: command advanced Bitcoin economic systems that operate independently 
+            of traditional financial infrastructure, creating true financial sovereignty.
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => handleInfrastructureMastery()}>
+          Achieve Bitcoin Apex Mastery →
+        </ContinueButton>
       </div>
     );
   }
 
-  function renderMasteryTopic() {
+  // Phase 6: Bitcoin Apex Master
+  function renderBitcoinApexMaster() {
+    const handleApexMastery = () => {
+      const insights = {
+        masteryLevel: 100,
+        apexAchievements: apexAchievements.length,
+        sovereigntyScore: 100,
+        technologicalLeadership: 'Bitcoin Innovation Master'
+      };
+      handlePhaseComplete(5, insights);
+    };
+
     return (
-      <div className="mastery-achievement">
-        <div className="mastery-icon">🏆</div>
-        <h2 className="mastery-title">Advanced Bitcoin Master</h2>
-        <p className="mastery-description">
-          You've mastered cutting-edge Bitcoin technology and understand the innovations shaping Bitcoin's future.
-        </p>
-        <Button 
-          onClick={() => handleTopicComplete(5)}
-          style={{
-            background: 'linear-gradient(135deg, #10b981, #059669)',
-            color: '#fff',
-            border: 'none',
-            padding: '1rem 2rem',
-            borderRadius: '8px',
-            fontSize: '1rem',
-            fontWeight: '600',
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-        >
-          <Trophy size={20} />
-          Complete Advanced Mastery
-        </Button>
+      <div className="apex-master-advanced">
+        <div className="phase-header">
+          <div className="phase-icon-large">
+            <Crown className="w-16 h-16 text-yellow-500" />
+          </div>
+          <div className="phase-title">
+            <h2>👑 Bitcoin Apex Master</h2>
+            <p className="phase-subtitle">Complete Technological Mastery</p>
+          </div>
+        </div>
+
+        <div className="mastery-celebration">
+          <div className="mastery-stats">
+            <div className="mastery-stat">
+              <div className="stat-icon">🏆</div>
+              <div className="stat-value">100%</div>
+              <div className="stat-label">Advanced Mastery</div>
+            </div>
+            <div className="mastery-stat">
+              <div className="stat-icon">🚀</div>
+              <div className="stat-value">6</div>
+              <div className="stat-label">Phases Conquered</div>
+            </div>
+            <div className="mastery-stat">
+              <div className="stat-icon">👑</div>
+              <div className="stat-value">∞</div>
+              <div className="stat-label">Innovation Power</div>
+            </div>
+          </div>
+
+          <div className="apex-achievement">
+            <div className="prime-insight">
+              🔥 You have achieved complete mastery of Bitcoin's cutting-edge technology and innovation 
+              leadership. You command privacy protocols, scaling solutions, protocol innovations, and 
+              sovereign infrastructure. You are now a Bitcoin Apex Master - a technological sovereign 
+              leading the future of financial innovation.
+            </div>
+          </div>
+
+          <div className="sovereignty-powers">
+            <h4>👑 Your Apex Mastery Powers</h4>
+            <div className="powers-grid">
+              <div className="power">🛡️ Privacy Architecture Mastery</div>
+              <div className="power">⚡ Scaling Solutions Engineering</div>
+              <div className="power">🏛️ Protocol Innovation Leadership</div>
+              <div className="power">🌍 Infrastructure Sovereignty</div>
+              <div className="power">🚀 Technological Innovation</div>
+              <div className="power">👑 Financial Freedom Command</div>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => handleApexMastery()}>
+          Complete Bitcoin Apex Mastery! 👑
+        </ContinueButton>
       </div>
     );
   }
