@@ -59,7 +59,7 @@ const HashingModule = () => {
       newCompleted.add(stepIndex);
       return newCompleted;
     });
-    
+      
     if (insights) {
       setUserInsights(prev => ({ ...prev, [stepIndex]: insights }));
     }
@@ -92,7 +92,7 @@ const HashingModule = () => {
                 className={`progress-dot ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
               />
             ))}
-          </div>
+      </div>
           <span className="progress-text">Step {currentStep + 1} of {journeySteps.length}</span>
         </div>
         
@@ -108,13 +108,13 @@ const HashingModule = () => {
           userInsights={userInsights}
           stepIndex={currentStep}
         />
-      </div>
+        </div>
 
       {/* Progress Summary */}
       <div className="progress-summary">
         <div className="completed-count">
           {completedSteps.size} / {journeySteps.length} discoveries made
-        </div>
+      </div>
         <div className="insight-indicator">
           {Object.keys(userInsights).length > 0 && (
             <span>💡 Building digital trust mastery...</span>
@@ -176,23 +176,23 @@ const TrustDetectiveStep = ({ onComplete }) => {
           <h3>🎯 Choose Your Challenge:</h3>
           <div className="scenario-buttons">
             {Object.entries(scenarios).map(([key, s]) => (
-              <button 
+            <button
                 key={key}
                 className={`scenario-button ${scenario === key ? 'active' : ''}`}
                 onClick={() => setScenario(key)}
-              >
+            >
                 {s.title}
-              </button>
-            ))}
-          </div>
+            </button>
+          ))}
         </div>
+      </div>
 
         <div className="scenario-content">
           <div className="problem-statement">
             <h3>The Challenge:</h3>
             <p>{currentScenario.problem}</p>
           </div>
-
+          
           <div className="choice-grid">
             <h4>Your options:</h4>
             {currentScenario.options.map((option) => (
@@ -207,7 +207,7 @@ const TrustDetectiveStep = ({ onComplete }) => {
             ))}
           </div>
         </div>
-      </div>
+          </div>
 
       {showResult && (
         <div className="result-revelation">
@@ -215,7 +215,7 @@ const TrustDetectiveStep = ({ onComplete }) => {
             {userChoice.id === 'math' ? (
               <div className="breakthrough-result">
                 <h3>🎉 You've Discovered the Breakthrough!</h3>
-                <p>
+              <p>
                   You chose <strong>mathematical proof</strong> - the only option that doesn't require trusting any person or institution!
                 </p>
                 <div className="insight-box">
@@ -239,8 +239,8 @@ const TrustDetectiveStep = ({ onComplete }) => {
                   <strong>💡 The Problem:</strong> Traditional verification always requires trusting someone. 
                   Bitcoin's breakthrough is using mathematical proof instead.
                 </div>
-              </div>
-            )}
+            </div>
+          )}
           </div>
           
           <button className="continue-button" onClick={handleContinue}>
@@ -281,7 +281,7 @@ const FingerprintLabStep = ({ onComplete }) => {
       instruction: "Try typing something really long (a sentence):",
       purpose: "See that length doesn't matter",
       insight: "Any amount of data → same size fingerprint"
-    }
+      }
   ];
 
   const handleInputChange = async (e) => {
@@ -313,7 +313,7 @@ const FingerprintLabStep = ({ onComplete }) => {
     // Discovery: Same input = same output
     if (prevExps.some(exp => exp.input === newExp.input && exp.hash === newExp.hash)) {
       newDiscoveries.add('deterministic');
-    }
+            }
     
     // Discovery: Similar inputs = very different outputs
     const similarInput = prevExps.find(exp => 
@@ -331,7 +331,7 @@ const FingerprintLabStep = ({ onComplete }) => {
     
     setDiscoveries(newDiscoveries);
   };
-
+    
   const handleExperimentComplete = () => {
     if (currentExperiment < guidedExperiments.length - 1) {
       setCurrentExperiment(currentExperiment + 1);
@@ -347,13 +347,13 @@ const FingerprintLabStep = ({ onComplete }) => {
 
   const currentGuide = guidedExperiments[currentExperiment];
 
-  return (
+        return (
     <div className="fingerprint-lab">
       <div className="lab-introduction">
         <h3>🧪 Welcome to the Digital Fingerprint Lab</h3>
         <p>Every piece of information can be transformed into a unique "digital fingerprint" using SHA-256. 
            Let's discover how this impossible-seeming magic actually works!</p>
-      </div>
+            </div>
 
       <div className="guided-experiment">
         <div className="experiment-guide">
@@ -361,8 +361,8 @@ const FingerprintLabStep = ({ onComplete }) => {
             <span className="experiment-number">Experiment {currentExperiment + 1} of {guidedExperiments.length}</span>
             <h4>{currentGuide.instruction}</h4>
             <p className="purpose">{currentGuide.purpose}</p>
-          </div>
-        </div>
+              </div>
+              </div>
 
         <div className="hash-interface">
           <div className="input-section">
@@ -374,12 +374,12 @@ const FingerprintLabStep = ({ onComplete }) => {
               placeholder="Start typing..."
               className="hash-input"
             />
-          </div>
+              </div>
 
           <div className="transformation-arrow">
             <ArrowRight size={24} />
             <span>SHA-256</span>
-          </div>
+            </div>
 
           <div className="output-section">
             <label>Digital Fingerprint:</label>
@@ -393,7 +393,7 @@ const FingerprintLabStep = ({ onComplete }) => {
                   <span>Always this long!</span>
                 </>
               )}
-            </div>
+          </div>
           </div>
         </div>
 
@@ -437,7 +437,7 @@ const FingerprintLabStep = ({ onComplete }) => {
         </div>
       </div>
     </div>
-  );
+        );
 };
 
 // Step 3: Impossible Challenge - Try to break the unbreakable
@@ -510,7 +510,7 @@ const ImpossibleChallengeStep = ({ onComplete }) => {
           SHA-256 is called "cryptographically secure" because certain things are mathematically impossible. 
           Let's test this! Try to break the unbreakable...
         </p>
-        
+
         <div className="challenge-selector">
           {Object.entries(challenges).map(([key, ch]) => (
             <button
@@ -522,7 +522,7 @@ const ImpossibleChallengeStep = ({ onComplete }) => {
             </button>
           ))}
         </div>
-      </div>
+        </div>
 
       <div className="challenge-arena">
         <div className="challenge-description">
@@ -535,8 +535,8 @@ const ImpossibleChallengeStep = ({ onComplete }) => {
               <code>{currentChallenge.target}</code>
             </div>
           )}
-        </div>
-
+            </div>
+            
         <div className="attempt-interface">
           <div className="input-area">
             <input
@@ -584,8 +584,8 @@ const ImpossibleChallengeStep = ({ onComplete }) => {
               <button className="give-up-button" onClick={handleGiveUp}>
                 I Give Up - Show Me Why This Matters
               </button>
-            </div>
           </div>
+        </div>
         )}
       </div>
 
@@ -756,7 +756,7 @@ const TrustMachineStep = ({ onComplete }) => {
                     <button 
                       className="verify-button understand"
                       onClick={() => handleVerification(true)}
-                    >
+            >
                       <CheckCircle size={16} />
                       Yes! I can verify without trusting anyone
                     </button>
@@ -768,8 +768,8 @@ const TrustMachineStep = ({ onComplete }) => {
                       Still confused - need to review
                     </button>
                   </div>
-                </div>
-              )}
+        </div>
+      )}
             </div>
           </div>
         </div>
@@ -900,8 +900,8 @@ const ChainOfTruthStep = ({ onComplete }) => {
             {isChainValid() ? '✅ Chain Valid' : '❌ Chain Broken'}
           </div>
           {tampering && <div className="tampering-indicator">🔧 Tampering in progress...</div>}
-        </div>
-
+      </div>
+      
         <div className="blocks-container">
           {blocks.map((block, index) => (
             <div key={block.id} className="block-chain-item">
@@ -915,8 +915,8 @@ const ChainOfTruthStep = ({ onComplete }) => {
                   <span className="block-id">Block {block.id}</span>
                   <div className="block-hash">
                     <strong>Hash:</strong> {block.hash}
-                  </div>
-                </div>
+        </div>
+        </div>
                 <div className="block-content">
                   <div className="block-data">
                     <strong>Data:</strong> {block.data}
@@ -924,9 +924,9 @@ const ChainOfTruthStep = ({ onComplete }) => {
                   <div className="prev-hash">
                     <strong>Previous Hash:</strong> {block.prevHash}
                   </div>
-                </div>
-              </div>
-              
+        </div>
+      </div>
+
               {index < blocks.length - 1 && (
                 <div className={`chain-link ${
                   blocks[index + 1].prevHash === block.hash ? 'valid' : 'broken'
@@ -953,10 +953,10 @@ const ChainOfTruthStep = ({ onComplete }) => {
           <button 
             className="tamper-button"
             onClick={() => handleTamperAttempt(2, "Bob → Mallory: 50 BTC")}
-          >
+        >
             💰 Change Block 2 Data
           </button>
-        </div>
+      </div>
 
         {brokenChain && (
           <div className="broken-chain-explanation">
@@ -972,10 +972,10 @@ const ChainOfTruthStep = ({ onComplete }) => {
               <div className="impossibility-note">
                 <strong>In Bitcoin:</strong> To hide your tampering, you'd need to recalculate 
                 ALL subsequent blocks faster than the entire network. This is computationally impossible!
-              </div>
             </div>
-          </div>
-        )}
+            </div>
+        </div>
+      )}
       </div>
 
       <div className="immutability-insight">
@@ -1100,14 +1100,14 @@ const DigitalSovereigntyStep = ({ onComplete, userInsights }) => {
       <div className="reflection-section">
         <h4>🤔 Personal Reflection</h4>
         <p>How does understanding cryptographic hashing change your perspective on money and trust?</p>
-        <textarea
+      <textarea
           value={personalReflection}
           onChange={(e) => setPersonalReflection(e.target.value)}
           placeholder="Share your thoughts on how mathematical proof compares to trusting institutions..."
-          className="reflection-textarea"
+        className="reflection-textarea"
         />
       </div>
-
+      
       <div className="commitment-section">
         <h4>⚡ Your Commitment to Digital Sovereignty</h4>
         <p>Choose how you'll apply this knowledge:</p>
@@ -1124,7 +1124,7 @@ const DigitalSovereigntyStep = ({ onComplete, userInsights }) => {
           ))}
         </div>
       </div>
-
+      
       <div className="next-steps">
         <h4>🚀 Next on Your Bitcoin Journey</h4>
         <p>
@@ -1142,7 +1142,7 @@ const DigitalSovereigntyStep = ({ onComplete, userInsights }) => {
           </div>
         </div>
       </div>
-
+        
       {personalReflection && selectedCommitment && (
         <button className="complete-module-button" onClick={handleComplete}>
           <Trophy size={20} />
@@ -1167,7 +1167,7 @@ const DigitalSovereigntyStep = ({ onComplete, userInsights }) => {
               <div key={step} className="insight-item">
                 <strong>Step {parseInt(step) + 1}:</strong>
                 <pre>{JSON.stringify(data, null, 2)}</pre>
-              </div>
+      </div>
             ))}
           </div>
         </div>

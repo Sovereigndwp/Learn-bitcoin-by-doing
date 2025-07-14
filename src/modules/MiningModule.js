@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { hash256, mineBlock } from '../utils/bitcoin';
-import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Zap, Hammer, CheckCircle, Trophy, Target, Clock, Shield, Globe, TrendingUp, Power, Battery, Cpu, Network, DollarSign, Leaf, Users, BarChart3, Award, Lightbulb, ChevronLeft, ChevronRight, AlertTriangle, Eye, EyeOff, Flame, Bolt, Factory, Recycle, Banknote, Calculator, ArrowRight } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
@@ -12,73 +11,100 @@ import {
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './MiningModule.css';
-import AnimatedIcon from '../components/AnimatedIcon';
-
-// Reusable Visual Capitalist Section Component
-const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
-  <div className="explore-further-section">
-    <div className="explore-further-header">
-      <span className="explore-further-icon">{icon}</span>
-      <h4 className="explore-further-title">{title}</h4>
-    </div>
-    <p className="explore-further-description">{description}</p>
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="explore-further-button"
-    >
-      <span className="button-icon">🔍</span>
-      {buttonText}
-    </a>
-  </div>
-);
 
 const MiningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [userInsights, setUserInsights] = useState({});
 
-  const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
+  // Energy Alchemist Journey Steps
+  const alchemySteps = [
+    {
+      id: "energy_crisis_detective",
+      title: "⚡ Energy Crisis Detective",
+      subtitle: "Discover how traditional money wastes massive energy hiding corruption...",
+      component: EnergyCrisisDetectiveStep
+    },
+    {
+      id: "electricity_alchemy_lab", 
+      title: "🧪 Electricity Alchemy Lab",
+      subtitle: "Transform raw electrical power into unbreakable mathematical proof",
+      component: ElectricityAlchemyLabStep
+    },
+    {
+      id: "economic_attack_simulator",
+      title: "💰 Economic Attack Simulator", 
+      subtitle: "Try to attack Bitcoin and discover why it's financially impossible",
+      component: EconomicAttackSimulatorStep
+    },
+    {
+      id: "difficulty_master_control",
+      title: "🎯 Difficulty Master Control",
+      subtitle: "Command Bitcoin's self-adjusting security heartbeat mechanism", 
+      component: DifficultyMasterControlStep
+    },
+    {
+      id: "clean_energy_pioneer",
+      title: "🌱 Clean Energy Pioneer",
+      subtitle: "Lead the renewable energy revolution powered by Bitcoin mining",
+      component: CleanEnergyPioneerStep
+    },
+    {
+      id: "global_security_guardian",
+      title: "🌍 Global Security Guardian", 
+      subtitle: "Join the worldwide distributed network defending digital sovereignty",
+      component: GlobalSecurityGuardianStep
+    }
+  ];
+
+  const handleStepComplete = (stepIndex, insights = {}) => {
+    setCompletedSteps(prev => {
+      const newCompleted = new Set(prev);
+      newCompleted.add(stepIndex);
+      return newCompleted;
+    });
     
-    // Show achievement for key milestones
-    if (stepIndex === 1) {
-      showAchievement("Energy Pioneer", "You understand how electricity becomes digital security!");
-    } else if (stepIndex === 3) {
-      showAchievement("Security Economist", "You grasp Bitcoin's innovative security model!");
-    } else if (stepIndex === 5) {
-      showAchievement("Energy Innovator", "You see how Bitcoin drives clean energy adoption!");
-    } else if (stepIndex === 7) {
-      showAchievement("Network Guardian", "You understand global distributed security!");
+    if (insights) {
+      setUserInsights(prev => ({ ...prev, [stepIndex]: insights }));
     }
     
-    // Auto-advance to next step
-    if (stepIndex < steps.length - 1) {
+    // Alchemy progression achievements
+    const achievements = [
+      { title: "Energy Crisis Awakened", description: "You see through monetary energy waste!" },
+      { title: "Electricity Alchemist", description: "You've mastered energy transformation!" },
+      { title: "Attack Simulator Expert", description: "You understand Bitcoin's invincibility!" },
+      { title: "Difficulty Master", description: "You control the heartbeat of security!" },
+      { title: "Clean Energy Pioneer", description: "You're leading the energy revolution!" },
+      { title: "Global Security Guardian", description: "You're protecting digital sovereignty!" }
+    ];
+    
+    if (achievements[stepIndex]) {
+      showAlchemyAchievement(achievements[stepIndex].title, achievements[stepIndex].description);
+    }
+    
+    // Auto-advance after brief celebration
+    if (stepIndex < alchemySteps.length - 1) {
       setTimeout(() => {
         setCurrentStep(stepIndex + 1);
-      }, 500);
-    }
-    
-    if (newCompleted.size === steps.length) {
+      }, 1800);
+    } else {
+      // Module complete! Navigate to Keys Module
       completeModule('mining');
-      // Redirect to homepage after completing the module
       setTimeout(() => {
-        navigate('/');
-      }, 2000);
+        navigate('/module/keys');
+      }, 3000);
     }
   };
 
-  const showAchievement = (title, description) => {
+  const showAlchemyAchievement = (title, description) => {
     const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
+    achievement.className = 'alchemy-achievement-popup';
     achievement.innerHTML = `
-      <div class="achievement-content">
-        <div class="achievement-icon">🏆</div>
-        <div class="achievement-text">
+      <div class="alchemy-achievement-content">
+        <div class="alchemy-achievement-icon">⚡</div>
+        <div class="alchemy-achievement-text">
           <h4>${title}</h4>
           <p>${description}</p>
         </div>
@@ -90,1451 +116,1699 @@ const MiningModule = () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
         document.body.removeChild(achievement);
-      }, 300);
-    }, 3000);
+      }, 400);
+    }, 3200);
   };
 
-  const handleTabClick = (stepIndex) => {
-    setCurrentStep(stepIndex);
+  const currentStepData = alchemySteps[currentStep];
+  const StepComponent = currentStepData.component;
+
+  return (
+    <div className="mining-module">
+      <div className="module-header">
+        <div className="alchemy-progress">
+          <div className="progress-indicators">
+            {alchemySteps.map((_, index) => (
+              <div 
+                key={index}
+                className={`progress-flame ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+              />
+            ))}
+          </div>
+          <span className="progress-text">Alchemy Step {currentStep + 1} of {alchemySteps.length}</span>
+        </div>
+        
+        <div className="step-header">
+          <h1>{currentStepData.title}</h1>
+          <p className="step-subtitle">{currentStepData.subtitle}</p>
+        </div>
+      </div>
+
+      <div className="step-container">
+        <StepComponent 
+          onComplete={(insights) => handleStepComplete(currentStep, insights)}
+          userInsights={userInsights}
+          stepIndex={currentStep}
+        />
+      </div>
+
+      {/* Alchemy Progress Summary */}
+      <div className="alchemy-summary">
+        <div className="mastery-count">
+          {completedSteps.size} / {alchemySteps.length} energy transformations mastered
+        </div>
+        <div className="insight-indicator">
+          {Object.keys(userInsights).length > 0 && (
+            <span>🔥 Energy alchemy mastery building...</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ⚡ Step 1: Energy Crisis Detective
+const EnergyCrisisDetectiveStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [selectedCrisis, setSelectedCrisis] = useState(null);
+  const [showRevelation, setShowRevelation] = useState(false);
+
+  const energyCrises = [
+    {
+      id: 'bank_infrastructure',
+      title: '🏛️ Banking Infrastructure Energy Waste',
+      problem: 'Global banking system consumes 270 TWh annually',
+      details: 'Bank branches, ATMs, data centers, payment processors, regulatory compliance systems',
+      hiddenCost: 'Energy spent maintaining trust through institutions and surveillance',
+      revelation: 'This massive energy expense still allows corruption, inflation, and control'
+    },
+    {
+      id: 'currency_printing',
+      title: '💸 Currency Printing & Distribution',
+      problem: 'Physical cash production, transport, security, destruction cycles',
+      details: 'Printing facilities, armored trucks, vaults, currency replacement every few years',
+      hiddenCost: 'Energy wasted on money that loses value through inflation',
+      revelation: 'All this energy spent on money that can be printed into worthlessness'
+    },
+    {
+      id: 'financial_surveillance',
+      title: '👁️ Financial Surveillance Systems',
+      problem: 'Government monitoring of every financial transaction',
+      details: 'NSA data centers, compliance systems, Know Your Customer infrastructure',
+      hiddenCost: 'Energy spent violating privacy while enabling monetary control',
+      revelation: 'Massive energy consumption to monitor and control your money'
+    }
+  ];
+
+  const handleCrisisInvestigation = (crisis) => {
+    setSelectedCrisis(crisis);
+    setTimeout(() => setShowRevelation(true), 2000);
   };
 
-  const steps = [
+  const handleDiscoveryComplete = () => {
+    const insights = {
+      investigatedCrisis: selectedCrisis?.id,
+      realizationLevel: showRevelation ? 'full' : 'partial'
+    };
+    onComplete(insights);
+  };
+
+  return (
+    <div className="energy-crisis-detective">
+      <div className="detective-briefing">
+        <h2>🕵️ Your Mission: Investigate Global Energy Waste</h2>
+        <div className="mission-context">
+          <p className="urgency-text">
+            The current monetary system burns enormous amounts of energy maintaining corruption and control. 
+            Your investigation will reveal the hidden truth about where this energy really goes...
+          </p>
+        </div>
+        
+        <div className="stakes-reminder">
+          <strong>Personal Stakes:</strong> Understanding this energy waste helps you see why Bitcoin's energy use 
+          creates incorruptible money that protects your wealth from inflation and control.
+        </div>
+      </div>
+
+      <div className="crisis-investigation-grid">
+        <h3>🔍 Choose Your Investigation Target:</h3>
+        {energyCrises.map((crisis) => (
+          <div 
+            key={crisis.id}
+            className={`crisis-card ${selectedCrisis?.id === crisis.id ? 'investigating' : ''}`}
+            onClick={() => handleCrisisInvestigation(crisis)}
+          >
+            <div className="crisis-header">
+              <h4>{crisis.title}</h4>
+              {selectedCrisis?.id === crisis.id && <div className="investigating-badge">🔍 INVESTIGATING</div>}
+            </div>
+            <div className="crisis-problem">{crisis.problem}</div>
+            
+            {selectedCrisis?.id === crisis.id && (
+              <div className="investigation-details">
+                <div className="evidence-section">
+                  <strong>Evidence Found:</strong>
+                  <p>{crisis.details}</p>
+                </div>
+                <div className="hidden-cost">
+                  <strong>Hidden Energy Cost:</strong>
+                  <p>{crisis.hiddenCost}</p>
+                </div>
+                
+                {showRevelation && (
+                  <div className="shocking-revelation">
+                    <strong>🚨 Shocking Discovery:</strong>
+                    <p className="revelation-text">{crisis.revelation}</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {showRevelation && (
+        <div className="detective-conclusion">
+          <div className="conclusion-header">
+            <h3>🎯 Investigation Complete: The Energy Scandal Exposed</h3>
+          </div>
+          
+          <div className="scandal-summary">
+            <p>
+              The traditional monetary system wastes <strong>hundreds of terawatt-hours annually</strong> maintaining 
+              institutions that still allow corruption, inflation, and financial surveillance.
+            </p>
+            
+            <div className="bitcoin-contrast">
+              <strong>Bitcoin's Revolutionary Approach:</strong>
+              <p>
+                Transform this same energy into <strong>mathematical proof</strong> that eliminates 
+                human trust, prevents corruption, and protects your wealth automatically.
+              </p>
+            </div>
+          </div>
+
+          <ActionButton
+            variant="primary"
+            onClick={handleDiscoveryComplete}
+            className="discovery-complete-button"
+          >
+            Discover Energy Alchemy Solution ⚡
+          </ActionButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 🧪 Step 2: Electricity Alchemy Lab  
+const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [selectedExperiment, setSelectedExperiment] = useState(null);
+  const [alchemyState, setAlchemyState] = useState('selecting'); // selecting, transforming, proof_created
+  const [energyInput, setEnergyInput] = useState(100);
+  const [computationWork, setComputationWork] = useState(0);
+  const [mathematicalProof, setMathematicalProof] = useState(null);
+
+  const alchemyExperiments = [
     {
-      title: "Energy → Security Transformation",
-      type: "energy-security-intro",
-      content: {
-        title: "⚡ How Bitcoin Transforms Physics into Trust",
-        subtitle: "The most sophisticated security system ever created runs on pure energy",
-        primeText: "Bitcoin doesn't just use energy—it transforms electrical energy into mathematical proof that creates unbreakable digital trust.",
-        transformationChain: {
-          step1: {
-            icon: "🔌",
-            title: "Raw Energy",
-            description: "Electricity from power grids worldwide",
-            detail: "Coal, solar, wind, hydro, nuclear → electrical energy"
-          },
-          step2: {
-            icon: "🖥️",
-            title: "Computational Work",
-            description: "ASIC miners solve cryptographic puzzles",
-            detail: "Trillions of hash calculations per second"
-          },
-          step3: {
-            icon: "🔐",
-            title: "Mathematical Proof",
-            description: "Valid proof-of-work hash is found",
-            detail: "Hash starting with required number of zeros"
-          },
-          step4: {
-            icon: "🛡️",
-            title: "Network Security",
-            description: "Energy investment protects all Bitcoin",
-            detail: "Higher energy cost = stronger security guarantee"
-          }
-        },
-        keyInsight: "This isn't energy 'waste'—it's energy transformation into the most secure monetary system in human history.",
-        comparison: {
-          traditional: "Trust banks & governments (can be corrupted)",
-          bitcoin: "Trust physics & mathematics (cannot be corrupted)"
+      id: 'beginner_alchemy',
+      title: '🔰 Beginner Energy Alchemy',
+      energyRequired: 100,
+      difficulty: '0000',
+      description: 'Transform 100 kWh into mathematical proof with 4 zeros',
+      securityLevel: 'Local Security',
+      realWorldEquivalent: 'Securing a small payment'
+    },
+    {
+      id: 'advanced_alchemy',
+      title: '⚡ Advanced Energy Alchemy', 
+      energyRequired: 1000,
+      difficulty: '00000',
+      description: 'Transform 1,000 kWh into stronger proof with 5 zeros',
+      securityLevel: 'Regional Security',
+      realWorldEquivalent: 'Securing significant transactions'
+    },
+    {
+      id: 'master_alchemy',
+      title: '🔥 Master Energy Alchemy',
+      energyRequired: 10000,
+      difficulty: '000000', 
+      description: 'Transform 10,000 kWh into maximum proof with 6 zeros',
+      securityLevel: 'Global Security',
+      realWorldEquivalent: 'Securing institutional-level value'
+    }
+  ];
+
+  const startAlchemyExperiment = (experiment) => {
+    setSelectedExperiment(experiment);
+    setEnergyInput(experiment.energyRequired);
+    setAlchemyState('transforming');
+    setComputationWork(0);
+    setMathematicalProof(null);
+
+    // Simulate the energy → proof transformation
+    performEnergyAlchemy(experiment);
+  };
+
+  const performEnergyAlchemy = (experiment) => {
+    const interval = setInterval(() => {
+      setComputationWork(prev => {
+        const increment = Math.floor(Math.random() * 1000000);
+        const newWork = prev + increment;
+        
+        // Check if transformation is complete (based on difficulty)
+        const targetWork = experiment.energyRequired * 1000000;
+        if (newWork >= targetWork) {
+          clearInterval(interval);
+          
+          // Create mathematical proof
+          const proof = {
+            hash: '0'.repeat(experiment.difficulty.length) + Math.random().toString(36).substring(7),
+            energyTransformed: experiment.energyRequired,
+            computationPerformed: newWork,
+            securityCreated: `${experiment.securityLevel} - ${experiment.realWorldEquivalent}`,
+            proofStrength: experiment.difficulty.length
+          };
+          
+          setMathematicalProof(proof);
+          setAlchemyState('proof_created');
+          
+          return newWork;
         }
-      }
-    },
+        
+        return newWork;
+      });
+    }, 150);
+  };
 
+  const handleAlchemyMastery = () => {
+    const insights = {
+      experimentCompleted: selectedExperiment?.id,
+      energyTransformed: energyInput,
+      proofCreated: mathematicalProof?.hash,
+      alchemyLevel: selectedExperiment?.title
+    };
+    onComplete(insights);
+  };
+
+  return (
+    <div className="electricity-alchemy-lab">
+      <div className="lab-introduction">
+        <h2>🧪 Welcome to the Energy Alchemy Laboratory</h2>
+        <div className="alchemy-concept">
+          <p className="concept-text">
+            You're about to perform real alchemy: transforming raw electrical energy into 
+            unbreakable mathematical proof that secures digital money without requiring human trust.
+          </p>
+          
+          <div className="transformation-formula">
+            <span className="formula-element">Electrical Energy</span>
+            <span className="formula-arrow">→</span>
+            <span className="formula-element">Computational Work</span>
+            <span className="formula-arrow">→</span>
+            <span className="formula-element">Mathematical Proof</span>
+            <span className="formula-arrow">→</span>
+            <span className="formula-element">Digital Security</span>
+          </div>
+        </div>
+      </div>
+
+      {alchemyState === 'selecting' && (
+        <div className="experiment-selection">
+          <h3>⚗️ Choose Your Alchemy Experiment:</h3>
+          <div className="experiment-grid">
+            {alchemyExperiments.map((experiment) => (
+              <div key={experiment.id} className="experiment-card">
+                <div className="experiment-header">
+                  <h4>{experiment.title}</h4>
+                  <div className="energy-requirement">⚡ {experiment.energyRequired} kWh</div>
+                </div>
+                
+                <div className="experiment-details">
+                  <div className="description">{experiment.description}</div>
+                  <div className="difficulty-display">
+                    Target Hash: <code>{experiment.difficulty}...</code>
+                  </div>
+                  <div className="security-level">{experiment.securityLevel}</div>
+                  <div className="real-world">{experiment.realWorldEquivalent}</div>
+                </div>
+                
+                <ActionButton
+                  variant="primary"
+                  onClick={() => startAlchemyExperiment(experiment)}
+                  className="start-alchemy-button"
+                >
+                  Begin Transformation ⚡
+                </ActionButton>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {alchemyState === 'transforming' && selectedExperiment && (
+        <div className="alchemy-in-progress">
+          <h3>🔥 Energy Transformation in Progress</h3>
+          
+          <div className="transformation-visualization">
+            <div className="energy-input-display">
+              <Zap className="energy-icon" />
+              <div className="energy-stats">
+                <div className="stat-label">Energy Input</div>
+                <div className="stat-value">{energyInput} kWh</div>
+              </div>
+            </div>
+            
+            <div className="transformation-arrows">
+              <div className="arrow-with-work">
+                <ArrowRight className="transformation-arrow" />
+                <div className="work-display">Computing...</div>
+              </div>
+            </div>
+            
+            <div className="computation-display">
+              <Cpu className="computation-icon" />
+              <div className="computation-stats">
+                <div className="stat-label">Computation Work</div>
+                <div className="stat-value">{computationWork.toLocaleString()} hashes</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="alchemy-status">
+            <div className="status-text">Transforming electrical energy into mathematical proof...</div>
+            <div className="target-info">
+              Searching for hash starting with: <code>{selectedExperiment.difficulty}</code>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {alchemyState === 'proof_created' && mathematicalProof && (
+        <div className="proof-creation-success">
+          <h3>🎉 Energy Alchemy Successful!</h3>
+          
+          <div className="proof-display">
+            <div className="proof-header">
+              <Trophy className="proof-icon" />
+              <h4>Mathematical Proof Created</h4>
+            </div>
+            
+            <div className="proof-details">
+              <div className="proof-hash">
+                <strong>Proof Hash:</strong>
+                <code className="hash-display">{mathematicalProof.hash}</code>
+              </div>
+              
+              <div className="transformation-summary">
+                <div className="summary-stat">
+                  <span className="stat-label">Energy Transformed:</span>
+                  <span className="stat-value">{mathematicalProof.energyTransformed} kWh</span>
+                </div>
+                <div className="summary-stat">
+                  <span className="stat-label">Computation Performed:</span>
+                  <span className="stat-value">{mathematicalProof.computationPerformed.toLocaleString()} hashes</span>
+                </div>
+                <div className="summary-stat">
+                  <span className="stat-label">Security Created:</span>
+                  <span className="stat-value">{mathematicalProof.securityCreated}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="alchemy-revelation">
+            <h4>🧠 Alchemical Revelation:</h4>
+            <p>
+              You've just performed the same process that secures Bitcoin! This mathematical proof 
+              is <strong>unforgeable</strong> - anyone can verify it required real energy to create, 
+              but no one can fake it without doing the work.
+            </p>
+            
+            <div className="bitcoin-connection">
+              <strong>In Bitcoin:</strong> Miners worldwide perform this exact transformation 24/7, 
+              turning electricity into mathematical proofs that secure your digital wealth.
+            </div>
+          </div>
+
+          <ActionButton
+            variant="success"
+            onClick={handleAlchemyMastery}
+            className="mastery-complete-button"
+          >
+            Master the Attack Simulator 💰
+          </ActionButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 💰 Step 3: Economic Attack Simulator
+const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [selectedAttack, setSelectedAttack] = useState(null);
+  const [attackPhase, setAttackPhase] = useState('planning'); // planning, calculating, failed
+  const [attackCalculations, setAttackCalculations] = useState(null);
+  const [realizationLevel, setRealizationLevel] = useState(0);
+
+  const attackScenarios = [
     {
-      title: "Interactive Mining Lab",
-      type: "mining-simulation",
-      content: {
-        title: "🎮 Experience Mining: Transform Energy into Security",
-        subtitle: "See how electrical energy becomes digital security through computational work",
-        primeText: "You're about to become a Bitcoin miner. Watch how energy investment creates mathematical proof that secures the network.",
-        miningLevels: [
-          {
-            level: 1,
-            title: "Beginner Miner",
-            difficulty: "0000",
-            energyCost: 100,
-            description: "Find a hash starting with 4 zeros",
-            blockReward: 6.25,
-            networkHashrate: "100 TH/s"
-          },
-          {
-            level: 2,
-            title: "Professional Miner", 
-            difficulty: "00000",
-            energyCost: 1000,
-            description: "Find a hash starting with 5 zeros",
-            blockReward: 6.25,
-            networkHashrate: "300 TH/s"
-          },
-          {
-            level: 3,
-            title: "Industrial Miner",
-            difficulty: "000000",
-            energyCost: 10000,
-            description: "Find a hash starting with 6 zeros",
-            blockReward: 6.25,
-            networkHashrate: "500 TH/s"
-          }
-        ],
-        realWorldStats: {
-          currentDifficulty: "62.46 T",
-          globalHashrate: "450 EH/s",
-          energyConsumption: "150 TWh/year",
-          countriesCompared: "Similar to Argentina's energy usage"
-        }
+      id: '51_percent_attack',
+      title: '⚔️ 51% Attack on Bitcoin',
+      description: 'Attempt to control majority of mining power to rewrite transactions',
+      requirements: {
+        hashratePortion: '51% of global network',
+        hardwareNeeded: '2.3 million ASIC miners',
+        electricityCost: '$75 million per day',
+        hardwareCost: '$23 billion', 
+        timeToAcquire: '2+ years (supply constraints)',
+        additionalChallenges: 'Must remain undetected while acquiring hardware'
+      },
+      economicReality: {
+        profitability: 'Massive losses - hardware becomes worthless if attack succeeds',
+        detection: 'Network would detect and respond immediately',
+        countermeasures: 'Users would switch to different chain, making hardware worthless',
+        opportunity_cost: 'Same resources could earn $40+ million daily mining honestly'
       }
     },
-
     {
-              title: "How Difficulty Adjusts",
-      type: "difficulty-demonstration",
-      content: {
-        title: "🎯 Self-Adjusting Security: The 10-Minute Heartbeat",
-        subtitle: "Watch Bitcoin automatically maintain perfect timing as miners join and leave",
-        primeText: "Bitcoin has a built-in mechanism that keeps blocks coming every 10 minutes, no matter how many miners join the network.",
-        scenario: {
-          setup: "Bitcoin targets 1 block every 10 minutes. But what happens when more miners join?",
-          demonstration: "Let's simulate what happens to block times when network hashrate changes"
-        },
-        adjustmentMechanism: {
-          frequency: "Every 2,016 blocks (~2 weeks)",
-          calculation: "If blocks came too fast → increase difficulty\nIf blocks came too slow → decrease difficulty",
-          result: "Block time returns to ~10 minutes average"
-        },
-        whyItMatters: [
-          "Predictable Bitcoin issuance schedule (21 million cap)",
-          "Consistent transaction confirmation times",
-          "Security scales automatically with network growth",
-          "No central authority needed to adjust the system"
-        ]
+      id: 'banking_attack',
+      title: '🏛️ Attack Traditional Bank',
+      description: 'Compare: How much does it cost to compromise a major bank?',
+      requirements: {
+        approach: 'Cyber attack, insider threat, or physical breach',
+        cost: '$1-10 million (estimated)',
+        time: 'Weeks to months',
+        detection: 'Often undetected for months',
+        success_rate: 'Thousands successful per year'
+      },
+      economicReality: {
+        profitability: 'Highly profitable - billions stolen annually',
+        consequences: 'Bank insurance covers losses, taxpayers pay',
+        accountability: 'Executives rarely prosecuted',
+        systemic_risk: 'Can trigger financial crises affecting millions'
       }
     },
-
     {
-      title: "Security Economics Game",
-      type: "attack-cost-calculator",
-      content: {
-        title: "💰 The Economics of Attacking Bitcoin",
-        subtitle: "Discover why Bitcoin becomes more secure as it grows",
-        primeText: "Let's calculate: How much would it cost to attack Bitcoin? The answer will shock you.",
-        attackScenarios: [
-          {
-            scenario: "51% Attack on Bitcoin",
-            description: "Control majority of mining power to rewrite history",
-            requirements: {
-              hashrate: "51% of network (230 EH/s)",
-              hardware: "2.3 million ASIC miners",
-              electricityCost: "$75 million per day",
-              hardwareCost: "$23 billion",
-              timeToAcquire: "2+ years (supply constraints)"
-            },
-            likelihood: "Practically impossible",
-            comparison: "Cost more than most countries' GDP"
-          },
-          {
-            scenario: "Attack Traditional Banking",
-            description: "Compromise major bank's security systems",
-            requirements: {
-              approach: "Cyber attack, insider threat, or physical breach",
-              cost: "$1-10 million (estimated)",
-              time: "Weeks to months",
-              detection: "High chance of detection"
-            },
-            likelihood: "Regularly attempted",
-            comparison: "Happens thousands of times per year"
-          },
-          {
-            scenario: "Attack Gold Vault",
-            description: "Steal from Fort Knox or major gold repository",
-            requirements: {
-              approach: "Physical breach of vault security",
-              cost: "$50-100 million (estimated)",
-              time: "Months of planning",
-              transportation: "How do you move tons of gold?"
-            },
-            likelihood: "Extremely difficult but possible",
-            comparison: "Physical security can be overwhelmed"
-          }
-        ],
-        economicIncentives: {
-          honestMining: "Earn 6.25 BTC + fees every 10 minutes",
-          maliciousAttack: "Destroy Bitcoin's value (your investment)",
-          conclusion: "It's more profitable to secure than attack"
-        }
-      }
-    },
-
-          {
-      title: "Energy Innovation Catalyst",
-      type: "energy-innovation",
-      content: {
-        title: "🌱 Bitcoin: The Clean Energy Accelerator",
-        subtitle: "How Bitcoin mining drives renewable energy innovation worldwide",
-        primeText: "Bitcoin mining doesn't compete with energy usage—it enables energy innovation by monetizing stranded and renewable sources.",
-        innovationDrivers: [
-          {
-            category: "Stranded Energy Monetization",
-            icon: "🏔️",
-            examples: [
-              "Remote hydroelectric dams with no transmission lines",
-              "Natural gas flaring that would otherwise be wasted",
-              "Geothermal sources in remote locations",
-              "Solar farms during peak production hours"
-            ],
-            impact: "Bitcoin mining makes previously unusable energy profitable"
-          },
-          {
-            category: "Renewable Energy Incentives", 
-            icon: "☀️",
-            examples: [
-              "Solar + battery + mining operations",
-              "Wind farm revenue optimization",
-              "Hydroelectric seasonal optimization",
-              "Geothermal expansion projects"
-            ],
-            impact: "Mining revenue helps fund renewable infrastructure"
-          },
-          {
-            category: "Grid Stabilization",
-            icon: "⚡",
-            examples: [
-              "Demand response during peak hours",
-              "Load balancing for renewable intermittency",
-              "Grid frequency regulation services",
-              "Emergency demand reduction"
-            ],
-            impact: "Miners can instantly reduce consumption when needed"
-          }
-        ],
-        realWorldExamples: {
-          texas: "Texas miners help stabilize renewable-heavy grid",
-          iceland: "Geothermal mining operations",
-          elsalvador: "Volcano-powered Bitcoin mining",
-          china: "Hydro-powered mining during flood seasons"
-        },
-        futureVision: "Bitcoin mining incentivizes humanity's transition to abundant clean energy"
-      }
-    },
-
-          {
-      title: "Global Security Network",
-      type: "network-visualization",
-      content: {
-        title: "🌍 The Most Distributed Security System Ever Built",
-        subtitle: "Explore Bitcoin's global mining network protecting $1+ trillion in value",
-        primeText: "Bitcoin's security comes from thousands of miners across every continent, creating unprecedented decentralization.",
-        globalDistribution: {
-          regions: [
-            {
-              region: "North America",
-              percentage: 35,
-              hashrate: "157.5 EH/s",
-              countries: ["USA", "Canada"],
-              advantages: ["Regulatory clarity", "Cheap energy", "Infrastructure"]
-            },
-            {
-              region: "Asia Pacific",
-              percentage: 30,
-              hashrate: "135 EH/s", 
-              countries: ["Kazakhstan", "Russia", "Malaysia"],
-              advantages: ["Low energy costs", "Mining infrastructure", "Government support"]
-            },
-            {
-              region: "Europe",
-              percentage: 20,
-              hashrate: "90 EH/s",
-              countries: ["Norway", "Iceland", "Georgia"],
-              advantages: ["Renewable energy", "Stable regulation", "Cool climate"]
-            },
-            {
-              region: "Other",
-              percentage: 15,
-              hashrate: "67.5 EH/s",
-              countries: ["Various"],
-              advantages: ["Emerging markets", "Stranded energy", "Innovation"]
-            }
-          ]
-        },
-        decentralizationBenefits: [
-          "No single point of failure",
-          "Resistant to government control",
-          "Geographic redundancy", 
-          "Cultural and political diversity",
-          "24/7/365 global operation"
-        ],
-        comparisonToOther: {
-          internetServers: "More distributed than major websites",
-          bankingSystem: "No central clearing houses",
-          goldStorage: "No Fort Knox equivalent",
-          militaryDefense: "More distributed than any defense system"
-          }
-      }
-    },
-
-    {
-      title: "Mining Pool Dynamics",
-      type: "pool-simulation",
-      content: {
-        title: "🤝 Strength in Numbers: How Mining Pools Work",
-        subtitle: "Understand how small miners combine forces while maintaining decentralization",
-        primeText: "Individual miners join pools to share rewards, but the network remains decentralized because pools compete with each other.",
-        poolConcepts: {
-          soloMining: {
-            pros: ["Keep all rewards", "Complete independence", "No pool fees"],
-            cons: ["Irregular payouts", "Need massive hashrate", "High variance"],
-            analogy: "Like playing lottery alone—big wins but very rare"
-          },
-          poolMining: {
-            pros: ["Regular payouts", "Predictable income", "Lower barrier to entry"],
-            cons: ["Share rewards", "Pool fees", "Trust pool operator"],
-            analogy: "Like group lottery tickets—smaller but regular wins"
-          }
-        },
-        poolMechanics: {
-          shareSubmission: "Miners submit partial solutions as 'shares'",
-          rewardDistribution: "Pool splits block rewards based on contributed shares",
-          difficultyAdjustment: "Pool sets easier targets for individual miners",
-          poolSwitching: "Miners can change pools if unhappy"
-        },
-        decentralizationMaintenance: [
-          "Multiple competing pools prevent centralization",
-          "Miners can switch pools instantly",
-          "Pool operators don't control miners' hardware",
-          "Economic incentives align with network health"
-        ]
-      }
-    },
-
-    {
-      title: "Proof of Work vs Alternatives",
-      type: "consensus-comparison",
-      content: {
-        title: "⚖️ Why Energy-Based Security Wins",
-        subtitle: "Compare Bitcoin's Proof of Work to other consensus mechanisms",
-        primeText: "Proof of Work is the only consensus mechanism that transforms real-world energy into digital security without creating new attack vectors.",
-        consensusMechanisms: [
-          {
-            name: "Proof of Work (Bitcoin)",
-            energyRequirement: "High",
-            securityModel: "Energy investment",
-            tradeoffs: {
-              pros: [
-                "Objective consensus (physics-based)",
-                "No wealth concentration from staking",
-                "Proven track record (15+ years)",
-                "Incentivizes energy innovation"
-              ],
-              cons: [
-                "High energy consumption",
-                "Environmental concerns from some",
-                "Hardware requirements",
-                "Hash rate centralization risks"
-              ]
-            },
-            realWorldAnalogy: "Like hiring security guards—costs money but provides real protection"
-          },
-          {
-            name: "Proof of Stake",
-            energyRequirement: "Low",
-            securityModel: "Economic stake",
-            tradeoffs: {
-              pros: [
-                "Lower energy consumption",
-                "Faster transaction finality",
-                "No mining hardware needed",
-                "Built-in governance mechanisms"
-              ],
-              cons: [
-                "Wealth concentration (rich get richer)",
-                "Nothing at stake problem",
-                "Long-range attack vulnerability",
-                "Subjective consensus (social layer)"
-              ]
-            },
-            realWorldAnalogy: "Like judges who are also shareholders—conflicts of interest"
-          }
-        ],
-        whyPowMatter: [
-          "Energy creates objective, unforgeable cost",
-          "No alternative has Bitcoin's security track record",
-          "PoW naturally decentralizes over time",
-          "Energy investment aligns with long-term network health"
-        ]
-      }
-    },
-
-    {
-      title: "Your Role in the Network",
-      type: "actionable-mining",
-      content: {
-        title: "🚀 How You Can Participate in Bitcoin's Security",
-        subtitle: "From running a node to understanding mining, here's how to contribute",
-        primeText: "You don't need to be a big miner to participate in and support Bitcoin's security network.",
-        participationLevels: [
-          {
-            level: "Bitcoin Node Operator",
-            description: "Run Bitcoin Core to validate transactions and blocks",
-            requirements: ["Computer", "Internet connection", "~500GB storage"],
-            contribution: "Helps maintain network decentralization and censorship resistance",
-            gettingStarted: "Download Bitcoin Core, sync blockchain, keep online"
-          },
-          {
-            level: "Home Miner",
-            description: "Small-scale mining for education and supporting decentralization",
-            requirements: ["ASIC miner (~$500-2000)", "Electricity", "Internet"],
-            contribution: "Adds to network security, learns mining process",
-            gettingStarted: "Start with USB miners, join mining pools, understand electricity costs"
-          },
-          {
-            level: "Mining Pool Participant",
-            description: "Contribute hashrate to pools for regular rewards",
-            requirements: ["Mining hardware", "Pool account", "Mining software"],
-            contribution: "Consistent network security contribution with predictable returns",
-            gettingStarted: "Choose reputable pool, configure miner, monitor performance"
-          },
-          {
-            level: "Energy Innovator",
-            description: "Use Bitcoin mining to monetize renewable energy projects",
-            requirements: ["Renewable energy source", "Significant capital", "Technical expertise"],
-            contribution: "Drives clean energy adoption while securing Bitcoin",
-            gettingStarted: "Partner with energy developers, understand grid regulations"
-          }
-        ],
-        keyLearnings: [
-          "Mining is the process that transforms energy into security",
-          "Higher energy investment = stronger Bitcoin security",
-          "Decentralized mining protects against centralized control",
-          "Mining incentivizes energy innovation and efficiency",
-          "Anyone can participate at various levels"
-        ],
-        nextSteps: {
-          immediate: "Run a Bitcoin node to support the network",
-          intermediate: "Learn about mining economics and energy markets",
-          advanced: "Explore renewable energy + mining opportunities"
-        }
+      id: 'gold_vault_attack',
+      title: '🏴‍☠️ Attack Gold Vault',
+      description: 'Physical theft from Fort Knox or major gold repository',
+      requirements: {
+        approach: 'Complex heist requiring inside knowledge',
+        cost: '$50-100 million (estimated)',
+        time: 'Years of planning',
+        success_examples: 'Multiple successful gold heists in history',
+        physical_challenges: 'Security guards, alarms, but still possible'
+      },
+      economicReality: {
+        profitability: 'Potentially very profitable',
+        precedent: 'Many successful gold thefts throughout history',
+        resale: 'Gold can be melted down and sold globally',
+        investigation: 'Physical evidence makes investigation possible'
       }
     }
   ];
 
-  // Interactive Mining Simulation Component
-  const MiningSimulation = ({ content, onComplete }) => {
-    const [selectedLevel, setSelectedLevel] = useState(0);
-    const [miningState, setMiningState] = useState('idle'); // idle, mining, success
-    const [miningResults, setMiningResults] = useState(null);
-    const [energySpent, setEnergySpent] = useState(0);
-    const [hashesComputed, setHashesComputed] = useState(0);
-
-    const currentLevel = content.miningLevels[selectedLevel];
-
-    const startMining = () => {
-      setMiningState('mining');
-      setMiningResults(null);
-      setEnergySpent(0);
-      setHashesComputed(0);
-
-      // Simulate mining process
-      simulateMining();
-    };
-
-    const simulateMining = () => {
-      const interval = setInterval(() => {
-        setEnergySpent(prev => prev + 10);
-        setHashesComputed(prev => prev + Math.floor(Math.random() * 1000000));
-
-        // Simulate finding solution based on difficulty
-        const successProbability = 0.002 + (selectedLevel * 0.001);
-        if (Math.random() < successProbability) {
-          clearInterval(interval);
-          setMiningState('success');
-          
-          const blockHash = '0'.repeat(currentLevel.difficulty.length) + 
-                           Math.random().toString(36).substring(7);
-          
-          setMiningResults({
-            blockHash,
-            energyUsed: energySpent + 10,
-            hashesComputed: hashesComputed + Math.floor(Math.random() * 1000000),
-            blockReward: currentLevel.blockReward,
-            securityContribution: `Added ${energySpent + 10} units of security to the network`
-          });
-
-          // Complete on first successful mine
-          setTimeout(() => onComplete(), 2000);
-        }
-      }, 100);
-
-      // Prevent infinite mining
-      setTimeout(() => {
-        if (miningState === 'mining') {
-          clearInterval(interval);
-          setMiningState('idle');
-        }
-      }, 10000);
-    };
-
-        return (
-      <div className="mining-simulation">
-        <div className="simulation-header">
-          <h2>{content.title}</h2>
-          <p className="subtitle">{content.subtitle}</p>
-          <div className="prime-text">{content.primeText}</div>
-            </div>
-
-        <div className="energy-transformation-visual">
-          <h3>⚡ Energy → Security Transformation</h3>
-          <div className="transformation-steps">
-            {content.miningLevels[0] && Object.entries(content.title === '🎮 Experience Mining: Transform Energy into Security' ? {
-              electricity: { icon: '🔌', label: 'Electricity', value: `${energySpent} kWh` },
-              computation: { icon: '🖥️', label: 'Hash Power', value: `${hashesComputed.toLocaleString()} H/s` },
-              security: { icon: '🛡️', label: 'Network Security', value: miningState === 'success' ? 'Block Secured!' : 'Mining...' }
-            } : {}).map(([key, step]) => (
-              <div key={key} className="transformation-step">
-                <div className="step-icon">{step.icon}</div>
-                <div className="step-content">
-                  <div className="step-label">{step.label}</div>
-                  <div className="step-value">{step.value}</div>
-              </div>
-              </div>
-            ))}
-              </div>
-            </div>
-
-        <div className="mining-controls">
-          <div className="level-selector">
-            <h3>Choose Mining Level:</h3>
-            <div className="level-buttons">
-              {content.miningLevels.map((level, index) => (
-            <OptionButton 
-                  key={index}
-                  selected={selectedLevel === index}
-                  onClick={() => setSelectedLevel(index)}
-                  disabled={miningState === 'mining'}
-                  className="level-button"
-                >
-                  <div className="level-title">{level.title}</div>
-                  <div className="level-difficulty">Difficulty: {level.difficulty}</div>
-                  <div className="level-cost">Energy: {level.energyCost} kWh</div>
-            </OptionButton>
-              ))}
-          </div>
-          </div>
-
-          <div className="mining-stats">
-            <h3>Network Statistics:</h3>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <strong>Current Difficulty:</strong>
-                <span>{content.realWorldStats.currentDifficulty}</span>
-              </div>
-              <div className="stat-item">
-                <strong>Global Hashrate:</strong>
-                <span>{content.realWorldStats.globalHashrate}</span>
-              </div>
-              <div className="stat-item">
-                <strong>Energy Usage:</strong>
-                <span>{content.realWorldStats.energyConsumption}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mining-action">
-            <ActionButton
-              variant={miningState === 'success' ? 'success' : 'primary'}
-              context="demo"
-              onClick={startMining}
-              disabled={miningState === 'mining'}
-              loading={miningState === 'mining'}
-              className="mine-button"
-            >
-              {miningState === 'idle' && <>⚡ Start Mining</>}
-              {miningState === 'mining' && <>⛏️ Mining in Progress...</>}
-              {miningState === 'success' && <>🎉 Block Mined!</>}
-            </ActionButton>
-          </div>
-        </div>
-
-        {miningState === 'mining' && (
-          <div className="mining-progress">
-            <div className="progress-stats">
-              <div className="stat">
-                <span className="stat-label">Energy Spent:</span>
-                <span className="stat-value">{energySpent} kWh</span>
-              </div>
-              <div className="stat">
-                <span className="stat-label">Hashes Computed:</span>
-                <span className="stat-value">{hashesComputed.toLocaleString()}</span>
-              </div>
-            </div>
-            <div className="mining-animation">
-              <div className="mining-visual">⛏️ Computing hashes... 🔥</div>
-            </div>
-          </div>
-        )}
-
-        {miningResults && (
-          <div className="mining-results success">
-            <h3>🎉 Successful Mining!</h3>
-            <div className="results-grid">
-              <div className="result-item">
-                <strong>Block Hash:</strong>
-                <code>{miningResults.blockHash}</code>
-              </div>
-              <div className="result-item">
-                <strong>Energy Invested:</strong>
-                <span>{miningResults.energyUsed} kWh</span>
-              </div>
-              <div className="result-item">
-                <strong>Hashes Computed:</strong>
-                <span>{miningResults.hashesComputed.toLocaleString()}</span>
-              </div>
-              <div className="result-item">
-                <strong>Block Reward:</strong>
-                <span>{miningResults.blockReward} BTC</span>
-              </div>
-            </div>
-            <div className="security-contribution">
-              <div className="contribution-icon">🛡️</div>
-              <p><strong>Security Contribution:</strong> {miningResults.securityContribution}</p>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  const renderStep = (step, index) => {
-    switch (step.type) {
-      case 'energy-security-intro':
-        return <EnergySecurityIntro content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'mining-simulation':
-        return <MiningSimulation content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'difficulty-demonstration':
-        return <DifficultyDemonstration content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'attack-cost-calculator':
-        return <AttackCostCalculator content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'energy-innovation':
-        return <EnergyInnovation content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'network-visualization':
-        return <NetworkVisualization content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'pool-simulation':
-        return <PoolSimulation content={step.content} onComplete={() => handleStepComplete(index)} />;
-
-      case 'consensus-comparison':
-        return <ConsensusComparison content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      case 'actionable-mining':
-        return <ActionableMining content={step.content} onComplete={() => handleStepComplete(index)} />;
-      
-      default:
-        return (
-          <div className="step-content">
-            <h2>{step.title}</h2>
-            <p>Step type "{step.type}" implementation in progress...</p>
-                    <ContinueButton onClick={() => handleStepComplete(index)}>
-          Continue
-        </ContinueButton>
-          </div>
-        );
-    }
-  };
-
-  if (currentStep >= steps.length) {
-        return (
-      <div className="module-container">
-        <div className="completion-screen">
-          <div className="completion-icon">
-            <Trophy size={64} />
-          </div>
-          <h1>⚡ Energy → Security Mastery Complete!</h1>
-          <p>You now understand how Bitcoin transforms electrical energy into the most secure monetary network in human history.</p>
-          <div className="completion-stats">
-            <div className="stat">
-              <span className="stat-number">{steps.length}</span>
-              <span className="stat-label">Security Concepts Mastered</span>
-            </div>
-            <div className="stat">
-              <span className="stat-number">450 EH/s</span>
-              <span className="stat-label">Global Network You Understand</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="module-container">
-      <div className="module-header">
-        <h1 className="module-title">
-          <Zap className="module-icon" />
-          Energy → Security: How Bitcoin Transforms Physics into Trust
-        </h1>
-      <div className="module-progress">
-          <span>Step {currentStep + 1} of {steps.length}</span>
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
-              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-          />
-        </div>
-        </div>
-      </div>
-
-      <div className="module-tabs">
-          {steps.map((step, index) => (
-            <button
-              key={index}
-            className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => handleTabClick(index)}
-            disabled={index > currentStep}
-            >
-              {completedSteps.has(index) && <CheckCircle size={16} />}
-            <span className="tab-title">{step.title}</span>
-            </button>
-          ))}
-        </div>
-
-        <div className="step-content-container">
-          {renderStep(steps[currentStep], currentStep)}
-      </div>
-    </div>
-  );
-};
-
-// Difficulty Demonstration Component
-const DifficultyDemonstration = ({ content, onComplete }) => {
-  const [simulationState, setSimulationState] = useState('idle');
-  const [networkHashrate, setNetworkHashrate] = useState(100);
-  const [blockTimes, setBlockTimes] = useState([]);
-  const [currentDifficulty, setCurrentDifficulty] = useState(1000);
-
-  const runSimulation = () => {
-    setSimulationState('running');
-    setBlockTimes([]);
+  const calculateAttackEconomics = (attack) => {
+    setSelectedAttack(attack);
+    setAttackPhase('calculating');
     
-    // Simulate block times with current hashrate
-    const times = [];
-    for (let i = 0; i < 10; i++) {
-      const expectedTime = 10; // 10 minutes target
-      const actualTime = (expectedTime * 1000) / networkHashrate; // Simulate inverse relationship
-      times.push(Math.max(0.5, Math.min(20, actualTime + (Math.random() - 0.5) * 2)));
-    }
-    
-    setBlockTimes(times);
-    
-    // Calculate new difficulty
-    const avgTime = times.reduce((a, b) => a + b, 0) / times.length;
-    const newDifficulty = Math.round(currentDifficulty * (avgTime / 10));
-    
+    // Simulate calculation process
     setTimeout(() => {
-      setCurrentDifficulty(newDifficulty);
-      setSimulationState('adjusted');
-      setTimeout(() => onComplete(), 2000);
+      const calculations = {
+        scenario: attack.id,
+        totalCost: attack.id === '51_percent_attack' ? 23075000000 : // $23.075 billion
+                   attack.id === 'banking_attack' ? 5500000 : // $5.5 million average
+                   75000000, // $75 million for gold vault
+        dailyOperatingCost: attack.id === '51_percent_attack' ? 75000000 : 0,
+        successProbability: attack.id === '51_percent_attack' ? 0.001 : // 0.1%
+                           attack.id === 'banking_attack' ? 0.15 : // 15%
+                           0.05, // 5%
+        expectedLoss: 0, // Will calculate
+        timeToExecution: attack.id === '51_percent_attack' ? 730 : // 2 years
+                        attack.id === 'banking_attack' ? 120 : // 4 months  
+                        365 // 1 year
+      };
+      
+      // Calculate expected loss (negative expected value)
+      calculations.expectedLoss = calculations.totalCost * (1 - calculations.successProbability);
+      
+      setAttackCalculations(calculations);
+      setAttackPhase('failed');
+      
+      // Progressive realization
+      let realization = 0;
+      const realizationInterval = setInterval(() => {
+        realization += 20;
+        setRealizationLevel(realization);
+        if (realization >= 100) {
+          clearInterval(realizationInterval);
+        }
+      }, 800);
+      
     }, 3000);
   };
 
-  return (
-    <div className="difficulty-demonstration">
-      <div className="demo-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="simulation-controls">
-        <h3>Network Hashrate Simulator</h3>
-        <div className="hashrate-control">
-          <label>Network Hashrate: {networkHashrate} TH/s</label>
-          <input
-            type="range"
-            min="50"
-            max="500"
-            value={networkHashrate}
-            onChange={(e) => setNetworkHashrate(Number(e.target.value))}
-            disabled={simulationState === 'running'}
-          />
-        </div>
-      
-        <div className="difficulty-display">
-          <div className="metric">
-            <span className="metric-label">Current Difficulty:</span>
-            <span className="metric-value">{currentDifficulty.toLocaleString()}</span>
-          </div>
-          <div className="metric">
-            <span className="metric-label">Target Block Time:</span>
-            <span className="metric-value">10 minutes</span>
-          </div>
-        </div>
-
-          <button
-          className="simulate-button"
-          onClick={runSimulation}
-          disabled={simulationState === 'running'}
-        >
-          {simulationState === 'idle' && '⚡ Run Simulation'}
-          {simulationState === 'running' && '⏱️ Mining Blocks...'}
-          {simulationState === 'adjusted' && '✅ Difficulty Adjusted!'}
-          </button>
-      </div>
-
-      {blockTimes.length > 0 && (
-        <div className="block-times-chart">
-          <h3>Block Times (Last 10 Blocks)</h3>
-          <div className="chart-container">
-            {blockTimes.map((time, index) => (
-              <div key={index} className="time-bar-container">
-                <div 
-                  className={`time-bar ${time > 10 ? 'slow' : time < 10 ? 'fast' : 'target'}`}
-                  style={{ height: `${(time / 20) * 100}%` }}
-                />
-                <span className="time-label">{time.toFixed(1)}m</span>
-              </div>
-        ))}
-      </div>
-          <div className="chart-legend">
-            <span className="legend-item fast">🟢 Fast (&lt;10m)</span>
-            <span className="legend-item target">🟡 Target (~10m)</span>
-            <span className="legend-item slow">🔴 Slow (&gt;10m)</span>
-          </div>
-        </div>
-      )}
-
-      <div className="why-it-matters">
-        <h3>Why This Matters</h3>
-        <div className="benefits-grid">
-          {content.whyItMatters.map((benefit, index) => (
-            <div key={index} className="benefit-item">
-              <CheckCircle size={20} />
-              <span>{benefit}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Attack Cost Calculator Component
-const AttackCostCalculator = ({ content, onComplete }) => {
-  const [selectedScenario, setSelectedScenario] = useState(0);
-  const [showCalculation, setShowCalculation] = useState(false);
-
-  const scenario = content.attackScenarios[selectedScenario];
-
-  const handleCalculate = () => {
-    setShowCalculation(true);
-    setTimeout(() => onComplete(), 3000);
-  };
-
-  return (
-    <div className="attack-cost-calculator">
-      <div className="calculator-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="scenario-selector">
-        <h3>Choose Attack Scenario:</h3>
-        <div className="scenario-buttons">
-          {content.attackScenarios.map((scenario, index) => (
-            <button
-              key={index}
-              className={`scenario-button ${selectedScenario === index ? 'selected' : ''}`}
-              onClick={() => setSelectedScenario(index)}
-            >
-              <h4>{scenario.scenario}</h4>
-              <p>{scenario.description}</p>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="attack-analysis">
-        <h3>Attack Requirements: {scenario.scenario}</h3>
-        <div className="requirements-grid">
-          {Object.entries(scenario.requirements).map(([key, value]) => (
-            <div key={key} className="requirement-item">
-              <strong>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}:</strong>
-              <span>{value}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="likelihood-assessment">
-          <div className="assessment-item">
-            <strong>Likelihood:</strong>
-            <span className={`likelihood ${scenario.likelihood.toLowerCase().includes('impossible') ? 'impossible' : scenario.likelihood.toLowerCase().includes('extremely') ? 'very-low' : 'possible'}`}>
-              {scenario.likelihood}
-            </span>
-          </div>
-          <div className="assessment-item">
-            <strong>Comparison:</strong>
-            <span>{scenario.comparison}</span>
-          </div>
-        </div>
-
-        <button className="calculate-button" onClick={handleCalculate}>
-          💰 Calculate Total Cost
-        </button>
-      </div>
-
-      {showCalculation && (
-        <div className="cost-breakdown">
-          <h3>💸 Economic Reality Check</h3>
-          <div className="cost-analysis">
-            <div className="cost-item total">
-              <span className="cost-label">Total Attack Cost:</span>
-              <span className="cost-value">
-                {selectedScenario === 0 ? '$23+ Billion' : selectedScenario === 1 ? '$1-10 Million' : '$50-100 Million'}
-              </span>
-            </div>
-            <div className="economic-incentive">
-              <h4>Economic Incentives</h4>
-              <div className="incentive-comparison">
-                <div className="incentive-item honest">
-                  <strong>Honest Mining:</strong>
-                  <span>{content.economicIncentives.honestMining}</span>
-                </div>
-                <div className="incentive-item malicious">
-                  <strong>Malicious Attack:</strong>
-                  <span>{content.economicIncentives.maliciousAttack}</span>
-                </div>
-              </div>
-              <div className="conclusion">
-                <strong>Conclusion:</strong> {content.economicIncentives.conclusion}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <VisualCapitalistSection
-        icon="⚡"
-        title="Explore Further: Energy Consumption Context"
-        description="See how Bitcoin's energy consumption compares to other industries like banking, gold mining, and data centers. This puts Bitcoin's energy use in global perspective."
-        url="https://www.visualcapitalist.com/bitcoin-energy-consumption-by-country/"
-        buttonText="View Energy Comparison"
-      />
-    </div>
-  );
-};
-
-// Energy Innovation Component
-const EnergyInnovation = ({ content, onComplete }) => {
-  const [selectedCategory, setSelectedCategory] = useState(0);
-
-  return (
-    <div className="energy-innovation">
-      <div className="innovation-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="innovation-drivers">
-        <h3>🌱 How Bitcoin Drives Energy Innovation</h3>
-        <div className="driver-tabs">
-          {content.innovationDrivers.map((driver, index) => (
-              <button
-                key={index}
-              className={`driver-tab ${selectedCategory === index ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(index)}
-              >
-              <span className="tab-icon">{driver.icon}</span>
-              <span className="tab-title">{driver.category}</span>
-              </button>
-            ))}
-          </div>
-
-        <div className="driver-content">
-          <div className="driver-examples">
-            <h4>Examples:</h4>
-            <ul>
-              {content.innovationDrivers[selectedCategory].examples.map((example, index) => (
-                <li key={index}>{example}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="driver-impact">
-            <strong>Impact:</strong> {content.innovationDrivers[selectedCategory].impact}
-          </div>
-          </div>
-        </div>
-
-      <div className="real-world-examples">
-        <h3>🌍 Real-World Examples</h3>
-        <div className="examples-grid">
-          {Object.entries(content.realWorldExamples).map(([location, description]) => (
-            <div key={location} className="example-card">
-              <h4>{location.charAt(0).toUpperCase() + location.slice(1)}</h4>
-              <p>{description}</p>
-          </div>
-          ))}
-          </div>
-        </div>
-
-      <div className="future-vision">
-        <div className="vision-content">
-          <Leaf size={48} />
-          <h3>Future Vision</h3>
-          <p>{content.futureVision}</p>
-        </div>
-      </div>
-
-      <button className="continue-button" onClick={onComplete}>
-        Explore Global Network 🌍
-          </button>
-        </div>
-  );
-};
-
-// Network Visualization Component
-const NetworkVisualization = ({ content, onComplete }) => {
-  const [selectedRegion, setSelectedRegion] = useState(null);
-
-  return (
-    <div className="network-visualization">
-      <div className="visualization-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="global-map">
-        <h3>🌍 Global Mining Distribution</h3>
-        <div className="regions-grid">
-          {content.globalDistribution.regions.map((region, index) => (
-            <div
-              key={index}
-              className={`region-card ${selectedRegion === index ? 'selected' : ''}`}
-              onClick={() => setSelectedRegion(selectedRegion === index ? null : index)}
-            >
-              <div className="region-header">
-                <h4>{region.region}</h4>
-                <span className="percentage">{region.percentage}%</span>
-            </div>
-              <div className="hashrate">{region.hashrate}</div>
-              
-              {selectedRegion === index && (
-                <div className="region-details">
-                  <div className="countries">
-                    <strong>Key Countries:</strong> {region.countries.join(', ')}
-            </div>
-                  <div className="advantages">
-                    <strong>Advantages:</strong>
-                    <ul>
-                      {region.advantages.map((advantage, i) => (
-                        <li key={i}>{advantage}</li>
-                      ))}
-                    </ul>
-          </div>
-        </div>
-      )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="decentralization-benefits">
-        <h3>🛡️ Decentralization Benefits</h3>
-        <div className="benefits-grid">
-          {content.decentralizationBenefits.map((benefit, index) => (
-            <div key={index} className="benefit-card">
-              <Shield size={24} />
-              <span>{benefit}</span>
-            </div>
-          ))}
-            </div>
-                </div>
-
-      <div className="comparison-section">
-        <h3>⚖️ Comparison to Other Systems</h3>
-        <div className="comparison-cards">
-          {Object.entries(content.comparisonToOther).map(([system, description]) => (
-            <div key={system} className="comparison-card">
-              <h4>{system.replace(/([A-Z])/g, ' $1').trim()}</h4>
-              <p>{description}</p>
-                </div>
-          ))}
-          </div>
-        </div>
-
-      <button className="continue-button" onClick={onComplete}>
-        Learn About Mining Pools 🤝
-      </button>
-    </div>
-  );
-};
-
-// Pool Simulation Component
-const PoolSimulation = ({ content, onComplete }) => {
-  const [miningMode, setMiningMode] = useState('solo');
-  const [poolResults, setPoolResults] = useState(null);
-
-  const simulatePoolMining = () => {
-    const results = {
-      solo: {
-        timeToBlock: '45 days',
-        variance: 'Very High',
-        reward: '6.25 BTC',
-        frequency: 'Once every 1-2 months',
-        reliability: 'Low'
-      },
-      pool: {
-        timeToBlock: 'N/A (share rewards)',
-        variance: 'Low',
-        reward: '0.01 BTC daily',
-        frequency: 'Daily payouts',
-        reliability: 'High'
-      }
+  const handleAttackRealization = () => {
+    const insights = {
+      attackAttempted: selectedAttack?.id,
+      economicRealization: realizationLevel,
+      calculatedLoss: attackCalculations?.expectedLoss,
+      securityAppreciation: 'bitcoin_invincibility_understood'
     };
-    
-    setPoolResults(results[miningMode]);
-    setTimeout(() => onComplete(), 2000);
+    onComplete(insights);
   };
 
   return (
-    <div className="pool-simulation">
-      <div className="simulation-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="mining-mode-selector">
-        <h3>Choose Your Mining Strategy:</h3>
-        <div className="mode-options">
-          <div className={`mode-option ${miningMode === 'solo' ? 'selected' : ''}`}>
-            <button onClick={() => setMiningMode('solo')}>
-              <h4>Solo Mining</h4>
-              <div className="mode-details">
-                <div className="pros">
-                  <strong>Pros:</strong>
-                  <ul>
-                    {content.poolConcepts.soloMining.pros.map((pro, i) => (
-                      <li key={i}>{pro}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="cons">
-                  <strong>Cons:</strong>
-                  <ul>
-                    {content.poolConcepts.soloMining.cons.map((con, i) => (
-                      <li key={i}>{con}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="analogy">
-                  <em>{content.poolConcepts.soloMining.analogy}</em>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          <div className={`mode-option ${miningMode === 'pool' ? 'selected' : ''}`}>
-            <button onClick={() => setMiningMode('pool')}>
-              <h4>Pool Mining</h4>
-              <div className="mode-details">
-                <div className="pros">
-                  <strong>Pros:</strong>
-                  <ul>
-                    {content.poolConcepts.poolMining.pros.map((pro, i) => (
-                      <li key={i}>{pro}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="cons">
-                  <strong>Cons:</strong>
-                  <ul>
-                    {content.poolConcepts.poolMining.cons.map((con, i) => (
-                      <li key={i}>{con}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="analogy">
-                  <em>{content.poolConcepts.poolMining.analogy}</em>
-                </div>
-              </div>
-            </button>
+    <div className="economic-attack-simulator">
+      <div className="simulator-briefing">
+        <h2>💰 Economic Attack Simulator</h2>
+        <div className="challenge-setup">
+          <p className="challenge-text">
+            You're now an attacker with unlimited resources. Your goal: break the security 
+            of different monetary systems to steal value. Let's calculate the real economics...
+          </p>
+          
+          <div className="personal-stakes">
+            <strong>Why This Matters:</strong> Understanding attack economics helps you choose 
+            the most secure system to protect your wealth from theft and manipulation.
           </div>
         </div>
       </div>
 
-      <div className="pool-mechanics">
-        <h3>🔧 How Pool Mining Works</h3>
-        <div className="mechanics-steps">
-          {Object.entries(content.poolMechanics).map(([step, description]) => (
-            <div key={step} className="mechanic-step">
-              <h4>{step.replace(/([A-Z])/g, ' $1').trim()}</h4>
-              <p>{description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <button className="simulate-button" onClick={simulatePoolMining}>
-        🎮 Simulate {miningMode === 'solo' ? 'Solo' : 'Pool'} Mining
-      </button>
-
-      {poolResults && (
-        <div className="simulation-results">
-          <h3>Simulation Results: {miningMode === 'solo' ? 'Solo' : 'Pool'} Mining</h3>
-          <div className="results-grid">
-            {Object.entries(poolResults).map(([metric, value]) => (
-              <div key={metric} className="result-metric">
-                <strong>{metric.replace(/([A-Z])/g, ' $1').trim()}:</strong>
-                <span>{value}</span>
+      {attackPhase === 'planning' && (
+        <div className="attack-planning">
+          <h3>🎯 Choose Your Attack Target:</h3>
+          <div className="attack-scenarios">
+            {attackScenarios.map((attack) => (
+              <div 
+                key={attack.id} 
+                className="attack-card"
+                onClick={() => calculateAttackEconomics(attack)}
+              >
+                <div className="attack-header">
+                  <h4>{attack.title}</h4>
+                </div>
+                
+                <div className="attack-description">
+                  {attack.description}
+                </div>
+                
+                <div className="requirements-preview">
+                  <strong>Initial Assessment:</strong>
+                  <ul>
+                    <li>Cost: {attack.requirements.cost || attack.requirements.hardwareCost}</li>
+                    <li>Time: {attack.requirements.time || attack.requirements.timeToAcquire}</li>
+                    <li>Complexity: {attack.id === '51_percent_attack' ? 'Extreme' : attack.id === 'banking_attack' ? 'Medium' : 'High'}</li>
+                  </ul>
+                </div>
+                
+                <ActionButton
+                  variant="danger"
+                  className="plan-attack-button"
+                >
+                  Calculate Attack Economics 📊
+                </ActionButton>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      <div className="decentralization-note">
-        <h3>🌐 Maintaining Decentralization</h3>
-        <ul>
-          {content.decentralizationMaintenance.map((point, index) => (
-            <li key={index}>{point}</li>
-          ))}
-        </ul>
-      </div>
+      {attackPhase === 'calculating' && (
+        <div className="attack-calculation">
+          <h3>📊 Running Economic Attack Analysis...</h3>
+          
+          <div className="calculation-visualization">
+            <div className="calculation-steps">
+              <div className="calc-step">💰 Calculating total investment required...</div>
+              <div className="calc-step">⚡ Computing ongoing operational costs...</div>
+              <div className="calc-step">🎯 Assessing success probability...</div>
+              <div className="calc-step">📈 Analyzing expected return...</div>
+              <div className="calc-step">⚠️ Factoring in counter-measures...</div>
+            </div>
+            
+            <div className="calculation-progress">
+              <div className="progress-bar">
+                <div className="progress-fill calculating"></div>
+              </div>
+              <div className="progress-text">Economic analysis in progress...</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {attackPhase === 'failed' && attackCalculations && (
+        <div className="attack-results">
+          <h3>📊 Attack Economics Analysis Complete</h3>
+          
+          <div className="attack-summary">
+            <div className="attack-target">
+              <h4>{selectedAttack.title}</h4>
+              <div className="target-description">{selectedAttack.description}</div>
+            </div>
+            
+            <div className="economic-breakdown">
+              <div className="cost-analysis">
+                <h5>💸 Financial Requirements</h5>
+                <div className="cost-details">
+                  <div className="cost-item">
+                    <span className="cost-label">Total Investment:</span>
+                    <span className="cost-value">${attackCalculations.totalCost.toLocaleString()}</span>
+                  </div>
+                  {attackCalculations.dailyOperatingCost > 0 && (
+                    <div className="cost-item">
+                      <span className="cost-label">Daily Operating Cost:</span>
+                      <span className="cost-value">${attackCalculations.dailyOperatingCost.toLocaleString()}</span>
+                    </div>
+                  )}
+                  <div className="cost-item">
+                    <span className="cost-label">Time to Execute:</span>
+                    <span className="cost-value">{attackCalculations.timeToExecution} days</span>
+                  </div>
+                  <div className="cost-item">
+                    <span className="cost-label">Success Probability:</span>
+                    <span className="cost-value">{(attackCalculations.successProbability * 100).toFixed(1)}%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="expected-outcome">
+                <h5>📈 Expected Outcome</h5>
+                <div className="outcome-result">
+                  <div className="expected-loss">
+                    <strong>Expected Loss:</strong>
+                    <span className="loss-amount">${attackCalculations.expectedLoss.toLocaleString()}</span>
+                  </div>
+                  
+                  {realizationLevel >= 20 && (
+                    <div className="realization-1">
+                      <strong>Realization #1:</strong> This attack would lose massive amounts of money
+                    </div>
+                  )}
+                  
+                  {realizationLevel >= 40 && (
+                    <div className="realization-2">
+                      <strong>Realization #2:</strong> {selectedAttack.id === '51_percent_attack' ? 
+                        'Even if successful, the attack makes Bitcoin worthless - destroying your investment' :
+                        'Traditional systems are much easier and cheaper to attack'}
+                    </div>
+                  )}
+                  
+                  {realizationLevel >= 60 && (
+                    <div className="realization-3">
+                      <strong>Realization #3:</strong> {selectedAttack.id === '51_percent_attack' ? 
+                        'Same resources could earn $40+ million daily mining honestly' :
+                        'These attacks happen regularly with actual success'}
+                    </div>
+                  )}
+                  
+                  {realizationLevel >= 80 && (
+                    <div className="realization-4">
+                      <strong>Realization #4:</strong> {selectedAttack.id === '51_percent_attack' ? 
+                        'Bitcoin\'s security gets stronger as more energy is invested' :
+                        'Physical and institutional systems have fundamental vulnerabilities'}
+                    </div>
+                  )}
+                  
+                  {realizationLevel >= 100 && (
+                    <div className="final-realization">
+                      <h5>🧠 Ultimate Realization:</h5>
+                      <div className="ultimate-insight">
+                        {selectedAttack.id === '51_percent_attack' ? (
+                          <p>
+                            <strong>Bitcoin is economically invincible.</strong> The same incentive structure that 
+                            makes attacks impossibly expensive also rewards honest participation massively. 
+                            It's cheaper and more profitable to secure the network than attack it.
+                          </p>
+                        ) : (
+                          <p>
+                            <strong>Traditional systems remain vulnerable.</strong> Banks get hacked regularly, 
+                            gold vaults can be robbed, but Bitcoin has never been successfully attacked 
+                            despite billions in bounties for finding vulnerabilities.
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {realizationLevel >= 100 && (
+            <div className="security-conclusion">
+              <h4>🛡️ Security Economics Lesson Complete</h4>
+              <div className="lesson-summary">
+                <p>
+                  You've discovered the economic foundation of security: Bitcoin's design makes 
+                  honest participation always more profitable than attacking the network. 
+                  This creates a self-reinforcing security system that gets stronger over time.
+                </p>
+              </div>
+
+              <ActionButton
+                variant="success"
+                onClick={handleAttackRealization}
+                className="realization-complete-button"
+              >
+                Master Difficulty Control 🎯
+              </ActionButton>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-// Consensus Comparison Component  
-const ConsensusComparison = ({ content, onComplete }) => {
-  const [selectedMechanism, setSelectedMechanism] = useState(0);
+// 🎯 Step 4: Difficulty Master Control
+const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [controlPhase, setControlPhase] = useState('learning'); // learning, simulation, mastery
+  const [networkState, setNetworkState] = useState({
+    currentHashrate: 450, // EH/s
+    targetBlockTime: 600, // 10 minutes in seconds
+    actualBlockTime: 600,
+    difficulty: 62460000000000,
+    blocksUntilAdjustment: 2016,
+    adjustmentDirection: 'stable'
+  });
+  const [simulationResults, setSimulationResults] = useState([]);
+  const [userUnderstanding, setUserUnderstanding] = useState(0);
+
+  const difficultyScenarios = [
+    {
+      id: 'hashrate_surge',
+      title: '📈 Massive Hashrate Surge',
+      description: 'Simulate China adding 50% more mining power overnight',
+      hashrateChange: 1.5, // 50% increase
+      expectedEffect: 'Blocks come faster temporarily, then difficulty adjusts up'
+    },
+    {
+      id: 'hashrate_crash',
+      title: '📉 Mining Exodus Event', 
+      description: 'Simulate 40% of miners suddenly going offline',
+      hashrateChange: 0.6, // 40% decrease
+      expectedEffect: 'Blocks slow down temporarily, then difficulty adjusts down'
+    },
+    {
+      id: 'gradual_growth',
+      title: '📊 Steady Network Growth',
+      description: 'Simulate gradual 20% hashrate increase over time',
+      hashrateChange: 1.2, // 20% increase
+      expectedEffect: 'Slight block time reduction, smooth difficulty adjustment'
+    }
+  ];
+
+  const runDifficultySimulation = (scenario) => {
+    setControlPhase('simulation');
+    
+    // Simulate the difficulty adjustment process
+    const newHashrate = networkState.currentHashrate * scenario.hashrateChange;
+    const newBlockTime = networkState.targetBlockTime / scenario.hashrateChange;
+    
+    // Simulate blocks being mined with new hashrate
+    const simulationSteps = [];
+    let currentDifficulty = networkState.difficulty;
+    let currentBlockTime = newBlockTime;
+    let blocksRemaining = 2016;
+    
+    for (let week = 1; week <= 4; week++) {
+      if (week === 3) {
+        // Difficulty adjustment happens
+        const timeRatio = currentBlockTime / networkState.targetBlockTime;
+        currentDifficulty = currentDifficulty / timeRatio;
+        currentBlockTime = networkState.targetBlockTime; // Back to 10 minutes
+        blocksRemaining = 2016; // Reset counter
+      }
+      
+      simulationSteps.push({
+        week,
+        hashrate: newHashrate,
+        blockTime: currentBlockTime,
+        difficulty: currentDifficulty,
+        status: week < 3 ? 'Accumulating data...' : 'Difficulty adjusted!'
+      });
+    }
+    
+    setSimulationResults(simulationSteps);
+    
+    // Simulate understanding progression
+    let understanding = 0;
+    const understandingInterval = setInterval(() => {
+      understanding += 25;
+      setUserUnderstanding(understanding);
+      if (understanding >= 100) {
+        clearInterval(understandingInterval);
+        setControlPhase('mastery');
+      }
+    }, 1500);
+  };
+
+  const handleDifficultyMastery = () => {
+    const insights = {
+      scenarioTested: simulationResults[0]?.status,
+      understandingLevel: userUnderstanding,
+      difficultyGrasped: 'automatic_security_adjustment',
+      heartbeatControl: 'mastered'
+    };
+    onComplete(insights);
+  };
 
   return (
-    <div className="consensus-comparison">
-      <div className="comparison-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
+    <div className="difficulty-master-control">
+      <div className="control-introduction">
+        <h2>🎯 Difficulty Master Control Center</h2>
+        <div className="master-concept">
+          <p className="concept-text">
+            You're now in control of Bitcoin's "heartbeat" - the difficulty adjustment that 
+            keeps blocks coming every 10 minutes no matter how many miners join or leave the network.
+          </p>
+          
+          <div className="heartbeat-visual">
+            <div className="heartbeat-rhythm">
+              <span className="beat">💗</span>
+              <span className="beat-time">10 min</span>
+              <span className="beat">💗</span>
+              <span className="beat-time">10 min</span>
+              <span className="beat">💗</span>
+              <span className="beat-time">10 min</span>
+            </div>
+            <div className="rhythm-description">Bitcoin's Perfect 10-Minute Heartbeat</div>
+          </div>
+        </div>
       </div>
 
-      <div className="mechanism-selector">
-        <div className="mechanism-tabs">
-          {content.consensusMechanisms.map((mechanism, index) => (
-              <button
-                key={index}
-              className={`mechanism-tab ${selectedMechanism === index ? 'active' : ''}`}
-              onClick={() => setSelectedMechanism(index)}
-              >
-              {mechanism.name}
-              </button>
+      {controlPhase === 'learning' && (
+        <div className="difficulty-education">
+          <h3>📚 Master the Difficulty Control Mechanism</h3>
+          
+          <div className="mechanism-explanation">
+            <div className="adjustment-process">
+              <h4>🔄 How Automatic Adjustment Works:</h4>
+              <div className="process-steps">
+                <div className="process-step">
+                  <div className="step-number">1</div>
+                  <div className="step-content">
+                    <strong>Monitoring:</strong> Network tracks actual time for last 2,016 blocks
+                  </div>
+                </div>
+                <div className="process-step">
+                  <div className="step-number">2</div>
+                  <div className="step-content">
+                    <strong>Calculation:</strong> Compares actual time vs target (20,160 minutes)
+                  </div>
+                </div>
+                <div className="process-step">
+                  <div className="step-number">3</div>
+                  <div className="step-content">
+                    <strong>Adjustment:</strong> Increases difficulty if blocks too fast, decreases if too slow
+                  </div>
+                </div>
+                <div className="process-step">
+                  <div className="step-number">4</div>
+                  <div className="step-content">
+                    <strong>Result:</strong> Block time returns to ~10 minutes automatically
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="current-network-stats">
+              <h4>📊 Current Network State:</h4>
+              <div className="stats-grid">
+                <div className="stat-item">
+                  <span className="stat-label">Global Hashrate:</span>
+                  <span className="stat-value">{networkState.currentHashrate} EH/s</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Current Difficulty:</span>
+                  <span className="stat-value">{(networkState.difficulty / 1000000000000).toFixed(1)}T</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Target Block Time:</span>
+                  <span className="stat-value">10 minutes</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Blocks Until Adjustment:</span>
+                  <span className="stat-value">{networkState.blocksUntilAdjustment}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="simulation-challenge">
+            <h4>🎮 Ready to Test Your Control?</h4>
+            <p>Choose a scenario to simulate and watch how Bitcoin automatically maintains its heartbeat:</p>
+            
+            <div className="scenario-grid">
+              {difficultyScenarios.map((scenario) => (
+                <div key={scenario.id} className="scenario-card">
+                  <div className="scenario-header">
+                    <h5>{scenario.title}</h5>
+                  </div>
+                  
+                  <div className="scenario-description">
+                    {scenario.description}
+                  </div>
+                  
+                  <div className="expected-effect">
+                    <strong>Expected:</strong> {scenario.expectedEffect}
+                  </div>
+                  
+                  <ActionButton
+                    variant="primary"
+                    onClick={() => runDifficultySimulation(scenario)}
+                    className="simulate-button"
+                  >
+                    Run Simulation 🚀
+                  </ActionButton>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {controlPhase === 'simulation' && (
+        <div className="difficulty-simulation">
+          <h3>⚡ Difficulty Adjustment Simulation in Progress</h3>
+          
+          <div className="simulation-timeline">
+            {simulationResults.map((step, index) => (
+              <div key={index} className={`timeline-step ${userUnderstanding >= (index + 1) * 25 ? 'revealed' : ''}`}>
+                <div className="step-week">Week {step.week}</div>
+                <div className="step-metrics">
+                  <div className="metric">
+                    <span className="metric-label">Hashrate:</span>
+                    <span className="metric-value">{step.hashrate.toFixed(0)} EH/s</span>
+                  </div>
+                  <div className="metric">
+                    <span className="metric-label">Block Time:</span>
+                    <span className="metric-value">{(step.blockTime / 60).toFixed(1)} min</span>
+                  </div>
+                  <div className="metric">
+                    <span className="metric-label">Difficulty:</span>
+                    <span className="metric-value">{(step.difficulty / 1000000000000).toFixed(1)}T</span>
+                  </div>
+                </div>
+                <div className="step-status">{step.status}</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="understanding-progress">
+            <div className="progress-label">Understanding Difficulty Control:</div>
+            <div className="progress-bar">
+              <div 
+                className="progress-fill"
+                style={{ width: `${userUnderstanding}%` }}
+              ></div>
+            </div>
+            <div className="progress-percentage">{userUnderstanding}%</div>
+          </div>
+        </div>
+      )}
+
+      {controlPhase === 'mastery' && (
+        <div className="difficulty-mastery">
+          <h3>🏆 Difficulty Master Achievement Unlocked!</h3>
+          
+          <div className="mastery-celebration">
+            <div className="achievement-icon">🎯</div>
+            <div className="achievement-text">
+              <h4>You now control Bitcoin's heartbeat!</h4>
+              <p>You understand how the network automatically maintains security regardless of mining changes.</p>
+            </div>
+          </div>
+          
+          <div className="mastery-insights">
+            <h4>🧠 Master-Level Insights Gained:</h4>
+            <div className="insight-list">
+              <div className="insight-item">
+                <strong>Self-Regulation:</strong> Bitcoin adjusts difficulty automatically without human intervention
+              </div>
+              <div className="insight-item">
+                <strong>Predictable Issuance:</strong> Consistent 10-minute blocks ensure predictable Bitcoin supply
+              </div>
+              <div className="insight-item">
+                <strong>Security Scaling:</strong> More miners = higher difficulty = stronger security
+              </div>
+              <div className="insight-item">
+                <strong>Attack Resistance:</strong> Even massive hashrate changes can't break the system
+              </div>
+            </div>
+          </div>
+          
+          <div className="personal-impact">
+            <h4>💰 What This Means for Your Wealth:</h4>
+            <p>
+              Bitcoin's difficulty adjustment ensures your digital wealth is protected by a security 
+              system that automatically strengthens itself over time. No central authority needed - 
+              just pure mathematics and economic incentives.
+            </p>
+          </div>
+
+          <ActionButton
+            variant="success"
+            onClick={handleDifficultyMastery}
+            className="mastery-complete-button"
+          >
+            Pioneer Clean Energy Revolution 🌱
+          </ActionButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 🌱 Step 5: Clean Energy Pioneer
+const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [pioneerPhase, setPioneerPhase] = useState('awakening'); // awakening, building, leading
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [projectProgress, setProjectProgress] = useState(0);
+  const [energyRevolution, setEnergyRevolution] = useState({
+    renewablePercentage: 58, // Current Bitcoin renewable energy usage
+    co2Reduction: 0,
+    gridStabilization: 0,
+    ruralDevelopment: 0
+  });
+
+  const energyProjects = [
+    {
+      id: 'solar_mining_farm',
+      title: '☀️ Solar-Powered Bitcoin Mining Farm',
+      description: 'Build mining operation using stranded solar energy',
+      location: 'Texas Solar Field',
+      energySource: 'Solar panels generating excess midday power',
+      innovation: 'Monetize solar energy that would otherwise be wasted',
+      impact: {
+        renewable: '+15% clean Bitcoin energy',
+        economic: '$2M annual revenue for solar farm',
+        environmental: '-50,000 tons CO2 annually',
+        community: '200 local jobs created'
+      }
+    },
+    {
+      id: 'hydro_mining_station',
+      title: '💧 Hydroelectric Mining Station',
+      description: 'Utilize excess hydroelectric capacity for Bitcoin mining',
+      location: 'Iceland Geothermal Plant',
+      energySource: 'Geothermal and hydroelectric excess capacity',
+      innovation: 'Convert stranded renewable energy into global value',
+      impact: {
+        renewable: '+25% clean Bitcoin energy',
+        economic: '$5M additional revenue for power plant',
+        environmental: '100% renewable energy mining',
+        community: 'Energy independence for remote community'
+      }
+    },
+    {
+      id: 'wind_stabilization',
+      title: '💨 Wind Grid Stabilization Network',
+      description: 'Use Bitcoin mining to balance wind energy intermittency',
+      location: 'North Dakota Wind Farms',
+      energySource: 'Variable wind power requiring grid balancing',
+      innovation: 'Provide demand flexibility for renewable grid integration',
+      impact: {
+        renewable: '+30% grid renewable capacity',
+        economic: '$10M grid stabilization revenue',
+        environmental: 'Enable 200MW additional wind capacity',
+        community: 'Stabilize rural electric grid'
+      }
+    }
+  ];
+
+  const buildEnergyProject = (project) => {
+    setSelectedProject(project);
+    setPioneerPhase('building');
+    setProjectProgress(0);
+
+    // Simulate project construction and impact
+    const buildingInterval = setInterval(() => {
+      setProjectProgress(prev => {
+        const newProgress = prev + 20;
+        
+        // Update energy revolution metrics as project builds
+        if (newProgress >= 40) {
+          setEnergyRevolution(prevRev => ({
+            ...prevRev,
+            renewablePercentage: Math.min(prevRev.renewablePercentage + 2, 100),
+            co2Reduction: prevRev.co2Reduction + 10000
+          }));
+        }
+        
+        if (newProgress >= 80) {
+          setEnergyRevolution(prevRev => ({
+            ...prevRev,
+            gridStabilization: prevRev.gridStabilization + 25,
+            ruralDevelopment: prevRev.ruralDevelopment + 1
+          }));
+        }
+        
+        if (newProgress >= 100) {
+          clearInterval(buildingInterval);
+          setPioneerPhase('leading');
+        }
+        
+        return newProgress;
+      });
+    }, 1200);
+  };
+
+  const handleEnergyRevolutionComplete = () => {
+    const insights = {
+      projectBuilt: selectedProject?.id,
+      revolutionLed: energyRevolution,
+      climateImpact: 'renewable_energy_leadership',
+      communityBenefit: selectedProject?.impact.community
+    };
+    onComplete(insights);
+  };
+
+  return (
+    <div className="clean-energy-pioneer">
+      <div className="pioneer-awakening">
+        <h2>🌱 Clean Energy Pioneer Mission</h2>
+        <div className="mission-context">
+          <p className="mission-text">
+            You're about to lead the renewable energy revolution. Bitcoin mining creates a 
+            new economic model that makes stranded renewable energy profitable, accelerating 
+            the global transition to clean power.
+          </p>
+          
+          <div className="current-energy-state">
+            <h3>🌍 Current Bitcoin Energy Profile:</h3>
+            <div className="energy-stats">
+              <div className="stat-item">
+                <span className="stat-label">Renewable Energy Usage:</span>
+                <span className="stat-value">{energyRevolution.renewablePercentage}%</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">CO2 Reduction Potential:</span>
+                <span className="stat-value">{energyRevolution.co2Reduction.toLocaleString()} tons/year</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Grid Stabilization:</span>
+                <span className="stat-value">{energyRevolution.gridStabilization}%</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Rural Projects:</span>
+                <span className="stat-value">{energyRevolution.ruralDevelopment} communities</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {pioneerPhase === 'awakening' && (
+        <div className="energy-project-selection">
+          <h3>🚀 Choose Your Energy Revolution Project:</h3>
+          
+          <div className="project-grid">
+            {energyProjects.map((project) => (
+              <div key={project.id} className="project-card">
+                <div className="project-header">
+                  <h4>{project.title}</h4>
+                  <div className="project-location">📍 {project.location}</div>
+                </div>
+                
+                <div className="project-details">
+                  <div className="project-description">{project.description}</div>
+                  
+                  <div className="energy-source">
+                    <strong>Energy Source:</strong> {project.energySource}
+                  </div>
+                  
+                  <div className="innovation">
+                    <strong>Innovation:</strong> {project.innovation}
+                  </div>
+                  
+                  <div className="impact-preview">
+                    <strong>Expected Impact:</strong>
+                    <ul>
+                      <li>🌱 {project.impact.renewable}</li>
+                      <li>💰 {project.impact.economic}</li>
+                      <li>🌍 {project.impact.environmental}</li>
+                      <li>👥 {project.impact.community}</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <ActionButton
+                  variant="success"
+                  onClick={() => buildEnergyProject(project)}
+                  className="build-project-button"
+                >
+                  Build This Project 🔨
+                </ActionButton>
+              </div>
             ))}
           </div>
         </div>
+      )}
 
-      <div className="mechanism-details">
-        <div className="mechanism-overview">
-          <h3>{content.consensusMechanisms[selectedMechanism].name}</h3>
-          <div className="overview-metrics">
-            <div className="metric">
-              <strong>Energy Requirement:</strong>
-              <span className={`energy-level ${content.consensusMechanisms[selectedMechanism].energyRequirement.toLowerCase()}`}>
-                {content.consensusMechanisms[selectedMechanism].energyRequirement}
-        </span>
-          </div>
-            <div className="metric">
-              <strong>Security Model:</strong>
-              <span>{content.consensusMechanisms[selectedMechanism].securityModel}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="tradeoffs-analysis">
-          <div className="pros-cons">
-            <div className="pros">
-              <h4>✅ Advantages</h4>
-              <ul>
-                {content.consensusMechanisms[selectedMechanism].tradeoffs.pros.map((pro, i) => (
-                  <li key={i}>{pro}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="cons">
-              <h4>❌ Disadvantages</h4>
-              <ul>
-                {content.consensusMechanisms[selectedMechanism].tradeoffs.cons.map((con, i) => (
-                  <li key={i}>{con}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="real-world-analogy">
-            <strong>Real-world analogy:</strong>
-            <em>{content.consensusMechanisms[selectedMechanism].realWorldAnalogy}</em>
-          </div>
-        </div>
-      </div>
-
-      <div className="why-pow-matters">
-        <h3>⚡ Why Proof of Work Matters</h3>
-        <div className="pow-benefits">
-          {content.whyPowMatter.map((benefit, index) => (
-            <div key={index} className="benefit-point">
-              <Zap size={20} />
-              <span>{benefit}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <ContinueButton onClick={onComplete}>
-        Discover Your Role 🚀
-      </ContinueButton>
-    </div>
-  );
-};
-
-// Actionable Mining Component
-const ActionableMining = ({ content, onComplete }) => {
-  const [selectedLevel, setSelectedLevel] = useState(0);
-
-  return (
-    <div className="actionable-mining">
-      <div className="actionable-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="participation-levels">
-        <h3>🎯 Choose Your Participation Level</h3>
-        <div className="level-selector">
-          {content.participationLevels.map((level, index) => (
-        <button 
-              key={index}
-              className={`participation-level ${selectedLevel === index ? 'selected' : ''}`}
-              onClick={() => setSelectedLevel(index)}
-        >
-              <h4>{level.level}</h4>
-              <p>{level.description}</p>
-        </button>
-          ))}
-      </div>
-
-        <div className="level-details">
-          <div className="level-info">
-            <h4>{content.participationLevels[selectedLevel].level}</h4>
-            <div className="requirements">
-              <strong>Requirements:</strong>
-              <ul>
-                {content.participationLevels[selectedLevel].requirements.map((req, i) => (
-                  <li key={i}>{req}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="contribution">
-              <strong>Your Contribution:</strong>
-              <p>{content.participationLevels[selectedLevel].contribution}</p>
-            </div>
-            <div className="getting-started">
-              <strong>Getting Started:</strong>
-              <p>{content.participationLevels[selectedLevel].gettingStarted}</p>
-          </div>
-        </div>
-        </div>
-      </div>
-
-      <div className="key-learnings">
-        <h3>🧠 Key Learnings</h3>
-        <div className="learnings-grid">
-          {content.keyLearnings.map((learning, index) => (
-            <div key={index} className="learning-item">
-              <CheckCircle size={20} />
-              <span>{learning}</span>
-            </div>
-          ))}
-            </div>
+      {pioneerPhase === 'building' && selectedProject && (
+        <div className="project-construction">
+          <h3>🔨 Building {selectedProject.title}</h3>
+          
+          <div className="construction-visualization">
+            <div className="project-site">
+              <h4>📍 {selectedProject.location}</h4>
+              <div className="construction-progress">
+                <div className="progress-label">Construction Progress:</div>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill"
+                    style={{ width: `${projectProgress}%` }}
+                  ></div>
                 </div>
-
-      <div className="next-steps">
-        <h3>🚀 Your Next Steps</h3>
-        <div className="steps-timeline">
-          <div className="step immediate">
-            <h4>Immediate</h4>
-            <p>{content.nextSteps.immediate}</p>
-                </div>
-          <div className="step intermediate">
-            <h4>Intermediate</h4>
-            <p>{content.nextSteps.intermediate}</p>
-          </div>
-          <div className="step advanced">
-            <h4>Advanced</h4>
-            <p>{content.nextSteps.advanced}</p>
-        </div>
-        </div>
-      </div>
-
-      <button className="complete-button" onClick={onComplete}>
-        🎓 Complete Mining Mastery
-      </button>
-    </div>
-  );
-};
-
-// Energy Security Intro Component  
-const EnergySecurityIntro = ({ content, onComplete }) => {
-  return (
-    <div className="energy-security-intro">
-      <div className="intro-header">
-        <h2>{content.title}</h2>
-        <p className="subtitle">{content.subtitle}</p>
-        <div className="prime-text">{content.primeText}</div>
-      </div>
-
-      <div className="transformation-chain">
-        <h3>⚡ The Energy → Security Transformation</h3>
-        <div className="chain-steps">
-          {Object.entries(content.transformationChain).map(([key, step]) => (
-            <div key={key} className="chain-step">
-              <div className="step-icon">{step.icon}</div>
-              <div className="step-content">
-                <h4>{step.title}</h4>
-                <p>{step.description}</p>
-                <div className="step-detail">{step.detail}</div>
+                <div className="progress-percentage">{projectProgress}%</div>
               </div>
             </div>
-          ))}
+            
+            <div className="impact-tracking">
+              <h4>🌍 Real-Time Impact:</h4>
+              <div className="impact-metrics">
+                <div className="metric">
+                  <span className="metric-icon">🌱</span>
+                  <span className="metric-label">Renewable %:</span>
+                  <span className="metric-value">{energyRevolution.renewablePercentage}%</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-icon">🌍</span>
+                  <span className="metric-label">CO2 Reduced:</span>
+                  <span className="metric-value">{energyRevolution.co2Reduction.toLocaleString()} tons</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-icon">⚡</span>
+                  <span className="metric-label">Grid Stability:</span>
+                  <span className="metric-value">{energyRevolution.gridStabilization}%</span>
+                </div>
+                <div className="metric">
+                  <span className="metric-icon">👥</span>
+                  <span className="metric-label">Communities:</span>
+                  <span className="metric-value">{energyRevolution.ruralDevelopment}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="construction-phases">
+            <div className={`phase ${projectProgress >= 20 ? 'completed' : 'current'}`}>
+              Phase 1: Site Preparation & Permits
+            </div>
+            <div className={`phase ${projectProgress >= 40 ? 'completed' : projectProgress >= 20 ? 'current' : ''}`}>
+              Phase 2: Renewable Energy Integration
+            </div>
+            <div className={`phase ${projectProgress >= 60 ? 'completed' : projectProgress >= 40 ? 'current' : ''}`}>
+              Phase 3: Mining Infrastructure Installation
+            </div>
+            <div className={`phase ${projectProgress >= 80 ? 'completed' : projectProgress >= 60 ? 'current' : ''}`}>
+              Phase 4: Grid Stabilization Systems
+            </div>
+            <div className={`phase ${projectProgress >= 100 ? 'completed' : projectProgress >= 80 ? 'current' : ''}`}>
+              Phase 5: Community Benefit Programs
+            </div>
+          </div>
+        </div>
+      )}
+
+      {pioneerPhase === 'leading' && (
+        <div className="energy-revolution-complete">
+          <h3>🏆 Clean Energy Revolution Leader!</h3>
+          
+          <div className="revolution-celebration">
+            <div className="achievement-icon">🌱</div>
+            <div className="achievement-text">
+              <h4>You've successfully pioneered clean Bitcoin mining!</h4>
+              <p>Your project demonstrates how Bitcoin incentivizes renewable energy development.</p>
+            </div>
+          </div>
+          
+          <div className="project-impact-summary">
+            <h4>📊 Your Project's Impact:</h4>
+            <div className="impact-grid">
+              <div className="impact-card">
+                <div className="impact-icon">🌱</div>
+                <div className="impact-title">Renewable Energy</div>
+                <div className="impact-value">{selectedProject.impact.renewable}</div>
+                <div className="impact-description">Increased clean Bitcoin mining</div>
+              </div>
+              <div className="impact-card">
+                <div className="impact-icon">💰</div>
+                <div className="impact-title">Economic Benefit</div>
+                <div className="impact-value">{selectedProject.impact.economic}</div>
+                <div className="impact-description">Annual revenue generation</div>
+              </div>
+              <div className="impact-card">
+                <div className="impact-icon">🌍</div>
+                <div className="impact-title">Environmental</div>
+                <div className="impact-value">{selectedProject.impact.environmental}</div>
+                <div className="impact-description">Climate impact reduction</div>
+              </div>
+              <div className="impact-card">
+                <div className="impact-icon">👥</div>
+                <div className="impact-title">Community</div>
+                <div className="impact-value">{selectedProject.impact.community}</div>
+                <div className="impact-description">Local economic development</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="global-revolution-insight">
+            <h4>🌍 Global Energy Revolution Insight:</h4>
+            <p>
+              Your project is part of a global movement where Bitcoin mining is driving the largest 
+              renewable energy buildout in history. By making stranded renewable energy profitable, 
+              Bitcoin accelerates the transition to clean power worldwide.
+            </p>
+            
+            <div className="future-vision">
+              <strong>Future Vision:</strong> Within a decade, Bitcoin mining will be predominantly 
+              renewable, providing economic incentives for clean energy projects globally while 
+              securing the most robust monetary network ever created.
+            </div>
+          </div>
+
+          <ActionButton
+            variant="success"
+            onClick={handleEnergyRevolutionComplete}
+            className="revolution-complete-button"
+          >
+            Join Global Security Network 🌍
+          </ActionButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// 🌍 Step 6: Global Security Guardian
+const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => {
+  const [guardianPhase, setGuardianPhase] = useState('recruitment'); // recruitment, training, deployed
+  const [securityRole, setSecurityRole] = useState(null);
+  const [networkContribution, setNetworkContribution] = useState({
+    nodesValidated: 0,
+    attacksRepelled: 0,
+    globalConnections: 0,
+    sovereigntyDefended: 0
+  });
+  const [deploymentProgress, setDeploymentProgress] = useState(0);
+
+  const securityRoles = [
+    {
+      id: 'node_operator',
+      title: '🛡️ Bitcoin Node Guardian',
+      description: 'Run a Bitcoin node to validate transactions and maintain network rules',
+      requirements: ['Computer/Raspberry Pi', 'Internet connection', '~500GB storage'],
+      contribution: 'Validate every transaction, reject invalid blocks, maintain consensus rules',
+      impact: {
+        decentralization: 'Increases network censorship resistance',
+        sovereignty: 'Validates your own transactions without trusting third parties',
+        security: 'Helps enforce Bitcoin protocol rules globally',
+        community: 'Strengthens the distributed network foundation'
+      },
+      globalEffect: 'Every node makes the network more resilient to attacks and censorship'
+    },
+    {
+      id: 'lightning_guardian',
+      title: '⚡ Lightning Network Guardian', 
+      description: 'Operate Lightning channels to enable instant Bitcoin payments',
+      requirements: ['Bitcoin node', 'Lightning software', 'Bitcoin liquidity'],
+      contribution: 'Provide payment routing, maintain channels, enable instant transactions',
+      impact: {
+        scalability: 'Enable millions of transactions per second',
+        accessibility: 'Make Bitcoin payments instant and low-cost',
+        innovation: 'Support Bitcoin as everyday currency',
+        economy: 'Earn fees while improving Bitcoin usability'
+      },
+      globalEffect: 'Lightning guardians enable Bitcoin to scale to global payment system'
+    },
+    {
+      id: 'education_guardian',
+      title: '🧠 Bitcoin Education Guardian',
+      description: 'Educate others about Bitcoin and monetary sovereignty',
+      requirements: ['Bitcoin knowledge', 'Communication skills', 'Passion for freedom'],
+      contribution: 'Teach Bitcoin principles, counter misinformation, onboard new users',
+      impact: {
+        adoption: 'Accelerate global Bitcoin understanding',
+        resistance: 'Counter anti-Bitcoin propaganda and FUD',
+        empowerment: 'Help others achieve financial sovereignty',
+        culture: 'Build Bitcoin-native communities and values'
+      },
+      globalEffect: 'Education guardians ensure Bitcoin knowledge spreads and persists'
+    }
+  ];
+
+  const deploySecurityRole = (role) => {
+    setSecurityRole(role);
+    setGuardianPhase('training');
+    setDeploymentProgress(0);
+
+    // Simulate guardian training and deployment
+    const trainingInterval = setInterval(() => {
+      setDeploymentProgress(prev => {
+        const newProgress = prev + 25;
+        
+        // Update network contribution as training progresses
+        if (newProgress >= 25) {
+          setNetworkContribution(prevContrib => ({
+            ...prevContrib,
+            nodesValidated: prevContrib.nodesValidated + 1000,
+            globalConnections: prevContrib.globalConnections + 50
+          }));
+        }
+        
+        if (newProgress >= 50) {
+          setNetworkContribution(prevContrib => ({
+            ...prevContrib,
+            attacksRepelled: prevContrib.attacksRepelled + 1,
+            sovereigntyDefended: prevContrib.sovereigntyDefended + 100
+          }));
+        }
+        
+        if (newProgress >= 100) {
+          clearInterval(trainingInterval);
+          setGuardianPhase('deployed');
+        }
+        
+        return newProgress;
+      });
+    }, 2000);
+  };
+
+  const handleGuardianDeployment = () => {
+    const insights = {
+      guardianRole: securityRole?.id,
+      networkContribution: networkContribution,
+      globalImpact: securityRole?.globalEffect,
+      sovereigntyAchieved: 'full_digital_sovereignty'
+    };
+    onComplete(insights);
+  };
+
+  return (
+    <div className="global-security-guardian">
+      <div className="guardian-recruitment">
+        <h2>🌍 Global Security Guardian Recruitment</h2>
+        <div className="recruitment-briefing">
+          <p className="briefing-text">
+            You've mastered energy alchemy and pioneered clean energy. Now join the global 
+            network of guardians protecting digital sovereignty for billions of people worldwide.
+          </p>
+          
+          <div className="global-network-stats">
+            <h3>🌐 Current Global Guardian Network:</h3>
+            <div className="network-stats">
+              <div className="stat-item">
+                <span className="stat-label">Active Bitcoin Nodes:</span>
+                <span className="stat-value">15,000+ worldwide</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Lightning Channels:</span>
+                <span className="stat-value">5,000+ active guardians</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Countries Protected:</span>
+                <span className="stat-value">100+ nations</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">People Served:</span>
+                <span className="stat-value">100M+ Bitcoin users</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="key-insight">
-        <div className="insight-icon">💡</div>
-        <div className="insight-content">
-          <h3>Key Insight</h3>
-          <p>{content.keyInsight}</p>
-      </div>
-      </div>
-
-      <div className="trust-comparison">
-        <h3>🤔 Two Models of Trust</h3>
-        <div className="comparison-grid">
-          <div className="comparison-item traditional">
-            <h4>🏛️ Traditional System</h4>
-            <p>{content.comparison.traditional}</p>
-          </div>
-          <div className="comparison-item bitcoin">
-            <h4>₿ Bitcoin System</h4>
-            <p>{content.comparison.bitcoin}</p>
+      {guardianPhase === 'recruitment' && (
+        <div className="guardian-role-selection">
+          <h3>🛡️ Choose Your Guardian Specialization:</h3>
+          
+          <div className="role-grid">
+            {securityRoles.map((role) => (
+              <div key={role.id} className="guardian-role-card">
+                <div className="role-header">
+                  <h4>{role.title}</h4>
+                </div>
+                
+                <div className="role-description">
+                  {role.description}
+                </div>
+                
+                <div className="role-requirements">
+                  <strong>Requirements:</strong>
+                  <ul>
+                    {role.requirements.map((req, index) => (
+                      <li key={index}>{req}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="role-contribution">
+                  <strong>Your Contribution:</strong>
+                  <p>{role.contribution}</p>
+                </div>
+                
+                <div className="role-impact">
+                  <strong>Impact Areas:</strong>
+                  <div className="impact-list">
+                    {Object.entries(role.impact).map(([key, value]) => (
+                      <div key={key} className="impact-item">
+                        <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="global-effect">
+                  <strong>Global Effect:</strong> {role.globalEffect}
+                </div>
+                
+                <ActionButton
+                  variant="primary"
+                  onClick={() => deploySecurityRole(role)}
+                  className="deploy-guardian-button"
+                >
+                  Deploy as Guardian 🚀
+                </ActionButton>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
-      <button className="continue-button" onClick={onComplete}>
-        Explore Mining Simulation ⚡
-        </button>
+      {guardianPhase === 'training' && securityRole && (
+        <div className="guardian-training">
+          <h3>🎯 Guardian Training: {securityRole.title}</h3>
+          
+          <div className="training-progress">
+            <div className="training-header">
+              <h4>Guardian Deployment Progress:</h4>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill"
+                  style={{ width: `${deploymentProgress}%` }}
+                ></div>
+              </div>
+              <div className="progress-percentage">{deploymentProgress}%</div>
+            </div>
+            
+            <div className="training-phases">
+              <div className={`training-phase ${deploymentProgress >= 25 ? 'completed' : 'current'}`}>
+                🎓 Guardian Knowledge Training
+              </div>
+              <div className={`training-phase ${deploymentProgress >= 50 ? 'completed' : deploymentProgress >= 25 ? 'current' : ''}`}>
+                🔧 Technical Setup & Configuration
+              </div>
+              <div className={`training-phase ${deploymentProgress >= 75 ? 'completed' : deploymentProgress >= 50 ? 'current' : ''}`}>
+                🌐 Network Integration & Testing
+              </div>
+              <div className={`training-phase ${deploymentProgress >= 100 ? 'completed' : deploymentProgress >= 75 ? 'current' : ''}`}>
+                🛡️ Full Guardian Deployment
+              </div>
+            </div>
+          </div>
+          
+          <div className="network-contribution-tracking">
+            <h4>📊 Your Network Contribution:</h4>
+            <div className="contribution-metrics">
+              <div className="contribution-metric">
+                <span className="metric-icon">✅</span>
+                <span className="metric-label">Transactions Validated:</span>
+                <span className="metric-value">{networkContribution.nodesValidated.toLocaleString()}</span>
+              </div>
+              <div className="contribution-metric">
+                <span className="metric-icon">🛡️</span>
+                <span className="metric-label">Attacks Repelled:</span>
+                <span className="metric-value">{networkContribution.attacksRepelled}</span>
+              </div>
+              <div className="contribution-metric">
+                <span className="metric-icon">🌐</span>
+                <span className="metric-label">Global Connections:</span>
+                <span className="metric-value">{networkContribution.globalConnections}</span>
+              </div>
+              <div className="contribution-metric">
+                <span className="metric-icon">👑</span>
+                <span className="metric-label">Sovereignty Defended:</span>
+                <span className="metric-value">{networkContribution.sovereigntyDefended}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {guardianPhase === 'deployed' && (
+        <div className="guardian-deployed">
+          <h3>🏆 Global Security Guardian Deployed!</h3>
+          
+          <div className="deployment-celebration">
+            <div className="achievement-icon">🌍</div>
+            <div className="achievement-text">
+              <h4>Welcome to the Global Guardian Network!</h4>
+              <p>You are now protecting digital sovereignty for people worldwide.</p>
+            </div>
+          </div>
+          
+          <div className="guardian-impact-summary">
+            <h4>🌟 Your Guardian Impact:</h4>
+            <div className="final-impact-grid">
+              <div className="impact-stat">
+                <div className="stat-icon">⚡</div>
+                <div className="stat-title">Energy Alchemy Mastered</div>
+                <div className="stat-description">Transform electricity into mathematical security</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-icon">🌱</div>
+                <div className="stat-title">Clean Energy Pioneer</div>
+                <div className="stat-description">Lead renewable energy revolution with Bitcoin</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-icon">🛡️</div>
+                <div className="stat-title">Security Guardian</div>
+                <div className="stat-description">Protect global digital sovereignty network</div>
+              </div>
+              <div className="impact-stat">
+                <div className="stat-icon">👑</div>
+                <div className="stat-title">Digital Sovereign</div>
+                <div className="stat-description">Full control over your digital wealth</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="global-mission-complete">
+            <h4>🌍 Global Mission Accomplished:</h4>
+            <div className="mission-summary">
+              <p>
+                You've completed the energy alchemy journey from crisis detective to global guardian. 
+                You now understand how Bitcoin transforms raw electrical energy into the most secure 
+                monetary system ever created, while driving clean energy adoption worldwide.
+              </p>
+              
+              <div className="sovereignty-achievement">
+                <strong>🎯 Digital Sovereignty Achieved:</strong> You have the knowledge and tools to 
+                protect your wealth using mathematical proof instead of trusting institutions.
+              </div>
+            </div>
+            
+            <div className="next-journey">
+              <h4>🚀 Your Next Adventure:</h4>
+              <p>
+                Ready to dive deeper? The Keys Module will teach you how to generate and manage 
+                the cryptographic keys that give you complete control over your Bitcoin.
+              </p>
+            </div>
+          </div>
+
+          <ActionButton
+            variant="success"
+            onClick={handleGuardianDeployment}
+            className="journey-complete-button"
+          >
+            Continue to Keys Module 🔐
+          </ActionButton>
+        </div>
+      )}
     </div>
   );
 };
