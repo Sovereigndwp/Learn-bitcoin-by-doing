@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { useNotifications } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
-import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Play, ArrowRight, Map, Lightbulb, Shield } from 'lucide-react';
+import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Play, ArrowRight, Map, Lightbulb, Shield, RotateCcw } from 'lucide-react';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -234,6 +234,15 @@ const Homepage = () => {
             <Map size={16} />
             <span>Journey Map</span>
           </button>
+          {bankingExperienceCompleted && (
+            <button 
+              onClick={() => setShowResetConfirm(true)} 
+              className="nav-button reset-button"
+            >
+              <RotateCcw size={16} />
+              <span>Reset Journey</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -323,116 +332,169 @@ const Homepage = () => {
 // New Interactive Components
 
 const RealityCheckStep = ({ onComplete }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [showEmbed, setShowEmbed] = useState(false);
+  const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
+  const [simulationCompleted, setSimulationCompleted] = useState(false);
 
-  const realitySteps = [
+  const awakeningPhases = [
     {
-      title: "🎭 What You've Been Told",
-      question: "Money is neutral, banks are helpful, inflation is normal, and you should trust the experts.",
-      revelation: "But what if none of that is true?"
+      id: "illusion",
+      title: "🎭 The Illusion You Live In",
+      hook: "Every morning, you wake up believing money works for you.",
+      reality: "But money is working against you—by design.",
+      question: "What if everything you believe about money serves someone else's interests?",
+      action: "Question Everything"
     },
     {
-      title: "💡 The Uncomfortable Truth", 
-      question: "What if the current money system was designed to benefit a small group at everyone else's expense?",
-      revelation: "You're about to discover how deep the deception goes."
-    },
-    {
-      title: "🔍 Time for Truth",
-      question: "Ready to see the reality behind the illusion?",
-      revelation: "This interactive experience reveals what they don't want you to know."
+      id: "mechanism", 
+      title: "⚙️ The Machine Revealed",
+      hook: "There's an invisible machine extracting your wealth daily.",
+      reality: "This isn't conspiracy—it's monetary mechanics.",
+      question: "Ready to see how the wealth extraction machine actually works?",
+      action: "See The Machine"
     }
   ];
 
-  const currentRealityStep = realitySteps[currentStep];
+  const currentPhase = awakeningPhases[currentPhaseIndex];
+
+  const handleSimulationComplete = () => {
+    setSimulationCompleted(true);
+  };
 
   return (
     <div className="reality-check-step">
-      <h2>🎯 Start Here: A Reality Check</h2>
+      <div className="awakening-header">
+        <h2>🌅 Your Financial Awakening Starts Here</h2>
+        <p className="awakening-subtitle">
+          Before we explore Bitcoin's solution, you need to see the problem clearly.
+        </p>
+      </div>
       
-      <div className="reality-progression">
-        <div className="reality-indicators">
-          {realitySteps.map((_, index) => (
-            <div 
-              key={index}
-              className={`reality-dot ${currentStep === index ? 'active' : ''} ${index < currentStep ? 'completed' : ''}`}
-            />
-          ))}
-        </div>
-        
-        <div className="reality-content">
-          <h3>{currentRealityStep.title}</h3>
-          <p className="reality-question">{currentRealityStep.question}</p>
-          <p className="reality-revelation">{currentRealityStep.revelation}</p>
-        </div>
+      {currentPhaseIndex < awakeningPhases.length ? (
+        <div className="awakening-phase">
+          <div className="phase-progress">
+            <div className="progress-indicators">
+              {awakeningPhases.map((_, index) => (
+                <div 
+                  key={index}
+                  className={`progress-dot ${currentPhaseIndex === index ? 'active' : ''} ${index < currentPhaseIndex ? 'completed' : ''}`}
+                />
+              ))}
+            </div>
+            <span className="phase-counter">Phase {currentPhaseIndex + 1} of {awakeningPhases.length}</span>
+          </div>
 
-        <div className="reality-actions">
-          {currentStep < realitySteps.length - 1 ? (
+          <div className="phase-content">
+            <h3>{currentPhase.title}</h3>
+            <div className="reality-revelation">
+              <p className="hook">{currentPhase.hook}</p>
+              <p className="reality-statement">{currentPhase.reality}</p>
+              <p className="critical-question">{currentPhase.question}</p>
+            </div>
+          </div>
+
+          <button 
+            onClick={() => setCurrentPhaseIndex(currentPhaseIndex + 1)}
+            className="phase-continue-button"
+          >
+            <Lightbulb size={16} />
+            {currentPhase.action}
+          </button>
+        </div>
+      ) : (
+        <div className="simulation-reveal">
+          <div className="simulation-intro">
+            <h3>💰 Experience the Wealth Extraction Machine</h3>
+            <p>
+              This interactive simulation shows you exactly how your purchasing power 
+              disappears while others profit. No theories—just cold, hard numbers.
+            </p>
+          </div>
+
+          <div className="canva-simulation-container">
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              height: 0,
+              paddingTop: '56.2225%',
+              paddingBottom: 0,
+              boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+              marginTop: '1.6em',
+              marginBottom: '0.9em',
+              overflow: 'hidden',
+              borderRadius: '8px',
+              willChange: 'transform'
+            }}>
+              <iframe 
+                loading="lazy"
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 0,
+                  left: 0,
+                  border: 'none',
+                  padding: 0,
+                  margin: 0
+                }}
+                src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
+                allowFullScreen="allowfullscreen"
+                allow="fullscreen"
+                title="The Magic of Modern Money Simulation"
+              />
+            </div>
+            <div className="simulation-attribution">
+              <a 
+                href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="simulation-link"
+              >
+                The Magic of Modern Money Simulation (Website)
+              </a>
+              <span>by Dalia Platt</span>
+            </div>
+          </div>
+
+          {!simulationCompleted ? (
             <button 
-              onClick={() => setCurrentStep(currentStep + 1)}
-              className="reality-continue-button"
+              onClick={handleSimulationComplete}
+              className="simulation-complete-button"
             >
-              Continue → 
+              <CheckCircle size={16} />
+              I've Experienced the Simulation
             </button>
           ) : (
-            <>
-              <button 
-                onClick={() => setShowEmbed(!showEmbed)}
-                className="reality-reveal-button"
-              >
-                <Lightbulb size={16} />
-                {showEmbed ? 'Hide' : 'Reveal'} the Truth
-              </button>
+            <div className="awakening-completion">
+              <div className="completion-message">
+                <h4>🎯 Now You See the Matrix</h4>
+                <p>
+                  The current money system isn't broken—it's working exactly as designed. 
+                  You've just seen the wealth extraction machine in action.
+                </p>
+                <blockquote className="awakening-insight">
+                  💡 <strong>Your journey begins with this truth:</strong> Money is either a tool of freedom or a weapon of control. There's no middle ground.
+                </blockquote>
+              </div>
               
-              {showEmbed && (
-                <div className="reality-embed">
-                  <div className="canva-embed-container">
-                    <div style={{
-                      position: 'relative',
-                      width: '100%',
-                      height: 0,
-                      paddingTop: '56.2225%',
-                      paddingBottom: 0,
-                      boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
-                      marginTop: '1.6em',
-                      marginBottom: '0.9em',
-                      overflow: 'hidden',
-                      borderRadius: '8px',
-                      willChange: 'transform'
-                    }}>
-                      <iframe 
-                        loading="lazy"
-                        style={{
-                          position: 'absolute',
-                          width: '100%',
-                          height: '100%',
-                          top: 0,
-                          left: 0,
-                          border: 'none',
-                          padding: 0,
-                          margin: 0
-                        }}
-                        src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
-                        allowFullScreen="allowfullscreen"
-                        allow="fullscreen"
-                        title="The Magic of Modern Money Simulation"
-                      />
-                    </div>
-                  </div>
-                  
-                  <button 
-                    onClick={onComplete}
-                    className="reality-understood-button"
-                  >
-                    <CheckCircle size={16} />
-                    I Understand the Reality
-                  </button>
-                </div>
-              )}
-            </>
+              <div className="journey-preview">
+                <h5>🚀 What's Next?</h5>
+                <p>
+                  You'll discover how Bitcoin creates the first money in history designed to serve people, not power. 
+                  This isn't just technology—it's financial sovereignty.
+                </p>
+              </div>
+
+              <button 
+                onClick={onComplete}
+                className="begin-journey-button"
+              >
+                <Target size={16} />
+                Begin My Journey to Financial Freedom
+              </button>
+            </div>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 };
@@ -777,14 +839,14 @@ const ResetConfirmationDialog = ({ userStats, onConfirm, onCancel }) => {
     <div className="reset-overlay" onClick={onCancel}>
       <div className="reset-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="reset-dialog-header">
-          <h3>🔄 Restart Learning Journey</h3>
+          <h3>🔄 Reset to Financial Awakening</h3>
         </div>
         <div className="reset-dialog-content">
           <div className="warning-message">
             <div className="warning-icon">⚠️</div>
             <div>
-              <h4>Are you sure you want to restart?</h4>
-              <p>This will permanently delete all your progress, including:</p>
+              <h4>Return to the beginning of your journey?</h4>
+              <p>This will reset your progress and return you to the <strong>Financial Awakening</strong> section, permanently deleting:</p>
               <ul>
                 <li>✅ All completed modules ({userStats.completedModules})</li>
                 <li>🏆 All earned achievements ({userStats.achievements.length})</li>
@@ -792,6 +854,10 @@ const ResetConfirmationDialog = ({ userStats, onConfirm, onCancel }) => {
                 <li>🔥 Your learning streak</li>
               </ul>
               <p><strong>This action cannot be undone.</strong></p>
+              <div className="reset-benefit">
+                <h5>💡 Why reset?</h5>
+                <p>Experience the complete awakening journey again or share it with someone new to Bitcoin.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -800,7 +866,8 @@ const ResetConfirmationDialog = ({ userStats, onConfirm, onCancel }) => {
             Cancel
           </button>
           <button className="confirm-reset-button" onClick={onConfirm}>
-            Yes, Restart Journey
+            <RotateCcw size={16} />
+            Yes, Reset to Beginning
           </button>
         </div>
       </div>

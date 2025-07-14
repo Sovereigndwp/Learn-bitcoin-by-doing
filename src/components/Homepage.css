@@ -62,6 +62,16 @@
   transform: translateY(-2px);
 }
 
+.reset-button {
+  background: #e74c3c !important;
+  border-color: #e74c3c !important;
+}
+
+.reset-button:hover {
+  background: #c0392b !important;
+  border-color: #c0392b !important;
+}
+
 /* Reality Check Step */
 .reality-check-step {
   background: linear-gradient(135deg, #fff0f0 0%, #ffe6e6 100%);
@@ -187,6 +197,270 @@
 
 .canva-embed-container {
   margin: 24px 0;
+}
+
+/* Enhanced Reality Check - Awakening Flow */
+.awakening-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.awakening-header h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.awakening-subtitle {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+.awakening-phase {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff4d6 100%);
+  border: 2px solid #f7931a;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.phase-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.progress-indicators {
+  display: flex;
+  gap: 12px;
+}
+
+.progress-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #f7931a;
+  box-shadow: 0 0 20px rgba(247, 147, 26, 0.5);
+  transform: scale(1.2);
+}
+
+.progress-dot.completed {
+  background: #27ae60;
+}
+
+.phase-counter {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.phase-content {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.phase-content h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.reality-revelation {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hook {
+  font-size: 1.1rem;
+  color: #e74c3c;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.reality-statement {
+  font-size: 1.1rem;
+  color: #f39c12;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.critical-question {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: 700;
+  font-style: italic;
+  margin: 0;
+}
+
+.phase-continue-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  background: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.phase-continue-button:hover {
+  background: #e6830f;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.3);
+}
+
+.simulation-reveal {
+  background: white;
+  border: 2px solid #f7931a;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.simulation-intro {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.simulation-intro h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.simulation-intro p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.canva-simulation-container {
+  margin: 24px 0;
+}
+
+.simulation-attribution {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.simulation-link {
+  color: #f7931a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.simulation-link:hover {
+  text-decoration: underline;
+}
+
+.simulation-complete-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto 0;
+}
+
+.simulation-complete-button:hover {
+  background: #229954;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+}
+
+.awakening-completion {
+  margin-top: 32px;
+}
+
+.completion-message {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.completion-message h4 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.completion-message p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 16px;
+}
+
+.awakening-insight {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-left: 4px solid #f7931a;
+  padding: 16px 20px;
+  margin: 0 0 24px 0;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+.journey-preview {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff4d6 100%);
+  border: 1px solid #f7931a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.journey-preview h5 {
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.journey-preview p {
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+.begin-journey-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, #f7931a 0%, #e6830f 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(247, 147, 26, 0.3);
+}
+
+.begin-journey-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(247, 147, 26, 0.4);
 }
 
 /* Current Journey Step */
@@ -936,6 +1210,26 @@
   color: #7f8c8d;
 }
 
+.reset-benefit {
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%);
+  border: 1px solid #27ae60;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.reset-benefit h5 {
+  color: #27ae60;
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+
+.reset-benefit p {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .reset-dialog-actions {
   display: flex;
   gap: 12px;
@@ -958,6 +1252,9 @@
 }
 
 .confirm-reset-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: #e74c3c;
   color: white;
 }
