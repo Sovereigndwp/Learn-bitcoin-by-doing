@@ -1,410 +1,396 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  CheckCircle, Info
+  Shield, AlertTriangle, Target, Zap, Crown, Globe, 
+  Search, Database, Sword, Building, Network, CheckCircle,
+  TrendingUp, Activity, Users, Award, Star, Lock
 } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './MythsModule.css';
 
-// Reusable Visual Capitalist Section Component
-const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) => (
-  <div className="explore-further-section">
-    <div className="explore-further-header">
-      <span className="explore-further-icon">{icon}</span>
-      <h4 className="explore-further-title">{title}</h4>
-    </div>
-    <p className="explore-further-description">{description}</p>
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="explore-further-button"
-    >
-      <span className="button-icon">🔍</span>
-      {buttonText}
-    </a>
-  </div>
-);
-
 const MythsModule = () => {
   const { completeModule } = useProgress();
+  
+  // Core State Management
+  const [currentPhase, setCurrentPhase] = useState('detective');
+  const [truthDefenderLevel, setTruthDefenderLevel] = useState(1);
+  const [mythsBusted, setMythsBusted] = useState(new Set());
+  const [evidenceCollected, setEvidenceCollected] = useState(new Set());
+  const [crisisAlerts, setCrisisAlerts] = useState([]);
+  const [truthNetworkStrength, setTruthNetworkStrength] = useState(0);
   const [selectedMyth, setSelectedMyth] = useState(null);
-  const [debunkedMyths, setDebunkedMyths] = useState(new Set());
-  // const [currentCategory, setCurrentCategory] = useState('energy');
+  const [activeScenario, setActiveScenario] = useState(null);
+  const [misinformationLevel, setMisinformationLevel] = useState(85);
+  const [truthImpactScore, setTruthImpactScore] = useState(0);
 
-  // Myth Categories
-  const mythCategories = {
-    'energy': {
-      title: 'Energy & Environment',
-      icon: '⚡',
-      description: 'Debunking environmental FUD with hard data and energy economics'
+  // Crisis-Driven Phase System
+  const phases = {
+    detective: {
+      title: 'Misinformation Crisis Detective',
+      icon: Search,
+      description: 'Discover how Bitcoin misinformation spreads and damages adoption',
+      color: '#f7931a',
+      unlocked: true,
+      crisisContext: 'Bitcoin misinformation is spreading faster than truth. The future of financial freedom depends on your ability to detect and counter these myths.',
+      tools: ['Misinformation Tracker', 'FUD Impact Analyzer', 'Source Credibility Scanner'],
+      stakes: 'Every unchecked myth delays Bitcoin adoption by millions of people',
+      empowerment: 'Master the patterns of misinformation warfare'
     },
-    'security': {
-      title: 'Security & Hacking',
-      icon: '🛡️',
-      description: 'Understanding Bitcoin\'s unbreakable security model and common misconceptions'
+    arsenal: {
+      title: 'Evidence Arsenal Builder',
+      icon: Database,
+      description: 'Gather bulletproof evidence to counter each myth category',
+      color: '#ff6b35',
+      unlocked: false,
+      crisisContext: 'Misinformation thrives in evidence vacuums. Build an unbreakable arsenal of verified facts.',
+      tools: ['Evidence Verification Lab', 'Source Credibility Checker', 'Data Integrity Scanner'],
+      stakes: 'Without solid evidence, truth defenders lose credibility in the information war',
+      empowerment: 'Become an unstoppable force of factual accuracy'
     },
-    'economics': {
-      title: 'Economic Value & Backing',
-      icon: '💰',
-      description: 'Dismantling value myths with monetary theory and market evidence'
+    warrior: {
+      title: 'Technical Truth Warrior',
+      icon: Sword,
+      description: 'Engage in real-time myth-busting scenarios with escalating difficulty',
+      color: '#e74c3c',
+      unlocked: false,
+      crisisContext: 'The misinformation war is escalating. Deploy your evidence arsenal in high-stakes truth battles.',
+      tools: ['Myth Combat Simulator', 'Argument Effectiveness Meter', 'Truth Response Timer'],
+      stakes: 'Each failed myth-bust strengthens the misinformation network',
+      empowerment: 'Develop lightning-fast truth response capabilities'
     },
-    'technology': {
-      title: 'Scalability & Technology',
-      icon: '⚙️',
-      description: 'Technical reality vs. popular misconceptions about Bitcoin\'s capabilities'
+    architect: {
+      title: 'Narrative Architect',
+      icon: Building,
+      description: 'Counter narrative warfare with compelling truth stories',
+      color: '#9b59b6',
+      unlocked: false,
+      crisisContext: 'Misinformation spreads through compelling narratives. Counter with even more powerful truth stories.',
+      tools: ['Story Impact Analyzer', 'Narrative Effectiveness Dashboard', 'Persuasion Optimizer'],
+      stakes: 'Losing the narrative war means losing the information war',
+      empowerment: 'Master the psychology of persuasive truth-telling'
+    },
+    commander: {
+      title: 'Truth Network Commander',
+      icon: Network,
+      description: 'Coordinate global truth defense against coordinated misinformation',
+      color: '#3498db',
+      unlocked: false,
+      crisisContext: 'Misinformation operates as a coordinated network. Build and command your own truth network.',
+      tools: ['Global Truth Network', 'Influence Amplification System', 'Coordination Command Center'],
+      stakes: 'Uncoordinated truth defenders are overwhelmed by organized misinformation',
+      empowerment: 'Command a global network of truth defenders'
+    },
+    sovereign: {
+      title: 'Bitcoin Truth Sovereign',
+      icon: Crown,
+      description: 'Achieve complete mastery over Bitcoin truth defense',
+      color: '#f39c12',
+      unlocked: false,
+      crisisContext: 'You have transcended from defender to sovereign. The truth network bows to your authority.',
+      tools: ['Truth Sovereignty Dashboard', 'Legacy Impact Tracker', 'Sovereign Authority Matrix'],
+      stakes: 'The entire Bitcoin truth ecosystem depends on your sovereign leadership',
+      empowerment: 'Become the ultimate authority on Bitcoin truth'
     }
   };
 
-  // Comprehensive Myth Database
+  // Crisis-Driven Myth Database
   const bitcoinMyths = [
-    // Energy & Environment Category
     {
       id: 'energy-waste',
       category: 'energy',
       title: 'Bitcoin Wastes Energy',
-      severity: 'High FUD',
+      severity: 'Critical Crisis',
       icon: '⚡',
+      crisisLevel: 95,
+      misinformationSources: ['Mainstream Media', 'Environmental Groups', 'Central Banks'],
       myth: 'Bitcoin mining wastes enormous amounts of energy and is destroying the environment',
-      reality: 'Bitcoin incentivizes renewable energy development and utilizes stranded energy that would otherwise be wasted',
-      technicalEvidence: [
-        'Bitcoin mining is 56% renewable energy powered (Q4 2023 Bitcoin Mining Council)',
-        'Miners prioritize cheapest energy sources, which are increasingly renewable',
-        'Bitcoin mining can monetize stranded energy sources (flared gas, excess hydroelectric)',
-        'Traditional banking system uses 2.5x more energy annually than Bitcoin',
-        'Bitcoin mining helps stabilize electrical grids through demand response programs'
+      truthWeapons: [
+        'Bitcoin mining is 56% renewable energy powered',
+        'Traditional banking uses 2.5x more energy than Bitcoin',
+        'Bitcoin incentivizes renewable energy development',
+        'Mining utilizes stranded energy that would be wasted',
+        'Bitcoin mining stabilizes electrical grids'
       ],
-      dataComparison: {
-        title: 'Annual Energy Consumption Comparison',
-        myth: { label: 'Bitcoin "Waste"', value: '150 TWh', description: 'Productive energy securing $800B+ network' },
-        reality: { label: 'Traditional Banking', value: '400+ TWh', description: 'Banks, ATMs, data centers, branches' }
-      },
-      expertQuote: {
-        text: 'Bitcoin mining is actually the biggest driver of renewable energy development in remote areas. It\'s creating economic incentives where none existed before.',
-        attribution: 'Troy Cross, Energy Economist, Reed College'
-      },
-      sources: [
-        'Bitcoin Mining Council Q4 2023 Report',
-        'Cambridge Bitcoin Electricity Consumption Index',
-        'Energy Information Administration data on banking energy use',
-        'Academic paper: "Bitcoin Mining and Renewable Energy" (2023)'
-      ]
-    },
-    {
-      id: 'environment-harm',
-      category: 'energy',
-      title: 'Bitcoin Harms the Environment',
-      severity: 'Medium FUD',
-      icon: '🌍',
-      myth: 'Bitcoin mining creates massive carbon emissions and environmental destruction',
-      reality: 'Bitcoin mining is increasingly carbon-neutral and actually incentivizes clean energy infrastructure',
-      technicalEvidence: [
-        'Bitcoin mining emissions fell 30% from 2021-2023 despite network growth',
-        '70% of mining operations plan to be carbon neutral by 2030',
-        'Bitcoin mining enables remote renewable energy projects previously uneconomical',
-        'Proof-of-Stake alternatives have hidden environmental costs (AWS, cloud infrastructure)',
-        'Bitcoin incentivizes energy efficiency improvements across entire energy sector'
+      evidenceStrength: 98,
+      counterNarratives: [
+        'Bitcoin is the biggest driver of renewable energy development',
+        'Bitcoin mining creates economic incentives for clean energy',
+        'Bitcoin secures $800B+ with mathematical certainty'
       ],
-      dataComparison: {
-        title: 'Carbon Footprint Reality Check',
-        myth: { label: 'Bitcoin Emissions', value: '65 Mt CO2', description: 'Declining rapidly with renewable adoption' },
-        reality: { label: 'Global Banking', value: '1,300+ Mt CO2', description: 'Includes all infrastructure and operations' }
-      },
-      expertQuote: {
-        text: 'Bitcoin is not an environmental problem—it\'s an environmental solution. It\'s the first technology that can monetize renewable energy anywhere on Earth.',
-        attribution: 'Daniel Batten, Environmental Tech Analyst'
-      },
-      sources: [
-        'Sustainable Bitcoin Protocol Report 2023',
-        'University of Cambridge Environmental Impact Study',
-        'Federal Reserve Bank of Dallas Energy Analysis',
-        'MIT Technology Review Bitcoin Environmental Study'
-      ]
+      realWorldImpact: 'Energy myth delays institutional adoption by 2-3 years',
+      truthDefenderResponse: 'Deploy renewable energy data and banking comparison statistics',
+      difficultyLevel: 'Expert',
+      stakesDescription: 'This myth single-handedly blocks major institutional adoption'
     },
-    {
-      id: 'energy-alternative',
-      category: 'energy',
-      title: 'Proof-of-Stake Is Better for Environment',
-      severity: 'Technical FUD',
-      icon: '🔋',
-      myth: 'Proof-of-Stake blockchains like Ethereum are better for the environment than Bitcoin',
-      reality: 'Proof-of-Stake has hidden energy costs and fundamental security trade-offs that compromise decentralization',
-      technicalEvidence: [
-        'PoS networks still require extensive cloud infrastructure (AWS, validators, etc.)',
-        'PoS enables wealth concentration - "rich get richer" through staking rewards',
-        'PoS has no objective cost to create money, enabling arbitrary inflation',
-        'Bitcoin\'s energy use secures $800B+ with mathematical certainty',
-        'PoS networks lack the 15-year security track record of Bitcoin'
-      ],
-      dataComparison: {
-        title: 'Security vs Energy Trade-off',
-        myth: { label: 'Ethereum PoS', value: '~2 TWh', description: 'Lower energy but subjective consensus' },
-        reality: { label: 'Bitcoin PoW', value: '150 TWh', description: 'Higher energy but objective physical security' }
-      },
-      expertQuote: {
-        text: 'Proof-of-Work is the only consensus mechanism that anchors digital consensus to physical reality. Everything else is just elaborate voting.',
-        attribution: 'Andreas Antonopoulos, Bitcoin Security Expert'
-      },
-      sources: [
-        'Ethereum Foundation Energy Consumption Report',
-        'Academic: "Nothing at Stake Problem in PoS"',
-        'Bitcoin Mining Council Comparative Analysis',
-        'University of Oxford Blockchain Consensus Study'
-      ]
-    },
-
-    // Security & Hacking Category
     {
       id: 'bitcoin-hacked',
       category: 'security',
-      title: 'Bitcoin Gets Hacked All the Time',
-      severity: 'Critical FUD',
-      icon: '🔓',
+      title: 'Bitcoin Gets Hacked Constantly',
+      severity: 'Extreme Crisis',
+      icon: '🛡️',
+      crisisLevel: 90,
+      misinformationSources: ['Tech Media', 'Traditional Finance', 'Government Officials'],
       myth: 'Bitcoin is constantly being hacked and isn\'t secure',
-      reality: 'Bitcoin network has never been hacked in 15+ years. Exchange hacks are not Bitcoin hacks.',
-      technicalEvidence: [
-        'Bitcoin blockchain has 99.98% uptime since 2009 - no successful attacks',
-        'SHA-256 encryption would take longer than age of universe to break',
-        'Network secured by 450+ exahashes of computational power',
-        'Exchange hacks affect custodial services, not Bitcoin protocol',
-        'Bitcoin transactions are irreversible by design, not due to hacking'
+      truthWeapons: [
+        'Bitcoin network has never been hacked in 15+ years',
+        'SHA-256 would take longer than age of universe to break',
+        'Network secured by 450+ exahashes of power',
+        'Exchange hacks ≠ Bitcoin protocol hacks',
+        '99.98% uptime since 2009'
       ],
-      dataComparison: {
-        title: 'Security Track Record',
-        myth: { label: 'Exchange Hacks', value: '$3.8B', description: 'Custodial services, not Bitcoin itself' },
-        reality: { label: 'Bitcoin Network', value: '$0', description: 'Zero protocol-level hacks in 15 years' }
-      },
-      expertQuote: {
-        text: 'The Bitcoin network is the most secure computer network ever created. It has never been hacked, and mathematically, it cannot be.',
-        attribution: 'Nick Szabo, Cryptographer and Bitcoin Pioneer'
-      },
-      sources: [
-        'Bitcoin Network Statistics and Uptime Analysis',
-        'NIST Cryptographic Standards Documentation',
-        'Academic: "Security Analysis of Bitcoin Protocol"',
-        'MIT OpenCourseWare: Cryptocurrency Security'
-      ]
-    },
-    {
-      id: 'quantum-threat',
-      category: 'security',
-      title: 'Quantum Computers Will Break Bitcoin',
-      severity: 'Future FUD',
-      icon: '🔬',
-      myth: 'Quantum computers will break Bitcoin\'s encryption and make it worthless',
-      reality: 'Bitcoin can upgrade to quantum-resistant cryptography, and quantum threats are decades away',
-      technicalEvidence: [
-        'Quantum computers need 4,000+ logical qubits to threaten Bitcoin (current: ~100)',
-        'Bitcoin protocol can upgrade to quantum-resistant algorithms (lattice-based crypto)',
-        'Banking, internet, and all digital infrastructure face same quantum threat',
-        'Bitcoin\'s decentralized upgrade process already proven through multiple forks',
-        'Quantum-resistant Bitcoin improvement proposals already exist and tested'
+      evidenceStrength: 100,
+      counterNarratives: [
+        'Bitcoin is the most secure computer network ever created',
+        'Exchange security failures are not Bitcoin failures',
+        'Bitcoin\'s security increases with every block'
       ],
-      dataComparison: {
-        title: 'Quantum Timeline Reality',
-        myth: { label: 'Quantum Threat', value: '2030-2040', description: 'Theoretical threat timeline' },
-        reality: { label: 'Bitcoin Upgrades', value: '< 6 months', description: 'Time to implement quantum resistance' }
-      },
-      expertQuote: {
-        text: 'By the time quantum computers can threaten Bitcoin, Bitcoin will have already upgraded. The cryptographic community is decades ahead of the quantum threat.',
-        attribution: 'Matthew Scherer, Quantum Cryptography Researcher, IBM'
-      },
-      sources: [
-        'NIST Post-Quantum Cryptography Standards',
-        'IBM Quantum Computing Roadmap',
-        'Bitcoin Improvement Proposal: Quantum Resistance',
-        'Academic: "Post-Quantum Security for Cryptocurrencies"'
-      ]
+      realWorldImpact: 'Security myth prevents $100B+ in institutional investment',
+      truthDefenderResponse: 'Distinguish between protocol security and exchange security',
+      difficultyLevel: 'Advanced',
+      stakesDescription: 'Security fears are the #1 barrier to mass adoption'
     },
-    {
-      id: 'government-shutdown',
-      category: 'security',
-      title: 'Governments Can Shut Down Bitcoin',
-      severity: 'Political FUD',
-      icon: '🏛️',
-      myth: 'Governments can ban Bitcoin and shut down the network',
-      reality: 'Bitcoin is designed to be unstoppable by any government, as proven by numerous failed ban attempts',
-      technicalEvidence: [
-        'Bitcoin operates on 15,000+ nodes across 100+ countries',
-        'China\'s mining ban (2021) - network continued operating normally',
-        'Banning Bitcoin is like banning mathematics or the internet',
-        'Governments can ban exchanges, not the protocol itself',
-        'Each ban attempt has historically increased Bitcoin adoption'
-      ],
-      dataComparison: {
-        title: 'Government Ban Effectiveness',
-        myth: { label: 'Ban Attempts', value: '15+ countries', description: 'Various restrictions and bans tried' },
-        reality: { label: 'Bitcoin Uptime', value: '99.98%', description: 'Unaffected by any government action' }
-      },
-      expertQuote: {
-        text: 'Governments can no more ban Bitcoin than they can ban prime numbers. It\'s pure information, and information wants to be free.',
-        attribution: 'Caitlin Long, Banking & Digital Assets Expert'
-      },
-      sources: [
-        'Bitcoin Node Distribution Analysis',
-        'Historical Analysis of Cryptocurrency Bans',
-        'Academic: "Regulatory Resistance in Decentralized Networks"',
-        'Electronic Frontier Foundation Digital Rights Report'
-      ]
-    },
-
-    // Economic Value & Backing Category
     {
       id: 'no-intrinsic-value',
       category: 'economics',
       title: 'Bitcoin Has No Intrinsic Value',
-      severity: 'Economic FUD',
+      severity: 'Economic Crisis',
       icon: '💎',
-      myth: 'Bitcoin has no intrinsic value because it\'s not backed by anything physical',
-      reality: 'Bitcoin is backed by mathematics, energy, and network effects - more reliable than government promises',
-      technicalEvidence: [
-        'Bitcoin is backed by cryptographic proof and energy expenditure',
-        'Scarcity is enforced by mathematics, not political promises',
-        'Network effects create utility value (Metcalfe\'s Law)',
-        'Gold has no "intrinsic" value either - value comes from properties',
-        'Dollar has no backing since 1971 - purely faith-based system'
+      crisisLevel: 85,
+      misinformationSources: ['Economists', 'Central Banks', 'Gold Bugs'],
+      myth: 'Bitcoin has no intrinsic value because it\'s not backed by anything',
+      truthWeapons: [
+        'Bitcoin is backed by mathematics and energy',
+        'Scarcity enforced by code, not politics',
+        'Network effects create utility value',
+        'Gold has no intrinsic value either',
+        'Dollar has no backing since 1971'
       ],
-      dataComparison: {
-        title: 'What Backs Different Monies?',
-        myth: { label: 'US Dollar', value: 'Government Promise', description: 'Can be broken by political decisions' },
-        reality: { label: 'Bitcoin', value: 'Mathematical Laws', description: 'Cannot be changed by any authority' }
-      },
-      expertQuote: {
-        text: 'Bitcoin is the first money in history backed by physics and mathematics rather than politics and promises.',
-        attribution: 'Michael Saylor, MicroStrategy Chairman'
-      },
-      sources: [
-        'Federal Reserve History: End of Gold Standard',
-        'Academic: "Network Effects in Digital Money"',
-        'Bank of International Settlements: Cryptocurrency Analysis',
-        'Economic Theory: Subjective Theory of Value'
-      ]
+      evidenceStrength: 92,
+      counterNarratives: [
+        'Bitcoin is the first money backed by physics',
+        'Mathematical scarcity is superior to political promises',
+        'Network effects create exponential value'
+      ],
+      realWorldImpact: 'Value myth prevents retail adoption and savings allocation',
+      truthDefenderResponse: 'Explain mathematical backing vs. political backing',
+      difficultyLevel: 'Intermediate',
+      stakesDescription: 'Value confusion keeps billions in depreciating fiat'
     },
     {
-      id: 'tulip-mania',
-      category: 'economics',
-      title: 'Bitcoin Is Like Tulip Mania',
-      severity: 'Historical FUD',
-      icon: '🌷',
-      myth: 'Bitcoin is a speculative bubble like tulip mania that will eventually collapse to zero',
-      reality: 'Bitcoin has unique properties no bubble in history has had: mathematical scarcity, global accessibility, and growing utility',
-      technicalEvidence: [
-        'Bitcoin has survived multiple 80%+ price crashes and recovered',
-        'Tulips could be grown infinitely; Bitcoin supply is capped at 21 million',
-        'Bitcoin adoption is global, not localized to one country',
-        'Institutional adoption growing: MicroStrategy, Tesla, El Salvador',
-        'Network effects and utility increase with each cycle'
+      id: 'too-slow',
+      category: 'technology',
+      title: 'Bitcoin Is Too Slow',
+      severity: 'Technical Crisis',
+      icon: '⚙️',
+      crisisLevel: 80,
+      misinformationSources: ['Tech Companies', 'Altcoin Promoters', 'Payment Processors'],
+      myth: 'Bitcoin is too slow for real payments and commerce',
+      truthWeapons: [
+        'Bitcoin processes $50B+ daily in final settlement',
+        'Lightning Network enables instant payments',
+        'Base layer optimized for security, not speed',
+        'Traditional banking takes 3-5 days to settle',
+        'Bitcoin settles globally in 10 minutes'
       ],
-      dataComparison: {
-        title: 'Bubble vs. Technology Adoption',
-        myth: { label: 'Tulip Mania', value: '1 Year', description: 'Localized speculation with no utility' },
-        reality: { label: 'Bitcoin Growth', value: '15 Years', description: 'Global adoption with increasing utility' }
-      },
-      expertQuote: {
-        text: 'Every major technology looks like a bubble during its exponential adoption phase. The internet "bubble" of 2000 was actually just the beginning.',
-        attribution: 'Raoul Pal, Global Macro Investor'
-      },
-      sources: [
-        'Historical Analysis: Technology Adoption Curves',
-        'Academic: "Network Effects and Asset Bubbles"',
-        'Federal Reserve Economic Papers on Asset Bubbles',
-        'Institutional Bitcoin Adoption Tracker'
-      ]
+      evidenceStrength: 94,
+      counterNarratives: [
+        'Bitcoin is the fastest final settlement system ever created',
+        'Lightning Network solves payment speed completely',
+        'Security is more important than speed for money'
+      ],
+      realWorldImpact: 'Speed myth drives users to centralized altcoins',
+      truthDefenderResponse: 'Distinguish between settlement and payment layers',
+      difficultyLevel: 'Advanced',
+      stakesDescription: 'Speed confusion diverts users to inferior alternatives'
     },
     {
       id: 'ponzi-scheme',
       category: 'economics',
       title: 'Bitcoin Is a Ponzi Scheme',
-      severity: 'Critical FUD',
+      severity: 'Extreme Crisis',
       icon: '🎪',
-      myth: 'Bitcoin is a Ponzi scheme where early adopters profit at the expense of later ones',
-      reality: 'Bitcoin is an open-source protocol with transparent economics, the opposite of a Ponzi scheme',
-      technicalEvidence: [
-        'No central authority promising returns or controlling funds',
-        'All code is open-source and auditable by anyone',
-        'No recruiting mechanism or pyramid structure',
-        'Value comes from utility and scarcity, not new investor money',
-        'Ponzi schemes collapse when new money stops; Bitcoin survived multiple bear markets'
+      crisisLevel: 88,
+      misinformationSources: ['Regulators', 'Traditional Finance', 'Skeptical Media'],
+      myth: 'Bitcoin is a Ponzi scheme where early adopters exploit later ones',
+      truthWeapons: [
+        'No central authority or promised returns',
+        'All code is open-source and auditable',
+        'No recruiting or pyramid structure',
+        'Value from utility and scarcity, not new money',
+        'Survived multiple bear markets'
       ],
-      dataComparison: {
-        title: 'Ponzi vs. Bitcoin Characteristics',
-        myth: { label: 'Ponzi Scheme', value: 'Opaque', description: 'Hidden operations, promised returns' },
-        reality: { label: 'Bitcoin', value: 'Transparent', description: 'Open source, no promised returns' }
-      },
-      expertQuote: {
-        text: 'Calling Bitcoin a Ponzi scheme shows a fundamental misunderstanding of both Bitcoin and Ponzi schemes.',
-        attribution: 'Preston Pysh, Bitcoin Educator and Investor'
-      },
-      sources: [
-        'SEC Definition of Ponzi Schemes',
-        'Bitcoin Source Code Repository',
-        'Academic: "Economic Analysis of Cryptocurrency Networks"',
-        'Legal Analysis: Bitcoin vs. Securities Law'
-      ]
+      evidenceStrength: 96,
+      counterNarratives: [
+        'Bitcoin is transparent, Ponzis are opaque',
+        'No one controls Bitcoin or promises returns',
+        'Open-source code prevents hidden operations'
+      ],
+      realWorldImpact: 'Ponzi myth triggers regulatory crackdowns',
+      truthDefenderResponse: 'Compare Bitcoin characteristics to actual Ponzi schemes',
+      difficultyLevel: 'Expert',
+      stakesDescription: 'Ponzi accusations fuel regulatory hostility'
     },
-
-    // Technology & Scalability Category
     {
-      id: 'too-slow',
-      category: 'technology',
-      title: 'Bitcoin Is Too Slow for Payments',
-      severity: 'Technical FUD',
-      icon: '🐌',
-      myth: 'Bitcoin can only process 7 transactions per second and is too slow for real payments',
-      reality: 'Bitcoin base layer is for final settlement; Lightning Network enables instant micropayments',
-      technicalEvidence: [
-        'Bitcoin processes $50B+ daily in final settlement (more than most payment rails)',
-        'Lightning Network enables millions of instant transactions per second',
-        'Base layer designed for security, not speed (settlement vs. payment layers)',
-        'Traditional banking: 3-5 business days for final settlement',
-        'Bitcoin: 10 minutes for final, irreversible settlement globally'
+      id: 'tulip-mania',
+      category: 'economics',
+      title: 'Bitcoin Is Like Tulip Mania',
+      severity: 'Historical Crisis',
+      icon: '🌷',
+      crisisLevel: 75,
+      misinformationSources: ['Financial Historians', 'Bubble Experts', 'Skeptical Investors'],
+      myth: 'Bitcoin is a speculative bubble like tulip mania',
+      truthWeapons: [
+        'Bitcoin survived multiple 80%+ crashes',
+        'Tulips could be grown infinitely, Bitcoin capped at 21M',
+        'Global adoption vs. localized speculation',
+        'Growing institutional adoption',
+        'Network effects increase with each cycle'
       ],
-      dataComparison: {
-        title: 'Settlement vs. Payment Speed',
-        myth: { label: 'Credit Cards', value: '~0 seconds', description: 'Payment, but 30-90 days to settle' },
-        reality: { label: 'Bitcoin + Lightning', value: '<1 second', description: 'Instant payment + 10min final settlement' }
-      },
-      expertQuote: {
-        text: 'Bitcoin is not slow - it\'s the fastest final settlement system ever created. Comparing it to credit cards is like comparing email to handwritten letters.',
-        attribution: 'Elizabeth Stark, Lightning Labs CEO'
-      },
-      sources: [
-        'Lightning Network Statistics and Growth',
-        'Federal Reserve Settlement Times Analysis',
-        'Academic: "Layered Scaling in Blockchain Systems"',
-        'Bitcoin Lightning Network Technical Specifications'
-      ]
+      evidenceStrength: 89,
+      counterNarratives: [
+        'Bitcoin is technology adoption, not speculation',
+        'Mathematical scarcity prevents tulip-like inflation',
+        'Global utility vs. local speculation'
+      ],
+      realWorldImpact: 'Bubble myth prevents long-term investment',
+      truthDefenderResponse: 'Compare technology adoption curves to speculation bubbles',
+      difficultyLevel: 'Intermediate',
+      stakesDescription: 'Bubble fears prevent strategic accumulation'
+    },
+    {
+      id: 'government-shutdown',
+      category: 'security',
+      title: 'Governments Can Shut Down Bitcoin',
+      severity: 'Political Crisis',
+      icon: '🏛️',
+      crisisLevel: 82,
+      misinformationSources: ['Government Officials', 'Regulatory Bodies', 'Compliance Experts'],
+      myth: 'Governments can ban Bitcoin and shut down the network',
+      truthWeapons: [
+        '15,000+ nodes across 100+ countries',
+        'China mining ban failed to stop Bitcoin',
+        'Banning Bitcoin is like banning mathematics',
+        'Can ban exchanges, not the protocol',
+        'Each ban increases adoption elsewhere'
+      ],
+      evidenceStrength: 91,
+      counterNarratives: [
+        'Bitcoin is unstoppable by design',
+        'Decentralization makes shutdown impossible',
+        'Bans create Streisand effect'
+      ],
+      realWorldImpact: 'Government fear prevents corporate adoption',
+      truthDefenderResponse: 'Explain decentralization and historical ban failures',
+      difficultyLevel: 'Advanced',
+      stakesDescription: 'Government fear creates regulatory uncertainty'
+    },
+    {
+      id: 'quantum-threat',
+      category: 'security',
+      title: 'Quantum Computers Will Break Bitcoin',
+      severity: 'Future Crisis',
+      icon: '🔬',
+      crisisLevel: 70,
+      misinformationSources: ['Quantum Researchers', 'Tech Media', 'Crypto Skeptics'],
+      myth: 'Quantum computers will break Bitcoin\'s encryption',
+      truthWeapons: [
+        'Need 4,000+ logical qubits (current: ~100)',
+        'Bitcoin can upgrade to quantum-resistant crypto',
+        'All digital infrastructure faces same threat',
+        'Quantum-resistant proposals already exist',
+        'Upgrade timeline faster than quantum threat'
+      ],
+      evidenceStrength: 87,
+      counterNarratives: [
+        'Bitcoin will upgrade before quantum threat materializes',
+        'Quantum threat is decades away',
+        'Cryptographic community is prepared'
+      ],
+      realWorldImpact: 'Quantum fear prevents long-term planning',
+      truthDefenderResponse: 'Explain upgrade capability and timeline reality',
+      difficultyLevel: 'Expert',
+      stakesDescription: 'Quantum fears create false urgency'
+    },
+    {
+      id: 'environment-harm',
+      category: 'energy',
+      title: 'Bitcoin Harms the Environment',
+      severity: 'Environmental Crisis',
+      icon: '🌍',
+      crisisLevel: 93,
+      misinformationSources: ['Environmental Groups', 'Climate Activists', 'Green Politicians'],
+      myth: 'Bitcoin mining creates massive environmental destruction',
+      truthWeapons: [
+        'Bitcoin mining emissions fell 30% from 2021-2023',
+        '70% of operations plan carbon neutrality by 2030',
+        'Enables remote renewable energy projects',
+        'Proof-of-Stake has hidden environmental costs',
+        'Incentivizes energy efficiency improvements'
+      ],
+      evidenceStrength: 95,
+      counterNarratives: [
+        'Bitcoin is an environmental solution, not problem',
+        'Bitcoin monetizes renewable energy globally',
+        'Environmental benefits outweigh costs'
+      ],
+      realWorldImpact: 'Environmental myth blocks ESG investment',
+      truthDefenderResponse: 'Present renewable energy data and efficiency improvements',
+      difficultyLevel: 'Expert',
+      stakesDescription: 'Environmental concerns block sustainable investment'
+    },
+    {
+      id: 'pos-better',
+      category: 'energy',
+      title: 'Proof-of-Stake Is Better',
+      severity: 'Technical Crisis',
+      icon: '🔋',
+      crisisLevel: 78,
+      misinformationSources: ['Altcoin Promoters', 'Ethereum Foundation', 'Efficiency Advocates'],
+      myth: 'Proof-of-Stake is better for the environment than Bitcoin',
+      truthWeapons: [
+        'PoS has hidden cloud infrastructure costs',
+        'PoS enables wealth concentration',
+        'PoS lacks objective cost to create money',
+        'Bitcoin energy secures $800B+ with certainty',
+        'PoS lacks Bitcoin\'s security track record'
+      ],
+      evidenceStrength: 90,
+      counterNarratives: [
+        'Proof-of-Work anchors consensus to physical reality',
+        'Energy use is a feature, not a bug',
+        'Security requires energy expenditure'
+      ],
+      realWorldImpact: 'PoS myth drives investment to inferior alternatives',
+      truthDefenderResponse: 'Explain security trade-offs and hidden costs',
+      difficultyLevel: 'Advanced',
+      stakesDescription: 'PoS confusion diverts capital to weaker systems'
     },
     {
       id: 'outdated-technology',
       category: 'technology',
       title: 'Bitcoin Uses Outdated Technology',
-      severity: 'Innovation FUD',
+      severity: 'Innovation Crisis',
       icon: '📟',
-      myth: 'Bitcoin is old technology that can\'t compete with newer, faster blockchains',
-      reality: 'Bitcoin prioritizes security and decentralization over speed; newer chains make fundamental trade-offs',
-      technicalEvidence: [
-        'Bitcoin has the largest network effect and strongest security (Lindy Effect)',
-        'Newer chains sacrifice decentralization for speed (blockchain trilemma)',
-        'Bitcoin receives continuous upgrades: Taproot, Lightning, sidechains',
-        'Most "faster" chains are centralized databases masquerading as blockchains',
-        'Security and immutability are more important than transaction speed for money'
+      crisisLevel: 73,
+      misinformationSources: ['Tech Companies', 'Blockchain Developers', 'Innovation Experts'],
+      myth: 'Bitcoin is old technology that can\'t compete with newer chains',
+      truthWeapons: [
+        'Bitcoin has strongest network effects (Lindy Effect)',
+        'Newer chains sacrifice decentralization for speed',
+        'Bitcoin receives continuous upgrades',
+        'Faster chains are centralized databases',
+        'Security > speed for money'
       ],
-      dataComparison: {
-        title: 'Security vs. Speed Trade-offs',
-        myth: { label: 'Newer Chains', value: '~100 nodes', description: 'Fast but centralized' },
-        reality: { label: 'Bitcoin', value: '15,000+ nodes', description: 'Slower but truly decentralized' }
-      },
-      expertQuote: {
-        text: 'Bitcoin is not old technology - it\'s mature technology. There\'s a difference between being the first and being obsolete.',
-        attribution: 'Jameson Lopp, Bitcoin Security Engineer'
-      },
-      sources: [
-        'Bitcoin Node Count and Distribution Analysis',
-        'Academic: "Blockchain Trilemma and Trade-offs"',
-        'Technical Comparison: Bitcoin vs. Alternative Chains',
-        'Bitcoin Improvement Proposals Archive'
-      ]
+      evidenceStrength: 88,
+      counterNarratives: [
+        'Bitcoin is mature technology, not obsolete',
+        'First-mover advantage in decentralized money',
+        'Continuous improvement without breaking changes'
+      ],
+      realWorldImpact: 'Technology myth drives users to centralized alternatives',
+      truthDefenderResponse: 'Explain maturity vs. obsolescence and upgrade capability',
+      difficultyLevel: 'Advanced',
+      stakesDescription: 'Technology confusion leads to inferior choices'
     },
     {
       id: 'replace-dollar',
@@ -412,58 +398,82 @@ const MythsModule = () => {
       title: 'Bitcoin Will Replace the Dollar',
       severity: 'Maximalist Myth',
       icon: '🔄',
-      myth: 'Bitcoin will completely replace the US dollar and all fiat currencies',
-      reality: 'Bitcoin will likely coexist with fiat as digital gold and a parallel monetary system',
-      technicalEvidence: [
-        'Bitcoin is better suited as a store of value than medium of exchange',
-        'Government currencies serve different functions (taxation, local commerce)',
-        'Bitcoin is becoming digital gold, not necessarily everyday currency',
-        'Central Bank Digital Currencies (CBDCs) likely for retail transactions',
-        'Multi-monetary system more likely than complete replacement'
+      crisisLevel: 65,
+      misinformationSources: ['Bitcoin Maximalists', 'Crypto Enthusiasts', 'Libertarian Groups'],
+      myth: 'Bitcoin will completely replace the US dollar',
+      truthWeapons: [
+        'Bitcoin better as store of value than medium of exchange',
+        'Governments won\'t give up monetary control',
+        'Bitcoin becoming digital gold',
+        'CBDCs likely for retail transactions',
+        'Multi-monetary system more probable'
       ],
-      dataComparison: {
-        title: 'Different Monetary Roles',
-        myth: { label: 'Complete Replacement', value: 'Unlikely', description: 'Governments won\'t give up monetary control' },
-        reality: { label: 'Parallel System', value: 'Probable', description: 'Bitcoin as digital gold + fiat for daily use' }
-      },
-      expertQuote: {
-        text: 'Bitcoin doesn\'t need to replace the dollar to be successful. It just needs to be a better store of value than anything else.',
-        attribution: 'Lyn Alden, Investment Strategist'
-      },
-      sources: [
-        'International Monetary Fund: Future of Money Report',
-        'Bank of International Settlements: CBDC Analysis',
-        'Academic: "Coexistence of Digital and Fiat Currencies"',
-        'Federal Reserve: Digital Dollar Research'
-      ]
+      evidenceStrength: 85,
+      counterNarratives: [
+        'Bitcoin doesn\'t need to replace dollar to succeed',
+        'Parallel monetary system more likely',
+        'Different monies serve different functions'
+      ],
+      realWorldImpact: 'Replacement myth creates unrealistic expectations',
+      truthDefenderResponse: 'Explain coexistence vs. replacement scenarios',
+      difficultyLevel: 'Intermediate',
+      stakesDescription: 'Unrealistic expectations lead to disappointment'
     }
   ];
 
-  const handleMythClick = (mythId) => {
-    setSelectedMyth(mythId);
-  };
+  // Crisis Alert System
+  useEffect(() => {
+    const generateCrisisAlert = () => {
+      const alerts = [
+        { type: 'urgent', message: 'Major news outlet spreading energy waste myth', impact: 'high' },
+        { type: 'critical', message: 'Government official claims Bitcoin can be shut down', impact: 'extreme' },
+        { type: 'warning', message: 'Social media amplifying Ponzi scheme narrative', impact: 'medium' },
+        { type: 'alert', message: 'Institutional investor citing security concerns', impact: 'high' }
+      ];
+      
+      const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
+      setCrisisAlerts(prev => [...prev.slice(-2), { ...randomAlert, id: Date.now() }]);
+    };
 
-  const handleDebunk = (mythId) => {
-    const newDebunked = new Set(debunkedMyths);
-    newDebunked.add(mythId);
-    setDebunkedMyths(newDebunked);
+    const interval = setInterval(generateCrisisAlert, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Phase Progression Logic
+  const checkPhaseUnlock = () => {
+    const bustedCount = mythsBusted.size;
+    const evidenceCount = evidenceCollected.size;
     
-    // Show achievement for milestones
-    if (newDebunked.size === 3) {
-      showAchievement("Myth Buster", "You've debunked your first 3 Bitcoin myths!");
-    } else if (newDebunked.size === 6) {
-      showAchievement("Truth Seeker", "Half the myths destroyed with facts and evidence!");
-    } else if (newDebunked.size === 9) {
-      showAchievement("FUD Fighter", "You're becoming a Bitcoin truth expert!");
-    } else if (newDebunked.size === 12) {
-      showAchievement("Truth Master", "All myths debunked! You're now a Bitcoin truth expert!");
+    if (bustedCount >= 2 && !phases.arsenal.unlocked) {
+      phases.arsenal.unlocked = true;
+      showAchievement('Evidence Arsenal Unlocked', 'Your detective work has unlocked the Evidence Arsenal Builder phase!');
+    }
+    if (bustedCount >= 4 && evidenceCount >= 6 && !phases.warrior.unlocked) {
+      phases.warrior.unlocked = true;
+      showAchievement('Truth Warrior Unlocked', 'Your evidence arsenal has unlocked the Technical Truth Warrior phase!');
+    }
+    if (bustedCount >= 6 && !phases.architect.unlocked) {
+      phases.architect.unlocked = true;
+      showAchievement('Narrative Architect Unlocked', 'Your warrior skills have unlocked the Narrative Architect phase!');
+    }
+    if (bustedCount >= 8 && !phases.commander.unlocked) {
+      phases.commander.unlocked = true;
+      showAchievement('Network Commander Unlocked', 'Your narrative mastery has unlocked the Truth Network Commander phase!');
+    }
+    if (bustedCount >= 10 && !phases.sovereign.unlocked) {
+      phases.sovereign.unlocked = true;
+      showAchievement('Truth Sovereign Unlocked', 'Your command abilities have unlocked the Bitcoin Truth Sovereign phase!');
+    }
+    if (bustedCount >= 12) {
       completeModule('myths');
+      showSovereigntyAchievement();
     }
   };
 
+  // Achievement System
   const showAchievement = (title, description) => {
     const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup';
+    achievement.className = 'crisis-achievement-popup';
     achievement.innerHTML = `
       <div class="achievement-content">
         <div class="achievement-icon">🏆</div>
@@ -478,157 +488,351 @@ const MythsModule = () => {
     setTimeout(() => {
       achievement.style.opacity = '0';
       setTimeout(() => {
-        document.body.removeChild(achievement);
+        if (document.body.contains(achievement)) {
+          document.body.removeChild(achievement);
+        }
       }, 300);
-    }, 3000);
+    }, 4000);
   };
 
-  const renderMythCard = (myth) => {
-    const isDebunked = debunkedMyths.has(myth.id);
-    const isActive = selectedMyth === myth.id;
+  const showSovereigntyAchievement = () => {
+    const sovereignty = document.createElement('div');
+    sovereignty.className = 'sovereignty-celebration';
+    sovereignty.innerHTML = `
+      <div class="sovereignty-content">
+        <div class="crown-glow">👑</div>
+        <h2>BITCOIN TRUTH SOVEREIGN</h2>
+        <p>You have achieved complete mastery over Bitcoin truth defense!</p>
+        <div class="sovereignty-stats">
+          <div>12/12 Myths Busted</div>
+          <div>Truth Network: ${truthNetworkStrength}%</div>
+          <div>Impact Score: ${truthImpactScore}</div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(sovereignty);
+    
+    setTimeout(() => {
+      sovereignty.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(sovereignty)) {
+          document.body.removeChild(sovereignty);
+        }
+      }, 500);
+    }, 6000);
+  };
 
-    return (
-            <div 
-              key={myth.id}
-        className={`myth-card ${isActive ? 'active' : ''} ${isDebunked ? 'debunked' : ''}`}
-              onClick={() => handleMythClick(myth.id)}
-            >
-              <div className="myth-header">
-          <div className="myth-icon">{myth.icon}</div>
-          <div className="myth-info">
-            <h3 className="myth-title">{myth.title}</h3>
-            <div className="myth-severity">{myth.severity}</div>
+  // Crisis Response Actions
+  const handleMythBust = (mythId) => {
+    const newBusted = new Set(mythsBusted);
+    newBusted.add(mythId);
+    setMythsBusted(newBusted);
+    
+    // Update crisis metrics
+    setMisinformationLevel(prev => Math.max(0, prev - 7));
+    setTruthImpactScore(prev => prev + 150);
+    setTruthNetworkStrength(prev => Math.min(100, prev + 8));
+    
+    // Level progression
+    if (newBusted.size % 3 === 0) {
+      setTruthDefenderLevel(prev => prev + 1);
+    }
+    
+    checkPhaseUnlock();
+  };
+
+  const handleEvidenceCollection = (evidenceId) => {
+    const newEvidence = new Set(evidenceCollected);
+    newEvidence.add(evidenceId);
+    setEvidenceCollected(newEvidence);
+    
+    setTruthImpactScore(prev => prev + 50);
+    checkPhaseUnlock();
+  };
+
+  const handlePhaseTransition = (newPhase) => {
+    if (phases[newPhase].unlocked) {
+      setCurrentPhase(newPhase);
+      setSelectedMyth(null);
+      setActiveScenario(null);
+    }
+  };
+
+  const renderCrisisHeader = () => (
+    <div className="crisis-header">
+      <div className="crisis-title-section">
+        <h1 className="crisis-title">
+          <Shield className="crisis-shield" />
+          Bitcoin Truth Defense Network
+        </h1>
+        <div className="crisis-subtitle">
+          Misinformation Crisis Response System
+        </div>
+      </div>
+      
+      <div className="crisis-metrics">
+        <div className="metric-card crisis-level">
+          <AlertTriangle className="metric-icon" />
+          <div className="metric-content">
+            <div className="metric-value">{misinformationLevel}%</div>
+            <div className="metric-label">Misinformation Level</div>
           </div>
-              </div>
-              
-        {isActive && (
-                <div className="myth-content">
-                  <div className="myth-statement">
-              <h4>The Myth</h4>
-                    <p>{myth.myth}</p>
-                  </div>
-                  
-                      <div className="reality-box">
-              <h4>The Technical Truth</h4>
-                        <p>{myth.reality}</p>
-                      </div>
-                      
-            <div className="technical-evidence">
-              <div className="evidence-header">
-                <Info size={16} />
-                <span className="evidence-title">Technical Evidence</span>
-              </div>
-              <ul className="evidence-list">
-                {myth.technicalEvidence.map((evidence, index) => (
-                  <li key={index}>{evidence}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-            <div className="data-comparison">
-              <div className="comparison-title">{myth.dataComparison.title}</div>
-              <div className="comparison-chart">
-                <div className="comparison-item comparison-myth">
-                  <div className="comparison-label">{myth.dataComparison.myth.label}</div>
-                  <div className="comparison-value">{myth.dataComparison.myth.value}</div>
-                  <div className="comparison-description">{myth.dataComparison.myth.description}</div>
-                </div>
-                <div className="comparison-item comparison-reality">
-                  <div className="comparison-label">{myth.dataComparison.reality.label}</div>
-                  <div className="comparison-value">{myth.dataComparison.reality.value}</div>
-                  <div className="comparison-description">{myth.dataComparison.reality.description}</div>
-                </div>
-              </div>
+        </div>
+        <div className="metric-card truth-impact">
+          <TrendingUp className="metric-icon" />
+          <div className="metric-content">
+            <div className="metric-value">{truthImpactScore.toLocaleString()}</div>
+            <div className="metric-label">Truth Impact Score</div>
+          </div>
+        </div>
+        <div className="metric-card network-strength">
+          <Network className="metric-icon" />
+          <div className="metric-content">
+            <div className="metric-value">{truthNetworkStrength}%</div>
+            <div className="metric-label">Network Strength</div>
+          </div>
+        </div>
+        <div className="metric-card defender-level">
+          <Award className="metric-icon" />
+          <div className="metric-content">
+            <div className="metric-value">L{truthDefenderLevel}</div>
+            <div className="metric-label">Defender Level</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderCrisisAlerts = () => (
+    <div className="crisis-alerts">
+      <div className="alerts-header">
+        <Activity className="alerts-icon" />
+        <span>Live Crisis Alerts</span>
+      </div>
+      <div className="alerts-feed">
+        {crisisAlerts.map(alert => (
+          <div key={alert.id} className={`alert-item ${alert.type}`}>
+            <div className="alert-indicator" />
+            <div className="alert-content">
+              <div className="alert-message">{alert.message}</div>
+              <div className="alert-impact">Impact: {alert.impact}</div>
             </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
-            {myth.expertQuote && (
-              <div className="expert-quote">
-                <div className="quote-text">{myth.expertQuote.text}</div>
-                <div className="quote-attribution">— {myth.expertQuote.attribution}</div>
+  const renderPhaseNavigation = () => (
+    <div className="phase-navigation">
+      <div className="phase-header">
+        <Target className="phase-icon" />
+        <span>Truth Defense Phases</span>
+      </div>
+      <div className="phase-grid">
+        {Object.entries(phases).map(([key, phase]) => {
+          const IconComponent = phase.icon;
+          return (
+            <div 
+              key={key}
+              className={`phase-card ${currentPhase === key ? 'active' : ''} ${phase.unlocked ? 'unlocked' : 'locked'}`}
+              onClick={() => handlePhaseTransition(key)}
+            >
+              <div className="phase-icon-container" style={{ color: phase.color }}>
+                <IconComponent className="phase-card-icon" />
+                {!phase.unlocked && <Lock className="lock-overlay" />}
               </div>
-            )}
-
-            <div className="sources-section">
-              <div className="sources-title">Sources & Further Reading</div>
-              <ul className="sources-list">
-                {myth.sources.map((source, index) => (
-                  <li key={index}>{source}</li>
-                ))}
-              </ul>
-                      </div>
-                      
-            {/* Visual Capitalist section for tulip mania myth */}
-            {myth.id === 'tulip-mania' && (
-              <VisualCapitalistSection
-                icon="🌷"
-                title="Explore Further: Historical Bubbles vs Technology Adoption"
-                description="See how Bitcoin's adoption pattern compares to historical bubbles like tulip mania versus genuine technology adoption curves like the internet."
-                url="https://www.visualcapitalist.com/bubbles-in-market-history/"
-                buttonText="View Historical Bubble Analysis"
-              />
-            )}
-            
-            {!isDebunked && (
-              <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                <button 
-                  className="guess-button false"
-                  onClick={() => handleDebunk(myth.id)}
-                >
-                  <CheckCircle size={16} />
-                  Myth Debunked!
-                </button>
-                      </div>
-            )}
-
-            {isDebunked && (
-              <div className="myth-progress">
-                <div className="progress-indicator completed">✓</div>
-                <span className="progress-text">Myth successfully debunked with facts and evidence</span>
-                    </div>
-                  )}
-                </div>
+              <div className="phase-info">
+                <div className="phase-title">{phase.title}</div>
+                <div className="phase-description">{phase.description}</div>
+              </div>
+              {phase.unlocked && currentPhase === key && (
+                <div className="phase-active-indicator" />
               )}
             </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const renderCurrentPhase = () => {
+    const phase = phases[currentPhase];
+    const IconComponent = phase.icon;
+    
+    return (
+      <div className="current-phase">
+        <div className="phase-context">
+          <div className="phase-context-header">
+            <IconComponent className="context-icon" style={{ color: phase.color }} />
+            <div className="context-title">{phase.title}</div>
+          </div>
+          <div className="crisis-context">{phase.crisisContext}</div>
+          <div className="phase-tools">
+            <div className="tools-header">Available Tools:</div>
+            <div className="tools-list">
+              {phase.tools.map(tool => (
+                <div key={tool} className="tool-item">
+                  <Zap className="tool-icon" />
+                  <span>{tool}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="phase-stakes">
+            <div className="stakes-header">Stakes:</div>
+            <div className="stakes-content">{phase.stakes}</div>
+          </div>
+          <div className="phase-empowerment">
+            <div className="empowerment-header">Empowerment:</div>
+            <div className="empowerment-content">{phase.empowerment}</div>
+          </div>
+        </div>
+        
+        {renderMythBattleground()}
+      </div>
     );
   };
 
-  const renderCategorySection = (categoryKey) => {
-    const category = mythCategories[categoryKey];
-    const categoryMyths = bitcoinMyths.filter(myth => myth.category === categoryKey);
-    const debunkedCount = categoryMyths.filter(myth => debunkedMyths.has(myth.id)).length;
+  const renderMythBattleground = () => (
+    <div className="myth-battleground">
+      <div className="battleground-header">
+        <Sword className="battleground-icon" />
+        <span>Active Myth Battleground</span>
+        <div className="battleground-stats">
+          <span>{mythsBusted.size}/12 Myths Busted</span>
+          <span>{evidenceCollected.size}/36 Evidence Collected</span>
+        </div>
+      </div>
+      
+      <div className="myths-grid">
+        {bitcoinMyths.map(myth => renderMythCard(myth))}
+      </div>
+    </div>
+  );
 
+  const renderMythCard = (myth) => {
+    const isBusted = mythsBusted.has(myth.id);
+    const isActive = selectedMyth === myth.id;
+    
     return (
-      <div key={categoryKey} className="category-section">
-        <div className="category-header">
-          <div className="category-icon">{category.icon}</div>
-          <div>
-            <h2 className="category-title">{category.title}</h2>
-            <p className="category-description">{category.description}</p>
+      <div 
+        key={myth.id}
+        className={`myth-card ${isActive ? 'active' : ''} ${isBusted ? 'busted' : ''}`}
+        onClick={() => setSelectedMyth(isActive ? null : myth.id)}
+      >
+        <div className="myth-card-header">
+          <div className="myth-icon">{myth.icon}</div>
+          <div className="myth-info">
+            <div className="myth-title">{myth.title}</div>
+            <div className="myth-severity">{myth.severity}</div>
           </div>
-          <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
-            <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>
-              {debunkedCount}/{categoryMyths.length} myths debunked
+          <div className="crisis-level">
+            <div className="crisis-meter">
+              <div 
+                className="crisis-fill" 
+                style={{ width: `${myth.crisisLevel}%` }}
+              />
             </div>
-            <div style={{ 
-              width: '100px', 
-              height: '8px', 
-              background: 'rgba(100, 116, 139, 0.2)', 
-              borderRadius: '4px',
-              marginTop: '0.5rem'
-            }}>
-              <div style={{
-                width: `${(debunkedCount / categoryMyths.length) * 100}%`,
-                height: '100%',
-                background: '#10b981',
-                borderRadius: '4px',
-                transition: 'width 0.3s ease'
-              }} />
-            </div>
+            <div className="crisis-percentage">{myth.crisisLevel}%</div>
           </div>
         </div>
-        <div className="myths-grid">
-          {categoryMyths.map(renderMythCard)}
-        </div>
+        
+        {isActive && (
+          <div className="myth-battle-interface">
+            <div className="myth-statement">
+              <div className="statement-header">
+                <AlertTriangle className="statement-icon" />
+                <span>Misinformation Threat</span>
+              </div>
+              <div className="statement-content">{myth.myth}</div>
+              <div className="misinformation-sources">
+                <div className="sources-header">Spreading Sources:</div>
+                <div className="sources-list">
+                  {myth.misinformationSources.map(source => (
+                    <span key={source} className="source-tag">{source}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="truth-weapons">
+              <div className="weapons-header">
+                <Database className="weapons-icon" />
+                <span>Truth Weapons Arsenal</span>
+                <div className="evidence-strength">
+                  Strength: {myth.evidenceStrength}%
+                </div>
+              </div>
+              <div className="weapons-list">
+                {myth.truthWeapons.map((weapon, index) => (
+                  <div 
+                    key={index}
+                    className={`weapon-item ${evidenceCollected.has(`${myth.id}-${index}`) ? 'collected' : ''}`}
+                    onClick={() => handleEvidenceCollection(`${myth.id}-${index}`)}
+                  >
+                    <CheckCircle className="weapon-icon" />
+                    <span>{weapon}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="counter-narratives">
+              <div className="narratives-header">
+                <Building className="narratives-icon" />
+                <span>Counter-Narratives</span>
+              </div>
+              <div className="narratives-list">
+                {myth.counterNarratives.map((narrative, index) => (
+                  <div key={index} className="narrative-item">
+                    <Star className="narrative-icon" />
+                    <span>{narrative}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="real-world-impact">
+              <div className="impact-header">Real-World Impact:</div>
+              <div className="impact-content">{myth.realWorldImpact}</div>
+            </div>
+            
+            <div className="truth-defender-response">
+              <div className="response-header">Truth Defender Response:</div>
+              <div className="response-content">{myth.truthDefenderResponse}</div>
+            </div>
+            
+            <div className="stakes-description">
+              <div className="stakes-header">Stakes:</div>
+              <div className="stakes-content">{myth.stakesDescription}</div>
+            </div>
+            
+            {!isBusted && (
+              <div className="myth-actions">
+                <button 
+                  className="bust-myth-button"
+                  onClick={() => handleMythBust(myth.id)}
+                >
+                  <Sword className="bust-icon" />
+                  Deploy Truth Weapons - BUST THIS MYTH!
+                </button>
+              </div>
+            )}
+            
+            {isBusted && (
+              <div className="myth-busted">
+                <div className="busted-indicator">
+                  <CheckCircle className="busted-icon" />
+                  <span>MYTH BUSTED!</span>
+                </div>
+                <div className="busted-impact">
+                  Truth impact: +150 points | Network strength: +8%
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -636,88 +840,10 @@ const MythsModule = () => {
   return (
     <div className="module-container myths-module">
       <div className="myths-content">
-        <div className="myths-header">
-          <h1 className="myths-title">
-            Bitcoin Myths: The Technical Truth
-          </h1>
-          <p className="myths-subtitle">
-            Expert-Level Myth Busting with Data, Evidence, and Citations
-          </p>
-          <div className="myths-description">
-            Arm yourself with facts, data, and expert analysis to counter the most persistent Bitcoin myths. 
-            Each myth is thoroughly debunked with technical evidence, real-world data, and credible sources.
-          </div>
-          {/* isModuleCompleted('myths') && (
-            <div className="completion-badge">
-              <Trophy size={24} />
-              <span>Truth Master Achieved!</span>
-            </div>
-          ) */}
-          <div className="myths-stats">
-            <div className="stat-card">
-              <span className="stat-value">{debunkedMyths.size}</span>
-              <span className="stat-label">Myths Debunked</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-value">12</span>
-              <span className="stat-label">Total Myths</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-value">50+</span>
-              <span className="stat-label">Sources Cited</span>
-            </div>
-            <div className="stat-card">
-              <span className="stat-value">4</span>
-              <span className="stat-label">Categories</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Render all categories */}
-        {Object.keys(mythCategories).map(renderCategorySection)}
-
-        {/* Achievement Summary */}
-        <div className="achievement-summary">
-          <div className="achievement-header">
-            <h2 className="achievement-title">🏆 Truth Master Progress</h2>
-            <p className="achievement-subtitle">Track your journey to Bitcoin truth mastery</p>
-          </div>
-          <div className="achievements-grid">
-            {[
-              { threshold: 3, title: 'Myth Buster', desc: 'Debunk 3+ myths', icon: '🔍' },
-              { threshold: 6, title: 'Truth Seeker', desc: 'Debunk 6+ myths', icon: '🎯' },
-              { threshold: 9, title: 'FUD Fighter', desc: 'Debunk 9+ myths', icon: '⚔️' },
-              { threshold: 12, title: 'Truth Master', desc: 'Debunk all 12 myths', icon: '👑' }
-            ].map(achievement => (
-              <div 
-                key={achievement.threshold}
-                className={`achievement-card ${debunkedMyths.size >= achievement.threshold ? 'earned' : ''}`}
-              >
-                <div className="achievement-icon">{achievement.icon}</div>
-                <div className="achievement-name">{achievement.title}</div>
-                <div className="achievement-description">{achievement.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {debunkedMyths.size >= 6 && (
-          <div className="category-section">
-            <div style={{ 
-              background: 'rgba(16, 185, 129, 0.1)', 
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-              borderRadius: '12px',
-              padding: '2rem',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ color: '#10b981', marginBottom: '1rem' }}>🎓 Expert Status Unlocked!</h3>
-              <p style={{ color: '#f1f5f9', lineHeight: '1.6' }}>
-                You now have the knowledge and evidence to confidently counter Bitcoin myths. 
-                Share these facts with others and help spread the technical truth about Bitcoin!
-              </p>
-            </div>
-          </div>
-        )}
+        {renderCrisisHeader()}
+        {renderCrisisAlerts()}
+        {renderPhaseNavigation()}
+        {renderCurrentPhase()}
       </div>
     </div>
   );
