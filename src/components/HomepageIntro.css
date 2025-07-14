@@ -1,0 +1,461 @@
+/* Homepage Intro - Complete CSS Reset and Isolation */
+
+/* Complete reset for the homepage intro component */
+.homepage-intro {
+  /* Reset all inherited styles */
+  all: initial;
+  
+  /* Apply our own styles */
+  display: block;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  border: 2px solid #f7931a;
+  border-top: 4px solid #f7931a;
+  box-shadow: 0 8px 32px rgba(247, 147, 26, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: visible;
+  font-family: inherit;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+/* Reset all children */
+.homepage-intro * {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+}
+
+/* Intro container */
+.homepage-intro .intro-container {
+  display: block;
+  position: relative;
+  background: transparent;
+}
+
+.homepage-intro .intro-title {
+  display: block;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: inherit;
+}
+
+.homepage-intro .intro-description {
+  display: block;
+  font-size: 1.125rem;
+  color: #666;
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
+/* Progress Indicator */
+.homepage-intro .progress-indicator {
+  display: flex;
+  background: rgba(247, 147, 26, 0.15);
+  border: 1px solid rgba(247, 147, 26, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+}
+
+.homepage-intro .progress-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.homepage-intro .progress-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.homepage-intro .completion-percentage {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f7931a;
+  background: rgba(247, 147, 26, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(247, 147, 26, 0.3);
+  font-family: inherit;
+}
+
+.homepage-intro .next-module-hint {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  font-family: inherit;
+}
+
+/* Statistics Grid - Completely isolated */
+.homepage-intro .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.homepage-intro .stats-grid .stat-card {
+  display: block;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(247, 147, 26, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.homepage-intro .stats-grid .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.2);
+  border-top: 3px solid #f7931a;
+}
+
+.homepage-intro .stats-grid .stat-card .stat-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+}
+
+.homepage-intro .stats-grid .stat-card .stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+}
+
+.homepage-intro .stats-grid .stat-card .stat-label {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+/* Quote */
+.homepage-intro .intro-quote {
+  display: block;
+  font-style: italic;
+  color: #666;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 0 2rem;
+  position: relative;
+  font-family: inherit;
+}
+
+/* Reality Check Section */
+.homepage-intro .reality-check-section {
+  display: block;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.homepage-intro .reality-check-title {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+.homepage-intro .reality-check-description {
+  display: block;
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
+.homepage-intro .reality-check-insights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.homepage-intro .insight-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-size: 0.875rem;
+  color: #333;
+  position: relative;
+  font-family: inherit;
+}
+
+/* Reality Check Actions */
+.homepage-intro .reality-check-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.homepage-intro .canva-embed-container {
+  display: block;
+  width: 100%;
+}
+
+.homepage-intro .canva-attribution {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+
+.homepage-intro .canva-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.homepage-intro .canva-link:hover {
+  text-decoration: underline;
+}
+
+.homepage-intro .reality-check-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  font-family: inherit;
+}
+
+.homepage-intro .reality-check-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.homepage-intro .experience-note {
+  display: block;
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+  font-family: inherit;
+}
+
+/* Reality Check Completed */
+.homepage-intro .reality-check-completed {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.homepage-intro .completed-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.homepage-intro .completed-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(34, 197, 94, 0.1);
+  color: #16a34a;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.homepage-intro .revisit-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3b82f6;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.homepage-intro .revisit-link:hover {
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.homepage-intro .revisit-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-family: inherit;
+}
+
+.homepage-intro .revisit-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* Continue Learning Section */
+.homepage-intro .continue-learning-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.homepage-intro .continue-learning-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(247, 147, 26, 0.3);
+}
+
+.homepage-intro .continue-learning-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.4);
+}
+
+.homepage-intro .continue-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.homepage-intro .continue-text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.homepage-intro .next-module-name {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .homepage-intro {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .homepage-intro .intro-title {
+    font-size: 1.5rem;
+  }
+  
+  .homepage-intro .intro-description {
+    font-size: 1rem;
+  }
+  
+  .homepage-intro .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .homepage-intro .stats-grid .stat-card {
+    padding: 1rem;
+  }
+  
+  .homepage-intro .reality-check-section {
+    padding: 1.5rem;
+  }
+  
+  .homepage-intro .reality-check-insights {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .homepage-intro .progress-indicator {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .homepage-intro .progress-stats {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .homepage-intro .intro-quote {
+    padding: 0 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-intro {
+    padding: 1rem;
+  }
+  
+  .homepage-intro .intro-title {
+    font-size: 1.25rem;
+  }
+  
+  .homepage-intro .stats-grid .stat-card .stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .homepage-intro .reality-check-button {
+    width: 100%;
+    justify-content: center;
+  }
+} 

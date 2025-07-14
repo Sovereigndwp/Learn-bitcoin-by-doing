@@ -38,424 +38,179 @@ const VisualCapitalistSection = ({ icon, title, description, url, buttonText }) 
 // Component for the Introduction (transition from banking friction)
 const Introduction = ({ onComplete }) => {
   const [showPayment, setShowPayment] = useState(false);
-  const [cardTapped, setCardTapped] = useState(false);
+  const [showRoleIntro, setShowRoleIntro] = useState(false);
 
-  const handleCardTap = () => {
-    setCardTapped(true);
+  const handleCardPay = () => {
+    setShowPayment(true);
     setTimeout(() => {
-      setShowPayment(true);
-    }, 500);
+      setShowPayment(false);
+    }, 2000);
   };
 
-  const resetAnimation = () => {
-    setCardTapped(false);
-    setShowPayment(false);
+  const handleTimeTravel = () => {
+    setShowRoleIntro(true);
+    setTimeout(() => {
+      onComplete(0);
+    }, 2000);
   };
 
   return (
     <div className="step-content introduction">
       <div className="module-header-box">
-        <h2>The Great Money Mystery: Why Does This Thing Even Exist?</h2>
-        <div className="intro-text">
-          <p className="prime-text">You just experienced how broken modern money feels. But what if I told you money wasn't supposed to be this complicated?</p>
-        </div>
+        <h2>The Great Money Mystery</h2>
       </div>
-      <div className="content-text">
-        <p>
-          Think about it: You carry around little pieces of paper and plastic rectangles, and somehow everyone agrees they're "valuable."
-        </p>
-
-        {/* Interactive Credit Card Payment Visual */}
-        <div className="payment-visual-container">
-          <h3>💳 The Magic of Modern Money</h3>
-          <p>Tap the card to see the magic happen:</p>
-          
-          <div className="payment-scene">
-            <div className="card-reader">
-              <div className="reader-screen">
-                {!showPayment ? (
-                  <span className="reader-text">TAP CARD</span>
-                ) : (
-                  <span className="reader-text paid">PAID</span>
-                )}
-              </div>
-              <div className="reader-body"></div>
-            </div>
-            
-            <div className="card-container">
-              <div 
-                className={`credit-card ${cardTapped ? 'tapped' : ''}`}
-                onClick={handleCardTap}
-                style={{ cursor: cardTapped ? 'default' : 'pointer' }}
-              >
-                <div className="card-chip"></div>
-                <div className="card-logo">💳</div>
-                <div className="card-number">**** **** **** 1234</div>
-                <div className="card-name">JANE DOE</div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="payment-description">
-            {!cardTapped ? (
-              <p>Click the card to simulate a payment</p>
-            ) : showPayment ? (
-              <p>✨ Invisible numbers moved around the world in seconds!</p>
-            ) : (
-              <p>Processing...</p>
-            )}
-          </div>
-          
-          {showPayment && (
-            <button className="reset-payment-btn" onClick={resetAnimation}>
-              🔄 Try Again
-            </button>
-          )}
-        </div>
-
-        <p>
       
-        </p>
-        <p>
-          But behind all that complexity is a surprisingly simple story: <strong>Humans needed to solve the world's most annoying problem.</strong>
-        </p>
+      <div className="content-text">
+        <p>Tap to pay and watch value zip across the globe.</p>
 
-        <div className="transition-hook">
-          <h3>🚀 Ready to Experience the Problem?</h3>
-          <p>Instead of telling you, let's travel back 10,000 years and let you experience the frustration firsthand.</p>
-          <p><em>You're about to become a potato farmer who desperately needs shoes. Good luck finding someone to trade with!</em></p>
+        <div className="card-pay-sim">
+          <div 
+            className={`interactive-card ${showPayment ? 'paying' : ''}`}
+            onClick={handleCardPay}
+          >
+            <div className="card-display">
+              <div className="card-icon">💳</div>
+              <div className="card-text">
+                {showPayment ? '✨ Payment sent globally!' : 'Tap to Pay'}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <button onClick={() => onComplete(0)} className="continue-button">
-          Take Me Back in Time
+        <p>Feels like magic, right? Underneath, it fixes a problem older than history—swapping what you have for what you need.</p>
+
+        <button onClick={handleTimeTravel} className="cta-time">
+          Take Me Back 10,000 Years
         </button>
+
+        <p className={`role-intro ${showRoleIntro ? 'visible' : 'hidden'}`}>
+          You are Paco the Potato Farmer. Your feet are freezing. You need shoes. Potatoes won't cut it. What's your move?
+        </p>
       </div>
     </div>
   );
 };
 
-// Component for the Barter World section
+// Component for the Barter World section  
 const BarterWorld = ({ onComplete }) => {
-  const [gameStep, setGameStep] = useState(0);
   const [currentTrader, setCurrentTrader] = useState(0);
+  const [playerChoice, setPlayerChoice] = useState(null);
+  const [showOutcome, setShowOutcome] = useState(false);
   const [tradeAttempts, setTradeAttempts] = useState(0);
-  const [tradeHistory, setTradeHistory] = useState([]);
-  const [inventory, setInventory] = useState("🥔 Potatoes");
-  const [visitedTraders, setVisitedTraders] = useState(new Set());
-  const [frustrationLevel, setFrustrationLevel] = useState(0);
 
-  // Helper function for achievements (placeholder for now)
-  const showAchievement = (title, description) => {
-    console.log(`Achievement: ${title} - ${description}`);
-    // This will be replaced by the proper notification system later
-  };
-
-  const tradeRoute = [
-    { 
-      id: 1, 
-      person: "Baker", 
-      location: "Village Square", 
-      have: "🍞 Bread", 
-      want: "🧱 Bricks", 
-      dialogue: "I need bricks to build a new oven. Do you have any?"
+  const tradeScenarios = [
+    {
+      id: 1,
+      title: "🍞 The Baker's Dilemma",
+      situation: "Your feet are freezing. You need shoes. You have potatoes.",
+      trader: "The baker has bread, but wants bricks.",
+      choice: "What do you do?",
+      options: [
+        { id: 'A', text: 'Offer potatoes anyway', result: 'reject' },
+        { id: 'B', text: 'Ask who might have bricks', result: 'chain' },
+        { id: 'C', text: 'Walk away frustrated', result: 'quit' }
+      ]
     },
-    { 
+    {
       id: 2, 
-      person: "Fisher", 
-      location: "River Bank", 
-      have: "🐟 Fish", 
-      want: "🍞 Bread", 
-      dialogue: "I'm hungry and need bread. Got any to trade?"
+      title: "🐟 The Fisher's Problem",
+      situation: "You learned bricks come from the builder. You still have potatoes.",
+      trader: "The fisher has what the builder wants, but needs bread.",
+      choice: "You're starting to see a pattern...",
+      options: [
+        { id: 'A', text: 'Try the potato trade again', result: 'reject' },
+        { id: 'B', text: 'Map out the trading chain', result: 'insight' },
+        { id: 'C', text: 'Give up and go barefoot', result: 'quit' }
+      ]
     },
-    { 
-      id: 3, 
-      person: "Builder", 
-      location: "Construction Site", 
-      have: "🧱 Bricks", 
-      want: "🐟 Fish", 
-      dialogue: "I need fish to feed my workers. Can you help?"
-    },
-    { 
-      id: 4, 
-      person: "Cobbler", 
-      location: "Market Street", 
-      have: "👟 Shoes", 
-      want: "🥔 Potatoes", 
-      dialogue: "Perfect! I love potatoes and I have shoes to trade!"
+    {
+      id: 3,
+      title: "🏗️ The Builder's Reality",
+      situation: "You need: Potatoes → Bread → Fish → Bricks → Shoes. That's 4 trades!",
+      trader: "Each person wants something different from what you have.",
+      choice: "This is getting ridiculous...",
+      options: [
+        { id: 'A', text: 'Attempt the 4-step chain', result: 'chaos' },
+        { id: 'B', text: 'Realize the system is broken', result: 'epiphany' },
+        { id: 'C', text: 'Invent money', result: 'genius' }
+      ]
     }
   ];
 
-  const handleTradeAttempt = (trader) => {
-    if (!trader) return;
-    
+  const handleChoice = (optionId) => {
+    setPlayerChoice(optionId);
+    setShowOutcome(true);
     setTradeAttempts(prev => prev + 1);
-    setVisitedTraders(prev => new Set(prev).add(currentTrader));
     
-    // Check if this trader wants what we have
-    const canTrade = trader.want === inventory;
-    
-    if (canTrade) {
-      // Successful trade - update inventory
-      const newInventory = trader.have;
-      setInventory(newInventory);
-      setTradeHistory(prev => [...prev, {
-        from: trader.person,
-        traded: inventory,
-        received: newInventory,
-        location: trader.location,
-        success: true
-      }]);
-      
-      // If this was the cobbler, we're done!
-      if (currentTrader === tradeRoute.length - 1) {
-        setTimeout(() => setGameStep(1), 1500);
+    setTimeout(() => {
+      if (currentTrader < tradeScenarios.length - 1) {
+        setCurrentTrader(prev => prev + 1);
+        setPlayerChoice(null);
+        setShowOutcome(false);
       } else {
-        // Move to next trader after successful trade
-        setTimeout(() => setCurrentTrader(prev => prev + 1), 1500);
+        onComplete(1);
       }
-    } else {
-      // Failed trade - record it and move to next trader
-      setTradeHistory(prev => [...prev, {
-        from: trader.person,
-        traded: "Nothing",
-        received: "Nothing",
-        location: trader.location,
-        failed: true,
-        reason: `"I don't want potatoes, I need ${trader.want}"`
-      }]);
-      setFrustrationLevel(prev => prev + 1);
-      
-      // Always move to next trader after failed attempt
-      if (currentTrader < tradeRoute.length - 1) {
-        setTimeout(() => setCurrentTrader(prev => prev + 1), 1500);
-      } else {
-        // We've tried everyone and failed
-        setTimeout(() => setGameStep(1), 1500);
-      }
-    }
+    }, 2000);
   };
 
-  const resetGame = () => {
-    setGameStep(0);
-    setCurrentTrader(0);
-    setTradeAttempts(0);
-    setTradeHistory([]);
-    setInventory("🥔 Potatoes");
-    setVisitedTraders(new Set());
-    setFrustrationLevel(0);
+  const getOutcomeText = (result) => {
+    const outcomes = {
+      reject: "❌ 'I don't want potatoes!' You're learning this is harder than it looks.",
+      chain: "🔍 You discover the complex web of who wants what. This is getting complicated...",
+      quit: "😤 You walk away empty-handed. Your feet are still cold.",
+      insight: "💡 You start mapping the chain: Potatoes → Bread → Fish → Bricks → Shoes. That's 4 trades!",
+      chaos: "🌪️ You attempt the chain but someone already traded away what you need. Back to square one.",
+      epiphany: "⚡ This system is completely broken! There has to be a better way...",
+      genius: "🧠 You just invented the concept of money! Something everyone accepts for anything."
+    };
+    return outcomes[result] || "Something happened...";
   };
 
-    if (gameStep === 0) {
-    const currentTraderData = tradeRoute[currentTrader];
-    
-    // Guard against undefined trader data
-    if (!currentTraderData) {
-  return (
-    <div className="step-content barter-world">
-      <div className="module-header-box">
-            <h2>Error Loading Trading Game</h2>
-            <p>Please refresh the page to try again.</p>
-          </div>
-        </div>
-      );
-    }
-    
+  const currentScenario = tradeScenarios[currentTrader];
+  
+  if (currentTrader < tradeScenarios.length) {
     return (
       <div className="step-content barter-world">
         <div className="module-header-box">
-          <h2>Your Trading Journey Through the Village</h2>
-          <div className="intro-text">
-            <p className="prime-text">You're a potato farmer who needs shoes for winter. You'll visit each trader in the village, offering your potatoes in exchange for what you need.</p>
-            <p>Watch how each trader rejects your potatoes because they want something else entirely!</p>
-          </div>
+          <h2>Paco's Trading Adventure</h2>
         </div>
-
-        <div className="barter-game">
-          <div className="journey-progress">
-            <h3>🗺️ Your Journey Through the Village</h3>
-            <div className="route-progress">
-              <div className="journey-path">
-                {tradeRoute.map((trader, index) => (
-                  <div 
-                    key={trader.id} 
-                    className={`journey-stop ${index === currentTrader ? 'current' : ''} ${index < currentTrader ? 'completed' : ''} ${index > currentTrader ? 'upcoming' : ''}`}
-                    onClick={() => index <= currentTrader && setCurrentTrader(index)}
+        
+        <div className="content-text">
+          <div className="scenario-card">
+            <h3>{currentScenario.title}</h3>
+            <p className="situation">{currentScenario.situation}</p>
+            <p className="trader-info">{currentScenario.trader}</p>
+            <p className="choice-prompt"><strong>{currentScenario.choice}</strong></p>
+            
+            {!showOutcome ? (
+              <div className="choice-options">
+                {currentScenario.options.map(option => (
+                  <button
+                    key={option.id}
+                    onClick={() => handleChoice(option.id)}
+                    className="choice-button"
                   >
-                    <div className="stop-marker">
-                      <span className="stop-number">{index + 1}</span>
-                      {index < currentTrader && <span className="checkmark">✅</span>}
-                      {index === currentTrader && <span className="current-indicator">📍</span>}
-                    </div>
-                    <div className="stop-info">
-                      <div className="stop-location">{trader.location}</div>
-                      <div className="stop-person">{trader.person}</div>
-                    </div>
-                    {index < tradeRoute.length - 1 && (
-                      <div className="path-arrow">→</div>
-                    )}
-        <button
-                      className="visit-trader-btn"
-                      onClick={() => setCurrentTrader(index)}
-                      disabled={index > currentTrader}
-                      title={index > currentTrader ? "You haven't reached this trader yet" : `Visit ${trader.person} at ${trader.location}`}
-        >
-                      {index <= currentTrader ? "Visit" : "Locked"}
-        </button>
-      </div>
+                    {option.text}
+                  </button>
                 ))}
               </div>
+            ) : (
+              <div className="outcome-display">
+                {playerChoice && (
+                  <div className="choice-result">
+                    <p>You chose: <strong>{currentScenario.options.find(o => o.id === playerChoice)?.text}</strong></p>
+                    <p className="outcome-text">
+                      {getOutcomeText(currentScenario.options.find(o => o.id === playerChoice)?.result)}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            <div className="progress-tracker">
+              Scenario {currentTrader + 1} of {tradeScenarios.length} • Attempts: {tradeAttempts}
             </div>
           </div>
-
-          <div className="your-situation">
-            <h3>🎯 Your Current Situation</h3>
-            <div className="situation-grid">
-              <div className="situation-item">
-                <span className="situation-icon">🎒</span>
-                <div className="situation-content">
-                  <span className="situation-label">You have:</span>
-                  <span className="situation-value">{inventory}</span>
-                </div>
-              </div>
-              <div className="situation-item">
-                <span className="situation-icon">👟</span>
-                <div className="situation-content">
-                  <span className="situation-label">You need:</span>
-                  <span className="situation-value">Shoes for winter</span>
-                </div>
-              </div>
-              <div className="situation-item">
-                <span className="situation-icon">📍</span>
-                <div className="situation-content">
-                  <span className="situation-label">Current location:</span>
-                  <span className="situation-value">{currentTraderData.location}</span>
-                </div>
-              </div>
-              <div className="situation-item">
-                <span className="situation-icon">🔄</span>
-                <div className="situation-content">
-                  <span className="situation-label">Trade attempts:</span>
-                  <span className="situation-value">{tradeAttempts}</span>
-                </div>
-              </div>
-              <div className="situation-item">
-                <span className="situation-icon">😤</span>
-                <div className="situation-content">
-                  <span className="situation-label">Frustration level:</span>
-                  <span className="situation-value">{frustrationLevel}/10</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="current-trader">
-            <h3>🤝 Meeting: {currentTraderData.person || 'Unknown'}</h3>
-            <div className="trader-card current">
-              <div className="trader-header">
-                <div className="trader-location">
-                  <span className="location-icon">📍</span>
-                  <span className="location-text">{currentTraderData.location || 'Unknown'}</span>
-                </div>
-                <div className="trader-name">
-                  <span className="name-icon">👤</span>
-                  <span className="name-text">{currentTraderData.person || 'Unknown'}</span>
-                </div>
-              </div>
-              
-              <div className="trader-details">
-                <div className="trade-info">
-                  <div className="trade-item">
-                    <span className="trade-label">Has:</span>
-                    <span className="trade-value">{currentTraderData.have || 'Nothing'}</span>
-                  </div>
-                  <div className="trade-item">
-                    <span className="trade-label">Wants:</span>
-                    <span className="trade-value">{currentTraderData.want || 'Nothing'}</span>
-                  </div>
-                </div>
-                
-                <div className="trader-dialogue-box">
-                  <span className="dialogue-icon">💬</span>
-                  <p className="trader-dialogue">"{currentTraderData.dialogue || 'Hello there!'}"</p>
-                </div>
-              </div>
-              
-              <div className="trade-options">
-                <button 
-                  className="trade-button primary"
-                  onClick={() => handleTradeAttempt(currentTraderData)}
-                >
-                  <span className="button-icon">🥔</span>
-                  <span className="button-text">Offer Potatoes for {currentTraderData.have}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {tradeHistory.length > 0 && (
-            <div className="trade-history">
-              <h3>📜 Your Trading History</h3>
-              <div className="history-list">
-                {tradeHistory.map((trade, index) => (
-                  <div key={index} className={`history-item ${trade.failed ? 'failed' : 'success'}`}>
-                    <div className="history-header">
-                      <div className="history-location">
-                        <span className="location-icon">📍</span>
-                        <span className="location-text">{trade.location || 'Unknown'}</span>
-                      </div>
-                      <div className="history-trader">
-                        <span className="trader-icon">👤</span>
-                        <span className="trader-text">{trade.from || 'Unknown'}</span>
-                      </div>
-                    </div>
-                    <div className="history-result">
-                      {trade.failed ? (
-                        <div className="failed-trade">
-                          <span className="result-icon">❌</span>
-                          <span className="result-text">No deal - they don't want {inventory}</span>
-                        </div>
-                      ) : (
-                        <div className="successful-trade">
-                          <span className="result-icon">✅</span>
-                          <span className="result-text">
-                            Traded <strong>{trade.traded || 'Nothing'}</strong> for <strong>{trade.received || 'Nothing'}</strong>
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {currentTrader === tradeRoute.length - 1 && inventory === "🥔 Potatoes" && (
-            <div className="success-section">
-              <h3>🎉 Success! You Found the Cobbler!</h3>
-              <p>After visiting {tradeAttempts} traders and trying {frustrationLevel} frustrating attempts, you finally found someone who wants potatoes and has shoes!</p>
-              <p>But imagine if this was your life every single day...</p>
-              <button className="continue-button" onClick={() => setGameStep(1)}>
-                See Why This System Failed
-              </button>
-            </div>
-          )}
-
-          {frustrationLevel >= 8 && (
-            <div className="failure-section">
-              <h3>😤 You're Getting Frustrated!</h3>
-              <p>You've tried {tradeAttempts} times and visited {visitedTraders.size} different traders. The trading chain is getting complicated!</p>
-              <p>You might have to:</p>
-              <ul>
-                <li>Walk to the next village (2 days journey)</li>
-                <li>Try a different trading route</li>
-                <li>Wait until someone needs what you have</li>
-                <li>Go barefoot this winter</li>
-        </ul>
-              <button className="continue-button" onClick={() => setGameStep(1)}>
-                This System is Broken!
-              </button>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -464,44 +219,30 @@ const BarterWorld = ({ onComplete }) => {
   return (
     <div className="step-content barter-world">
       <div className="module-header-box">
-        <h2>The Problem That Broke Humanity's Patience</h2>
-        <div className="intro-text">
-          <p className="prime-text">What you just experienced is called "the double coincidence of wants" - basically, the universe's worst matchmaking system.</p>
-        </div>
+        <h2>The Broken System</h2>
       </div>
       
       <div className="content-text">
-        <div className="problem-breakdown">
-          <h3>🤔 Why Bartering Was a Nightmare</h3>
-          <div className="problems-grid">
-            <div className="problem-card">
-              <h4>⏰ Time Problem</h4>
-              <p>Finding someone who wants what you have AND has what you want could take days, weeks, or never happen.</p>
-            </div>
-            <div className="problem-card">
-              <h4>🗳️ Value Problem</h4>
-              <p>Is a cow worth 3 goats? 5 chickens? Who decides? Arguments everywhere.</p>
-            </div>
-            <div className="problem-card">
-              <h4>🍎 Storage Problem</h4>
-              <p>Can't save potatoes for next year - they rot. Can't store your wealth over time.</p>
-            </div>
-            <div className="problem-card">
-              <h4>📍 Location Problem</h4>
-              <p>Your trading partner might be in the next village, 50 miles away. Good luck with that.</p>
-            </div>
+        <p>You just experienced "the double coincidence of wants"—the universe's worst matchmaking system.</p>
+        
+        <div className="barter-problems">
+          <h3>Why Barter Failed</h3>
+          <div className="problems-list">
+            <div className="problem-item">⏰ <strong>Time:</strong> Finding the right trade could take forever</div>
+            <div className="problem-item">📏 <strong>Value:</strong> Is a cow worth 3 goats? Who decides?</div>
+            <div className="problem-item">🍎 <strong>Storage:</strong> Potatoes rot. Can't save wealth over time</div>
+            <div className="problem-item">📍 <strong>Distance:</strong> Your trade partner might be 50 miles away</div>
           </div>
         </div>
 
-        <div className="solution-reveal">
-          <h3>💡 The Key Insight</h3>
-          <p>Someone finally realized: <em>"What if we all just agree on ONE thing that everyone will accept for everything else?"</em></p>
-          <p>And thus... <strong>money was born</strong>.</p>
-          <p>Not by governments. Not by banks. By frustrated humans who were tired of trading goats for shoes.</p>
+        <div className="money-solution">
+          <h3>💡 The Breakthrough</h3>
+          <p>Someone finally thought: <em>"What if we all agree on ONE thing everyone accepts?"</em></p>
+          <p><strong>Money was born.</strong> Not by banks or governments—by frustrated humans tired of impossible trades.</p>
         </div>
 
-        <button onClick={() => onComplete(1)} className="continue-button">
-          Let's See Exactly What Money Was Supposed to Fix
+        <button onClick={() => onComplete(1)} className="cta-time">
+          Discover What Money Should Do
         </button>
       </div>
     </div>
@@ -510,42 +251,84 @@ const BarterWorld = ({ onComplete }) => {
 
 // Component for Carlos's Flower Export
 const CarlosFlowerExport = ({ onComplete }) => {
+  const [showStoryChoice, setShowStoryChoice] = useState(false);
+  const [playerChoice, setPlayerChoice] = useState(null);
+
+  const handleExploreStory = () => {
+    window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank');
+    setShowStoryChoice(true);
+  };
+
+  const handleChoice = (choice) => {
+    setPlayerChoice(choice);
+    setTimeout(() => onComplete(4), 1500);
+  };
+
   return (
     <div className="step-content carlos-export-step">
       <div className="module-header-box">
-        <h2>From Theory to Reality: The Human Cost</h2>
-        <div className="intro-text">
-          <p className="prime-text">Not only has this happened to entire countries, but it affects everyday people in ways we sometimes don't think about.</p>
-        </div>
+        <h2>Real People, Real Problems</h2>
       </div>
 
       <div className="content-text">
-        <div className="carlos-story">
-          <h3>Meet Carlos, a flower exporter in Colombia</h3>
-          <p>
-            Carlos exports 1,000 roses to Japan. He gets paid in USD but spends in Colombian pesos. 
-              <button
-              className="inline-link-button"
-              onClick={() => window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank')}
-              >
-              See exactly what happens when money's core functions break down.
-              </button>
-          </p>
-          </div>
+        <p>You've seen the theory. Now meet someone living with broken money every day.</p>
+        
+        <div className="carlos-intro">
+          <h3>🌹 Carlos the Flower Exporter</h3>
+          <p>Carlos grows roses in Colombia and sells them to Japan. Simple business, right?</p>
+          <p>Watch what happens when he tries to get paid...</p>
           
-        <p>After exploring Carlos's story, you can see how traditional payment systems create unnecessary friction, delays, and costs that eat into people's earnings and limit economic opportunity.</p>
-        
-        <p><strong>Now that you understand both the historical failures and the real human cost, you're ready to discover what makes money truly sound.</strong></p>
-        
+          <button onClick={handleExploreStory} className="explore-button">
+            Follow Carlos's Payment Journey
+          </button>
+        </div>
+
+        {showStoryChoice && (
+          <div className="reflection-section">
+            <h3>What Did You Notice?</h3>
+            <p>After seeing Carlos's story, what strikes you most?</p>
+            
+            <div className="choice-options">
               <button 
-                className="continue-button"
-          onClick={() => onComplete(4)}
+                onClick={() => handleChoice('fees')}
+                className="choice-button"
               >
-          Continue to the Sound Money Blueprint
+                💸 The hidden fees eating his profits
               </button>
+              <button 
+                onClick={() => handleChoice('time')}
+                className="choice-button"
+              >
+                ⏰ The delays holding up his business
+              </button>
+              <button 
+                onClick={() => handleChoice('control')}
+                className="choice-button"
+              >
+                🏦 How banks control every step
+              </button>
+            </div>
+
+            {playerChoice && (
+              <div className="choice-response">
+                <p>Exactly! {getCarlosInsight(playerChoice)}</p>
+                <p><strong>Ready to discover what money should actually do?</strong></p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
+
+  function getCarlosInsight(choice) {
+    const insights = {
+      fees: "Traditional payments nickle-and-dime everyone with hidden costs. Carlos loses money just for getting paid.",
+      time: "When money moves slowly, businesses suffer. Carlos can't plan or reinvest quickly.",
+      control: "Banks sit between Carlos and his money, adding friction and extracting value."
+    };
+    return insights[choice] || "Every aspect of this system makes life harder for regular people.";
+  }
 };
 
 // Component for the "What's Missing Here?" section
@@ -645,81 +428,70 @@ const WhatsWrong = ({ onComplete }) => {
     }
   };
 
+  const currentScenarioData = scenarios[currentScenario];
+  
   return (
     <div className="step-content whats-wrong-step">
       <div className="module-header-box">
-        <h2>The Job of Money</h2>
-        <div className="intro-text">
-          <p className="prime-text">These scenarios reveal why money had to be invented. Each one shows a reason we bother with money... when it works.</p>
-          <p>What problem is money solving in each case?</p>
-        </div>
+        <h2>Money's Three Jobs</h2>
       </div>
 
-      <div className="functions-tracker">
-        <h3>Money Functions Unlocked:</h3>
-        <div className="functions-grid">
-          {['Medium of Exchange', 'Store of Value', 'Unit of Account'].map(func => (
-            <div key={func} className={`function-badge ${unlockedFunctions.includes(func) ? 'unlocked' : 'locked'}`}>
-              {unlockedFunctions.includes(func) ? '✅' : '🔒'} {func}
-            </div>
-          ))}
-        </div>
-      </div>
+      <div className="content-text">
+        <p>Each scenario reveals why money exists. Can you spot what job money needs to do?</p>
 
-      <div className="scenario-container">
-        {scenarios.map((scenario, index) => (
-          <div 
-            key={scenario.id} 
-            className={`scenario-item ${index === currentScenario ? 'active' : ''} ${index < currentScenario ? 'completed' : ''} ${index > currentScenario ? 'locked' : ''}`}
-          >
-            <div className="scenario-header">
-              <h3>{scenario.title}</h3>
-              <p className="scenario-description">{scenario.description}</p>
-              <p className="scenario-question"><strong>{scenario.question}</strong></p>
-            </div>
-            
-            {index === currentScenario && (
-            <div className="options-grid">
-              {scenario.options.map(option => (
-                  <button
-                    key={option.value}
-                    className={`option-button ${answers[scenario.id] === option.value ? 'selected' : ''}`}
-                    onClick={() => handleAnswer(scenario.id, option.value)}
-                    disabled={isLocked}
-                  >
-                    {option.label}
-                  </button>
+        <div className="scenario-progress">
+          <div className="progress-dots">
+            {scenarios.map((_, index) => (
+              <div 
+                key={index} 
+                className={`dot ${index === currentScenario ? 'current' : ''} ${index < currentScenario ? 'completed' : ''}`}
+              >
+                {index < currentScenario ? '✅' : index + 1}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="current-scenario">
+          <h3>{currentScenarioData.title}</h3>
+          <p className="scenario-setup">{currentScenarioData.description}</p>
+          <p className="scenario-question"><strong>{currentScenarioData.question}</strong></p>
+          
+          {!feedback[currentScenarioData.id] && (
+            <div className="choice-options">
+              {currentScenarioData.options.map(option => (
+                <button
+                  key={option.value}
+                  className={`choice-button ${answers[currentScenarioData.id] === option.value ? 'selected' : ''}`}
+                  onClick={() => handleAnswer(currentScenarioData.id, option.value)}
+                  disabled={isLocked}
+                >
+                  {option.label}
+                </button>
               ))}
             </div>
-            )}
-            
-            {feedback[scenario.id] && (
-              <div className={`feedback ${feedback[scenario.id].includes('🎉') ? 'correct' : 'incorrect'}`}>
-                <p>{feedback[scenario.id]}</p>
-                {feedback[scenario.id].includes('🎉') && (
-                  <div className="function-explanation">
-                    <h4>💡 Function Unlocked: {scenario.moneyFunction}</h4>
-                    <p>{scenario.explanation}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {index < currentScenario && (
-              <div className="completed-indicator">
-                <p>✅ Completed: {scenario.moneyFunction}</p>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {unlockedFunctions.length === 3 && (
-        <div className="completion-section">
-          <h3>🎉 You've Discovered Money's Three Core Functions!</h3>
-          <p>Now you understand why money was such a transformative invention. But wait until you see what happened next...</p>
+          )}
+          
+          {feedback[currentScenarioData.id] && (
+            <div className={`outcome-display ${feedback[currentScenarioData.id].includes('🎉') ? 'correct' : 'incorrect'}`}>
+              <p>{feedback[currentScenarioData.id]}</p>
+              {feedback[currentScenarioData.id].includes('🎉') && (
+                <div className="function-unlocked">
+                  <h4>💡 Function Unlocked: {currentScenarioData.moneyFunction}</h4>
+                  <p>{currentScenarioData.explanation}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      )}
+
+        {unlockedFunctions.length === 3 && (
+          <div className="completion-message">
+            <h3>🎉 You've Discovered All Three Functions!</h3>
+            <p>Now you know why money was humanity's breakthrough invention.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
