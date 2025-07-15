@@ -86,16 +86,8 @@ const KeysModule = () => {
       setTimeout(() => showAchievement(achievements[stepIndex].title, achievements[stepIndex].desc), 500);
     }
     
-    // Auto-advance to next step
-    if (stepIndex < sovereigntySteps.length - 1) {
-      setTimeout(() => setCurrentStep(stepIndex + 1), 1000);
-    } else {
-      // Complete module with personalized insights
-      setTimeout(() => {
-        completeModule('keys');
-        navigate('/dashboard');
-      }, 2000);
-    }
+    // Manual advance - user controls the pace
+    // No auto-advance, users click to continue when ready
   };
 
   // Achievement notification system
@@ -109,14 +101,37 @@ const KeysModule = () => {
           <h4>${title}</h4>
           <p>${description}</p>
         </div>
+        <div class="achievement-controls">
+          <button class="achievement-dismiss" onclick="this.closest('.achievement-popup').remove()">
+            Continue
+          </button>
+        </div>
       </div>
+      <div class="achievement-hint">Click to dismiss or wait 8 seconds...</div>
     `;
     document.body.appendChild(achievement);
     
-    setTimeout(() => {
+    // Click to dismiss
+    achievement.addEventListener('click', () => {
       achievement.style.opacity = '0';
-      setTimeout(() => document.body.removeChild(achievement), 300);
-    }, 3000);
+      setTimeout(() => {
+        if (document.body.contains(achievement)) {
+          document.body.removeChild(achievement);
+        }
+      }, 300);
+    });
+    
+    // Auto dismiss after longer delay
+    setTimeout(() => {
+      if (document.body.contains(achievement)) {
+        achievement.style.opacity = '0';
+        setTimeout(() => {
+          if (document.body.contains(achievement)) {
+            document.body.removeChild(achievement);
+          }
+        }, 300);
+      }
+    }, 8000); // Extended from 3000
   };
 
   // Progress tracking
@@ -147,9 +162,9 @@ const KeysModule = () => {
               >
                 <Flame className="flame-icon" />
                 <span className="flame-label">{step.title.split(' ')[1]}</span>
-              </div>
+        </div>
             ))}
-          </div>
+        </div>
           <div className="progress-text">
             Building your sovereignty: {completedSteps.size} / {sovereigntySteps.length} steps mastered
           </div>
@@ -170,7 +185,7 @@ const KeysModule = () => {
           <span className="current-step">{sovereigntySteps[currentStep].title}</span>
           <span className="step-subtitle">{sovereigntySteps[currentStep].subtitle}</span>
         </div>
-        
+
         <NavigationButton
           onClick={() => setCurrentStep(Math.min(sovereigntySteps.length - 1, currentStep + 1))}
           disabled={currentStep === sovereigntySteps.length - 1}
@@ -240,7 +255,7 @@ const KingdomUnderSiegeStep = ({ onComplete }) => {
         <div>
           <h2>Your Financial Kingdom Is Under Attack</h2>
           <p>Experience what happens when others control your wealth...</p>
-        </div>
+      </div>
       </div>
 
       {/* Scenario selection */}
@@ -256,9 +271,9 @@ const KingdomUnderSiegeStep = ({ onComplete }) => {
               {scen.title}
             </OptionButton>
           ))}
-        </div>
-      </div>
-
+            </div>
+          </div>
+          
       {/* Current scenario display */}
       <div className="siege-scenario">
         <div className="scenario-story">
@@ -269,9 +284,9 @@ const KingdomUnderSiegeStep = ({ onComplete }) => {
           </div>
           <div className="emotion-box">
             <strong>Feeling:</strong> {currentScenario.emotion}
+            </div>
           </div>
-        </div>
-
+          
         {!userReaction && (
           <div className="reaction-prompt">
             <h4>How does this make you feel?</h4>
@@ -296,8 +311,8 @@ const KingdomUnderSiegeStep = ({ onComplete }) => {
               <div className="solution-text">
                 What if no bank, exchange, or government could EVER lock you out of your wealth? 
                 What if your money was protected by unbreakable mathematics instead of breakable institutions?
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="bitcoin-promise">
               <h4>🗝️ Bitcoin's Cryptographic Promise:</h4>
@@ -307,14 +322,14 @@ const KingdomUnderSiegeStep = ({ onComplete }) => {
                 <li><strong>Global accessibility</strong> - Access your wealth from anywhere, anytime</li>
                 <li><strong>Sovereign immunity</strong> - No third party can betray your trust</li>
               </ul>
-            </div>
+      </div>
 
             <ContinueButton onClick={() => onComplete({ scenario, reaction: userReaction })}>
               Learn How to Build True Sovereignty →
             </ContinueButton>
           </div>
         )}
-      </div>
+          </div>
     </div>
   );
 };
@@ -385,7 +400,7 @@ const ChaosAlchemistStep = ({ onComplete }) => {
       </div>
 
       <div className="chaos-explanation">
-        <div className="prime-text">
+      <div className="prime-text">
           💡 Your Bitcoin security begins with chaos. The more random, the more unbreakable. 
           You're about to transform pure randomness into mathematical sovereignty.
         </div>
@@ -408,7 +423,7 @@ const ChaosAlchemistStep = ({ onComplete }) => {
               <div className="method-description">{method.description}</div>
               <div className="method-process">{method.method}</div>
             </div>
-          ))}
+        ))}
         </div>
       </div>
 
@@ -433,7 +448,7 @@ const ChaosAlchemistStep = ({ onComplete }) => {
             <div className="generating-status">
               <div className="loading-spinner"></div>
               Extracting randomness from {currentMethod.title.toLowerCase()}...
-            </div>
+          </div>
           )}
         </div>
 
@@ -451,9 +466,9 @@ const ChaosAlchemistStep = ({ onComplete }) => {
                     <div className="arrow">→</div>
                     <div className="output">Your Secret Mathematical Identity</div>
                   </div>
-                </div>
-              </div>
-              
+        </div>
+      </div>
+
               <div className="transformation-step">
                 <div className="step-number">2</div>
                 <div className="step-content">
@@ -560,7 +575,7 @@ const SecretGuardianStep = ({ onComplete }) => {
       </div>
 
       <div className="guardian-explanation">
-        <div className="prime-text">
+      <div className="prime-text">
           💡 Your private key is your cryptographic DNA. It can sign messages and transactions that 
           prove you are you—without revealing your secret. This is the power of guardianship.
         </div>
@@ -579,11 +594,11 @@ const SecretGuardianStep = ({ onComplete }) => {
                 <li><strong>Unbreakable</strong> - Protected by 256-bit mathematics</li>
                 <li><strong>Yours Forever</strong> - No authority can revoke or change them</li>
               </ul>
-            </div>
+                </div>
             <ActionButton onClick={generateDemoKeys}>
               🔨 Forge My Cryptographic Identity
             </ActionButton>
-          </div>
+              </div>
         ) : (
           <div className="keys-display">
             <div className="key-item">
@@ -591,29 +606,29 @@ const SecretGuardianStep = ({ onComplete }) => {
               <div className="key-value secret">
                 <Eye className="key-icon" />
                 {demoKeys.privateKey}
-              </div>
+                </div>
               <div className="key-description">
                 Guard this with your life. Anyone with this controls your Bitcoin.
               </div>
             </div>
-            
+              
             <div className="key-item">
               <h4>🌍 Public Key (Your Proof)</h4>
               <div className="key-value public">
                 <Globe className="key-icon" />
                 {demoKeys.publicKey}
-              </div>
+                </div>
               <div className="key-description">
                 Share this freely. It proves signatures came from your private key.
               </div>
             </div>
-            
+              
             <div className="key-item">
               <h4>📮 Bitcoin Address (Your Kingdom)</h4>
               <div className="key-value address">
                 <Crown className="key-icon" />
                 {demoKeys.address}
-              </div>
+                </div>
               <div className="key-description">
                 Your digital territory where Bitcoin can be sent and stored.
               </div>
@@ -636,8 +651,8 @@ const SecretGuardianStep = ({ onComplete }) => {
                 onChange={(e) => setMessage(e.target.value)}
                 className="message-input"
               />
-            </div>
-            
+          </div>
+
             {!showSigning ? (
               <ActionButton onClick={signMessage}>
                 ✍️ Sign with My Private Key
@@ -648,17 +663,17 @@ const SecretGuardianStep = ({ onComplete }) => {
                   <div className="signing-step">
                     <div className="step-icon">📝</div>
                     <div>Message: "{message}"</div>
-                  </div>
+            </div>
                   <div className="signing-step">
                     <div className="step-icon">🔐</div>
                     <div>Signing with private key...</div>
-                  </div>
+          </div>
                   {signature && (
                     <>
                       <div className="signing-step">
                         <div className="step-icon">📋</div>
                         <div>Signature: {signature}</div>
-                      </div>
+            </div>
                       <div className="signing-step">
                         <div className="step-icon">✅</div>
                         <div>Verification: Valid! This message was signed by your private key.</div>
@@ -682,12 +697,12 @@ const SecretGuardianStep = ({ onComplete }) => {
                 <div className="power-header">
                   <span className="power-icon">{power.power.split(' ')[0]}</span>
                   <span className="power-name">{power.power.split(' ').slice(1).join(' ')}</span>
-                </div>
+        </div>
                 <div className="power-description">{power.description}</div>
                 <div className="power-example">{power.example}</div>
               </div>
             ))}
-          </div>
+      </div>
 
           <div className="guardian-truth">
             <Shield className="truth-icon" />
@@ -696,7 +711,7 @@ const SecretGuardianStep = ({ onComplete }) => {
               that no government can issue, no authority can revoke, and no institution can control. 
               You are your own digital sovereign.
             </div>
-          </div>
+      </div>
 
           <ContinueButton onClick={() => onComplete({ keys: demoKeys, message, signature })}>
             Build Your Digital Kingdom's Architecture →
@@ -792,16 +807,16 @@ const SovereignConstructorStep = ({ onComplete }) => {
         <div>
           <h2>Build Your Digital Kingdom's Architecture</h2>
           <p>From one seed, construct infinite sovereign territories...</p>
-        </div>
+      </div>
       </div>
 
       <div className="constructor-explanation">
-        <div className="prime-text">
+      <div className="prime-text">
           💡 Your seed phrase is the master blueprint for your entire digital kingdom. 
           From these 12-24 words, you can generate millions of addresses, each one 
           a sovereign territory under your mathematical rule.
-        </div>
       </div>
+          </div>
 
       {/* Seed generation */}
       <div className="seed-generation">
@@ -817,7 +832,7 @@ const SovereignConstructorStep = ({ onComplete }) => {
                 <li><strong>Universal Recovery</strong> - Works in any compatible wallet</li>
                 <li><strong>Your Responsibility</strong> - No one can recover it if lost</li>
               </ul>
-            </div>
+          </div>
             <ActionButton onClick={generateSeedPhrase}>
               🌱 Generate My Master Seed
             </ActionButton>
@@ -831,14 +846,14 @@ const SovereignConstructorStep = ({ onComplete }) => {
                   <div key={index} className="seed-word">
                     <span className="word-number">{index + 1}</span>
                     <span className="word-text">{word}</span>
-                  </div>
+        </div>
                 ))}
-              </div>
+      </div>
               <div className="seed-warning">
                 ⚠️ In reality, never store your seed digitally. Write it on paper/metal and guard it with your life.
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+    </div>
         )}
       </div>
 
@@ -859,7 +874,7 @@ const SovereignConstructorStep = ({ onComplete }) => {
                 className="hierarchy-slider"
               />
               <span className="level-display">Level {hierarchyLevel}: {hierarchyLevels[hierarchyLevel].title}</span>
-            </div>
+          </div>
 
             <div className="hierarchy-visualization">
               {hierarchyLevels.slice(0, hierarchyLevel + 1).map((level, index) => (
@@ -867,14 +882,14 @@ const SovereignConstructorStep = ({ onComplete }) => {
                   <div className="level-header">
                     <span className="level-icon">{level.title.split(' ')[0]}</span>
                     <span className="level-title">{level.title.split(' ').slice(1).join(' ')}</span>
-                  </div>
+          </div>
                   <div className="level-path">{level.path}</div>
                   <div className="level-description">{level.description}</div>
                   <div className="level-example">{level.example}</div>
                   {index < hierarchyLevel && <div className="hierarchy-arrow">↓</div>}
-                </div>
+        </div>
               ))}
-            </div>
+      </div>
 
             {hierarchyLevel === 5 && (
               <div className="final-address">
@@ -883,13 +898,13 @@ const SovereignConstructorStep = ({ onComplete }) => {
                   <div className="generated-address">
                     <div className="address-type">Bitcoin Address:</div>
                     <div className="address-value">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-                  </div>
+          </div>
                   <div className="address-power">
                     This address is mathematically derived from your seed. 
                     You can regenerate it anytime with the same seed + path.
-                  </div>
-                </div>
-              </div>
+          </div>
+          </div>
+          </div>
             )}
           </div>
 
@@ -899,10 +914,10 @@ const SovereignConstructorStep = ({ onComplete }) => {
               {constructionInsights.map((insight, index) => (
                 <div key={index} className="insight-item">
                   <div className="insight-text">{insight}</div>
-                </div>
-              ))}
-            </div>
           </div>
+              ))}
+        </div>
+      </div>
 
           <ContinueButton onClick={() => onComplete({ seed: generatedSeed, finalLevel: hierarchyLevel })}>
             Lead the Battle for Financial Independence →
@@ -1018,12 +1033,12 @@ const IndependenceWarriorStep = ({ onComplete }) => {
 
       <div className="battle-setup">
         <div className="battle-description">
-          <div className="prime-text">
+      <div className="prime-text">
             💡 This is the moment of truth. You understand Bitcoin's technology. 
             Now you must choose: Will you be your own bank, or remain dependent 
             on others to hold your wealth?
           </div>
-        </div>
+      </div>
 
         <div className="battle-scenario">
           <h3>⚔️ The Independence Battleground</h3>
@@ -1031,9 +1046,9 @@ const IndependenceWarriorStep = ({ onComplete }) => {
             You now own Bitcoin. The question is: who controls the keys? 
             This choice determines whether you're truly sovereign or still dependent 
             on the old system.
-          </div>
-        </div>
-      </div>
+                    </div>
+                    </div>
+                  </div>
 
       {/* Battle choice selection */}
       <div className="battle-choices">
@@ -1048,14 +1063,14 @@ const IndependenceWarriorStep = ({ onComplete }) => {
               <div className="option-header">
                 <span className="option-icon">{option.title.split(' ')[0]}</span>
                 <span className="option-title">{option.title.split(' ').slice(1).join(' ')}</span>
-              </div>
+                  </div>
               <div className="option-subtitle">{option.subtitle}</div>
               <div className="option-appeal">
                 <strong>Appeal:</strong> {option.appeal}
-              </div>
+                  </div>
               <div className="option-weapon">
                 <strong>Weapon:</strong> {option.weapon}
-              </div>
+                </div>
             </div>
           ))}
         </div>
@@ -1073,24 +1088,24 @@ const IndependenceWarriorStep = ({ onComplete }) => {
                 <div className="pros-list">
                   {consequences[battleChoice].pros.map((pro, index) => (
                     <div key={index} className="consequence-item">{pro}</div>
-                  ))}
-                </div>
-              </div>
-              
+          ))}
+        </div>
+      </div>
+
               <div className="cons-section">
                 <h4>⚠️ Strategic Risks</h4>
                 <div className="cons-list">
                   {consequences[battleChoice].cons.map((con, index) => (
                     <div key={index} className="consequence-item">{con}</div>
                   ))}
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+          </div>
             
             <div className="outcome-section">
               <h4>🎯 Ultimate Outcome</h4>
               <div className="outcome-text">{consequences[battleChoice].outcome}</div>
-            </div>
+          </div>
           </div>
 
           {battleChoice === 'self_custody' && (
@@ -1099,7 +1114,7 @@ const IndependenceWarriorStep = ({ onComplete }) => {
               <div className="commitment-text">
                 Self-custody is power, but power requires responsibility. 
                 Make your commitment to true financial sovereignty:
-              </div>
+          </div>
               <div className="commitment-options">
                 {warriorCommitments.map((commitment, index) => (
                   <label key={index} className="commitment-item">
@@ -1114,8 +1129,8 @@ const IndependenceWarriorStep = ({ onComplete }) => {
                     <span>{commitment}</span>
                   </label>
                 ))}
-              </div>
-            </div>
+        </div>
+      </div>
           )}
 
           <div className="battle-wisdom">
@@ -1203,7 +1218,7 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
           <p>You have built an unbreakable digital kingdom...</p>
         </div>
       </div>
-
+      
       {/* Sovereignty building animation */}
       <div className="sovereignty-building">
         <h3>🏗️ Sovereignty Construction Progress</h3>
@@ -1215,7 +1230,7 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
             />
             <div className="meter-text">{sovereigntyLevel}% Digital Sovereign</div>
           </div>
-        </div>
+      </div>
 
         <div className="milestones">
           {sovereigntyMilestones.map((milestone, index) => (
@@ -1225,10 +1240,10 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
             >
               <div className="milestone-marker" />
               <div className="milestone-text">{milestone.achievement}</div>
-            </div>
+        </div>
           ))}
         </div>
-      </div>
+        </div>
 
       {/* Sovereignty manifesto */}
       {showManifesto && (
@@ -1237,7 +1252,7 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
           <div className="manifesto-intro">
             You have completed the transformation from financial dependent to digital sovereign. 
             Here's what you've mastered:
-          </div>
+        </div>
           
           <div className="manifesto-items">
             {sovereigntyManifesto.map((item, index) => (
@@ -1246,7 +1261,7 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
                 <div className="manifesto-text">{item}</div>
               </div>
             ))}
-          </div>
+      </div>
 
           <div className="user-journey-summary">
             <h4>🎯 Your Sovereignty Journey</h4>
@@ -1255,21 +1270,21 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
                 <div className="insight-item">
                   <strong>Siege Awareness:</strong> You experienced {userInsights.kingdom_under_siege.scenario} 
                   and felt {userInsights.kingdom_under_siege.reaction.text}
-                </div>
+          </div>
               )}
               {userInsights.chaos_alchemist && (
                 <div className="insight-item">
                   <strong>Entropy Method:</strong> You chose {userInsights.chaos_alchemist.method} 
                   to generate cryptographic randomness
-                </div>
+          </div>
               )}
               {userInsights.independence_warrior && (
                 <div className="insight-item">
                   <strong>Custody Strategy:</strong> You selected {userInsights.independence_warrior.choice} 
                   as your sovereignty approach
-                </div>
+          </div>
               )}
-            </div>
+          </div>
           </div>
 
           <div className="sovereignty-power">
@@ -1278,8 +1293,8 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
               <strong>Your Sovereign Powers:</strong> You now possess the knowledge to be your own bank, 
               control your wealth mathematically, and access your Bitcoin from anywhere in the world 
               without permission from any authority.
-            </div>
-          </div>
+        </div>
+      </div>
 
           <div className="next-steps-section">
             <h4>🚀 Continue Your Sovereignty Mastery</h4>
@@ -1295,7 +1310,7 @@ const DigitalSovereignStep = ({ onComplete, userInsights }) => {
                 </div>
               ))}
             </div>
-          </div>
+      </div>
 
           <ContinueButton 
             onClick={() => {

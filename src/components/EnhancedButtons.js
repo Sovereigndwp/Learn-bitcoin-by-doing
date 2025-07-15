@@ -421,7 +421,7 @@ const OptionButton = ({
     // Show explanation if feedback is enabled
     if (showFeedback && explanation) {
       setShowExplanation(true);
-      setTimeout(() => setShowExplanation(false), 3000);
+      setTimeout(() => setShowExplanation(false), 6000); // Extended from 3000
     }
   };
 
@@ -488,7 +488,7 @@ const ActionButton = ({
 }) => {
   const contextClasses = {
     navigation: 'nav-button',
-    form: 'form-button', 
+    form: 'form-button',
     tool: 'tool-button',
     demo: 'demo-button',
     crisis: 'crisis-button',
@@ -671,9 +671,9 @@ const PopupButton = ({
         onMouseLeave={triggerOn === 'hover' ? closePopup : undefined}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        {...props}
-      >
-        {children}
+      {...props}
+    >
+      {children}
       </Button>
       
       {isOpen && (
@@ -700,7 +700,7 @@ const PopupButton = ({
                     aria-label="Close popup"
                   >
                     ×
-                  </button>
+    </button>
                 )}
               </div>
             )}

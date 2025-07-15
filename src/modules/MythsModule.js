@@ -489,18 +489,36 @@ const MythsModule = () => {
           <h4>${title}</h4>
           <p>${description}</p>
         </div>
+        <div class="achievement-controls">
+          <button class="achievement-dismiss" onclick="this.closest('.crisis-achievement-popup').remove()">
+            Continue
+          </button>
+        </div>
       </div>
+      <div class="achievement-hint">Click to dismiss or wait 8 seconds...</div>
     `;
     document.body.appendChild(achievement);
     
-    setTimeout(() => {
+    // Click to dismiss
+    achievement.addEventListener('click', () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
         if (document.body.contains(achievement)) {
-        document.body.removeChild(achievement);
+          document.body.removeChild(achievement);
         }
       }, 300);
-    }, 4000);
+    });
+    
+    setTimeout(() => {
+      if (document.body.contains(achievement)) {
+        achievement.style.opacity = '0';
+        setTimeout(() => {
+          if (document.body.contains(achievement)) {
+            document.body.removeChild(achievement);
+          }
+        }, 300);
+      }
+    }, 8000); // Extended from 4000
   };
 
   const showSovereigntyAchievement = () => {
@@ -516,18 +534,36 @@ const MythsModule = () => {
           <div>Truth Network: ${truthNetworkStrength}%</div>
           <div>Impact Score: ${truthImpactScore}</div>
         </div>
+        <div class="sovereignty-controls">
+          <button class="sovereignty-dismiss" onclick="this.closest('.sovereignty-celebration').remove()">
+            Continue Your Journey
+          </button>
+        </div>
       </div>
+      <div class="sovereignty-hint">Click to continue or wait 10 seconds...</div>
     `;
     document.body.appendChild(sovereignty);
     
-    setTimeout(() => {
+    // Click to dismiss
+    sovereignty.addEventListener('click', () => {
       sovereignty.style.opacity = '0';
       setTimeout(() => {
         if (document.body.contains(sovereignty)) {
           document.body.removeChild(sovereignty);
         }
       }, 500);
-    }, 6000);
+    });
+    
+    setTimeout(() => {
+      if (document.body.contains(sovereignty)) {
+        sovereignty.style.opacity = '0';
+        setTimeout(() => {
+          if (document.body.contains(sovereignty)) {
+            document.body.removeChild(sovereignty);
+          }
+        }, 500);
+      }
+    }, 10000); // Extended from 6000
   };
 
   // Crisis Response Actions
@@ -785,7 +821,7 @@ const MythsModule = () => {
                 ))}
               </div>
             </div>
-            
+
             <div className="counter-narratives">
               <div className="narratives-header">
                 <Building className="narratives-icon" />

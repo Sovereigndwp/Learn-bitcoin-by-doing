@@ -332,167 +332,267 @@ const Homepage = () => {
 // New Interactive Components
 
 const RealityCheckStep = ({ onComplete }) => {
-  const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
-  const [simulationCompleted, setSimulationCompleted] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userReflections, setUserReflections] = useState({});
+  const [showDataExploration, setShowDataExploration] = useState(false);
 
-  const awakeningPhases = [
+  const thoughtProvokingQuestions = [
     {
-      id: "illusion",
-      title: "🎭 The Illusion You Live In",
-      hook: "Every morning, you wake up believing money works for you.",
-      reality: "But money is working against you—by design.",
-      question: "What if everything you believe about money serves someone else's interests?",
-      action: "Question Everything"
+      id: "money_definition",
+      question: "What exactly is money?",
+      context: "Most people use money daily but rarely question its fundamental nature.",
+      followUp: "Is it the physical bills and coins? The numbers in your bank account? Something else entirely?",
+      reflection: {
+        prompt: "Write your definition of money in one sentence:",
+        placeholder: "Money is..."
+      }
     },
     {
-      id: "mechanism", 
-      title: "⚙️ The Machine Revealed",
-      hook: "There's an invisible machine extracting your wealth daily.",
-      reality: "This isn't conspiracy—it's monetary mechanics.",
-      question: "Ready to see how the wealth extraction machine actually works?",
-      action: "See The Machine"
+      id: "value_storage",
+      question: "Should money store value over time?",
+      context: "A dollar today purchases different amounts than a dollar from different time periods.",
+      followUp: "If you save $1000 today, what should it buy in 10 years? More, less, or the same?",
+      reflection: {
+        prompt: "What's your expectation for savings over time?",
+        placeholder: "I expect my savings to..."
+      }
+    },
+    {
+      id: "money_creation",
+      question: "Who should have the power to create money?",
+      context: "Throughout history, different entities have controlled money creation.",
+      followUp: "Should it be governments, banks, algorithms, or something else? What are the trade-offs?",
+      reflection: {
+        prompt: "Who do you think should control money creation and why?",
+        placeholder: "I think... because..."
+      }
+    },
+    {
+      id: "economic_changes",
+      question: "What economic changes have you noticed in your lifetime?",
+      context: "Economic conditions evolve, and personal experiences vary widely.",
+      followUp: "How do costs today compare to what you remember from earlier periods? What patterns do you see?",
+      reflection: {
+        prompt: "Describe an economic change you've personally observed:",
+        placeholder: "I've noticed that..."
+      }
     }
   ];
 
-  const currentPhase = awakeningPhases[currentPhaseIndex];
+  const currentQuestion = thoughtProvokingQuestions[currentQuestionIndex];
 
-  const handleSimulationComplete = () => {
-    setSimulationCompleted(true);
+  const handleQuestionComplete = (reflection) => {
+    setUserReflections(prev => ({
+      ...prev,
+      [currentQuestion.id]: reflection
+    }));
+    
+    if (currentQuestionIndex < thoughtProvokingQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setShowDataExploration(true);
+    }
   };
 
   return (
-    <div className="reality-check-step">
-      <div className="awakening-header">
-        <h2>🌅 Your Financial Awakening Starts Here</h2>
-        <p className="awakening-subtitle">
-          Before we explore Bitcoin's solution, you need to see the problem clearly.
-        </p>
-      </div>
-      
-      {currentPhaseIndex < awakeningPhases.length ? (
-        <div className="awakening-phase">
-          <div className="phase-progress">
-            <div className="progress-indicators">
-              {awakeningPhases.map((_, index) => (
-                <div 
-                  key={index}
-                  className={`progress-dot ${currentPhaseIndex === index ? 'active' : ''} ${index < currentPhaseIndex ? 'completed' : ''}`}
-                />
-              ))}
-            </div>
-            <span className="phase-counter">Phase {currentPhaseIndex + 1} of {awakeningPhases.length}</span>
-          </div>
-
-          <div className="phase-content">
-            <h3>{currentPhase.title}</h3>
-            <div className="reality-revelation">
-              <p className="hook">{currentPhase.hook}</p>
-              <p className="reality-statement">{currentPhase.reality}</p>
-              <p className="critical-question">{currentPhase.question}</p>
-            </div>
-          </div>
-
-          <button 
-            onClick={() => setCurrentPhaseIndex(currentPhaseIndex + 1)}
-            className="phase-continue-button"
-          >
-            <Lightbulb size={16} />
-            {currentPhase.action}
-          </button>
+    <div className="inquiry-based-introduction">
+      {/* Trust & Verify Notice */}
+      <div className="trust-verify-notice">
+        <div className="notice-header">
+          <span className="verify-icon">🔍</span>
+          <h3>Don't Trust, Verify!</h3>
         </div>
-      ) : (
-        <div className="simulation-reveal">
-          <div className="simulation-intro">
-            <h3>💰 Experience the Wealth Extraction Machine</h3>
-            <p>
-              This interactive simulation shows you exactly how your purchasing power 
-              disappears while others profit. No theories—just cold, hard numbers.
-            </p>
+        <div className="notice-content">
+          <p><strong>Before we begin:</strong> This is not a brainwashing course. This is an educational journey built on questions, evidence, and critical thinking.</p>
+          <div className="notice-principles">
+            <div className="principle">
+              <span className="principle-icon">🧠</span>
+              <div className="principle-text">
+                <strong>Question Everything:</strong> Challenge every claim presented, including ours.
+              </div>
+            </div>
+            <div className="principle">
+              <span className="principle-icon">🔬</span>
+              <div className="principle-text">
+                <strong>Verify Claims:</strong> All data and arguments should be independently verifiable.
+              </div>
+            </div>
+            <div className="principle">
+              <span className="principle-icon">🎯</span>
+              <div className="principle-text">
+                <strong>Form Your Own Conclusions:</strong> Use this as a starting point for your own research journey.
+              </div>
+            </div>
+          </div>
+          <div className="notice-commitment">
+            <p><em>"The goal isn't to convince you of anything—it's to give you the tools to think clearly about money and make your own informed decisions."</em></p>
+          </div>
+        </div>
+      </div>
+
+      {/* Course Introduction */}
+      <div className="course-introduction">
+        <h2>Why This Course Exists</h2>
+        <p className="introduction-context">
+          Money affects every aspect of our lives, yet most of us were never taught how it actually works. 
+          This course explores money systems—both traditional and emerging—through data, history, and practical examples.
+        </p>
+        <div className="course-approach">
+          <h3>Our Approach</h3>
+          <div className="approach-principles">
+            <div className="approach-item">
+              <span className="approach-icon">❓</span>
+              <div className="approach-text">
+                <strong>Start with Questions:</strong> Before presenting answers, we'll explore what questions are worth asking.
+              </div>
+            </div>
+            <div className="approach-item">
+              <span className="approach-icon">📊</span>
+              <div className="approach-text">
+                <strong>Examine Evidence:</strong> Look at historical data, real-world examples, and verifiable information.
+              </div>
+            </div>
+            <div className="approach-item">
+              <span className="approach-icon">🧩</span>
+              <div className="approach-text">
+                <strong>Build Understanding:</strong> Connect concepts logically from first principles to complex systems.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {!showDataExploration ? (
+        <div className="thoughtful-inquiry">
+          <div className="inquiry-header">
+            <h3>Let's Start with Some Questions</h3>
+            <p>Before diving into content, let's explore what you already think about money and economics.</p>
+            <div className="question-progress">
+              <span>Question {currentQuestionIndex + 1} of {thoughtProvokingQuestions.length}</span>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${((currentQuestionIndex + 1) / thoughtProvokingQuestions.length) * 100}%` }}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className="canva-simulation-container">
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: 0,
-              paddingTop: '56.2225%',
-              paddingBottom: 0,
-              boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
-              marginTop: '1.6em',
-              marginBottom: '0.9em',
-              overflow: 'hidden',
-              borderRadius: '8px',
-              willChange: 'transform'
-            }}>
-              <iframe 
-                loading="lazy"
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: 0,
-                  left: 0,
-                  border: 'none',
-                  padding: 0,
-                  margin: 0
-                }}
-                src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
-                allowFullScreen="allowfullscreen"
-                allow="fullscreen"
-                title="The Magic of Modern Money Simulation"
+          <div className="inquiry-content">
+            <div className="question-section">
+              <h4>{currentQuestion.question}</h4>
+              <p className="question-context">{currentQuestion.context}</p>
+              <p className="question-followup">{currentQuestion.followUp}</p>
+            </div>
+
+            <div className="reflection-section">
+              <label htmlFor="reflection-input">{currentQuestion.reflection.prompt}</label>
+              <textarea 
+                id="reflection-input"
+                value={userReflections[`${currentQuestion.id}_draft`] || ''}
+                onChange={(e) => setUserReflections(prev => ({
+                  ...prev,
+                  [`${currentQuestion.id}_draft`]: e.target.value
+                }))}
+                placeholder={currentQuestion.reflection.placeholder}
+                className="reflection-input"
+                rows={3}
               />
-            </div>
-            <div className="simulation-attribution">
-              <a 
-                href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="simulation-link"
-              >
-                The Magic of Modern Money Simulation (Website)
-              </a>
-              <span>by Dalia Platt</span>
-            </div>
-          </div>
-
-          {!simulationCompleted ? (
-            <button 
-              onClick={handleSimulationComplete}
-              className="simulation-complete-button"
-            >
-              <CheckCircle size={16} />
-              I've Experienced the Simulation
-            </button>
-          ) : (
-            <div className="awakening-completion">
-              <div className="completion-message">
-                <h4>🎯 Now You See the Matrix</h4>
-                <p>
-                  The current money system isn't broken—it's working exactly as designed. 
-                  You've just seen the wealth extraction machine in action.
-                </p>
-                <blockquote className="awakening-insight">
-                  💡 <strong>Your journey begins with this truth:</strong> Money is either a tool of freedom or a weapon of control. There's no middle ground.
-                </blockquote>
+              <div className="reflection-note">
+                <em>Optional but recommended - reflecting on your current thinking helps you notice how it evolves.</em>
               </div>
-              
-              <div className="journey-preview">
-                <h5>🚀 What's Next?</h5>
-                <p>
-                  You'll discover how Bitcoin creates the first money in history designed to serve people, not power. 
-                  This isn't just technology—it's financial sovereignty.
-                </p>
-              </div>
+            </div>
 
+            <div className="inquiry-actions">
               <button 
-                onClick={onComplete}
-                className="begin-journey-button"
+                onClick={() => handleQuestionComplete(userReflections[`${currentQuestion.id}_draft`] || '')}
+                className="continue-inquiry-button"
               >
-                <Target size={16} />
-                Begin My Journey to Financial Freedom
+                {currentQuestionIndex < thoughtProvokingQuestions.length - 1 ? 'Next Question' : 'Explore the Data'}
               </button>
             </div>
-          )}
+          </div>
+        </div>
+      ) : (
+        <div className="data-exploration">
+          <div className="exploration-header">
+            <h3>Now Let's Look at Some Data</h3>
+            <p>You've shared your initial thoughts. Let's examine some historical and economic data together and see what patterns emerge.</p>
+          </div>
+
+          <div className="data-invitation">
+            <div className="canva-embed-container">
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: 0,
+                paddingTop: '56.2225%',
+                paddingBottom: 0,
+                boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+                marginTop: '1.6em',
+                marginBottom: '0.9em',
+                overflow: 'hidden',
+                borderRadius: '8px',
+                willChange: 'transform'
+              }}>
+                <iframe 
+                  loading="lazy"
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    border: 'none',
+                    padding: 0,
+                    margin: 0
+                  }}
+                  src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
+                  allowFullScreen="allowfullscreen"
+                  allow="fullscreen"
+                  title="Economic Data Exploration"
+                />
+              </div>
+              <div className="canva-attribution">
+                <a 
+                  href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="canva-link"
+                >
+                  Economic Data & Money Systems Exploration
+                </a>
+                <span> by Dalia Platt</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="next-steps">
+            <h4>After Exploring the Data</h4>
+            <p>
+              Take time with the interactive content above. When you're ready, we'll begin our systematic 
+              exploration of money systems, starting with how money evolved and why different systems emerge.
+            </p>
+            <div className="transition-context">
+              <p>
+                <strong>What you'll explore:</strong> The evolution of money, characteristics of different 
+                monetary systems, economic trends and patterns, and emerging alternatives including Bitcoin.
+              </p>
+              <p>
+                <strong>How we'll explore it:</strong> Through historical analysis, data examination, 
+                hands-on examples, and practical exercises that help you form your own conclusions.
+              </p>
+            </div>
+            
+            <button 
+              onClick={onComplete}
+              className="begin-journey-button"
+            >
+              <span className="journey-icon">🚀</span>
+              Begin Systematic Exploration
+              <span className="journey-subtext">Start with: How Money Works</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

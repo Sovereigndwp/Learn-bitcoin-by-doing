@@ -609,7 +609,7 @@ export const ProgressProvider = ({ children }) => {
     }
     if (moduleCount >= 10 && !earnedBadges.includes('bitcoin-scholar')) {
       earnBadge('bitcoin-scholar');
-    }
+      }
     if (moduleCount >= MODULES.length && !earnedBadges.includes('master-student')) {
       earnBadge('master-student');
     }
@@ -690,7 +690,7 @@ export const ProgressProvider = ({ children }) => {
             toModule: currentModuleId,
             ...connectionTemplates[currentModuleId][prevModuleId]
           });
-        }
+    }
       });
     }
 

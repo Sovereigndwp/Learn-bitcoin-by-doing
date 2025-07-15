@@ -1106,13 +1106,13 @@
   font-size: 24px;
   font-weight: 800;
   color: var(--custody-purple);
-}
+  }
 
 .declaration-text p {
   margin: 0 0 16px 0;
   font-size: 16px;
   color: #ccc;
-}
+  }
 
 .declaration-text ul {
   margin: 0 0 24px 0;
@@ -1122,7 +1122,7 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
+  }
 
 .declaration-text li {
   margin-bottom: 8px;
@@ -1131,7 +1131,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-}
+  }
 
 .final-score {
   background: rgba(255, 255, 255, 0.05);
@@ -1171,19 +1171,19 @@
   gap: 12px;
   margin: 24px auto 0 auto;
   min-width: 200px;
-}
-
+  }
+  
 .continue-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(247, 147, 26, 0.3);
   background: linear-gradient(135deg, var(--bitcoin-orange-light), var(--bitcoin-orange));
-}
-
+  }
+  
 .continue-btn.investigation-complete {
   background: linear-gradient(135deg, var(--custody-green), rgba(22, 163, 74, 0.8));
   color: #ffffff;
-}
-
+  }
+  
 .continue-btn.investigation-complete:hover {
   background: linear-gradient(135deg, rgba(22, 163, 74, 0.9), var(--custody-green));
 }
@@ -1191,12 +1191,12 @@
 .continue-btn.design-setup {
   background: linear-gradient(135deg, var(--custody-purple), rgba(124, 58, 237, 0.8));
   color: #ffffff;
-}
-
+  }
+  
 .continue-btn.design-setup:hover {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), var(--custody-purple));
-}
-
+  }
+  
 /* Responsive Design */
 @media (max-width: 768px) {
   .phase-content {

@@ -42,15 +42,15 @@ const BitcoinBasicsModule = () => {
     
     if (index === microSteps.length - 1) {
       completeModule('bitcoin-basics');
-      setTimeout(() => navigate('/'), 2000);
+      setTimeout(() => navigate('/'), 6000); // Extended from 2000
     } else {
-      setCurrentStep(index + 1);
+    setCurrentStep(index + 1);
     }
   };
 
   const handleStepChange = (index) => {
     if (index <= Math.max(currentStep, Math.max(...completedSteps) + 1)) {
-      setCurrentStep(index);
+    setCurrentStep(index);
     }
   };
 
@@ -249,9 +249,9 @@ const BitcoinBasicsModule = () => {
         setShowBarterChoice={setShowBarterChoice}
       />
     );
-  };
+    };
 
-  return (
+    return (
     <div className="module-container bitcoin-basics-enhanced">
       <div className="module-header">
         <h1 className="module-title">
@@ -261,7 +261,7 @@ const BitcoinBasicsModule = () => {
         <p className="module-subtitle">
           Discover why Bitcoin solves humanity's oldest problem
         </p>
-      </div>
+        </div>
 
       {/* Micro-Step Progress */}
       <div className="micro-progress">
@@ -274,7 +274,7 @@ const BitcoinBasicsModule = () => {
             className="progress-fill"
             style={{ width: `${(completedSteps.size / microSteps.length) * 100}%` }}
           />
-        </div>
+            </div>
         <div className="micro-steps-nav">
           {microSteps.map((step, index) => (
             <div
@@ -286,14 +286,14 @@ const BitcoinBasicsModule = () => {
               <div className="step-title">{step.title}</div>
             </div>
           ))}
+          </div>
         </div>
-      </div>
 
       {/* Current Step Content */}
       <div className="step-content">
         {renderCurrentStep()}
-      </div>
-    </div>
+          </div>
+          </div>
   );
 };
 
@@ -403,8 +403,8 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                   {option}
                 </OptionButton>
               ))}
-            </div>
-          </div>
+        </div>
+              </div>
         );
 
       case 'open_ended':
@@ -420,8 +420,8 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                 onBlur={(e) => e.target.value && handleSocraticResponse(2, e.target.value)}
               />
               <div className="follow-up">{question.followUp}</div>
+              </div>
             </div>
-          </div>
         );
 
       case 'reflective':
@@ -439,22 +439,22 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                 className="metacognitive-input"
                 onChange={(e) => handleMetacognitiveInput(e.target.value)}
               />
-            </div>
+                </div>
 
             <div className="assumption-explorer">
               <h4>Consider these common assumptions:</h4>
               {question.prompts.map((prompt, index) => (
-                <ActionButton
+            <ActionButton
                   key={index}
                   onClick={() => handleSocraticResponse(3, prompt, metacognitiveResponse)}
                   variant="secondary"
                   className="assumption-prompt"
                 >
                   {prompt}
-                </ActionButton>
+            </ActionButton>
               ))}
-            </div>
-          </div>
+                  </div>
+                </div>
         );
 
       case 'creative_problem_solving':
@@ -474,9 +474,9 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                     className="design-input"
                     onBlur={(e) => e.target.value && handleSocraticResponse(4, e.target.value)}
                   />
-                </div>
-              ))}
-            </div>
+                 </div>
+               ))}
+             </div>
           </div>
         );
 
@@ -496,7 +496,7 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                     className="evaluation-input"
                     onBlur={(e) => e.target.value && handleSocraticResponse(5, e.target.value)}
                   />
-                </div>
+              </div>
               ))}
             </div>
           </div>
@@ -507,11 +507,11 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
     }
   };
 
-  return (
+    return (
     <div className="spark-curiosity-step enhanced-socratic">
       <div className="curiosity-header">
         <h2>{content.headline}</h2>
-        <p className="subtitle">{content.subtitle}</p>
+          <p className="subtitle">{content.subtitle}</p>
         
         {/* Socratic Progress Indicator */}
         <div className="socratic-progress">
@@ -523,11 +523,11 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                 className={`progress-level ${level <= currentQuestionLevel ? 'active' : ''} ${level < currentQuestionLevel ? 'completed' : ''}`}
               >
                 {level}
-              </div>
-            ))}
+                          </div>
+                        ))}
+                      </div>
+                      </div>
           </div>
-        </div>
-      </div>
 
       {/* Dynamic Question Rendering */}
       {renderQuestionLevel()}
@@ -538,8 +538,8 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
           <div className="insight-text">{content.insight}</div>
           <div className="depth-invitation">
             <p>💡 <strong>Ready to think deeper?</strong> Let's explore the 'why' behind your experience...</p>
-          </div>
         </div>
+              </div>
       )}
 
       {/* Questioning Journey Progress */}
@@ -552,12 +552,12 @@ const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse
                 <span className="step-level">Level {step.level}</span>
                 <span className="step-response">{step.response.substring(0, 50)}...</span>
                 {step.strategy && <span className="step-strategy">Strategy: {step.strategy}</span>}
-              </div>
+                  </div>
             ))}
-          </div>
-        </div>
+                  </div>
+                  </div>
       )}
-    </div>
+                  </div>
   );
 };
 
@@ -586,38 +586,38 @@ const InstantContrastStep = ({ content, onComplete, paymentTally }) => {
           <div className="tap-instruction">{content.tapDemo.message}</div>
           <div className="tap-counter">You've tapped: {taps} times</div>
         </ActionButton>
-      </div>
+          </div>
 
       <div className="payment-counter">
         <h3>{content.tapDemo.countDisplay}</h3>
         <div className="tally-display">
           <span className="tally-number">{paymentTally.toLocaleString()}</span>
           <span className="tally-label">payments in last second</span>
-        </div>
-      </div>
-
+              </div>
+            </div>
+            
       <div className="insight-box">
         <p>{content.insight}</p>
-      </div>
+            </div>
 
       {showContinue && (
-        <ContinueButton 
+          <ContinueButton 
           onClick={() => onComplete({ tapsCompleted: taps })}
           showProgress={true}
           feedback="visual"
           ariaLabel="Continue to next step after completing tap demonstration"
         >
           Amazing! Show me why this matters
-        </ContinueButton>
-      )}
-    </div>
-  );
-};
+          </ContinueButton>
+        )}
+      </div>
+    );
+  };
 
 const KeyInsightStep = ({ content, onComplete }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  return (
+    return (
     <div className="key-insight-step">
       <div className="insight-content">
         <p className="main-text">
@@ -639,20 +639,20 @@ const KeyInsightStep = ({ content, onComplete }) => {
         {showTooltip && (
           <div className="deeper-insight">
             <p>{content.deeperInsight}</p>
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </div>
 
-      <ContinueButton 
+        <ContinueButton 
         onClick={() => onComplete({ tooltipRevealed: showTooltip })}
         feedback="visual"
         ariaLabel="Continue after understanding the key insight"
       >
         This changes everything...
-      </ContinueButton>
-    </div>
-  );
-};
+        </ContinueButton>
+      </div>
+    );
+  };
 
 const TimeTravelInviteStep = ({ content, onComplete }) => {
   const [buttonShaking, setButtonShaking] = useState(false);
@@ -703,14 +703,14 @@ const RolePlayIntroStep = ({ content, onComplete, showBarterChoice, setShowBarte
         discoveredFrustration: true 
       });
     }, 2000);
-  };
+    };
 
-  return (
+    return (
     <div className="role-play-step">
       <div className="scenario-card">
         <h3>🥔 Your Story Begins</h3>
         <p className="scenario-text">{content.scenario}</p>
-      </div>
+        </div>
 
       <div className="quick-choice">
         <h4>{content.quickChoice.question}</h4>
@@ -724,16 +724,16 @@ const RolePlayIntroStep = ({ content, onComplete, showBarterChoice, setShowBarte
             >
               {option.text}
             </button>
-          ))}
-        </div>
-      </div>
+                ))}
+              </div>
+            </div>
 
       {showBarterChoice && selectedChoice && (
         <div className="choice-outcome">
           <p>💭 <em>This is harder than it looks... Let me feel the real friction</em></p>
-        </div>
+                </div>
       )}
-    </div>
+                </div>
   );
 };
 
@@ -767,16 +767,16 @@ const BarterFrictionStep = ({ content, onComplete }) => {
           <div className="trade-items">
             <div className="have-item">
               <span>You have: {trade.have}</span>
-            </div>
+                  </div>
             <div className="arrow">→</div>
             <div className="want-item">
               <span>You want: {trade.want}</span>
-            </div>
-          </div>
-          
+                </div>
+              </div>
+
           <div className="trade-difficulty">
             <p>❌ {trade.difficulty}</p>
-          </div>
+              </div>
 
           <button 
             className="attempt-button"
@@ -784,7 +784,7 @@ const BarterFrictionStep = ({ content, onComplete }) => {
           >
             Try this trade
           </button>
-        </div>
+                  </div>
 
         <div className="frustration-meter">
           <div className="meter-label">Frustration Level:</div>
@@ -793,15 +793,15 @@ const BarterFrictionStep = ({ content, onComplete }) => {
               className="meter-fill"
               style={{ width: `${frustration}%` }}
             />
-          </div>
+                      </div>
           <div className="meter-text">{frustration}% frustrated</div>
-        </div>
-      </div>
+                  </div>
+                </div>
 
       <div className="insight-text">
         <p>{content.insight}</p>
-      </div>
-    </div>
+              </div>
+            </div>
   );
 };
 
@@ -822,28 +822,28 @@ const ModernMagicStep = ({ content, onComplete }) => {
           <h3>{content.comparison.before.title}</h3>
           <p>{content.comparison.before.scenario}</p>
           <div className="difficulty before">{content.comparison.before.difficulty}</div>
-        </div>
-
+              </div>
+              
         {showAfter && (
           <div className="after-section animate-in">
             <h3>{content.comparison.after.title}</h3>
             <p>{content.comparison.after.scenario}</p>
             <div className="difficulty after">{content.comparison.after.difficulty}</div>
-          </div>
+                </div>
         )}
-      </div>
+            </div>
 
       {showAfter && (
         <div className="revelation">
           <p>{content.revelation}</p>
           <ContinueButton onClick={() => onComplete({ comparisonViewed: true })}>
             Show me how we got here
-          </ContinueButton>
-        </div>
-      )}
-    </div>
-  );
-};
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
+  };
 
 const TrustQuestionStep = ({ content, onComplete }) => {
   const [trustLevels, setTrustLevels] = useState(
@@ -863,30 +863,30 @@ const TrustQuestionStep = ({ content, onComplete }) => {
       }
       return updated;
     });
-  };
+    };
 
-  return (
+        return (
     <div className="trust-question-step">
       <div className="central-question">
         <h3>{content.centralQuestion}</h3>
-      </div>
+        </div>
 
       <div className="trust-meters">
         {content.trustMeter.entities.map((entity) => (
           <div key={entity.name} className="trust-entity">
             <label>{entity.name}</label>
-            <input
-              type="range"
-              min="0"
-              max="100"
+          <input
+            type="range"
+            min="0"
+            max="100"
               value={trustLevels[entity.name]}
               onChange={(e) => handleTrustAdjustment(entity.name, parseInt(e.target.value))}
               className="trust-slider"
             />
             <span>{trustLevels[entity.name]}% trust</span>
-          </div>
+        </div>
         ))}
-      </div>
+            </div>
 
       {allAdjusted && (
         <div className="revelation">
@@ -895,10 +895,10 @@ const TrustQuestionStep = ({ content, onComplete }) => {
             No trust needed? How is that possible?
           </ContinueButton>
         </div>
-      )}
-    </div>
-  );
-};
+        )}
+      </div>
+    );
+  };
 
 const EnergyTrustStep = ({ content, onComplete }) => {
   const [dragPosition, setDragPosition] = useState({ ice: 0, concrete: 0 });
@@ -917,9 +917,9 @@ const EnergyTrustStep = ({ content, onComplete }) => {
       }
       return updated;
     });
-  };
+    };
 
-  return (
+    return (
     <div className="energy-trust-step">
       <div className="physics-demo">
         <h3>{content.physicsDemo.instruction}</h3>
@@ -929,8 +929,8 @@ const EnergyTrustStep = ({ content, onComplete }) => {
             <div className="surface-info">
               <h4>{surface.name}</h4>
               <p>Trust Level: {surface.trust}</p>
-            </div>
-            
+          </div>
+
             <div className="drag-area">
               <input
                 type="range"
@@ -942,26 +942,26 @@ const EnergyTrustStep = ({ content, onComplete }) => {
               />
               <div className="energy-display">
                 Energy spent: {energySpent[surfaceKey]} units
-              </div>
-            </div>
-          </div>
+                      </div>
+                  </div>
+                </div>
         ))}
-      </div>
+            </div>
 
       {bothTested && (
         <div className="insight-reveal">
-          <p>{content.insight}</p>
+              <p>{content.insight}</p>
           <ContinueButton onClick={() => onComplete({ 
             energySpent,
             understoodEnergyTrustConnection: true 
           })}>
             Now I get it! Show me Bitcoin
           </ContinueButton>
-        </div>
-      )}
-    </div>
-  );
-};
+          </div>
+        )}
+      </div>
+    );
+  };
 
 const BitcoinBreakthroughStep = ({ content, onComplete }) => {
   const [connectionsRevealed, setConnectionsRevealed] = useState(0);
@@ -970,9 +970,9 @@ const BitcoinBreakthroughStep = ({ content, onComplete }) => {
     if (connectionsRevealed < content.connections.length) {
       setConnectionsRevealed(prev => prev + 1);
     }
-  };
+    };
 
-  return (
+    return (
     <div className="bitcoin-breakthrough-step">
       <div className="breakthrough-revelation">
         <h3>🚀 {content.breakthrough.problem}</h3>
@@ -981,14 +981,14 @@ const BitcoinBreakthroughStep = ({ content, onComplete }) => {
         <div className="mechanism">
           <p><strong>How:</strong> {content.breakthrough.mechanism}</p>
         </div>
-      </div>
+              </div>
 
       <div className="connections">
         <h4>Connect the dots:</h4>
         {content.connections.slice(0, connectionsRevealed).map((connection, index) => (
           <div key={index} className="connection-item animate-in">
             {connection}
-          </div>
+                    </div>
         ))}
         
         {connectionsRevealed < content.connections.length && (
@@ -1001,7 +1001,7 @@ const BitcoinBreakthroughStep = ({ content, onComplete }) => {
             Show next connection
           </ActionButton>
         )}
-      </div>
+            </div>
 
       {connectionsRevealed === content.connections.length && (
         <div className="completion">
@@ -1011,9 +1011,9 @@ const BitcoinBreakthroughStep = ({ content, onComplete }) => {
             readyForTechnicalDetails: true 
           })}>
             I'm ready to learn more about Bitcoin
-          </ContinueButton>
-        </div>
-      )}
+            </ContinueButton>
+          </div>
+        )}
     </div>
   );
 };

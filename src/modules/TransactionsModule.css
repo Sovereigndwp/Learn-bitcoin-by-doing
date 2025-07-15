@@ -1790,21 +1790,21 @@
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .module-tabs {
     flex-direction: column;
     gap: 0.75rem;
   }
-
+  
   .tab {
     min-width: auto;
     flex-direction: row;
   }
-
+  
   .step-content-container {
     padding: 1rem;
   }
-
+  
   .crisis-header h2,
   .alchemy-header h2,
   .strategy-header h2,
@@ -1813,41 +1813,41 @@
   .commander-header h2 {
     font-size: 2rem;
   }
-
+  
   .utxo-forge {
     grid-template-columns: 1fr;
   }
-
+  
   .strategy-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .blueprint-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .dashboard-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-
+  
   .comparison-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .mission-details {
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .mission-status {
     text-align: center;
   }
-
+  
   .tx-breakdown {
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .mastery-display {
     flex-direction: column;
     gap: 1rem;
@@ -1864,7 +1864,7 @@
     gap: 0.5rem;
     min-width: auto;
   }
-
+  
   .strategic-achievement {
     top: 1rem;
     right: 1rem;

@@ -1311,10 +1311,10 @@ const MoneyModule = () => {
       completeModule('money');
       setShowBadgeModal(true);
       showAchievement("Money Master", "You've mastered the fundamentals of sound money!");
-      // Redirect to homepage after a delay to allow badge modal to show
+      // Redirect to homepage after a longer delay to allow badge modal and achievement to show
       setTimeout(() => {
         navigate('/');
-      }, 3000);
+      }, 8000); // Extended from 3000
     } else {
       setCurrentStep(stepIndex + 1);
     }
@@ -1331,16 +1331,37 @@ const MoneyModule = () => {
           <h4>${title}</h4>
           <p>${description}</p>
         </div>
+        <div class="achievement-controls">
+          <button class="achievement-dismiss" onclick="this.closest('.achievement-popup').remove()">
+            Continue
+          </button>
+        </div>
       </div>
+      <div class="achievement-hint">Click to dismiss or wait 8 seconds...</div>
     `;
     document.body.appendChild(achievement);
     
-    setTimeout(() => {
+    // Click to dismiss
+    achievement.addEventListener('click', () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
-        document.body.removeChild(achievement);
+        if (document.body.contains(achievement)) {
+          document.body.removeChild(achievement);
+        }
       }, 300);
-    }, 3000);
+    });
+    
+    // Auto dismiss after longer delay
+    setTimeout(() => {
+      if (document.body.contains(achievement)) {
+        achievement.style.opacity = '0';
+        setTimeout(() => {
+          if (document.body.contains(achievement)) {
+            document.body.removeChild(achievement);
+          }
+        }, 300);
+      }
+    }, 8000); // Extended from 3000
   };
 
   const handleTabClick = (stepIndex) => {

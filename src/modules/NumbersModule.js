@@ -430,7 +430,7 @@ const NumbersModule = () => {
                 <span className="alert-time">{alert.timestamp}</span>
                 <span className="alert-message">{alert.message}</span>
                 <span className="alert-intensity">{alert.intensity}%</span>
-              </div>
+      </div>
           ))}
         </div>
         </div>
@@ -451,7 +451,7 @@ const NumbersModule = () => {
               </div>
           <div className="threat">
             <strong>Threat:</strong> {currentScenario.threat}
-          </div>
+            </div>
           </div>
           
         {/* Crisis Challenges */}
@@ -592,7 +592,7 @@ const NumbersModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(endiannessControl.mastery * 25, 100)}%` }}
                 />
-              </div>
+        </div>
               <span>{endiannessControl.mastery} Mastery Points</span>
               </div>
             </div>

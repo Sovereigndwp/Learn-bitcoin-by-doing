@@ -248,7 +248,7 @@ const CustodyModule = () => {
     setAchievements(prev => [newAchievement, ...prev]);
     setCustodyScore(prev => prev + points);
     setShowAchievement(true);
-    setTimeout(() => setShowAchievement(false), 3000);
+    setTimeout(() => setShowAchievement(false), 6000); // Extended from 3000
   };
 
   const handleStepComplete = (stepIndex) => {

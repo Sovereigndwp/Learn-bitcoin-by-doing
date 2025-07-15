@@ -18,49 +18,49 @@ const NOTIFICATION_TYPES = {
     icon: Trophy,
     color: '#FFD700',
     gradient: 'linear-gradient(135deg, #FFD700, #FFA500)',
-    duration: 5000,
+    duration: 8000, // Extended from 5000
     sound: 'achievement'
   },
   badge: {
     icon: Award,
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981, #059669)',
-    duration: 4000,
+    duration: 7000, // Extended from 4000
     sound: 'badge'
   },
   streak: {
     icon: Flame,
     color: '#EF4444',
     gradient: 'linear-gradient(135deg, #EF4444, #DC2626)',
-    duration: 4000,
+    duration: 7000, // Extended from 4000
     sound: 'streak'
   },
   milestone: {
     icon: Star,
     color: '#8B5CF6',
     gradient: 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
-    duration: 5000,
+    duration: 8000, // Extended from 5000
     sound: 'milestone'
   },
   insight: {
     icon: Brain,
     color: '#06B6D4',
     gradient: 'linear-gradient(135deg, #06B6D4, #0891B2)',
-    duration: 4000,
+    duration: 7000, // Extended from 4000
     sound: 'insight'
   },
   levelUp: {
     icon: TrendingUp,
     color: '#F59E0B',
     gradient: 'linear-gradient(135deg, #F59E0B, #D97706)',
-    duration: 4000,
+    duration: 7000, // Extended from 4000
     sound: 'levelup'
   },
   completion: {
     icon: CheckCircle,
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981, #059669)',
-    duration: 3000,
+    duration: 6000, // Extended from 3000
     sound: 'completion'
   }
 };
@@ -134,6 +134,8 @@ const playFanfare = () => {
 const Notification = ({ notification, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
   
   const config = NOTIFICATION_TYPES[notification.type] || NOTIFICATION_TYPES.achievement;
   const IconComponent = config.icon;
@@ -147,14 +149,57 @@ const Notification = ({ notification, onClose }) => {
       setTimeout(() => SOUNDS[notification.type](), 200);
     }
     
-    // Auto dismiss
-    const timer = setTimeout(() => {
-      setIsLeaving(true);
-      setTimeout(() => onClose(notification.id), 300);
-    }, config.duration);
+    // Initialize countdown
+    setTimeLeft(config.duration);
+    
+    let startTime = Date.now();
+    let remainingTime = config.duration;
+    let timer;
+    let progressInterval;
+    
+    const scheduleTimer = (duration) => {
+      startTime = Date.now();
+      timer = setTimeout(() => {
+        if (!isPaused) {
+          setIsLeaving(true);
+          setTimeout(() => onClose(notification.id), 300);
+        }
+      }, duration);
+    };
+    
+    const updateProgress = () => {
+      progressInterval = setInterval(() => {
+        if (!isPaused) {
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, remainingTime - elapsed);
+          setTimeLeft(remaining);
+          
+          if (remaining <= 0) {
+            clearInterval(progressInterval);
+            setIsLeaving(true);
+            setTimeout(() => onClose(notification.id), 300);
+          }
+        }
+      }, 100);
+    };
+    
+    scheduleTimer(remainingTime);
+    updateProgress();
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(progressInterval);
+    };
   }, [notification, onClose, config.duration]);
+
+  // Handle pause/resume on hover
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
 
   const handleClick = () => {
     setIsLeaving(true);
@@ -163,9 +208,11 @@ const Notification = ({ notification, onClose }) => {
 
   return (
     <div 
-      className={`notification ${isVisible ? 'visible' : ''} ${isLeaving ? 'leaving' : ''}`}
+      className={`notification ${isVisible ? 'visible' : ''} ${isLeaving ? 'leaving' : ''} ${isPaused ? 'paused' : ''}`}
       style={{ background: config.gradient }}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="notification-content">
         <div className="notification-icon" style={{ color: config.color }}>
@@ -184,6 +231,18 @@ const Notification = ({ notification, onClose }) => {
             <span className="badge-text">{notification.badge.text}</span>
           </div>
         )}
+        <div className="notification-controls">
+          <button 
+            className="notification-close" 
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
+            aria-label="Close notification"
+          >
+            ×
+          </button>
+        </div>
       </div>
       
       {notification.type === 'achievement' && (
@@ -196,13 +255,20 @@ const Notification = ({ notification, onClose }) => {
       
       <div className="notification-progress">
         <div 
-          className="progress-bar" 
+          className={`progress-bar ${isPaused ? 'paused' : ''}`}
           style={{ 
-            animationDuration: `${config.duration}ms`,
-            background: config.color
+            width: `${(timeLeft / config.duration) * 100}%`,
+            background: config.color,
+            transition: isPaused ? 'none' : 'width 0.1s linear'
           }}
         />
       </div>
+      
+      {isPaused && (
+        <div className="pause-indicator">
+          <span>⏸️ Paused - Click to dismiss</span>
+        </div>
+      )}
     </div>
   );
 };
@@ -218,16 +284,24 @@ const CelebrationOverlay = ({ celebration, onClose }) => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(onClose, 500);
-    }, 3000);
+    }, 6000); // Extended from 3000
 
     return () => clearTimeout(timer);
   }, [onClose]);
 
+  const handleClick = () => {
+    setIsVisible(false);
+    setTimeout(onClose, 500);
+  };
+
   if (!celebration) return null;
 
   return (
-    <div className={`celebration-overlay ${isVisible ? 'visible' : ''}`}>
-      <div className="celebration-content">
+    <div 
+      className={`celebration-overlay ${isVisible ? 'visible' : ''}`}
+      onClick={handleClick}
+    >
+      <div className="celebration-content" onClick={(e) => e.stopPropagation()}>
         <div className="celebration-icon">
           {celebration.icon}
         </div>
@@ -242,6 +316,14 @@ const CelebrationOverlay = ({ celebration, onClose }) => {
             </div>
           </div>
         )}
+        <div className="celebration-controls">
+          <button 
+            className="celebration-dismiss"
+            onClick={handleClick}
+          >
+            Continue
+          </button>
+        </div>
       </div>
       
       <div className="celebration-particles">
@@ -250,6 +332,10 @@ const CelebrationOverlay = ({ celebration, onClose }) => {
             {i % 4 === 0 ? '🎉' : i % 4 === 1 ? '✨' : i % 4 === 2 ? '🎊' : '⭐'}
           </div>
         ))}
+      </div>
+      
+      <div className="celebration-hint">
+        <span>Click to continue or wait...</span>
       </div>
     </div>
   );

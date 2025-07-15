@@ -93,11 +93,11 @@ const ScriptsModule = () => {
     achievement.className = 'strategic-achievement';
     achievement.innerHTML = `
       <div class="achievement-glow">
-        <div class="achievement-content">
+      <div class="achievement-content">
           <div class="achievement-emoji">${emoji}</div>
-          <div class="achievement-text">
+        <div class="achievement-text">
             <h3>${title}</h3>
-            <p>${description}</p>
+          <p>${description}</p>
           </div>
         </div>
       </div>
@@ -340,8 +340,8 @@ const ScriptsModule = () => {
     const executeScriptStep = (script) => {
       const steps = [];
       const stack = [];
-      const operations = script.split(' ');
-      
+    const operations = script.split(' ');
+    
       operations.forEach((op, index) => {
         if (op.startsWith('OP_')) {
           switch (op) {
@@ -376,11 +376,11 @@ const ScriptsModule = () => {
         } else if (!op.startsWith('<')) {
           stack.push(op);
           steps.push({ step: index + 1, operation: 'PUSH', action: `Push ${op} to stack`, stack: [...stack] });
-        }
+    }
       });
       
       return steps;
-    };
+  };
 
     const handleTransformLogic = (transformation) => {
       setCurrentScript(transformation.scriptCode);
@@ -410,13 +410,13 @@ const ScriptsModule = () => {
         {alchemyPhase === 'learning' && (
           <div className="alchemy-workshop">
             <div className="workshop-explanation">
-              <div className="prime-text">
+        <div className="prime-text">
                 🧪 Every Bitcoin script starts as human logic: "If this, then that." 
                 Your job as a Code Alchemist is to transform fuzzy human intentions into 
                 precise mathematical operations that execute exactly as specified.
-              </div>
-            </div>
-
+        </div>
+      </div>
+      
             <h3>Choose a logic transformation to master:</h3>
             <div className="transformations-grid">
               {logicTransformations.map(transformation => (
@@ -428,23 +428,23 @@ const ScriptsModule = () => {
                   <div className="transformation-header">
                     <span className="transformation-title">{transformation.title}</span>
                     <span className="transformation-difficulty">{transformation.difficulty}</span>
-                  </div>
+          </div>
                   
                   <div className="human-logic">
                     <h4>🧠 Human Logic</h4>
                     <p>{transformation.humanLogic}</p>
-                  </div>
+          </div>
                   
                   {completedTransformations.has(transformation.id) && (
                     <div className="transformation-status">
                       <CheckCircle className="w-5 h-5" />
                       <span>Transformation Complete</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
           </div>
+                  )}
+          </div>
+              ))}
+        </div>
+      </div>
         )}
 
         {alchemyPhase === 'demonstration' && (
@@ -452,15 +452,15 @@ const ScriptsModule = () => {
             <div className="demonstration-header">
               <h3>⚡ Transformation in Progress</h3>
               <p>Watch logic become mathematical law...</p>
-            </div>
+      </div>
 
             <div className="script-execution">
               <div className="script-display">
                 <h4>📜 Generated Script</h4>
                 <div className="script-code">
                   {currentScript}
-                </div>
-              </div>
+        </div>
+        </div>
 
               <div className="execution-visualization">
                 <h4>🔥 Step-by-Step Execution</h4>
@@ -473,20 +473,20 @@ const ScriptsModule = () => {
                         <div className="step-action">{step.action}</div>
                         <div className="step-stack">
                           Stack: [{step.stack.join(', ')}]
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
+                    </div>
+                  ))}
+                    </div>
+                </div>
+              </div>
 
             <div className="transformation-insight">
               <div className="prime-text">
                 🎯 The transformation is complete! Human logic is now mathematical law. 
                 No court, no judge, no interpretation—just pure, unstoppable execution.
-              </div>
             </div>
+          </div>
 
             <div className="demonstration-controls">
               <ActionButton onClick={() => setAlchemyPhase('learning')}>
@@ -498,8 +498,8 @@ const ScriptsModule = () => {
                   Master Security Architecture →
                 </ContinueButton>
               )}
-            </div>
           </div>
+        </div>
         )}
       </div>
     );
@@ -575,19 +575,19 @@ const ScriptsModule = () => {
         <div className="architect-header">
           <div className="architect-icon">
             <Shield className="w-16 h-16 text-green-500" />
-          </div>
+      </div>
           <h2>🛡️ BULLETPROOF CONTRACTS</h2>
           <p className="architect-subtitle">Design security that no single party can break...</p>
-        </div>
+    </div>
 
         {architectPhase === 'challenge' && (
           <div className="security-challenges">
             <div className="challenge-explanation">
-              <div className="prime-text">
+        <div className="prime-text">
                 🎯 Single signatures are security disasters waiting to happen. Your mission: 
                 architect contracts so secure that even coordinated attacks fail.
-              </div>
-            </div>
+        </div>
+      </div>
 
             <h3>Choose a security challenge to solve:</h3>
             <div className="challenges-grid">
@@ -601,21 +601,21 @@ const ScriptsModule = () => {
                   <div className="challenge-problem">{challenge.problem}</div>
                   <div className="challenge-threat">
                     <strong>Threat:</strong> {challenge.threat}
-                  </div>
+          </div>
                   <div className="challenge-solution">
                     <strong>Solution:</strong> {challenge.solution}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
+          </div>
+              ))}
+          </div>
+        </div>
         )}
 
         {architectPhase === 'design' && securityScenario && (
           <div className="contract-design">
             <div className="design-header">
               <h3>🏗️ Designing: {securityScenario.title}</h3>
-            </div>
+          </div>
 
             <div className="design-requirements">
               <div className="requirement-analysis">
@@ -625,15 +625,15 @@ const ScriptsModule = () => {
                   <li><strong>Requirement:</strong> {securityScenario.requirement}</li>
                   <li><strong>Solution Type:</strong> {securityScenario.solution}</li>
                 </ul>
-              </div>
+          </div>
 
               <div className="script-blueprint">
                 <h4>⚡ Security Script</h4>
-                <div className="script-code">
+          <div className="script-code">
                   {securityScenario.script}
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+        </div>
 
             <div className="security-analysis">
               <h4>🔒 Security Properties</h4>
@@ -641,21 +641,21 @@ const ScriptsModule = () => {
                 <div className="property">
                   <span className="property-icon">✅</span>
                   <span>No single point of failure</span>
-                </div>
+          </div>
                 <div className="property">
                   <span className="property-icon">✅</span>
                   <span>Resistance to coercion</span>
-                </div>
+          </div>
                 <div className="property">
                   <span className="property-icon">✅</span>
                   <span>Transparent verification</span>
-                </div>
+          </div>
                 <div className="property">
                   <span className="property-icon">✅</span>
                   <span>Immutable execution</span>
                 </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
             <ActionButton onClick={handleContractTest}>
               <Play className="w-4 h-4" />
@@ -668,17 +668,17 @@ const ScriptsModule = () => {
           <div className="security-validation">
             <div className="validation-header">
               <h3>🎯 Security Validation Complete</h3>
-            </div>
+          </div>
 
             <div className="security-metrics">
               <div className="metric">
                 <span className="metric-label">Security Rating:</span>
                 <span className="metric-value">{contractDesign.security_rating}</span>
-              </div>
+          </div>
               <div className="metric">
                 <span className="metric-label">Attack Vectors:</span>
                 <span className="metric-value">{contractDesign.attack_vectors}</span>
-              </div>
+          </div>
               <div className="metric">
                 <span className="metric-label">Single Points of Failure:</span>
                 <span className="metric-value">{contractDesign.single_points_failure}</span>
@@ -686,14 +686,14 @@ const ScriptsModule = () => {
               <div className="metric">
                 <span className="metric-label">Trust Requirements:</span>
                 <span className="metric-value">{contractDesign.trust_requirements}</span>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="validation-insight">
-              <div className="prime-text">
+      <div className="prime-text">
                 🛡️ Contract security achieved! You've eliminated single points of failure 
                 and created a system where no individual can compromise the funds.
-              </div>
+      </div>
             </div>
 
             <ContinueButton onClick={() => handleContinue()}>
@@ -710,8 +710,8 @@ const ScriptsModule = () => {
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   function LiquidityEngineer() {
@@ -761,10 +761,10 @@ const ScriptsModule = () => {
         <div className="engineer-header">
           <div className="engineer-icon">
             <Zap className="w-16 h-16 text-yellow-500" />
-          </div>
+                  </div>
           <h2>🌊 GLOBAL LIQUIDITY INFRASTRUCTURE</h2>
           <p className="engineer-subtitle">Build the pipes that carry instant money worldwide...</p>
-        </div>
+                  </div>
 
         {engineerPhase === 'discovery' && (
           <div className="liquidity-discovery">
@@ -774,7 +774,7 @@ const ScriptsModule = () => {
                 <div className="stat">
                   <span className="stat-value">$40</span>
                   <span className="stat-label">Average Bitcoin transaction fee during congestion</span>
-                </div>
+                  </div>
                 <div className="stat">
                   <span className="stat-value">10-60 min</span>
                   <span className="stat-label">Transaction confirmation time</span>
@@ -782,14 +782,14 @@ const ScriptsModule = () => {
                 <div className="stat">
                   <span className="stat-value">7 TPS</span>
                   <span className="stat-label">Bitcoin's base layer transaction limit</span>
-                </div>
               </div>
-              
+          </div>
+
               <div className="prime-text">
                 🚫 These limitations make Bitcoin unusable for daily payments. But what if we could 
                 build a second layer that enables millions of instant, cheap transactions?
               </div>
-            </div>
+          </div>
 
             <div className="channel-introduction">
               <h3>⚡ Payment Channel Solution</h3>
@@ -800,19 +800,19 @@ const ScriptsModule = () => {
                   <div className="participant">
                     <div className="participant-name">Alice</div>
                     <div className="participant-balance">{channelDemo.alice} BTC</div>
-                  </div>
-                  
+        </div>
+
                   <div className="channel-connection">
                     <div className="channel-capacity">
                       Total: {channelDemo.alice + channelDemo.bob} BTC
-                    </div>
-                  </div>
+        </div>
+      </div>
                   
                   <div className="participant">
                     <div className="participant-name">Bob</div>
                     <div className="participant-balance">{channelDemo.bob} BTC</div>
-                  </div>
-                </div>
+        </div>
+      </div>
 
                 <div className="payment-controls">
                   <ActionButton 
@@ -827,7 +827,7 @@ const ScriptsModule = () => {
                   >
                     Bob → Alice (1 BTC)
                   </ActionButton>
-                </div>
+        </div>
 
                 {channelDemo.payments.length > 0 && (
                   <div className="payment-history">
@@ -836,9 +836,9 @@ const ScriptsModule = () => {
                       <div key={payment.id} className="payment-record">
                         {payment.direction === 'alice_to_bob' ? 'Alice → Bob' : 'Bob → Alice'}: 
                         {payment.amount} BTC at {payment.timestamp}
-                      </div>
+              </div>
                     ))}
-                  </div>
+              </div>
                 )}
               </div>
             </div>
@@ -848,21 +848,21 @@ const ScriptsModule = () => {
                 <div className="prime-text">
                   🎯 Notice: Instant payments, zero fees, no blockchain congestion! 
                   Now imagine connecting millions of these channels...
-                </div>
+            </div>
                 
                 <ActionButton onClick={handleLightningReveal}>
                   Reveal the Lightning Network →
                 </ActionButton>
-              </div>
-            )}
           </div>
+            )}
+        </div>
         )}
 
         {engineerPhase === 'mastery' && lightningMetrics && (
           <div className="lightning-mastery">
             <div className="mastery-header">
               <h3>⚡ Lightning Network: Global Payment Infrastructure</h3>
-            </div>
+      </div>
 
             <div className="lightning-stats">
               <div className="stat-grid">
@@ -870,24 +870,24 @@ const ScriptsModule = () => {
                   <span className="stat-icon">🌐</span>
                   <span className="stat-value">{lightningMetrics.total_nodes}</span>
                   <span className="stat-label">Active Nodes</span>
-                </div>
+          </div>
                 <div className="network-stat">
                   <span className="stat-icon">💰</span>
                   <span className="stat-value">{lightningMetrics.total_capacity}</span>
                   <span className="stat-label">Total Capacity</span>
-                </div>
+          </div>
                 <div className="network-stat">
                   <span className="stat-icon">⚡</span>
                   <span className="stat-value">{lightningMetrics.daily_payments}</span>
                   <span className="stat-label">Daily Payments</span>
-                </div>
+        </div>
                 <div className="network-stat">
                   <span className="stat-icon">💸</span>
                   <span className="stat-value">{lightningMetrics.avg_fee}</span>
                   <span className="stat-label">Average Fee</span>
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+        </div>
 
             <div className="engineering-achievements">
               <h4>🏗️ Your Engineering Impact</h4>
@@ -895,11 +895,11 @@ const ScriptsModule = () => {
                 <div className="achievement">
                   <span className="achievement-icon">🚀</span>
                   <span>Enabled instant global payments</span>
-                </div>
+          </div>
                 <div className="achievement">
                   <span className="achievement-icon">💰</span>
                   <span>Reduced fees by 99.9%</span>
-                </div>
+          </div>
                 <div className="achievement">
                   <span className="achievement-icon">🌍</span>
                   <span>Connected global liquidity pools</span>
@@ -908,15 +908,15 @@ const ScriptsModule = () => {
                   <span className="achievement-icon">⚡</span>
                   <span>Powered millions of micropayments</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="mastery-insight">
-              <div className="prime-text">
+      <div className="prime-text">
                 🌊 You've engineered the infrastructure for global instant payments! 
                 Payment channels and routing create a parallel financial system that 
                 settles instantly and scales infinitely.
-              </div>
+      </div>
             </div>
 
             <ContinueButton onClick={() => handleContinue()}>
@@ -924,8 +924,8 @@ const ScriptsModule = () => {
             </ContinueButton>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   function ProtocolDesigner() {
@@ -999,10 +999,10 @@ const ScriptsModule = () => {
         <div className="designer-header">
           <div className="designer-icon">
             <TrendingUp className="w-16 h-16 text-purple-500" />
-          </div>
+        </div>
           <h2>🏛️ PROTOCOL EVOLUTION MASTERY</h2>
           <p className="designer-subtitle">Design privacy-preserving protocols that scale to global adoption...</p>
-        </div>
+      </div>
 
         {designPhase === 'evolution' && (
           <div className="protocol-evolution">
@@ -1010,8 +1010,8 @@ const ScriptsModule = () => {
               <div className="prime-text">
                 🚀 Bitcoin scripts have evolved from simple payments to sophisticated privacy-preserving 
                 protocols. Each generation solves new problems while maintaining backward compatibility.
-              </div>
-            </div>
+          </div>
+          </div>
 
             <h3>Explore the protocol evolution:</h3>
             <div className="evolution-timeline">
@@ -1024,34 +1024,34 @@ const ScriptsModule = () => {
                   <div className="era-header">
                     <span className="era-name">{protocol.name}</span>
                     <span className="era-period">{protocol.era}</span>
-                  </div>
-                  
+        </div>
+
                   <div className="era-metrics">
                     <div className="metric">
                       <span className="metric-label">Privacy:</span>
                       <span className={`metric-value ${protocol.privacy.toLowerCase()}`}>
                         {protocol.privacy}
                       </span>
-                    </div>
+          </div>
                     <div className="metric">
                       <span className="metric-label">Efficiency:</span>
                       <span className="metric-value">{protocol.efficiency}</span>
-                    </div>
-                  </div>
+          </div>
+        </div>
 
                   <div className="era-features">
                     {protocol.features.map(feature => (
                       <span key={feature} className="feature-tag">{feature}</span>
                     ))}
-                  </div>
+          </div>
 
                   <div className="era-address">
                     <code>{protocol.address}</code>
-                  </div>
+          </div>
 
                   <div className="era-description">
                     {protocol.description}
-                  </div>
+        </div>
                 </div>
               ))}
             </div>
@@ -1062,7 +1062,7 @@ const ScriptsModule = () => {
           <div className="protocol-analysis">
             <div className="analysis-header">
               <h3>🔬 Deep Dive: {selectedProtocol.name}</h3>
-            </div>
+          </div>
 
             <div className="privacy-analysis">
               <h4>🔒 Privacy Analysis</h4>
@@ -1070,7 +1070,7 @@ const ScriptsModule = () => {
                 <div className="privacy-metric">
                   <span className="metric-label">Public Visibility:</span>
                   <span className="metric-value">{privacyComparison.public_visibility}</span>
-                </div>
+          </div>
                 <div className="privacy-metric">
                   <span className="metric-label">Key Aggregation:</span>
                   <span className="metric-value">{privacyComparison.key_aggregation}</span>
@@ -1083,8 +1083,8 @@ const ScriptsModule = () => {
                   <span className="metric-label">Analysis Resistance:</span>
                   <span className="metric-value">{privacyComparison.analysis_resistance}</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             {selectedProtocol.id === 'taproot' && (
               <div className="taproot-innovation">
@@ -1095,8 +1095,8 @@ const ScriptsModule = () => {
                     <div className="innovation-text">
                       <strong>Script Privacy</strong>
                       <p>Complex smart contracts look identical to simple payments</p>
-                    </div>
-                  </div>
+      </div>
+    </div>
                   <div className="innovation-item">
                     <span className="innovation-icon">🔑</span>
                     <div className="innovation-text">
@@ -1123,13 +1123,13 @@ const ScriptsModule = () => {
             )}
 
             <div className="design-insight">
-              <div className="prime-text">
+        <div className="prime-text">
                 🎯 {selectedProtocol.id === 'taproot' 
                   ? 'You\'ve mastered the pinnacle of Bitcoin script evolution! Taproot enables maximum privacy while maintaining unlimited functionality.'
                   : `This protocol was a crucial step in Bitcoin's evolution, enabling ${selectedProtocol.features.join(', ').toLowerCase()}.`
                 }
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="analysis-controls">
               <ActionButton onClick={() => setDesignPhase('evolution')}>
@@ -1141,10 +1141,10 @@ const ScriptsModule = () => {
                   Achieve Economic Sovereignty →
                 </ContinueButton>
               )}
-            </div>
+          </div>
           </div>
         )}
-      </div>
+        </div>
     );
   }
 
@@ -1214,7 +1214,7 @@ const ScriptsModule = () => {
                   <span className="metric-icon">📜</span>
                   <span className="metric-value">{impactMetrics.scripts_mastered}</span>
                   <span className="metric-label">Script Types Mastered</span>
-                </div>
+          </div>
                 <div className="impact-metric">
                   <span className="metric-icon">🏗️</span>
                   <span className="metric-value">{impactMetrics.contracts_designed}</span>
@@ -1230,8 +1230,8 @@ const ScriptsModule = () => {
                   <span className="metric-value">{sovereigntyLevel.toFixed(0)}%</span>
                   <span className="metric-label">Sovereignty Mastery</span>
                 </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
             <div className="global-impact">
               <h3>🌎 Your Knowledge Powers Global Finance</h3>
@@ -1243,11 +1243,11 @@ const ScriptsModule = () => {
                       <h4>{app.title}</h4>
                       <div className="app-impact">{app.impact}</div>
                       <p>{app.description}</p>
-                    </div>
-                  </div>
+          </div>
+          </div>
                 ))}
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="sovereignty-powers">
               <h3>👑 Your Script Architect Powers</h3>
@@ -1255,36 +1255,36 @@ const ScriptsModule = () => {
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Design unbreakable multisig contracts</span>
-                </div>
+      </div>
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Program time-locked inheritance plans</span>
-                </div>
+    </div>
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Build instant payment channels</span>
-                </div>
+      </div>
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Create atomic swap contracts</span>
-                </div>
+        </div>
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Implement privacy-preserving protocols</span>
-                </div>
+        </div>
                 <div className="power-item">
                   <CheckCircle className="power-icon" />
                   <span>Engineer global financial infrastructure</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="final-insight">
-              <div className="prime-text">
+      <div className="prime-text">
                 🎓 You are now a Script Architect! You understand how code becomes law, 
                 how logic becomes money, and how programmable contracts reshape global finance. 
                 The power to design unstoppable financial systems is in your hands.
-              </div>
+      </div>
             </div>
 
             <div className="sovereignty-navigation">
@@ -1294,8 +1294,8 @@ const ScriptsModule = () => {
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   const renderCurrentStep = () => {
@@ -1316,7 +1316,7 @@ const ScriptsModule = () => {
         <div className="module-progress">
           <div className="progress-bar">
             <div 
-              className="progress-fill"
+              className="progress-fill" 
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
@@ -1326,7 +1326,7 @@ const ScriptsModule = () => {
 
       <div className="module-tabs">
         {architectSteps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
             className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
             onClick={() => index <= currentStep && setCurrentStep(index)}

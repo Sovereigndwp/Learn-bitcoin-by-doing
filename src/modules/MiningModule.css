@@ -1717,20 +1717,20 @@
 .insight-list {
   display: grid;
   gap: 1rem;
-}
-
+  }
+  
 .insight-item {
   background: rgba(247, 147, 26, 0.1);
   border: 1px solid rgba(247, 147, 26, 0.3);
   border-radius: 8px;
-  padding: 1rem;
+    padding: 1rem;
   color: rgba(255, 255, 255, 0.9);
-}
-
+  }
+  
 .insight-item strong {
   color: #f7931a;
-}
-
+  }
+  
 .personal-impact {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(247, 147, 26, 0.3);
@@ -1738,28 +1738,28 @@
   padding: 2rem;
   margin-bottom: 2rem;
   text-align: left;
-}
-
+  }
+  
 .personal-impact h4 {
   color: #f7931a;
   margin-bottom: 1rem;
   font-size: 1.3rem;
-}
-
+  }
+  
 .personal-impact p {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin: 0;
-}
-
+  }
+  
 /* Clean Energy Pioneer Styles */
 .clean-energy-pioneer {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 16px;
   padding: 2rem;
   border: 1px solid rgba(247, 147, 26, 0.2);
-}
-
+  }
+  
 .pioneer-awakening {
   text-align: center;
   margin-bottom: 2rem;
@@ -1773,7 +1773,7 @@
   font-size: 2rem;
   color: #32c832;
   margin-bottom: 1rem;
-}
+  }
 
 .mission-context {
   margin-bottom: 1.5rem;
@@ -2055,8 +2055,8 @@
   margin-bottom: 1rem;
   font-size: 1.3rem;
   text-align: center;
-}
-
+  }
+  
 .final-impact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -2086,7 +2086,7 @@
 
 .stat-description {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.85rem;
+    font-size: 0.85rem;
   line-height: 1.4;
 }
 
