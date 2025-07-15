@@ -458,7 +458,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
       <div className="module-header-box">
         <h2>Real People, Real Problems</h2>
         <div className="intro-text">
-          <p className="prime-text">You've seen the theory of broken money. Now meet someone living with these problems every single day.</p>
+          <p className="prime-text">You now understand money's three essential functions. But what happens when money systems fail to deliver them? Let's meet someone dealing with these failures every day.</p>
         </div>
       </div>
 
@@ -476,7 +476,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
           </div>
           
           <div className="story-engagement">
-            <p>Follow Carlos through a typical payment to understand the hidden complexity of "modern" money:</p>
+            <p>Follow Carlos through a typical payment to see how modern money fails at its most basic functions:</p>
             
             <ActionButton 
               onClick={handleExploreStory} 
@@ -500,7 +500,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
           <div className="reflection-section">
             <div className="reflection-prompt">
               <h3>🤔 What struck you most about Carlos's experience?</h3>
-              <p>After seeing the reality behind "seamless" international payments, what bothered you most?</p>
+              <p>You've seen how money should work in theory. Now you've witnessed how it fails in practice. What bothered you most?</p>
             </div>
             
             <div className="choice-options">
@@ -550,7 +550,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
                 </div>
                 
                 <div className="transition-hook">
-                  <p>You've experienced both ancient and modern money failures. Ready to discover what money <em>should</em> do?</p>
+                  <p>Carlos's story shows how modern money fails real people every day. Ready to systematically analyze <em>why</em> these failures keep happening?</p>
                 </div>
               </div>
             )}
@@ -971,12 +971,12 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
     return (
       <div className="step-content quiz-step">
         <div className="module-header-box">
-          <h2>When Good Money Goes Bad</h2>
+          <h2>Systematic Analysis</h2>
           <div className="intro-text">
-            <p className="prime-text">You now understand money's three core functions. Modern money has lost most of these capabilities.</p>
-            <p>Let's examine the evidence through history's greatest money failures.</p>
+            <p className="prime-text">Carlos's experience isn't unique—it reveals systematic flaws in how modern money works. Let's investigate the historical evidence to understand why these failures are inevitable.</p>
+            <p>Through history's greatest money disasters, we'll discover what traits money must have to actually serve people.</p>
             <div className="quiz-preview">
-              <h3>🔍 What You'll Discover:</h3>
+              <h3>🔍 What You'll Uncover:</h3>
               <ul>
                 <li>Why every government currency eventually fails</li>
                 <li>How inflation silently steals your savings</li>
@@ -984,7 +984,7 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
                 <li>What traits make money truly sound</li>
               </ul>
             </div>
-            <p><strong>Ready to analyze money systems?</strong></p>
+            <p><strong>Ready to become a money systems detective?</strong></p>
           </div>
         </div>
         <div className="quiz-content">
@@ -1108,26 +1108,104 @@ const MoneyQuiz = ({ onComplete, onUnlockTrait }) => {
 
 // Component for the Traits Scorecard
 const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
-  const [showComparison, setShowComparison] = useState(false);
+  const [currentView, setCurrentView] = useState('discover'); // 'discover', 'compare', 'blueprint', 'challenge'
+  const [selectedTrait, setSelectedTrait] = useState(null);
+  const [discoveryProgress, setDiscoveryProgress] = useState(0);
+  const [showTraitDetail, setShowTraitDetail] = useState(false);
+  const [interactionCount, setInteractionCount] = useState(0);
+  const [soundMoneyScore, setSoundMoneyScore] = useState(null);
+  const [challengeAnswers, setChallengeAnswers] = useState({});
   
   const allTraits = [
-    { name: "Scarcity", icon: "scarcity", description: "Limited supply that cannot be artificially increased", modernFail: "Central banks print unlimited money, destroying scarcity" },
-    { name: "Durability", icon: "durability", description: "Doesn't rot, decay, or degrade over time", modernFail: "Digital records can be deleted, corrupted, or hacked" },
-    { name: "Portability", icon: "portability", description: "Easy to move, transport, and verify", modernFail: "International transfers take days, cost fees, and require verification" },
-    { name: "Fungibility", icon: "fungibility", description: "Each unit is identical and interchangeable", modernFail: "Bills can be tracked, marked, blacklisted, or counterfeited" },
-    { name: "Ledger Consensus", icon: "consensus", description: "Shared, trusted agreement on ownership", modernFail: "Banks control the ledger unilaterally and can alter records" },
-    { name: "Censorship Resistance", icon: "censorshipResistance", description: "Cannot be frozen, blocked, or restricted", modernFail: "Accounts can be frozen by authorities or payment processors" },
-    { name: "Borderless", icon: "borderless", description: "Moves freely across political boundaries", modernFail: "Capital controls and international restrictions limit movement" },
-    { name: "Divisibility", icon: "divisibility", description: "Can be split into smaller precise units", modernFail: "Limited by smallest physical denomination or processing fees" }
+    { 
+      name: "Scarcity", 
+      icon: "💎", 
+      description: "Limited supply that cannot be artificially increased", 
+      modernFail: "Central banks print unlimited money, destroying scarcity",
+      historicalExample: "Gold's scarcity made it valuable across cultures for 3,000+ years",
+      importance: "Without scarcity, money loses its ability to store value over time"
+    },
+    { 
+      name: "Durability", 
+      icon: "🏛️", 
+      description: "Doesn't rot, decay, or degrade over time", 
+      modernFail: "Digital records can be deleted, corrupted, or hacked",
+      historicalExample: "Roman coins survive today, but their paper money disappeared centuries ago",
+      importance: "Money must outlast the things you want to buy with it"
+    },
+    { 
+      name: "Portability", 
+      icon: "✈️", 
+      description: "Easy to move, transport, and verify", 
+      modernFail: "International transfers take days, cost fees, and require verification",
+      historicalExample: "Merchants preferred silver coins over cattle because they were easier to carry",
+      importance: "Heavy or complex money limits trade and economic growth"
+    },
+    { 
+      name: "Fungibility", 
+      icon: "🔄", 
+      description: "Each unit is identical and interchangeable", 
+      modernFail: "Bills can be tracked, marked, blacklisted, or counterfeited",
+      historicalExample: "When Roman coins were debased, people started rejecting certain coins",
+      importance: "If money units aren't equal, trust in the system breaks down"
+    },
+    { 
+      name: "Ledger Consensus", 
+      icon: "📊", 
+      description: "Shared, trusted agreement on ownership", 
+      modernFail: "Banks control the ledger unilaterally and can alter records",
+      historicalExample: "Yap Island stones worked because everyone agreed on ownership",
+      importance: "Money is ultimately about shared trust in who owns what"
+    },
+    { 
+      name: "Censorship Resistance", 
+      icon: "🛡️", 
+      description: "Cannot be frozen, blocked, or restricted", 
+      modernFail: "Accounts can be frozen by authorities or payment processors",
+      historicalExample: "Hidden gold saved families during wars when banks were closed",
+      importance: "Money you can't use isn't really yours"
+    },
+    { 
+      name: "Borderless", 
+      icon: "🌍", 
+      description: "Moves freely across political boundaries", 
+      modernFail: "Capital controls and international restrictions limit movement",
+      historicalExample: "Silk Road merchants used gold because it was accepted everywhere",
+      importance: "Trade creates wealth, but only if value can move freely"
+    },
+    { 
+      name: "Divisibility", 
+      icon: "🔢", 
+      description: "Can be split into smaller precise units", 
+      modernFail: "Limited by smallest physical denomination or processing fees",
+      historicalExample: "Spanish pieces of eight could be literally cut into pieces for smaller amounts",
+      importance: "Money needs to handle both coffee purchases and house sales"
+    }
+  ];
+
+  const challengeQuestions = [
+    {
+      question: "If you had to choose just ONE trait for money to have, which would create the most stable economy?",
+      options: ["Scarcity", "Durability", "Censorship Resistance"],
+      insight: "Scarcity is foundational - without it, all other traits become meaningless as value gets inflated away."
+    },
+    {
+      question: "Which trait is most threatened by digital surveillance and control systems?",
+      options: ["Fungibility", "Censorship Resistance", "Borderless"],
+      insight: "Modern surveillance makes all money movements trackable, threatening financial privacy and freedom."
+    },
+    {
+      question: "What happens to an economy when money lacks durability?",
+      options: ["Short-term thinking dominates", "Trade becomes impossible", "Only the rich benefit"],
+      insight: "When money doesn't last, people can't plan for the future, leading to short-term, destructive decisions."
+    }
   ];
 
   // Flexible trait matching function
   const isTraitUnlocked = (scorecardTrait) => {
     return unlockedTraits.some(unlockedTrait => {
-      // Direct match
       if (unlockedTrait === scorecardTrait.name) return true;
       
-      // Flexible matching for related traits
       const traitMappings = {
         "Scarcity": ["Scarcity", "Fixed Supply"],
         "Durability": ["Durability"],
@@ -1145,74 +1223,324 @@ const TraitsScorecard = ({ unlockedTraits, onComplete }) => {
   };
 
   const unlockedCount = allTraits.filter(trait => isTraitUnlocked(trait)).length;
-  // const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
+  const completionPercentage = Math.round((unlockedCount / allTraits.length) * 100);
 
-        return (
-    <div className="step-content scorecard-step">
-      <div className="module-header-box">
-          <h2>The Sound Money Blueprint</h2>
-        <div className="intro-text">
-            <p className="prime-text">Through your investigation, you've discovered the traits that make money truly sound. Modern money fails at most of these.</p>
-          </div>
-        </div>
+  const handleTraitClick = (trait) => {
+    if (isTraitUnlocked(trait)) {
+      setSelectedTrait(trait);
+      setShowTraitDetail(true);
+      setInteractionCount(prev => prev + 1);
       
-      <div className="traits-comparison">
-        <div className="comparison-header">
-          <div className="header-left">
-            <Button 
-              className={`view-toggle ${!showComparison ? 'active' : ''}`}
-              onClick={() => setShowComparison(false)}
-            >
-              Sound Money Traits
-            </Button>
-            <Button 
-              className={`view-toggle ${showComparison ? 'active' : ''}`}
-              onClick={() => setShowComparison(true)}
-            >
-              How Modern Money Fails
-            </Button>
-          </div>
-          <div className="progress-indicator">
-            <span className="progress-text">{unlockedCount}/{allTraits.length} discovered</span>
+      // Auto-advance discovery progress
+      if (discoveryProgress < 100) {
+        setDiscoveryProgress(Math.min(100, discoveryProgress + (100 / unlockedCount)));
+      }
+    }
+  };
+
+  const calculateSoundMoneyScore = () => {
+    const modernMoneyTraits = {
+      "Scarcity": 1, // Fiat has no scarcity
+      "Durability": 6, // Digital records are somewhat durable
+      "Portability": 7, // Credit cards/digital payments are portable
+      "Fungibility": 4, // Bills can be tracked and marked
+      "Ledger Consensus": 2, // Banks control the ledger unilaterally
+      "Censorship Resistance": 1, // Easily frozen/blocked
+      "Borderless": 3, // Heavy restrictions and fees
+      "Divisibility": 8 // Good divisibility with digital systems
+    };
+
+    const goldTraits = {
+      "Scarcity": 9, // Very scarce and hard to mine
+      "Durability": 10, // Lasts forever
+      "Portability": 4, // Heavy and hard to verify
+      "Fungibility": 8, // Pure gold is fungible
+      "Ledger Consensus": 6, // Physical possession shows ownership
+      "Censorship Resistance": 7, // Hard to confiscate if hidden
+      "Borderless": 5, // Can cross borders but may be detected
+      "Divisibility": 6 // Can be melted and divided
+    };
+
+    const modernScore = Object.values(modernMoneyTraits).reduce((a, b) => a + b, 0);
+    const goldScore = Object.values(goldTraits).reduce((a, b) => a + b, 0);
+    const maxScore = 80; // 8 traits × 10 points each
+
+    return {
+      modern: { score: modernScore, percentage: Math.round((modernScore / maxScore) * 100) },
+      gold: { score: goldScore, percentage: Math.round((goldScore / maxScore) * 100) },
+      perfect: { score: maxScore, percentage: 100 }
+    };
+  };
+
+  const handleChallengeAnswer = (questionIndex, answer) => {
+    setChallengeAnswers(prev => ({
+      ...prev,
+      [questionIndex]: answer
+    }));
+  };
+
+  const renderDiscoveryView = () => (
+    <div className="discovery-view">
+      <div className="discovery-header">
+        <h3>🔍 Explore Your Discovered Traits</h3>
+        <p>Click on any trait you've unlocked to dive deeper into why it matters...</p>
+        <div className="discovery-progress-bar">
+          <div className="progress-fill" style={{ width: `${discoveryProgress}%` }} />
+          <span className="progress-label">Discovery Progress: {Math.round(discoveryProgress)}%</span>
         </div>
       </div>
       
-      <div className="traits-list">
+      <div className="traits-grid">
         {allTraits.map(trait => (
-            <div key={trait.name} className={`trait-item ${isTraitUnlocked(trait) ? 'unlocked' : 'locked'}`}>
-              <span className="check-icon">{isTraitUnlocked(trait) ? '✅' : '🔒'}</span>
-              <div className="trait-content">
-                <div className="trait-header">
-            <span className="trait-name"><strong>{trait.name}</strong></span>
-                  {isTraitUnlocked(trait) && <span className="discovered-badge">Discovered!</span>}
-                </div>
-                <div className="trait-details">
-                  {!showComparison ? (
-            <span className="trait-description">{trait.description}</span>
-                  ) : (
-                    <span className="trait-failure">❌ {trait.modernFail}</span>
-                  )}
-                </div>
-              </div>
+          <div 
+            key={trait.name} 
+            className={`trait-card ${isTraitUnlocked(trait) ? 'unlocked' : 'locked'} ${selectedTrait?.name === trait.name ? 'selected' : ''}`}
+            onClick={() => handleTraitClick(trait)}
+          >
+            <div className="trait-icon">{isTraitUnlocked(trait) ? trait.icon : '🔒'}</div>
+            <div className="trait-content">
+              <h4 className="trait-name">{trait.name}</h4>
+              {isTraitUnlocked(trait) ? (
+                <>
+                  <p className="trait-description">{trait.description}</p>
+                  <div className="trait-status">✓ Discovered</div>
+                </>
+              ) : (
+                <p className="trait-locked">Complete the quiz to unlock</p>
+              )}
+            </div>
           </div>
         ))}
       </div>
 
-        <div className="bitcoin-teaser">
-          <h3>🔮 Coming Next...</h3>
-          <p>Now that you understand what makes money truly sound, you're ready to learn about the first technology that combines ALL these traits in one global system.</p>
-          <p><strong>Spoiler alert:</strong> It's called Bitcoin, and it's going to challenge everything you thought you knew about money.</p>
+      {showTraitDetail && selectedTrait && (
+        <div className="trait-detail-modal">
+          <div className="modal-content">
+            <button className="close-button" onClick={() => setShowTraitDetail(false)}>×</button>
+            <div className="trait-detail-header">
+              <span className="trait-detail-icon">{selectedTrait.icon}</span>
+              <h3>{selectedTrait.name}</h3>
+            </div>
+            <div className="trait-detail-body">
+              <div className="detail-section">
+                <h4>📚 What It Means:</h4>
+                <p>{selectedTrait.description}</p>
+              </div>
+              <div className="detail-section">
+                <h4>🏛️ Historical Example:</h4>
+                <p>{selectedTrait.historicalExample}</p>
+              </div>
+              <div className="detail-section">
+                <h4>💡 Why It's Critical:</h4>
+                <p>{selectedTrait.importance}</p>
+              </div>
+              <div className="detail-section modern-failure">
+                <h4>❌ How Modern Money Fails:</h4>
+                <p>{selectedTrait.modernFail}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  const renderComparisonView = () => {
+    if (!soundMoneyScore) {
+      setSoundMoneyScore(calculateSoundMoneyScore());
+      return <div>Calculating scores...</div>;
+    }
+
+    return (
+      <div className="comparison-view">
+        <h3>📊 Sound Money Scorecard</h3>
+        <p>How do different money systems score on the 8 essential traits?</p>
+        
+        <div className="money-comparison-grid">
+          <div className="money-system">
+            <h4>💵 Modern Fiat Money</h4>
+            <div className="score-display">
+              <div className="score-number">{soundMoneyScore.modern.percentage}%</div>
+              <div className="score-bar">
+                <div className="score-fill modern" style={{ width: `${soundMoneyScore.modern.percentage}%` }} />
+              </div>
+            </div>
+            <p className="score-analysis">Fails at scarcity, censorship resistance, and ledger control</p>
+          </div>
+
+          <div className="money-system">
+            <h4>🏅 Gold Standard</h4>
+            <div className="score-display">
+              <div className="score-number">{soundMoneyScore.gold.percentage}%</div>
+              <div className="score-bar">
+                <div className="score-fill gold" style={{ width: `${soundMoneyScore.gold.percentage}%` }} />
+              </div>
+            </div>
+            <p className="score-analysis">Strong on scarcity and durability, weak on portability</p>
+          </div>
+
+          <div className="money-system">
+            <h4>⭐ Ideal Sound Money</h4>
+            <div className="score-display">
+              <div className="score-number">100%</div>
+              <div className="score-bar">
+                <div className="score-fill perfect" style={{ width: '100%' }} />
+              </div>
+            </div>
+            <p className="score-analysis">Combines ALL 8 traits - has this ever existed?</p>
+          </div>
         </div>
 
-
-
-        <Button 
-          className="continue-button"
-          onClick={() => onComplete(5)}
-        >
-          Ready for the Solution
-        </Button>
+        <div className="trait-breakdown">
+          <h4>🔍 Detailed Breakdown:</h4>
+          <div className="breakdown-grid">
+            {allTraits.map(trait => (
+              <div key={trait.name} className="breakdown-item">
+                <span className="trait-label">{trait.icon} {trait.name}</span>
+                <div className="breakdown-scores">
+                  <span className="modern-score">Fiat: 🔴</span>
+                  <span className="gold-score">Gold: 🟡</span>
+                  <span className="perfect-score">Ideal: 🟢</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+    );
+  };
+
+  const renderChallengeView = () => (
+    <div className="challenge-view">
+      <h3>🤔 Critical Thinking Challenge</h3>
+      <p>Test your understanding of how these traits interact in real-world scenarios...</p>
+      
+      <div className="challenge-questions">
+        {challengeQuestions.map((q, index) => (
+          <div key={index} className="challenge-question">
+            <h4>Question {index + 1}:</h4>
+            <p>{q.question}</p>
+            <div className="challenge-options">
+              {q.options.map(option => (
+                <OptionButton
+                  key={option}
+                  onClick={() => handleChallengeAnswer(index, option)}
+                  className={`challenge-option ${challengeAnswers[index] === option ? 'selected' : ''}`}
+                >
+                  {option}
+                </OptionButton>
+              ))}
+            </div>
+            {challengeAnswers[index] && (
+              <div className="challenge-insight">
+                <h5>💡 Insight:</h5>
+                <p>{q.insight}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderBlueprintView = () => (
+    <div className="blueprint-view">
+      <h3>🏗️ Building the Perfect Money</h3>
+      <p>If you were designing money from scratch, what would it look like?</p>
+      
+      <div className="blueprint-exercise">
+        <div className="blueprint-header">
+          <h4>Your Money System Design Challenge:</h4>
+          <p>Rank these traits by importance for a global money system:</p>
+        </div>
+        
+        <div className="blueprint-traits">
+          {allTraits.filter(trait => isTraitUnlocked(trait)).map((trait, index) => (
+            <div key={trait.name} className="blueprint-trait">
+              <div className="trait-ranking">#{index + 1}</div>
+              <div className="trait-info">
+                <span className="trait-icon">{trait.icon}</span>
+                <span className="trait-name">{trait.name}</span>
+              </div>
+              <div className="trait-impact">
+                <p>{trait.importance}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="blueprint-conclusion">
+          <h4>🎯 The Ultimate Question:</h4>
+          <p>What if there was a technology that could deliver ALL {unlockedCount} traits simultaneously?</p>
+          <p><strong>What would that be worth?</strong></p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="step-content scorecard-step">
+      <div className="module-header-box">
+        <h2>The Sound Money Blueprint</h2>
+        <div className="intro-text">
+          <p className="prime-text">You've discovered {unlockedCount}/8 traits that make money truly sound. Now let's explore how they work together.</p>
+        </div>
+      </div>
+      
+      <div className="scorecard-navigation">
+        <div className="nav-buttons">
+          <Button 
+            className={`nav-button ${currentView === 'discover' ? 'active' : ''}`}
+            onClick={() => setCurrentView('discover')}
+          >
+            🔍 Explore Traits
+          </Button>
+          <Button 
+            className={`nav-button ${currentView === 'compare' ? 'active' : ''}`}
+            onClick={() => setCurrentView('compare')}
+          >
+            📊 Compare Systems
+          </Button>
+          <Button 
+            className={`nav-button ${currentView === 'blueprint' ? 'active' : ''}`}
+            onClick={() => setCurrentView('blueprint')}
+          >
+            🏗️ Build Perfect Money
+          </Button>
+          <Button 
+            className={`nav-button ${currentView === 'challenge' ? 'active' : ''}`}
+            onClick={() => setCurrentView('challenge')}
+          >
+            🤔 Think Deeper
+          </Button>
+        </div>
+        
+        <div className="progress-stats">
+          <span className="stats-item">Traits Discovered: {unlockedCount}/8</span>
+          <span className="stats-item">Completion: {completionPercentage}%</span>
+          <span className="stats-item">Interactions: {interactionCount}</span>
+        </div>
+      </div>
+
+      <div className="scorecard-content">
+        {currentView === 'discover' && renderDiscoveryView()}
+        {currentView === 'compare' && renderComparisonView()}
+        {currentView === 'blueprint' && renderBlueprintView()}
+        {currentView === 'challenge' && renderChallengeView()}
+      </div>
+
+      <div className="scorecard-summary">
+        <h3>🎯 You've Built the Blueprint</h3>
+        <p>You now understand the 8 essential traits of sound money and why every historical money system has failed to achieve them all.</p>
+        <p><strong>Ready to discover what comes next?</strong></p>
+      </div>
+
+      <Button 
+        className="continue-button"
+        onClick={() => onComplete(5)}
+      >
+        Continue to Completion
+      </Button>
     </div>
   );
 };
@@ -1261,6 +1589,114 @@ const BadgeModal = ({ isOpen, onClose }) => {
         );
 };
 
+// Component for Module Completion
+const ModuleCompletion = ({ onComplete }) => {
+  return (
+    <div className="step-content completion-step">
+      <div className="module-header-box">
+        <h2>🎉 Congratulations!</h2>
+        <div className="intro-text">
+          <p className="prime-text">You've mastered the fundamentals of sound money and discovered why the current system is broken.</p>
+        </div>
+      </div>
+      
+      <div className="completion-content">
+        <div className="achievement-summary">
+          <h3>🏆 What You've Accomplished</h3>
+          <div className="accomplishments-grid">
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">🥔</div>
+              <h4>Trade Explorer</h4>
+              <p>Experienced the painful reality of barter economics firsthand</p>
+            </div>
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">⚖️</div>
+              <h4>Money Functions Expert</h4>
+              <p>Discovered the three essential jobs money must perform</p>
+            </div>
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">🔍</div>
+              <h4>System Analyst</h4>
+              <p>Uncovered the hidden flaws in traditional money systems</p>
+            </div>
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">🛡️</div>
+              <h4>Sound Money Scholar</h4>
+              <p>Learned the 8 traits that make money truly sound</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="key-insights">
+          <h3>💡 Key Insights You've Gained</h3>
+          <div className="insights-list">
+            <div className="insight-item">
+              <span className="insight-number">1</span>
+              <div className="insight-content">
+                <h4>Modern Money is Broken by Design</h4>
+                <p>Central banks can print unlimited money, banks can freeze your accounts, and governments can restrict money movement across borders.</p>
+              </div>
+            </div>
+            <div className="insight-item">
+              <span className="insight-number">2</span>
+              <div className="insight-content">
+                <h4>Sound Money Requires Specific Traits</h4>
+                <p>True money must be scarce, durable, portable, fungible, censorship-resistant, borderless, divisible, and have consensus-based ownership.</p>
+              </div>
+            </div>
+            <div className="insight-item">
+              <span className="insight-number">3</span>
+              <div className="insight-content">
+                <h4>No Previous Money System Has Been Perfect</h4>
+                <p>Gold was great for scarcity and durability but terrible for portability. Fiat money is portable but fails at scarcity and censorship resistance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="optional-resource">
+          <h3>📚 Optional: Dive Deeper</h3>
+          <p>Want to explore the complete history of money? Check out our interactive timeline:</p>
+          <a
+            href="https://layer-d.my.canva.site/interactive-timeline-of-money-evolution-from-barter-to-bitcoin"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="resource-link"
+          >
+            🕰️ Evolution of Money: From Barter to Bitcoin
+          </a>
+        </div>
+
+        <div className="next-journey">
+          <h3>🔮 Your Next Journey</h3>
+          <div className="next-journey-content">
+            <p>Now that you understand what makes money truly sound, you're ready to explore the first technology in human history that combines <strong>ALL</strong> 8 traits in one global system.</p>
+            
+            <div className="bitcoin-preview">
+              <h4>🟠 Coming Up: Bitcoin Fundamentals</h4>
+              <ul>
+                <li>How Bitcoin achieves perfect scarcity without central authority</li>
+                <li>Why Bitcoin can't be censored, frozen, or inflated</li>
+                <li>How a network of computers maintains consensus without banks</li>
+                <li>Why this matters for your financial future</li>
+              </ul>
+            </div>
+            
+            <p className="ready-question"><strong>Ready to see how all these pieces fit together?</strong></p>
+          </div>
+        </div>
+
+        <Button 
+          className="complete-module-button"
+          onClick={() => onComplete(6)}
+        >
+          Complete Money Module
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 // Main Module Component
 const MoneyModule = () => {
   const { completeModule } = useProgress();
@@ -1307,7 +1743,7 @@ const MoneyModule = () => {
       showAchievement("Sound Money Scholar", "You know what makes money truly sound!");
     }
     
-    if (stepIndex === 6) {  // Final step
+    if (stepIndex === 6) {  // Final step - Complete after ModuleCompletion
       completeModule('money');
       setShowBadgeModal(true);
       showAchievement("Money Master", "You've mastered the fundamentals of sound money!");
@@ -1452,7 +1888,7 @@ const MoneyModule = () => {
 
       {/* Horizontal Tab Navigation */}
       <div className="top-navigation">
-        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'When Money Goes Wrong', 'From Theory to Reality', 'The Sound Money Blueprint', 'Your Next Steps'].map((step, index) => (
+        {['The Money Mystery', 'The Stone Age Economy', 'Money\'s Core Functions', 'Real People, Real Problems', 'Systematic Analysis', 'The Sound Money Blueprint', 'Congratulations'].map((step, index) => (
           <Button
             key={index}
             className={`top-nav-button ${
@@ -1471,10 +1907,10 @@ const MoneyModule = () => {
         {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
         {currentStep === 1 && <BarterWorld onComplete={handleStepComplete} />}
         {currentStep === 2 && <WhatsWrong onComplete={handleStepComplete} />}
-        {currentStep === 3 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 4 && <CarlosFlowerExport onComplete={handleStepComplete} />}
+        {currentStep === 3 && <CarlosFlowerExport onComplete={handleStepComplete} />}
+        {currentStep === 4 && <MoneyQuiz onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
         {currentStep === 5 && <TraitsScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 6 && <ExternalResource onComplete={handleStepComplete} />}
+        {currentStep === 6 && <ModuleCompletion onComplete={handleStepComplete} />}
       </div>
 
       <BadgeModal isOpen={showBadgeModal} onClose={() => setShowBadgeModal(false)} />
