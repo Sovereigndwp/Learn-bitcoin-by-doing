@@ -6,7 +6,6 @@ import {
   Users, Layers, Activity, BarChart3
 } from 'lucide-react';
 import { 
-  ContinueButton,
   Button 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
@@ -19,7 +18,6 @@ const LightningModule = () => {
   const [achievements, setAchievements] = useState([]);
   
   // Crisis Investigation State
-  const [investigationProgress, setInvestigationProgress] = useState(0);
   const [crisisData, setCrisisData] = useState({
     paymentFailures: 0,
     costAnalysis: 0,
@@ -28,6 +26,7 @@ const LightningModule = () => {
   
   // Channel Architecture State
   const [channelBalance, setChannelBalance] = useState({ alice: 50000, bob: 50000 });
+  // eslint-disable-next-line no-unused-vars
   const [paymentQueue, setPaymentQueue] = useState([]);
   const [channelEfficiency, setChannelEfficiency] = useState(0);
   
@@ -48,6 +47,7 @@ const LightningModule = () => {
   
   // Sovereignty Achievement State
   const [masteryLevel, setMasteryLevel] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [sovereigntyScore, setSovereigntyScore] = useState(0);
 
   const architectPhases = [
@@ -239,31 +239,31 @@ const LightningModule = () => {
             <div className="metric-header">
               <Clock className="metric-icon" />
               <h4>Payment Failures</h4>
-            </div>
+      </div>
             <div className="metric-value">
               ${Math.floor(crisisData.paymentFailures).toLocaleString()}M
-            </div>
+        </div>
             <div className="metric-description">
               Daily losses from slow payment settlements
-            </div>
+          </div>
             <div className="crisis-examples">
               <div className="crisis-example">
                 <strong>Real Case:</strong> Small business loses $2,400 monthly due to 3-day payment delays
-              </div>
+          </div>
               <div className="crisis-example">
                 <strong>Global Impact:</strong> $1.2T locked in slow payment systems daily
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
 
           <div className="crisis-metric">
             <div className="metric-header">
               <DollarSign className="metric-icon" />
               <h4>Processing Costs</h4>
-            </div>
+        </div>
             <div className="metric-value">
               ${Math.floor(crisisData.costAnalysis).toLocaleString()}B
-            </div>
+        </div>
             <div className="metric-description">
               Annual fees paid to payment processors
             </div>
@@ -274,17 +274,17 @@ const LightningModule = () => {
               <div className="crisis-example">
                 <strong>Wire Transfers:</strong> $15-50 + 1-3% international fees
               </div>
-            </div>
-          </div>
+        </div>
+      </div>
 
           <div className="crisis-metric">
             <div className="metric-header">
               <Target className="metric-icon" />
               <h4>Speed Comparison</h4>
-            </div>
+      </div>
             <div className="metric-value">
               {Math.floor(crisisData.speedComparison)}%
-            </div>
+    </div>
             <div className="metric-description">
               Payments that could be Lightning-fast
             </div>
@@ -309,14 +309,14 @@ const LightningModule = () => {
                 <div className="metric">Cost: 2-3% + fees</div>
                 <div className="metric">Reach: Limited hours</div>
                 <div className="metric">Size: $1+ minimums</div>
-              </div>
-            </div>
-            
+        </div>
+      </div>
+
             <div className="solution-arrow">
               <ArrowRight className="solution-icon" />
               <span>Lightning Revolution</span>
-            </div>
-            
+      </div>
+
             <div className="solution-side lightning">
               <h4>Lightning Network</h4>
               <div className="solution-metrics">
@@ -324,16 +324,16 @@ const LightningModule = () => {
                 <div className="metric lightning-advantage">Cost: Fractions of pennies</div>
                 <div className="metric lightning-advantage">Reach: 24/7 global</div>
                 <div className="metric lightning-advantage">Size: Any amount</div>
-              </div>
             </div>
           </div>
-        </div>
+            </div>
+          </div>
 
         <div className="investigation-results">
           <div className="result-header">
             <CheckCircle className="result-icon" />
             <h4>Crisis Investigation Complete</h4>
-          </div>
+            </div>
           <p>You've uncovered the massive payment crisis affecting billions. Lightning Network emerges as the revolutionary solution enabling instant, cheap, global Bitcoin payments.</p>
           
           <div className="detective-skills">
@@ -342,9 +342,9 @@ const LightningModule = () => {
               <div className="skill">🔍 Payment Crisis Analysis</div>
               <div className="skill">📊 Cost-Benefit Evaluation</div>
               <div className="skill">⚡ Lightning Solution Recognition</div>
-            </div>
           </div>
         </div>
+      </div>
       </div>
 
       <div className="phase-completion">
@@ -377,47 +377,47 @@ const LightningModule = () => {
         <div className="channel-construction">
           <h4>Payment Channel Architecture</h4>
           <div className="channel-builder">
-            <div className="channel-participants">
+        <div className="channel-participants">
               <div className="participant alice">
-                <div className="participant-avatar">A</div>
+            <div className="participant-avatar">A</div>
                 <div className="participant-info">
                   <div className="participant-name">Alice (Merchant)</div>
                   <div className="participant-balance">{channelBalance.alice.toLocaleString()} sats</div>
                 </div>
-              </div>
+          </div>
 
               <div className="channel-visualization">
-                <div className="channel-bar">
-                  <div 
-                    className="balance-alice" 
+          <div className="channel-bar">
+              <div 
+                className="balance-alice" 
                     style={{ width: `${(channelBalance.alice / (channelBalance.alice + channelBalance.bob)) * 100}%` }}
-                  />
-                  <div 
-                    className="balance-bob"
+              />
+              <div 
+                className="balance-bob"
                     style={{ width: `${(channelBalance.bob / (channelBalance.alice + channelBalance.bob)) * 100}%` }}
-                  />
-                </div>
+              />
+            </div>
                 <div className="channel-capacity">
                   Total Capacity: {(channelBalance.alice + channelBalance.bob).toLocaleString()} sats
                 </div>
                 <div className="channel-status">
                   <div className="status-indicator active"></div>
                   Channel Status: Active & Lightning Fast ⚡
-                </div>
-              </div>
+            </div>
+          </div>
 
               <div className="participant bob">
-                <div className="participant-avatar">B</div>
+            <div className="participant-avatar">B</div>
                 <div className="participant-info">
                   <div className="participant-name">Bob (Customer)</div>
                   <div className="participant-balance">{channelBalance.bob.toLocaleString()} sats</div>
                 </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
             <div className="payment-simulator">
               <h5>Lightning Payment Simulator</h5>
-              <div className="payment-controls">
+        <div className="payment-controls">
                 <div className="payment-scenarios">
                   <button 
                     className="scenario-btn"
@@ -436,7 +436,7 @@ const LightningModule = () => {
                     onClick={() => simulatePayment(25000, 'alice-to-bob')}
                   >
                     Refund (25,000 sats)
-                  </button>
+            </button>
                 </div>
               </div>
             </div>
@@ -451,9 +451,9 @@ const LightningModule = () => {
               <div className="speed-value">
                 <span className="speed-number">&lt; 100ms</span>
                 <span className="speed-label">Lightning</span>
-              </div>
+        </div>
               <div className="vs-traditional">vs 3-5 days traditional</div>
-            </div>
+      </div>
 
             <div className="speed-metric">
               <BarChart3 className="speed-icon" />
@@ -550,7 +550,7 @@ const LightningModule = () => {
         <div className="challenge-alert">
           <h3>🌐 NETWORK ROUTING CRISIS</h3>
           <p>Payment needs to route from Alaska to Argentina through network congestion. Design the optimal path!</p>
-        </div>
+      </div>
 
         <div className="network-topology">
           <h4>Lightning Network Topology</h4>
@@ -585,8 +585,8 @@ const LightningModule = () => {
                 <div className="route-node source">
                   <div className="node-indicator">A</div>
                   <div className="node-label">Alaska</div>
-                </div>
-                
+        </div>
+        
                 <div className="route-hop">
                   <div className="hop-connection active">
                     <div className="connection-line"></div>
@@ -595,18 +595,18 @@ const LightningModule = () => {
                   <div className="route-node intermediate">
                     <div className="node-indicator">B</div>
                     <div className="node-label">Seattle Hub</div>
-                  </div>
-                </div>
+        </div>
+      </div>
 
                 <div className="route-hop">
                   <div className="hop-connection active">
                     <div className="connection-line"></div>
                     <div className="connection-fee">0.01%</div>
-                  </div>
+        </div>
                   <div className="route-node intermediate">
                     <div className="node-indicator">C</div>
                     <div className="node-label">Miami Router</div>
-                  </div>
+        </div>
                 </div>
 
                 <div className="route-hop">
@@ -618,8 +618,8 @@ const LightningModule = () => {
                     <div className="node-indicator">D</div>
                     <div className="node-label">Argentina</div>
                   </div>
-                </div>
-              </div>
+        </div>
+      </div>
 
               <div className="routing-metrics">
                 <div className="routing-metric">
@@ -651,7 +651,7 @@ const LightningModule = () => {
                 <div className="tool-name">Optimize Routing</div>
                 <div className="tool-description">Find best path through network</div>
               </div>
-            </button>
+        </button>
 
             <button 
               className="optimization-tool"
@@ -743,16 +743,16 @@ const LightningModule = () => {
               <div className="metric-header">
                 <DollarSign className="metric-icon" />
                 <h5>Fee Optimization</h5>
-              </div>
+          </div>
               <div className="metric-display">
                 <div className="metric-value">{feeOptimization}%</div>
                 <div className="metric-label">Optimized</div>
-              </div>
+          </div>
               <div className="metric-details">
                 <div className="detail">Base Fee: 1 sat</div>
                 <div className="detail">Rate: 0.01%</div>
                 <div className="detail">Competitive: ✓</div>
-              </div>
+          </div>
             </div>
 
             <div className="economics-metric">
@@ -768,25 +768,25 @@ const LightningModule = () => {
                 <div className="detail">Inbound: 2.5 BTC</div>
                 <div className="detail">Outbound: 2.5 BTC</div>
                 <div className="detail">Balanced: ✓</div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="economics-metric">
               <div className="metric-header">
                 <Target className="metric-icon" />
                 <h5>Node Profitability</h5>
-              </div>
+          </div>
               <div className="metric-display">
                 <div className="metric-value">{profitability}%</div>
                 <div className="metric-label">ROI</div>
-              </div>
+          </div>
               <div className="metric-details">
                 <div className="detail">Revenue: 0.05 BTC/month</div>
                 <div className="detail">Costs: 0.01 BTC/month</div>
                 <div className="detail">Profit: 0.04 BTC/month</div>
-              </div>
-            </div>
           </div>
+          </div>
+        </div>
 
           <div className="liquidity-strategy">
             <h4>Liquidity Management Strategy</h4>
@@ -799,7 +799,7 @@ const LightningModule = () => {
                 <div className="strategy-info">
                   <div className="strategy-name">Optimize Fee Structure</div>
                   <div className="strategy-description">Balance competitiveness with profitability</div>
-                </div>
+      </div>
               </button>
 
               <button 
@@ -811,7 +811,7 @@ const LightningModule = () => {
                   <div className="strategy-name">Rebalance Channels</div>
                   <div className="strategy-description">Maintain optimal liquidity distribution</div>
                 </div>
-              </button>
+        </button>
 
               <button 
                 className="strategy-btn"
@@ -920,16 +920,16 @@ const LightningModule = () => {
               <div className="solution-header">
                 <div className="solution-icon">🛒</div>
                 <h4>E-Commerce Integration</h4>
-              </div>
+          </div>
               <div className="solution-metrics">
                 <div className="metric">
                   <span className="metric-label">Merchants:</span>
                   <span className="metric-value">{Math.floor(commerceSolutions * 100).toLocaleString()}</span>
-                </div>
+          </div>
                 <div className="metric">
                   <span className="metric-label">Avg Transaction:</span>
                   <span className="metric-value">$12.50</span>
-                </div>
+          </div>
                 <div className="metric">
                   <span className="metric-label">Success Rate:</span>
                   <span className="metric-value">99.8%</span>
@@ -939,8 +939,8 @@ const LightningModule = () => {
                 <div className="feature">✓ Instant checkout</div>
                 <div className="feature">✓ No chargebacks</div>
                 <div className="feature">✓ Global reach</div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="commerce-solution">
               <div className="solution-header">
@@ -966,7 +966,7 @@ const LightningModule = () => {
                 <div className="feature">✓ Streaming payments</div>
                 <div className="feature">✓ Creator monetization</div>
               </div>
-            </div>
+        </div>
 
             <div className="commerce-solution">
               <div className="solution-header">
@@ -992,8 +992,8 @@ const LightningModule = () => {
                 <div className="feature">✓ 24/7 availability</div>
                 <div className="feature">✓ No intermediaries</div>
               </div>
-            </div>
-          </div>
+        </div>
+      </div>
 
           <div className="commerce-tools">
             <h4>Commerce Development Tools</h4>
@@ -1007,7 +1007,7 @@ const LightningModule = () => {
                   <div className="tool-name">Build E-Commerce Solution</div>
                   <div className="tool-description">Enable instant checkout for online stores</div>
                 </div>
-              </button>
+        </button>
 
               <button 
                 className="commerce-tool"
@@ -1017,7 +1017,7 @@ const LightningModule = () => {
                 <div className="tool-info">
                   <div className="tool-name">Deploy Micropayment System</div>
                   <div className="tool-description">Enable content monetization with tiny payments</div>
-                </div>
+      </div>
               </button>
 
               <button 
@@ -1028,7 +1028,7 @@ const LightningModule = () => {
                 <div className="tool-info">
                   <div className="tool-name">Expand Global Reach</div>
                   <div className="tool-description">Connect more countries to Lightning network</div>
-                </div>
+    </div>
               </button>
             </div>
           </div>
@@ -1053,14 +1053,14 @@ const LightningModule = () => {
                 <div className="stat-label">Success Rate</div>
               </div>
             </div>
-          </div>
         </div>
+      </div>
 
         <div className="pioneer-achievement">
           <h4>🌟 Commerce Pioneer Achievement</h4>
           <p>You've successfully built Lightning commerce solutions that enable global micropayments and instant transactions. Your innovations are driving Lightning adoption worldwide.</p>
         </div>
-      </div>
+        </div>
 
       <div className="phase-completion">
         <Button
@@ -1069,7 +1069,7 @@ const LightningModule = () => {
           text="Achieve Lightning Sovereignty"
           className="pioneer-continue-btn"
         />
-      </div>
+        </div>
     </div>
   );
 
@@ -1096,7 +1096,7 @@ const LightningModule = () => {
           <h2>Lightning Sovereign</h2>
           <p>Master of instant, global Bitcoin payments</p>
         </div>
-      </div>
+        </div>
 
       <div className="sovereignty-display">
         <div className="mastery-dashboard">
@@ -1112,8 +1112,8 @@ const LightningModule = () => {
                 <div className="skill">Payment System Investigation</div>
                 <div className="skill">Cost-Benefit Analysis</div>
                 <div className="skill">Solution Recognition</div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="mastery-category">
               <div className="category-header">
@@ -1126,7 +1126,7 @@ const LightningModule = () => {
                 <div className="skill">Instant Settlements</div>
                 <div className="skill">Performance Optimization</div>
               </div>
-            </div>
+      </div>
 
             <div className="mastery-category">
               <div className="category-header">
@@ -1145,13 +1145,13 @@ const LightningModule = () => {
               <div className="category-header">
                 <TrendingUp className="category-icon" />
                 <h4>Economic Mastery</h4>
-              </div>
+      </div>
               <div className="mastery-level">Master</div>
               <div className="category-skills">
                 <div className="skill">Fee Optimization</div>
                 <div className="skill">Liquidity Management</div>
                 <div className="skill">Profitability Analysis</div>
-              </div>
+    </div>
             </div>
 
             <div className="mastery-category">
@@ -1164,8 +1164,8 @@ const LightningModule = () => {
                 <div className="skill">Commerce Solutions</div>
                 <div className="skill">Micropayment Systems</div>
                 <div className="skill">Global Adoption</div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="mastery-category sovereignty-special">
               <div className="category-header">
@@ -1190,14 +1190,14 @@ const LightningModule = () => {
               <div className="power-info">
                 <h4>Instant Settlements</h4>
                 <p>Send any amount globally in milliseconds</p>
-              </div>
-            </div>
+          </div>
+          </div>
             <div className="sovereign-power">
               <div className="power-icon">💰</div>
               <div className="power-info">
                 <h4>Micropenny Fees</h4>
                 <p>Pay fractions of pennies for any transaction</p>
-              </div>
+          </div>
             </div>
             <div className="sovereign-power">
               <div className="power-icon">🌍</div>
@@ -1235,8 +1235,8 @@ const LightningModule = () => {
               <div className="metric-value">0.001%</div>
               <div className="metric-label">Transaction Fees</div>
             </div>
-          </div>
-          
+        </div>
+
           <div className="sovereignty-message">
             <p>You have achieved complete mastery of the Lightning Network. You understand how to solve the global payments crisis through instant, cheap Bitcoin transactions. You can build Lightning infrastructure, optimize economic models, and deploy solutions that connect the world through instant value transfer.</p>
             
@@ -1270,7 +1270,7 @@ const LightningModule = () => {
               <p className="module-subtitle">Master instant Bitcoin payments through crisis-driven discovery</p>
               <div className="crisis-tagline">
                 Transform the global payment nightmare into Lightning-fast solutions
-              </div>
+          </div>
             </div>
           </div>
           

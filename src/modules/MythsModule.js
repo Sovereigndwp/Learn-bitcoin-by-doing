@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  Shield, AlertTriangle, Target, Zap, Crown, Globe, 
+  Shield, AlertTriangle, Target, Zap, Crown, 
   Search, Database, Sword, Building, Network, CheckCircle,
-  TrendingUp, Activity, Users, Award, Star, Lock
+  TrendingUp, Activity, Award, Star, Lock
 } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './MythsModule.css';
@@ -19,7 +19,6 @@ const MythsModule = () => {
   const [crisisAlerts, setCrisisAlerts] = useState([]);
   const [truthNetworkStrength, setTruthNetworkStrength] = useState(0);
   const [selectedMyth, setSelectedMyth] = useState(null);
-  const [activeScenario, setActiveScenario] = useState(null);
   const [misinformationLevel, setMisinformationLevel] = useState(85);
   const [truthImpactScore, setTruthImpactScore] = useState(0);
 
@@ -489,7 +488,7 @@ const MythsModule = () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
         if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
+        document.body.removeChild(achievement);
         }
       }, 300);
     }, 4000);
@@ -554,7 +553,6 @@ const MythsModule = () => {
     if (phases[newPhase].unlocked) {
       setCurrentPhase(newPhase);
       setSelectedMyth(null);
-      setActiveScenario(null);
     }
   };
 
@@ -714,13 +712,13 @@ const MythsModule = () => {
   const renderMythCard = (myth) => {
     const isBusted = mythsBusted.has(myth.id);
     const isActive = selectedMyth === myth.id;
-    
+
     return (
-      <div 
-        key={myth.id}
+            <div 
+              key={myth.id}
         className={`myth-card ${isActive ? 'active' : ''} ${isBusted ? 'busted' : ''}`}
         onClick={() => setSelectedMyth(isActive ? null : myth.id)}
-      >
+            >
         <div className="myth-card-header">
           <div className="myth-icon">{myth.icon}</div>
           <div className="myth-info">
@@ -736,11 +734,11 @@ const MythsModule = () => {
             </div>
             <div className="crisis-percentage">{myth.crisisLevel}%</div>
           </div>
-        </div>
-        
+              </div>
+              
         {isActive && (
           <div className="myth-battle-interface">
-            <div className="myth-statement">
+                  <div className="myth-statement">
               <div className="statement-header">
                 <AlertTriangle className="statement-icon" />
                 <span>Misinformation Threat</span>
@@ -755,7 +753,7 @@ const MythsModule = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="truth-weapons">
               <div className="weapons-header">
                 <Database className="weapons-icon" />
@@ -777,7 +775,7 @@ const MythsModule = () => {
                 ))}
               </div>
             </div>
-            
+
             <div className="counter-narratives">
               <div className="narratives-header">
                 <Building className="narratives-icon" />
@@ -801,8 +799,8 @@ const MythsModule = () => {
             <div className="truth-defender-response">
               <div className="response-header">Truth Defender Response:</div>
               <div className="response-content">{myth.truthDefenderResponse}</div>
-            </div>
-            
+                      </div>
+                      
             <div className="stakes-description">
               <div className="stakes-header">Stakes:</div>
               <div className="stakes-content">{myth.stakesDescription}</div>
@@ -817,9 +815,9 @@ const MythsModule = () => {
                   <Sword className="bust-icon" />
                   Deploy Truth Weapons - BUST THIS MYTH!
                 </button>
-              </div>
+                      </div>
             )}
-            
+
             {isBusted && (
               <div className="myth-busted">
                 <div className="busted-indicator">
@@ -829,10 +827,10 @@ const MythsModule = () => {
                 <div className="busted-impact">
                   Truth impact: +150 points | Network strength: +8%
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+                    </div>
+                  )}
+                </div>
+              )}
       </div>
     );
   };

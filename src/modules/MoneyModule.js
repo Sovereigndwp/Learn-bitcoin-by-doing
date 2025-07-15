@@ -1,794 +1,786 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useProgress } from '../contexts/ProgressContext';
+import { TrendingUp, Coins, 
+         CheckCircle, ArrowRight, Lightbulb, AlertTriangle } from 'lucide-react';
 import '../components/MoneyModule.css';
 
 const MoneyModule = () => {
-  // Core crisis state management
-  const [crisisPhase, setCrisisPhase] = useState('monetary_collapse_detective');
-  const [crisisIntensity, setCrisisIntensity] = useState(0);
-  const [architectLevel, setArchitectLevel] = useState(1);
-  const [masteryPoints, setMasteryPoints] = useState(0);
-  const [totalCrisisDefended, setTotalCrisisDefended] = useState(0);
+  const { completeModule } = useProgress();
+  
+  // Core learning state management
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [learningProgress, setLearningProgress] = useState(0);
+  const [unlockedPrinciples, setUnlockedPrinciples] = useState(new Set());
+  
+  // Interactive elements state
+  const [selectedPrinciple, setSelectedPrinciple] = useState(null);
+  const [quizResults, setQuizResults] = useState({});
+  const [inflationAmount, setInflationAmount] = useState(1000);
+  const [inflationYears, setInflationYears] = useState(10);
+  
+  // Knowledge tracking
+  const [conceptsUnderstood, setConceptsUnderstood] = useState(new Set());
+  const [practicalExamplesViewed, setPracticalExamplesViewed] = useState(new Set());
 
-  // Monetary mastery state
-  const [monetaryCollapseAlerts, setMonetaryCollapseAlerts] = useState([]);
-  const [soundMoneyEngineering, setSoundMoneyEngineering] = useState({ systems: 0, efficiency: 0 });
-  const [inflationDefense, setInflationDefense] = useState({ shields: 0, protection: 0 });
-  const [economicSovereignty, setEconomicSovereignty] = useState({ independence: 0, resistance: 0 });
-  const [wealthPreservation, setWealthPreservation] = useState({ preserved: 0, techniques: [] });
-  const [soundMoneySovereignty, setSoundMoneySovereignty] = useState({ sovereignty: 0, mastery: 0 });
-
-  // Interactive challenge state
-  const [activeChallenge, setActiveChallenge] = useState(null);
-  const [challengeProgress, setChallengeProgress] = useState(0);
-  const [userInput, setUserInput] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [showHint, setShowHint] = useState(false);
-
-  // Crisis scenarios and challenges
-  const crisisScenarios = {
-    monetary_collapse_detective: {
-      title: "Monetary Collapse Detective",
-      crisis: "Global Monetary System Collapse",
-      description: "Currencies are failing worldwide, inflation is destroying savings, and economic chaos is spreading. As a Monetary Collapse Detective, you must investigate the root causes of monetary system failures and discover the principles of sound money.",
-      objective: "Investigate monetary system failures and discover sound money principles",
-      threat: "Complete economic collapse",
-      urgency: "CRITICAL",
-      challenges: [
-        {
-          id: 'fiat_failure_analysis',
-          title: 'Fiat Currency Failure Analysis',
-          description: 'Analyze why fiat currencies inevitably fail and destroy wealth',
-          type: 'failure_analysis',
-          difficulty: 'detective'
-        },
-        {
-          id: 'sound_money_discovery',
-          title: 'Sound Money Discovery',
-          description: 'Discover the fundamental properties that make money sound',
-          type: 'discovery',
-          difficulty: 'detective'
-        }
-      ]
+  // Learning Journey Steps
+  const learningSteps = [
+    {
+      id: 'money_problems',
+      title: 'Why Current Money Systems Fail',
+      description: 'Understand the fundamental problems with fiat currency',
+      icon: AlertTriangle,
+      concepts: ['inflation', 'debasement', 'central_control']
     },
-    sound_money_engineer: {
-      title: "Sound Money Engineer",
-      crisis: "Monetary Engineering Crisis",
-      description: "The world needs a new monetary system that can't be manipulated or debased. As a Sound Money Engineer, you must engineer the perfect monetary system using the principles of scarcity, durability, and verifiability.",
-      objective: "Engineer sound monetary systems with unbreakable properties",
-      threat: "Continued monetary manipulation",
-      urgency: "HIGH",
-      challenges: [
-        {
-          id: 'scarcity_engineering',
-          title: 'Scarcity Engineering',
-          description: 'Engineer absolute scarcity into monetary systems',
-          type: 'scarcity_engineering',
-          difficulty: 'engineer'
-        },
-        {
-          id: 'durability_architecture',
-          title: 'Durability Architecture',
-          description: 'Architect systems that preserve value across time',
-          type: 'durability_architecture',
-          difficulty: 'engineer'
-        }
-      ]
+    {
+      id: 'sound_money_principles',
+      title: 'What Makes Money Sound',
+      description: 'Explore the essential properties of reliable money',
+      icon: Lightbulb,
+      concepts: ['scarcity', 'durability', 'verifiability', 'portability']
     },
-    inflation_defense_architect: {
-      title: "Inflation Defense Architect",
-      crisis: "Inflation Attack Emergency",
-      description: "Inflation is attacking savings and destroying purchasing power worldwide. As an Inflation Defense Architect, you must architect impenetrable defenses against monetary debasement.",
-      objective: "Architect defenses against inflation and monetary debasement",
-      threat: "Wealth destruction through inflation",
-      urgency: "HIGH",
-      challenges: [
-        {
-          id: 'inflation_shield_design',
-          title: 'Inflation Shield Design',
-          description: 'Design shields that protect wealth from inflation attacks',
-          type: 'shield_design',
-          difficulty: 'architect'
-        },
-        {
-          id: 'purchasing_power_preservation',
-          title: 'Purchasing Power Preservation',
-          description: 'Preserve purchasing power against monetary debasement',
-          type: 'power_preservation',
-          difficulty: 'architect'
-        }
-      ]
+    {
+      id: 'bitcoin_solution',
+      title: 'Bitcoin as Sound Money',
+      description: 'See how Bitcoin solves traditional money problems',
+      icon: Coins,
+      concepts: ['fixed_supply', 'decentralization', 'cryptographic_proof']
     },
-    economic_sovereignty_guardian: {
-      title: "Economic Sovereignty Guardian",
-      crisis: "Economic Sovereignty Crisis",
-      description: "Economic freedom is under attack from central planners and monetary manipulators. As an Economic Sovereignty Guardian, you must guard against all forms of economic control and manipulation.",
-      objective: "Guard economic sovereignty against all forms of control",
-      threat: "Loss of economic freedom",
-      urgency: "CRITICAL",
-      challenges: [
-        {
-          id: 'sovereignty_defense',
-          title: 'Economic Sovereignty Defense',
-          description: 'Defend economic sovereignty against central planning',
-          type: 'sovereignty_defense',
-          difficulty: 'guardian'
-        },
-        {
-          id: 'manipulation_resistance',
-          title: 'Manipulation Resistance',
-          description: 'Build resistance against monetary manipulation',
-          type: 'manipulation_resistance',
-          difficulty: 'guardian'
-        }
-      ]
-    },
-    wealth_preservation_master: {
-      title: "Wealth Preservation Master",
-      crisis: "Wealth Destruction Crisis",
-      description: "Traditional wealth preservation methods are failing as currencies collapse. As a Wealth Preservation Master, you must master advanced techniques for preserving wealth across generations.",
-      objective: "Master wealth preservation techniques for generational wealth",
-      threat: "Generational wealth destruction",
-      urgency: "MAXIMUM",
-      challenges: [
-        {
-          id: 'generational_preservation',
-          title: 'Generational Wealth Preservation',
-          description: 'Master techniques for preserving wealth across generations',
-          type: 'generational_preservation',
-          difficulty: 'master'
-        },
-        {
-          id: 'store_of_value_mastery',
-          title: 'Store of Value Mastery',
-          description: 'Master the ultimate store of value properties',
-          type: 'store_of_value',
-          difficulty: 'master'
-        }
-      ]
-    },
-    sound_money_sovereign: {
-      title: "Sound Money Sovereign",
-      crisis: "Sound Money Sovereignty Defense",
-      description: "You've achieved mastery over sound money principles. As a Sound Money Sovereign, you must defend sound money sovereignty against all fiat attacks.",
-      objective: "Defend sound money sovereignty against all fiat systems",
-      threat: "Sound money sovereignty erosion",
-      urgency: "ETERNAL",
-      challenges: [
-        {
-          id: 'sovereignty_mastery',
-          title: 'Sound Money Sovereignty Mastery',
-          description: 'Achieve complete mastery over sound money principles',
-          type: 'sovereignty_mastery',
-          difficulty: 'sovereign'
-        },
-        {
-          id: 'monetary_legacy',
-          title: 'Monetary Legacy Creation',
-          description: 'Create lasting sound money systems for future generations',
-          type: 'legacy_creation',
-          difficulty: 'sovereign'
-        }
-      ]
+    {
+      id: 'personal_impact',
+      title: 'Your Financial Future',
+      description: 'Calculate how sound money affects your wealth',
+      icon: TrendingUp,
+      concepts: ['wealth_preservation', 'purchasing_power', 'financial_sovereignty']
     }
-  };
+  ];
 
-  // Challenge implementations
-  const challengeImplementations = {
-    fiat_failure_analysis: {
-      question: "What is the fundamental flaw in fiat currency systems?",
-      options: [
-        "They're too complicated",
-        "They lack government backing",
-        "They can be printed without limit",
-        "They're not digital"
-      ],
-      correctAnswer: 2,
-      explanation: "Fiat currencies can be printed without limit, leading to inflation and wealth destruction. This unlimited supply destroys the scarcity required for sound money.",
-      reward: 100
+  // Sound Money Principles (now interactive)
+  const soundMoneyPrinciples = [
+    {
+      id: 'scarcity',
+      title: 'Scarcity',
+      icon: '🔒',
+      shortDesc: 'Limited supply preserves value over time',
+      detailedExplanation: 'Scarcity means there\'s a limited amount that can never be increased arbitrarily. This protects against inflation and maintains purchasing power.',
+      examples: {
+        good: 'Bitcoin: Fixed at 21 million coins maximum',
+        bad: 'US Dollar: Federal Reserve can print unlimited amounts'
+      },
+      realWorldImpact: 'A scarce money protects your savings from losing value through inflation',
+      quiz: {
+        question: 'Why is scarcity important for money?',
+        options: [
+          'It makes money more expensive',
+          'It prevents inflation and maintains value',
+          'It makes transactions faster',
+          'It requires government backing'
+        ],
+        correct: 1,
+        explanation: 'Scarcity prevents inflation because no one can create more money arbitrarily, which maintains the value of existing money.'
+      }
     },
-    sound_money_discovery: {
-      question: "Which property is most essential for sound money?",
-      options: [
-        "Government approval",
-        "Physical beauty",
-        "Absolute scarcity",
-        "Popular acceptance"
-      ],
-      correctAnswer: 2,
-      explanation: "Absolute scarcity is the most essential property of sound money. Without scarcity, money loses its ability to store value over time.",
-      reward: 150
+    {
+      id: 'durability',
+      title: 'Durability',
+      icon: '💎',
+      shortDesc: 'Withstands time and physical forces',
+      detailedExplanation: 'Durable money doesn\'t deteriorate, break, or become unusable over time. It must survive for generations.',
+      examples: {
+        good: 'Bitcoin: Digital information that cannot be destroyed',
+        bad: 'Paper money: Deteriorates, burns, gets wet, fades over time'
+      },
+      realWorldImpact: 'Durable money means your wealth storage method won\'t physically deteriorate',
+      quiz: {
+        question: 'What makes Bitcoin more durable than paper money?',
+        options: [
+          'It\'s backed by government',
+          'It can\'t be physically destroyed',
+          'It\'s worth more',
+          'It\'s easier to use'
+        ],
+        correct: 1,
+        explanation: 'Bitcoin exists as digital information that can be backed up and recovered, unlike physical money that can be destroyed.'
+      }
     },
-    scarcity_engineering: {
-      question: "What makes Bitcoin's scarcity superior to gold's scarcity?",
-      options: [
-        "Bitcoin is shinier",
-        "Bitcoin's supply is mathematically fixed",
-        "Bitcoin is government-backed",
-        "Bitcoin is easier to mine"
-      ],
-      correctAnswer: 1,
-      explanation: "Bitcoin's supply is mathematically fixed at 21 million coins, making it absolutely scarce. Gold's supply can increase with new discoveries and mining technology.",
-      reward: 200
+    {
+      id: 'divisibility',
+      title: 'Divisibility',
+      icon: '📏',
+      shortDesc: 'Can be divided into smaller units for precise transactions',
+      detailedExplanation: 'Good money can be divided into smaller amounts for transactions of any size, from tiny purchases to large ones.',
+      examples: {
+        good: 'Bitcoin: Divisible to 8 decimal places (100 million satoshis per bitcoin)',
+        bad: 'Gold bars: Difficult to divide for small purchases'
+      },
+      realWorldImpact: 'Divisible money lets you make transactions of any size with exact amounts',
+      quiz: {
+        question: 'How many satoshis are in one Bitcoin?',
+        options: [
+          '1 million',
+          '10 million', 
+          '100 million',
+          '1 billion'
+        ],
+        correct: 2,
+        explanation: 'One Bitcoin equals 100 million satoshis, allowing for very precise transactions.'
+      }
     },
-    durability_architecture: {
-      question: "What makes digital money more durable than physical money?",
-      options: [
-        "It's newer technology",
-        "It can't be physically destroyed",
-        "It's backed by computers",
-        "It's more popular"
-      ],
-      correctAnswer: 1,
-      explanation: "Digital money can't be physically destroyed like paper or metal money. It exists as information that can be backed up and recovered.",
-      reward: 250
+    {
+      id: 'verifiability',
+      title: 'Verifiability',
+      icon: '✅',
+      shortDesc: 'Authenticity can be independently proven',
+      detailedExplanation: 'Anyone must be able to verify that the money is real and hasn\'t been counterfeited, without trusting a third party.',
+      examples: {
+        good: 'Bitcoin: Cryptographic proof verifiable by anyone',
+        bad: 'Counterfeit cash: Requires expertise and tools to detect fakes'
+      },
+      realWorldImpact: 'Verifiable money means you never have to worry about receiving counterfeit money',
+      quiz: {
+        question: 'How can you verify Bitcoin is authentic?',
+        options: [
+          'Ask a bank to check it',
+          'Use cryptographic verification on the blockchain',
+          'Look for security features',
+          'Trust the government'
+        ],
+        correct: 1,
+        explanation: 'Bitcoin uses cryptographic proofs that anyone can verify independently using the blockchain.'
+      }
     },
-    inflation_shield_design: {
-      question: "How does Bitcoin protect against inflation?",
-      options: [
-        "By increasing supply with demand",
-        "By being backed by gold",
-        "By having a fixed supply schedule",
-        "By government regulation"
-      ],
-      correctAnswer: 2,
-      explanation: "Bitcoin protects against inflation by having a fixed supply schedule that cannot be changed, unlike fiat currencies that can be printed endlessly.",
-      reward: 300
+    {
+      id: 'portability',
+      title: 'Portability',
+      icon: '🚀',
+      shortDesc: 'Easy to transport and transfer anywhere',
+      detailedExplanation: 'Good money should be easy to move from place to place, whether across the room or across the world.',
+      examples: {
+        good: 'Bitcoin: Instant global transfer with just an internet connection',
+        bad: 'Gold: Heavy, requires physical transport and security'
+      },
+      realWorldImpact: 'Portable money gives you financial freedom to move and transact globally',
+      quiz: {
+        question: 'What makes Bitcoin highly portable?',
+        options: [
+          'It\'s lightweight',
+          'It exists as digital information',
+          'It\'s small in size',
+          'It\'s government approved'
+        ],
+        correct: 1,
+        explanation: 'Bitcoin exists as digital information that can be transmitted instantly anywhere with internet access.'
+      }
     },
-    purchasing_power_preservation: {
-      question: "If $100 today buys what $20 bought in 1970, what happened to the dollar's purchasing power?",
-      options: [
-        "It increased 5x",
-        "It decreased by 80%",
-        "It stayed the same",
-        "It became more valuable"
-      ],
-      correctAnswer: 1,
-      explanation: "The dollar lost 80% of its purchasing power. This is the result of monetary inflation destroying the value of fiat currency over time.",
-      reward: 350
-    },
-    sovereignty_defense: {
-      question: "What gives you true economic sovereignty?",
-      options: [
-        "Having a bank account",
-        "Owning government bonds",
-        "Controlling your own money without permission",
-        "Having a credit card"
-      ],
-      correctAnswer: 2,
-      explanation: "True economic sovereignty comes from controlling your own money without needing permission from banks, governments, or other third parties.",
-      reward: 400
-    },
-    manipulation_resistance: {
-      question: "How does sound money resist manipulation?",
-      options: [
-        "Through government protection",
-        "Through mathematical rules that can't be changed",
-        "Through popular vote",
-        "Through banking regulations"
-      ],
-      correctAnswer: 1,
-      explanation: "Sound money resists manipulation through mathematical rules that cannot be changed by any authority, unlike fiat systems that can be manipulated at will.",
-      reward: 450
-    },
-    generational_preservation: {
-      question: "What's the best way to preserve wealth across generations?",
-      options: [
-        "Saving in fiat currency",
-        "Buying government bonds",
-        "Storing value in scarce, durable assets",
-        "Keeping cash under the mattress"
-      ],
-      correctAnswer: 2,
-      explanation: "Preserving wealth across generations requires storing value in scarce, durable assets that maintain purchasing power over long periods.",
-      reward: 500
-    },
-    store_of_value_mastery: {
-      question: "What makes the ultimate store of value?",
-      options: [
-        "Government backing",
-        "Physical beauty",
-        "Scarcity + durability + verifiability",
-        "Popular opinion"
-      ],
-      correctAnswer: 2,
-      explanation: "The ultimate store of value combines scarcity (limited supply), durability (lasts over time), and verifiability (can be proven authentic).",
-      reward: 550
-    },
-    sovereignty_mastery: {
-      question: "What does sound money sovereignty ultimately provide?",
-      options: [
-        "Higher investment returns",
-        "Freedom from monetary manipulation",
-        "Government approval",
-        "Social status"
-      ],
-      correctAnswer: 1,
-      explanation: "Sound money sovereignty provides freedom from monetary manipulation, allowing individuals to preserve and transfer value without interference.",
-      reward: 600
-    },
-    monetary_legacy: {
-      question: "What is the ultimate legacy of sound money?",
-      type: 'open_ended',
-      answer: "freedom",
-      hint: "Think about what happens when money can't be manipulated",
-      validator: (input) => input.toLowerCase().includes('freedom') || input.toLowerCase().includes('liberty') || input.toLowerCase().includes('prosperity'),
-      reward: 700
+    {
+      id: 'fungibility',
+      title: 'Fungibility',
+      icon: '🔄',
+      shortDesc: 'Each unit is identical and interchangeable',
+      detailedExplanation: 'Every unit of the money should be identical to every other unit. One unit should be worth exactly the same as any other unit.',
+      examples: {
+        good: 'Bitcoin: Every bitcoin is mathematically identical',
+        bad: 'Collectible items: Each has different value based on condition/rarity'
+      },
+      realWorldImpact: 'Fungible money ensures fair transactions where all units have equal value',
+      quiz: {
+        question: 'Why is fungibility important for money?',
+        options: [
+          'It makes money more valuable',
+          'It ensures all units have equal value',
+          'It makes transactions faster',
+          'It prevents theft'
+        ],
+        correct: 1,
+        explanation: 'Fungibility ensures fair trade because every unit of money has exactly the same value as every other unit.'
+      }
     }
-  };
+  ];
 
-  // Crisis alert system
-  const generateMonetaryCollapseAlert = useCallback(() => {
-    const alerts = [
-      "🚨 BREAKING: Major currency devaluation detected - monetary system failing",
-      "⚠️ CRITICAL: Hyperinflation spreading - purchasing power collapsing",
-      "🔥 URGENT: Central bank printing money - wealth destruction accelerating",
-      "💥 ALERT: Economic crisis deepening - sound money needed immediately",
-      "⚡ CRISIS: Fiat system instability - monetary sovereignty required",
-      "🛡️ DEFEND: Economic freedom under attack - sound money defense activated"
-    ];
+  // Real-world money problems examples
+  const moneyProblems = [
+    {
+      id: 'inflation',
+      title: 'Inflation Destroys Savings',
+      description: 'Central banks print money, reducing the value of your savings',
+      example: 'A coffee that cost $1 in 1980 costs $3+ today',
+      impact: 'Your purchasing power decreases every year',
+      visual: { before: '$1 = 1 coffee', after: '$3 = 1 coffee' }
+    },
+    {
+      id: 'debasement',
+      title: 'Currency Debasement',
+      description: 'Governments reduce the value of money by creating more',
+      example: 'The US dollar has lost 96% of its value since 1913',
+      impact: 'Long-term wealth storage becomes impossible',
+      visual: { before: '$100 in 1913', after: '$4 buying power today' }
+    },
+    {
+      id: 'control',
+      title: 'Central Control',
+      description: 'Banks and governments can freeze, seize, or block your money',
+      example: 'Canadian truckers had bank accounts frozen in 2022',
+      impact: 'Your money isn\'t truly yours if others control it',
+      visual: { before: 'Your money', after: 'Frozen by authorities' }
+    }
+  ];
+
+  // Calculate inflation impact
+  const calculateInflationImpact = useCallback((amount, years, rate = 3) => {
+    const futureValue = amount * Math.pow(1 + rate/100, years);
+    const realValue = amount / Math.pow(1 + rate/100, years);
+    const purchasing_power_lost = ((amount - realValue) / amount * 100).toFixed(1);
     
-    const newAlert = {
-      id: Date.now(),
-      message: alerts[Math.floor(Math.random() * alerts.length)],
-      timestamp: new Date().toLocaleTimeString(),
-      intensity: Math.floor(Math.random() * 100) + 1
+    return {
+      futureValue: futureValue.toFixed(2),
+      realValue: realValue.toFixed(2),
+      purchasing_power_lost
     };
-    
-    setMonetaryCollapseAlerts(prev => [newAlert, ...prev.slice(0, 4)]);
-    setCrisisIntensity(prev => Math.min(prev + 10, 100));
   }, []);
 
-  // Initialize crisis alerts
-  useEffect(() => {
-    generateMonetaryCollapseAlert();
-    const interval = setInterval(generateMonetaryCollapseAlert, 6000);
-    return () => clearInterval(interval);
-  }, [generateMonetaryCollapseAlert]);
+  // Handle principle selection
+  const handlePrincipleSelect = (principleId) => {
+    setSelectedPrinciple(principleId);
+    setUnlockedPrinciples(prev => new Set([...prev, principleId]));
+  };
 
-  // Handle challenge completion
-  const handleChallengeComplete = (challengeId, success) => {
-    if (success) {
-      const challenge = challengeImplementations[challengeId];
-      setMasteryPoints(prev => prev + challenge.reward);
-      setTotalCrisisDefended(prev => prev + 1);
-      setCrisisIntensity(prev => Math.max(prev - 15, 0));
-      
-      // Update specific mastery systems
-      switch (crisisPhase) {
-        case 'monetary_collapse_detective':
-          setMonetaryCollapseAlerts(prev => prev.map(alert => ({ ...alert, resolved: true })));
-          break;
-        case 'sound_money_engineer':
-          setSoundMoneyEngineering(prev => ({ 
-            ...prev, 
-            systems: prev.systems + 1,
-            efficiency: prev.efficiency + 20
-          }));
-          break;
-        case 'inflation_defense_architect':
-          setInflationDefense(prev => ({
-            ...prev,
-            shields: prev.shields + 1,
-            protection: prev.protection + 25
-          }));
-          break;
-        case 'economic_sovereignty_guardian':
-          setEconomicSovereignty(prev => ({
-            ...prev,
-            independence: prev.independence + 20,
-            resistance: prev.resistance + 15
-          }));
-          break;
-        case 'wealth_preservation_master':
-          setWealthPreservation(prev => ({
-            ...prev,
-            preserved: prev.preserved + 25,
-            techniques: [...prev.techniques, challengeId]
-          }));
-          break;
-        case 'sound_money_sovereign':
-          setSoundMoneySovereignty(prev => ({
-            ...prev,
-            sovereignty: prev.sovereignty + 30,
-            mastery: prev.mastery + 25
-          }));
-          break;
-      }
-      
-      setFeedback(`🎯 SOUND MONEY MASTERY ACHIEVED! +${challenge.reward} points`);
-      
-      // Check for phase advancement
-      if (masteryPoints + challenge.reward >= architectLevel * 500) {
-        advancePhase();
-      }
+  // Handle quiz completion
+  const handleQuizComplete = (principleId, correct) => {
+    setQuizResults(prev => ({
+      ...prev,
+      [principleId]: { correct, timestamp: Date.now() }
+    }));
+    
+    if (correct) {
+      setConceptsUnderstood(prev => new Set([...prev, principleId]));
+      setLearningProgress(prev => Math.min(prev + 16.67, 100)); // 6 principles = 100%
+    }
+  };
+
+  // Handle step completion
+  const handleStepComplete = (stepIndex) => {
+    setCompletedSteps(prev => new Set([...prev, stepIndex]));
+    
+    if (stepIndex === learningSteps.length - 1) {
+      // Module completed
+      completeModule('money');
     } else {
-      setFeedback("❌ Monetary crisis continues - strengthen your sound money understanding");
-      setCrisisIntensity(prev => Math.min(prev + 5, 100));
+      setCurrentStep(stepIndex + 1);
     }
   };
-
-  // Phase advancement system
-  const advancePhase = () => {
-    const phases = Object.keys(crisisScenarios);
-    const currentIndex = phases.indexOf(crisisPhase);
     
-    if (currentIndex < phases.length - 1) {
-      setCrisisPhase(phases[currentIndex + 1]);
-      setArchitectLevel(prev => prev + 1);
-      setFeedback(`🚀 PHASE ADVANCED! You are now a ${crisisScenarios[phases[currentIndex + 1]].title}`);
-    } else {
-      setFeedback("👑 ULTIMATE MASTERY ACHIEVED! You are the Sound Money Sovereign!");
-    }
+    return (
+    <div className="money-module light-theme">
+      {/* Module Header */}
+      <div className="module-header container-light-orange">
+        <h1 className="hero-title">Understanding Money: From Problems to Solutions</h1>
+        <p className="module-subtitle subtitle">
+          Learn why current money systems fail and discover the principles of sound money
+        </p>
+        
+        {/* Progress Indicator */}
+        <div className="learning-progress">
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${(completedSteps.size / learningSteps.length) * 100}%` }}
+            />
+          </div>
+          <span>{completedSteps.size} of {learningSteps.length} steps completed</span>
+          </div>
+        </div>
+
+      {/* Learning Steps Navigation */}
+      <div className="learning-steps">
+        {learningSteps.map((step, index) => {
+          const StepIcon = step.icon;
+          const isCompleted = completedSteps.has(index);
+          const isCurrent = index === currentStep;
+          const isAccessible = index <= currentStep;
+          
+          return (
+            <div 
+              key={step.id}
+              className={`learning-step card-light ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''} ${!isAccessible ? 'locked' : ''}`}
+              onClick={() => isAccessible && setCurrentStep(index)}
+            >
+              <div className="step-icon">
+                {isCompleted ? <CheckCircle size={24} /> : <StepIcon size={24} />}
+                    </div>
+              <div className="step-content">
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+                    </div>
+              <div className="step-status">
+                {isCompleted && <span className="status-completed">✓</span>}
+                {isCurrent && <span className="status-current">→</span>}
+                {!isAccessible && <span className="status-locked">🔒</span>}
+      </div>
+              </div>
+          );
+        })}
+            </div>
+
+      {/* Main Content Area */}
+      <div className="main-content light-bg">
+        {currentStep === 0 && (
+          <MoneyProblemsStep 
+            problems={moneyProblems}
+            onViewExample={setPracticalExamplesViewed}
+            onComplete={() => handleStepComplete(0)}
+            viewedExamples={practicalExamplesViewed}
+          />
+        )}
+        
+        {currentStep === 1 && (
+          <SoundMoneyPrinciplesStep 
+            principles={soundMoneyPrinciples}
+            selectedPrinciple={selectedPrinciple}
+            onPrincipleSelect={handlePrincipleSelect}
+            onQuizComplete={handleQuizComplete}
+            quizResults={quizResults}
+            unlockedPrinciples={unlockedPrinciples}
+            onComplete={() => handleStepComplete(1)}
+          />
+        )}
+        
+        {currentStep === 2 && (
+          <BitcoinSolutionStep 
+            principles={soundMoneyPrinciples}
+            onComplete={() => handleStepComplete(2)}
+          />
+        )}
+        
+        {currentStep === 3 && (
+          <PersonalImpactStep 
+            inflationAmount={inflationAmount}
+            inflationYears={inflationYears}
+            onAmountChange={setInflationAmount}
+            onYearsChange={setInflationYears}
+            calculateInflation={calculateInflationImpact}
+            onComplete={() => handleStepComplete(3)}
+          />
+        )}
+          </div>
+
+      {/* Knowledge Summary */}
+      <div className="knowledge-summary card-light">
+        <h3>Your Learning Progress</h3>
+        <div className="progress-metrics">
+          <div className="metric">
+            <span className="metric-value text-bitcoin">{conceptsUnderstood.size}</span>
+            <span className="metric-label">Concepts Mastered</span>
+                </div>
+          <div className="metric">
+            <span className="metric-value text-bitcoin">{practicalExamplesViewed.size}</span>
+            <span className="metric-label">Examples Explored</span>
+              </div>
+          <div className="metric">
+            <span className="metric-value text-bitcoin">{Object.keys(quizResults).filter(k => quizResults[k].correct).length}</span>
+            <span className="metric-label">Quizzes Passed</span>
+                </div>
+          <div className="metric">
+            <span className="metric-value text-bitcoin">{Math.round(learningProgress)}%</span>
+            <span className="metric-label">Overall Progress</span>
+              </div>
+                </div>
+              </div>
+                </div>
+  );
+};
+
+// Step 1: Money Problems Component
+const MoneyProblemsStep = ({ problems, onViewExample, onComplete, viewedExamples }) => {
+  const [selectedProblem, setSelectedProblem] = useState(null);
+
+  const handleProblemSelect = (problemId) => {
+    setSelectedProblem(problemId);
+    onViewExample(prev => new Set([...prev, problemId]));
   };
 
-  // Challenge submission handler
-  const handleSubmit = () => {
-    if (!activeChallenge) return;
-    
-    const challenge = challengeImplementations[activeChallenge.id];
-    let isCorrect = false;
-    
-    if (challenge.type === 'open_ended') {
-      isCorrect = challenge.validator(userInput);
-    } else if (challenge.options) {
-      isCorrect = parseInt(userInput) === challenge.correctAnswer;
-    }
-    
-    handleChallengeComplete(activeChallenge.id, isCorrect);
-    
-    if (isCorrect) {
-      setActiveChallenge(null);
-      setUserInput('');
-      setShowHint(false);
-    }
-  };
-
-  // Start challenge
-  const startChallenge = (challenge) => {
-    setActiveChallenge(challenge);
-    setUserInput('');
-    setFeedback('');
-    setShowHint(false);
-  };
-
-  const currentScenario = crisisScenarios[crisisPhase];
+  const canComplete = viewedExamples.size >= problems.length;
 
   return (
-    <div className="money-module">
-      {/* Crisis Command Center */}
-      <div className="crisis-command-center">
-        <div className="crisis-header">
-          <h1 className="crisis-title">Monetary System Crisis Architect</h1>
-          <div className="crisis-status">
-            <div className="architect-level">Level {architectLevel} {currentScenario.title}</div>
-            <div className="mastery-points">{masteryPoints} Mastery Points</div>
-            <div className="crisis-meter">
-              <div 
-                className="crisis-intensity" 
-                style={{ width: `${crisisIntensity}%` }}
-              />
-              <span>Crisis: {crisisIntensity}%</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Monetary Collapse Alerts */}
-        <div className="crisis-alerts">
-          <h3>🚨 Monetary Collapse Feed</h3>
-          <div className="alerts-container">
-            {monetaryCollapseAlerts.map(alert => (
-              <div 
-                key={alert.id} 
-                className={`crisis-alert ${alert.resolved ? 'resolved' : ''}`}
-              >
-                <span className="alert-time">{alert.timestamp}</span>
-                <span className="alert-message">{alert.message}</span>
-                <span className="alert-intensity">{alert.intensity}%</span>
+    <div className="money-problems-step light-bg">
+      <div className="step-header card-light">
+        <h2>Why Current Money Systems Fail</h2>
+        <p>Before we explore solutions, let's understand the fundamental problems with today's money systems.</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Current Crisis Scenario */}
-      <div className="crisis-scenario">
-        <div className="scenario-header">
-          <h2>{currentScenario.title}</h2>
-          <div className="crisis-badge">{currentScenario.urgency}</div>
-        </div>
-        
-        <div className="crisis-description">
-          <h3>🔥 {currentScenario.crisis}</h3>
-          <p>{currentScenario.description}</p>
-          <div className="objective">
-            <strong>Mission:</strong> {currentScenario.objective}
-          </div>
-          <div className="threat">
-            <strong>Threat:</strong> {currentScenario.threat}
-          </div>
-        </div>
-
-        {/* Crisis Challenges */}
-        <div className="crisis-challenges">
-          <h3>⚡ Active Challenges</h3>
-          <div className="challenges-grid">
-            {currentScenario.challenges.map(challenge => (
-              <div key={challenge.id} className="challenge-card">
-                <h4>{challenge.title}</h4>
-                <p>{challenge.description}</p>
-                <div className="challenge-meta">
-                  <span className="challenge-type">{challenge.type}</span>
-                  <span className="challenge-difficulty">{challenge.difficulty}</span>
-                </div>
-                <button 
-                  className="challenge-start-btn"
-                  onClick={() => startChallenge(challenge)}
-                >
-                  Begin Challenge
-                </button>
+              
+      <div className="problems-grid">
+        {problems.map(problem => (
+          <div 
+            key={problem.id}
+            className={`problem-card card-light ${selectedProblem === problem.id ? 'selected' : ''} ${viewedExamples.has(problem.id) ? 'viewed' : ''}`}
+            onClick={() => handleProblemSelect(problem.id)}
+          >
+            <div className="problem-header">
+              <h3>{problem.title}</h3>
+              {viewedExamples.has(problem.id) && <CheckCircle className="viewed-icon text-success" size={20} />}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Active Challenge Interface */}
-      {activeChallenge && (
-        <div className="active-challenge">
-          <div className="challenge-header">
-            <h3>🎯 {activeChallenge.title}</h3>
-            <button 
-              className="challenge-close"
-              onClick={() => setActiveChallenge(null)}
-            >
-              ×
-            </button>
-          </div>
-          
-          <div className="challenge-content">
-            <div className="challenge-question">
-              {challengeImplementations[activeChallenge.id].question}
-            </div>
+            <p>{problem.description}</p>
             
-            {challengeImplementations[activeChallenge.id].options ? (
-              <div className="challenge-options">
-                {challengeImplementations[activeChallenge.id].options.map((option, index) => (
-                  <button
-                    key={index}
-                    className={`option-btn ${userInput === index.toString() ? 'selected' : ''}`}
-                    onClick={() => setUserInput(index.toString())}
-                  >
-                    {option}
-                  </button>
+            {selectedProblem === problem.id && (
+              <div className="problem-details">
+                <div className="example-section">
+                  <h4>Real Example:</h4>
+                  <p>{problem.example}</p>
+                      </div>
+                <div className="impact-section">
+                  <h4>Impact on You:</h4>
+                  <p>{problem.impact}</p>
+                      </div>
+                <div className="visual-comparison">
+                  <div className="before">
+                    <span className="label">Before:</span>
+                    <span className="value">{problem.visual.before}</span>
+                    </div>
+                  <ArrowRight size={20} />
+                  <div className="after">
+                    <span className="label">After:</span>
+                    <span className="value">{problem.visual.after}</span>
+                        </div>
+                </div>
+                        </div>
+                      )}
+                  </div>
                 ))}
               </div>
-            ) : (
-              <div className="challenge-input">
-                <input
-                  type="text"
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="Enter your answer..."
-                  onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                />
-                <button onClick={handleSubmit}>Submit</button>
-              </div>
-            )}
-            
-            {showHint && challengeImplementations[activeChallenge.id].hint && (
-              <div className="challenge-hint">
-                💡 {challengeImplementations[activeChallenge.id].hint}
-              </div>
-            )}
-            
-            {challengeImplementations[activeChallenge.id].hint && (
-              <button 
-                className="hint-btn"
-                onClick={() => setShowHint(!showHint)}
-              >
-                {showHint ? 'Hide Hint' : 'Show Hint'}
+
+      {canComplete && (
+        <div className="step-completion">
+          <div className="completion-message">
+            <CheckCircle size={24} />
+            <span>You've explored all the major problems with current money systems!</span>
+            </div>
+          <button className="continue-button" onClick={onComplete}>
+            Learn About Sound Money Solutions →
               </button>
+            </div>
+          )}
+      </div>
+    );
+};
+
+// Step 2: Sound Money Principles Component
+const SoundMoneyPrinciplesStep = ({ principles, selectedPrinciple, onPrincipleSelect, onQuizComplete, quizResults, unlockedPrinciples, onComplete }) => {
+  const [activeQuiz, setActiveQuiz] = useState(null);
+  const [quizAnswer, setQuizAnswer] = useState('');
+
+  const handleQuizSubmit = (principleId, answerIndex) => {
+    const principle = principles.find(p => p.id === principleId);
+    const correct = answerIndex === principle.quiz.correct;
+    onQuizComplete(principleId, correct);
+    setActiveQuiz(null);
+    setQuizAnswer('');
+  };
+
+  const correctQuizzes = Object.keys(quizResults).filter(k => quizResults[k].correct).length;
+  const canComplete = correctQuizzes >= principles.length;
+
+  return (
+    <div className="sound-money-principles-step light-bg">
+      <div className="step-header card-light">
+        <h2>What Makes Money Sound</h2>
+        <p>Explore the essential properties that make money reliable and trustworthy. Click each principle to learn more.</p>
+      </div>
+
+      <div className="principles-grid">
+        {principles.map(principle => {
+          const hasCorrectQuiz = quizResults[principle.id]?.correct;
+          
+          return (
+            <div 
+              key={principle.id}
+              className={`principle-card card-light interactive ${selectedPrinciple === principle.id ? 'selected' : ''} ${hasCorrectQuiz ? 'mastered' : ''}`}
+              onClick={() => onPrincipleSelect(principle.id)}
+            >
+              <div className="principle-header">
+                <div className="principle-icon">{principle.icon}</div>
+                <h3>{principle.title}</h3>
+                {hasCorrectQuiz && <CheckCircle className="mastered-icon text-success" size={20} />}
+      </div>
+              
+              <p>{principle.shortDesc}</p>
+              
+              {selectedPrinciple === principle.id && (
+                <div className="principle-details">
+                  <div className="detailed-explanation">
+                    <h4>Why This Matters:</h4>
+                    <p>{principle.detailedExplanation}</p>
+      </div>
+
+                  <div className="examples-comparison">
+                    <div className="good-example">
+                      <h5>✅ Good Example:</h5>
+                      <p>{principle.examples.good}</p>
+            </div>
+                    <div className="bad-example">
+                      <h5>❌ Poor Example:</h5>
+                      <p>{principle.examples.bad}</p>
+        </div>
+      </div>
+
+                  <div className="real-world-impact">
+                    <h5>Impact on Your Life:</h5>
+                    <p>{principle.realWorldImpact}</p>
+            </div>
+            
+                  {!hasCorrectQuiz && (
+                    <div className="quiz-section">
+                      {activeQuiz !== principle.id ? (
+                  <button
+                          className="quiz-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveQuiz(principle.id);
+                          }}
+                        >
+                          Test Your Understanding
+                        </button>
+                      ) : (
+                        <div className="quiz-content">
+                          <h5>{principle.quiz.question}</h5>
+                          <div className="quiz-options">
+                            {principle.quiz.options.map((option, index) => (
+                              <button
+                                key={index}
+                                className={`quiz-option ${quizAnswer === index.toString() ? 'selected' : ''}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setQuizAnswer(index.toString());
+                                }}
+                              >
+                                {option}
+                  </button>
+              ))}
+                          </div>
+                          <button 
+                            className="submit-quiz btn-primary"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleQuizSubmit(principle.id, parseInt(quizAnswer));
+                            }}
+                            disabled={quizAnswer === ''}
+                          >
+                            Submit Answer
+                          </button>
+            </div>
             )}
             
-            {feedback && (
-              <div className={`challenge-feedback ${feedback.includes('ACHIEVED') ? 'success' : 'error'}`}>
-                {feedback}
+                      {quizResults[principle.id] && (
+                        <div className={`quiz-result ${quizResults[principle.id].correct ? 'correct' : 'incorrect'}`}>
+                          <p>{quizResults[principle.id].correct ? '✅ Correct!' : '❌ Incorrect'}</p>
+                          <p>{principle.quiz.explanation}</p>
+                  </div>
+                )}
+              </div>
+            )}
               </div>
             )}
           </div>
+          );
+        })}
+      </div>
+
+      {canComplete && (
+        <div className="step-completion">
+          <div className="completion-message">
+            <CheckCircle size={24} />
+            <span>Excellent! You understand the principles of sound money!</span>
+          </div>
+          <button className="continue-button" onClick={onComplete}>
+            Discover How Bitcoin Implements These Principles →
+          </button>
         </div>
       )}
+    </div>
+  );
+};
 
-      {/* Sound Money Principles Dashboard */}
-      <div className="sound-money-dashboard">
-        <h3>💰 Sound Money Principles</h3>
-        <div className="principles-grid">
-          <div className="principle-card">
-            <div className="principle-icon">🔒</div>
-            <h4>Scarcity</h4>
-            <p>Limited supply preserves value over time</p>
-            <div className="principle-example">Bitcoin: 21 million max supply</div>
+// Step 3: Bitcoin Solution Component
+const BitcoinSolutionStep = ({ principles, onComplete }) => {
+  const [selectedComparison, setSelectedComparison] = useState(null);
+
+  const bitcoinComparisons = [
+    {
+      principle: 'scarcity',
+      title: 'Fixed Supply vs Infinite Printing',
+      fiat: 'Central banks can print unlimited money',
+      bitcoin: '21 million Bitcoin maximum, coded into the protocol',
+      advantage: 'Your Bitcoin can never be diluted by creating more'
+    },
+    {
+      principle: 'durability',
+      title: 'Digital vs Physical',
+      fiat: 'Paper money deteriorates, gets lost, destroyed',
+      bitcoin: 'Digital information, backed up across the globe',
+      advantage: 'Your wealth storage method never deteriorates'
+    },
+    {
+      principle: 'verifiability',
+      title: 'Cryptographic Proof vs Trust',
+      fiat: 'Must trust banks and governments to verify',
+      bitcoin: 'Anyone can verify using mathematics',
+      advantage: 'You never need to trust anyone to verify your money'
+    }
+  ];
+
+    return (
+    <div className="bitcoin-solution-step">
+      <div className="step-header">
+        <h2>Bitcoin as Sound Money</h2>
+        <p>See how Bitcoin implements each sound money principle better than traditional currency.</p>
+            </div>
+
+      <div className="comparison-grid">
+        {bitcoinComparisons.map((comparison, index) => (
+          <div 
+            key={comparison.principle}
+            className={`comparison-card ${selectedComparison === index ? 'selected' : ''}`}
+            onClick={() => setSelectedComparison(index)}
+          >
+            <h3>{comparison.title}</h3>
+            
+            <div className="comparison-content">
+              <div className="fiat-side">
+                <h4>💸 Traditional Money</h4>
+                <p>{comparison.fiat}</p>
+            </div>
+
+              <div className="bitcoin-side">
+                <h4>₿ Bitcoin</h4>
+                <p>{comparison.bitcoin}</p>
           </div>
+        </div>
+
+            {selectedComparison === index && (
+              <div className="advantage-section">
+                <h4>🎯 Your Advantage:</h4>
+                <p>{comparison.advantage}</p>
+                </div>
+            )}
+                </div>
+        ))}
+                </div>
+
+      <div className="bitcoin-summary">
+        <div className="summary-card">
+          <h3>🏆 The Bitcoin Advantage</h3>
+          <p>
+            Bitcoin is the first money in human history that combines all the properties of sound money 
+            without requiring trust in any institution. It's designed to serve people, not power.
+          </p>
+          <ul>
+            <li>✅ <strong>Scarce:</strong> 21 million maximum, impossible to change</li>
+            <li>✅ <strong>Durable:</strong> Digital information that cannot be destroyed</li>
+            <li>✅ <strong>Verifiable:</strong> Cryptographic proof, no trust required</li>
+            <li>✅ <strong>Portable:</strong> Send anywhere instantly</li>
+            <li>✅ <strong>Divisible:</strong> 100 million satoshis per Bitcoin</li>
+            <li>✅ <strong>Fungible:</strong> Every Bitcoin is identical</li>
+          </ul>
+        </div>
+                </div>
+                
+      <div className="step-completion">
+        <button className="continue-button" onClick={onComplete}>
+          Calculate Your Personal Impact →
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Step 4: Personal Impact Component
+const PersonalImpactStep = ({ inflationAmount, inflationYears, onAmountChange, onYearsChange, calculateInflation, onComplete }) => {
+  const inflationResult = calculateInflation(inflationAmount, inflationYears);
+
+        return (
+    <div className="personal-impact-step">
+      <div className="step-header">
+        <h2>Your Financial Future</h2>
+        <p>Calculate how inflation affects your wealth and understand why sound money matters for your future.</p>
+        </div>
+      
+      <div className="inflation-calculator">
+        <div className="calculator-inputs">
+          <h3>💰 Inflation Impact Calculator</h3>
+          <div className="input-group">
+            <label>Current Savings Amount:</label>
+            <div className="input-with-symbol">
+              <span>$</span>
+              <input 
+                type="number" 
+                value={inflationAmount}
+                onChange={(e) => onAmountChange(Number(e.target.value))}
+                min="0"
+                step="100"
+              />
+        </div>
+      </div>
+      
+          <div className="input-group">
+            <label>Time Period (years):</label>
+            <input 
+              type="range" 
+              min="1" 
+              max="30" 
+              value={inflationYears}
+              onChange={(e) => onYearsChange(Number(e.target.value))}
+            />
+            <span className="range-value">{inflationYears} years</span>
+                </div>
+      </div>
+
+        <div className="calculator-results">
+          <div className="result-card alarming">
+            <h4>📉 With 3% Annual Inflation</h4>
+            <div className="result-value">
+              <span className="before">${inflationAmount.toLocaleString()}</span>
+              <ArrowRight size={20} />
+              <span className="after">${inflationResult.realValue}</span>
+        </div>
+            <p>Your ${inflationAmount.toLocaleString()} today will only buy ${inflationResult.realValue} worth of goods in {inflationYears} years</p>
+            <div className="loss-highlight">
+              <strong>{inflationResult.purchasing_power_lost}% purchasing power lost!</strong>
+      </div>
+    </div>
           
-          <div className="principle-card">
-            <div className="principle-icon">💎</div>
-            <h4>Durability</h4>
-            <p>Withstands time and physical forces</p>
-            <div className="principle-example">Digital: Cannot be destroyed</div>
-          </div>
-          
-          <div className="principle-card">
-            <div className="principle-icon">📏</div>
-            <h4>Divisibility</h4>
-            <p>Can be divided into smaller units</p>
-            <div className="principle-example">Satoshis: 100 million per Bitcoin</div>
-          </div>
-          
-          <div className="principle-card">
-            <div className="principle-icon">✅</div>
-            <h4>Verifiability</h4>
-            <p>Authenticity can be proven</p>
-            <div className="principle-example">Cryptographic proof</div>
-          </div>
-          
-          <div className="principle-card">
-            <div className="principle-icon">🚀</div>
-            <h4>Portability</h4>
-            <p>Easy to transport and transfer</p>
-            <div className="principle-example">Digital: Instant global transfer</div>
-          </div>
-          
-          <div className="principle-card">
-            <div className="principle-icon">🔄</div>
-            <h4>Fungibility</h4>
-            <p>Each unit is interchangeable</p>
-            <div className="principle-example">Every Bitcoin is identical</div>
-          </div>
+          <div className="result-card positive">
+            <h4>📈 With Sound Money (Bitcoin)</h4>
+            <div className="result-value">
+              <span className="before">${inflationAmount.toLocaleString()}</span>
+              <ArrowRight size={20} />
+              <span className="after">${inflationAmount.toLocaleString()}+</span>
+      </div>
+            <p>Sound money maintains or increases purchasing power over time</p>
+            <div className="gain-highlight">
+              <strong>Purchasing power preserved!</strong>
+      </div>
+      </div>
+    </div>
+      </div>
+
+      <div className="next-steps">
+        <div className="next-steps-card">
+          <h3>🚀 Your Journey Continues</h3>
+          <p>
+            Now you understand why money matters and how Bitcoin solves these problems. 
+            Ready to dive deeper into Bitcoin's technology?
+          </p>
+          <div className="learning-path">
+            <div className="next-module">
+              <h4>Next: Bitcoin Basics</h4>
+              <p>Learn how Bitcoin actually works under the hood</p>
+        </div>
+      </div>
         </div>
       </div>
 
-      {/* Mastery Dashboard */}
-      <div className="mastery-dashboard">
-        <h3>🏆 Monetary Mastery Systems</h3>
-        <div className="mastery-grid">
-          <div className="mastery-card">
-            <h4>🔍 Collapse Detection</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(monetaryCollapseAlerts.filter(a => a.resolved).length * 25, 100)}%` }}
-                />
-              </div>
-              <span>{monetaryCollapseAlerts.filter(a => a.resolved).length}/4 Alerts Resolved</span>
-            </div>
-          </div>
-
-          <div className="mastery-card">
-            <h4>🏗️ Sound Money Engineering</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(soundMoneyEngineering.efficiency, 100)}%` }}
-                />
-              </div>
-              <span>{soundMoneyEngineering.systems} Systems Built</span>
-            </div>
-          </div>
-
-          <div className="mastery-card">
-            <h4>🛡️ Inflation Defense</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(inflationDefense.protection, 100)}%` }}
-                />
-              </div>
-              <span>{inflationDefense.shields} Shields Active</span>
-            </div>
-          </div>
-
-          <div className="mastery-card">
-            <h4>👑 Economic Sovereignty</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(economicSovereignty.independence, 100)}%` }}
-                />
-              </div>
-              <span>{economicSovereignty.independence}% Independence</span>
-            </div>
-          </div>
-
-          <div className="mastery-card">
-            <h4>💎 Wealth Preservation</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(wealthPreservation.preserved, 100)}%` }}
-                />
-              </div>
-              <span>{wealthPreservation.preserved}% Preserved</span>
-            </div>
-          </div>
-
-          <div className="mastery-card">
-            <h4>🏅 Sound Money Sovereignty</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(soundMoneySovereignty.sovereignty, 100)}%` }}
-                />
-              </div>
-              <span>{soundMoneySovereignty.sovereignty}% Sovereignty</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Crisis Statistics */}
-      <div className="crisis-statistics">
-        <h3>📊 Monetary Crisis Defense Statistics</h3>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-number">{totalCrisisDefended}</div>
-            <div className="stat-label">Crises Defended</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{masteryPoints}</div>
-            <div className="stat-label">Mastery Points</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{architectLevel}</div>
-            <div className="stat-label">Architect Level</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{100 - crisisIntensity}%</div>
-            <div className="stat-label">Crisis Controlled</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Achievement System */}
-      <div className="achievement-system">
-        <h3>🏅 Sound Money Achievement Unlocks</h3>
-        <div className="achievements-grid">
-          <div className={`achievement ${masteryPoints >= 500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🔍</div>
-            <div className="achievement-name">Monetary Collapse Detective</div>
-            <div className="achievement-desc">Master monetary system failure analysis</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 1000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🏗️</div>
-            <div className="achievement-name">Sound Money Engineer</div>
-            <div className="achievement-desc">Engineer sound monetary systems</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 1500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🛡️</div>
-            <div className="achievement-name">Inflation Defense Architect</div>
-            <div className="achievement-desc">Architect defenses against inflation</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 2000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">👑</div>
-            <div className="achievement-name">Economic Sovereignty Guardian</div>
-            <div className="achievement-desc">Guard economic sovereignty</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 2500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">💎</div>
-            <div className="achievement-name">Wealth Preservation Master</div>
-            <div className="achievement-desc">Master wealth preservation techniques</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 3000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🏅</div>
-            <div className="achievement-name">Sound Money Sovereign</div>
-            <div className="achievement-desc">Achieve sound money sovereignty</div>
-          </div>
-        </div>
+      <div className="step-completion">
+        <button className="continue-button" onClick={onComplete}>
+          Complete Money Module & Continue to Bitcoin Basics →
+        </button>
       </div>
     </div>
   );

@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  AlertTriangle, Shield, Zap, Cpu, Globe, Crown, Trophy,
-  TrendingUp, Lock, Network, Users, Target, Database,
-  CheckCircle, ArrowRight, Activity, BarChart3, Settings,
-  Eye, EyeOff, Clock, Layers, Code, FileText, Award,
-  DollarSign, Coins, Building, Smartphone, Server
+  AlertTriangle, Shield, Zap, Cpu, Globe, Crown
 } from 'lucide-react';
 import { 
-  ContinueButton, 
-  ActionButton, 
-  Button 
+  ContinueButton
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './AdvancedTopicsModule.css';
@@ -28,28 +22,11 @@ const AdvancedTopicsModule = () => {
   
   // Privacy Architecture State
   const [privacyThreat, setPrivacyThreat] = useState(0);
-  const [confidentialSolutions, setConfidentialSolutions] = useState([]);
   const [surveillanceResistance, setSurveillanceResistance] = useState(0);
   
   // Scaling Engineering State
   const [networkCongestion, setNetworkCongestion] = useState(75);
-  const [scalingSolutions, setScalingSolutions] = useState({});
   const [throughputAchieved, setThroughputAchieved] = useState(7);
-  
-  // Protocol Innovation State
-  const [consensusProgress, setConsensusProgress] = useState(0);
-  const [protocolImprovements, setProtocolImprovements] = useState([]);
-  const [innovationScore, setInnovationScore] = useState(0);
-  
-  // Infrastructure Sovereignty State
-  const [infrastructureControl, setInfrastructureControl] = useState(0);
-  const [economicSystems, setEconomicSystems] = useState([]);
-  const [globalImpact, setGlobalImpact] = useState(0);
-  
-  // Bitcoin Apex Mastery State
-  const [masteryLevel, setMasteryLevel] = useState(0);
-  const [apexAchievements, setApexAchievements] = useState([]);
-  const [sovereigntyScore, setSovereigntyScore] = useState(0);
   
   // Phase-specific UI State
   const [crisisPhase, setCrisisPhase] = useState('discovery');
@@ -242,7 +219,7 @@ const AdvancedTopicsModule = () => {
         <div className="progress-header">
           <h3>🏗️ Innovation Architecture Progress</h3>
           <span className="progress-percentage">{Math.round(progressPercentage)}%</span>
-        </div>
+            </div>
         <div className="progress-bar-advanced">
           <div 
             className="progress-fill-advanced"
@@ -260,7 +237,7 @@ const AdvancedTopicsModule = () => {
             </div>
           ))}
         </div>
-      </div>
+        </div>
 
       <div className="architect-content">
         {currentPhase === 0 && renderInnovationCrisisDetective()}
@@ -467,8 +444,8 @@ const AdvancedTopicsModule = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
+          </div>
+          
             <div className="investigation-impact">
               <div className="prime-insight">
                 🔥 Bitcoin represents the greatest financial innovation in centuries, while traditional 
@@ -589,7 +566,7 @@ const AdvancedTopicsModule = () => {
           </div>
           <div className="metric-card">
             <div className="metric-icon">🔒</div>
-            <div className="metric-value">{confidentialSolutions.length}</div>
+            <div className="metric-value">0</div>
             <div className="metric-label">Privacy Solutions</div>
           </div>
         </div>
@@ -722,7 +699,7 @@ const AdvancedTopicsModule = () => {
   function renderScalingSolutionEngineer() {
     const handleScalingMastery = () => {
       const insights = {
-        scalingSolutions: Object.keys(scalingSolutions).length,
+        scalingSolutions: 0,
         throughputAchieved: throughputAchieved,
         networkOptimization: 'Layer 2 Engineering'
       };
@@ -757,7 +734,7 @@ const AdvancedTopicsModule = () => {
             <div className="metric-value">Layer 2</div>
             <div className="metric-label">Solution Type</div>
           </div>
-        </div>
+          </div>
 
         <div className="scaling-challenge">
           <div className="prime-insight">
@@ -828,8 +805,8 @@ const AdvancedTopicsModule = () => {
   function renderProtocolInnovationPioneer() {
     const handleProtocolMastery = () => {
       const insights = {
-        protocolImprovements: protocolImprovements.length,
-        consensusProgress: consensusProgress,
+        protocolImprovements: 0,
+        consensusProgress: 0,
         innovationLeadership: 'Protocol Engineering'
       };
       handlePhaseComplete(3, insights);
@@ -866,7 +843,7 @@ const AdvancedTopicsModule = () => {
             <h4>📜 Covenant Protocols</h4>
             <p>Advanced spending conditions and vault architectures</p>
             <div className="innovation-status">Research 🔬</div>
-          </div>
+      </div>
 
           <div className="innovation-card quantum">
             <h4>🔮 Quantum Resistance</h4>
@@ -886,9 +863,9 @@ const AdvancedTopicsModule = () => {
   function renderInfrastructureSovereign() {
     const handleInfrastructureMastery = () => {
       const insights = {
-        infrastructureControl: infrastructureControl,
-        economicSystems: economicSystems.length,
-        globalImpact: globalImpact
+        infrastructureControl: 0,
+        economicSystems: 0,
+        globalImpact: 0
       };
       handlePhaseComplete(4, insights);
     };
@@ -925,7 +902,7 @@ const AdvancedTopicsModule = () => {
     const handleApexMastery = () => {
       const insights = {
         masteryLevel: 100,
-        apexAchievements: apexAchievements.length,
+        apexAchievements: 0,
         sovereigntyScore: 100,
         technologicalLeadership: 'Bitcoin Innovation Master'
       };
@@ -983,7 +960,7 @@ const AdvancedTopicsModule = () => {
               <div className="power">👑 Financial Freedom Command</div>
             </div>
           </div>
-        </div>
+      </div>
 
         <ContinueButton onClick={() => handleApexMastery()}>
           Complete Bitcoin Apex Mastery! 👑

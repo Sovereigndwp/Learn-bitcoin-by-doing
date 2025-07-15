@@ -19,7 +19,6 @@ const NumbersModule = () => {
 
   // Interactive challenge state
   const [activeChallenge, setActiveChallenge] = useState(null);
-  const [challengeProgress, setChallengeProgress] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [feedback, setFeedback] = useState('');
   const [showHint, setShowHint] = useState(false);
@@ -153,8 +152,8 @@ const NumbersModule = () => {
       objective: "Maintain eternal vigilance over Bitcoin's mathematical precision",
       threat: "Mathematical sovereignty erosion",
       urgency: "ETERNAL",
-      challenges: [
-        {
+        challenges: [
+          {
           id: 'sovereignty_defense',
           title: 'Mathematical Sovereignty Defense',
           description: 'Defend Bitcoin\'s mathematical precision against all threats',
@@ -338,6 +337,10 @@ const NumbersModule = () => {
             achievements: [...prev.achievements, challengeId]
           }));
           break;
+        default:
+          // Handle unknown crisis phases gracefully
+          console.log(`Unknown crisis phase: ${crisisPhase}`);
+          break;
       }
       
       setFeedback(`🎯 MASTERY ACHIEVED! +${challenge.reward} points`);
@@ -409,7 +412,7 @@ const NumbersModule = () => {
               <span>Crisis: {crisisIntensity}%</span>
             </div>
           </div>
-        </div>
+      </div>
 
         {/* Crisis Alerts */}
         <div className="crisis-alerts">
@@ -423,9 +426,9 @@ const NumbersModule = () => {
                 <span className="alert-time">{alert.timestamp}</span>
                 <span className="alert-message">{alert.message}</span>
                 <span className="alert-intensity">{alert.intensity}%</span>
-              </div>
-            ))}
-          </div>
+      </div>
+          ))}
+        </div>
         </div>
       </div>
 
@@ -434,19 +437,19 @@ const NumbersModule = () => {
         <div className="scenario-header">
           <h2>{currentScenario.title}</h2>
           <div className="crisis-badge">{currentScenario.urgency}</div>
-        </div>
+    </div>
         
         <div className="crisis-description">
           <h3>🔥 {currentScenario.crisis}</h3>
           <p>{currentScenario.description}</p>
           <div className="objective">
             <strong>Mission:</strong> {currentScenario.objective}
-          </div>
+              </div>
           <div className="threat">
             <strong>Threat:</strong> {currentScenario.threat}
+            </div>
           </div>
-        </div>
-
+          
         {/* Crisis Challenges */}
         <div className="crisis-challenges">
           <h3>⚡ Active Challenges</h3>
@@ -467,9 +470,9 @@ const NumbersModule = () => {
                 </button>
               </div>
             ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
       {/* Active Challenge Interface */}
       {activeChallenge && (
@@ -503,23 +506,23 @@ const NumbersModule = () => {
             {showHint && (
               <div className="challenge-hint">
                 💡 {challengeImplementations[activeChallenge.id].hint}
-              </div>
+          </div>
             )}
-            
-            <button 
+          
+          <button 
               className="hint-btn"
               onClick={() => setShowHint(!showHint)}
             >
               {showHint ? 'Hide Hint' : 'Show Hint'}
-            </button>
+          </button>
             
             {feedback && (
               <div className={`challenge-feedback ${feedback.includes('ACHIEVED') ? 'success' : 'error'}`}>
                 {feedback}
               </div>
             )}
-          </div>
-        </div>
+              </div>
+              </div>
       )}
 
       {/* Mastery Dashboard */}
@@ -551,7 +554,7 @@ const NumbersModule = () => {
               <span>{binaryFoundation.strength}% Foundation Strength</span>
             </div>
           </div>
-
+          
           <div className="mastery-card">
             <h4>🧪 Hex Alchemy</h4>
             <div className="mastery-progress">
@@ -560,11 +563,11 @@ const NumbersModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(hexadecimalMastery.level * 20, 100)}%` }}
                 />
-              </div>
+                </div>
               <span>Level {hexadecimalMastery.level} Alchemist</span>
             </div>
           </div>
-
+          
           <div className="mastery-card">
             <h4>⚖️ Endianness Control</h4>
             <div className="mastery-progress">
@@ -573,11 +576,11 @@ const NumbersModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(endiannessControl.mastery * 25, 100)}%` }}
                 />
-              </div>
+        </div>
               <span>{endiannessControl.mastery} Mastery Points</span>
+              </div>
             </div>
-          </div>
-
+            
           <div className="mastery-card">
             <h4>🎯 Cryptographic Precision</h4>
             <div className="mastery-progress">
@@ -590,7 +593,7 @@ const NumbersModule = () => {
               <span>{cryptographicPrecision.accuracy}% Accuracy</span>
             </div>
           </div>
-
+          
           <div className="mastery-card">
             <h4>👑 Bitcoin Sovereignty</h4>
             <div className="mastery-progress">
@@ -605,7 +608,7 @@ const NumbersModule = () => {
           </div>
         </div>
       </div>
-
+      
       {/* Crisis Statistics */}
       <div className="crisis-statistics">
         <h3>📊 Crisis Defense Statistics</h3>
@@ -613,19 +616,19 @@ const NumbersModule = () => {
           <div className="stat-card">
             <div className="stat-number">{totalCrisisDefended}</div>
             <div className="stat-label">Crises Defended</div>
-          </div>
+      </div>
           <div className="stat-card">
             <div className="stat-number">{masteryPoints}</div>
             <div className="stat-label">Mastery Points</div>
-          </div>
+    </div>
           <div className="stat-card">
             <div className="stat-number">{architectLevel}</div>
             <div className="stat-label">Architect Level</div>
-          </div>
+      </div>
           <div className="stat-card">
             <div className="stat-number">{100 - crisisIntensity}%</div>
             <div className="stat-label">Crisis Controlled</div>
-          </div>
+            </div>
         </div>
       </div>
 
@@ -637,7 +640,7 @@ const NumbersModule = () => {
             <div className="achievement-icon">🔍</div>
             <div className="achievement-name">Chaos Detective</div>
             <div className="achievement-desc">Master digital chaos detection</div>
-          </div>
+    </div>
           <div className={`achievement ${masteryPoints >= 1000 ? 'unlocked' : 'locked'}`}>
             <div className="achievement-icon">🏗️</div>
             <div className="achievement-name">Foundation Engineer</div>
@@ -647,7 +650,7 @@ const NumbersModule = () => {
             <div className="achievement-icon">🧪</div>
             <div className="achievement-name">Hex Alchemist</div>
             <div className="achievement-desc">Master hexadecimal transformations</div>
-          </div>
+        </div>
           <div className={`achievement ${masteryPoints >= 2000 ? 'unlocked' : 'locked'}`}>
             <div className="achievement-icon">⚖️</div>
             <div className="achievement-name">Endianness Architect</div>
@@ -662,9 +665,9 @@ const NumbersModule = () => {
             <div className="achievement-icon">👑</div>
             <div className="achievement-name">Number Sovereign</div>
             <div className="achievement-desc">Achieve Bitcoin number sovereignty</div>
-          </div>
-        </div>
-      </div>
+                </div>
+              </div>
+            </div>
     </div>
   );
 };

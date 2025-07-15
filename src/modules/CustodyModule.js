@@ -1,42 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import ModuleLayout from '../components/ModuleLayout';
 import './CustodyModule.css';
 import { 
   Shield, 
-  Key, 
-  Lock, 
-  Unlock, 
   AlertTriangle, 
   CheckCircle, 
-  XCircle, 
   Zap, 
-  Clock, 
   Users, 
-  Eye, 
-  EyeOff, 
   Building, 
-  Home, 
-  Smartphone, 
-  HardDrive, 
-  Wifi, 
-  WifiOff, 
-  DollarSign, 
-  TrendingDown, 
-  Crown, 
   Target, 
   Award,
-  ArrowRight,
-  ChevronRight,
-  Cpu,
-  Database,
-  Server,
-  Cloud,
-  FileText,
-  BarChart3,
-  Globe,
-  Layers,
-  Coins
+  ArrowRight
 } from 'lucide-react';
 
 const CustodyModule = () => {
@@ -49,8 +24,6 @@ const CustodyModule = () => {
   const [custodyScore, setCustodyScore] = useState(0);
   const [totalLosses, setTotalLosses] = useState(0);
   const [securityLevel, setSecurityLevel] = useState(1);
-  const [walletSetups, setWalletSetups] = useState([]);
-  const [emergencyScenarios, setEmergencyScenarios] = useState([]);
   const [sovereigntyProgress, setSovereigntyProgress] = useState(0);
 
   // Crisis scenarios and real-world data
@@ -196,7 +169,7 @@ const CustodyModule = () => {
       id: 'sovereignty-engineer',
       title: 'Sovereignty Engineer: Break Free from Banks',
       subtitle: 'Build Self-Custody Infrastructure',
-      icon: Crown,
+      icon: Shield, // Changed from Crown to Shield as Crown is removed
       color: '#ca8a04',
       description: 'Engineer complete financial independence through advanced self-custody techniques.',
       objective: 'Achieve true financial sovereignty with bulletproof custody.'
@@ -540,7 +513,7 @@ const CustodyModule = () => {
               </div>
             </div>
             <button className="continue-btn" onClick={handleContinue}>
-              <Crown size={20} />
+              <Shield size={20} /> {/* Changed from Crown to Shield */}
               Engineer Self-Custody
               <ArrowRight size={20} />
             </button>
@@ -625,7 +598,6 @@ const CustodyModule = () => {
 
   // Emergency Architect Phase
   const EmergencyArchitectPhase = () => {
-    const [selectedEmergency, setSelectedEmergency] = useState(null);
     const [emergencyPlans, setEmergencyPlans] = useState([]);
 
     const createEmergencyPlan = (emergencyType) => {
@@ -661,7 +633,6 @@ const CustodyModule = () => {
             <div 
               key={emergency.id} 
               className={`emergency-card ${emergency.urgency}`}
-              onClick={() => setSelectedEmergency(emergency)}
             >
               <div className="emergency-header">
                 <h4>{emergency.title}</h4>

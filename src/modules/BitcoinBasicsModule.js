@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Zap, AlertTriangle, Shield, Target, Trophy, ChevronRight } from 'lucide-react';
+import { Zap, AlertTriangle, Target, Trophy } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  Button, 
   OptionButton
 } from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
@@ -20,7 +19,6 @@ const BitcoinBasicsModule = () => {
   const [crisisAlerts, setCrisisAlerts] = useState([]);
   const [masteryPoints, setMasteryPoints] = useState(0);
   const [achievements, setAchievements] = useState([]);
-  const [challengeResults, setChallengeResults] = useState({});
 
   // Crisis Alert System
   useEffect(() => {
@@ -41,20 +39,16 @@ const BitcoinBasicsModule = () => {
   }, []);
 
   // Achievement System
-  const unlockAchievement = (id, title, description) => {
+  const unlockAchievement = useCallback((id, title, description) => {
     if (!achievements.find(a => a.id === id)) {
       setAchievements(prev => [...prev, { id, title, description, timestamp: Date.now() }]);
       setMasteryPoints(prev => prev + 100);
     }
-  };
+  }, [achievements]);
 
   // Challenge Validation System
   const validateChallenge = (challengeId, answer, correctAnswer, points = 50) => {
     const isCorrect = answer === correctAnswer;
-    setChallengeResults(prev => ({
-      ...prev,
-      [challengeId]: { correct: isCorrect, answer, timestamp: Date.now() }
-    }));
     
     if (isCorrect) {
       setMasteryPoints(prev => prev + points);
@@ -143,7 +137,7 @@ const BitcoinBasicsModule = () => {
           <div className="crisis-metric">
             <span className="metric-label">Energy-Trust Crisis Level</span>
             <span className="metric-value critical">CRITICAL</span>
-          </div>
+            </div>
           <div className="crisis-metric">
             <span className="metric-label">Fiat Vulnerability</span>
             <span className="metric-value extreme">EXTREME</span>
@@ -152,7 +146,7 @@ const BitcoinBasicsModule = () => {
             <span className="metric-label">Bitcoin Solution</span>
             <span className="metric-value optimal">OPTIMAL</span>
           </div>
-        </div>
+          </div>
 
         <div className="investigation-lab">
           <h3>🧪 Energy-Trust Investigation Lab</h3>
@@ -173,19 +167,19 @@ const BitcoinBasicsModule = () => {
                   <div className="metric">
                     <span className="metric-label">Energy Cost:</span>
                     <span className="metric-value">{scenario.energyCost} units</span>
-                  </div>
+            </div>
                   <div className="metric">
                     <span className="metric-label">Trust Required:</span>
                     <span className="metric-value">{scenario.trustRequired}</span>
-                  </div>
-                </div>
+          </div>
+        </div>
 
                 {selectedScenario?.id === scenario.id && (
                   <div className="scenario-analysis">
                     <div className="analysis-result">
                       <p><strong>Result:</strong> {scenario.result}</p>
                       <p><strong>Crisis Insight:</strong> {scenario.crisis}</p>
-                    </div>
+          </div>
                   </div>
                 )}
               </div>
@@ -208,8 +202,8 @@ const BitcoinBasicsModule = () => {
                   {insight.text}
                 </OptionButton>
               ))}
-            </div>
-
+        </div>
+        
             {crisisInsight && (
               <div className="insight-result">
                 <div className="result-icon">🎯</div>
@@ -218,7 +212,7 @@ const BitcoinBasicsModule = () => {
                   {crisisInsight === 'fiat_weakness' && "CRITICAL INSIGHT! Fiat money costs no energy to create, making it infinitely fakeable."}
                   {crisisInsight === 'trust_vulnerability' && "CRISIS IDENTIFIED! Every trust requirement is a vulnerability that can be exploited."}
                 </p>
-              </div>
+        </div>
             )}
           </div>
         )}
@@ -236,7 +230,6 @@ const BitcoinBasicsModule = () => {
 
   // Phase 2: Bitcoin Foundation Engineer
   const BitcoinFoundationEngineer = ({ onComplete }) => {
-    const [engineeringStep, setEngineeringStep] = useState(0);
     const [foundationPrinciples, setFoundationPrinciples] = useState({});
     const [engineeringComplete, setEngineeringComplete] = useState(false);
 
@@ -297,7 +290,7 @@ const BitcoinBasicsModule = () => {
       }
     };
 
-    return (
+        return (
       <div className="crisis-phase foundation-engineer">
         <div className="crisis-header">
           <div className="crisis-icon">⚡</div>
@@ -309,12 +302,12 @@ const BitcoinBasicsModule = () => {
           <div className="dashboard-metric">
             <span className="metric-label">Foundation Principles</span>
             <span className="metric-value">{Object.keys(foundationPrinciples).length}/{principles.length}</span>
-          </div>
+              </div>
           <div className="dashboard-metric">
             <span className="metric-label">Engineering Progress</span>
             <span className="metric-value">{Math.round((Object.keys(foundationPrinciples).length / principles.length) * 100)}%</span>
-          </div>
-        </div>
+              </div>
+            </div>
 
         <div className="foundation-principles">
           <h3>🏗️ Bitcoin Foundation Principles</h3>
@@ -326,8 +319,8 @@ const BitcoinBasicsModule = () => {
                 <div className="principle-info">
                   <h4>{principle.title}</h4>
                   <p>{principle.description}</p>
+                  </div>
                 </div>
-              </div>
 
               <div className="principle-challenge">
                 <h5>🎯 Engineering Challenge:</h5>
@@ -340,7 +333,7 @@ const BitcoinBasicsModule = () => {
                       selected={foundationPrinciples[principle.id]?.answer === optionIndex}
                       onClick={() => handlePrincipleChallenge(principle.id, optionIndex)}
                       disabled={foundationPrinciples[principle.id]?.completed}
-                    >
+            >
                       {option}
                     </OptionButton>
                   ))}
@@ -350,29 +343,28 @@ const BitcoinBasicsModule = () => {
                   <div className="challenge-result">
                     <div className={`result-icon ${foundationPrinciples[principle.id].correct ? 'correct' : 'incorrect'}`}>
                       {foundationPrinciples[principle.id].correct ? '✅' : '❌'}
-                    </div>
-                    <p>{principle.explanation}</p>
                   </div>
-                )}
+                    <p>{principle.explanation}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            )}
+              </div>
+                 </div>
+               ))}
+             </div>
 
-        <ContinueButton
-          onClick={onComplete}
+          <ContinueButton 
+            onClick={onComplete}
           completed={engineeringComplete}
           nextStep="Fiat Vulnerability Analyst"
-        >
+          >
           Advance to Vulnerability Analysis →
-        </ContinueButton>
-      </div>
-    );
+          </ContinueButton>
+          </div>
+        );
   };
 
   // Phase 3: Fiat Vulnerability Analyst
   const FiatVulnerabilityAnalyst = ({ onComplete }) => {
-    const [analysisStep, setAnalysisStep] = useState(0);
     const [vulnerabilities, setVulnerabilities] = useState({});
     const [analysisComplete, setAnalysisComplete] = useState(false);
 
@@ -425,14 +417,14 @@ const BitcoinBasicsModule = () => {
           <h2>Fiat Vulnerability Analyst</h2>
           <p className="crisis-subtitle">Analyze fiat system's trust dependencies and critical failures</p>
         </div>
-
+            
         <div className="vulnerability-dashboard">
           <div className="dashboard-alert">
             <AlertTriangle className="alert-icon" />
             <span>VULNERABILITY SCAN: {fiatVulnerabilities.length} Critical Flaws Detected</span>
           </div>
-        </div>
-
+                </div>
+                
         <div className="vulnerability-analysis">
           <h3>🚨 Fiat System Vulnerability Report</h3>
           
@@ -441,22 +433,22 @@ const BitcoinBasicsModule = () => {
               <div className="vulnerability-header">
                 <div className={`severity-badge ${vulnerability.severity.toLowerCase()}`}>
                   {vulnerability.severity}
-                </div>
+                          </div>
                 <h4>{vulnerability.title}</h4>
-              </div>
+          </div>
 
               <div className="vulnerability-details">
                 <p><strong>Description:</strong> {vulnerability.description}</p>
                 <p><strong>Real-World Example:</strong> {vulnerability.scenario}</p>
                 <p><strong>Impact:</strong> {vulnerability.impact}</p>
                 <p><strong>Bitcoin Solution:</strong> {vulnerability.bitcoinSolution}</p>
-              </div>
+        </div>
 
               <div className="vulnerability-question">
                 <p>Do you understand how this vulnerability threatens financial sovereignty?</p>
                 <div className="question-options">
                   <ActionButton
-                    variant="primary"
+              variant="primary"
                     onClick={() => handleVulnerabilityAnalysis(vulnerability.id, true)}
                     disabled={vulnerabilities[vulnerability.id]?.understood}
                   >
@@ -469,33 +461,32 @@ const BitcoinBasicsModule = () => {
                   >
                     Need more explanation
                   </ActionButton>
-                </div>
+          </div>
 
                 {vulnerabilities[vulnerability.id]?.understood && (
                   <div className="analysis-confirmed">
                     <div className="confirmation-icon">✅</div>
                     <p>Vulnerability analysis complete. Bitcoin eliminates this attack vector.</p>
-                  </div>
+              </div>
                 )}
               </div>
             </div>
           ))}
-        </div>
+            </div>
 
-        <ContinueButton
-          onClick={onComplete}
+          <ContinueButton 
+            onClick={onComplete}
           completed={analysisComplete}
           nextStep="Digital Scarcity Architect"
-        >
+          >
           Advance to Scarcity Architecture →
-        </ContinueButton>
+          </ContinueButton>
       </div>
     );
   };
 
   // Phase 4: Digital Scarcity Architect
   const DigitalScarcityArchitect = ({ onComplete }) => {
-    const [architectureStep, setArchitectureStep] = useState(0);
     const [scarcityDesign, setScarcityDesign] = useState({});
     const [architectureComplete, setArchitectureComplete] = useState(false);
 
@@ -562,18 +553,18 @@ const BitcoinBasicsModule = () => {
           <div className="crisis-icon">🏗️</div>
           <h2>Digital Scarcity Architect</h2>
           <p className="crisis-subtitle">Design energy-backed digital scarcity systems</p>
-        </div>
+                      </div>
 
         <div className="architecture-dashboard">
           <div className="dashboard-metric">
             <span className="metric-label">Architecture Components</span>
             <span className="metric-value">{Object.keys(scarcityDesign).length}/{scarcityComponents.length}</span>
-          </div>
+                        </div>
           <div className="dashboard-metric">
             <span className="metric-label">Design Progress</span>
             <span className="metric-value">{Math.round((Object.keys(scarcityDesign).length / scarcityComponents.length) * 100)}%</span>
-          </div>
-        </div>
+                        </div>
+                      </div>
 
         <div className="scarcity-architecture">
           <h3>⚡ Digital Scarcity Architecture</h3>
@@ -586,8 +577,8 @@ const BitcoinBasicsModule = () => {
                 <div className="component-info">
                   <h4>{component.title}</h4>
                   <p>{component.description}</p>
-                </div>
-              </div>
+                      </div>
+                      </div>
 
               <div className="component-challenge">
                 <h5>🎯 Architecture Challenge:</h5>
@@ -610,16 +601,16 @@ const BitcoinBasicsModule = () => {
                   <div className="challenge-result">
                     <div className={`result-icon ${scarcityDesign[component.id].correct ? 'correct' : 'incorrect'}`}>
                       {scarcityDesign[component.id].correct ? '✅' : '❌'}
-                    </div>
+                  </div>
                     <p>{component.explanation}</p>
                   </div>
                 )}
-              </div>
-            </div>
-          ))}
+                    </div>
+                  </div>
+                ))}
         </div>
 
-        <ContinueButton
+        <ContinueButton 
           onClick={onComplete}
           completed={architectureComplete}
           nextStep="Double-Spend Defense Master"
@@ -632,7 +623,6 @@ const BitcoinBasicsModule = () => {
 
   // Phase 5: Double-Spend Defense Master
   const DoubleSpendDefenseMaster = ({ onComplete }) => {
-    const [defenseTest, setDefenseTest] = useState(null);
     const [testResults, setTestResults] = useState({});
     const [masteryComplete, setMasteryComplete] = useState(false);
 
@@ -696,12 +686,12 @@ const BitcoinBasicsModule = () => {
           <div className="dashboard-metric">
             <span className="metric-label">Defense Tests</span>
             <span className="metric-value">{Object.keys(testResults).length}/{defenseTests.length}</span>
-          </div>
+                      </div>
           <div className="dashboard-metric">
             <span className="metric-label">Mastery Level</span>
             <span className="metric-value">{Math.round((Object.keys(testResults).length / defenseTests.length) * 100)}%</span>
-          </div>
-        </div>
+              </div>
+            </div>
 
         <div className="defense-testing">
           <h3>⚔️ Double-Spend Defense Testing</h3>
@@ -712,7 +702,7 @@ const BitcoinBasicsModule = () => {
               <div className="test-header">
                 <h4>{test.title}</h4>
                 <p>{test.description}</p>
-              </div>
+            </div>
 
               <div className="test-challenge">
                 <h5>🎯 Defense Challenge:</h5>
@@ -728,29 +718,29 @@ const BitcoinBasicsModule = () => {
                     >
                       {option}
                     </OptionButton>
-                  ))}
-                </div>
+                    ))}
+              </div>
 
                 {testResults[test.id]?.completed && (
                   <div className="test-result">
                     <div className="result-display">
                       <p><strong>Result:</strong> {test.result}</p>
                       <p><strong>Principle:</strong> {test.principle}</p>
-                    </div>
                   </div>
+                </div>
                 )}
               </div>
+                      </div>
+                    ))}
             </div>
-          ))}
-        </div>
 
-        <ContinueButton
-          onClick={onComplete}
+            <ContinueButton 
+              onClick={onComplete}
           completed={masteryComplete}
           nextStep="Bitcoin Foundation Sovereign"
-        >
+            >
           Advance to Foundation Sovereignty →
-        </ContinueButton>
+            </ContinueButton>
       </div>
     );
   };
@@ -782,7 +772,7 @@ const BitcoinBasicsModule = () => {
       }, 1000);
 
       return () => clearInterval(interval);
-    }, []);
+    }, [sovereigntyMilestones.length]);
 
     return (
       <div className="crisis-phase foundation-sovereign">
@@ -796,12 +786,12 @@ const BitcoinBasicsModule = () => {
           <div className="dashboard-metric">
             <span className="metric-label">Mastery Points</span>
             <span className="metric-value">{masteryPoints}</span>
-          </div>
+              </div>
           <div className="dashboard-metric">
             <span className="metric-label">Achievements</span>
             <span className="metric-value">{achievements.length}</span>
+            </div>
           </div>
-        </div>
 
         <div className="sovereignty-journey">
           <h3>🏆 Your Bitcoin Foundation Journey</h3>
@@ -814,12 +804,12 @@ const BitcoinBasicsModule = () => {
               >
                 <div className="milestone-icon">
                   {index <= sovereigntyLevel ? '✅' : '⏳'}
-                </div>
+                      </div>
                 <span className="milestone-text">{milestone}</span>
-              </div>
+                  </div>
             ))}
-          </div>
-        </div>
+                </div>
+            </div>
 
         <div className="achievements-showcase">
           <h3>🎖️ Achievements Unlocked</h3>
@@ -829,7 +819,7 @@ const BitcoinBasicsModule = () => {
                 <div className="achievement-icon">🏆</div>
                 <h4>{achievement.title}</h4>
                 <p>{achievement.description}</p>
-              </div>
+                </div>
             ))}
           </div>
         </div>
@@ -845,16 +835,16 @@ const BitcoinBasicsModule = () => {
               <li>🏗️ How to architect sound digital money</li>
               <li>👑 How to achieve financial sovereignty</li>
             </ul>
+            </div>
           </div>
-        </div>
 
-        <ContinueButton
-          onClick={onComplete}
+          <ContinueButton 
+            onClick={onComplete}
           completed={masteryAchieved}
           nextStep="Complete Module"
-        >
+          >
           Complete Bitcoin Foundation Mastery →
-        </ContinueButton>
+          </ContinueButton>
       </div>
     );
   };
@@ -907,9 +897,9 @@ const BitcoinBasicsModule = () => {
         onComplete={() => handlePhaseComplete(index)}
       />
     );
-  };
+    };
 
-  return (
+    return (
     <div className="module-container bitcoin-basics-crisis">
       {/* Crisis Command Center Header */}
       <div className="crisis-command-center">
@@ -928,8 +918,8 @@ const BitcoinBasicsModule = () => {
               <div className="alert-pulse"></div>
               <span>{alert}</span>
             </div>
-          ))}
-        </div>
+                ))}
+              </div>
 
         {/* Crisis Metrics Dashboard */}
         <div className="crisis-metrics">
@@ -938,24 +928,24 @@ const BitcoinBasicsModule = () => {
             <div className="metric-content">
               <span className="metric-label">Mastery Points</span>
               <span className="metric-value">{masteryPoints}</span>
-            </div>
-          </div>
+                    </div>
+                  </div>
           <div className="metric-card">
             <Trophy className="metric-icon" />
             <div className="metric-content">
               <span className="metric-label">Achievements</span>
               <span className="metric-value">{achievements.length}</span>
+                </div>
             </div>
-          </div>
           <div className="metric-card">
             <Target className="metric-icon" />
             <div className="metric-content">
               <span className="metric-label">Phase Progress</span>
               <span className="metric-value">{completedPhases.size}/{phases.length}</span>
-            </div>
+          </div>
           </div>
         </div>
-      </div>
+            </div>
 
       {/* Phase Navigation */}
       <div className="phase-navigation">
@@ -970,13 +960,13 @@ const BitcoinBasicsModule = () => {
             <div className="phase-info">
               <span className="phase-title">{phase.title}</span>
               <span className="phase-description">{phase.description}</span>
-            </div>
+          </div>
             {completedPhases.has(index) && (
               <div className="phase-completed">✅</div>
-            )}
+        )}
           </div>
         ))}
-      </div>
+          </div>
 
       {/* Current Phase Content */}
       <div className="phase-content">

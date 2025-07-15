@@ -20,7 +20,6 @@ const HashingModule = () => {
 
   // Interactive challenge state
   const [activeChallenge, setActiveChallenge] = useState(null);
-  const [challengeProgress, setChallengeProgress] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [hashResult, setHashResult] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -394,6 +393,10 @@ const HashingModule = () => {
             independence: prev.independence + 20
           }));
           break;
+        default:
+          // No specific update for this phase, just increment mastery points
+          setMasteryPoints(prev => prev + challenge.reward);
+          break;
       }
       
       setFeedback(`🎯 PROOF MASTERY ACHIEVED! +${challenge.reward} points`);
@@ -468,7 +471,7 @@ const HashingModule = () => {
 
   const currentScenario = crisisScenarios[crisisPhase];
 
-  return (
+        return (
     <div className="hashing-module">
       {/* Crisis Command Center */}
       <div className="crisis-command-center">
@@ -501,16 +504,16 @@ const HashingModule = () => {
                 <span className="alert-intensity">{alert.intensity}%</span>
               </div>
             ))}
-          </div>
-        </div>
-      </div>
+              </div>
+              </div>
+            </div>
 
       {/* Current Crisis Scenario */}
       <div className="crisis-scenario">
         <div className="scenario-header">
           <h2>{currentScenario.title}</h2>
           <div className="crisis-badge">{currentScenario.urgency}</div>
-        </div>
+            </div>
         
         <div className="crisis-description">
           <h3>🔥 {currentScenario.crisis}</h3>
@@ -521,7 +524,7 @@ const HashingModule = () => {
           <div className="threat">
             <strong>Threat:</strong> {currentScenario.threat}
           </div>
-        </div>
+      </div>
 
         {/* Crisis Challenges */}
         <div className="crisis-challenges">
@@ -552,13 +555,13 @@ const HashingModule = () => {
         <div className="active-challenge">
           <div className="challenge-header">
             <h3>🎯 {activeChallenge.title}</h3>
-            <button 
+            <button
               className="challenge-close"
               onClick={() => setActiveChallenge(null)}
             >
               ×
             </button>
-          </div>
+        </div>
           
           <div className="challenge-content">
             <div className="challenge-question">
@@ -576,6 +579,13 @@ const HashingModule = () => {
                     {option}
                   </button>
                 ))}
+                <button 
+                  className="submit-btn"
+                  onClick={handleSubmit}
+                  disabled={userInput === ''}
+                >
+                  Submit Answer
+                </button>
               </div>
             ) : (
               <div className="challenge-input">
@@ -665,10 +675,10 @@ const HashingModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(trustCollapseAlerts.filter(a => a.resolved).length * 25, 100)}%` }}
                 />
-              </div>
+    </div>
               <span>{trustCollapseAlerts.filter(a => a.resolved).length}/4 Alerts Resolved</span>
-            </div>
-          </div>
+      </div>
+      </div>
 
           <div className="mastery-card">
             <h4>🔐 Cryptographic Proofs</h4>
@@ -678,10 +688,10 @@ const HashingModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(cryptographicProofs.mastery, 100)}%` }}
                 />
-              </div>
+        </div>
               <span>{cryptographicProofs.verified} Proofs Verified</span>
-            </div>
-          </div>
+    </div>
+    </div>
 
           <div className="mastery-card">
             <h4>⚡ Impossibility Mastery</h4>
@@ -693,9 +703,9 @@ const HashingModule = () => {
                 />
               </div>
               <span>{impossibilityMastery.understanding}% Understanding</span>
-            </div>
-          </div>
-
+      </div>
+      </div>
+      
           <div className="mastery-card">
             <h4>🏗️ Trust Machine Architecture</h4>
             <div className="mastery-progress">
@@ -704,10 +714,10 @@ const HashingModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(trustMachineArchitecture.efficiency, 100)}%` }}
                 />
-              </div>
+        </div>
               <span>{trustMachineArchitecture.systems.length} Systems Built</span>
-            </div>
-          </div>
+        </div>
+      </div>
 
           <div className="mastery-card">
             <h4>⛓️ Chain Integrity</h4>
@@ -720,7 +730,7 @@ const HashingModule = () => {
               </div>
               <span>{chainIntegrity.blocks} Blocks Secured</span>
             </div>
-          </div>
+      </div>
 
           <div className="mastery-card">
             <h4>👑 Digital Sovereignty</h4>
@@ -730,7 +740,7 @@ const HashingModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(digitalSovereignty.sovereignty, 100)}%` }}
                 />
-              </div>
+      </div>
               <span>{digitalSovereignty.sovereignty}% Sovereignty</span>
             </div>
           </div>
@@ -759,7 +769,7 @@ const HashingModule = () => {
           </div>
         </div>
       </div>
-
+      
       {/* Achievement System */}
       <div className="achievement-system">
         <h3>🏅 Cryptographic Achievement Unlocks</h3>

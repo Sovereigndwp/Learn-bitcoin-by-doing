@@ -581,6 +581,34 @@
   color: var(--crisis-red);
 }
 
+.submit-btn {
+  background: var(--bitcoin-orange);
+  border: 2px solid var(--bitcoin-orange-dark);
+  border-radius: var(--border-radius);
+  padding: 15px 30px;
+  color: white;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--bitcoin-orange-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.submit-btn:disabled {
+  background: var(--dark-bg-lighter);
+  border-color: var(--dark-text-dim);
+  color: var(--dark-text-dim);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* ===== MASTERY DASHBOARD ===== */
 .mastery-dashboard {
   background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);

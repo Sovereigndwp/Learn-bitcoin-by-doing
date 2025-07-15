@@ -7,6 +7,7 @@ import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
 import './App.css';
+import './styles/GlobalContrast.css';
 
 // Import all modules
 import MoneyModule from './modules/MoneyModule';

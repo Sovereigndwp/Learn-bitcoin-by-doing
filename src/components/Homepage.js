@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { useNotifications } from './NotificationSystem';
@@ -177,16 +177,16 @@ const Homepage = () => {
     return module.prerequisites.every(prereq => isModuleCompleted(prereq));
   };
 
-  const handleExperienceComplete = () => {
+  const handleExperienceComplete = useCallback(() => {
     completeModule('banking-intro');
     showNotification({
       type: 'achievement',
       title: 'Journey Begins! 🎯',
       message: "You've taken your first step toward financial understanding!"
     });
-  };
+  }, [completeModule, showNotification]);
 
-  const handleResetProgress = () => {
+  const handleResetProgress = useCallback(() => {
     resetProgress();
     setShowResetConfirm(false);
     showNotification({
@@ -194,7 +194,7 @@ const Homepage = () => {
       title: 'Fresh Start 🔄',
       message: "Your learning journey has been reset. Ready to begin again!"
     });
-  };
+  }, [resetProgress, showNotification]);
 
   const getCurrentJourneyStep = () => {
     for (let i = journeySteps.length - 1; i >= 0; i--) {
@@ -213,13 +213,13 @@ const Homepage = () => {
 
 
   return (
-    <div className="homepage">
-      <header className="homepage-header">
+    <div className="homepage light-theme">
+      <header className="homepage-header container-light-orange">
         <div className="logo">
           <span className="bitcoin-symbol">₿</span>
           <div className="logo-content">
-            <h1>Money's Mess & Bitcoin's Fix</h1>
-            <p className="tagline">A logical journey from broken money to digital sovereignty</p>
+            <h1 className="hero-title">Money's Mess & Bitcoin's Fix</h1>
+            <p className="tagline subtitle">A logical journey from broken money to digital sovereignty</p>
           </div>
         </div>
         <div className="nav-buttons">

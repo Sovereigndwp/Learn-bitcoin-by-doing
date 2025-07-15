@@ -1,0 +1,726 @@
+/* ============================================================
+   GLOBAL CONTRAST SYSTEM + PROFESSIONAL TYPOGRAPHY
+   Professional Bitcoin Learning App Design Standards
+   Enhanced with Designer-Grade Text Treatments
+   ============================================================ */
+
+/* ===== APPROVED COLOR PALETTE ===== */
+:root {
+  /* Light Backgrounds (Only These Allowed) */
+  --light-white: #ffffff;
+  --light-gray-100: #f8f9fa;
+  --light-gray-200: #e9ecef;
+  --light-blue-100: #e3f2fd;
+  --light-blue-200: #bbdefb;
+  --light-orange-100: #fff9e6;
+  --light-orange-200: #fff4d6;
+  --light-orange-300: #fff3e6;
+
+  /* Dark Backgrounds */
+  --dark-black: #000000;
+  --dark-gray-800: #1a1a1a;
+  --dark-gray-700: #2d2d2d;
+  --dark-gray-600: #404040;
+  --dark-blue-900: #0f172a;
+  --dark-blue-800: #1e293b;
+  --dark-blue-700: #334155;
+  --dark-brown-900: #2d1810;
+  --dark-brown-800: #1a1010;
+
+  /* Text Colors for Perfect Contrast */
+  --text-on-light-primary: #333333;
+  --text-on-light-secondary: #2c3e50;
+  --text-on-light-tertiary: #000000;
+  --text-on-light-muted: #666666;
+
+  --text-on-dark-primary: #ffffff;
+  --text-on-dark-secondary: #f8fafc;
+  --text-on-dark-tertiary: #e2e8f0;
+  --text-on-dark-muted: #cbd5e1;
+
+  /* Professional Text Shadow Values */
+  --text-shadow-light-subtle: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --text-shadow-light-medium: 0 1px 3px rgba(0, 0, 0, 0.15);
+  --text-shadow-light-strong: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --text-shadow-dark-subtle: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --text-shadow-dark-medium: 0 1px 3px rgba(0, 0, 0, 0.7);
+  --text-shadow-dark-strong: 0 2px 4px rgba(0, 0, 0, 0.8);
+  --text-shadow-glow-light: 0 0 10px rgba(255, 255, 255, 0.8);
+  --text-shadow-glow-bitcoin: 0 0 8px rgba(247, 147, 26, 0.6);
+  --text-shadow-crisp-dark: 1px 1px 0px rgba(0, 0, 0, 0.8);
+  --text-shadow-crisp-light: 1px 1px 0px rgba(255, 255, 255, 0.8);
+
+  /* Accent Colors (For Highlights Only, Not Primary Text) */
+  --bitcoin-orange: #f7931a;
+  --bitcoin-orange-dark: #e8851c;
+  --bitcoin-orange-light: #ffb347;
+  --success-green: #28a745;
+  --success-green-dark: #218838;
+  --error-red: #dc3545;
+  --error-red-dark: #c82333;
+  --info-blue: #007bff;
+  --info-blue-dark: #0056b3;
+  --warning-yellow: #ffc107;
+  --warning-yellow-dark: #e0a800;
+
+  /* Button & Interactive Colors */
+  --btn-primary-bg: var(--bitcoin-orange);
+  --btn-primary-bg-hover: var(--bitcoin-orange-dark);
+  --btn-primary-text: var(--text-on-dark-primary);
+  --btn-secondary-bg: var(--dark-gray-600);
+  --btn-secondary-bg-hover: var(--dark-gray-700);
+  --btn-secondary-text: var(--text-on-dark-primary);
+  --btn-success-bg: var(--success-green);
+  --btn-success-bg-hover: var(--success-green-dark);
+  --btn-success-text: var(--text-on-dark-primary);
+}
+
+/* ===== PROFESSIONAL TYPOGRAPHY TREATMENTS ===== */
+
+/* Enhanced Headings with Designer-Grade Shadows */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.2 !important;
+}
+
+/* Light Background Headings - Crisp Dark Shadows */
+.light-theme h1, .light-bg h1, .card-light h1, .container-light h1,
+.container-light-gray h1, .container-light-blue h1, .container-light-orange h1 {
+  color: var(--text-on-light-secondary) !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+  font-weight: 700 !important;
+}
+
+.light-theme h2, .light-bg h2, .card-light h2, .container-light h2,
+.container-light-gray h2, .container-light-blue h2, .container-light-orange h2 {
+  color: var(--text-on-light-secondary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  font-weight: 650 !important;
+}
+
+.light-theme h3, .light-bg h3, .card-light h3, .container-light h3,
+.container-light-gray h3, .container-light-blue h3, .container-light-orange h3 {
+  color: var(--text-on-light-primary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  font-weight: 600 !important;
+}
+
+.light-theme h4, .light-theme h5, .light-theme h6,
+.light-bg h4, .light-bg h5, .light-bg h6,
+.card-light h4, .card-light h5, .card-light h6 {
+  color: var(--text-on-light-primary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+/* Dark Background Headings - Glowing Light Shadows */
+.dark-theme h1, .dark-bg h1, .card-dark h1, .container-dark h1,
+.container-dark-blue h1 {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  font-weight: 700 !important;
+}
+
+.dark-theme h2, .dark-bg h2, .card-dark h2, .container-dark h2,
+.container-dark-blue h2 {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+  font-weight: 650 !important;
+}
+
+.dark-theme h3, .dark-bg h3, .card-dark h3, .container-dark h3,
+.container-dark-blue h3 {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+  font-weight: 600 !important;
+}
+
+.dark-theme h4, .dark-theme h5, .dark-theme h6,
+.dark-bg h4, .dark-bg h5, .dark-bg h6,
+.card-dark h4, .card-dark h5, .card-dark h6 {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+}
+
+/* Enhanced Body Text with Subtle Shadows */
+.light-theme p, .light-bg p, .card-light p,
+.light-theme span, .light-bg span, .card-light span,
+.light-theme div, .light-bg div, .card-light div {
+  color: var(--text-on-light-primary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  line-height: 1.6 !important;
+}
+
+.dark-theme p, .dark-bg p, .card-dark p,
+.dark-theme span, .dark-bg span, .card-dark span,
+.dark-theme div, .dark-bg div, .card-dark div {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+  line-height: 1.6 !important;
+}
+
+/* Muted Text with Enhanced Legibility */
+.light-theme .muted, .light-bg .muted, .card-light .muted {
+  color: var(--text-on-light-muted) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  font-weight: 500 !important;
+}
+
+.dark-theme .muted, .dark-bg .muted, .card-dark .muted {
+  color: var(--text-on-dark-muted) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+  font-weight: 500 !important;
+}
+
+/* ===== SPECIAL BITCOIN ORANGE TEXT TREATMENTS ===== */
+
+/* Bitcoin Orange on Light Backgrounds - Enhanced with Strong Shadow */
+.light-theme .text-bitcoin,
+.light-bg .text-bitcoin,
+.card-light .text-bitcoin {
+  color: var(--bitcoin-orange) !important;
+  font-weight: 700 !important;
+  text-shadow: var(--text-shadow-light-strong) !important;
+  /* Add subtle outline for ultimate readability */
+  -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.1);
+  text-stroke: 0.5px rgba(0, 0, 0, 0.1);
+}
+
+/* Bitcoin Orange on Dark Backgrounds - Glowing Effect */
+.dark-theme .text-bitcoin,
+.dark-bg .text-bitcoin,
+.card-dark .text-bitcoin {
+  color: var(--bitcoin-orange-light) !important;
+  font-weight: 700 !important;
+  text-shadow: var(--text-shadow-glow-bitcoin) !important;
+}
+
+/* ===== GLOBAL CONTRAST ENFORCEMENT ===== */
+
+/* Light Theme Containers */
+.light-theme,
+.light-bg,
+.card-light,
+.modal-light,
+.popup-light,
+[data-theme="light"] {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+/* Dark Theme Containers */
+.dark-theme,
+.dark-bg,
+.card-dark,
+.modal-dark,
+.popup-dark,
+[data-theme="dark"] {
+  background: var(--dark-gray-800) !important;
+  color: var(--text-on-dark-primary) !important;
+}
+
+/* ===== CONTAINER BACKGROUND RESTRICTIONS ===== */
+
+/* Force Light Containers to Use Only Approved Light Colors */
+.container-light,
+.section-light,
+.card-light,
+.module-container.light,
+.learning-step.light,
+.principle-card.light,
+.problem-card.light {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+.container-light-gray,
+.section-light-gray,
+.card-light-gray {
+  background: var(--light-gray-100) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+.container-light-blue,
+.section-light-blue,
+.card-light-blue {
+  background: var(--light-blue-100) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+.container-light-orange,
+.section-light-orange,
+.card-light-orange {
+  background: var(--light-orange-100) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+/* Force Dark Containers to Use Only Approved Dark Colors */
+.container-dark,
+.section-dark,
+.card-dark,
+.module-container.dark,
+.learning-step.dark,
+.principle-card.dark,
+.problem-card.dark {
+  background: var(--dark-gray-800) !important;
+  color: var(--text-on-dark-primary) !important;
+}
+
+.container-dark-blue,
+.section-dark-blue,
+.card-dark-blue {
+  background: var(--dark-blue-800) !important;
+  color: var(--text-on-dark-primary) !important;
+}
+
+/* ===== ENHANCED BUTTON SYSTEM ===== */
+
+/* Primary Buttons - High Priority Actions with Professional Shadows */
+.btn-primary,
+.continue-button,
+.submit-button,
+.complete-button,
+.primary-action {
+  background: var(--btn-primary-bg) !important;
+  color: var(--btn-primary-text) !important;
+  border: 2px solid var(--btn-primary-bg) !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-primary:hover,
+.continue-button:hover,
+.submit-button:hover,
+.complete-button:hover,
+.primary-action:hover {
+  background: var(--btn-primary-bg-hover) !important;
+  border-color: var(--btn-primary-bg-hover) !important;
+  transform: translateY(-2px) !important;
+  text-shadow: var(--text-shadow-dark-strong) !important;
+  box-shadow: 0 8px 24px rgba(247, 147, 26, 0.4), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Secondary Buttons - Medium Priority Actions */
+.btn-secondary,
+.secondary-button,
+.back-button,
+.cancel-button {
+  background: var(--btn-secondary-bg) !important;
+  color: var(--btn-secondary-text) !important;
+  border: 2px solid var(--btn-secondary-bg) !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn-secondary:hover,
+.secondary-button:hover,
+.back-button:hover,
+.cancel-button:hover {
+  background: var(--btn-secondary-bg-hover) !important;
+  border-color: var(--btn-secondary-bg-hover) !important;
+  transform: translateY(-1px) !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Success Buttons with Enhanced Shadows */
+.btn-success,
+.success-button,
+.correct-button {
+  background: var(--btn-success-bg) !important;
+  color: var(--btn-success-text) !important;
+  border: 2px solid var(--btn-success-bg) !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-success:hover,
+.success-button:hover,
+.correct-button:hover {
+  background: var(--btn-success-bg-hover) !important;
+  border-color: var(--btn-success-bg-hover) !important;
+  text-shadow: var(--text-shadow-dark-strong) !important;
+  box-shadow: 0 8px 24px rgba(40, 167, 69, 0.4), 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ===== ENHANCED INTERACTIVE ELEMENT RULES ===== */
+
+/* Quiz Options - Enhanced with Professional Shadows */
+.quiz-option,
+.question-option,
+.answer-option {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+  border: 2px solid var(--light-gray-200) !important;
+  padding: 1rem !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  font-weight: 500 !important;
+}
+
+.quiz-option:hover,
+.question-option:hover,
+.answer-option:hover {
+  border-color: var(--bitcoin-orange) !important;
+  background: var(--light-orange-100) !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+  box-shadow: 0 4px 8px rgba(247, 147, 26, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.quiz-option.selected,
+.question-option.selected,
+.answer-option.selected {
+  background: var(--light-orange-200) !important;
+  border-color: var(--bitcoin-orange) !important;
+  color: var(--text-on-light-primary) !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.25), 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  font-weight: 600 !important;
+}
+
+.quiz-option.correct,
+.question-option.correct,
+.answer-option.correct {
+  background: var(--success-green) !important;
+  border-color: var(--success-green) !important;
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3), 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  font-weight: 600 !important;
+}
+
+.quiz-option.incorrect,
+.question-option.incorrect,
+.answer-option.incorrect {
+  background: var(--error-red) !important;
+  border-color: var(--error-red) !important;
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-medium) !important;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3), 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  font-weight: 600 !important;
+}
+
+/* ===== ENHANCED CARD SYSTEM ===== */
+
+/* Light Cards with Professional Depth */
+.card,
+.principle-card,
+.problem-card,
+.learning-card,
+.section-card {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+  border: 1px solid var(--light-gray-200) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:hover,
+.principle-card:hover,
+.problem-card:hover,
+.learning-card:hover,
+.section-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-2px) !important;
+  border-color: var(--bitcoin-orange) !important;
+}
+
+.card h1, .card h2, .card h3, .card h4,
+.principle-card h1, .principle-card h2, .principle-card h3, .principle-card h4,
+.problem-card h1, .problem-card h2, .problem-card h3, .problem-card h4 {
+  color: var(--text-on-light-secondary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  font-weight: 600 !important;
+}
+
+.card p, .card span,
+.principle-card p, .principle-card span,
+.problem-card p, .problem-card span {
+  color: var(--text-on-light-primary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+/* Dark Cards with Depth */
+.card-dark,
+.dark-card {
+  background: var(--dark-gray-700) !important;
+  color: var(--text-on-dark-primary) !important;
+  border: 1px solid var(--dark-gray-600) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-dark:hover,
+.dark-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  border-color: var(--bitcoin-orange-light) !important;
+}
+
+.card-dark h1, .card-dark h2, .card-dark h3, .card-dark h4,
+.dark-card h1, .dark-card h2, .dark-card h3, .dark-card h4 {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+}
+
+.card-dark p, .card-dark span,
+.dark-card p, .dark-card span {
+  color: var(--text-on-dark-primary) !important;
+  text-shadow: var(--text-shadow-dark-subtle) !important;
+}
+
+/* ===== ENHANCED MODAL & POPUP SYSTEM ===== */
+
+.modal,
+.popup,
+.dialog,
+.overlay-content {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+  border: 2px solid var(--light-gray-200) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal h1, .modal h2, .modal h3,
+.popup h1, .popup h2, .popup h3,
+.dialog h1, .dialog h2, .dialog h3 {
+  color: var(--text-on-light-secondary) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+.modal-overlay,
+.popup-overlay,
+.dialog-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* ===== ENHANCED FORM ELEMENTS ===== */
+
+input,
+textarea,
+select {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+  border: 2px solid var(--light-gray-200) !important;
+  border-radius: 6px !important;
+  padding: 0.75rem !important;
+  font-size: 1rem !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--bitcoin-orange) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-on-light-muted) !important;
+  text-shadow: none !important;
+}
+
+/* ===== ACCENT COLOR USAGE WITH ENHANCED TREATMENTS ===== */
+
+.text-bitcoin {
+  color: var(--bitcoin-orange) !important;
+  font-weight: 700 !important;
+}
+
+.text-success {
+  color: var(--success-green) !important;
+  font-weight: 600 !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+.text-error {
+  color: var(--error-red) !important;
+  font-weight: 600 !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+.text-warning {
+  color: var(--warning-yellow-dark) !important;
+  font-weight: 600 !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+}
+
+.text-info {
+  color: var(--info-blue) !important;
+  font-weight: 600 !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+/* ===== SPECIAL DESIGNER TREATMENTS ===== */
+
+/* Hero Text with Dramatic Shadows */
+.hero-title,
+.module-title,
+.main-heading {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  text-shadow: var(--text-shadow-light-strong) !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Subtitle Enhancement */
+.subtitle,
+.module-subtitle,
+.section-subtitle {
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  color: var(--text-on-light-muted) !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+  line-height: 1.5 !important;
+}
+
+/* Call-to-Action Text */
+.cta-text,
+.action-text,
+.highlight-text {
+  font-weight: 600 !important;
+  color: var(--bitcoin-orange) !important;
+  text-shadow: var(--text-shadow-light-medium) !important;
+}
+
+/* Status Indicators with Enhanced Visibility */
+.status-completed,
+.status-success {
+  color: var(--success-green) !important;
+  font-weight: 700 !important;
+  text-shadow: var(--text-shadow-glow-light) !important;
+}
+
+.status-current,
+.status-active {
+  color: var(--bitcoin-orange) !important;
+  font-weight: 700 !important;
+  text-shadow: var(--text-shadow-glow-bitcoin) !important;
+}
+
+.status-locked,
+.status-disabled {
+  color: var(--text-on-light-muted) !important;
+  font-weight: 500 !important;
+  text-shadow: var(--text-shadow-light-subtle) !important;
+}
+
+/* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+
+/* Screen Reader Only Text */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Enhanced Focus Indicators */
+*:focus-visible {
+  outline: 3px solid var(--bitcoin-orange) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 5px rgba(247, 147, 26, 0.2) !important;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-on-light-primary: #000000;
+    --text-on-dark-primary: #ffffff;
+    --light-gray-200: #cccccc;
+    --dark-gray-600: #333333;
+    --text-shadow-light-subtle: 1px 1px 0px rgba(0, 0, 0, 1);
+    --text-shadow-dark-subtle: 1px 1px 0px rgba(255, 255, 255, 1);
+  }
+}
+
+/* ===== UTILITY CLASSES FOR EXPLICIT CONTRAST ===== */
+
+.force-light-bg {
+  background: var(--light-white) !important;
+  color: var(--text-on-light-primary) !important;
+}
+
+.force-dark-bg {
+  background: var(--dark-gray-800) !important;
+  color: var(--text-on-dark-primary) !important;
+}
+
+.force-high-contrast {
+  background: var(--light-white) !important;
+  color: var(--dark-black) !important;
+  border: 2px solid var(--dark-black) !important;
+  text-shadow: var(--text-shadow-crisp-dark) !important;
+}
+
+.force-reverse-contrast {
+  background: var(--dark-black) !important;
+  color: var(--light-white) !important;
+  border: 2px solid var(--light-white) !important;
+  text-shadow: var(--text-shadow-crisp-light) !important;
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY SCALING ===== */
+
+@media (max-width: 768px) {
+  .hero-title,
+  .module-title,
+  .main-heading {
+    font-size: 2rem !important;
+  }
+  
+  .subtitle,
+  .module-subtitle,
+  .section-subtitle {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title,
+  .module-title,
+  .main-heading {
+    font-size: 1.75rem !important;
+  }
+  
+  .subtitle,
+  .module-subtitle,
+  .section-subtitle {
+    font-size: 1rem !important;
+  }
+} 
