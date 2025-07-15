@@ -2857,3 +2857,1074 @@
     font-size: 1rem;
   }
 } 
+
+/* ===== BITCOIN ORANGE THEME VARIABLES ===== */
+:root {
+  --bitcoin-orange: #f7931a;
+  --bitcoin-orange-dark: #e8851c;
+  --bitcoin-orange-light: #ffb347;
+  --bitcoin-orange-glow: rgba(247, 147, 26, 0.3);
+  --bitcoin-orange-shadow: rgba(247, 147, 26, 0.15);
+  
+  --crisis-red: #ff4444;
+  --crisis-red-dark: #cc3333;
+  --crisis-red-glow: rgba(255, 68, 68, 0.3);
+  
+  --success-green: #00ff88;
+  --success-green-dark: #00cc6a;
+  --success-green-glow: rgba(0, 255, 136, 0.3);
+  
+  --warning-yellow: #ffdd00;
+  --warning-yellow-dark: #e6c700;
+  --warning-yellow-glow: rgba(255, 221, 0, 0.3);
+  
+  --gold-yellow: #ffd700;
+  --gold-yellow-dark: #e6c200;
+  --gold-yellow-glow: rgba(255, 215, 0, 0.3);
+  
+  --dark-bg: #1a1a1a;
+  --dark-bg-light: #2d2d2d;
+  --dark-bg-lighter: #404040;
+  --dark-text: #ffffff;
+  --dark-text-muted: #cccccc;
+  --dark-text-dim: #999999;
+  
+  --border-radius: 12px;
+  --border-radius-large: 20px;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
+  --shadow-bitcoin: 0 4px 20px var(--bitcoin-orange-shadow);
+  --shadow-crisis: 0 4px 20px var(--crisis-red-glow);
+  --shadow-gold: 0 4px 20px var(--gold-yellow-glow);
+}
+
+/* ===== MONETARY CRISIS ANIMATIONS ===== */
+@keyframes monetaryCollapseAlert {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--crisis-red-glow); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 10px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 var(--crisis-red-glow); }
+}
+
+@keyframes soundMoneyPulse {
+  0% { box-shadow: 0 0 0 0 var(--bitcoin-orange-glow); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 var(--bitcoin-orange-glow); }
+}
+
+@keyframes wealthFlow {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes inflationDestruction {
+  0% { background: linear-gradient(90deg, var(--crisis-red) 0%, var(--crisis-red-dark) 100%); }
+  50% { background: linear-gradient(90deg, var(--crisis-red-dark) 0%, var(--crisis-red) 100%); }
+  100% { background: linear-gradient(90deg, var(--crisis-red) 0%, var(--crisis-red-dark) 100%); }
+}
+
+@keyframes monetaryGlow {
+  0% { box-shadow: 0 0 5px var(--bitcoin-orange-glow); }
+  50% { box-shadow: 0 0 20px var(--bitcoin-orange-glow), 0 0 30px var(--bitcoin-orange-glow); }
+  100% { box-shadow: 0 0 5px var(--bitcoin-orange-glow); }
+}
+
+@keyframes sovereigntyRise {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes goldShimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+@keyframes scarcityPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wealthPreservation {
+  0% { border-color: var(--bitcoin-orange); }
+  50% { border-color: var(--gold-yellow); }
+  100% { border-color: var(--bitcoin-orange); }
+}
+
+/* ===== MAIN CONTAINER ===== */
+.money-module {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  color: var(--dark-text);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.money-module::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, var(--bitcoin-orange-glow) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--gold-yellow-glow) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.money-module > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== CRISIS COMMAND CENTER ===== */
+.crisis-command-center {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+  animation: soundMoneyPulse 3s infinite;
+}
+
+.crisis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.crisis-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px var(--bitcoin-orange-glow);
+  margin: 0;
+}
+
+.crisis-status {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.architect-level {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-medium);
+  animation: monetaryGlow 2s infinite;
+}
+
+.mastery-points {
+  background: linear-gradient(45deg, var(--success-green), var(--success-green-dark));
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-medium);
+}
+
+.crisis-meter {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  background: var(--dark-bg);
+  border: 2px solid var(--crisis-red);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crisis-intensity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--crisis-red), var(--crisis-red-dark));
+  animation: inflationDestruction 2s infinite;
+  transition: width var(--transition-smooth);
+}
+
+.crisis-meter span {
+  position: relative;
+  z-index: 2;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== CRISIS ALERTS ===== */
+.crisis-alerts {
+  margin-top: 25px;
+}
+
+.crisis-alerts h3 {
+  color: var(--crisis-red);
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.crisis-alert {
+  background: linear-gradient(135deg, var(--crisis-red-glow), transparent);
+  border: 1px solid var(--crisis-red);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: monetaryCollapseAlert 2s infinite;
+  transition: all var(--transition-smooth);
+}
+
+.crisis-alert.resolved {
+  background: linear-gradient(135deg, var(--success-green-glow), transparent);
+  border-color: var(--success-green);
+  animation: none;
+  opacity: 0.7;
+}
+
+.alert-time {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  min-width: 80px;
+}
+
+.alert-message {
+  flex: 1;
+  margin: 0 15px;
+  font-weight: 500;
+}
+
+.alert-intensity {
+  color: var(--crisis-red);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ===== CRISIS SCENARIO ===== */
+.crisis-scenario {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.scenario-header h2 {
+  font-size: 2rem;
+  color: var(--bitcoin-orange);
+  margin: 0;
+  font-weight: 700;
+}
+
+.crisis-badge {
+  background: linear-gradient(45deg, var(--crisis-red), var(--crisis-red-dark));
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 0.9rem;
+  animation: monetaryCollapseAlert 2s infinite;
+}
+
+.crisis-description {
+  margin-bottom: 30px;
+}
+
+.crisis-description h3 {
+  color: var(--crisis-red);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.crisis-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--dark-text-muted);
+  margin-bottom: 20px;
+}
+
+.objective, .threat {
+  background: var(--dark-bg);
+  border: 1px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.objective {
+  border-color: var(--success-green);
+}
+
+.threat {
+  border-color: var(--crisis-red);
+}
+
+/* ===== CRISIS CHALLENGES ===== */
+.crisis-challenges h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.challenge-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.challenge-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--bitcoin-orange-glow), transparent);
+  transition: left var(--transition-slow);
+}
+
+.challenge-card:hover::before {
+  left: 100%;
+}
+
+.challenge-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+  border-color: var(--bitcoin-orange-light);
+}
+
+.challenge-card h4 {
+  color: var(--bitcoin-orange);
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.challenge-card p {
+  color: var(--dark-text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.challenge-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.challenge-type, .challenge-difficulty {
+  background: var(--dark-bg-lighter);
+  color: var(--dark-text);
+  padding: 6px 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.challenge-type {
+  border: 1px solid var(--gold-yellow);
+}
+
+.challenge-difficulty {
+  border: 1px solid var(--warning-yellow);
+}
+
+.challenge-start-btn {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  width: 100%;
+  font-size: 1rem;
+}
+
+.challenge-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-bitcoin);
+  background: linear-gradient(45deg, var(--bitcoin-orange-light), var(--bitcoin-orange));
+}
+
+/* ===== ACTIVE CHALLENGE ===== */
+.active-challenge {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 3px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 40px;
+  box-shadow: var(--shadow-heavy);
+  z-index: 1000;
+  min-width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: sovereigntyRise var(--transition-slow);
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.challenge-header h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.challenge-close {
+  background: var(--crisis-red);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.challenge-close:hover {
+  background: var(--crisis-red-dark);
+  transform: scale(1.1);
+}
+
+.challenge-question {
+  background: var(--dark-bg);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--dark-text);
+}
+
+.challenge-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.option-btn {
+  background: var(--dark-bg);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  color: var(--dark-text);
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  text-align: left;
+}
+
+.option-btn:hover {
+  background: var(--dark-bg-light);
+  border-color: var(--bitcoin-orange-light);
+}
+
+.option-btn.selected {
+  background: var(--bitcoin-orange-glow);
+  border-color: var(--bitcoin-orange-light);
+  animation: wealthPreservation 1s infinite;
+}
+
+.challenge-input {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.challenge-input input {
+  flex: 1;
+  background: var(--dark-bg);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  color: var(--dark-text);
+  font-size: 1.1rem;
+  transition: all var(--transition-smooth);
+}
+
+.challenge-input input:focus {
+  outline: none;
+  border-color: var(--bitcoin-orange-light);
+  box-shadow: 0 0 0 3px var(--bitcoin-orange-glow);
+}
+
+.challenge-input button {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  font-size: 1.1rem;
+}
+
+.challenge-input button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.challenge-hint {
+  background: linear-gradient(135deg, var(--warning-yellow-glow), transparent);
+  border: 1px solid var(--warning-yellow);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  color: var(--dark-text);
+  font-style: italic;
+}
+
+.hint-btn {
+  background: linear-gradient(45deg, var(--warning-yellow), var(--warning-yellow-dark));
+  color: var(--dark-bg);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  margin-bottom: 20px;
+}
+
+.hint-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.challenge-feedback {
+  padding: 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  animation: sovereigntyRise var(--transition-smooth);
+}
+
+.challenge-feedback.success {
+  background: linear-gradient(135deg, var(--success-green-glow), transparent);
+  border: 2px solid var(--success-green);
+  color: var(--success-green);
+}
+
+.challenge-feedback.error {
+  background: linear-gradient(135deg, var(--crisis-red-glow), transparent);
+  border: 2px solid var(--crisis-red);
+  color: var(--crisis-red);
+}
+
+/* ===== SOUND MONEY PRINCIPLES DASHBOARD ===== */
+.sound-money-dashboard {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--gold-yellow);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-gold);
+}
+
+.sound-money-dashboard h3 {
+  color: var(--gold-yellow);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.principle-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--gold-yellow);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.principle-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--gold-yellow-glow), transparent);
+  transition: left var(--transition-slow);
+}
+
+.principle-card:hover::before {
+  left: 100%;
+}
+
+.principle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-gold);
+  animation: scarcityPulse 1s infinite;
+}
+
+.principle-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: goldShimmer 3s infinite;
+}
+
+.principle-card h4 {
+  color: var(--gold-yellow);
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.principle-card p {
+  color: var(--dark-text-muted);
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.principle-example {
+  background: var(--dark-bg-lighter);
+  border: 1px solid var(--gold-yellow);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  color: var(--gold-yellow);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ===== MASTERY DASHBOARD ===== */
+.mastery-dashboard {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.mastery-dashboard h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.mastery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.mastery-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  transition: all var(--transition-smooth);
+}
+
+.mastery-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.mastery-card h4 {
+  color: var(--bitcoin-orange);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.mastery-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-bar {
+  background: var(--dark-bg);
+  border: 1px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  transition: width var(--transition-slow);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: wealthFlow 2s infinite;
+}
+
+.mastery-progress span {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ===== CRISIS STATISTICS ===== */
+.crisis-statistics {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.crisis-statistics h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+  animation: monetaryGlow 1s infinite;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--bitcoin-orange);
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px var(--bitcoin-orange-glow);
+}
+
+.stat-label {
+  color: var(--dark-text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== ACHIEVEMENT SYSTEM ===== */
+.achievement-system {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.achievement-system h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.achievement {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--dark-bg-lighter);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+  opacity: 0.5;
+}
+
+.achievement.unlocked {
+  border-color: var(--bitcoin-orange);
+  opacity: 1;
+  animation: monetaryGlow 3s infinite;
+}
+
+.achievement.unlocked:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.achievement-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: goldShimmer 4s infinite;
+}
+
+.achievement.unlocked .achievement-icon {
+  animation: goldShimmer 2s infinite;
+}
+
+.achievement-name {
+  color: var(--bitcoin-orange);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.achievement.locked .achievement-name {
+  color: var(--dark-text-dim);
+}
+
+.achievement-desc {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.achievement.locked .achievement-desc {
+  color: var(--dark-text-dim);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .money-module {
+    padding: 15px;
+  }
+  
+  .crisis-title {
+    font-size: 2rem;
+  }
+  
+  .crisis-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .crisis-status {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .crisis-meter {
+    width: 100%;
+  }
+  
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .active-challenge {
+    min-width: 300px;
+    padding: 20px;
+  }
+  
+  .challenge-input {
+    flex-direction: column;
+  }
+  
+  .mastery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .crisis-title {
+    font-size: 1.5rem;
+  }
+  
+  .scenario-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .principle-card {
+    padding: 20px;
+  }
+  
+  .principle-icon {
+    font-size: 2rem;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== MONETARY VISUAL EFFECTS ===== */
+.monetary-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.monetary-effect::before {
+  content: '₿💰💎';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--bitcoin-orange-glow);
+  font-size: 0.6rem;
+  line-height: 1;
+  opacity: 0.1;
+  animation: goldShimmer 3s infinite;
+  pointer-events: none;
+}
+
+.wealth-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.wealth-effect::after {
+  content: '💰🏆💎✨';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gold-yellow-glow);
+  font-size: 0.8rem;
+  opacity: 0.1;
+  animation: scarcityPulse 5s infinite;
+  pointer-events: none;
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+.alerts-container::-webkit-scrollbar,
+.active-challenge::-webkit-scrollbar {
+  width: 8px;
+}
+
+.alerts-container::-webkit-scrollbar-track,
+.active-challenge::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+  border-radius: var(--border-radius);
+}
+
+.alerts-container::-webkit-scrollbar-thumb,
+.active-challenge::-webkit-scrollbar-thumb {
+  background: var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+}
+
+.alerts-container::-webkit-scrollbar-thumb:hover,
+.active-challenge::-webkit-scrollbar-thumb:hover {
+  background: var(--bitcoin-orange-light);
+}

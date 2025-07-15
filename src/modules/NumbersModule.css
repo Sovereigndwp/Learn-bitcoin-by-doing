@@ -1,587 +1,867 @@
-/* Numbers Module CSS */
+/* ===== BITCOIN ORANGE THEME VARIABLES ===== */
+:root {
+  --bitcoin-orange: #f7931a;
+  --bitcoin-orange-dark: #e8851c;
+  --bitcoin-orange-light: #ffb347;
+  --bitcoin-orange-glow: rgba(247, 147, 26, 0.3);
+  --bitcoin-orange-shadow: rgba(247, 147, 26, 0.15);
+  
+  --crisis-red: #ff4444;
+  --crisis-red-dark: #cc3333;
+  --crisis-red-glow: rgba(255, 68, 68, 0.3);
+  
+  --success-green: #00ff88;
+  --success-green-dark: #00cc6a;
+  --success-green-glow: rgba(0, 255, 136, 0.3);
+  
+  --warning-yellow: #ffdd00;
+  --warning-yellow-dark: #e6c700;
+  --warning-yellow-glow: rgba(255, 221, 0, 0.3);
+  
+  --dark-bg: #1a1a1a;
+  --dark-bg-light: #2d2d2d;
+  --dark-bg-lighter: #404040;
+  --dark-text: #ffffff;
+  --dark-text-muted: #cccccc;
+  --dark-text-dim: #999999;
+  
+  --border-radius: 12px;
+  --border-radius-large: 20px;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.2);
+  --shadow-bitcoin: 0 4px 20px var(--bitcoin-orange-shadow);
+  --shadow-crisis: 0 4px 20px var(--crisis-red-glow);
+}
+
+/* ===== CRISIS ANIMATIONS ===== */
+@keyframes crisisAlert {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--crisis-red-glow); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 10px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 var(--crisis-red-glow); }
+}
+
+@keyframes bitcoinPulse {
+  0% { box-shadow: 0 0 0 0 var(--bitcoin-orange-glow); }
+  70% { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 var(--bitcoin-orange-glow); }
+}
+
+@keyframes numberFlow {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes binaryFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes hexTransform {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes masteryGlow {
+  0% { box-shadow: 0 0 5px var(--bitcoin-orange-glow); }
+  50% { box-shadow: 0 0 20px var(--bitcoin-orange-glow), 0 0 30px var(--bitcoin-orange-glow); }
+  100% { box-shadow: 0 0 5px var(--bitcoin-orange-glow); }
+}
+
+@keyframes crisisIntensity {
+  0% { background: linear-gradient(90deg, var(--crisis-red) 0%, var(--crisis-red-dark) 100%); }
+  50% { background: linear-gradient(90deg, var(--crisis-red-dark) 0%, var(--crisis-red) 100%); }
+  100% { background: linear-gradient(90deg, var(--crisis-red) 0%, var(--crisis-red-dark) 100%); }
+}
+
+@keyframes sovereigntyRise {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== MAIN CONTAINER ===== */
 .numbers-module {
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  color: var(--dark-text);
   padding: 20px;
-}
-
-/* Pizza Story Step */
-.pizza-story-step {
-  background: linear-gradient(135deg, #fff9e6 0%, #fff4d6 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(247, 147, 26, 0.1);
-  border: 2px solid #ffeaa7;
-}
-
-.pizza-story-step h2 {
-  color: #f7931a;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.scenario-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 24px 0;
-}
-
-.scenario-indicators {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.scenario-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.scenario-dot.active {
-  background: #f7931a;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(247, 147, 26, 0.2);
-}
-
-.scenario-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.scenario-content {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-left: 4px solid #f7931a;
-}
-
-.scenario-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
-}
-
-.scenario-content li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
-  padding-left: 24px;
+  overflow-x: hidden;
 }
 
-.scenario-content li:before {
-  content: "→";
-  position: absolute;
+.numbers-module::before {
+  content: '';
+  position: fixed;
+  top: 0;
   left: 0;
-  color: #f7931a;
-  font-weight: bold;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, var(--bitcoin-orange-glow) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--crisis-red-glow) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.insight-text {
-  background: #f8f9fa;
-  padding: 16px;
-  border-radius: 8px;
-  border-left: 4px solid #f7931a;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-top: 16px;
-}
-
-/* Computer Language Step */
-.computer-language-step {
-  background: linear-gradient(135deg, #e8f4f8 0%, #d6eaf8 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(52, 152, 219, 0.1);
-  border: 2px solid #aed6f1;
-}
-
-.computer-language-step h2 {
-  color: #2980b9;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.language-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 24px 0;
-}
-
-.language-indicators {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.language-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.language-dot.active {
-  background: #2980b9;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.2);
-}
-
-.language-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.language-content {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-left: 4px solid #2980b9;
-}
-
-.language-content p {
-  margin: 12px 0;
-  line-height: 1.6;
-}
-
-/* Hex Discovery Step */
-.hex-discovery-step {
-  background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(46, 204, 113, 0.1);
-  border: 2px solid #a9dfbf;
-}
-
-.hex-discovery-step h2 {
-  color: #27ae60;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.discovery-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 24px 0;
-}
-
-.discovery-indicators {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.discovery-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.discovery-dot.active {
-  background: #27ae60;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.2);
-}
-
-.discovery-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.discovery-content {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-left: 4px solid #27ae60;
-}
-
-.discovery-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
-}
-
-.discovery-content li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+.numbers-module > * {
   position: relative;
-  padding-left: 24px;
+  z-index: 1;
 }
 
-.discovery-content li:before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: #27ae60;
-  font-weight: bold;
+/* ===== CRISIS COMMAND CENTER ===== */
+.crisis-command-center {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+  animation: bitcoinPulse 3s infinite;
 }
 
-/* Endian Discovery Step */
-.endian-discovery-step {
-  background: linear-gradient(135deg, #f8f0ff 0%, #f0e6ff 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(155, 89, 182, 0.1);
-  border: 2px solid #d2b4de;
-}
-
-.endian-discovery-step h2 {
-  color: #8e44ad;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.explanation-content {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-left: 4px solid #8e44ad;
-}
-
-.explanation-content ul {
-  list-style: none;
-  padding: 0;
-  margin: 16px 0;
-}
-
-.explanation-content li {
-  padding: 12px;
-  margin: 8px 0;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 3px solid #8e44ad;
-}
-
-/* Security Demo Step */
-.security-demo-step {
-  background: linear-gradient(135deg, #fff0f0 0%, #ffe6e6 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(231, 76, 60, 0.1);
-  border: 2px solid #f1948a;
-}
-
-.security-demo-step h2 {
-  color: #e74c3c;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.demo-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 24px 0;
-}
-
-.demo-indicators {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.demo-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  transition: all 0.3s ease;
-}
-
-.demo-dot.active {
-  background: #e74c3c;
-  transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
-}
-
-.demo-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2c3e50;
-  text-align: center;
-}
-
-.demo-content {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-left: 4px solid #e74c3c;
-}
-
-.demo-content p {
-  margin: 12px 0;
-  line-height: 1.6;
-  font-family: 'Courier New', monospace;
-  padding: 8px;
-  background: #f8f9fa;
-  border-radius: 4px;
-}
-
-/* Reflection Step */
-.reflection-step {
-  background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 2px solid #ddd;
-}
-
-.reflection-intro h3 {
-  color: #f7931a;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.reflection-header {
-  margin-bottom: 24px;
-}
-
-.main-question {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.prompt-header {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #f7931a;
-  margin: 20px 0 12px 0;
-}
-
-.insight-item, .next-step-item {
-  background: white;
-  padding: 16px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border-left: 4px solid #f7931a;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.insight-item p, .next-step-item p {
-  margin: 0;
-  color: #2c3e50;
-  line-height: 1.6;
-}
-
-.optional-note {
-  font-style: italic;
-  color: #7f8c8d;
-  text-align: center;
-  margin-top: 16px;
-}
-
-.reflection-input {
-  margin-top: 24px;
-}
-
-.reflection-textarea {
-  width: 100%;
-  min-height: 200px;
-  padding: 16px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  line-height: 1.6;
-  resize: vertical;
-  transition: border-color 0.3s ease;
-}
-
-.reflection-textarea:focus {
-  outline: none;
-  border-color: #f7931a;
-  box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.1);
-}
-
-.reflection-footer {
-  margin-top: 16px;
-}
-
-.reflection-controls {
+.crisis-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.word-count {
-  color: #7f8c8d;
-  font-size: 0.9rem;
-}
-
-.button-group {
-  display: flex;
-  gap: 12px;
-}
-
-/* Universal Button Styles */
-.continue-button, .skip-button, .submit-button, .home-button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.continue-button {
-  background: #f7931a;
-  color: white;
-}
-
-.continue-button:hover {
-  background: #e67e00;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
-}
-
-.skip-button {
-  background: #95a5a6;
-  color: white;
-}
-
-.skip-button:hover {
-  background: #7f8c8d;
-  transform: translateY(-2px);
-}
-
-.submit-button {
-  background: #27ae60;
-  color: white;
-}
-
-.submit-button:hover:not(:disabled) {
-  background: #229954;
-  transform: translateY(-2px);
-}
-
-.submit-button:disabled {
-  background: #bdc3c7;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.home-button {
-  background: #3498db;
-  color: white;
-}
-
-.home-button:hover {
-  background: #2980b9;
-  transform: translateY(-2px);
-}
-
-/* Completion View */
-.completion-view {
-  text-align: center;
-  padding: 40px;
-}
-
-.completion-view h3 {
-  color: #f7931a;
+.crisis-title {
   font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-weight: 800;
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px var(--bitcoin-orange-glow);
+  margin: 0;
 }
 
-.completion-view p {
-  font-size: 1.2rem;
-  color: #2c3e50;
-  margin-bottom: 24px;
-}
-
-.completion-buttons {
+.crisis-status {
   display: flex;
-  gap: 16px;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.architect-level {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-medium);
+  animation: masteryGlow 2s infinite;
+}
+
+.mastery-points {
+  background: linear-gradient(45deg, var(--success-green), var(--success-green-dark));
+  color: white;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow-medium);
+}
+
+.crisis-meter {
+  position: relative;
+  width: 200px;
+  height: 40px;
+  background: var(--dark-bg);
+  border: 2px solid var(--crisis-red);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-/* Responsive Design */
+.crisis-intensity {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--crisis-red), var(--crisis-red-dark));
+  animation: crisisIntensity 2s infinite;
+  transition: width var(--transition-smooth);
+}
+
+.crisis-meter span {
+  position: relative;
+  z-index: 2;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* ===== CRISIS ALERTS ===== */
+.crisis-alerts {
+  margin-top: 25px;
+}
+
+.crisis-alerts h3 {
+  color: var(--crisis-red);
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.crisis-alert {
+  background: linear-gradient(135deg, var(--crisis-red-glow), transparent);
+  border: 1px solid var(--crisis-red);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: crisisAlert 2s infinite;
+  transition: all var(--transition-smooth);
+}
+
+.crisis-alert.resolved {
+  background: linear-gradient(135deg, var(--success-green-glow), transparent);
+  border-color: var(--success-green);
+  animation: none;
+  opacity: 0.7;
+}
+
+.alert-time {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  min-width: 80px;
+}
+
+.alert-message {
+  flex: 1;
+  margin: 0 15px;
+  font-weight: 500;
+}
+
+.alert-intensity {
+  color: var(--crisis-red);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* ===== CRISIS SCENARIO ===== */
+.crisis-scenario {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.scenario-header h2 {
+  font-size: 2rem;
+  color: var(--bitcoin-orange);
+  margin: 0;
+  font-weight: 700;
+}
+
+.crisis-badge {
+  background: linear-gradient(45deg, var(--crisis-red), var(--crisis-red-dark));
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 0.9rem;
+  animation: crisisAlert 2s infinite;
+}
+
+.crisis-description {
+  margin-bottom: 30px;
+}
+
+.crisis-description h3 {
+  color: var(--crisis-red);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.crisis-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--dark-text-muted);
+  margin-bottom: 20px;
+}
+
+.objective, .threat {
+  background: var(--dark-bg);
+  border: 1px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.objective {
+  border-color: var(--success-green);
+}
+
+.threat {
+  border-color: var(--crisis-red);
+}
+
+/* ===== CRISIS CHALLENGES ===== */
+.crisis-challenges h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.challenge-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.challenge-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--bitcoin-orange-glow), transparent);
+  transition: left var(--transition-slow);
+}
+
+.challenge-card:hover::before {
+  left: 100%;
+}
+
+.challenge-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+  border-color: var(--bitcoin-orange-light);
+}
+
+.challenge-card h4 {
+  color: var(--bitcoin-orange);
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.challenge-card p {
+  color: var(--dark-text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.challenge-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.challenge-type, .challenge-difficulty {
+  background: var(--dark-bg-lighter);
+  color: var(--dark-text);
+  padding: 6px 12px;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.challenge-type {
+  border: 1px solid var(--bitcoin-orange);
+}
+
+.challenge-difficulty {
+  border: 1px solid var(--warning-yellow);
+}
+
+.challenge-start-btn {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  width: 100%;
+  font-size: 1rem;
+}
+
+.challenge-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-bitcoin);
+  background: linear-gradient(45deg, var(--bitcoin-orange-light), var(--bitcoin-orange));
+}
+
+/* ===== ACTIVE CHALLENGE ===== */
+.active-challenge {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 3px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 40px;
+  box-shadow: var(--shadow-heavy);
+  z-index: 1000;
+  min-width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: sovereigntyRise var(--transition-slow);
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.challenge-header h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.challenge-close {
+  background: var(--crisis-red);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.challenge-close:hover {
+  background: var(--crisis-red-dark);
+  transform: scale(1.1);
+}
+
+.challenge-question {
+  background: var(--dark-bg);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--dark-text);
+}
+
+.challenge-input {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.challenge-input input {
+  flex: 1;
+  background: var(--dark-bg);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 15px;
+  color: var(--dark-text);
+  font-size: 1.1rem;
+  transition: all var(--transition-smooth);
+}
+
+.challenge-input input:focus {
+  outline: none;
+  border-color: var(--bitcoin-orange-light);
+  box-shadow: 0 0 0 3px var(--bitcoin-orange-glow);
+}
+
+.challenge-input button {
+  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  font-size: 1.1rem;
+}
+
+.challenge-input button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.challenge-hint {
+  background: linear-gradient(135deg, var(--warning-yellow-glow), transparent);
+  border: 1px solid var(--warning-yellow);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  color: var(--dark-text);
+  font-style: italic;
+}
+
+.hint-btn {
+  background: linear-gradient(45deg, var(--warning-yellow), var(--warning-yellow-dark));
+  color: var(--dark-bg);
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  margin-bottom: 20px;
+}
+
+.hint-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.challenge-feedback {
+  padding: 20px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  animation: sovereigntyRise var(--transition-smooth);
+}
+
+.challenge-feedback.success {
+  background: linear-gradient(135deg, var(--success-green-glow), transparent);
+  border: 2px solid var(--success-green);
+  color: var(--success-green);
+}
+
+.challenge-feedback.error {
+  background: linear-gradient(135deg, var(--crisis-red-glow), transparent);
+  border: 2px solid var(--crisis-red);
+  color: var(--crisis-red);
+}
+
+/* ===== MASTERY DASHBOARD ===== */
+.mastery-dashboard {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.mastery-dashboard h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.mastery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.mastery-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  transition: all var(--transition-smooth);
+}
+
+.mastery-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.mastery-card h4 {
+  color: var(--bitcoin-orange);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.mastery-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-bar {
+  background: var(--dark-bg);
+  border: 1px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  transition: width var(--transition-slow);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: numberFlow 2s infinite;
+}
+
+.mastery-progress span {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ===== CRISIS STATISTICS ===== */
+.crisis-statistics {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.crisis-statistics h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+  animation: masteryGlow 1s infinite;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--bitcoin-orange);
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px var(--bitcoin-orange-glow);
+}
+
+.stat-label {
+  color: var(--dark-text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== ACHIEVEMENT SYSTEM ===== */
+.achievement-system {
+  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
+  border: 2px solid var(--bitcoin-orange);
+  border-radius: var(--border-radius-large);
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.achievement-system h3 {
+  color: var(--bitcoin-orange);
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.achievement {
+  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--dark-bg-lighter);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+  opacity: 0.5;
+}
+
+.achievement.unlocked {
+  border-color: var(--bitcoin-orange);
+  opacity: 1;
+  animation: masteryGlow 3s infinite;
+}
+
+.achievement.unlocked:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-bitcoin);
+}
+
+.achievement-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: hexTransform 4s infinite;
+}
+
+.achievement.unlocked .achievement-icon {
+  animation: hexTransform 2s infinite;
+}
+
+.achievement-name {
+  color: var(--bitcoin-orange);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.achievement.locked .achievement-name {
+  color: var(--dark-text-dim);
+}
+
+.achievement-desc {
+  color: var(--dark-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.achievement.locked .achievement-desc {
+  color: var(--dark-text-dim);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
-  .pizza-story-step,
-  .computer-language-step,
-  .hex-discovery-step,
-  .endian-discovery-step,
-  .security-demo-step,
-  .reflection-step {
-    padding: 20px;
-    margin: 16px;
+  .numbers-module {
+    padding: 15px;
   }
-
-  .scenario-progress,
-  .language-progress,
-  .discovery-progress,
-  .demo-progress {
-    margin: 16px 0;
+  
+  .crisis-title {
+    font-size: 2rem;
   }
-
-  .scenario-indicators,
-  .language-indicators,
-  .discovery-indicators,
-  .demo-indicators {
-    gap: 8px;
-  }
-
-  .scenario-dot,
-  .language-dot,
-  .discovery-dot,
-  .demo-dot {
-    width: 12px;
-    height: 12px;
-  }
-
-  .reflection-controls {
+  
+  .crisis-header {
     flex-direction: column;
-    gap: 12px;
     align-items: stretch;
   }
-
-  .button-group {
-    justify-content: center;
-  }
-
-  .completion-buttons {
+  
+  .crisis-status {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+  }
+  
+  .crisis-meter {
+    width: 100%;
+  }
+  
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .active-challenge {
+    min-width: 300px;
+    padding: 20px;
+  }
+  
+  .challenge-input {
+    flex-direction: column;
+  }
+  
+  .mastery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .achievements-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Accessibility */
+@media (max-width: 480px) {
+  .crisis-title {
+    font-size: 1.5rem;
+  }
+  
+  .scenario-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -590,71 +870,66 @@
   }
 }
 
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  .pizza-story-step,
-  .computer-language-step,
-  .hex-discovery-step,
-  .endian-discovery-step,
-  .security-demo-step,
-  .reflection-step {
-    border-width: 3px;
-  }
-
-  .continue-button,
-  .skip-button,
-  .submit-button,
-  .home-button {
-    border: 2px solid currentColor;
-  }
+/* ===== BITCOIN NUMBER SYSTEM EFFECTS ===== */
+.binary-effect {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Animation classes */
-@keyframes sparkle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
+.binary-effect::before {
+  content: '01010101010101010101010101010101';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--bitcoin-orange-glow);
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  line-height: 1;
+  opacity: 0.1;
+  animation: binaryFlicker 3s infinite;
+  pointer-events: none;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(247, 147, 26, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(247, 147, 26, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(247, 147, 26, 0); }
+.hex-effect {
+  position: relative;
+  overflow: hidden;
 }
 
-.sparkle {
-  animation: sparkle 2s ease-in-out infinite;
+.hex-effect::after {
+  content: '0x1A2B3C4D5E6F7890ABCDEF';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--bitcoin-orange-glow);
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  opacity: 0.1;
+  animation: hexTransform 5s infinite;
+  pointer-events: none;
 }
 
-.pulse {
-  animation: pulse 2s infinite;
+/* ===== SCROLLBAR STYLING ===== */
+.alerts-container::-webkit-scrollbar,
+.active-challenge::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Focus management for accessibility */
-.continue-button:focus,
-.skip-button:focus,
-.submit-button:focus,
-.home-button:focus {
-  outline: 3px solid #f7931a;
-  outline-offset: 2px;
+.alerts-container::-webkit-scrollbar-track,
+.active-challenge::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+  border-radius: var(--border-radius);
 }
 
-/* Print styles */
-@media print {
-  .pizza-story-step,
-  .computer-language-step,
-  .hex-discovery-step,
-  .endian-discovery-step,
-  .security-demo-step,
-  .reflection-step {
-    background: white !important;
-    box-shadow: none !important;
-    border: 1px solid #000 !important;
-  }
+.alerts-container::-webkit-scrollbar-thumb,
+.active-challenge::-webkit-scrollbar-thumb {
+  background: var(--bitcoin-orange);
+  border-radius: var(--border-radius);
+}
 
-  .continue-button,
-  .skip-button,
-  .submit-button,
-  .home-button {
-    display: none;
-  }
+.alerts-container::-webkit-scrollbar-thumb:hover,
+.active-challenge::-webkit-scrollbar-thumb:hover {
+  background: var(--bitcoin-orange-light);
 } 

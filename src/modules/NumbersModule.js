@@ -1,786 +1,670 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useProgress } from '../contexts/ProgressContext';
-import { Calculator, CheckCircle, Trophy } from 'lucide-react';
-import '../components/ModuleCommon.css';
+import React, { useState, useEffect, useCallback } from 'react';
 import './NumbersModule.css';
 
 const NumbersModule = () => {
-  const { completeModule, isModuleCompleted } = useProgress();
-  const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  // Core crisis state management
+  const [crisisPhase, setCrisisPhase] = useState('digital_chaos_detective');
+  const [crisisIntensity, setCrisisIntensity] = useState(0);
+  const [architectLevel, setArchitectLevel] = useState(1);
+  const [masteryPoints, setMasteryPoints] = useState(0);
+  const [totalCrisisDefended, setTotalCrisisDefended] = useState(0);
 
-  const steps = [
-    {
-      title: "The Pizza That Changed Everything 🍕",
-      type: "pizza_story",
-      content: {
-        title: "May 22, 2010: Computer History in the Making",
-        story: "You're a programmer named Laszlo. You're hungry and want pizza, but you have an idea that will change digital money forever...",
-        scenarios: [
-          {
-            id: "traditional_payment",
-            title: "🏦 The Traditional Way",
-            description: "You grab your credit card and order online",
-            process: [
-              "Your card number travels through 6 different companies",
-              "Each company checks, validates, and records",
-              "Everything happens in private databases",
-              "You trust the banks got it right"
-            ],
-            insight: "Traditional payments require trusting many middlemen"
-          },
-          {
-            id: "bitcoin_experiment", 
-            title: "⚡ Laszlo's Experiment",
-            description: "You post: 'I'll pay 10,000 Bitcoin for two pizzas'",
-            process: [
-              "Your transaction goes to thousands of computers",
-              "Everyone can see and verify the payment",
-              "No banks or middlemen needed",
-              "The payment becomes permanent history"
-            ],
-            insight: "Bitcoin payments are transparent and verifiable by anyone"
-          },
-          {
-            id: "future_shock",
-            title: "💰 The Plot Twist",
-            description: "Those 10,000 Bitcoin become worth $600+ million",
-            process: [
-              "The pizza cost: $40 in 2010",
-              "The Bitcoin value: $600+ million today",
-              "Laszlo proved digital money could work",
-              "The first real-world Bitcoin purchase"
-            ],
-            insight: "This 'expensive pizza' proved Bitcoin's real-world value"
-          }
-        ]
-      }
-    },
-    {
-      title: "Computer Languages",
-      type: "computer_language",
-      content: {
-        title: "How Computers Actually Talk",
-        challenge: "You want to send a secret message that computers can read, but humans can also understand. How do you write it?",
-        languages: [
-          {
-            id: "binary",
-            name: "Binary (Computer Native)",
-            example: "Hello",
-            encoded: "01001000 01100101 01101100 01101100 01101111",
-            pros: ["Only language computers understand", "Impossible to misinterpret"],
-            cons: ["Very long", "Hard for humans to read"],
-            usage: "Computer processors work entirely in binary"
-          },
-          {
-            id: "decimal", 
-            name: "Decimal (Human Friendly)",
-            example: "10,000",
-            encoded: "10,000",
-            pros: ["Easy for humans", "What we use daily"],
-            cons: ["Not how computers think", "Can be ambiguous"],
-            usage: "Bitcoin amounts shown to users"
-          },
-          {
-            id: "hexadecimal",
-            name: "Hexadecimal (Best of Both)",
-            example: "Hello",
-            encoded: "48656C6C6F",
-            pros: ["Much shorter than binary", "Computers can easily convert", "Clear and precise"],
-            cons: ["Uses letters A-F", "Need to learn the system"],
-            usage: "Bitcoin addresses and transaction IDs"
-          }
-        ]
-      }
-    },
-    {
-      title: "Hex Discovery Lab",
-      type: "hex_discovery",
-      content: {
-        title: "Crack the Hex Code",
-        mission: "You're investigating Bitcoin transactions. Each has a hex address like '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'. Can you decode what the letters mean?",
-        discoveries: [
-          {
-            phase: "basic_digits",
-            title: "🔢 The Number Part",
-            question: "In hex, what do the regular numbers 0-9 mean?",
-            revelation: "They mean exactly the same as in regular numbers! 0=0, 1=1, 2=2... 9=9",
-            examples: ["5 in hex = 5 in decimal", "7 in hex = 7 in decimal"]
-          },
-          {
-            phase: "letter_code", 
-            title: "🔤 The Letter Mystery",
-            question: "But what about A, B, C, D, E, F?",
-            revelation: "They're just more numbers! A=10, B=11, C=12, D=13, E=14, F=15",
-            examples: ["A in hex = 10 in decimal", "F in hex = 15 in decimal"]
-          },
-          {
-            phase: "position_power",
-            title: "🚀 The Position Secret", 
-            question: "Why is hex '10' different from decimal '10'?",
-            revelation: "Position matters! Each spot is worth 16 times more than the one to its right",
-            examples: ["Hex '10' = (1×16) + (0×1) = 16 decimal", "Hex 'FF' = (15×16) + (15×1) = 255 decimal"]
-          }
-        ]
-      }
-    },
-    {
-      title: "Bitcoin's Backward Trick",
-      type: "endian_discovery",
-      content: {
-        title: "Why Bitcoin Sometimes Reads Backwards",
-        scenario: "You're examining a Bitcoin transaction and notice something strange...",
-        mystery: "The same number appears differently in different parts of Bitcoin's code. Sometimes '1234' becomes '3412'. Why?",
-        explanation: {
-          title: "Little-Endian: Reading in Reverse",
-          reason: "Computers sometimes read numbers backwards in pairs to work more efficiently",
-          examples: [
-            {
-              normal: "12",
-              flipped: "21", 
-              process: "Two digits: just flip them"
-            },
-            {
-              normal: "1234",
-              flipped: "3412",
-              process: "Four digits: flip each pair, then reverse the pairs"
-            },
-            {
-              normal: "ABCDEF",
-              flipped: "EFCDAB", 
-              process: "Six digits: flip each pair (AB→BA, CD→DC, EF→FE), then reverse"
-            }
-          ]
+  // Digital representation mastery state
+  const [digitalChaosAlerts, setDigitalChaosAlerts] = useState([]);
+  const [binaryFoundation, setBinaryFoundation] = useState({ strength: 0, defenses: [] });
+  const [hexadecimalMastery, setHexadecimalMastery] = useState({ level: 0, transformations: [] });
+  const [endiannessControl, setEndiannessControl] = useState({ big: 0, little: 0, mastery: 0 });
+  const [cryptographicPrecision, setCryptographicPrecision] = useState({ accuracy: 0, validations: [] });
+  const [bitcoinNumberSovereignty, setBitcoinNumberSovereignty] = useState({ sovereignty: 0, achievements: [] });
+
+  // Interactive challenge state
+  const [activeChallenge, setActiveChallenge] = useState(null);
+  const [challengeProgress, setChallengeProgress] = useState(0);
+  const [userInput, setUserInput] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [showHint, setShowHint] = useState(false);
+
+  // Crisis scenarios and challenges
+  const crisisScenarios = {
+    digital_chaos_detective: {
+      title: "Digital Chaos Detective",
+      crisis: "Digital Miscommunication Crisis",
+      description: "Bitcoin transactions are failing worldwide due to number representation errors. As a Digital Chaos Detective, you must identify the root cause of these digital representation failures.",
+      objective: "Investigate digital chaos patterns and build crisis detection systems",
+      threat: "Global Bitcoin network instability",
+      urgency: "CRITICAL",
+      challenges: [
+        {
+          id: 'chaos_detection',
+          title: 'Digital Chaos Pattern Recognition',
+          description: 'Analyze failing Bitcoin transactions to identify number representation errors',
+          type: 'pattern_analysis',
+          difficulty: 'detective'
         },
-        insight: "This 'backward reading' helps computers process large numbers faster, which is crucial for Bitcoin's security calculations."
-      }
+        {
+          id: 'crisis_mapping',
+          title: 'Crisis Impact Mapping',
+          description: 'Map the global impact of digital representation failures',
+          type: 'impact_analysis',
+          difficulty: 'detective'
+        }
+      ]
     },
-    {
-      title: "Security Through Numbers",
-      type: "security_demo",
-      content: {
-        title: "How Numbers Create Unbreakable Security",
-        challenge: "You need to prove you own Bitcoin without revealing your private key. How do math and encoding make this possible?",
-        demonstrations: [
-          {
-            type: "consistency",
-            title: "🎯 Always the Same",
-            input: "Hello Bitcoin",
-            process: "Put through security algorithm",
-            output: "9595c9bca95d8ef8...",
-            rule: "Same input → Same output, every time"
-          },
-          {
-            type: "sensitivity", 
-            title: "🦋 Butterfly Effect",
-            input: "Hello bitcoin", 
-            process: "Just changed one letter case",
-            output: "completely different hash...",
-            rule: "Tiny change → Completely different output"
-          },
-          {
-            type: "one_way",
-            title: "🔒 One-Way Street", 
-            input: "9595c9bca95d8ef8...",
-            process: "Try to reverse the algorithm",
-            output: "Impossible to get back to 'Hello Bitcoin'",
-            rule: "Can't reverse the process, no matter how hard you try"
-          }
-        ]
-      }
+    binary_foundation_engineer: {
+      title: "Binary Foundation Engineer",
+      crisis: "Binary Communication Breakdown",
+      description: "Bitcoin's binary foundation is cracking under representation pressure. As a Binary Foundation Engineer, you must rebuild the binary infrastructure that powers Bitcoin's precision.",
+      objective: "Master binary systems and engineer unbreakable foundations",
+      threat: "Bitcoin's mathematical foundation collapse",
+      urgency: "HIGH",
+      challenges: [
+        {
+          id: 'binary_mastery',
+          title: 'Binary System Mastery',
+          description: 'Convert between decimal and binary with perfect precision',
+          type: 'conversion_mastery',
+          difficulty: 'engineer'
+        },
+        {
+          id: 'foundation_building',
+          title: 'Binary Foundation Construction',
+          description: 'Build robust binary foundations for Bitcoin operations',
+          type: 'foundation_building',
+          difficulty: 'engineer'
+        }
+      ]
     },
-    {
-      title: "Your Bitcoin Insights",
-      type: "reflection",
-      content: {
-        question: "What's your biggest insight about how Bitcoin uses numbers and encoding?",
-        insights: [
-          {
-            id: "encoding_bridge",
-            title: "🌉 Encoding as Universal Language",
-            description: "Hex and binary let humans and computers communicate about the same information"
-          },
-          {
-            id: "transparency_power",
-            title: "👁️ Transparency Creates Trust", 
-            description: "When everyone can verify the math, we don't need to trust authorities"
-          },
-          {
-            id: "efficiency_matters",
-            title: "⚡ Efficiency Enables Scale",
-            description: "Clever encoding tricks (like little-endian) help Bitcoin handle millions of transactions"
-          }
-        ],
-        nextSteps: [
-          {
-            id: "explore_hashing",
-            title: "🔐 Explore Cryptographic Hashing",
-            description: "Dive deeper into how Bitcoin uses mathematical functions for security"
-          },
-          {
-            id: "learn_keys",
-            title: "🗝️ Understand Keys and Addresses", 
-            description: "Learn how your Bitcoin address is created from your private key"
-          },
-          {
-            id: "study_transactions",
-            title: "💸 Study Transaction Structure",
-            description: "See exactly how Bitcoin transactions are encoded and verified"
-          }
-        ]
+    hexadecimal_alchemist: {
+      title: "Hexadecimal Alchemist",
+      crisis: "Hex Transformation Crisis",
+      description: "Bitcoin's hexadecimal representations are becoming corrupted, threatening transaction integrity. As a Hexadecimal Alchemist, you must master the ancient art of hex transformation.",
+      objective: "Transform between number systems with alchemical precision",
+      threat: "Transaction integrity corruption",
+      urgency: "HIGH",
+      challenges: [
+        {
+          id: 'hex_alchemy',
+          title: 'Hexadecimal Alchemy Mastery',
+          description: 'Master the transformation between decimal, binary, and hexadecimal',
+          type: 'transformation_mastery',
+          difficulty: 'alchemist'
+        },
+        {
+          id: 'corruption_healing',
+          title: 'Hex Corruption Healing',
+          description: 'Heal corrupted hexadecimal representations in Bitcoin data',
+          type: 'corruption_healing',
+          difficulty: 'alchemist'
+        }
+      ]
+    },
+    endianness_architect: {
+      title: "Endianness Architect",
+      crisis: "Byte Order Chaos",
+      description: "Bitcoin's byte ordering is causing catastrophic miscommunication between systems. As an Endianness Architect, you must design perfect byte order harmony.",
+      objective: "Architect flawless endianness systems for Bitcoin precision",
+      threat: "Inter-system communication breakdown",
+      urgency: "CRITICAL",
+      challenges: [
+        {
+          id: 'endian_mastery',
+          title: 'Endianness Mastery',
+          description: 'Master big-endian and little-endian byte ordering',
+          type: 'endian_mastery',
+          difficulty: 'architect'
+        },
+        {
+          id: 'harmony_design',
+          title: 'Byte Order Harmony Design',
+          description: 'Design systems that handle both endianness formats flawlessly',
+          type: 'harmony_design',
+          difficulty: 'architect'
+        }
+      ]
+    },
+    cryptographic_precision_master: {
+      title: "Cryptographic Precision Master",
+      crisis: "Precision Degradation Emergency",
+      description: "Bitcoin's cryptographic operations are losing precision, threatening security. As a Cryptographic Precision Master, you must restore mathematical perfection.",
+      objective: "Achieve cryptographic precision mastery for Bitcoin security",
+      threat: "Bitcoin security compromise",
+      urgency: "MAXIMUM",
+      challenges: [
+        {
+          id: 'precision_mastery',
+          title: 'Cryptographic Precision Mastery',
+          description: 'Master precise number representations in cryptographic operations',
+          type: 'precision_mastery',
+          difficulty: 'master'
+        },
+        {
+          id: 'security_restoration',
+          title: 'Security Precision Restoration',
+          description: 'Restore perfect precision to Bitcoin\'s cryptographic operations',
+          type: 'security_restoration',
+          difficulty: 'master'
+        }
+      ]
+    },
+    bitcoin_number_sovereign: {
+      title: "Bitcoin Number Sovereign",
+      crisis: "Mathematical Sovereignty Defense",
+      description: "You've achieved mastery over Bitcoin's number systems. As a Bitcoin Number Sovereign, you must defend mathematical sovereignty against all threats.",
+      objective: "Maintain eternal vigilance over Bitcoin's mathematical precision",
+      threat: "Mathematical sovereignty erosion",
+      urgency: "ETERNAL",
+      challenges: [
+        {
+          id: 'sovereignty_defense',
+          title: 'Mathematical Sovereignty Defense',
+          description: 'Defend Bitcoin\'s mathematical precision against all threats',
+          type: 'sovereignty_defense',
+          difficulty: 'sovereign'
+        },
+        {
+          id: 'precision_legacy',
+          title: 'Precision Legacy Creation',
+          description: 'Create lasting systems that preserve Bitcoin\'s mathematical precision',
+          type: 'legacy_creation',
+          difficulty: 'sovereign'
+        }
+      ]
+    }
+  };
+
+  // Challenge implementations
+  const challengeImplementations = {
+    chaos_detection: {
+      question: "A Bitcoin transaction shows value 0x1A2B in hex. What's the decimal value?",
+      answer: "6699",
+      hint: "Remember: 1A2B in hex = 1×16³ + 10×16² + 2×16¹ + 11×16⁰",
+      validator: (input) => parseInt(input) === 6699,
+      reward: 100
+    },
+    crisis_mapping: {
+      question: "If a system expects little-endian but receives big-endian 0x12345678, what value does it interpret?",
+      answer: "2018915346",
+      hint: "Little-endian reverses byte order: 0x78563412",
+      validator: (input) => parseInt(input) === 2018915346,
+      reward: 150
+    },
+    binary_mastery: {
+      question: "Convert decimal 255 to binary:",
+      answer: "11111111",
+      hint: "255 = 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1",
+      validator: (input) => input.replace(/\s/g, '') === '11111111',
+      reward: 200
+    },
+    foundation_building: {
+      question: "What's the binary representation of the maximum value in a single byte?",
+      answer: "11111111",
+      hint: "A byte has 8 bits, maximum value is when all bits are 1",
+      validator: (input) => input.replace(/\s/g, '') === '11111111',
+      reward: 250
+    },
+    hex_alchemy: {
+      question: "Convert binary 10101010 to hexadecimal:",
+      answer: "AA",
+      hint: "Group binary into 4-bit chunks: 1010 1010 = A A",
+      validator: (input) => input.toUpperCase().replace(/\s/g, '') === 'AA',
+      reward: 300
+    },
+    corruption_healing: {
+      question: "A corrupted hex value shows 0xG7F3. What should the first digit be? (0-F)",
+      answer: "7",
+      hint: "G is not a valid hex digit. Look at the pattern: ?7F3",
+      validator: (input) => input.toUpperCase() === '7',
+      reward: 350
+    },
+    endian_mastery: {
+      question: "Convert 0x12345678 from big-endian to little-endian:",
+      answer: "78563412",
+      hint: "Reverse the byte order: 12 34 56 78 → 78 56 34 12",
+      validator: (input) => input.toUpperCase().replace(/0X/g, '') === '78563412',
+      reward: 400
+    },
+    harmony_design: {
+      question: "What's the decimal value of little-endian 0x00000001?",
+      answer: "16777216",
+      hint: "In little-endian, bytes are reversed: 01 00 00 00 = 0x01000000",
+      validator: (input) => parseInt(input) === 16777216,
+      reward: 450
+    },
+    precision_mastery: {
+      question: "In Bitcoin, how many satoshis equal 1 BTC? (numerical answer)",
+      answer: "100000000",
+      hint: "1 BTC = 100,000,000 satoshis (8 decimal places)",
+      validator: (input) => parseInt(input) === 100000000,
+      reward: 500
+    },
+    security_restoration: {
+      question: "A Bitcoin private key is 256 bits. How many hex characters represent it?",
+      answer: "64",
+      hint: "Each hex character represents 4 bits: 256 ÷ 4 = 64",
+      validator: (input) => parseInt(input) === 64,
+      reward: 550
+    },
+    sovereignty_defense: {
+      question: "What's the maximum value of a 32-bit unsigned integer in hex?",
+      answer: "FFFFFFFF",
+      hint: "32 bits = 8 hex characters, all F's for maximum value",
+      validator: (input) => input.toUpperCase().replace(/0X/g, '') === 'FFFFFFFF',
+      reward: 600
+    },
+    precision_legacy: {
+      question: "Bitcoin's difficulty target is a 256-bit number. In hex, how many leading zeros indicate high difficulty?",
+      answer: "Many",
+      hint: "More leading zeros = smaller target = higher difficulty",
+      validator: (input) => input.toLowerCase().includes('many') || input.toLowerCase().includes('more'),
+      reward: 700
+    }
+  };
+
+  // Crisis alert system
+  const generateCrisisAlert = useCallback(() => {
+    const alerts = [
+      "🚨 CRITICAL: Bitcoin transaction 0x7a2b failed - number representation error detected",
+      "⚠️ WARNING: Endianness mismatch causing network communication breakdown",
+      "🔥 URGENT: Hexadecimal corruption spreading through transaction pool",
+      "💥 ALERT: Binary foundation instability detected in block validation",
+      "⚡ CRISIS: Precision degradation threatening cryptographic security",
+      "🛡️ DEFEND: Mathematical sovereignty under attack - respond immediately"
+    ];
+    
+    const newAlert = {
+      id: Date.now(),
+      message: alerts[Math.floor(Math.random() * alerts.length)],
+      timestamp: new Date().toLocaleTimeString(),
+      intensity: Math.floor(Math.random() * 100) + 1
+    };
+    
+    setDigitalChaosAlerts(prev => [newAlert, ...prev.slice(0, 4)]);
+    setCrisisIntensity(prev => Math.min(prev + 10, 100));
+  }, []);
+
+  // Initialize crisis alerts
+  useEffect(() => {
+    generateCrisisAlert();
+    const interval = setInterval(generateCrisisAlert, 8000);
+    return () => clearInterval(interval);
+  }, [generateCrisisAlert]);
+
+  // Handle challenge completion
+  const handleChallengeComplete = (challengeId, success) => {
+    if (success) {
+      const challenge = challengeImplementations[challengeId];
+      setMasteryPoints(prev => prev + challenge.reward);
+      setTotalCrisisDefended(prev => prev + 1);
+      setCrisisIntensity(prev => Math.max(prev - 15, 0));
+      
+      // Update specific mastery systems
+      switch (crisisPhase) {
+        case 'digital_chaos_detective':
+          setDigitalChaosAlerts(prev => prev.map(alert => ({ ...alert, resolved: true })));
+          break;
+        case 'binary_foundation_engineer':
+          setBinaryFoundation(prev => ({ 
+            ...prev, 
+            strength: prev.strength + 20,
+            defenses: [...prev.defenses, challengeId]
+          }));
+          break;
+        case 'hexadecimal_alchemist':
+          setHexadecimalMastery(prev => ({
+            ...prev,
+            level: prev.level + 1,
+            transformations: [...prev.transformations, challengeId]
+          }));
+          break;
+        case 'endianness_architect':
+          setEndiannessControl(prev => ({
+            ...prev,
+            big: challengeId.includes('big') ? prev.big + 1 : prev.big,
+            little: challengeId.includes('little') ? prev.little + 1 : prev.little,
+            mastery: prev.mastery + 1
+          }));
+          break;
+        case 'cryptographic_precision_master':
+          setCryptographicPrecision(prev => ({
+            ...prev,
+            accuracy: prev.accuracy + 10,
+            validations: [...prev.validations, challengeId]
+          }));
+          break;
+        case 'bitcoin_number_sovereign':
+          setBitcoinNumberSovereignty(prev => ({
+            ...prev,
+            sovereignty: prev.sovereignty + 15,
+            achievements: [...prev.achievements, challengeId]
+          }));
+          break;
       }
-    }
-  ];
-
-  const handleStepComplete = (index) => {
-    setCompletedSteps(prev => new Set(prev).add(index));
-    if (index === steps.length - 1) {
-      completeModule('numbers');
-      setTimeout(() => {
-        navigate('/');
-      }, 2000);
-    }
-    setCurrentStep(index + 1);
-  };
-
-  const renderStep = (step, index) => {
-    if (!step || !step.type) {
-      console.error('Invalid step data:', step);
-      return null;
-    }
-
-    switch (step.type) {
-      case 'pizza_story':
-        return (
-          <PizzaStoryStep
-            title={step.content.title}
-            story={step.content.story}
-            scenarios={step.content.scenarios}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'computer_language':
-        return (
-          <ComputerLanguageStep
-            title={step.content.title}
-            challenge={step.content.challenge}
-            languages={step.content.languages}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'hex_discovery':
-        return (
-          <HexDiscoveryStep
-            title={step.content.title}
-            mission={step.content.mission}
-            discoveries={step.content.discoveries}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'endian_discovery':
-        return (
-          <EndianDiscoveryStep
-            title={step.content.title}
-            scenario={step.content.scenario}
-            mystery={step.content.mystery}
-            explanation={step.content.explanation}
-            insight={step.content.insight}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'security_demo':
-        return (
-          <SecurityDemoStep
-            title={step.content.title}
-            challenge={step.content.challenge}
-            demonstrations={step.content.demonstrations}
-            onComplete={() => handleStepComplete(index)}
-          />
-        );
-
-      case 'reflection':
-                  return (
-            <ReflectionStep
-              question={step.content.question}
-              insights={step.content.insights}
-              nextSteps={step.content.nextSteps}
-              onComplete={() => handleStepComplete(index)}
-              setCurrentStep={setCurrentStep}
-              isLastStep={index === steps.length - 1}
-            />
-        );
-
-      default:
-        return <div>Unknown step type</div>;
+      
+      setFeedback(`🎯 MASTERY ACHIEVED! +${challenge.reward} points`);
+      
+      // Check for phase advancement
+      if (masteryPoints + challenge.reward >= architectLevel * 500) {
+        advancePhase();
+      }
+    } else {
+      setFeedback("❌ Crisis continues - refine your approach");
+      setCrisisIntensity(prev => Math.min(prev + 5, 100));
     }
   };
 
-  return (
-    <div className="module-container">
-      <div className="module-header">
-        <h1 className="module-title">
-          <Calculator className="module-icon" />
-          Numbers & Encoding
-        </h1>
-        {isModuleCompleted('numbers') && (
-          <div className="completion-badge">
-            <Trophy size={24} />
-            Completed!
-          </div>
-        )}
-      </div>
-
-      <div className="module-progress">
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
-            style={{ width: `${(completedSteps.size / steps.length) * 100}%` }}
-          />
-        </div>
-        <span className="progress-text">
-          {completedSteps.size} / {steps.length} steps completed
-        </span>
-      </div>
-
-      <div className="module-steps">
-        <div className="steps-navigation">
-          {steps.map((step, index) => (
-            <button
-              key={index}
-              className={`step-nav-button ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-              onClick={() => setCurrentStep(index)}
-            >
-              {completedSteps.has(index) && <CheckCircle size={16} />}
-              {step.title}
-            </button>
-          ))}
-        </div>
-
-        <div className="step-content-container">
-          {renderStep(steps[currentStep], currentStep)}
-        </div>
-
-        <div className="step-navigation">
-          <button
-            className="nav-button prev-button"
-            onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
-            disabled={currentStep === 0}
-          >
-            Previous
-          </button>
-          <button
-            className="nav-button next-button"
-            onClick={() => setCurrentStep(Math.min(steps.length - 1, currentStep + 1))}
-            disabled={currentStep === steps.length - 1}
-          >
-            Next
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Helper Components
-const PizzaStoryStep = ({ title, story, scenarios, onComplete }) => {
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [/* selectedOption */, setSelectedOption] = useState(null);
-  const [/* showResult */, setShowResult] = useState(false);
-
-  const handleScenarioComplete = (scenarioIndex) => {
-    setSelectedOption(null);
-    setShowResult(false);
-    setCurrentScenario(scenarioIndex + 1);
+  // Phase advancement system
+  const advancePhase = () => {
+    const phases = Object.keys(crisisScenarios);
+    const currentIndex = phases.indexOf(crisisPhase);
+    
+    if (currentIndex < phases.length - 1) {
+      setCrisisPhase(phases[currentIndex + 1]);
+      setArchitectLevel(prev => prev + 1);
+      setFeedback(`🚀 PHASE ADVANCED! You are now a ${crisisScenarios[phases[currentIndex + 1]].title}`);
+    } else {
+      setFeedback("👑 ULTIMATE MASTERY ACHIEVED! You are the Bitcoin Number Sovereign!");
+    }
   };
 
-  const currentScenarioData = scenarios[currentScenario];
-
-  return (
-    <div className="pizza-story-step">
-      <h2>{title}</h2>
-      <p>{story}</p>
-
-      <div className="scenario-progress">
-        <div className="scenario-indicators">
-          {scenarios.map((_, index) => (
-            <div 
-              key={index}
-              className={`scenario-dot ${currentScenario === index ? 'active' : ''}`}
-            />
-          ))}
-        </div>
-        <p className="scenario-title">{currentScenarioData.title}</p>
-      </div>
-
-      <div className="scenario-content">
-        <p>{currentScenarioData.description}</p>
-        <ul>
-          {currentScenarioData.process.map((step, index) => (
-            <li key={index}>{step}</li>
-          ))}
-        </ul>
-        <p className="insight-text">{currentScenarioData.insight}</p>
-      </div>
-
-      {currentScenario < scenarios.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={() => handleScenarioComplete(currentScenario)}
-        >
-          Next Scenario →
-        </button>
-      )}
-      {currentScenario === scenarios.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={onComplete}
-        >
-          I understand the story! →
-        </button>
-      )}
-    </div>
-  );
-};
-
-const ComputerLanguageStep = ({ title, challenge, languages, onComplete }) => {
-  const [currentLanguage, setCurrentLanguage] = useState(0);
-  const [/* selectedOption */, setSelectedOption] = useState(null);
-  const [/* showResult */, setShowResult] = useState(false);
-
-  const handleLanguageComplete = (languageIndex) => {
-    setSelectedOption(null);
-    setShowResult(false);
-    setCurrentLanguage(languageIndex + 1);
-  };
-
-  const currentLanguageData = languages[currentLanguage];
-
-  return (
-    <div className="computer-language-step">
-      <h2>{title}</h2>
-      <p>{challenge}</p>
-
-      <div className="language-progress">
-        <div className="language-indicators">
-          {languages.map((_, index) => (
-            <div 
-              key={index}
-              className={`language-dot ${currentLanguage === index ? 'active' : ''}`}
-            />
-          ))}
-        </div>
-        <p className="language-title">{currentLanguageData.name}</p>
-      </div>
-
-      <div className="language-content">
-        <p>Example: {currentLanguageData.example}</p>
-        <p>Encoded: {currentLanguageData.encoded}</p>
-        <p>Pros: {currentLanguageData.pros.join(', ')}</p>
-        <p>Cons: {currentLanguageData.cons.join(', ')}</p>
-        <p>Usage: {currentLanguageData.usage}</p>
-      </div>
-
-      {currentLanguage < languages.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={() => handleLanguageComplete(currentLanguage)}
-        >
-          Next Language →
-        </button>
-      )}
-      {currentLanguage === languages.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={onComplete}
-        >
-          I understand the languages! →
-        </button>
-      )}
-    </div>
-  );
-};
-
-const HexDiscoveryStep = ({ title, mission, discoveries, onComplete }) => {
-  const [currentDiscovery, setCurrentDiscovery] = useState(0);
-  const [/* selectedOption */, setSelectedOption] = useState(null);
-  const [/* showResult */, setShowResult] = useState(false);
-
-  const handleDiscoveryComplete = (discoveryIndex) => {
-    setSelectedOption(null);
-    setShowResult(false);
-    setCurrentDiscovery(discoveryIndex + 1);
-  };
-
-  const currentDiscoveryData = discoveries[currentDiscovery];
-
-  return (
-    <div className="hex-discovery-step">
-      <h2>{title}</h2>
-      <p>{mission}</p>
-
-      <div className="discovery-progress">
-        <div className="discovery-indicators">
-          {discoveries.map((_, index) => (
-            <div 
-              key={index}
-              className={`discovery-dot ${currentDiscovery === index ? 'active' : ''}`}
-            />
-          ))}
-        </div>
-        <p className="discovery-title">{currentDiscoveryData.title}</p>
-      </div>
-
-      <div className="discovery-content">
-        <p>{currentDiscoveryData.question}</p>
-        <p>Revelation: {currentDiscoveryData.revelation}</p>
-        <p>Examples:</p>
-        <ul>
-          {currentDiscoveryData.examples.map((example, index) => (
-            <li key={index}>{example}</li>
-          ))}
-        </ul>
-      </div>
-
-      {currentDiscovery < discoveries.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={() => handleDiscoveryComplete(currentDiscovery)}
-        >
-          Next Discovery →
-        </button>
-      )}
-      {currentDiscovery === discoveries.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={onComplete}
-        >
-          I understand hex! →
-        </button>
-      )}
-    </div>
-  );
-};
-
-const EndianDiscoveryStep = ({ title, scenario, mystery, explanation, insight, onComplete }) => {
-  const [/* selectedOption */, setSelectedOption] = useState(null);
-  const [/* showResult */, setShowResult] = useState(false);
-
-  const handleComplete = () => {
-    setSelectedOption(null);
-    setShowResult(false);
-    onComplete();
-  };
-
-  return (
-    <div className="endian-discovery-step">
-      <h2>{title}</h2>
-      <p>{scenario}</p>
-      <p>{mystery}</p>
-
-      <div className="explanation-content">
-        <p>{explanation.title}</p>
-        <p>{explanation.reason}</p>
-        <p>Examples:</p>
-        <ul>
-          {explanation.examples.map((example, index) => (
-            <li key={index}>
-              Normal: {example.normal}, Flipped: {example.flipped}, Process: {example.process}
-            </li>
-          ))}
-        </ul>
-        <p className="insight-text">{insight}</p>
-      </div>
-
-      <button 
-        className="continue-button"
-        onClick={handleComplete}
-      >
-        I understand the trick! →
-      </button>
-    </div>
-  );
-};
-
-const SecurityDemoStep = ({ title, challenge, demonstrations, onComplete }) => {
-  const [currentDemo, setCurrentDemo] = useState(0);
-  const [/* selectedOption */, setSelectedOption] = useState(null);
-  const [/* showResult */, setShowResult] = useState(false);
-
-  const handleDemoComplete = (demoIndex) => {
-    setSelectedOption(null);
-    setShowResult(false);
-    setCurrentDemo(demoIndex + 1);
-  };
-
-  const currentDemoData = demonstrations[currentDemo];
-
-  return (
-    <div className="security-demo-step">
-      <h2>{title}</h2>
-      <p>{challenge}</p>
-
-      <div className="demo-progress">
-        <div className="demo-indicators">
-          {demonstrations.map((_, index) => (
-            <div 
-              key={index}
-              className={`demo-dot ${currentDemo === index ? 'active' : ''}`}
-            />
-          ))}
-        </div>
-        <p className="demo-title">{currentDemoData.title}</p>
-      </div>
-
-      <div className="demo-content">
-        <p>Input: {currentDemoData.input}</p>
-        <p>Process: {currentDemoData.process}</p>
-        <p>Output: {currentDemoData.output}</p>
-        <p>Rule: {currentDemoData.rule}</p>
-      </div>
-
-      {currentDemo < demonstrations.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={() => handleDemoComplete(currentDemo)}
-        >
-          Next Demo →
-        </button>
-      )}
-      {currentDemo === demonstrations.length - 1 && (
-        <button 
-          className="continue-button"
-          onClick={onComplete}
-        >
-          I understand security! →
-        </button>
-      )}
-    </div>
-  );
-};
-
-const ReflectionStep = ({ question, insights, nextSteps, onComplete, setCurrentStep, isLastStep }) => {
-  const [reflection, setReflection] = useState('');
-  const [isSkipped, setIsSkipped] = useState(false);
-  const minLength = 100; // Requiring more thoughtful responses
-
-  // Ensure we have the required props
-  if (!onComplete || typeof onComplete !== 'function') {
-    console.error('ReflectionStep: onComplete prop is required and must be a function');
-    return null;
-  }
-
+  // Challenge submission handler
   const handleSubmit = () => {
-    if (reflection.trim().length >= minLength) {
-      handleStepComplete();
+    if (!activeChallenge) return;
+    
+    const challenge = challengeImplementations[activeChallenge.id];
+    const isCorrect = challenge.validator(userInput);
+    
+    handleChallengeComplete(activeChallenge.id, isCorrect);
+    
+    if (isCorrect) {
+      setActiveChallenge(null);
+      setUserInput('');
+      setShowHint(false);
     }
   };
 
-  const handleStepComplete = () => {
-    try {
-      onComplete();
-      if (isLastStep) {
-        setIsSkipped(true);
-      } else if (setCurrentStep && typeof setCurrentStep === 'function') {
-        setCurrentStep(prev => prev + 1);
-      }
-    } catch (error) {
-      console.error('Error in handleStepComplete:', error);
-    }
+  // Start challenge
+  const startChallenge = (challenge) => {
+    setActiveChallenge(challenge);
+    setUserInput('');
+    setFeedback('');
+    setShowHint(false);
   };
 
-  const handleSkip = () => {
-    handleStepComplete();
-  };
+  const currentScenario = crisisScenarios[crisisPhase];
 
-  const handleBackToHome = () => {
-    window.location.href = '/';
-  };
-
-    return (
-    <div className="reflection-step">
-      {isSkipped ? (
-        <div className="completion-view">
-          <h3>🎉 Module Complete!</h3>
-          <p>You've completed the Numbers & Encoding module.</p>
-          <div className="completion-buttons">
-            <button 
-              className="home-button"
-              onClick={handleBackToHome}
-            >
-              ← Back to Home
-            </button>
+  return (
+    <div className="numbers-module">
+      {/* Crisis Command Center */}
+      <div className="crisis-command-center">
+        <div className="crisis-header">
+          <h1 className="crisis-title">Digital Representation Crisis Architect</h1>
+          <div className="crisis-status">
+            <div className="architect-level">Level {architectLevel} {currentScenario.title}</div>
+            <div className="mastery-points">{masteryPoints} Mastery Points</div>
+            <div className="crisis-meter">
+              <div 
+                className="crisis-intensity" 
+                style={{ width: `${crisisIntensity}%` }}
+              />
+              <span>Crisis: {crisisIntensity}%</span>
+            </div>
           </div>
         </div>
-      ) : (
-        <>
-          <div className="reflection-intro">
-            <h3>🤔 Think About This...</h3>
-            <div className="reflection-header">
-              <p className="main-question">{question || 'Time to reflect on what you learned!'}</p>
-              {insights && insights.length > 0 && (
-                <>
-                  <p className="prompt-header">✨ Consider these insights:</p>
-                  {insights.map((insight, index) => (
-                    <div key={index} className="insight-item">
-                      <p>• {insight.title}: {insight.description}</p>
-                    </div>
-                  ))}
-                </>
-              )}
-              {nextSteps && nextSteps.length > 0 && (
-                <>
-                  <p className="prompt-header">🚀 Next Steps:</p>
-                  {nextSteps.map((step, index) => (
-                    <div key={index} className="next-step-item">
-                      <p>• {step.title}: {step.description}</p>
-                    </div>
-                  ))}
-                </>
-              )}
-              <p className="optional-note">(This reflection is optional - feel free to skip if you prefer to continue learning!)</p>
+
+        {/* Crisis Alerts */}
+        <div className="crisis-alerts">
+          <h3>🚨 Live Crisis Feed</h3>
+          <div className="alerts-container">
+            {digitalChaosAlerts.map(alert => (
+              <div 
+                key={alert.id} 
+                className={`crisis-alert ${alert.resolved ? 'resolved' : ''}`}
+              >
+                <span className="alert-time">{alert.timestamp}</span>
+                <span className="alert-message">{alert.message}</span>
+                <span className="alert-intensity">{alert.intensity}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Current Crisis Scenario */}
+      <div className="crisis-scenario">
+        <div className="scenario-header">
+          <h2>{currentScenario.title}</h2>
+          <div className="crisis-badge">{currentScenario.urgency}</div>
+        </div>
+        
+        <div className="crisis-description">
+          <h3>🔥 {currentScenario.crisis}</h3>
+          <p>{currentScenario.description}</p>
+          <div className="objective">
+            <strong>Mission:</strong> {currentScenario.objective}
+          </div>
+          <div className="threat">
+            <strong>Threat:</strong> {currentScenario.threat}
+          </div>
+        </div>
+
+        {/* Crisis Challenges */}
+        <div className="crisis-challenges">
+          <h3>⚡ Active Challenges</h3>
+          <div className="challenges-grid">
+            {currentScenario.challenges.map(challenge => (
+              <div key={challenge.id} className="challenge-card">
+                <h4>{challenge.title}</h4>
+                <p>{challenge.description}</p>
+                <div className="challenge-meta">
+                  <span className="challenge-type">{challenge.type}</span>
+                  <span className="challenge-difficulty">{challenge.difficulty}</span>
+                </div>
+                <button 
+                  className="challenge-start-btn"
+                  onClick={() => startChallenge(challenge)}
+                >
+                  Begin Challenge
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Active Challenge Interface */}
+      {activeChallenge && (
+        <div className="active-challenge">
+          <div className="challenge-header">
+            <h3>🎯 {activeChallenge.title}</h3>
+            <button 
+              className="challenge-close"
+              onClick={() => setActiveChallenge(null)}
+            >
+              ×
+            </button>
+          </div>
+          
+          <div className="challenge-content">
+            <div className="challenge-question">
+              {challengeImplementations[activeChallenge.id].question}
+            </div>
+            
+            <div className="challenge-input">
+              <input
+                type="text"
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                placeholder="Enter your answer..."
+                onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+              />
+              <button onClick={handleSubmit}>Submit</button>
+            </div>
+            
+            {showHint && (
+              <div className="challenge-hint">
+                💡 {challengeImplementations[activeChallenge.id].hint}
+              </div>
+            )}
+            
+            <button 
+              className="hint-btn"
+              onClick={() => setShowHint(!showHint)}
+            >
+              {showHint ? 'Hide Hint' : 'Show Hint'}
+            </button>
+            
+            {feedback && (
+              <div className={`challenge-feedback ${feedback.includes('ACHIEVED') ? 'success' : 'error'}`}>
+                {feedback}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Mastery Dashboard */}
+      <div className="mastery-dashboard">
+        <h3>🏆 Mastery Systems</h3>
+        <div className="mastery-grid">
+          <div className="mastery-card">
+            <h4>🔍 Chaos Detection</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(digitalChaosAlerts.filter(a => a.resolved).length * 25, 100)}%` }}
+                />
+              </div>
+              <span>{digitalChaosAlerts.filter(a => a.resolved).length}/4 Alerts Resolved</span>
             </div>
           </div>
 
-          <div className="reflection-input">
-            <textarea
-              value={reflection}
-              onChange={(e) => setReflection(e.target.value)}
-              placeholder={`Share your thoughts about how Bitcoin uses numbers and encoding. What's your biggest insight? What questions do you have?`}
-              rows={10}
-              className="reflection-textarea"
-            />
-            <div className="reflection-footer">
-              <div className="reflection-controls">
-                <p className="word-count">
-                  {reflection.length} / {minLength} characters
-                  {reflection.length < minLength && " (need more thoughts!)"}
-                </p>
-                <div className="button-group">
-                  <button 
-                    className="skip-button"
-                    onClick={handleSkip}
-                  >
-                    Skip Reflection →
-                  </button>
-                  <button 
-                    className="submit-button"
-                    onClick={handleSubmit}
-                    disabled={reflection.trim().length < minLength}
-                  >
-                    Share Your Insights
-                  </button>
-                </div>
+          <div className="mastery-card">
+            <h4>🏗️ Binary Foundation</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(binaryFoundation.strength, 100)}%` }}
+                />
               </div>
+              <span>{binaryFoundation.strength}% Foundation Strength</span>
             </div>
           </div>
-        </>
-      )}
+
+          <div className="mastery-card">
+            <h4>🧪 Hex Alchemy</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(hexadecimalMastery.level * 20, 100)}%` }}
+                />
+              </div>
+              <span>Level {hexadecimalMastery.level} Alchemist</span>
+            </div>
+          </div>
+
+          <div className="mastery-card">
+            <h4>⚖️ Endianness Control</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(endiannessControl.mastery * 25, 100)}%` }}
+                />
+              </div>
+              <span>{endiannessControl.mastery} Mastery Points</span>
+            </div>
+          </div>
+
+          <div className="mastery-card">
+            <h4>🎯 Cryptographic Precision</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(cryptographicPrecision.accuracy, 100)}%` }}
+                />
+              </div>
+              <span>{cryptographicPrecision.accuracy}% Accuracy</span>
+            </div>
+          </div>
+
+          <div className="mastery-card">
+            <h4>👑 Bitcoin Sovereignty</h4>
+            <div className="mastery-progress">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${Math.min(bitcoinNumberSovereignty.sovereignty, 100)}%` }}
+                />
+              </div>
+              <span>{bitcoinNumberSovereignty.sovereignty}% Sovereignty</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Crisis Statistics */}
+      <div className="crisis-statistics">
+        <h3>📊 Crisis Defense Statistics</h3>
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-number">{totalCrisisDefended}</div>
+            <div className="stat-label">Crises Defended</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{masteryPoints}</div>
+            <div className="stat-label">Mastery Points</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{architectLevel}</div>
+            <div className="stat-label">Architect Level</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{100 - crisisIntensity}%</div>
+            <div className="stat-label">Crisis Controlled</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Achievement System */}
+      <div className="achievement-system">
+        <h3>🏅 Achievement Unlocks</h3>
+        <div className="achievements-grid">
+          <div className={`achievement ${masteryPoints >= 500 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">🔍</div>
+            <div className="achievement-name">Chaos Detective</div>
+            <div className="achievement-desc">Master digital chaos detection</div>
+          </div>
+          <div className={`achievement ${masteryPoints >= 1000 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">🏗️</div>
+            <div className="achievement-name">Foundation Engineer</div>
+            <div className="achievement-desc">Build unbreakable binary foundations</div>
+          </div>
+          <div className={`achievement ${masteryPoints >= 1500 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">🧪</div>
+            <div className="achievement-name">Hex Alchemist</div>
+            <div className="achievement-desc">Master hexadecimal transformations</div>
+          </div>
+          <div className={`achievement ${masteryPoints >= 2000 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">⚖️</div>
+            <div className="achievement-name">Endianness Architect</div>
+            <div className="achievement-desc">Achieve byte order mastery</div>
+          </div>
+          <div className={`achievement ${masteryPoints >= 2500 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">🎯</div>
+            <div className="achievement-name">Precision Master</div>
+            <div className="achievement-desc">Attain cryptographic precision</div>
+          </div>
+          <div className={`achievement ${masteryPoints >= 3000 ? 'unlocked' : 'locked'}`}>
+            <div className="achievement-icon">👑</div>
+            <div className="achievement-name">Number Sovereign</div>
+            <div className="achievement-desc">Achieve Bitcoin number sovereignty</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

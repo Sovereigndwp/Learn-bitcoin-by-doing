@@ -1,4 +1,188 @@
-/* Bitcoin Basics Module Specific Styles */
+/* Bitcoin Foundation Crisis Architect Module - Complete CSS Theming */
+
+/* Core Crisis Variables */
+:root {
+  --bitcoin-orange: #f7931a;
+  --bitcoin-orange-light: #ffb347;
+  --bitcoin-orange-dark: #cc7a15;
+  --crisis-red: #dc2626;
+  --crisis-red-light: #f87171;
+  --crisis-red-dark: #991b1b;
+  --energy-blue: #1e40af;
+  --energy-blue-light: #3b82f6;
+  --energy-blue-dark: #1e3a8a;
+  --trust-green: #059669;
+  --trust-green-light: #10b981;
+  --trust-green-dark: #047857;
+  --sovereignty-gold: #d97706;
+  --sovereignty-gold-light: #f59e0b;
+  --sovereignty-gold-dark: #b45309;
+  --foundation-purple: #7c3aed;
+  --foundation-purple-light: #8b5cf6;
+  --foundation-purple-dark: #5b21b6;
+  --dark-bg: #0f172a;
+  --dark-bg-light: #1e293b;
+  --dark-bg-lighter: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #475569;
+  --border-color-light: #64748b;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --gradient-primary: linear-gradient(135deg, var(--bitcoin-orange), var(--sovereignty-gold));
+  --gradient-crisis: linear-gradient(135deg, var(--crisis-red), var(--crisis-red-dark));
+  --gradient-energy: linear-gradient(135deg, var(--energy-blue), var(--energy-blue-dark));
+  --gradient-trust: linear-gradient(135deg, var(--trust-green), var(--trust-green-dark));
+  --gradient-foundation: linear-gradient(135deg, var(--foundation-purple), var(--foundation-purple-dark));
+}
+
+/* Crisis Animations */
+@keyframes crisisAlert {
+  0%, 100% { 
+    background: var(--gradient-crisis);
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+  }
+  50% { 
+    background: linear-gradient(135deg, var(--crisis-red-light), var(--crisis-red));
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+  }
+}
+
+@keyframes energyTrustPulse {
+  0%, 100% { 
+    background: var(--gradient-energy);
+    box-shadow: 0 0 20px rgba(30, 64, 175, 0.3);
+  }
+  50% { 
+    background: var(--gradient-trust);
+    box-shadow: 0 0 30px rgba(5, 150, 105, 0.5);
+  }
+}
+
+@keyframes foundationFlow {
+  0% { 
+    background: var(--gradient-foundation);
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% { 
+    background: var(--gradient-primary);
+    opacity: 1;
+  }
+  100% { 
+    background: var(--gradient-foundation);
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes sovereigntyRise {
+  0% { 
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+    background: var(--gradient-foundation);
+  }
+  50% { 
+    transform: translateY(0) scale(1.05);
+    opacity: 1;
+    background: var(--gradient-primary);
+  }
+  100% { 
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    background: var(--gradient-primary);
+  }
+}
+
+@keyframes crisisGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(247, 147, 26, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(247, 147, 26, 0.7);
+  }
+}
+
+@keyframes alertPulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Main Container */
+.bitcoin-basics-crisis {
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bitcoin-basics-crisis::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(247, 147, 26, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Crisis Command Center */
+.crisis-command-center {
+  position: relative;
+  z-index: 1;
+  background: var(--gradient-crisis);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: crisisAlert 3s ease-in-out infinite;
+}
+
+.command-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.crisis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crisis-icon {
+  font-size: 1rem;
+  animation: alertPulse 2s ease-in-out infinite;
+}
+
+.crisis-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
 
 /* Top Navigation Styles */
 .top-navigation {
@@ -95,6 +279,234 @@
 
 .reset-progress-button:hover {
   background: #ea580c;
+}
+
+/* Crisis Alerts */
+.crisis-alerts {
+  margin-bottom: 1.5rem;
+}
+
+.crisis-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-left: 4px solid var(--bitcoin-orange);
+  animation: alertPulse 2s ease-in-out infinite;
+}
+
+.alert-pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--bitcoin-orange);
+  border-radius: 50%;
+  animation: crisisGlow 1.5s ease-in-out infinite;
+}
+
+/* Crisis Metrics Dashboard */
+.crisis-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--bitcoin-orange);
+  transform: translateY(-2px);
+}
+
+.metric-icon {
+  font-size: 1.5rem;
+  color: var(--bitcoin-orange);
+  animation: energyTrustPulse 3s ease-in-out infinite;
+}
+
+.metric-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--bitcoin-orange);
+}
+
+/* Phase Navigation */
+.phase-navigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.phase-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--dark-bg-light);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.phase-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-foundation);
+  transition: left 0.3s ease;
+  z-index: 0;
+}
+
+.phase-nav-item:hover::before {
+  left: 0;
+}
+
+.phase-nav-item:hover {
+  border-color: var(--bitcoin-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(247, 147, 26, 0.2);
+}
+
+.phase-nav-item.active {
+  background: var(--gradient-primary);
+  border-color: var(--bitcoin-orange);
+  box-shadow: 0 4px 16px rgba(247, 147, 26, 0.3);
+}
+
+.phase-nav-item.completed {
+  background: var(--gradient-trust);
+  border-color: var(--trust-green);
+}
+
+.phase-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--bitcoin-orange);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.875rem;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.phase-description {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.phase-completed {
+  font-size: 1.25rem;
+  color: var(--trust-green);
+  position: relative;
+  z-index: 1;
+}
+
+/* Crisis Phase Content */
+.crisis-phase {
+  background: var(--dark-bg-light);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.crisis-phase::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-foundation);
+  opacity: 0.05;
+  animation: foundationFlow 10s linear infinite;
+  z-index: 0;
+}
+
+.crisis-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.crisis-header .crisis-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+  animation: sovereigntyRise 2s ease-out;
+}
+
+.crisis-header h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--bitcoin-orange);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.crisis-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Header Styles */
