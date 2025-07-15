@@ -607,10 +607,10 @@ const MythsModule = () => {
       <div className="crisis-title-section">
         <h1 className="crisis-title">
           <Shield className="crisis-shield" />
-          Bitcoin Truth Defense Network
+          Bitcoin Myths & Facts
         </h1>
-        <div className="crisis-subtitle">
-          Misinformation Crisis Response System
+        <div className="module-subtitle">
+          Examine common misconceptions about Bitcoin with evidence and data
         </div>
       </div>
       

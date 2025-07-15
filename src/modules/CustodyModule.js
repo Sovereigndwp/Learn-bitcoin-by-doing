@@ -902,9 +902,9 @@ const CustodyModule = () => {
 
   return (
     <ModuleLayout
-      title="Custody Crisis Architect"
-      subtitle="Master Bitcoin Self-Custody Through Crisis-Driven Discovery"
-      description="Transform from custody victim to sovereignty architect by learning from $50+ billion in real custody failures and building unbreakable security systems."
+      title="Self-Custody & Security"
+      subtitle="Learn practical strategies for safely storing and managing your Bitcoin"
+      description="Understand Bitcoin custody options, security best practices, and how to protect your Bitcoin from loss or theft through real-world examples and practical guidance."
     >
     <div className="custody-module">
         {/* Achievement Popup */}

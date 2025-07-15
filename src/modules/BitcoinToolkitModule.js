@@ -352,14 +352,14 @@ const BitcoinToolkitModule = () => {
       <div className="toolkit-content">
         <div className="toolkit-header">
           <h1 className="toolkit-title">
-            Bitcoin Developer Toolkit
+            Bitcoin Tools & Practice
           </h1>
           <p className="toolkit-subtitle">
-            Professional Tools for Bitcoin Development & Analysis
+            Hands-on experience with Bitcoin tools and real-world applications
           </p>
           <div className="toolkit-description">
-            Master Bitcoin through hands-on practice with professional-grade tools. 
-            Build transactions, analyze scripts, explore the network, and develop real Bitcoin applications.
+            Practice with Bitcoin tools through interactive exercises. 
+            Build transactions, analyze scripts, explore the network, and work with real Bitcoin data.
           </div>
           {isModuleCompleted('bitcoin-toolkit') && (
             <div className="completion-badge">

@@ -232,8 +232,8 @@ const AdvancedTopicsModule = () => {
         <div className="crisis-alert">
           <AlertTriangle className="crisis-icon animate-pulse" />
           <div className="crisis-text">
-            <h1>Advanced Bitcoin Architect</h1>
-            <p>Master Bitcoin's cutting-edge technology and lead the innovation frontier</p>
+            <h1>Advanced Bitcoin Topics</h1>
+            <p>Explore cutting-edge Bitcoin technology and future developments</p>
           </div>
         </div>
       </div>

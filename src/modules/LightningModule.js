@@ -1277,10 +1277,10 @@ const LightningModule = () => {
           <div className="header-content">
             <div className="module-icon">⚡</div>
             <div className="header-text">
-              <h1 className="module-title">Lightning Crisis Architect</h1>
-              <p className="module-subtitle">Master instant Bitcoin payments through crisis-driven discovery</p>
-              <div className="crisis-tagline">
-                Transform the global payment nightmare into Lightning-fast solutions
+              <h1 className="module-title">Lightning Network</h1>
+              <p className="module-subtitle">Understand Bitcoin's second layer for fast, cheap payments</p>
+              <div className="module-description">
+                Learn how Lightning Network enables instant Bitcoin transactions
           </div>
             </div>
           </div>

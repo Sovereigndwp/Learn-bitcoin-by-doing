@@ -15,42 +15,42 @@ const MiningModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userInsights, setUserInsights] = useState({});
 
-  // Energy Alchemist Journey Steps
+  // Bitcoin Mining Learning Steps
   const alchemySteps = [
     {
-      id: "energy_crisis_detective",
-      title: "⚡ Energy Crisis Detective",
-      subtitle: "Discover how traditional money wastes massive energy hiding corruption...",
+      id: "energy_and_money",
+      title: "⚡ Energy and Money Systems",
+      subtitle: "Compare the energy usage of traditional banking versus Bitcoin",
       component: EnergyCrisisDetectiveStep
     },
     {
-      id: "electricity_alchemy_lab", 
-      title: "🧪 Electricity Alchemy Lab",
-      subtitle: "Transform raw electrical power into unbreakable mathematical proof",
+      id: "proof_of_work", 
+      title: "🔨 Proof of Work Mechanism",
+      subtitle: "Understand how Bitcoin converts electricity into network security",
       component: ElectricityAlchemyLabStep
     },
     {
-      id: "economic_attack_simulator",
-      title: "💰 Economic Attack Simulator", 
-      subtitle: "Try to attack Bitcoin and discover why it's financially impossible",
+      id: "attack_economics",
+      title: "💰 Attack Economics", 
+      subtitle: "Learn why attacking Bitcoin becomes prohibitively expensive",
       component: EconomicAttackSimulatorStep
     },
     {
-      id: "difficulty_master_control",
-      title: "🎯 Difficulty Master Control",
-      subtitle: "Command Bitcoin's self-adjusting security heartbeat mechanism", 
+      id: "difficulty_adjustment",
+      title: "📊 Difficulty Adjustment",
+      subtitle: "Explore Bitcoin's automatic security calibration system", 
       component: DifficultyMasterControlStep
     },
     {
-      id: "clean_energy_pioneer",
-      title: "🌱 Clean Energy Pioneer",
-      subtitle: "Lead the renewable energy revolution powered by Bitcoin mining",
+      id: "energy_incentives",
+      title: "🌱 Energy Incentives",
+      subtitle: "Examine how Bitcoin mining drives renewable energy adoption",
       component: CleanEnergyPioneerStep
     },
     {
-      id: "global_security_guardian",
-      title: "🌍 Global Security Guardian", 
-      subtitle: "Join the worldwide distributed network defending digital sovereignty",
+      id: "network_security",
+      title: "🌐 Network Security", 
+      subtitle: "Understand how distributed mining secures the Bitcoin network",
       component: GlobalSecurityGuardianStep
     }
   ];
@@ -122,16 +122,16 @@ const MiningModule = () => {
   return (
     <div className="mining-module">
       <div className="module-header">
-        <div className="alchemy-progress">
+        <div className="module-progress">
           <div className="progress-indicators">
             {alchemySteps.map((_, index) => (
               <div 
                 key={index}
-                className={`progress-flame ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+                className={`progress-step ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
               />
             ))}
           </div>
-          <span className="progress-text">Alchemy Step {currentStep + 1} of {alchemySteps.length}</span>
+          <span className="progress-text">Step {currentStep + 1} of {alchemySteps.length}</span>
         </div>
         
         <div className="step-header">

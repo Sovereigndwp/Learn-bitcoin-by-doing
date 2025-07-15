@@ -1326,9 +1326,9 @@ const MerkleModule = () => {
           <div className="module-icon">
             <TreePine className="w-12 h-12" />
           </div>
-          Data Crisis Architect: Engineer Logarithmic Efficiency
+          Merkle Trees
         </h1>
-        <p className="module-subtitle">Transform data verification crises into elegant tree solutions that scale globally</p>
+        <p className="module-subtitle">Discover how Bitcoin efficiently verifies large amounts of data using tree structures</p>
         <div className="module-progress">
           <div className="progress-bar">
             <div 

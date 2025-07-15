@@ -1310,9 +1310,9 @@ const ScriptsModule = () => {
           <div className="module-icon">
             <Code className="w-12 h-12" />
           </div>
-          Script Architect: Program Unstoppable Money Contracts
+          Bitcoin Scripts
         </h1>
-        <p className="module-subtitle">Transform crisis into code, logic into law, and contracts into mathematical certainty</p>
+        <p className="module-subtitle">Learn how Bitcoin uses programmable conditions to control spending</p>
         <div className="module-progress">
           <div className="progress-bar">
             <div 
