@@ -1,4 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  OptionButton, 
+  NavigationButton, 
+  PopupButton 
+} from '../components/EnhancedButtons';
 import './NumbersModule.css';
 
 const NumbersModule = () => {
@@ -19,6 +26,7 @@ const NumbersModule = () => {
 
   // Interactive challenge state
   const [activeChallenge, setActiveChallenge] = useState(null);
+  const [challengeProgress, setChallengeProgress] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [feedback, setFeedback] = useState('');
   const [showHint, setShowHint] = useState(false);
@@ -337,10 +345,6 @@ const NumbersModule = () => {
             achievements: [...prev.achievements, challengeId]
           }));
           break;
-        default:
-          // Handle unknown crisis phases gracefully
-          console.log(`Unknown crisis phase: ${crisisPhase}`);
-          break;
       }
       
       setFeedback(`🎯 MASTERY ACHIEVED! +${challenge.reward} points`);
@@ -426,7 +430,7 @@ const NumbersModule = () => {
                 <span className="alert-time">{alert.timestamp}</span>
                 <span className="alert-message">{alert.message}</span>
                 <span className="alert-intensity">{alert.intensity}%</span>
-      </div>
+              </div>
           ))}
         </div>
         </div>
@@ -447,7 +451,7 @@ const NumbersModule = () => {
               </div>
           <div className="threat">
             <strong>Threat:</strong> {currentScenario.threat}
-            </div>
+          </div>
           </div>
           
         {/* Crisis Challenges */}
@@ -462,12 +466,14 @@ const NumbersModule = () => {
                   <span className="challenge-type">{challenge.type}</span>
                   <span className="challenge-difficulty">{challenge.difficulty}</span>
                 </div>
-                <button 
+                <ActionButton 
                   className="challenge-start-btn"
                   onClick={() => startChallenge(challenge)}
+                  variant="crisis"
+                  size="small"
                 >
                   Begin Challenge
-                </button>
+                </ActionButton>
               </div>
             ))}
               </div>
@@ -479,12 +485,14 @@ const NumbersModule = () => {
         <div className="active-challenge">
           <div className="challenge-header">
             <h3>🎯 {activeChallenge.title}</h3>
-            <button 
+            <NavigationButton 
               className="challenge-close"
               onClick={() => setActiveChallenge(null)}
+              variant="close"
+              size="small"
             >
               ×
-            </button>
+            </NavigationButton>
           </div>
           
           <div className="challenge-content">
@@ -500,7 +508,13 @@ const NumbersModule = () => {
                 placeholder="Enter your answer..."
                 onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
               />
-              <button onClick={handleSubmit}>Submit</button>
+              <ActionButton 
+                onClick={handleSubmit}
+                variant="primary"
+                size="small"
+              >
+                Submit
+              </ActionButton>
             </div>
             
             {showHint && (
@@ -509,12 +523,14 @@ const NumbersModule = () => {
           </div>
             )}
           
-          <button 
+          <PopupButton 
               className="hint-btn"
               onClick={() => setShowHint(!showHint)}
+              variant="secondary"
+              size="small"
             >
               {showHint ? 'Hide Hint' : 'Show Hint'}
-          </button>
+            </PopupButton>
             
             {feedback && (
               <div className={`challenge-feedback ${feedback.includes('ACHIEVED') ? 'success' : 'error'}`}>
@@ -576,7 +592,7 @@ const NumbersModule = () => {
                   className="progress-fill" 
                   style={{ width: `${Math.min(endiannessControl.mastery * 25, 100)}%` }}
                 />
-        </div>
+              </div>
               <span>{endiannessControl.mastery} Mastery Points</span>
               </div>
             </div>

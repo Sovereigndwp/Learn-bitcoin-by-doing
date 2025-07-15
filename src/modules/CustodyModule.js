@@ -1,17 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import ModuleLayout from '../components/ModuleLayout';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  OptionButton, 
+  NavigationButton, 
+  PopupButton 
+} from '../components/EnhancedButtons';
 import './CustodyModule.css';
 import { 
   Shield, 
+  Key, 
+  Lock, 
+  Unlock, 
   AlertTriangle, 
   CheckCircle, 
+  XCircle, 
   Zap, 
+  Clock, 
   Users, 
+  Eye, 
+  EyeOff, 
   Building, 
+  Home, 
+  Smartphone, 
+  HardDrive, 
+  Wifi, 
+  WifiOff, 
+  DollarSign, 
+  TrendingDown, 
+  Crown, 
   Target, 
   Award,
-  ArrowRight
+  ArrowRight,
+  ChevronRight,
+  Cpu,
+  Database,
+  Server,
+  Cloud,
+  FileText,
+  BarChart3,
+  Globe,
+  Layers,
+  Coins
 } from 'lucide-react';
 
 const CustodyModule = () => {
@@ -24,6 +56,8 @@ const CustodyModule = () => {
   const [custodyScore, setCustodyScore] = useState(0);
   const [totalLosses, setTotalLosses] = useState(0);
   const [securityLevel, setSecurityLevel] = useState(1);
+  const [walletSetups, setWalletSetups] = useState([]);
+  const [emergencyScenarios, setEmergencyScenarios] = useState([]);
   const [sovereigntyProgress, setSovereigntyProgress] = useState(0);
 
   // Crisis scenarios and real-world data
@@ -169,7 +203,7 @@ const CustodyModule = () => {
       id: 'sovereignty-engineer',
       title: 'Sovereignty Engineer: Break Free from Banks',
       subtitle: 'Build Self-Custody Infrastructure',
-      icon: Shield, // Changed from Crown to Shield as Crown is removed
+      icon: Crown,
       color: '#ca8a04',
       description: 'Engineer complete financial independence through advanced self-custody techniques.',
       objective: 'Achieve true financial sovereignty with bulletproof custody.'
@@ -339,19 +373,22 @@ const CustodyModule = () => {
         )}
 
         {selectedCrisis && !investigationComplete && (
-          <button className="continue-btn investigation-complete" onClick={completeInvestigation}>
-            <CheckCircle size={20} />
+          <ActionButton 
+            className="investigation-complete" 
+            onClick={completeInvestigation}
+            variant="primary"
+            icon={<CheckCircle size={20} />}
+            iconPosition="left"
+          >
             Complete Investigation & Design Solutions
-            <ArrowRight size={20} />
-          </button>
+          </ActionButton>
         )}
 
         {investigationComplete && (
-          <button className="continue-btn" onClick={handleContinue}>
+          <ContinueButton onClick={handleContinue}>
             <Shield size={20} />
             Begin Risk Architecture
-            <ArrowRight size={20} />
-          </button>
+          </ContinueButton>
         )}
       </div>
     );
@@ -484,11 +521,15 @@ const CustodyModule = () => {
         )}
 
         {selectedMethod && !customSetup && (
-          <button className="continue-btn design-setup" onClick={designCustomSetup}>
-            <Target size={20} />
+          <ActionButton 
+            className="design-setup" 
+            onClick={designCustomSetup}
+            variant="primary"
+            icon={<Target size={20} />}
+            iconPosition="left"
+          >
             Design Custom Multi-Layer Setup
-            <ArrowRight size={20} />
-          </button>
+          </ActionButton>
         )}
 
         {customSetup && (
@@ -512,11 +553,10 @@ const CustodyModule = () => {
                 <span className="layer-method">{customSetup.emergency.name}</span>
               </div>
             </div>
-            <button className="continue-btn" onClick={handleContinue}>
-              <Shield size={20} /> {/* Changed from Crown to Shield */}
+            <ContinueButton onClick={handleContinue}>
+              <Crown size={20} />
               Engineer Self-Custody
-              <ArrowRight size={20} />
-            </button>
+            </ContinueButton>
                 </div>
               )}
             </div>
@@ -569,12 +609,14 @@ const CustodyModule = () => {
               <div className="step-content">
                 <h4>{step.title}</h4>
                 {!step.completed && (
-                  <button 
+                  <ActionButton 
                     className="complete-step-btn"
                     onClick={() => completeStep(step.id)}
+                    variant="secondary"
+                    size="small"
                   >
                     Complete Step
-                  </button>
+                  </ActionButton>
                 )}
               </div>
             </div>
@@ -585,11 +627,10 @@ const CustodyModule = () => {
           <div className="sovereignty-achievement">
             <h4>🎉 Financial Sovereignty Achieved!</h4>
             <p>You now have complete control over your Bitcoin with no third-party dependencies.</p>
-            <button className="continue-btn" onClick={handleContinue}>
+            <ContinueButton onClick={handleContinue}>
               <Zap size={20} />
               Design Emergency Protocols
-              <ArrowRight size={20} />
-            </button>
+            </ContinueButton>
           </div>
         )}
       </div>
@@ -598,6 +639,7 @@ const CustodyModule = () => {
 
   // Emergency Architect Phase
   const EmergencyArchitectPhase = () => {
+    const [selectedEmergency, setSelectedEmergency] = useState(null);
     const [emergencyPlans, setEmergencyPlans] = useState([]);
 
     const createEmergencyPlan = (emergencyType) => {
@@ -633,6 +675,7 @@ const CustodyModule = () => {
             <div 
               key={emergency.id} 
               className={`emergency-card ${emergency.urgency}`}
+              onClick={() => setSelectedEmergency(emergency)}
             >
               <div className="emergency-header">
                 <h4>{emergency.title}</h4>
@@ -642,15 +685,17 @@ const CustodyModule = () => {
         </div>
               <div className="emergency-actions">
                 {!emergencyPlans.find(p => p.id === emergency.id) ? (
-                  <button 
+                  <ActionButton 
                     className="create-plan-btn"
                     onClick={(e) => {
                       e.stopPropagation();
                       createEmergencyPlan(emergency);
                     }}
+                    variant="crisis"
+                    size="small"
                   >
                     Create Emergency Plan
-                  </button>
+                  </ActionButton>
                 ) : (
                   <div className="plan-created">
                     <CheckCircle size={16} />
@@ -666,11 +711,11 @@ const CustodyModule = () => {
           <div className="emergency-mastery">
             <h4>🛡️ Emergency Architect Mastery!</h4>
             <p>You've created comprehensive emergency plans for all crisis scenarios.</p>
-            <button className="continue-btn" onClick={handleContinue}>
+            <ContinueButton onClick={handleContinue}>
               <Building size={20} />
               Command Institutional Scale
               <ArrowRight size={20} />
-            </button>
+            </ContinueButton>
           </div>
         )}
       </div>
@@ -740,12 +785,14 @@ const CustodyModule = () => {
                 </ul>
               </div>
               {!institutionalSetups.find(s => s.id === solution.id) ? (
-                <button 
+                <ActionButton 
                   className="deploy-btn"
                   onClick={() => deployInstitutionalSetup(solution)}
+                  variant="primary"
+                  size="small"
                 >
                   Deploy Solution
-                </button>
+                </ActionButton>
               ) : (
                 <div className="deployed">
                   <CheckCircle size={16} />
@@ -757,11 +804,11 @@ const CustodyModule = () => {
             </div>
 
         {institutionalSetups.length === institutionalSolutions.length && (
-          <button className="continue-btn" onClick={handleContinue}>
+          <ContinueButton onClick={handleContinue}>
             <Target size={20} />
             Achieve Custody Sovereignty
             <ArrowRight size={20} />
-          </button>
+          </ContinueButton>
         )}
           </div>
         );

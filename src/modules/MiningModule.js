@@ -58,7 +58,7 @@ const MiningModule = () => {
   const handleStepComplete = (stepIndex, insights = {}) => {
     setCompletedSteps(prev => {
       const newCompleted = new Set(prev);
-    newCompleted.add(stepIndex);
+      newCompleted.add(stepIndex);
       return newCompleted;
     });
     
@@ -346,7 +346,7 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
   };
 
   const performEnergyAlchemy = (experiment) => {
-      const interval = setInterval(() => {
+    const interval = setInterval(() => {
       setComputationWork(prev => {
         const increment = Math.floor(Math.random() * 1000000);
         const newWork = prev + increment;
@@ -384,9 +384,9 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
       alchemyLevel: selectedExperiment?.title
     };
     onComplete(insights);
-    };
+  };
 
-        return (
+  return (
     <div className="electricity-alchemy-lab">
       <div className="lab-introduction">
         <h2>🧪 Welcome to the Energy Alchemy Laboratory</h2>
@@ -404,9 +404,9 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
             <span className="formula-element">Mathematical Proof</span>
             <span className="formula-arrow">→</span>
             <span className="formula-element">Digital Security</span>
-              </div>
-              </div>
-              </div>
+          </div>
+        </div>
+      </div>
 
       {alchemyState === 'selecting' && (
         <div className="experiment-selection">
@@ -417,17 +417,17 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
                 <div className="experiment-header">
                   <h4>{experiment.title}</h4>
                   <div className="energy-requirement">⚡ {experiment.energyRequired} kWh</div>
-            </div>
-
+                </div>
+                
                 <div className="experiment-details">
                   <div className="description">{experiment.description}</div>
                   <div className="difficulty-display">
                     Target Hash: <code>{experiment.difficulty}...</code>
-          </div>
+                  </div>
                   <div className="security-level">{experiment.securityLevel}</div>
                   <div className="real-world">{experiment.realWorldEquivalent}</div>
-          </div>
-
+                </div>
+                
                 <ActionButton
                   variant="primary"
                   onClick={() => startAlchemyExperiment(experiment)}
@@ -437,8 +437,8 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
                 </ActionButton>
               </div>
             ))}
-              </div>
-              </div>
+          </div>
+        </div>
       )}
 
       {alchemyState === 'transforming' && selectedExperiment && (
@@ -451,33 +451,33 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
               <div className="energy-stats">
                 <div className="stat-label">Energy Input</div>
                 <div className="stat-value">{energyInput} kWh</div>
+              </div>
             </div>
-          </div>
-
+            
             <div className="transformation-arrows">
               <div className="arrow-with-work">
                 <ArrowRight className="transformation-arrow" />
                 <div className="work-display">Computing...</div>
-          </div>
-        </div>
-
+              </div>
+            </div>
+            
             <div className="computation-display">
               <Cpu className="computation-icon" />
               <div className="computation-stats">
                 <div className="stat-label">Computation Work</div>
                 <div className="stat-value">{computationWork.toLocaleString()} hashes</div>
               </div>
-              </div>
             </div>
+          </div>
           
           <div className="alchemy-status">
             <div className="status-text">Transforming electrical energy into mathematical proof...</div>
             <div className="target-info">
               Searching for hash starting with: <code>{selectedExperiment.difficulty}</code>
             </div>
-            </div>
           </div>
-        )}
+        </div>
+      )}
 
       {alchemyState === 'proof_created' && mathematicalProof && (
         <div className="proof-creation-success">
@@ -487,7 +487,7 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
             <div className="proof-header">
               <Trophy className="proof-icon" />
               <h4>Mathematical Proof Created</h4>
-              </div>
+            </div>
             
             <div className="proof-details">
               <div className="proof-hash">
@@ -499,16 +499,16 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
                 <div className="summary-stat">
                   <span className="stat-label">Energy Transformed:</span>
                   <span className="stat-value">{mathematicalProof.energyTransformed} kWh</span>
-              </div>
+                </div>
                 <div className="summary-stat">
                   <span className="stat-label">Computation Performed:</span>
                   <span className="stat-value">{mathematicalProof.computationPerformed.toLocaleString()} hashes</span>
-              </div>
+                </div>
                 <div className="summary-stat">
                   <span className="stat-label">Security Created:</span>
                   <span className="stat-value">{mathematicalProof.securityCreated}</span>
-            </div>
-            </div>
+                </div>
+              </div>
             </div>
           </div>
           
@@ -533,11 +533,11 @@ const ElectricityAlchemyLabStep = ({ onComplete, userInsights, stepIndex }) => {
           >
             Master the Attack Simulator 💰
           </ActionButton>
-          </div>
-        )}
-      </div>
-    );
-  };
+        </div>
+      )}
+    </div>
+  );
+};
 
 // 💰 Step 3: Economic Attack Simulator
 const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) => {
@@ -654,7 +654,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
     onComplete(insights);
   };
 
-        return (
+  return (
     <div className="economic-attack-simulator">
       <div className="simulator-briefing">
         <h2>💰 Economic Attack Simulator</h2>
@@ -668,8 +668,8 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
             <strong>Why This Matters:</strong> Understanding attack economics helps you choose 
             the most secure system to protect your wealth from theft and manipulation.
           </div>
-            </div>
-            </div>
+        </div>
+      </div>
 
       {attackPhase === 'planning' && (
         <div className="attack-planning">
@@ -683,11 +683,11 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
               >
                 <div className="attack-header">
                   <h4>{attack.title}</h4>
-        </div>
+                </div>
                 
                 <div className="attack-description">
                   {attack.description}
-        </div>
+                </div>
                 
                 <div className="requirements-preview">
                   <strong>Initial Assessment:</strong>
@@ -696,8 +696,8 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                     <li>Time: {attack.requirements.time || attack.requirements.timeToAcquire}</li>
                     <li>Complexity: {attack.id === '51_percent_attack' ? 'Extreme' : attack.id === 'banking_attack' ? 'Medium' : 'High'}</li>
                   </ul>
-      </div>
-
+                </div>
+                
                 <ActionButton
                   variant="danger"
                   className="plan-attack-button"
@@ -705,9 +705,9 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                   Calculate Attack Economics 📊
                 </ActionButton>
               </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
       )}
 
       {attackPhase === 'calculating' && (
@@ -774,12 +774,12 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                   <div className="expected-loss">
                     <strong>Expected Loss:</strong>
                     <span className="loss-amount">${attackCalculations.expectedLoss.toLocaleString()}</span>
-      </div>
-
+                  </div>
+                  
                   {realizationLevel >= 20 && (
                     <div className="realization-1">
                       <strong>Realization #1:</strong> This attack would lose massive amounts of money
-        </div>
+                    </div>
                   )}
                   
                   {realizationLevel >= 40 && (
@@ -787,7 +787,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                       <strong>Realization #2:</strong> {selectedAttack.id === '51_percent_attack' ? 
                         'Even if successful, the attack makes Bitcoin worthless - destroying your investment' :
                         'Traditional systems are much easier and cheaper to attack'}
-          </div>
+                    </div>
                   )}
                   
                   {realizationLevel >= 60 && (
@@ -795,7 +795,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                       <strong>Realization #3:</strong> {selectedAttack.id === '51_percent_attack' ? 
                         'Same resources could earn $40+ million daily mining honestly' :
                         'These attacks happen regularly with actual success'}
-          </div>
+                    </div>
                   )}
                   
                   {realizationLevel >= 80 && (
@@ -803,7 +803,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                       <strong>Realization #4:</strong> {selectedAttack.id === '51_percent_attack' ? 
                         'Bitcoin\'s security gets stronger as more energy is invested' :
                         'Physical and institutional systems have fundamental vulnerabilities'}
-      </div>
+                    </div>
                   )}
                   
                   {realizationLevel >= 100 && (
@@ -823,11 +823,11 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                             despite billions in bounties for finding vulnerabilities.
                           </p>
                         )}
-              </div>
-      </div>
+                      </div>
+                    </div>
                   )}
-          </div>
-        </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -840,7 +840,7 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
                   honest participation always more profitable than attacking the network. 
                   This creates a self-reinforcing security system that gets stronger over time.
                 </p>
-            </div>
+              </div>
 
               <ActionButton
                 variant="success"
@@ -849,9 +849,9 @@ const EconomicAttackSimulatorStep = ({ onComplete, userInsights, stepIndex }) =>
               >
                 Master Difficulty Control 🎯
               </ActionButton>
-        </div>
+            </div>
           )}
-      </div>
+        </div>
       )}
     </div>
   );
@@ -968,11 +968,11 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
               <span className="beat-time">10 min</span>
               <span className="beat">💗</span>
               <span className="beat-time">10 min</span>
-        </div>
-            <div className="rhythm-description">Bitcoin's Perfect 10-Minute Heartbeat</div>
-      </div>
             </div>
+            <div className="rhythm-description">Bitcoin's Perfect 10-Minute Heartbeat</div>
+          </div>
         </div>
+      </div>
 
       {controlPhase === 'learning' && (
         <div className="difficulty-education">
@@ -986,13 +986,13 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                   <div className="step-number">1</div>
                   <div className="step-content">
                     <strong>Monitoring:</strong> Network tracks actual time for last 2,016 blocks
-          </div>
-          </div>
+                  </div>
+                </div>
                 <div className="process-step">
                   <div className="step-number">2</div>
                   <div className="step-content">
                     <strong>Calculation:</strong> Compares actual time vs target (20,160 minutes)
-        </div>
+                  </div>
                 </div>
                 <div className="process-step">
                   <div className="step-number">3</div>
@@ -1007,15 +1007,15 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                   </div>
                 </div>
               </div>
-      </div>
-
+            </div>
+            
             <div className="current-network-stats">
               <h4>📊 Current Network State:</h4>
               <div className="stats-grid">
                 <div className="stat-item">
                   <span className="stat-label">Global Hashrate:</span>
                   <span className="stat-value">{networkState.currentHashrate} EH/s</span>
-            </div>
+                </div>
                 <div className="stat-item">
                   <span className="stat-label">Current Difficulty:</span>
                   <span className="stat-value">{(networkState.difficulty / 1000000000000).toFixed(1)}T</span>
@@ -1027,7 +1027,7 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                 <div className="stat-item">
                   <span className="stat-label">Blocks Until Adjustment:</span>
                   <span className="stat-value">{networkState.blocksUntilAdjustment}</span>
-              </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1041,16 +1041,16 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                 <div key={scenario.id} className="scenario-card">
                   <div className="scenario-header">
                     <h5>{scenario.title}</h5>
-        </div>
+                  </div>
                   
                   <div className="scenario-description">
                     {scenario.description}
-    </div>
+                  </div>
                   
                   <div className="expected-effect">
                     <strong>Expected:</strong> {scenario.expectedEffect}
-      </div>
-
+                  </div>
+                  
                   <ActionButton
                     variant="primary"
                     onClick={() => runDifficultySimulation(scenario)}
@@ -1059,8 +1059,8 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                     Run Simulation 🚀
                   </ActionButton>
                 </div>
-            ))}
-          </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -1077,21 +1077,21 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                   <div className="metric">
                     <span className="metric-label">Hashrate:</span>
                     <span className="metric-value">{step.hashrate.toFixed(0)} EH/s</span>
-          </div>
+                  </div>
                   <div className="metric">
                     <span className="metric-label">Block Time:</span>
                     <span className="metric-value">{(step.blockTime / 60).toFixed(1)} min</span>
-          </div>
+                  </div>
                   <div className="metric">
                     <span className="metric-label">Difficulty:</span>
                     <span className="metric-value">{(step.difficulty / 1000000000000).toFixed(1)}T</span>
-          </div>
-        </div>
+                  </div>
+                </div>
                 <div className="step-status">{step.status}</div>
+              </div>
+            ))}
           </div>
-          ))}
-        </div>
-
+          
           <div className="understanding-progress">
             <div className="progress-label">Understanding Difficulty Control:</div>
             <div className="progress-bar">
@@ -1099,9 +1099,9 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
                 className="progress-fill"
                 style={{ width: `${userUnderstanding}%` }}
               ></div>
-        </div>
+            </div>
             <div className="progress-percentage">{userUnderstanding}%</div>
-      </div>
+          </div>
         </div>
       )}
 
@@ -1114,27 +1114,27 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
             <div className="achievement-text">
               <h4>You now control Bitcoin's heartbeat!</h4>
               <p>You understand how the network automatically maintains security regardless of mining changes.</p>
-      </div>
             </div>
+          </div>
           
           <div className="mastery-insights">
             <h4>🧠 Master-Level Insights Gained:</h4>
             <div className="insight-list">
               <div className="insight-item">
                 <strong>Self-Regulation:</strong> Bitcoin adjusts difficulty automatically without human intervention
-            </div>
+              </div>
               <div className="insight-item">
                 <strong>Predictable Issuance:</strong> Consistent 10-minute blocks ensure predictable Bitcoin supply
-          </div>
+              </div>
               <div className="insight-item">
                 <strong>Security Scaling:</strong> More miners = higher difficulty = stronger security
-        </div>
+              </div>
               <div className="insight-item">
                 <strong>Attack Resistance:</strong> Even massive hashrate changes can't break the system
+              </div>
             </div>
-        </div>
-      </div>
-
+          </div>
+          
           <div className="personal-impact">
             <h4>💰 What This Means for Your Wealth:</h4>
             <p>
@@ -1142,7 +1142,7 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
               system that automatically strengthens itself over time. No central authority needed - 
               just pure mathematics and economic incentives.
             </p>
-                </div>
+          </div>
 
           <ActionButton
             variant="success"
@@ -1151,7 +1151,7 @@ const DifficultyMasterControlStep = ({ onComplete, userInsights, stepIndex }) =>
           >
             Pioneer Clean Energy Revolution 🌱
           </ActionButton>
-                </div>
+        </div>
       )}
     </div>
   );
@@ -1278,23 +1278,23 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
               <div className="stat-item">
                 <span className="stat-label">Renewable Energy Usage:</span>
                 <span className="stat-value">{energyRevolution.renewablePercentage}%</span>
-                </div>
+              </div>
               <div className="stat-item">
                 <span className="stat-label">CO2 Reduction Potential:</span>
                 <span className="stat-value">{energyRevolution.co2Reduction.toLocaleString()} tons/year</span>
-                </div>
+              </div>
               <div className="stat-item">
                 <span className="stat-label">Grid Stabilization:</span>
                 <span className="stat-value">{energyRevolution.gridStabilization}%</span>
-                </div>
+              </div>
               <div className="stat-item">
                 <span className="stat-label">Rural Projects:</span>
                 <span className="stat-value">{energyRevolution.ruralDevelopment} communities</span>
               </div>
+            </div>
           </div>
-                </div>
-                </div>
-                </div>
+        </div>
+      </div>
 
       {pioneerPhase === 'awakening' && (
         <div className="energy-project-selection">
@@ -1306,19 +1306,19 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
                 <div className="project-header">
                   <h4>{project.title}</h4>
                   <div className="project-location">📍 {project.location}</div>
-              </div>
+                </div>
                 
                 <div className="project-details">
                   <div className="project-description">{project.description}</div>
                   
                   <div className="energy-source">
                     <strong>Energy Source:</strong> {project.energySource}
-          </div>
+                  </div>
                   
                   <div className="innovation">
                     <strong>Innovation:</strong> {project.innovation}
-      </div>
-
+                  </div>
+                  
                   <div className="impact-preview">
                     <strong>Expected Impact:</strong>
                     <ul>
@@ -1327,9 +1327,9 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
                       <li>🌍 {project.impact.environmental}</li>
                       <li>👥 {project.impact.community}</li>
                     </ul>
-        </div>
-      </div>
-
+                  </div>
+                </div>
+                
                 <ActionButton
                   variant="success"
                   onClick={() => buildEnergyProject(project)}
@@ -1357,11 +1357,11 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
                     className="progress-fill"
                     style={{ width: `${projectProgress}%` }}
                   ></div>
-      </div>
+                </div>
                 <div className="progress-percentage">{projectProgress}%</div>
-    </div>
-      </div>
-
+              </div>
+            </div>
+            
             <div className="impact-tracking">
               <h4>🌍 Real-Time Impact:</h4>
               <div className="impact-metrics">
@@ -1369,26 +1369,26 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
                   <span className="metric-icon">🌱</span>
                   <span className="metric-label">Renewable %:</span>
                   <span className="metric-value">{energyRevolution.renewablePercentage}%</span>
-          </div>
+                </div>
                 <div className="metric">
                   <span className="metric-icon">🌍</span>
                   <span className="metric-label">CO2 Reduced:</span>
                   <span className="metric-value">{energyRevolution.co2Reduction.toLocaleString()} tons</span>
-        </div>
-            <div className="metric">
+                </div>
+                <div className="metric">
                   <span className="metric-icon">⚡</span>
                   <span className="metric-label">Grid Stability:</span>
                   <span className="metric-value">{energyRevolution.gridStabilization}%</span>
-          </div>
-            <div className="metric">
+                </div>
+                <div className="metric">
                   <span className="metric-icon">👥</span>
                   <span className="metric-label">Communities:</span>
                   <span className="metric-value">{energyRevolution.ruralDevelopment}</span>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-
+          
           <div className="construction-phases">
             <div className={`phase ${projectProgress >= 20 ? 'completed' : 'current'}`}>
               Phase 1: Site Preparation & Permits
@@ -1398,14 +1398,14 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
             </div>
             <div className={`phase ${projectProgress >= 60 ? 'completed' : projectProgress >= 40 ? 'current' : ''}`}>
               Phase 3: Mining Infrastructure Installation
-          </div>
+            </div>
             <div className={`phase ${projectProgress >= 80 ? 'completed' : projectProgress >= 60 ? 'current' : ''}`}>
               Phase 4: Grid Stabilization Systems
-          </div>
+            </div>
             <div className={`phase ${projectProgress >= 100 ? 'completed' : projectProgress >= 80 ? 'current' : ''}`}>
               Phase 5: Community Benefit Programs
-        </div>
-      </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -1448,9 +1448,9 @@ const CleanEnergyPioneerStep = ({ onComplete, userInsights, stepIndex }) => {
                 <div className="impact-value">{selectedProject.impact.community}</div>
                 <div className="impact-description">Local economic development</div>
               </div>
-        </div>
-      </div>
-
+            </div>
+          </div>
+          
           <div className="global-revolution-insight">
             <h4>🌍 Global Energy Revolution Insight:</h4>
             <p>
@@ -1626,25 +1626,25 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
               <div key={role.id} className="guardian-role-card">
                 <div className="role-header">
                   <h4>{role.title}</h4>
-      </div>
-
+                </div>
+                
                 <div className="role-description">
                   {role.description}
                 </div>
                 
                 <div className="role-requirements">
-              <strong>Requirements:</strong>
-              <ul>
+                  <strong>Requirements:</strong>
+                  <ul>
                     {role.requirements.map((req, index) => (
                       <li key={index}>{req}</li>
-                ))}
-              </ul>
-            </div>
+                    ))}
+                  </ul>
+                </div>
                 
                 <div className="role-contribution">
-              <strong>Your Contribution:</strong>
+                  <strong>Your Contribution:</strong>
                   <p>{role.contribution}</p>
-            </div>
+                </div>
                 
                 <div className="role-impact">
                   <strong>Impact Areas:</strong>
@@ -1652,15 +1652,15 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                     {Object.entries(role.impact).map(([key, value]) => (
                       <div key={key} className="impact-item">
                         <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
-          </div>
+                      </div>
                     ))}
-        </div>
-        </div>
+                  </div>
+                </div>
                 
                 <div className="global-effect">
                   <strong>Global Effect:</strong> {role.globalEffect}
-      </div>
-
+                </div>
+                
                 <ActionButton
                   variant="primary"
                   onClick={() => deploySecurityRole(role)}
@@ -1668,10 +1668,10 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                 >
                   Deploy as Guardian 🚀
                 </ActionButton>
-            </div>
-          ))}
-            </div>
-                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {guardianPhase === 'training' && securityRole && (
@@ -1686,14 +1686,14 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                   className="progress-fill"
                   style={{ width: `${deploymentProgress}%` }}
                 ></div>
-                </div>
+              </div>
               <div className="progress-percentage">{deploymentProgress}%</div>
-          </div>
+            </div>
             
             <div className="training-phases">
               <div className={`training-phase ${deploymentProgress >= 25 ? 'completed' : 'current'}`}>
                 🎓 Guardian Knowledge Training
-        </div>
+              </div>
               <div className={`training-phase ${deploymentProgress >= 50 ? 'completed' : deploymentProgress >= 25 ? 'current' : ''}`}>
                 🔧 Technical Setup & Configuration
               </div>
@@ -1703,9 +1703,9 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
               <div className={`training-phase ${deploymentProgress >= 100 ? 'completed' : deploymentProgress >= 75 ? 'current' : ''}`}>
                 🛡️ Full Guardian Deployment
               </div>
-        </div>
-      </div>
-
+            </div>
+          </div>
+          
           <div className="network-contribution-tracking">
             <h4>📊 Your Network Contribution:</h4>
             <div className="contribution-metrics">
@@ -1713,7 +1713,7 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                 <span className="metric-icon">✅</span>
                 <span className="metric-label">Transactions Validated:</span>
                 <span className="metric-value">{networkContribution.nodesValidated.toLocaleString()}</span>
-    </div>
+              </div>
               <div className="contribution-metric">
                 <span className="metric-icon">🛡️</span>
                 <span className="metric-label">Attacks Repelled:</span>
@@ -1744,8 +1744,8 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
               <h4>Welcome to the Global Guardian Network!</h4>
               <p>You are now protecting digital sovereignty for people worldwide.</p>
             </div>
-      </div>
-
+          </div>
+          
           <div className="guardian-impact-summary">
             <h4>🌟 Your Guardian Impact:</h4>
             <div className="final-impact-grid">
@@ -1758,20 +1758,20 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                 <div className="stat-icon">🌱</div>
                 <div className="stat-title">Clean Energy Pioneer</div>
                 <div className="stat-description">Lead renewable energy revolution with Bitcoin</div>
-            </div>
+              </div>
               <div className="impact-stat">
                 <div className="stat-icon">🛡️</div>
                 <div className="stat-title">Security Guardian</div>
                 <div className="stat-description">Protect global digital sovereignty network</div>
-        </div>
+              </div>
               <div className="impact-stat">
                 <div className="stat-icon">👑</div>
                 <div className="stat-title">Digital Sovereign</div>
                 <div className="stat-description">Full control over your digital wealth</div>
-      </div>
-      </div>
-      </div>
-
+              </div>
+            </div>
+          </div>
+          
           <div className="global-mission-complete">
             <h4>🌍 Global Mission Accomplished:</h4>
             <div className="mission-summary">
@@ -1784,8 +1784,8 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
               <div className="sovereignty-achievement">
                 <strong>🎯 Digital Sovereignty Achieved:</strong> You have the knowledge and tools to 
                 protect your wealth using mathematical proof instead of trusting institutions.
-          </div>
-          </div>
+              </div>
+            </div>
             
             <div className="next-journey">
               <h4>🚀 Your Next Adventure:</h4>
@@ -1793,8 +1793,8 @@ const GlobalSecurityGuardianStep = ({ onComplete, userInsights, stepIndex }) => 
                 Ready to dive deeper? The Keys Module will teach you how to generate and manage 
                 the cryptographic keys that give you complete control over your Bitcoin.
               </p>
-        </div>
-      </div>
+            </div>
+          </div>
 
           <ActionButton
             variant="success"

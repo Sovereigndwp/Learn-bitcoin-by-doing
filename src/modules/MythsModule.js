@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
+import ModuleLayout from '../components/ModuleLayout';
 import { 
-  Shield, AlertTriangle, Target, Zap, Crown, 
+  ContinueButton, 
+  ActionButton, 
+  OptionButton, 
+  NavigationButton, 
+  PopupButton 
+} from '../components/EnhancedButtons';
+import { 
+  Shield, AlertTriangle, Target, Zap, Crown, Globe, 
   Search, Database, Sword, Building, Network, CheckCircle,
-  TrendingUp, Activity, Award, Star, Lock
+  TrendingUp, Activity, Users, Award, Star, Lock
 } from 'lucide-react';
 import '../components/ModuleCommon.css';
 import './MythsModule.css';
@@ -19,6 +27,7 @@ const MythsModule = () => {
   const [crisisAlerts, setCrisisAlerts] = useState([]);
   const [truthNetworkStrength, setTruthNetworkStrength] = useState(0);
   const [selectedMyth, setSelectedMyth] = useState(null);
+  const [activeScenario, setActiveScenario] = useState(null);
   const [misinformationLevel, setMisinformationLevel] = useState(85);
   const [truthImpactScore, setTruthImpactScore] = useState(0);
 
@@ -553,6 +562,7 @@ const MythsModule = () => {
     if (phases[newPhase].unlocked) {
       setCurrentPhase(newPhase);
       setSelectedMyth(null);
+      setActiveScenario(null);
     }
   };
 
@@ -775,7 +785,7 @@ const MythsModule = () => {
                 ))}
               </div>
             </div>
-
+            
             <div className="counter-narratives">
               <div className="narratives-header">
                 <Building className="narratives-icon" />
@@ -808,13 +818,15 @@ const MythsModule = () => {
             
             {!isBusted && (
               <div className="myth-actions">
-                <button 
+                <ActionButton 
                   className="bust-myth-button"
                   onClick={() => handleMythBust(myth.id)}
+                  variant="crisis"
+                  icon={<Sword className="bust-icon" />}
+                  iconPosition="left"
                 >
-                  <Sword className="bust-icon" />
-                  Deploy Truth Weapons - BUST THIS MYTH!
-                </button>
+                  BUST THIS MYTH
+                </ActionButton>
                       </div>
             )}
 

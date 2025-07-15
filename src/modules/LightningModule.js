@@ -6,10 +6,16 @@ import {
   Users, Layers, Activity, BarChart3
 } from 'lucide-react';
 import { 
+  ContinueButton, 
+  ActionButton, 
+  OptionButton, 
+  NavigationButton, 
+  PopupButton,
   Button 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './LightningModule.css';
+import ModuleLayout from '../components/ModuleLayout';
 
 const LightningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
@@ -18,6 +24,7 @@ const LightningModule = () => {
   const [achievements, setAchievements] = useState([]);
   
   // Crisis Investigation State
+  const [investigationProgress, setInvestigationProgress] = useState(0);
   const [crisisData, setCrisisData] = useState({
     paymentFailures: 0,
     costAnalysis: 0,
@@ -26,7 +33,6 @@ const LightningModule = () => {
   
   // Channel Architecture State
   const [channelBalance, setChannelBalance] = useState({ alice: 50000, bob: 50000 });
-  // eslint-disable-next-line no-unused-vars
   const [paymentQueue, setPaymentQueue] = useState([]);
   const [channelEfficiency, setChannelEfficiency] = useState(0);
   
@@ -47,7 +53,6 @@ const LightningModule = () => {
   
   // Sovereignty Achievement State
   const [masteryLevel, setMasteryLevel] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [sovereigntyScore, setSovereigntyScore] = useState(0);
 
   const architectPhases = [
@@ -419,24 +424,30 @@ const LightningModule = () => {
               <h5>Lightning Payment Simulator</h5>
         <div className="payment-controls">
                 <div className="payment-scenarios">
-                  <button 
+                  <ActionButton 
                     className="scenario-btn"
                     onClick={() => simulatePayment(1000, 'bob-to-alice')}
+                    variant="demo"
+                    size="small"
                   >
                     Coffee Purchase (1,000 sats)
-                  </button>
-                  <button 
+                  </ActionButton>
+                  <ActionButton 
                     className="scenario-btn"
                     onClick={() => simulatePayment(5000, 'bob-to-alice')}
+                    variant="demo"
+                    size="small"
                   >
-                    Lunch Payment (5,000 sats)
-                  </button>
-                  <button 
+                    Lunch Bill (5,000 sats)
+                  </ActionButton>
+                  <ActionButton 
                     className="scenario-btn"
                     onClick={() => simulatePayment(25000, 'alice-to-bob')}
+                    variant="demo"
+                    size="small"
                   >
-                    Refund (25,000 sats)
-            </button>
+                    Book Purchase (25,000 sats)
+                  </ActionButton>
                 </div>
               </div>
             </div>
@@ -1069,7 +1080,7 @@ const LightningModule = () => {
           text="Achieve Lightning Sovereignty"
           className="pioneer-continue-btn"
         />
-        </div>
+      </div>
     </div>
   );
 

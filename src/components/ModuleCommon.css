@@ -738,7 +738,7 @@ li {
   .properties-grid {
     grid-template-columns: 1fr;
   }
-
+  
   .challenge-container {
     padding: 1rem;
   }
@@ -3351,4 +3351,429 @@ li {
   .button-loading-spinner {
     animation: none;
   }
+}
+
+/* ========================================
+   ENHANCED BUTTON SYSTEM WITH FEEDBACK & ACCESSIBILITY
+======================================== */
+
+/* Core Button States and Feedback */
+.button {
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:focus-visible {
+  outline: 3px solid rgba(247, 147, 26, 0.5);
+  outline-offset: 2px;
+}
+
+/* Button State Management */
+.button-state-default {
+  transform: translateY(0);
+}
+
+.button-state-hover {
+  transform: translateY(-1px);
+}
+
+.button-state-active {
+  transform: translateY(1px);
+}
+
+.button-state-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  animation: successPulse 0.6s ease-out;
+}
+
+.button-state-error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  animation: errorShake 0.6s ease-out;
+}
+
+/* Feedback Animations */
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Ripple Effect for Visual Feedback */
+.button-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Loading State Enhancements */
+.button-loading .button-text {
+  opacity: 0;
+}
+
+.button-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Success and Error Animations */
+.button-success-animation {
+  animation: buttonSuccess 0.6s ease-in-out;
+}
+
+.button-error-animation {
+  animation: buttonError 0.6s ease-in-out;
+}
+
+/* Continue Button Enhancements */
+.continue-button-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.continue-progress-bar {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.continue-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  transition: width 0.3s ease;
+  border-radius: inherit;
+}
+
+.continue-progress-indicator {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Option Button Enhancements */
+.option-button-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.option-checkbox {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f7931a;
+  min-width: 24px;
+}
+
+.option-text {
+  flex: 1;
+  text-align: left;
+}
+
+.option-indicator {
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-width: 24px;
+}
+
+.option-indicator.correct {
+  color: #10b981;
+}
+
+.option-indicator.incorrect {
+  color: #ef4444;
+}
+
+.option-button.explaining {
+  border-color: #f7931a;
+  box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.2);
+}
+
+.option-explanation {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background: rgba(247, 147, 26, 0.1);
+  border: 1px solid rgba(247, 147, 26, 0.3);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #333;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navigation Button Enhancements */
+.nav-button {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-forward {
+  padding-right: 2.5rem;
+}
+
+.nav-back {
+  padding-left: 2.5rem;
+}
+
+.keyboard-shortcut {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #6b7280;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.nav-button:hover .keyboard-shortcut {
+  opacity: 1;
+}
+
+/* Popup Button and Card System */
+.popup-button {
+  position: relative;
+}
+
+.button-popup {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  min-width: 250px;
+  animation: popupFadeIn 0.2s ease-out;
+  z-index: 1000;
+}
+
+.popup-top {
+  margin-bottom: 10px;
+}
+
+.popup-bottom {
+  margin-top: 10px;
+}
+
+.popup-left {
+  margin-right: 10px;
+}
+
+.popup-right {
+  margin-left: 10px;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.popup-content {
+  padding: 0;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 12px 12px 0 0;
+}
+
+.popup-header h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.popup-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.popup-body {
+  padding: 1.5rem;
+  color: #374151;
+}
+
+/* Activity Button Context Styling */
+.crisis-button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: 2px solid #ef4444;
+  position: relative;
+  overflow: hidden;
+}
+
+.crisis-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.crisis-button:hover::before {
+  left: 100%;
+}
+
+.completion-button {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: 2px solid #10b981;
+  position: relative;
+}
+
+.completion-button::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.completion-button:hover::after {
+  opacity: 1;
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button-ripple,
+  .option-explanation,
+  .button-popup {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .button {
+    border-width: 3px;
+  }
+  
+  .option-button.selected {
+    background: #000000;
+    color: #ffffff;
+  }
+}
+
+/* Touch-Friendly Adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .button {
+    min-height: 48px;
+    padding: 0.875rem 1.5rem;
+  }
+  
+  .button-sm {
+    min-height: 44px;
+  }
+  
+  .popup-button {
+    min-height: 48px;
+  }
+}
+
+/* Focus Management */
+.button:focus-visible,
+.option-button:focus-visible,
+.popup-close:focus-visible {
+  outline: 3px solid rgba(247, 147, 26, 0.7);
+  outline-offset: 2px;
+}
+
+/* Screen Reader Support */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

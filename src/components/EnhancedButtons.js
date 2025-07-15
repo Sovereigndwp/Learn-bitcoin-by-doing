@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-// Enhanced Button Component with Visual Hierarchy
+// Enhanced Button Component with Visual Hierarchy, Feedback, and Accessibility
 const Button = ({
   children,
   onClick,
@@ -15,18 +15,162 @@ const Button = ({
   number,
   help,
   fullWidth = false,
+  feedback = 'default', // default, haptic, audio, visual
+  successAnimation = false,
+  errorAnimation = false,
+  ariaLabel,
+  ariaDescribedBy,
+  id,
+  onSuccess,
+  onError,
+  autoFocus = false,
   ...props
 }) => {
+  const [buttonState, setButtonState] = useState('default'); // default, hover, active, success, error
+  const [feedbackActive, setFeedbackActive] = useState(false);
+  const buttonRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  // Auto focus effect
+  useEffect(() => {
+    if (autoFocus && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, [autoFocus]);
+
+  // Cleanup timeouts
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   const baseClasses = [
     'button',
     `button-${variant}`,
     `button-${size}`,
     `button-priority-${priority}`,
+    `button-state-${buttonState}`,
     fullWidth && 'button-full-width',
     disabled && 'button-state-disabled',
     loading && 'button-loading',
+    feedbackActive && 'button-feedback-active',
+    successAnimation && 'button-success-animation',
+    errorAnimation && 'button-error-animation',
     className
   ].filter(Boolean).join(' ');
+
+  // Enhanced click handler with feedback
+  const handleClick = async (e) => {
+    if (disabled || loading) return;
+
+    // Provide immediate feedback
+    provideFeedback();
+    
+    try {
+      setButtonState('active');
+      
+      if (onClick) {
+        const result = await onClick(e);
+        
+        // Handle success
+        if (result !== false) {
+          setButtonState('success');
+          if (onSuccess) onSuccess();
+          
+          // Reset state after animation
+          timeoutRef.current = setTimeout(() => {
+            setButtonState('default');
+          }, 600);
+        }
+      }
+    } catch (error) {
+      // Handle error
+      setButtonState('error');
+      if (onError) onError(error);
+      
+      // Reset state after animation
+      timeoutRef.current = setTimeout(() => {
+        setButtonState('default');
+      }, 600);
+    }
+  };
+
+  // Feedback mechanisms
+  const provideFeedback = () => {
+    setFeedbackActive(true);
+    
+    // Visual feedback (ripple effect)
+    if (feedback === 'visual' || feedback === 'default') {
+      createRippleEffect();
+    }
+    
+    // Haptic feedback simulation
+    if (feedback === 'haptic' && navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+    
+    // Audio feedback
+    if (feedback === 'audio') {
+      playClickSound();
+    }
+    
+    // Reset feedback state
+    setTimeout(() => setFeedbackActive(false), 200);
+  };
+
+  const createRippleEffect = () => {
+    const button = buttonRef.current;
+    if (!button) return;
+
+    const ripple = document.createElement('span');
+    ripple.className = 'button-ripple';
+    
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (rect.width / 2 - size / 2) + 'px';
+    ripple.style.top = (rect.height / 2 - size / 2) + 'px';
+    
+    button.appendChild(ripple);
+    
+    setTimeout(() => {
+      if (button.contains(ripple)) {
+        button.removeChild(ripple);
+      }
+    }, 600);
+  };
+
+  const playClickSound = () => {
+    // Create audio context for click sound
+    if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+      const audioContext = new (AudioContext || webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    }
+  };
+
+  // Keyboard event handlers
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick(e);
+    }
+  };
 
   const buttonContent = (
     <>
@@ -34,7 +178,7 @@ const Button = ({
       {icon && iconPosition === 'left' && (
         <span className="button-icon button-icon-left">{icon}</span>
       )}
-      {children}
+      <span className="button-text">{children}</span>
       {icon && iconPosition === 'right' && (
         <span className="button-icon button-icon-right">{icon}</span>
       )}
@@ -43,13 +187,21 @@ const Button = ({
 
   return (
     <button
+      ref={buttonRef}
+      id={id}
       className={baseClasses}
-      onClick={onClick}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       disabled={disabled || loading}
+      aria-label={ariaLabel || (typeof children === 'string' ? children : undefined)}
+      aria-describedby={ariaDescribedBy}
+      aria-pressed={buttonState === 'active'}
+      aria-disabled={disabled || loading}
       data-help={help}
+      tabIndex={disabled ? -1 : 0}
       {...props}
     >
-      {number && <span className="button-number">{number}</span>}
+      {number && <span className="button-number" aria-hidden="true">{number}</span>}
       {buttonContent}
     </button>
   );
@@ -132,76 +284,248 @@ const ProgressButton = ({
   );
 };
 
-// Action Button Component with Context
-const ActionButton = ({
-  children,
-  action = 'primary', // primary, secondary, success, warning, danger
-  context = 'default', // default, navigation, form, tool, demo
-  onClick,
-  className = '',
-  ...props
-}) => {
-  const contextClasses = {
-    navigation: 'nav-button',
-    form: 'form-button',
-    tool: 'tool-button',
-    demo: 'demo-button'
-  };
-
-  const baseClasses = [
-    contextClasses[context] || 'button',
-    `button-context-${action}`,
-    className
-  ].filter(Boolean).join(' ');
-
-  return (
-    <button
-      className={baseClasses}
-      onClick={onClick}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
-
-// Continue Button Component (Most Common Use Case)
+// Enhanced Continue Button with Progress Feedback
 const ContinueButton = ({
   children,
   onClick,
   completed = false,
   nextStep = null,
+  progress = null,
   className = '',
+  showProgress = false,
+  onProgress,
   ...props
 }) => {
+  const [isProgressing, setIsProgressing] = useState(false);
+  const [progressValue, setProgressValue] = useState(0);
+
+  const handleClick = async (e) => {
+    if (showProgress && !completed) {
+      setIsProgressing(true);
+      setProgressValue(0);
+      
+      // Simulate progress if no onProgress provided
+      if (!onProgress) {
+        const interval = setInterval(() => {
+          setProgressValue(prev => {
+            if (prev >= 100) {
+              clearInterval(interval);
+              setIsProgressing(false);
+              if (onClick) onClick(e);
+              return 100;
+            }
+            return prev + 10;
+          });
+        }, 100);
+      } else {
+        try {
+          await onProgress((value) => setProgressValue(value));
+          setIsProgressing(false);
+          if (onClick) onClick(e);
+        } catch (error) {
+          setIsProgressing(false);
+          throw error;
+        }
+      }
+    } else {
+      if (onClick) onClick(e);
+    }
+  };
+
   const buttonClasses = [
     'continue-button',
     completed && 'button-success',
     nextStep && 'button-with-progress',
+    isProgressing && 'button-progressing',
+    className
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div className="continue-button-container">
+      <Button
+        variant={completed ? "success" : "primary"}
+        size="lg"
+        priority="high"
+        onClick={handleClick}
+        className={buttonClasses}
+        loading={isProgressing}
+        successAnimation={completed}
+        feedback="visual"
+        ariaLabel={`Continue: ${children}`}
+        {...props}
+      >
+        {children}
+        {nextStep && <span className="button-icon button-icon-right">→</span>}
+      </Button>
+      
+      {showProgress && isProgressing && (
+        <div className="continue-progress-bar">
+          <div 
+            className="continue-progress-fill"
+            style={{ width: `${progressValue}%` }}
+          />
+        </div>
+      )}
+      
+      {progress !== null && (
+        <div className="continue-progress-indicator">
+          <span className="progress-text">{Math.round(progress)}% complete</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Enhanced Option Button with Selection Feedback
+const OptionButton = ({
+  children,
+  selected = false,
+  onClick,
+  disabled = false,
+  className = '',
+  multiSelect = false,
+  correctAnswer = false,
+  incorrectAnswer = false,
+  explanation,
+  showFeedback = false,
+  onSelect,
+  onDeselect,
+  value,
+  ...props
+}) => {
+  const [isSelected, setIsSelected] = useState(selected);
+  const [showExplanation, setShowExplanation] = useState(false);
+
+  useEffect(() => {
+    setIsSelected(selected);
+  }, [selected]);
+
+  const handleClick = (e) => {
+    if (disabled) return;
+
+    const newSelected = multiSelect ? !isSelected : true;
+    setIsSelected(newSelected);
+
+    if (newSelected && onSelect) {
+      onSelect(value || children);
+    } else if (!newSelected && onDeselect) {
+      onDeselect(value || children);
+    }
+
+    if (onClick) {
+      onClick(e, newSelected);
+    }
+
+    // Show explanation if feedback is enabled
+    if (showFeedback && explanation) {
+      setShowExplanation(true);
+      setTimeout(() => setShowExplanation(false), 3000);
+    }
+  };
+
+  const optionClasses = [
+    'option-button',
+    isSelected && 'selected',
+    disabled && 'disabled',
+    correctAnswer && 'correct',
+    incorrectAnswer && 'incorrect',
+    showExplanation && 'explaining',
+    className
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div className="option-button-container">
+      <button
+        className={optionClasses}
+        onClick={handleClick}
+        disabled={disabled}
+        aria-pressed={isSelected}
+        aria-describedby={explanation ? `${props.id}-explanation` : undefined}
+        role={multiSelect ? 'checkbox' : 'radio'}
+        {...props}
+      >
+        <div className="option-content">
+          {multiSelect && (
+            <div className="option-checkbox" aria-hidden="true">
+              {isSelected ? '✓' : '☐'}
+            </div>
+          )}
+          <div className="option-text">{children}</div>
+          {correctAnswer && <div className="option-indicator correct" aria-hidden="true">✓</div>}
+          {incorrectAnswer && <div className="option-indicator incorrect" aria-hidden="true">✗</div>}
+        </div>
+      </button>
+      
+      {showExplanation && explanation && (
+        <div 
+          id={`${props.id}-explanation`}
+          className="option-explanation"
+          role="tooltip"
+          aria-live="polite"
+        >
+          {explanation}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Enhanced Action Button with Context-Aware Styling
+const ActionButton = ({
+  children,
+  action = 'primary',
+  context = 'default',
+  onClick,
+  className = '',
+  icon,
+  loading = false,
+  success = false,
+  error = false,
+  hapticFeedback = false,
+  ...props
+}) => {
+  const contextClasses = {
+    navigation: 'nav-button',
+    form: 'form-button', 
+    tool: 'tool-button',
+    demo: 'demo-button',
+    crisis: 'crisis-button',
+    completion: 'completion-button'
+  };
+
+  const baseClasses = [
+    contextClasses[context] || 'button',
+    `button-context-${action}`,
+    loading && 'button-loading',
+    success && 'button-success',
+    error && 'button-error',
     className
   ].filter(Boolean).join(' ');
 
   return (
     <Button
-      variant="primary"
-      size="lg"
-      priority="high"
+      className={baseClasses}
       onClick={onClick}
-      className={buttonClasses}
+      loading={loading}
+      successAnimation={success}
+      errorAnimation={error}
+      feedback={hapticFeedback ? 'haptic' : 'visual'}
+      icon={icon}
       {...props}
     >
       {children}
-      {nextStep && <span className="button-icon button-icon-right">→</span>}
     </Button>
   );
 };
 
-// Navigation Button Component
+// Enhanced Navigation Button with Direction Awareness
 const NavigationButton = ({
   children,
   onClick,
   direction = 'forward', // forward, back, home
   className = '',
+  showKeyboardShortcut = false,
+  keyboardShortcut,
   ...props
 }) => {
   const directionIcons = {
@@ -209,6 +533,26 @@ const NavigationButton = ({
     back: '←',
     home: '🏠'
   };
+
+  const directionLabels = {
+    forward: 'Next',
+    back: 'Previous', 
+    home: 'Home'
+  };
+
+  useEffect(() => {
+    if (showKeyboardShortcut && keyboardShortcut) {
+      const handleKeyPress = (e) => {
+        if (e.key === keyboardShortcut && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          onClick(e);
+        }
+      };
+      
+      document.addEventListener('keydown', handleKeyPress);
+      return () => document.removeEventListener('keydown', handleKeyPress);
+    }
+  }, [showKeyboardShortcut, keyboardShortcut, onClick]);
 
   return (
     <Button
@@ -218,39 +562,153 @@ const NavigationButton = ({
       onClick={onClick}
       icon={directionIcons[direction]}
       iconPosition={direction === 'back' ? 'left' : 'right'}
-      className={`nav-button ${className}`}
+      className={`nav-button nav-${direction} ${className}`}
+      ariaLabel={`${directionLabels[direction]}: ${children}`}
       {...props}
     >
       {children}
+      {showKeyboardShortcut && keyboardShortcut && (
+        <span className="keyboard-shortcut" aria-hidden="true">
+          {keyboardShortcut}
+        </span>
+      )}
     </Button>
   );
 };
 
-// Option Button Component for Choices
-const OptionButton = ({
+// Enhanced Modal/Popup Button for Interactive Cards
+const PopupButton = ({
   children,
-  selected = false,
-  onClick,
-  disabled = false,
+  popupContent,
+  popupTitle,
   className = '',
+  triggerOn = 'click', // click, hover
+  position = 'top', // top, bottom, left, right
+  closeOnOutsideClick = true,
+  showCloseButton = true,
+  onOpen,
+  onClose,
   ...props
 }) => {
-  const optionClasses = [
-    'option-button',
-    selected && 'selected',
-    disabled && 'disabled',
-    className
-  ].filter(Boolean).join(' ');
+  const [isOpen, setIsOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef(null);
+  const popupRef = useRef(null);
+
+  const openPopup = () => {
+    setIsOpen(true);
+    calculatePosition();
+    if (onOpen) onOpen();
+  };
+
+  const closePopup = () => {
+    setIsOpen(false);
+    if (onClose) onClose();
+  };
+
+  const calculatePosition = () => {
+    if (!buttonRef.current) return;
+    
+    const rect = buttonRef.current.getBoundingClientRect();
+    const popup = { width: 300, height: 200 }; // Default popup size
+    
+    let top, left;
+    
+    switch (position) {
+      case 'top':
+        top = rect.top - popup.height - 10;
+        left = rect.left + rect.width / 2 - popup.width / 2;
+        break;
+      case 'bottom':
+        top = rect.bottom + 10;
+        left = rect.left + rect.width / 2 - popup.width / 2;
+        break;
+      case 'left':
+        top = rect.top + rect.height / 2 - popup.height / 2;
+        left = rect.left - popup.width - 10;
+        break;
+      case 'right':
+        top = rect.top + rect.height / 2 - popup.height / 2;
+        left = rect.right + 10;
+        break;
+      default:
+        top = rect.bottom + 10;
+        left = rect.left;
+    }
+    
+    setPopupPosition({ top, left });
+  };
+
+  useEffect(() => {
+    if (closeOnOutsideClick && isOpen) {
+      const handleClickOutside = (e) => {
+        if (popupRef.current && !popupRef.current.contains(e.target) && 
+            buttonRef.current && !buttonRef.current.contains(e.target)) {
+          closePopup();
+        }
+      };
+      
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen, closeOnOutsideClick]);
+
+  const handleTrigger = () => {
+    if (triggerOn === 'click') {
+      isOpen ? closePopup() : openPopup();
+    }
+  };
 
   return (
-    <button
-      className={optionClasses}
-      onClick={onClick}
-      disabled={disabled}
-      {...props}
-    >
-      {children}
-    </button>
+    <>
+      <Button
+        ref={buttonRef}
+        className={`popup-button ${className}`}
+        onClick={handleTrigger}
+        onMouseEnter={triggerOn === 'hover' ? openPopup : undefined}
+        onMouseLeave={triggerOn === 'hover' ? closePopup : undefined}
+        aria-expanded={isOpen}
+        aria-haspopup="dialog"
+        {...props}
+      >
+        {children}
+      </Button>
+      
+      {isOpen && (
+        <div 
+          ref={popupRef}
+          className={`button-popup popup-${position}`}
+          style={{
+            position: 'fixed',
+            top: popupPosition.top,
+            left: popupPosition.left,
+            zIndex: 1000
+          }}
+          role="dialog"
+          aria-labelledby={popupTitle ? "popup-title" : undefined}
+        >
+          <div className="popup-content">
+            {popupTitle && (
+              <div className="popup-header">
+                <h3 id="popup-title">{popupTitle}</h3>
+                {showCloseButton && (
+                  <button 
+                    className="popup-close"
+                    onClick={closePopup}
+                    aria-label="Close popup"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            )}
+            <div className="popup-body">
+              {typeof popupContent === 'function' ? popupContent({ close: closePopup }) : popupContent}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -262,7 +720,8 @@ export {
   ActionButton,
   ContinueButton,
   NavigationButton,
-  OptionButton
+  OptionButton,
+  PopupButton
 };
 
 export default Button; 

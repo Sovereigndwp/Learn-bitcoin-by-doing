@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Zap, AlertTriangle, Target, Trophy } from 'lucide-react';
+import { Zap, Clock, DollarSign, Users, ArrowRight, Play, TrendingUp } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton
+  Button, 
+  OptionButton,
+  PopupButton
 } from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
@@ -14,977 +16,786 @@ import './BitcoinBasicsModule.css';
 const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
-  const [currentPhase, setCurrentPhase] = useState(0);
-  const [completedPhases, setCompletedPhases] = useState(new Set());
-  const [crisisAlerts, setCrisisAlerts] = useState([]);
-  const [masteryPoints, setMasteryPoints] = useState(0);
-  const [achievements, setAchievements] = useState([]);
-
-  // Crisis Alert System
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [userInteractions, setUserInteractions] = useState({});
+  const [pollResponse, setPollResponse] = useState(null);
+  const [paymentTally, setPaymentTally] = useState(0);
+  const [showBarterChoice, setShowBarterChoice] = useState(false);
+  
+  // Real-time payment counter for engagement
   useEffect(() => {
-    const alerts = [
-      "⚠️ ENERGY-TRUST CRISIS: Fiat money requires infinite trust but zero energy",
-      "🔥 FOUNDATION FAILURE: Traditional money systems built on trust dependencies",
-      "⚡ BITCOIN BREAKTHROUGH: Energy-backed digital scarcity eliminates trust requirements",
-      "🛡️ SOVEREIGNTY ALERT: Master Bitcoin's energy-trust breakthrough for financial freedom"
-    ];
-    
-    let alertIndex = 0;
     const interval = setInterval(() => {
-      setCrisisAlerts(prev => [...prev.slice(-2), alerts[alertIndex % alerts.length]]);
-      alertIndex++;
-    }, 4000);
-
+      setPaymentTally(prev => prev + Math.floor(Math.random() * 50000) + 30000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // Achievement System
-  const unlockAchievement = useCallback((id, title, description) => {
-    if (!achievements.find(a => a.id === id)) {
-      setAchievements(prev => [...prev, { id, title, description, timestamp: Date.now() }]);
-      setMasteryPoints(prev => prev + 100);
-    }
-  }, [achievements]);
-
-  // Challenge Validation System
-  const validateChallenge = (challengeId, answer, correctAnswer, points = 50) => {
-    const isCorrect = answer === correctAnswer;
+  
+  const handleStepComplete = (index, insights = {}) => {
+    const newCompletedSteps = new Set(completedSteps);
+    newCompletedSteps.add(index);
+    setCompletedSteps(newCompletedSteps);
     
-    if (isCorrect) {
-      setMasteryPoints(prev => prev + points);
+    if (insights) {
+      setUserInteractions(prev => ({ ...prev, [index]: insights }));
     }
     
-    return isCorrect;
-  };
-
-  const handlePhaseComplete = (phaseIndex) => {
-    const newCompletedPhases = new Set(completedPhases);
-    newCompletedPhases.add(phaseIndex);
-    setCompletedPhases(newCompletedPhases);
-    
-    if (phaseIndex === phases.length - 1) {
+    if (index === microSteps.length - 1) {
       completeModule('bitcoin-basics');
-      unlockAchievement('bitcoin_foundation_sovereign', 'Bitcoin Foundation Sovereign', 'Mastered Bitcoin\'s energy-trust breakthrough');
       setTimeout(() => navigate('/'), 2000);
     } else {
-      setCurrentPhase(phaseIndex + 1);
+      setCurrentStep(index + 1);
     }
   };
 
-  // Phase 1: Energy-Trust Crisis Detective
-  const EnergyTrustCrisisDetective = ({ onComplete }) => {
-    const [selectedScenario, setSelectedScenario] = useState(null);
-    const [analysisComplete, setAnalysisComplete] = useState(false);
-    const [crisisInsight, setCrisisInsight] = useState(null);
-
-    const scenarios = [
-      {
-        id: 'ice_rink',
-        title: "Ice Rink Energy Test",
-        description: "Push heavy box across frictionless ice",
-        energyCost: 5,
-        trustRequired: "None",
-        result: "Easy push, no energy wasted",
-        crisis: "Low energy = Low security",
-        icon: "🧊"
-      },
-      {
-        id: 'concrete',
-        title: "Concrete Floor Energy Test", 
-        description: "Push same box across rough concrete",
-        energyCost: 95,
-        trustRequired: "None",
-        result: "Hard push, friction creates heat",
-        crisis: "High energy = High security",
-        icon: "🏗️"
-      },
-      {
-        id: 'fiat_creation',
-        title: "Fiat Money Creation",
-        description: "Bank creates $270,000 with keystrokes",
-        energyCost: 0.1,
-        trustRequired: "Infinite",
-        result: "Instant money creation",
-        crisis: "Zero energy = Zero security",
-        icon: "💸"
-      }
-    ];
-
-    const insights = [
-      { text: "Energy cost creates security", value: "energy_security" },
-      { text: "Fiat money has no energy backing", value: "fiat_weakness" },
-      { text: "Trust requirements are vulnerabilities", value: "trust_vulnerability" }
-    ];
-
-    const handleScenarioAnalysis = (scenario) => {
-      setSelectedScenario(scenario);
-      setAnalysisComplete(true);
-      
-      if (scenario.id === 'fiat_creation') {
-        unlockAchievement('crisis_detective', 'Energy-Trust Crisis Detective', 'Identified the energy-trust crisis in fiat systems');
-      }
-    };
-
-    return (
-      <div className="crisis-phase energy-trust-detective">
-        <div className="crisis-header">
-          <div className="crisis-icon">🔍</div>
-          <h2>Energy-Trust Crisis Detective</h2>
-          <p className="crisis-subtitle">Investigate the fundamental energy-trust contradictions in money systems</p>
-        </div>
-
-        <div className="crisis-dashboard">
-          <div className="crisis-metric">
-            <span className="metric-label">Energy-Trust Crisis Level</span>
-            <span className="metric-value critical">CRITICAL</span>
-            </div>
-          <div className="crisis-metric">
-            <span className="metric-label">Fiat Vulnerability</span>
-            <span className="metric-value extreme">EXTREME</span>
-          </div>
-          <div className="crisis-metric">
-            <span className="metric-label">Bitcoin Solution</span>
-            <span className="metric-value optimal">OPTIMAL</span>
-          </div>
-          </div>
-
-        <div className="investigation-lab">
-          <h3>🧪 Energy-Trust Investigation Lab</h3>
-          <p>Test different systems to discover the energy-trust relationship:</p>
-          
-          <div className="scenarios-grid">
-            {scenarios.map((scenario) => (
-              <div 
-                key={scenario.id}
-                className={`scenario-card ${selectedScenario?.id === scenario.id ? 'selected' : ''}`}
-                onClick={() => handleScenarioAnalysis(scenario)}
-              >
-                <div className="scenario-icon">{scenario.icon}</div>
-                <h4>{scenario.title}</h4>
-                <p>{scenario.description}</p>
-                
-                <div className="scenario-metrics">
-                  <div className="metric">
-                    <span className="metric-label">Energy Cost:</span>
-                    <span className="metric-value">{scenario.energyCost} units</span>
-            </div>
-                  <div className="metric">
-                    <span className="metric-label">Trust Required:</span>
-                    <span className="metric-value">{scenario.trustRequired}</span>
-          </div>
-        </div>
-
-                {selectedScenario?.id === scenario.id && (
-                  <div className="scenario-analysis">
-                    <div className="analysis-result">
-                      <p><strong>Result:</strong> {scenario.result}</p>
-                      <p><strong>Crisis Insight:</strong> {scenario.crisis}</p>
-          </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {analysisComplete && (
-          <div className="crisis-insight-section">
-            <h3>💡 Crisis Pattern Recognition</h3>
-            <p>What crisis pattern do you detect across these systems?</p>
-            
-            <div className="insight-options">
-              {insights.map((insight) => (
-                <OptionButton
-                  key={insight.value}
-                  selected={crisisInsight === insight.value}
-                  onClick={() => setCrisisInsight(insight.value)}
-                >
-                  {insight.text}
-                </OptionButton>
-              ))}
-        </div>
-        
-            {crisisInsight && (
-              <div className="insight-result">
-                <div className="result-icon">🎯</div>
-                <p>
-                  {crisisInsight === 'energy_security' && "BREAKTHROUGH! Energy cost creates unfakeable security. This is Bitcoin's foundation."}
-                  {crisisInsight === 'fiat_weakness' && "CRITICAL INSIGHT! Fiat money costs no energy to create, making it infinitely fakeable."}
-                  {crisisInsight === 'trust_vulnerability' && "CRISIS IDENTIFIED! Every trust requirement is a vulnerability that can be exploited."}
-                </p>
-        </div>
-            )}
-          </div>
-        )}
-
-        <ContinueButton
-          onClick={onComplete}
-          completed={analysisComplete && crisisInsight}
-          nextStep="Bitcoin Foundation Engineer"
-        >
-          Advance to Foundation Engineering →
-        </ContinueButton>
-      </div>
-    );
+  const handleStepChange = (index) => {
+    if (index <= Math.max(currentStep, Math.max(...completedSteps) + 1)) {
+      setCurrentStep(index);
+    }
   };
 
-  // Phase 2: Bitcoin Foundation Engineer
-  const BitcoinFoundationEngineer = ({ onComplete }) => {
-    const [foundationPrinciples, setFoundationPrinciples] = useState({});
-    const [engineeringComplete, setEngineeringComplete] = useState(false);
-
-    const principles = [
-      {
-        id: 'energy_backing',
-        title: "Energy-Backed Digital Scarcity",
-        description: "Bitcoin uses real energy to create digital scarcity",
-        challenge: "How does energy create digital scarcity?",
-        options: [
-          "Energy cost makes Bitcoin expensive to create",
-          "Energy spent cannot be recovered or reused", 
-          "Energy creates mathematical proof of work"
-        ],
-        correct: 1,
-        explanation: "Energy spent mining Bitcoin is permanently consumed - it cannot be spent twice, creating true digital scarcity."
+  // Streamlined Micro-Steps with UX Elements
+  const microSteps = [
+    {
+      id: 'spark-curiosity',
+      title: 'The Great Money Mystery',
+      uxElement: 'h2 headline',
+      engagementHook: 'Micro-poll',
+      content: {
+        headline: "The Great Money Mystery",
+        subtitle: "Ever wonder why we trust tiny bits of paper and plastic?",
+        microPoll: {
+          question: "When was the last time you used cash?",
+          options: [
+            "Today", "This week", "This month", "Can't remember", "I'm cash-only"
+          ]
+        },
+        insight: "💡 You're about to discover why most money today isn't actually... money"
       },
-      {
-        id: 'trust_elimination',
-        title: "Trust Elimination Architecture",
-        description: "Bitcoin replaces trust with mathematical proof",
-        challenge: "What eliminates the need for trust in Bitcoin?",
-        options: [
-          "Government guarantees Bitcoin's value",
-          "Banks verify all Bitcoin transactions",
-          "Mathematical proof replaces human trust"
-        ],
-        correct: 2,
-        explanation: "Bitcoin uses cryptographic proof instead of trust - no humans or institutions needed to verify transactions."
+      component: SparkCuriosityStep
+    },
+    {
+      id: 'instant-contrast',
+      title: 'The Speed Revolution',
+      uxElement: 'Interactive tap card',
+      engagementHook: 'Real-time payment counter',
+      content: {
+        tapDemo: {
+          message: "Tap to pay. See instant value move.",
+          countDisplay: "Payments happening worldwide right now:"
+        },
+        insight: "Every tap you see represents someone, somewhere, moving value instantly"
       },
-      {
-        id: 'double_spend_prevention',
-        title: "Double-Spend Prevention System",
-        description: "Bitcoin prevents spending the same money twice",
-        challenge: "How does Bitcoin prevent double-spending?",
-        options: [
-          "Banks monitor all transactions",
-          "Energy cost makes it impossible to fake history",
-          "Government regulations prevent double-spending"
-        ],
-        correct: 1,
-        explanation: "The energy cost of mining makes it impossible to rewrite Bitcoin's transaction history."
-      }
-    ];
-
-    const handlePrincipleChallenge = (principleId, answer) => {
-      const principle = principles.find(p => p.id === principleId);
-      const isCorrect = validateChallenge(principleId, answer, principle.correct);
-      
-      setFoundationPrinciples(prev => ({
-        ...prev,
-        [principleId]: { answer, correct: isCorrect, completed: true }
-      }));
-
-      if (isCorrect && Object.keys(foundationPrinciples).length === principles.length - 1) {
-        setEngineeringComplete(true);
-        unlockAchievement('foundation_engineer', 'Bitcoin Foundation Engineer', 'Mastered Bitcoin\'s foundational principles');
-      }
-    };
-
-        return (
-      <div className="crisis-phase foundation-engineer">
-        <div className="crisis-header">
-          <div className="crisis-icon">⚡</div>
-          <h2>Bitcoin Foundation Engineer</h2>
-          <p className="crisis-subtitle">Master Bitcoin's energy-trust breakthrough principles</p>
-        </div>
-
-        <div className="engineering-dashboard">
-          <div className="dashboard-metric">
-            <span className="metric-label">Foundation Principles</span>
-            <span className="metric-value">{Object.keys(foundationPrinciples).length}/{principles.length}</span>
-              </div>
-          <div className="dashboard-metric">
-            <span className="metric-label">Engineering Progress</span>
-            <span className="metric-value">{Math.round((Object.keys(foundationPrinciples).length / principles.length) * 100)}%</span>
-              </div>
-            </div>
-
-        <div className="foundation-principles">
-          <h3>🏗️ Bitcoin Foundation Principles</h3>
-          
-          {principles.map((principle, index) => (
-            <div key={principle.id} className="principle-card">
-              <div className="principle-header">
-                <div className="principle-number">{index + 1}</div>
-                <div className="principle-info">
-                  <h4>{principle.title}</h4>
-                  <p>{principle.description}</p>
-                  </div>
-                </div>
-
-              <div className="principle-challenge">
-                <h5>🎯 Engineering Challenge:</h5>
-                <p>{principle.challenge}</p>
-                
-                <div className="challenge-options">
-                  {principle.options.map((option, optionIndex) => (
-                    <OptionButton
-                      key={optionIndex}
-                      selected={foundationPrinciples[principle.id]?.answer === optionIndex}
-                      onClick={() => handlePrincipleChallenge(principle.id, optionIndex)}
-                      disabled={foundationPrinciples[principle.id]?.completed}
-            >
-                      {option}
-                    </OptionButton>
-                  ))}
-                </div>
-
-                {foundationPrinciples[principle.id]?.completed && (
-                  <div className="challenge-result">
-                    <div className={`result-icon ${foundationPrinciples[principle.id].correct ? 'correct' : 'incorrect'}`}>
-                      {foundationPrinciples[principle.id].correct ? '✅' : '❌'}
-                  </div>
-                    <p>{principle.explanation}</p>
-              </div>
-            )}
-              </div>
-                 </div>
-               ))}
-             </div>
-
-          <ContinueButton 
-            onClick={onComplete}
-          completed={engineeringComplete}
-          nextStep="Fiat Vulnerability Analyst"
-          >
-          Advance to Vulnerability Analysis →
-          </ContinueButton>
-          </div>
-        );
-  };
-
-  // Phase 3: Fiat Vulnerability Analyst
-  const FiatVulnerabilityAnalyst = ({ onComplete }) => {
-    const [vulnerabilities, setVulnerabilities] = useState({});
-    const [analysisComplete, setAnalysisComplete] = useState(false);
-
-    const fiatVulnerabilities = [
-      {
-        id: 'infinite_printing',
-        title: "Infinite Money Printing Vulnerability",
-        description: "Governments can create unlimited money with no energy cost",
-        scenario: "Sarah needs $270,000 for a house. Bank creates it with keystrokes.",
-        impact: "Everyone's savings lose value through inflation",
-        severity: "CRITICAL",
-        bitcoinSolution: "Fixed 21 million supply - no inflation possible"
+      component: InstantContrastStep
+    },
+    {
+      id: 'key-insight',
+      title: 'The Prehistoric Problem',
+      uxElement: 'Text block with tooltip',
+      engagementHook: 'Emoji tooltip reveal',
+      content: {
+        mainText: "All this speed solves a single prehistoric headache: exchanging what you have for what you need.",
+        tooltip: {
+          trigger: "💱",
+          reveal: "Money = universal swap token"
+        },
+        deeperInsight: "But what happens when the 'universal swap token' can be created from nothing?"
       },
-      {
-        id: 'trust_dependency',
-        title: "Trust Dependency Vulnerability", 
-        description: "Fiat money only works if people trust institutions",
-        scenario: "Venezuela's currency collapsed when people lost trust in government",
-        impact: "Money becomes worthless overnight",
-        severity: "EXTREME",
-        bitcoinSolution: "No trust required - mathematical proof only"
+      component: KeyInsightStep
+    },
+    {
+      id: 'time-travel-invite',
+      title: 'Journey to the Beginning',
+      uxElement: 'Big CTA button',
+      engagementHook: 'Button animation after 3s',
+      content: {
+        invitation: "Ready to see where it all began?",
+        ctaButton: {
+          text: "Travel 10,000 years back",
+          animation: "shakes after 3s if untouched"
+        },
+        preview: "You're about to experience the original money problem..."
       },
-      {
-        id: 'permission_control',
-        title: "Permission Control Vulnerability",
-        description: "Banks and governments can freeze or block transactions",
-        scenario: "Canadian truckers had bank accounts frozen during protests",
-        impact: "Your money can be taken away at any time",
-        severity: "HIGH",
-        bitcoinSolution: "Permissionless - no one can stop Bitcoin transactions"
-      }
-    ];
-
-    const handleVulnerabilityAnalysis = (vulnerabilityId, understood) => {
-      setVulnerabilities(prev => ({
-        ...prev,
-        [vulnerabilityId]: { understood, timestamp: Date.now() }
-      }));
-
-      if (understood && Object.keys(vulnerabilities).length === fiatVulnerabilities.length - 1) {
-        setAnalysisComplete(true);
-        unlockAchievement('vulnerability_analyst', 'Fiat Vulnerability Analyst', 'Identified critical fiat system vulnerabilities');
-      }
-    };
-
-    return (
-      <div className="crisis-phase vulnerability-analyst">
-        <div className="crisis-header">
-          <div className="crisis-icon">🔍</div>
-          <h2>Fiat Vulnerability Analyst</h2>
-          <p className="crisis-subtitle">Analyze fiat system's trust dependencies and critical failures</p>
-        </div>
-            
-        <div className="vulnerability-dashboard">
-          <div className="dashboard-alert">
-            <AlertTriangle className="alert-icon" />
-            <span>VULNERABILITY SCAN: {fiatVulnerabilities.length} Critical Flaws Detected</span>
-          </div>
-                </div>
-                
-        <div className="vulnerability-analysis">
-          <h3>🚨 Fiat System Vulnerability Report</h3>
-          
-          {fiatVulnerabilities.map((vulnerability) => (
-            <div key={vulnerability.id} className="vulnerability-card">
-              <div className="vulnerability-header">
-                <div className={`severity-badge ${vulnerability.severity.toLowerCase()}`}>
-                  {vulnerability.severity}
-                          </div>
-                <h4>{vulnerability.title}</h4>
-          </div>
-
-              <div className="vulnerability-details">
-                <p><strong>Description:</strong> {vulnerability.description}</p>
-                <p><strong>Real-World Example:</strong> {vulnerability.scenario}</p>
-                <p><strong>Impact:</strong> {vulnerability.impact}</p>
-                <p><strong>Bitcoin Solution:</strong> {vulnerability.bitcoinSolution}</p>
-        </div>
-
-              <div className="vulnerability-question">
-                <p>Do you understand how this vulnerability threatens financial sovereignty?</p>
-                <div className="question-options">
-                  <ActionButton
-              variant="primary"
-                    onClick={() => handleVulnerabilityAnalysis(vulnerability.id, true)}
-                    disabled={vulnerabilities[vulnerability.id]?.understood}
-                  >
-                    Yes, I understand the threat
-                  </ActionButton>
-                  <ActionButton
-                    variant="secondary"
-                    onClick={() => handleVulnerabilityAnalysis(vulnerability.id, false)}
-                    disabled={vulnerabilities[vulnerability.id]?.understood}
-                  >
-                    Need more explanation
-                  </ActionButton>
-          </div>
-
-                {vulnerabilities[vulnerability.id]?.understood && (
-                  <div className="analysis-confirmed">
-                    <div className="confirmation-icon">✅</div>
-                    <p>Vulnerability analysis complete. Bitcoin eliminates this attack vector.</p>
-              </div>
-                )}
-              </div>
-            </div>
-          ))}
-            </div>
-
-          <ContinueButton 
-            onClick={onComplete}
-          completed={analysisComplete}
-          nextStep="Digital Scarcity Architect"
-          >
-          Advance to Scarcity Architecture →
-          </ContinueButton>
-      </div>
-    );
-  };
-
-  // Phase 4: Digital Scarcity Architect
-  const DigitalScarcityArchitect = ({ onComplete }) => {
-    const [scarcityDesign, setScarcityDesign] = useState({});
-    const [architectureComplete, setArchitectureComplete] = useState(false);
-
-    const scarcityComponents = [
-      {
-        id: 'energy_cost',
-        title: "Energy Cost Mechanism",
-        description: "Design energy requirements for digital scarcity",
-        challenge: "How much energy should creating new Bitcoin require?",
-        options: [
-          "Minimal energy - make it cheap and easy",
-          "Massive energy - make it expensive and secure",
-          "Variable energy - adjust based on demand"
-        ],
-        correct: 1,
-        explanation: "Massive energy cost makes Bitcoin impossible to counterfeit - security through energy expenditure."
+      component: TimeTravelInviteStep
+    },
+    {
+      id: 'role-play-intro',
+      title: 'Meet Paco the Potato Farmer',
+      uxElement: 'Story card with choices',
+      engagementHook: 'Quick-choice quiz leading to barter frustration',
+      content: {
+        scenario: "You are Paco the Potato Farmer. Feet frozen. Zero shoes. No one wants potatoes today.",
+        quickChoice: {
+          question: "What do you try first?",
+          options: [
+            { id: 'trade', text: 'Try to trade potatoes', outcome: 'barter_frustration' },
+            { id: 'make', text: 'Try to make shoes yourself', outcome: 'barter_frustration' },
+            { id: 'give-up', text: 'Give up and stay cold', outcome: 'barter_frustration' }
+          ],
+          allRouteToFrustration: true
+        }
       },
-      {
-        id: 'supply_limit',
-        title: "Supply Limitation System",
-        description: "Design maximum supply constraints",
-        challenge: "What should be Bitcoin's maximum supply?",
-        options: [
-          "Unlimited supply - create as needed",
-          "Fixed supply - never exceed 21 million",
-          "Elastic supply - adjust with economy"
-        ],
-        correct: 1,
-        explanation: "Fixed supply of 21 million ensures Bitcoin cannot be inflated away like fiat currencies."
+      component: RolePlayIntroStep
+    },
+    {
+      id: 'barter-friction',
+      title: 'Feel the Friction',
+      uxElement: 'Interactive friction demo',
+      engagementHook: 'Drag and drop difficulty simulation',
+      content: {
+        frictionDemo: {
+          scenario: "Try to make these trades work:",
+          trades: [
+            { have: "🥔 Potatoes", want: "👟 Shoes", difficulty: "Shoemaker wants fish" },
+            { have: "🥔 Potatoes", want: "🐟 Fish", difficulty: "Fisherman wants meat" },
+            { have: "🥔 Potatoes", want: "🥩 Meat", difficulty: "Butcher wants gold" }
+          ]
+        },
+        insight: "Each failed trade makes you colder and hungrier..."
       },
-      {
-        id: 'difficulty_adjustment',
-        title: "Difficulty Adjustment Algorithm",
-        description: "Design automatic difficulty adjustments",
-        challenge: "How should Bitcoin maintain consistent block times?",
-        options: [
-          "Manual adjustment by developers",
-          "Automatic adjustment every 2016 blocks",
-          "Market-driven adjustment by miners"
-        ],
-        correct: 1,
-        explanation: "Automatic difficulty adjustment every 2016 blocks maintains 10-minute block times regardless of mining power."
-      }
-    ];
-
-    const handleArchitectureChallenge = (componentId, answer) => {
-      const component = scarcityComponents.find(c => c.id === componentId);
-      const isCorrect = validateChallenge(componentId, answer, component.correct);
-      
-      setScarcityDesign(prev => ({
-        ...prev,
-        [componentId]: { answer, correct: isCorrect, completed: true }
-      }));
-
-      if (isCorrect && Object.keys(scarcityDesign).length === scarcityComponents.length - 1) {
-        setArchitectureComplete(true);
-        unlockAchievement('scarcity_architect', 'Digital Scarcity Architect', 'Designed energy-backed digital scarcity systems');
-      }
-    };
-
-    return (
-      <div className="crisis-phase scarcity-architect">
-        <div className="crisis-header">
-          <div className="crisis-icon">🏗️</div>
-          <h2>Digital Scarcity Architect</h2>
-          <p className="crisis-subtitle">Design energy-backed digital scarcity systems</p>
-                      </div>
-
-        <div className="architecture-dashboard">
-          <div className="dashboard-metric">
-            <span className="metric-label">Architecture Components</span>
-            <span className="metric-value">{Object.keys(scarcityDesign).length}/{scarcityComponents.length}</span>
-                        </div>
-          <div className="dashboard-metric">
-            <span className="metric-label">Design Progress</span>
-            <span className="metric-value">{Math.round((Object.keys(scarcityDesign).length / scarcityComponents.length) * 100)}%</span>
-                        </div>
-                      </div>
-
-        <div className="scarcity-architecture">
-          <h3>⚡ Digital Scarcity Architecture</h3>
-          <p>Design the components that create true digital scarcity:</p>
-          
-          {scarcityComponents.map((component, index) => (
-            <div key={component.id} className="component-card">
-              <div className="component-header">
-                <div className="component-number">{index + 1}</div>
-                <div className="component-info">
-                  <h4>{component.title}</h4>
-                  <p>{component.description}</p>
-                      </div>
-                      </div>
-
-              <div className="component-challenge">
-                <h5>🎯 Architecture Challenge:</h5>
-                <p>{component.challenge}</p>
-                
-                <div className="challenge-options">
-                  {component.options.map((option, optionIndex) => (
-                    <OptionButton
-                      key={optionIndex}
-                      selected={scarcityDesign[component.id]?.answer === optionIndex}
-                      onClick={() => handleArchitectureChallenge(component.id, optionIndex)}
-                      disabled={scarcityDesign[component.id]?.completed}
-                    >
-                      {option}
-                    </OptionButton>
-                  ))}
-                </div>
-
-                {scarcityDesign[component.id]?.completed && (
-                  <div className="challenge-result">
-                    <div className={`result-icon ${scarcityDesign[component.id].correct ? 'correct' : 'incorrect'}`}>
-                      {scarcityDesign[component.id].correct ? '✅' : '❌'}
-                  </div>
-                    <p>{component.explanation}</p>
-                  </div>
-                )}
-                    </div>
-                  </div>
-                ))}
-        </div>
-
-        <ContinueButton 
-          onClick={onComplete}
-          completed={architectureComplete}
-          nextStep="Double-Spend Defense Master"
-        >
-          Advance to Double-Spend Defense →
-        </ContinueButton>
-      </div>
-    );
-  };
-
-  // Phase 5: Double-Spend Defense Master
-  const DoubleSpendDefenseMaster = ({ onComplete }) => {
-    const [testResults, setTestResults] = useState({});
-    const [masteryComplete, setMasteryComplete] = useState(false);
-
-    const defenseTests = [
-      {
-        id: 'physical_energy',
-        title: "Physical Energy Test",
-        description: "You burned 1000 calories pushing a box through quicksand",
-        question: "Can you use those same 1000 calories to push another box?",
-        options: ["Yes, energy can be reused", "No, energy is permanently spent"],
-        correct: 1,
-        result: "❌ IMPOSSIBLE! Energy is permanently consumed and cannot be double-spent.",
-        principle: "Physical energy cannot be spent twice"
-      },
-      {
-        id: 'digital_fiat',
-        title: "Digital Fiat Test",
-        description: "You have $1000 in your bank account",
-        question: "Can you spend that same $1000 twice through system manipulation?",
-        options: ["No, impossible to double-spend", "Yes, if you hack the system"],
-        correct: 1,
-        result: "🚨 POSSIBLE! Digital fiat can be double-spent through system vulnerabilities.",
-        principle: "Digital fiat lacks physical constraints"
-      },
-      {
-        id: 'bitcoin_energy',
-        title: "Bitcoin Energy Test",
-        description: "Miners spent 1000 energy units to secure your Bitcoin transaction",
-        question: "Can that same energy be used to create a conflicting transaction?",
-        options: ["Yes, energy can be reused", "No, energy is permanently spent"],
-        correct: 1,
-        result: "❌ IMPOSSIBLE! Energy spent mining Bitcoin cannot be recovered or reused.",
-        principle: "Bitcoin inherits physical energy constraints"
-      }
-    ];
-
-    const handleDefenseTest = (testId, answer) => {
-      const test = defenseTests.find(t => t.id === testId);
-      const isCorrect = validateChallenge(testId, answer, test.correct);
-      
-      setTestResults(prev => ({
-        ...prev,
-        [testId]: { answer, correct: isCorrect, completed: true }
-      }));
-
-      if (Object.keys(testResults).length === defenseTests.length - 1) {
-        setMasteryComplete(true);
-        unlockAchievement('double_spend_master', 'Double-Spend Defense Master', 'Mastered Bitcoin\'s double-spend prevention');
-      }
-    };
-
-    return (
-      <div className="crisis-phase double-spend-master">
-        <div className="crisis-header">
-          <div className="crisis-icon">🛡️</div>
-          <h2>Double-Spend Defense Master</h2>
-          <p className="crisis-subtitle">Master Bitcoin's double-spend prevention mechanisms</p>
-        </div>
-
-        <div className="defense-dashboard">
-          <div className="dashboard-metric">
-            <span className="metric-label">Defense Tests</span>
-            <span className="metric-value">{Object.keys(testResults).length}/{defenseTests.length}</span>
-                      </div>
-          <div className="dashboard-metric">
-            <span className="metric-label">Mastery Level</span>
-            <span className="metric-value">{Math.round((Object.keys(testResults).length / defenseTests.length) * 100)}%</span>
-              </div>
-            </div>
-
-        <div className="defense-testing">
-          <h3>⚔️ Double-Spend Defense Testing</h3>
-          <p>Test different systems to understand double-spend prevention:</p>
-          
-          {defenseTests.map((test) => (
-            <div key={test.id} className="defense-test-card">
-              <div className="test-header">
-                <h4>{test.title}</h4>
-                <p>{test.description}</p>
-            </div>
-
-              <div className="test-challenge">
-                <h5>🎯 Defense Challenge:</h5>
-                <p>{test.question}</p>
-                
-                <div className="challenge-options">
-                  {test.options.map((option, optionIndex) => (
-                    <OptionButton
-                      key={optionIndex}
-                      selected={testResults[test.id]?.answer === optionIndex}
-                      onClick={() => handleDefenseTest(test.id, optionIndex)}
-                      disabled={testResults[test.id]?.completed}
-                    >
-                      {option}
-                    </OptionButton>
-                    ))}
-              </div>
-
-                {testResults[test.id]?.completed && (
-                  <div className="test-result">
-                    <div className="result-display">
-                      <p><strong>Result:</strong> {test.result}</p>
-                      <p><strong>Principle:</strong> {test.principle}</p>
-                  </div>
-                </div>
-                )}
-              </div>
-                      </div>
-                    ))}
-            </div>
-
-            <ContinueButton 
-              onClick={onComplete}
-          completed={masteryComplete}
-          nextStep="Bitcoin Foundation Sovereign"
-            >
-          Advance to Foundation Sovereignty →
-            </ContinueButton>
-      </div>
-    );
-  };
-
-  // Phase 6: Bitcoin Foundation Sovereign
-  const BitcoinFoundationSovereign = ({ onComplete }) => {
-    const [sovereigntyLevel, setSovereigntyLevel] = useState(0);
-    const [masteryAchieved, setMasteryAchieved] = useState(false);
-
-    const sovereigntyMilestones = [
-      "✅ Identified energy-trust crisis in fiat systems",
-      "✅ Mastered Bitcoin's foundational principles", 
-      "✅ Analyzed fiat system vulnerabilities",
-      "✅ Designed digital scarcity architecture",
-      "✅ Mastered double-spend prevention",
-      "🎯 Achieved Bitcoin Foundation Sovereignty"
-    ];
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setSovereigntyLevel(prev => {
-          if (prev < sovereigntyMilestones.length - 1) {
-            return prev + 1;
-          } else {
-            setMasteryAchieved(true);
-            return prev;
+      component: BarterFrictionStep
+    },
+    {
+      id: 'modern-magic',
+      title: 'The Modern Magic',
+      uxElement: 'Before/after comparison',
+      engagementHook: 'Smooth transition animation',
+      content: {
+        comparison: {
+          before: {
+            title: "10,000 years ago",
+            scenario: "Finding someone who wants exactly what you have, and has exactly what you want",
+            difficulty: "Nearly impossible"
+          },
+          after: {
+            title: "Today",
+            scenario: "Tap phone. Value moves instantly anywhere in the world.",
+            difficulty: "Effortless"
           }
-        });
-      }, 1000);
-
-      return () => clearInterval(interval);
-    }, [sovereigntyMilestones.length]);
-
-    return (
-      <div className="crisis-phase foundation-sovereign">
-        <div className="crisis-header">
-          <div className="crisis-icon">👑</div>
-          <h2>Bitcoin Foundation Sovereign</h2>
-          <p className="crisis-subtitle">You have achieved complete Bitcoin foundation mastery</p>
-        </div>
-
-        <div className="sovereignty-dashboard">
-          <div className="dashboard-metric">
-            <span className="metric-label">Mastery Points</span>
-            <span className="metric-value">{masteryPoints}</span>
-              </div>
-          <div className="dashboard-metric">
-            <span className="metric-label">Achievements</span>
-            <span className="metric-value">{achievements.length}</span>
-            </div>
-          </div>
-
-        <div className="sovereignty-journey">
-          <h3>🏆 Your Bitcoin Foundation Journey</h3>
-          
-          <div className="milestones-list">
-            {sovereigntyMilestones.map((milestone, index) => (
-              <div 
-                key={index}
-                className={`milestone ${index <= sovereigntyLevel ? 'completed' : 'pending'}`}
-              >
-                <div className="milestone-icon">
-                  {index <= sovereigntyLevel ? '✅' : '⏳'}
-                      </div>
-                <span className="milestone-text">{milestone}</span>
-                  </div>
-            ))}
-                </div>
-            </div>
-
-        <div className="achievements-showcase">
-          <h3>🎖️ Achievements Unlocked</h3>
-          <div className="achievements-grid">
-            {achievements.map((achievement) => (
-              <div key={achievement.id} className="achievement-card">
-                <div className="achievement-icon">🏆</div>
-                <h4>{achievement.title}</h4>
-                <p>{achievement.description}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="sovereignty-declaration">
-          <h3>⚡ Bitcoin Foundation Sovereignty Achieved</h3>
-          <div className="declaration-content">
-            <p>You have mastered Bitcoin's energy-trust breakthrough and understand:</p>
-            <ul>
-              <li>🔥 How energy cost creates digital scarcity</li>
-              <li>🛡️ How mathematical proof eliminates trust</li>
-              <li>⚡ How Bitcoin solves the double-spend problem</li>
-              <li>🏗️ How to architect sound digital money</li>
-              <li>👑 How to achieve financial sovereignty</li>
-            </ul>
-            </div>
-          </div>
-
-          <ContinueButton 
-            onClick={onComplete}
-          completed={masteryAchieved}
-          nextStep="Complete Module"
-          >
-          Complete Bitcoin Foundation Mastery →
-          </ContinueButton>
-      </div>
-    );
-  };
-
-  // Phase definitions
-  const phases = [
-    {
-      id: 'energy_trust_detective',
-      title: 'Energy-Trust Crisis Detective',
-      component: EnergyTrustCrisisDetective,
-      description: 'Investigate energy-trust contradictions'
+        },
+        revelation: "But how did we get from impossible to effortless?"
+      },
+      component: ModernMagicStep
     },
     {
-      id: 'foundation_engineer',
-      title: 'Bitcoin Foundation Engineer',
-      component: BitcoinFoundationEngineer,
-      description: 'Master Bitcoin breakthrough principles'
+      id: 'trust-question',
+      title: 'The Trust Question',
+      uxElement: 'Interactive trust meter',
+      engagementHook: 'Trust level adjustment slider',
+      content: {
+        centralQuestion: "That modern magic depends on one thing: TRUST",
+        trustMeter: {
+          entities: [
+            { name: "Your Bank", trustLevel: 70 },
+            { name: "Payment Processor", trustLevel: 65 },
+            { name: "Government", trustLevel: 45 },
+            { name: "Internet Infrastructure", trustLevel: 80 }
+          ]
+        },
+        revelation: "What if there was a way to not need trust at all?"
+      },
+      component: TrustQuestionStep
     },
     {
-      id: 'vulnerability_analyst',
-      title: 'Fiat Vulnerability Analyst',
-      component: FiatVulnerabilityAnalyst,
-      description: 'Analyze fiat system failures'
+      id: 'energy-trust',
+      title: 'Energy = Trust',
+      uxElement: 'Physical simulation',
+      engagementHook: 'Drag box across surfaces',
+      content: {
+        physicsDemo: {
+          instruction: "Try moving the box across two different surfaces:",
+          surfaces: {
+            ice: { name: "Ice (No Energy)", resistance: 0, trust: "Low" },
+            concrete: { name: "Concrete (High Energy)", resistance: 100, trust: "High" }
+          }
+        },
+        insight: "Energy spent = Trust earned. No energy = No trust."
+      },
+      component: EnergyTrustStep
     },
     {
-      id: 'scarcity_architect',
-      title: 'Digital Scarcity Architect',
-      component: DigitalScarcityArchitect,
-      description: 'Design energy-backed scarcity'
-    },
-    {
-      id: 'double_spend_master',
-      title: 'Double-Spend Defense Master',
-      component: DoubleSpendDefenseMaster,
-      description: 'Master prevention mechanisms'
-    },
-    {
-      id: 'foundation_sovereign',
-      title: 'Bitcoin Foundation Sovereign',
-      component: BitcoinFoundationSovereign,
-      description: 'Achieve complete mastery'
+      id: 'bitcoin-breakthrough',
+      title: 'The Bitcoin Breakthrough',
+      uxElement: 'Revelation animation',
+      engagementHook: 'Progressive disclosure',
+      content: {
+        breakthrough: {
+          problem: "Money that requires trusting humans",
+          solution: "Money secured by energy (not promises)",
+          mechanism: "Proof-of-Work: Energy spent proves transactions are real"
+        },
+        connections: [
+          "Paco's barter problem → Solved by universal medium of exchange",
+          "Modern trust problem → Solved by mathematical proof",
+          "Energy requirement → Creates real security (like concrete vs ice)"
+        ]
+      },
+      component: BitcoinBreakthroughStep
     }
   ];
 
-  const renderPhase = (phase, index) => {
-    const PhaseComponent = phase.component;
+  const renderCurrentStep = () => {
+    const step = microSteps[currentStep];
+    const StepComponent = step.component;
     return (
-      <PhaseComponent
-        key={phase.id}
-        onComplete={() => handlePhaseComplete(index)}
+      <StepComponent
+        content={step.content}
+        onComplete={(insights) => handleStepComplete(currentStep, insights)}
+        userInteractions={userInteractions}
+        pollResponse={pollResponse}
+        setPollResponse={setPollResponse}
+        paymentTally={paymentTally}
+        showBarterChoice={showBarterChoice}
+        setShowBarterChoice={setShowBarterChoice}
       />
     );
-    };
+  };
 
-    return (
-    <div className="module-container bitcoin-basics-crisis">
-      {/* Crisis Command Center Header */}
-      <div className="crisis-command-center">
-        <div className="command-header">
-          <div className="crisis-badge">
-            <AlertTriangle className="crisis-icon" />
-            <span>BITCOIN FOUNDATION CRISIS ARCHITECT</span>
-          </div>
-          <h1 className="crisis-title">Energy-Trust Crisis vs. Bitcoin Foundation Sovereignty</h1>
-        </div>
-
-        {/* Live Crisis Alerts */}
-        <div className="crisis-alerts">
-          {crisisAlerts.slice(-1).map((alert, index) => (
-            <div key={index} className="crisis-alert">
-              <div className="alert-pulse"></div>
-              <span>{alert}</span>
-            </div>
-                ))}
-              </div>
-
-        {/* Crisis Metrics Dashboard */}
-        <div className="crisis-metrics">
-          <div className="metric-card">
-            <Zap className="metric-icon" />
-            <div className="metric-content">
-              <span className="metric-label">Mastery Points</span>
-              <span className="metric-value">{masteryPoints}</span>
-                    </div>
-                  </div>
-          <div className="metric-card">
-            <Trophy className="metric-icon" />
-            <div className="metric-content">
-              <span className="metric-label">Achievements</span>
-              <span className="metric-value">{achievements.length}</span>
-                </div>
-            </div>
-          <div className="metric-card">
-            <Target className="metric-icon" />
-            <div className="metric-content">
-              <span className="metric-label">Phase Progress</span>
-              <span className="metric-value">{completedPhases.size}/{phases.length}</span>
-          </div>
-          </div>
-        </div>
-            </div>
-
-      {/* Phase Navigation */}
-      <div className="phase-navigation">
-        {phases.map((phase, index) => (
-          <div
-            key={phase.id}
-            className={`phase-nav-item ${
-              index === currentPhase ? 'active' : ''
-            } ${completedPhases.has(index) ? 'completed' : ''}`}
-          >
-            <div className="phase-number">{index + 1}</div>
-            <div className="phase-info">
-              <span className="phase-title">{phase.title}</span>
-              <span className="phase-description">{phase.description}</span>
-          </div>
-            {completedPhases.has(index) && (
-              <div className="phase-completed">✅</div>
-        )}
-          </div>
-        ))}
-          </div>
-
-      {/* Current Phase Content */}
-      <div className="phase-content">
-        {renderPhase(phases[currentPhase], currentPhase)}
+  return (
+    <div className="module-container bitcoin-basics-enhanced">
+      <div className="module-header">
+        <h1 className="module-title">
+          <Zap className="module-icon" />
+          Bitcoin Basics: From Barter to Digital Gold
+        </h1>
+        <p className="module-subtitle">
+          Discover why Bitcoin solves humanity's oldest problem
+        </p>
       </div>
 
-      {/* Progress Tracking */}
-      <div className="progress-footer">
+      {/* Micro-Step Progress */}
+      <div className="micro-progress">
+        <div className="progress-header">
+          <span>Understanding Bitcoin</span>
+          <span>{completedSteps.size} / {microSteps.length} insights</span>
+        </div>
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${(completedPhases.size / phases.length) * 100}%` }}
+            style={{ width: `${(completedSteps.size / microSteps.length) * 100}%` }}
           />
         </div>
-        <span className="progress-text">
-          Phase {currentPhase + 1} of {phases.length} • {completedPhases.size} completed
-        </span>
+        <div className="micro-steps-nav">
+          {microSteps.map((step, index) => (
+            <div
+              key={step.id}
+              className={`micro-step ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''} ${index <= Math.max(currentStep, Math.max(...completedSteps) + 1) ? 'available' : 'locked'}`}
+              onClick={() => handleStepChange(index)}
+            >
+              <div className="step-number">{index + 1}</div>
+              <div className="step-title">{step.title}</div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Current Step Content */}
+      <div className="step-content">
+        {renderCurrentStep()}
+      </div>
+    </div>
+  );
+};
+
+// Micro-Step Components with Enhanced Interactions
+const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse }) => {
+  const [showInsight, setShowInsight] = useState(false);
+
+  const handlePollResponse = (response) => {
+    setPollResponse(response);
+    setShowInsight(true);
+    setTimeout(() => onComplete({ pollResponse: response }), 2000);
+  };
+
+  return (
+    <div className="spark-curiosity-step">
+      <div className="curiosity-header">
+        <h2>{content.headline}</h2>
+        <p className="subtitle">{content.subtitle}</p>
+      </div>
+
+      <div className="micro-poll">
+        <h3>{content.microPoll.question}</h3>
+        <div className="poll-options">
+          {content.microPoll.options.map((option, index) => (
+            <OptionButton
+              key={index}
+              selected={pollResponse === option}
+              onClick={() => handlePollResponse(option)}
+              disabled={pollResponse !== null}
+              className="poll-option"
+              feedback="haptic"
+              ariaLabel={`Poll option: ${option}`}
+              id={`poll-option-${index}`}
+            >
+              {option}
+            </OptionButton>
+          ))}
+        </div>
+      </div>
+
+      {showInsight && (
+        <div className="insight-reveal">
+          <div className="insight-text">{content.insight}</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const InstantContrastStep = ({ content, onComplete, paymentTally }) => {
+  const [taps, setTaps] = useState(0);
+  const [showContinue, setShowContinue] = useState(false);
+
+  const handleTap = () => {
+    setTaps(prev => prev + 1);
+    if (taps + 1 >= 5) {
+      setShowContinue(true);
+    }
+  };
+
+  return (
+    <div className="instant-contrast-step">
+      <div className="tap-demo">
+        <ActionButton 
+          className="tap-card"
+          onClick={handleTap}
+          context="demo"
+          feedback="haptic"
+          ariaLabel={`Tap to simulate payment. Tapped ${taps} times`}
+          success={taps >= 5}
+        >
+          <div className="tap-instruction">{content.tapDemo.message}</div>
+          <div className="tap-counter">You've tapped: {taps} times</div>
+        </ActionButton>
+      </div>
+
+      <div className="payment-counter">
+        <h3>{content.tapDemo.countDisplay}</h3>
+        <div className="tally-display">
+          <span className="tally-number">{paymentTally.toLocaleString()}</span>
+          <span className="tally-label">payments in last second</span>
+        </div>
+      </div>
+
+      <div className="insight-box">
+        <p>{content.insight}</p>
+      </div>
+
+      {showContinue && (
+        <ContinueButton 
+          onClick={() => onComplete({ tapsCompleted: taps })}
+          showProgress={true}
+          feedback="visual"
+          ariaLabel="Continue to next step after completing tap demonstration"
+        >
+          Amazing! Show me why this matters
+        </ContinueButton>
+      )}
+    </div>
+  );
+};
+
+const KeyInsightStep = ({ content, onComplete }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  return (
+    <div className="key-insight-step">
+      <div className="insight-content">
+        <p className="main-text">
+          {content.mainText}
+        </p>
+        
+        <PopupButton
+          className="tooltip-trigger"
+          popupContent={content.tooltip.reveal}
+          popupTitle="Money Definition"
+          triggerOn="hover"
+          position="top"
+          onOpen={() => setShowTooltip(true)}
+          ariaLabel="Show money definition tooltip"
+        >
+          {content.tooltip.trigger}
+        </PopupButton>
+        
+        {showTooltip && (
+          <div className="deeper-insight">
+            <p>{content.deeperInsight}</p>
+          </div>
+        )}
+      </div>
+
+      <ContinueButton 
+        onClick={() => onComplete({ tooltipRevealed: showTooltip })}
+        feedback="visual"
+        ariaLabel="Continue after understanding the key insight"
+      >
+        This changes everything...
+      </ContinueButton>
+    </div>
+  );
+};
+
+const TimeTravelInviteStep = ({ content, onComplete }) => {
+  const [buttonShaking, setButtonShaking] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setButtonShaking(true);
+      setTimeout(() => setButtonShaking(false), 1000);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="time-travel-step">
+      <div className="invitation">
+        <h3>{content.invitation}</h3>
+        <p>{content.preview}</p>
+      </div>
+
+      <ActionButton
+        className={`time-travel-button ${buttonShaking ? 'shaking' : ''}`}
+        onClick={() => onComplete({ timeTravelAccepted: true })}
+        context="demo"
+        action="primary"
+        feedback="haptic"
+        icon={<Clock className="button-icon" />}
+        iconPosition="left"
+        size="lg"
+        ariaLabel="Travel back in time to understand money's origins"
+        autoFocus={buttonShaking}
+      >
+        {content.ctaButton.text}
+      </ActionButton>
+    </div>
+  );
+};
+
+const RolePlayIntroStep = ({ content, onComplete, showBarterChoice, setShowBarterChoice }) => {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
+  const handleChoice = (choice) => {
+    setSelectedChoice(choice);
+    setShowBarterChoice(true);
+    setTimeout(() => {
+      onComplete({ 
+        selectedChoice: choice.id,
+        discoveredFrustration: true 
+      });
+    }, 2000);
+  };
+
+  return (
+    <div className="role-play-step">
+      <div className="scenario-card">
+        <h3>🥔 Your Story Begins</h3>
+        <p className="scenario-text">{content.scenario}</p>
+      </div>
+
+      <div className="quick-choice">
+        <h4>{content.quickChoice.question}</h4>
+        <div className="choice-options">
+          {content.quickChoice.options.map((option) => (
+            <button
+              key={option.id}
+              className={`choice-button ${selectedChoice?.id === option.id ? 'selected' : ''}`}
+              onClick={() => handleChoice(option)}
+              disabled={selectedChoice !== null}
+            >
+              {option.text}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {showBarterChoice && selectedChoice && (
+        <div className="choice-outcome">
+          <p>💭 <em>This is harder than it looks... Let me feel the real friction</em></p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const BarterFrictionStep = ({ content, onComplete }) => {
+  const [attempts, setAttempts] = useState(0);
+  const [currentTrade, setCurrentTrade] = useState(0);
+  const [frustration, setFrustration] = useState(0);
+
+  const handleTradeAttempt = () => {
+    setAttempts(prev => prev + 1);
+    setFrustration(prev => prev + 25);
+    
+    if (currentTrade < content.frictionDemo.trades.length - 1) {
+      setCurrentTrade(prev => prev + 1);
+    } else {
+      setTimeout(() => onComplete({ 
+        totalAttempts: attempts + 1,
+        frustrationLevel: frustration + 25 
+      }), 1500);
+    }
+  };
+
+  const trade = content.frictionDemo.trades[currentTrade];
+
+  return (
+    <div className="barter-friction-step">
+      <div className="friction-demo">
+        <h3>{content.frictionDemo.scenario}</h3>
+        
+        <div className="trade-attempt">
+          <div className="trade-items">
+            <div className="have-item">
+              <span>You have: {trade.have}</span>
+            </div>
+            <div className="arrow">→</div>
+            <div className="want-item">
+              <span>You want: {trade.want}</span>
+            </div>
+          </div>
+          
+          <div className="trade-difficulty">
+            <p>❌ {trade.difficulty}</p>
+          </div>
+
+          <button 
+            className="attempt-button"
+            onClick={handleTradeAttempt}
+          >
+            Try this trade
+          </button>
+        </div>
+
+        <div className="frustration-meter">
+          <div className="meter-label">Frustration Level:</div>
+          <div className="meter-bar">
+            <div 
+              className="meter-fill"
+              style={{ width: `${frustration}%` }}
+            />
+          </div>
+          <div className="meter-text">{frustration}% frustrated</div>
+        </div>
+      </div>
+
+      <div className="insight-text">
+        <p>{content.insight}</p>
+      </div>
+    </div>
+  );
+};
+
+const ModernMagicStep = ({ content, onComplete }) => {
+  const [showAfter, setShowAfter] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAfter(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="modern-magic-step">
+      <div className="comparison-container">
+        <div className="before-section">
+          <h3>{content.comparison.before.title}</h3>
+          <p>{content.comparison.before.scenario}</p>
+          <div className="difficulty before">{content.comparison.before.difficulty}</div>
+        </div>
+
+        {showAfter && (
+          <div className="after-section animate-in">
+            <h3>{content.comparison.after.title}</h3>
+            <p>{content.comparison.after.scenario}</p>
+            <div className="difficulty after">{content.comparison.after.difficulty}</div>
+          </div>
+        )}
+      </div>
+
+      {showAfter && (
+        <div className="revelation">
+          <p>{content.revelation}</p>
+          <ContinueButton onClick={() => onComplete({ comparisonViewed: true })}>
+            Show me how we got here
+          </ContinueButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const TrustQuestionStep = ({ content, onComplete }) => {
+  const [trustLevels, setTrustLevels] = useState(
+    content.trustMeter.entities.reduce((acc, entity) => {
+      acc[entity.name] = entity.trustLevel;
+      return acc;
+    }, {})
+  );
+  const [allAdjusted, setAllAdjusted] = useState(false);
+
+  const handleTrustAdjustment = (entityName, newLevel) => {
+    setTrustLevels(prev => {
+      const updated = { ...prev, [entityName]: newLevel };
+      const adjusted = Object.values(updated).every(level => level !== content.trustMeter.entities.find(e => e.name === entityName)?.trustLevel);
+      if (adjusted && Object.keys(updated).length === content.trustMeter.entities.length) {
+        setAllAdjusted(true);
+      }
+      return updated;
+    });
+  };
+
+  return (
+    <div className="trust-question-step">
+      <div className="central-question">
+        <h3>{content.centralQuestion}</h3>
+      </div>
+
+      <div className="trust-meters">
+        {content.trustMeter.entities.map((entity) => (
+          <div key={entity.name} className="trust-entity">
+            <label>{entity.name}</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={trustLevels[entity.name]}
+              onChange={(e) => handleTrustAdjustment(entity.name, parseInt(e.target.value))}
+              className="trust-slider"
+            />
+            <span>{trustLevels[entity.name]}% trust</span>
+          </div>
+        ))}
+      </div>
+
+      {allAdjusted && (
+        <div className="revelation">
+          <p>{content.revelation}</p>
+          <ContinueButton onClick={() => onComplete({ trustLevels })}>
+            No trust needed? How is that possible?
+          </ContinueButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const EnergyTrustStep = ({ content, onComplete }) => {
+  const [dragPosition, setDragPosition] = useState({ ice: 0, concrete: 0 });
+  const [energySpent, setEnergySpent] = useState({ ice: 0, concrete: 0 });
+  const [bothTested, setBothTested] = useState(false);
+
+  const handleDrag = (surface, position) => {
+    setDragPosition(prev => ({ ...prev, [surface]: position }));
+    
+    const resistance = content.physicsDemo.surfaces[surface].resistance;
+    const energy = Math.floor(position * resistance / 100);
+    setEnergySpent(prev => {
+      const updated = { ...prev, [surface]: energy };
+      if (updated.ice > 0 && updated.concrete > 0) {
+        setBothTested(true);
+      }
+      return updated;
+    });
+  };
+
+  return (
+    <div className="energy-trust-step">
+      <div className="physics-demo">
+        <h3>{content.physicsDemo.instruction}</h3>
+        
+        {Object.entries(content.physicsDemo.surfaces).map(([surfaceKey, surface]) => (
+          <div key={surfaceKey} className="surface-test">
+            <div className="surface-info">
+              <h4>{surface.name}</h4>
+              <p>Trust Level: {surface.trust}</p>
+            </div>
+            
+            <div className="drag-area">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={dragPosition[surfaceKey]}
+                onChange={(e) => handleDrag(surfaceKey, parseInt(e.target.value))}
+                className={`drag-slider ${surfaceKey}`}
+              />
+              <div className="energy-display">
+                Energy spent: {energySpent[surfaceKey]} units
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {bothTested && (
+        <div className="insight-reveal">
+          <p>{content.insight}</p>
+          <ContinueButton onClick={() => onComplete({ 
+            energySpent,
+            understoodEnergyTrustConnection: true 
+          })}>
+            Now I get it! Show me Bitcoin
+          </ContinueButton>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const BitcoinBreakthroughStep = ({ content, onComplete }) => {
+  const [connectionsRevealed, setConnectionsRevealed] = useState(0);
+
+  const revealConnection = () => {
+    if (connectionsRevealed < content.connections.length) {
+      setConnectionsRevealed(prev => prev + 1);
+    }
+  };
+
+  return (
+    <div className="bitcoin-breakthrough-step">
+      <div className="breakthrough-revelation">
+        <h3>🚀 {content.breakthrough.problem}</h3>
+        <div className="solution-arrow">↓</div>
+        <h3>⚡ {content.breakthrough.solution}</h3>
+        <div className="mechanism">
+          <p><strong>How:</strong> {content.breakthrough.mechanism}</p>
+        </div>
+      </div>
+
+      <div className="connections">
+        <h4>Connect the dots:</h4>
+        {content.connections.slice(0, connectionsRevealed).map((connection, index) => (
+          <div key={index} className="connection-item animate-in">
+            {connection}
+          </div>
+        ))}
+        
+        {connectionsRevealed < content.connections.length && (
+          <ActionButton 
+            className="reveal-button" 
+            onClick={revealConnection}
+            variant="demo"
+            size="small"
+          >
+            Show next connection
+          </ActionButton>
+        )}
+      </div>
+
+      {connectionsRevealed === content.connections.length && (
+        <div className="completion">
+          <h4>🎯 You've discovered Bitcoin's breakthrough!</h4>
+          <ContinueButton onClick={() => onComplete({ 
+            allConnectionsUnderstood: true,
+            readyForTechnicalDetails: true 
+          })}>
+            I'm ready to learn more about Bitcoin
+          </ContinueButton>
+        </div>
+      )}
     </div>
   );
 };

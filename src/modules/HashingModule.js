@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { sha256 } from '../utils/bitcoin';
+import { 
+  ContinueButton, 
+  ActionButton, 
+  OptionButton, 
+  NavigationButton, 
+  PopupButton 
+} from '../components/EnhancedButtons';
 import './HashingModule.css';
 
 const HashingModule = () => {
@@ -20,6 +27,7 @@ const HashingModule = () => {
 
   // Interactive challenge state
   const [activeChallenge, setActiveChallenge] = useState(null);
+  const [challengeProgress, setChallengeProgress] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [hashResult, setHashResult] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -393,10 +401,6 @@ const HashingModule = () => {
             independence: prev.independence + 20
           }));
           break;
-        default:
-          // No specific update for this phase, just increment mastery points
-          setMasteryPoints(prev => prev + challenge.reward);
-          break;
       }
       
       setFeedback(`🎯 PROOF MASTERY ACHIEVED! +${challenge.reward} points`);
@@ -538,12 +542,14 @@ const HashingModule = () => {
                   <span className="challenge-type">{challenge.type}</span>
                   <span className="challenge-difficulty">{challenge.difficulty}</span>
                 </div>
-                <button 
+                <ActionButton 
                   className="challenge-start-btn"
                   onClick={() => startChallenge(challenge)}
+                  variant="crisis"
+                  size="small"
                 >
                   Begin Challenge
-                </button>
+                </ActionButton>
               </div>
             ))}
           </div>
@@ -555,12 +561,14 @@ const HashingModule = () => {
         <div className="active-challenge">
           <div className="challenge-header">
             <h3>🎯 {activeChallenge.title}</h3>
-            <button
+            <NavigationButton
               className="challenge-close"
               onClick={() => setActiveChallenge(null)}
+              variant="close"
+              size="small"
             >
               ×
-            </button>
+            </NavigationButton>
         </div>
           
           <div className="challenge-content">
@@ -571,21 +579,16 @@ const HashingModule = () => {
             {challengeImplementations[activeChallenge.id].options ? (
               <div className="challenge-options">
                 {challengeImplementations[activeChallenge.id].options.map((option, index) => (
-                  <button
+                  <OptionButton
                     key={index}
                     className={`option-btn ${userInput === index.toString() ? 'selected' : ''}`}
                     onClick={() => setUserInput(index.toString())}
+                    selected={userInput === index.toString()}
+                    variant="quiz"
                   >
                     {option}
-                  </button>
+                  </OptionButton>
                 ))}
-                <button 
-                  className="submit-btn"
-                  onClick={handleSubmit}
-                  disabled={userInput === ''}
-                >
-                  Submit Answer
-                </button>
               </div>
             ) : (
               <div className="challenge-input">
@@ -601,7 +604,13 @@ const HashingModule = () => {
                   placeholder="Enter your answer..."
                   onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
                 />
-                <button onClick={handleSubmit}>Submit</button>
+                <ActionButton 
+                  onClick={handleSubmit}
+                  variant="primary"
+                  size="small"
+                >
+                  Submit
+                </ActionButton>
               </div>
             )}
             
@@ -619,12 +628,14 @@ const HashingModule = () => {
             )}
             
             {challengeImplementations[activeChallenge.id].hint && (
-              <button 
+              <PopupButton 
                 className="hint-btn"
                 onClick={() => setShowHint(!showHint)}
+                variant="secondary"
+                size="small"
               >
                 {showHint ? 'Hide Hint' : 'Show Hint'}
-              </button>
+              </PopupButton>
             )}
             
             {feedback && (
