@@ -423,6 +423,17 @@ export const ProgressProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // Connection tracking for cross-module learning
+  const [connectionMap, setConnectionMap] = useState(() => {
+    const saved = localStorage.getItem('connectionMap');
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  const [conceptualInsights, setConceptualInsights] = useState(() => {
+    const saved = localStorage.getItem('conceptualInsights');
+    return saved ? JSON.parse(saved) : {};
+  });
+
   const [sessionStartTime, setSessionStartTime] = useState(null);
 
   // Enhanced state persistence
@@ -436,13 +447,15 @@ export const ProgressProvider = ({ children }) => {
       totalPoints,
       totalTimeSpent,
       learningPath,
-      achievements
+      achievements,
+      connectionMap,
+      conceptualInsights
     };
 
     Object.entries(stateToSave).forEach(([key, value]) => {
       localStorage.setItem(key, JSON.stringify(value));
     });
-  }, [completedModules, moduleScores, earnedBadges, currentStreak, longestStreak, totalPoints, totalTimeSpent, learningPath, achievements]);
+  }, [completedModules, moduleScores, earnedBadges, currentStreak, longestStreak, totalPoints, totalTimeSpent, learningPath, achievements, connectionMap, conceptualInsights]);
 
   // Session tracking
   const startSession = () => {
@@ -457,8 +470,8 @@ export const ProgressProvider = ({ children }) => {
     }
   };
 
-  // Enhanced module completion with scoring
-  const completeModule = (moduleId, score = 100) => {
+  // Enhanced module completion with scoring and connection tracking
+  const completeModule = (moduleId, score = 100, connectionInsights = {}) => {
     if (!completedModules.includes(moduleId)) {
       const updatedModules = [...completedModules, moduleId];
       setCompletedModules(updatedModules);
@@ -468,13 +481,26 @@ export const ProgressProvider = ({ children }) => {
         ...prev,
         [moduleId]: score
       }));
+
+      // Track connection insights for cross-module learning
+      if (Object.keys(connectionInsights).length > 0) {
+        setConnectionMap(prev => ({
+          ...prev,
+          [moduleId]: {
+            ...prev[moduleId],
+            ...connectionInsights,
+            completedAt: Date.now()
+          }
+        }));
+      }
       
       // Award points based on difficulty and score
       const module = MODULES.find(m => m.id === moduleId);
       const basePoints = 100;
       const difficultyMultiplier = module?.difficulty || 1;
       const scoreMultiplier = score / 100;
-      const points = Math.round(basePoints * difficultyMultiplier * scoreMultiplier);
+      const connectionBonus = Object.keys(connectionInsights).length * 10; // Bonus for making connections
+      const points = Math.round(basePoints * difficultyMultiplier * scoreMultiplier) + connectionBonus;
       
       setTotalPoints(prev => prev + points);
       
@@ -505,6 +531,9 @@ export const ProgressProvider = ({ children }) => {
       
       // Check mastery badges
       checkMasteryBadges(updatedModules.length);
+
+      // Check for connection mastery badges
+      checkConnectionMasteryBadges(connectionInsights);
       
       // End session tracking
       endSession();
@@ -575,15 +604,111 @@ export const ProgressProvider = ({ children }) => {
   };
 
   const checkMasteryBadges = (moduleCount) => {
-    if (moduleCount >= 5 && !earnedBadges.includes('bitcoin-apprentice')) {
-      earnBadge('bitcoin-apprentice');
+    if (moduleCount >= 5 && !earnedBadges.includes('knowledge-seeker')) {
+      earnBadge('knowledge-seeker');
     }
     if (moduleCount >= 10 && !earnedBadges.includes('bitcoin-scholar')) {
       earnBadge('bitcoin-scholar');
-      }
-    if (moduleCount >= MODULES.length && !earnedBadges.includes('bitcoin-expert')) {
-      earnBadge('bitcoin-expert');
     }
+    if (moduleCount >= MODULES.length && !earnedBadges.includes('master-student')) {
+      earnBadge('master-student');
+    }
+  };
+
+  // Check for connection mastery badges
+  const checkConnectionMasteryBadges = (connectionInsights) => {
+    const connectionCount = Object.keys(connectionInsights).length;
+    
+    if (connectionCount >= 3 && !earnedBadges.includes('concept-connector')) {
+      earnBadge('concept-connector');
+    }
+    
+    // Check for deep conceptual understanding across modules
+    const totalConnections = Object.values(connectionMap).reduce((total, moduleConnections) => {
+      return total + Object.keys(moduleConnections).length;
+    }, 0);
+    
+    if (totalConnections >= 10 && !earnedBadges.includes('pattern-master')) {
+      earnBadge('pattern-master');
+    }
+    
+    if (totalConnections >= 20 && !earnedBadges.includes('systems-thinker')) {
+      earnBadge('systems-thinker');
+    }
+  };
+
+  // Helper function to get connection opportunities between modules
+  const getConnectionOpportunities = (currentModuleId, previousModuleIds) => {
+    const connectionTemplates = {
+      'hashing': {
+        'numbers': {
+          question: "How does what you learned about number systems connect to hashing?",
+          concept: "Hexadecimal representation of hash outputs",
+          insight: "Hash functions output numbers in hexadecimal format - the number systems you learned help you read Bitcoin's digital fingerprints."
+        }
+      },
+      'mining': {
+        'hashing': {
+          question: "How does hashing enable the mining process you just learned about?",
+          concept: "Proof-of-work uses repeated hashing",
+          insight: "Mining is essentially a race to find hash inputs that produce outputs meeting specific requirements - millions of SHA-256 operations per second."
+        },
+        'numbers': {
+          question: "Why do miners care about targets expressed in hexadecimal?",
+          concept: "Difficulty targets as large numbers",
+          insight: "Mining targets are 256-bit numbers in hex - your number systems knowledge helps you understand how 'difficulty' is actually measured."
+        }
+      },
+      'keys': {
+        'hashing': {
+          question: "How does hashing protect your private keys and create addresses?",
+          concept: "Key derivation and address generation",
+          insight: "Your private key gets hashed multiple times to create your public address - hashing provides both security and privacy."
+        }
+      },
+      'transactions': {
+        'keys': {
+          question: "How do the keys you learned about enable transaction signing?",
+          concept: "Digital signatures prove ownership",
+          insight: "Every transaction uses your private key to create a unique signature - proving you own the coins without revealing your key."
+        },
+        'hashing': {
+          question: "Where does hashing appear in the transaction verification process?",
+          concept: "Transaction IDs and signature hashing",
+          insight: "Each transaction gets a unique hash ID, and signature verification relies on hashing the transaction data."
+        }
+      }
+    };
+
+    const opportunities = [];
+    
+    if (connectionTemplates[currentModuleId]) {
+      previousModuleIds.forEach(prevModuleId => {
+        if (connectionTemplates[currentModuleId][prevModuleId]) {
+          opportunities.push({
+            fromModule: prevModuleId,
+            toModule: currentModuleId,
+            ...connectionTemplates[currentModuleId][prevModuleId]
+          });
+        }
+      });
+    }
+
+    return opportunities;
+  };
+
+  // Record a conceptual insight
+  const recordConceptualInsight = (moduleId, insightType, insight) => {
+    setConceptualInsights(prev => ({
+      ...prev,
+      [moduleId]: {
+        ...prev[moduleId],
+        [insightType]: {
+          insight,
+          timestamp: Date.now()
+        }
+      }
+    }));
   };
 
   const earnBadge = (badgeId) => {
@@ -686,12 +811,14 @@ export const ProgressProvider = ({ children }) => {
     setTotalTimeSpent(0);
     setLearningPath([]);
     setAchievements([]);
+    setConnectionMap({});
+    setConceptualInsights({});
     
     // Clear localStorage
     const keysToRemove = [
       'completedModules', 'moduleScores', 'earnedBadges', 'currentStreak',
       'longestStreak', 'totalPoints', 'totalTimeSpent', 'learningPath',
-      'achievements', 'lastActiveDate'
+      'achievements', 'lastActiveDate', 'connectionMap', 'conceptualInsights'
     ];
     
     keysToRemove.forEach(key => localStorage.removeItem(key));
@@ -707,6 +834,8 @@ export const ProgressProvider = ({ children }) => {
     totalTimeSpent,
     moduleScores,
     achievements,
+    connectionMap,
+    conceptualInsights,
     
     // Module data
     modules: MODULES,
@@ -719,13 +848,15 @@ export const ProgressProvider = ({ children }) => {
     endSession,
       earnBadge,
     resetProgress,
+    recordConceptualInsight,
     
     // Helpers
       getModuleProgress,
       isModuleCompleted,
       getBadgeDetails,
     getLearningStats,
-    getNextRecommendation
+    getNextRecommendation,
+    getConnectionOpportunities
   };
 
   return (

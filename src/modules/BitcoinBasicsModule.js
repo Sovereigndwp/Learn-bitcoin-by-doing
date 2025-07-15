@@ -297,46 +297,264 @@ const BitcoinBasicsModule = () => {
   );
 };
 
-// Micro-Step Components with Enhanced Interactions
+// Enhanced Micro-Step Components with Socratic Questioning Framework
 const SparkCuriosityStep = ({ content, onComplete, pollResponse, setPollResponse }) => {
   const [showInsight, setShowInsight] = useState(false);
+  const [currentQuestionLevel, setCurrentQuestionLevel] = useState(1);
+  const [questioningPath, setQuestioningPath] = useState([]);
+  const [metacognitiveResponse, setMetacognitiveResponse] = useState('');
 
-  const handlePollResponse = (response) => {
+  // 5-Level Socratic Questioning Framework
+  const socraticQuestions = {
+    1: {
+      question: content.microPoll.question, // Level 1: Surface observation
+      type: 'multiple_choice',
+      options: content.microPoll.options,
+      purpose: 'Establish current experience and awareness'
+    },
+    2: {
+      question: "Why do you think cash usage has changed this way?", // Level 2: Cause exploration
+      type: 'open_ended',
+      purpose: 'Explore underlying reasons and patterns',
+      followUp: "What forces might be driving this shift?"
+    },
+    3: {
+      question: "What assumptions about money are we making when we use digital payments?", // Level 3: Assumption examination
+      type: 'reflective',
+      purpose: 'Question underlying beliefs and assumptions',
+      prompts: ['We assume it will always work', 'We assume someone will honor the transaction', 'We assume the system is secure']
+    },
+    4: {
+      question: "How might we design a payment system that doesn't require these assumptions?", // Level 4: Alternative design
+      type: 'creative_problem_solving',
+      purpose: 'Generate alternative solutions from first principles',
+      scaffolds: ['What if no one controlled it?', 'What if it was based on math instead of trust?', 'What if everyone could verify it?']
+    },
+    5: {
+      question: "What are the trade-offs and implications of your solution?", // Level 5: Critical evaluation
+      type: 'synthesis',
+      purpose: 'Evaluate solutions and understand consequences',
+      framework: ['Benefits vs Costs', 'Short-term vs Long-term', 'Individual vs Society']
+    }
+  };
+
+  const handleInitialPollResponse = (response) => {
     setPollResponse(response);
+    setQuestioningPath([{ level: 1, response, timestamp: Date.now() }]);
     setShowInsight(true);
-    setTimeout(() => onComplete({ pollResponse: response }), 2000);
+    
+    // Progress to Level 2 after insight reveal
+    setTimeout(() => {
+      setCurrentQuestionLevel(2);
+    }, 2500);
+  };
+
+  const handleSocraticResponse = (level, response, strategy = null) => {
+    const newPath = [...questioningPath, { 
+      level, 
+      response, 
+      strategy, 
+      timestamp: Date.now(),
+      metacognitive: level > 2 ? metacognitiveResponse : null
+    }];
+    setQuestioningPath(newPath);
+
+    if (level < 5) {
+      setTimeout(() => {
+        setCurrentQuestionLevel(level + 1);
+      }, 1500);
+    } else {
+      // Complete the Socratic journey
+      setTimeout(() => {
+        onComplete({ 
+          pollResponse, 
+          socraticJourney: newPath,
+          finalUnderstanding: response,
+          thinkingDepth: 'deep_socratic'
+        });
+      }, 2000);
+    }
+  };
+
+  const handleMetacognitiveInput = (response) => {
+    setMetacognitiveResponse(response);
+  };
+
+  const renderQuestionLevel = () => {
+    const question = socraticQuestions[currentQuestionLevel];
+    
+    switch (question.type) {
+      case 'multiple_choice':
+        return (
+          <div className="socratic-question level-1">
+            <h3>{question.question}</h3>
+            <div className="poll-options">
+              {question.options.map((option, index) => (
+                <OptionButton
+                  key={index}
+                  selected={pollResponse === option}
+                  onClick={() => handleInitialPollResponse(option)}
+                  disabled={pollResponse !== null}
+                  className="poll-option"
+                  feedback="haptic"
+                  ariaLabel={`Poll option: ${option}`}
+                  id={`poll-option-${index}`}
+                >
+                  {option}
+                </OptionButton>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'open_ended':
+        return (
+          <div className="socratic-question level-2">
+            <h3>🤔 {question.question}</h3>
+            <p className="question-purpose">{question.purpose}</p>
+            <div className="thinking-space">
+              <textarea 
+                placeholder="Share your thoughts..."
+                className="reflection-input"
+                onChange={(e) => handleSocraticResponse(2, e.target.value)}
+                onBlur={(e) => e.target.value && handleSocraticResponse(2, e.target.value)}
+              />
+              <div className="follow-up">{question.followUp}</div>
+            </div>
+          </div>
+        );
+
+      case 'reflective':
+        return (
+          <div className="socratic-question level-3">
+            <h3>🔍 {question.question}</h3>
+            <p className="question-purpose">{question.purpose}</p>
+            
+            {/* Metacognitive prompt */}
+            <div className="metacognitive-prompt">
+              <h4>Before you answer, reflect:</h4>
+              <input 
+                type="text"
+                placeholder="What thinking strategy will you use to explore this?"
+                className="metacognitive-input"
+                onChange={(e) => handleMetacognitiveInput(e.target.value)}
+              />
+            </div>
+
+            <div className="assumption-explorer">
+              <h4>Consider these common assumptions:</h4>
+              {question.prompts.map((prompt, index) => (
+                <ActionButton
+                  key={index}
+                  onClick={() => handleSocraticResponse(3, prompt, metacognitiveResponse)}
+                  variant="secondary"
+                  className="assumption-prompt"
+                >
+                  {prompt}
+                </ActionButton>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'creative_problem_solving':
+        return (
+          <div className="socratic-question level-4">
+            <h3>🛠️ {question.question}</h3>
+            <p className="question-purpose">{question.purpose}</p>
+            
+            <div className="design-scaffolds">
+              <h4>Design thinking prompts:</h4>
+              {question.scaffolds.map((scaffold, index) => (
+                <div key={index} className="scaffold-prompt">
+                  <span className="scaffold-text">{scaffold}</span>
+                  <input 
+                    type="text"
+                    placeholder="Your design idea..."
+                    className="design-input"
+                    onBlur={(e) => e.target.value && handleSocraticResponse(4, e.target.value)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'synthesis':
+        return (
+          <div className="socratic-question level-5">
+            <h3>⚖️ {question.question}</h3>
+            <p className="question-purpose">{question.purpose}</p>
+            
+            <div className="evaluation-framework">
+              <h4>Evaluate using this framework:</h4>
+              {question.framework.map((dimension, index) => (
+                <div key={index} className="evaluation-dimension">
+                  <h5>{dimension}</h5>
+                  <textarea 
+                    placeholder={`Consider the ${dimension.toLowerCase()} implications...`}
+                    className="evaluation-input"
+                    onBlur={(e) => e.target.value && handleSocraticResponse(5, e.target.value)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="spark-curiosity-step">
+    <div className="spark-curiosity-step enhanced-socratic">
       <div className="curiosity-header">
         <h2>{content.headline}</h2>
         <p className="subtitle">{content.subtitle}</p>
-      </div>
-
-      <div className="micro-poll">
-        <h3>{content.microPoll.question}</h3>
-        <div className="poll-options">
-          {content.microPoll.options.map((option, index) => (
-            <OptionButton
-              key={index}
-              selected={pollResponse === option}
-              onClick={() => handlePollResponse(option)}
-              disabled={pollResponse !== null}
-              className="poll-option"
-              feedback="haptic"
-              ariaLabel={`Poll option: ${option}`}
-              id={`poll-option-${index}`}
-            >
-              {option}
-            </OptionButton>
-          ))}
+        
+        {/* Socratic Progress Indicator */}
+        <div className="socratic-progress">
+          <span className="progress-label">Thinking Depth:</span>
+          <div className="progress-levels">
+            {[1, 2, 3, 4, 5].map(level => (
+              <div 
+                key={level}
+                className={`progress-level ${level <= currentQuestionLevel ? 'active' : ''} ${level < currentQuestionLevel ? 'completed' : ''}`}
+              >
+                {level}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {showInsight && (
+      {/* Dynamic Question Rendering */}
+      {renderQuestionLevel()}
+
+      {/* Initial Insight (Level 1 completion) */}
+      {showInsight && currentQuestionLevel === 1 && (
         <div className="insight-reveal">
           <div className="insight-text">{content.insight}</div>
+          <div className="depth-invitation">
+            <p>💡 <strong>Ready to think deeper?</strong> Let's explore the 'why' behind your experience...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Questioning Journey Progress */}
+      {questioningPath.length > 1 && (
+        <div className="thinking-journey">
+          <h4>🧠 Your Thinking Journey:</h4>
+          <div className="journey-steps">
+            {questioningPath.map((step, index) => (
+              <div key={index} className={`journey-step level-${step.level}`}>
+                <span className="step-level">Level {step.level}</span>
+                <span className="step-response">{step.response.substring(0, 50)}...</span>
+                {step.strategy && <span className="step-strategy">Strategy: {step.strategy}</span>}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

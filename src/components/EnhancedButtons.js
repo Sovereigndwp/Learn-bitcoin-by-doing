@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 // Enhanced Button Component with Visual Hierarchy, Feedback, and Accessibility
 const Button = ({
@@ -146,7 +146,9 @@ const Button = ({
 
   const playClickSound = () => {
     // Create audio context for click sound
+    // eslint-disable-next-line no-undef
     if (typeof AudioContext !== 'undefined' || typeof webkitAudioContext !== 'undefined') {
+      // eslint-disable-next-line no-undef
       const audioContext = new (AudioContext || webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
@@ -601,10 +603,10 @@ const PopupButton = ({
     if (onOpen) onOpen();
   };
 
-  const closePopup = () => {
+  const closePopup = useCallback(() => {
     setIsOpen(false);
     if (onClose) onClose();
-  };
+  }, [onClose]);
 
   const calculatePosition = () => {
     if (!buttonRef.current) return;
@@ -651,7 +653,7 @@ const PopupButton = ({
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [isOpen, closeOnOutsideClick]);
+  }, [isOpen, closeOnOutsideClick, closePopup]);
 
   const handleTrigger = () => {
     if (triggerOn === 'click') {

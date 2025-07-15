@@ -8,8 +8,7 @@ import {
   ActionButton,
   Button, 
   OptionButton,
-  NavigationButton,
-  PopupButton 
+  NavigationButton
 } from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
@@ -35,293 +34,524 @@ import '../components/MoneyModule.css';
 //   </div>
 // );
 
-// Component for the Introduction (transition from banking friction)
+// Enhanced Introduction with better hook and progression
 const Introduction = ({ onComplete }) => {
-  const [showPayment, setShowPayment] = useState(false);
-  const [showRoleIntro, setShowRoleIntro] = useState(false);
+  const [currentDemo, setCurrentDemo] = useState(0);
+  const [userReflection, setUserReflection] = useState('');
+  const [showTimeTravel, setShowTimeTravel] = useState(false);
 
-  const handleCardPay = () => {
-    setShowPayment(true);
+  const modernPaymentDemos = [
+    {
+      title: "💳 Tap to Pay",
+      description: "You tap your card. Money zips across the globe instantly.",
+      action: "Tap the Card",
+      effect: "✨ $25 sent to merchant!",
+      hidden: "Behind the scenes: 7 banks, 3 countries, 4 currencies, dozens of fees..."
+    },
+    {
+      title: "📱 Send Money",
+      description: "You Venmo your friend $20 for coffee.",
+      action: "Send $20",
+      effect: "💸 Money sent instantly!",
+      hidden: "Hidden reality: Frozen accounts, transaction limits, surveillance, bank dependencies..."
+    },
+    {
+      title: "🌍 International Transfer",
+      description: "Send $500 to your family abroad.",
+      action: "Send International",
+      effect: "🚀 Transfer initiated!",
+      hidden: "The truth: 3-5 days delay, $15-50 fees, exchange rate markup, compliance checks..."
+    }
+  ];
+
+  const currentDemoData = modernPaymentDemos[currentDemo];
+
+  const handleDemoAction = () => {
+    // Show the hidden complexity after a brief delay
     setTimeout(() => {
-      setShowPayment(false);
-    }, 2000);
+      if (currentDemo < modernPaymentDemos.length - 1) {
+        setCurrentDemo(currentDemo + 1);
+      } else {
+        setShowTimeTravel(true);
+      }
+    }, 2500);
   };
 
   const handleTimeTravel = () => {
-    setShowRoleIntro(true);
-    setTimeout(() => {
-      onComplete(0);
-    }, 2000);
+    onComplete(0);
   };
 
   return (
     <div className="step-content introduction">
       <div className="module-header-box">
-        <h2>The Great Money Mystery</h2>
+        <h2>The Great Money Illusion</h2>
+        <div className="intro-text">
+          <p className="prime-text">Modern payments feel like magic. But underneath the smooth surface lies a system more complex and fragile than most people realize.</p>
+        </div>
       </div>
       
       <div className="content-text">
-        <p>Tap to pay and watch value zip across the globe.</p>
+        <div className="payment-demo-section">
+          <h3>Experience "Seamless" Modern Money</h3>
+          <p>Try these everyday payment scenarios and discover what's really happening...</p>
 
-        <div className="card-pay-sim">
-          <div 
-            className={`interactive-card ${showPayment ? 'paying' : ''}`}
-            onClick={handleCardPay}
-          >
-            <div className="card-display">
-              <div className="card-icon">💳</div>
-              <div className="card-text">
-                {showPayment ? '✨ Payment sent globally!' : 'Tap to Pay'}
+          <div className="demo-container">
+            <div className="payment-demo-card">
+              <div className="demo-header">
+                <h4>{currentDemoData.title}</h4>
+                <p>{currentDemoData.description}</p>
+              </div>
+              
+              <div className="demo-interaction">
+                <ActionButton 
+                  onClick={handleDemoAction}
+                  className="demo-action-button"
+                  variant="primary"
+                  icon="💳"
+                  iconPosition="left"
+                >
+                  {currentDemoData.action}
+                </ActionButton>
+              </div>
+              
+              <div className="demo-result">
+                <p className="surface-result">{currentDemoData.effect}</p>
+                <div className="hidden-complexity">
+                  <p><strong>What you don't see:</strong></p>
+                  <p className="complexity-text">{currentDemoData.hidden}</p>
+                </div>
               </div>
             </div>
           </div>
+
+          <div className="progress-dots">
+            {modernPaymentDemos.map((_, index) => (
+              <div 
+                key={index} 
+                className={`demo-dot ${index <= currentDemo ? 'completed' : ''}`}
+              />
+            ))}
+          </div>
         </div>
 
-        <p>Feels like magic, right? Underneath, it fixes a problem older than history—swapping what you have for what you need.</p>
-
-        <ContinueButton 
-          onClick={() => onComplete(1)} 
-          className="cta-time"
-        >
-          Discover What Money Should Do
-        </ContinueButton>
-
-        <p className={`role-intro ${showRoleIntro ? 'visible' : 'hidden'}`}>
-          You are Paco the Potato Farmer. Your feet are freezing. You need shoes. Potatoes won't cut it. What's your move?
-        </p>
+        {showTimeTravel && (
+          <div className="time-travel-section">
+            <div className="revelation-box">
+              <h3>🎭 The Illusion Unveiled</h3>
+              <p>Every "instant" payment involves dozens of intermediaries, hidden fees, and potential failure points. The system appears smooth but is incredibly complex and centralized.</p>
+              
+              <div className="reflection-prompt">
+                <p><strong>Before we continue:</strong> What surprised you most about these payment realities?</p>
+                <textarea 
+                  value={userReflection}
+                  onChange={(e) => setUserReflection(e.target.value)}
+                  placeholder="Share your thoughts... (optional but encouraged)"
+                  className="reflection-input"
+                />
+              </div>
+              
+              <div className="time-travel-hook">
+                <p>Now, let's travel back 10,000 years to understand why humans invented money in the first place...</p>
+                <p className="character-intro"><strong>🥔 Meet Paco the Potato Farmer:</strong> Your feet are freezing, you need shoes, but all you have are potatoes. What's your move?</p>
+              </div>
+              
+              <ContinueButton 
+                onClick={handleTimeTravel}
+                className="time-travel-button"
+                icon="⏰"
+                iconPosition="left"
+              >
+                Enter the Stone Age
+              </ContinueButton>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-// Component for the Barter World section  
+// Enhanced BarterWorld with better progression and interactivity
 const BarterWorld = ({ onComplete }) => {
-  const [currentTrader, setCurrentTrader] = useState(0);
+  const [currentScenario, setCurrentScenario] = useState(0);
   const [playerChoice, setPlayerChoice] = useState(null);
   const [showOutcome, setShowOutcome] = useState(false);
   const [tradeAttempts, setTradeAttempts] = useState(0);
+  const [discoveredProblems, setDiscoveredProblems] = useState(new Set());
 
   const tradeScenarios = [
     {
       id: 1,
       title: "🍞 The Baker's Dilemma",
-      situation: "Your feet are freezing. You need shoes. You have potatoes.",
-      trader: "The baker has bread, but wants bricks.",
-      choice: "What do you do?",
+      situation: "Your feet are freezing. You need shoes. You have a sack of potatoes.",
+      trader: "The baker has bread, but says: 'I need bricks to fix my oven, not potatoes!'",
+      choice: "What's your strategy?",
       options: [
-        { id: 'A', text: 'Offer potatoes anyway', result: 'reject' },
-        { id: 'B', text: 'Ask who might have bricks', result: 'chain' },
-        { id: 'C', text: 'Walk away frustrated', result: 'quit' }
+        { 
+          id: 'A', 
+          text: 'Offer potatoes anyway - maybe convince him?', 
+          result: 'reject',
+          problem: 'coincidence'
+        },
+        { 
+          id: 'B', 
+          text: 'Ask who might have bricks', 
+          result: 'chain',
+          problem: 'complexity' 
+        },
+        { 
+          id: 'C', 
+          text: 'Look for someone who wants potatoes directly', 
+          result: 'search',
+          problem: 'time'
+        }
       ]
     },
     {
       id: 2, 
-      title: "🐟 The Fisher's Problem",
-      situation: "You learned bricks come from the builder. You still have potatoes.",
-      trader: "The fisher has what the builder wants, but needs bread.",
-      choice: "You're starting to see a pattern...",
+      title: "🐟 The Fisher's Network",
+      situation: "You learned the bricklayer wants fish. Now you need to find the fisher.",
+      trader: "The fisher says: 'I'll trade fish for bread, but you only have potatoes.'",
+      choice: "The trading chain is getting complex...",
       options: [
-        { id: 'A', text: 'Try the potato trade again', result: 'reject' },
-        { id: 'B', text: 'Map out the trading chain', result: 'insight' },
-        { id: 'C', text: 'Give up and go barefoot', result: 'quit' }
+        { 
+          id: 'A', 
+          text: 'Try the potato-for-fish trade again', 
+          result: 'reject',
+          problem: 'coincidence'
+        },
+        { 
+          id: 'B', 
+          text: 'Map out the full chain: Potatoes → Bread → Fish → Bricks → Shoes', 
+          result: 'insight',
+          problem: 'complexity'
+        },
+        { 
+          id: 'C', 
+          text: 'Give up and go barefoot this winter', 
+          result: 'quit',
+          problem: 'failure'
+        }
       ]
     },
     {
       id: 3,
-      title: "🏗️ The Builder's Reality",
-      situation: "You need: Potatoes → Bread → Fish → Bricks → Shoes. That's 4 trades!",
-      trader: "Each person wants something different from what you have.",
-      choice: "This is getting ridiculous...",
+      title: "🏗️ The Reality Check",
+      situation: "You need 4 successful trades in sequence. That's assuming everyone still has what you need when you get there.",
+      trader: "The bricklayer says: 'I just traded my last bricks to someone else. Come back next month.'",
+      choice: "This system is fundamentally broken...",
       options: [
-        { id: 'A', text: 'Attempt the 4-step chain', result: 'chaos' },
-        { id: 'B', text: 'Realize the system is broken', result: 'epiphany' },
-        { id: 'C', text: 'Invent money', result: 'genius' }
+        { 
+          id: 'A', 
+          text: 'Start the whole chain over from scratch', 
+          result: 'chaos',
+          problem: 'timing'
+        },
+        { 
+          id: 'B', 
+          text: 'Realize there must be a better way', 
+          result: 'epiphany',
+          problem: 'system'
+        },
+        { 
+          id: 'C', 
+          text: 'Invent something everyone accepts', 
+          result: 'genius',
+          problem: 'solution'
+        }
       ]
     }
   ];
+
+  const problemTypes = {
+    coincidence: "Double Coincidence of Wants",
+    complexity: "Complex Trading Chains", 
+    time: "Time and Search Costs",
+    timing: "Timing and Coordination",
+    failure: "System Failure Rate",
+    system: "Systemic Inefficiency",
+    solution: "Need for Universal Medium"
+  };
 
   const handleChoice = (optionId) => {
     setPlayerChoice(optionId);
     setShowOutcome(true);
     setTradeAttempts(prev => prev + 1);
     
+    const selectedOption = tradeScenarios[currentScenario].options.find(opt => opt.id === optionId);
+    if (selectedOption?.problem) {
+      setDiscoveredProblems(prev => new Set([...prev, selectedOption.problem]));
+    }
+    
     setTimeout(() => {
-      if (currentTrader < tradeScenarios.length - 1) {
-        setCurrentTrader(prev => prev + 1);
+      if (currentScenario < tradeScenarios.length - 1) {
+        setCurrentScenario(prev => prev + 1);
         setPlayerChoice(null);
         setShowOutcome(false);
       } else {
         onComplete(1);
       }
-    }, 2000);
+    }, 3000);
   };
 
   const getOutcomeText = (result) => {
     const outcomes = {
-      reject: "❌ 'I don't want potatoes!' You're learning this is harder than it looks.",
-      chain: "🔍 You discover the complex web of who wants what. This is getting complicated...",
-      quit: "😤 You walk away empty-handed. Your feet are still cold.",
-      insight: "💡 You start mapping the chain: Potatoes → Bread → Fish → Bricks → Shoes. That's 4 trades!",
-      chaos: "🌪️ You attempt the chain but someone already traded away what you need. Back to square one.",
-      epiphany: "⚡ This system is completely broken! There has to be a better way...",
+      reject: "❌ 'I don't want potatoes!' You're discovering the 'double coincidence of wants' problem.",
+      chain: "🔍 You map out the trading chain. This is getting ridiculously complicated...",
+      search: "🔍 After hours of searching, you find someone who wants potatoes... but they only have carrots.",
+      quit: "😤 You walk away empty-handed. Your feet will freeze this winter.",
+      insight: "💡 The chain needs perfect timing: Potatoes → Bread → Fish → Bricks → Shoes. What could go wrong?",
+      chaos: "🌪️ Someone already traded away what you need. You're back to square one. Again.",
+      epiphany: "⚡ This system wastes enormous amounts of time and often fails completely!",
       genius: "🧠 You just invented the concept of money! Something everyone accepts for anything."
     };
     return outcomes[result] || "Something happened...";
   };
 
-  const currentScenario = tradeScenarios[currentTrader];
+  const currentScenarioData = tradeScenarios[currentScenario];
   
-  if (currentTrader < tradeScenarios.length) {
-    return (
-      <div className="step-content barter-world">
-        <div className="module-header-box">
-          <h2>Paco's Trading Adventure</h2>
+  return (
+    <div className="step-content barter-world">
+      <div className="module-header-box">
+        <h2>Paco's Trading Adventure</h2>
+        <div className="intro-text">
+          <p className="prime-text">Experience the painful reality of barter economics. Every choice reveals why humans desperately needed to invent money.</p>
         </div>
-        
-        <div className="content-text">
-          <div className="scenario-card">
-            <h3>{currentScenario.title}</h3>
-            <p className="situation">{currentScenario.situation}</p>
-            <p className="trader-info">{currentScenario.trader}</p>
-            <p className="choice-prompt"><strong>{currentScenario.choice}</strong></p>
+      </div>
+      
+      <div className="content-text">
+        {/* Progress tracking */}
+        <div className="adventure-progress">
+          <div className="scenario-tracker">
+            <h3>Trading Progress</h3>
+            <div className="progress-stats">
+              <div className="stat-item">
+                <span className="stat-label">Scenario:</span>
+                <span className="stat-value">{currentScenario + 1} of {tradeScenarios.length}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Attempts:</span>
+                <span className="stat-value">{tradeAttempts}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Problems Found:</span>
+                <span className="stat-value">{discoveredProblems.size} of 7</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Current scenario */}
+        <div className="scenario-card">
+          <div className="scenario-header">
+            <h3>{currentScenarioData.title}</h3>
+            <div className="scenario-setup">
+              <p className="situation"><strong>Situation:</strong> {currentScenarioData.situation}</p>
+              <p className="trader-response"><strong>The Trader:</strong> {currentScenarioData.trader}</p>
+            </div>
+          </div>
+          
+          <div className="choice-section">
+            <p className="choice-prompt"><strong>{currentScenarioData.choice}</strong></p>
             
             {!showOutcome ? (
               <div className="choice-options">
-                {currentScenario.options.map(option => (
-                  <button
+                {currentScenarioData.options.map(option => (
+                  <OptionButton
                     key={option.id}
                     onClick={() => handleChoice(option.id)}
-                    className="choice-button"
+                    className="barter-choice-button"
+                    variant="default"
                   >
-                    {option.text}
-                  </button>
+                    <span className="option-letter">{option.id}.</span>
+                    <span className="option-text">{option.text}</span>
+                  </OptionButton>
                 ))}
               </div>
             ) : (
               <div className="outcome-display">
-                {playerChoice && (
-                  <div className="choice-result">
-                    <p>You chose: <strong>{currentScenario.options.find(o => o.id === playerChoice)?.text}</strong></p>
-                    <p className="outcome-text">
-                      {getOutcomeText(currentScenario.options.find(o => o.id === playerChoice)?.result)}
-                    </p>
+                <div className="choice-result">
+                  <p><strong>You chose:</strong> {currentScenarioData.options.find(o => o.id === playerChoice)?.text}</p>
+                  <div className="outcome-box">
+                    <p className="outcome-text">{getOutcomeText(currentScenarioData.options.find(o => o.id === playerChoice)?.result)}</p>
                   </div>
-                )}
+                </div>
               </div>
             )}
-            
-            <div className="progress-tracker">
-              Scenario {currentTrader + 1} of {tradeScenarios.length} • Attempts: {tradeAttempts}
+          </div>
+        </div>
+
+        {/* Problems discovered tracker */}
+        {discoveredProblems.size > 0 && (
+          <div className="problems-discovered">
+            <h3>🔍 Barter Problems You've Discovered:</h3>
+            <div className="problems-grid">
+              {Array.from(discoveredProblems).map(problem => (
+                <div key={problem} className="problem-badge">
+                  ✓ {problemTypes[problem]}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
-    );
-  }
+        )}
 
-  return (
-    <div className="step-content barter-world">
-      <div className="module-header-box">
-        <h2>The Broken System</h2>
-      </div>
-      
-      <div className="content-text">
-        <p>You just experienced "the double coincidence of wants"—the universe's worst matchmaking system.</p>
-        
-        <div className="barter-problems">
-          <h3>Why Barter Failed</h3>
-          <div className="problems-list">
-            <div className="problem-item">⏰ <strong>Time:</strong> Finding the right trade could take forever</div>
-            <div className="problem-item">📏 <strong>Value:</strong> Is a cow worth 3 goats? Who decides?</div>
-            <div className="problem-item">🍎 <strong>Storage:</strong> Potatoes rot. Can't save wealth over time</div>
-            <div className="problem-item">📍 <strong>Distance:</strong> Your trade partner might be 50 miles away</div>
+        {/* Final summary when adventure complete */}
+        {currentScenario === tradeScenarios.length - 1 && showOutcome && (
+          <div className="adventure-conclusion">
+            <div className="conclusion-box">
+              <h3>🎯 Mission Impossible: Complete</h3>
+              <p>You just experienced firsthand why barter economies never lasted. The "double coincidence of wants" makes simple trades incredibly complex.</p>
+              
+              <div className="barter-failure-summary">
+                <h4>Why Barter Failed Humanity:</h4>
+                <ul>
+                  <li><strong>Time Waste:</strong> Endless searching for the right trade partners</li>
+                  <li><strong>Complexity:</strong> Multi-step chains that often break</li>
+                  <li><strong>Timing Issues:</strong> What you need might be gone when you get there</li>
+                  <li><strong>No Storage:</strong> Potatoes rot, you can't save wealth over time</li>
+                  <li><strong>No Standards:</strong> How many potatoes equal one pair of shoes?</li>
+                </ul>
+              </div>
+
+              <div className="money-breakthrough">
+                <h4>💡 The Breakthrough Insight</h4>
+                <p>Someone finally thought: <em>"What if we all agreed on ONE thing that everyone accepts for everything?"</em></p>
+                <p><strong>Money was born.</strong> Not created by governments or banks—invented by frustrated humans tired of impossible trades.</p>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="money-solution">
-          <h3>💡 The Breakthrough</h3>
-          <p>Someone finally thought: <em>"What if we all agree on ONE thing everyone accepts?"</em></p>
-          <p><strong>Money was born.</strong> Not by banks or governments—by frustrated humans tired of impossible trades.</p>
-        </div>
-
-        <button onClick={() => onComplete(1)} className="cta-time">
-          Discover What Money Should Do
-        </button>
+        )}
       </div>
     </div>
   );
 };
 
-// Component for Carlos's Flower Export
+// Enhanced CarlosFlowerExport with better integration
 const CarlosFlowerExport = ({ onComplete }) => {
-  const [showStoryChoice, setShowStoryChoice] = useState(false);
+  const [storyViewed, setStoryViewed] = useState(false);
   const [playerChoice, setPlayerChoice] = useState(null);
+  const [showReflection, setShowReflection] = useState(false);
 
   const handleExploreStory = () => {
     window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank');
-    setShowStoryChoice(true);
+    setStoryViewed(true);
+    setTimeout(() => setShowReflection(true), 3000);
   };
 
   const handleChoice = (choice) => {
     setPlayerChoice(choice);
-    setTimeout(() => onComplete(4), 1500);
+    setTimeout(() => onComplete(4), 2000);
+  };
+
+  const getCarlosInsight = (choice) => {
+    const insights = {
+      fees: "Traditional payments nickle-and-dime everyone with hidden costs. Carlos loses money just for getting paid.",
+      time: "When money moves slowly, businesses suffer. Carlos can't plan or reinvest quickly.", 
+      control: "Banks sit between Carlos and his money, adding friction and extracting value.",
+      system: "The entire system is designed to extract value from productive people like Carlos."
+    };
+    return insights[choice] || "Every aspect of this system makes life harder for productive people.";
   };
 
   return (
     <div className="step-content carlos-export-step">
       <div className="module-header-box">
         <h2>Real People, Real Problems</h2>
+        <div className="intro-text">
+          <p className="prime-text">You've seen the theory of broken money. Now meet someone living with these problems every single day.</p>
+        </div>
       </div>
 
       <div className="content-text">
-        <p>You've seen the theory. Now meet someone living with broken money every day.</p>
-        
-        <div className="carlos-intro">
-          <h3>🌹 Carlos the Flower Exporter</h3>
-          <p>Carlos grows roses in Colombia and sells them to Japan. Simple business, right?</p>
-          <p>Watch what happens when he tries to get paid...</p>
+        <div className="carlos-introduction">
+          <div className="character-spotlight">
+            <div className="character-visual">
+              <div className="character-icon">🌹</div>
+              <h3>Carlos the Flower Exporter</h3>
+            </div>
+            <div className="character-story">
+              <p>Carlos grows beautiful roses in Colombia and sells them to florists in Japan. It sounds like a simple international business...</p>
+              <p><strong>But watch what happens when he tries to get paid.</strong></p>
+            </div>
+          </div>
           
-          <ActionButton 
-            onClick={handleExploreStory} 
-            className="explore-button"
-            variant="demo"
-            icon="🌹"
-            iconPosition="left"
-          >
-            Follow Carlos's Payment Journey
-          </ActionButton>
+          <div className="story-engagement">
+            <p>Follow Carlos through a typical payment to understand the hidden complexity of "modern" money:</p>
+            
+            <ActionButton 
+              onClick={handleExploreStory} 
+              className="explore-story-button"
+              variant="primary"
+              icon="🌹"
+              iconPosition="left"
+            >
+              Follow Carlos's Payment Journey
+            </ActionButton>
+            
+            {storyViewed && (
+              <div className="viewing-instructions">
+                <p className="instruction-text">📖 <em>Take your time exploring Carlos's story. When you're ready, return here to reflect...</em></p>
+              </div>
+            )}
+          </div>
         </div>
 
-        {showStoryChoice && (
+        {showReflection && (
           <div className="reflection-section">
-            <h3>What Did You Notice?</h3>
-            <p>After seeing Carlos's story, what strikes you most?</p>
+            <div className="reflection-prompt">
+              <h3>🤔 What struck you most about Carlos's experience?</h3>
+              <p>After seeing the reality behind "seamless" international payments, what bothered you most?</p>
+            </div>
             
             <div className="choice-options">
-              <button 
+              <OptionButton 
                 onClick={() => handleChoice('fees')}
-                className="choice-button"
+                className="carlos-choice-button"
+                variant="outline"
               >
-                💸 The hidden fees eating his profits
-              </button>
-              <button 
+                💸 <strong>The Hidden Fees</strong><br/>
+                <span className="choice-detail">Banks and processors eating into his hard-earned profits</span>
+              </OptionButton>
+              
+              <OptionButton 
                 onClick={() => handleChoice('time')}
-                className="choice-button"
+                className="carlos-choice-button" 
+                variant="outline"
               >
-                ⏰ The delays holding up his business
-              </button>
-              <button 
+                ⏰ <strong>The Delays</strong><br/>
+                <span className="choice-detail">Days of waiting while his business is put on hold</span>
+              </OptionButton>
+              
+              <OptionButton 
                 onClick={() => handleChoice('control')}
-                className="choice-button"
+                className="carlos-choice-button"
+                variant="outline"
               >
-                🏦 How banks control every step
-              </button>
+                🏦 <strong>The Control</strong><br/>
+                <span className="choice-detail">Banks having power over every step of his payment</span>
+              </OptionButton>
+              
+              <OptionButton 
+                onClick={() => handleChoice('system')}
+                className="carlos-choice-button"
+                variant="outline"
+              >
+                🕸️ <strong>The Broken System</strong><br/>
+                <span className="choice-detail">The entire system working against productive people</span>
+              </OptionButton>
             </div>
 
             {playerChoice && (
               <div className="choice-response">
-                <p>Exactly! {getCarlosInsight(playerChoice)}</p>
-                <p><strong>Ready to discover what money should actually do?</strong></p>
+                <div className="insight-box">
+                  <h4>💡 Exactly Right!</h4>
+                  <p>{getCarlosInsight(playerChoice)}</p>
+                  <p><strong>Now you understand why we need to reimagine what money should actually do.</strong></p>
+                </div>
+                
+                <div className="transition-hook">
+                  <p>You've experienced both ancient and modern money failures. Ready to discover what money <em>should</em> do?</p>
+                </div>
               </div>
             )}
           </div>
@@ -329,15 +559,6 @@ const CarlosFlowerExport = ({ onComplete }) => {
       </div>
     </div>
   );
-
-  function getCarlosInsight(choice) {
-    const insights = {
-      fees: "Traditional payments nickle-and-dime everyone with hidden costs. Carlos loses money just for getting paid.",
-      time: "When money moves slowly, businesses suffer. Carlos can't plan or reinvest quickly.",
-      control: "Banks sit between Carlos and his money, adding friction and extracting value."
-    };
-    return insights[choice] || "Every aspect of this system makes life harder for regular people.";
-  }
 };
 
 // Component for the "What's Missing Here?" section

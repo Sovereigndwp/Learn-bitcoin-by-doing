@@ -7036,3 +7036,337 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Enhanced Socratic Questioning Styles */
+.enhanced-socratic {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.socratic-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 2rem 0;
+  padding: 1rem;
+  background: rgba(247, 147, 26, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(247, 147, 26, 0.3);
+}
+
+.progress-label {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+.progress-levels {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.progress-level {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  border: 2px solid #e2e8f0;
+  background: white;
+  color: #718096;
+}
+
+.progress-level.active {
+  border-color: #f7931a;
+  background: #f7931a;
+  color: white;
+  transform: scale(1.1);
+}
+
+.progress-level.completed {
+  border-color: #48bb78;
+  background: #48bb78;
+  color: white;
+}
+
+.socratic-question {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.socratic-question.level-1 {
+  background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+  border-left: 4px solid #38b2ac;
+}
+
+.socratic-question.level-2 {
+  background: linear-gradient(135deg, #fffbeb 0%, #fed7aa 100%);
+  border-left: 4px solid #f59e0b;
+}
+
+.socratic-question.level-3 {
+  background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+  border-left: 4px solid #ef4444;
+}
+
+.socratic-question.level-4 {
+  background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
+  border-left: 4px solid #0ea5e9;
+}
+
+.socratic-question.level-5 {
+  background: linear-gradient(135deg, #f4f3ff 0%, #c4b5fd 100%);
+  border-left: 4px solid #8b5cf6;
+}
+
+.question-purpose {
+  font-style: italic;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.thinking-space {
+  margin-top: 1rem;
+}
+
+.reflection-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  resize: vertical;
+}
+
+.reflection-input:focus {
+  outline: none;
+  border-color: #f7931a;
+  box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.1);
+}
+
+.follow-up {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.metacognitive-prompt {
+  background: rgba(99, 102, 241, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.metacognitive-prompt h4 {
+  color: #4c51bf;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.metacognitive-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.metacognitive-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.assumption-explorer h4,
+.design-scaffolds h4,
+.evaluation-framework h4 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+.assumption-prompt {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  min-height: auto;
+}
+
+.scaffold-prompt {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.scaffold-text {
+  font-weight: 500;
+  color: #2d3748;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.design-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.design-input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.1);
+}
+
+.evaluation-dimension {
+  margin-bottom: 1.5rem;
+}
+
+.evaluation-dimension h5 {
+  color: #4c51bf;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.evaluation-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.evaluation-input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
+}
+
+.depth-invitation {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+  border-radius: 8px;
+  border: 1px solid #fb923c;
+}
+
+.depth-invitation p {
+  margin: 0;
+  color: #c2410c;
+  font-weight: 500;
+}
+
+.thinking-journey {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  border: 1px solid #cbd5e0;
+}
+
+.thinking-journey h4 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.journey-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.journey-step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.journey-step.level-1 { border-left-color: #38b2ac; }
+.journey-step.level-2 { border-left-color: #f59e0b; }
+.journey-step.level-3 { border-left-color: #ef4444; }
+.journey-step.level-4 { border-left-color: #0ea5e9; }
+.journey-step.level-5 { border-left-color: #8b5cf6; }
+
+.step-level {
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  background: #f7fafc;
+  border-radius: 4px;
+  color: #4a5568;
+  min-width: 60px;
+  text-align: center;
+}
+
+.step-response {
+  flex: 1;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+.step-strategy {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .enhanced-socratic {
+    padding: 1rem;
+  }
+  
+  .scaffold-prompt {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .scaffold-text {
+    min-width: auto;
+  }
+  
+  .progress-levels {
+    justify-content: center;
+  }
+  
+  .journey-step {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+}
