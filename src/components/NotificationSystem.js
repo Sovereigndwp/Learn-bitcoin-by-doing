@@ -176,8 +176,8 @@ const Notification = ({ notification, onClose }) => {
           
           if (remaining <= 0) {
             clearInterval(progressInterval);
-            setIsLeaving(true);
-            setTimeout(() => onClose(notification.id), 300);
+      setIsLeaving(true);
+      setTimeout(() => onClose(notification.id), 300);
           }
         }
       }, 100);

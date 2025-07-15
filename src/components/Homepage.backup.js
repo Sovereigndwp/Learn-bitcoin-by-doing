@@ -334,196 +334,203 @@ const Homepage = () => {
 const RealityCheckStep = ({ onComplete }) => {
   const [showDataExploration, setShowDataExploration] = useState(false);
 
+  const thoughtProvokingQuestions = [
+    {
+      id: "money_definition",
+      question: "What exactly is money?",
+      insight: "Is it physical bills and coins? Numbers in your bank account? Something else entirely?"
+    },
+    {
+      id: "value_storage", 
+      question: "Should money store value over time?",
+      insight: "If you save $1000 today, what should it buy in 10 years? More, less, or the same?"
+    },
+    {
+      id: "money_creation",
+      question: "Who should have the power to create money?",
+      insight: "Should it be governments, banks, algorithms, or something else? What are the trade-offs?"
+    },
+    {
+      id: "economic_changes",
+      question: "What economic changes have you noticed in your lifetime?",
+      insight: "How do costs today compare to what you remember from earlier periods? What patterns do you see?"
+    }
+  ];
+
   return (
-    <div className="modern-homepage-introduction">
-      {/* Don't Trust, Verify Header */}
-      <div className="trust-verify-hero">
-        <h1 className="stop-sign">🛑 Don't Trust. <strong>Verify.</strong></h1>
-        
-        <div className="before-we-begin">
-          <h3>❗ Before We Begin</h3>
-          <p>
-            This <strong>isn't</strong> a brainwashing course. It's not about preaching Bitcoin.<br/>
-            It's about <em>thinking for yourself</em>—asking better questions, finding real answers, 
-            and reclaiming clarity in a system designed to confuse you.
-          </p>
+    <div className="inquiry-based-introduction">
+      {/* Trust & Verify Notice */}
+      <div className="trust-verify-notice">
+        <div className="notice-header">
+          <span className="verify-icon">🔍</span>
+          <h3>Don't Trust, Verify!</h3>
+        </div>
+        <div className="notice-content">
+          <p><strong>Before we begin:</strong> This is not a brainwashing course. This is an educational journey built on questions, evidence, and critical thinking.</p>
+          <div className="notice-principles">
+            <div className="principle">
+              <span className="principle-icon">🧠</span>
+              <div className="principle-text">
+                <strong>Question Everything:</strong> Challenge every claim presented, including ours.
+              </div>
+            </div>
+            <div className="principle">
+              <span className="principle-icon">🔬</span>
+              <div className="principle-text">
+                <strong>Verify Claims:</strong> All data and arguments should be independently verifiable.
+              </div>
+            </div>
+            <div className="principle">
+              <span className="principle-icon">🎯</span>
+              <div className="principle-text">
+                <strong>Form Your Own Conclusions:</strong> Use this as a starting point for your own research journey.
+              </div>
+            </div>
+          </div>
+          <div className="notice-commitment">
+            <p><em>"The goal isn't to convince you of anything—it's to give you the tools to think clearly about money and make your own informed decisions."</em></p>
+          </div>
         </div>
       </div>
 
-      {/* Core Belief Section */}
-      <div className="core-belief-section">
-        <h2 className="core-belief-title">🧠 Our Core Belief:</h2>
-        <p className="core-belief-statement"><strong>Question everything.</strong> Even us.</p>
-        
-        <div className="what-youll-practice">
-          <h3>🔍 What You'll Practice:</h3>
-          <ul className="practice-list">
-            <li><strong>Challenge assumptions</strong>—ours, yours, and the system's</li>
-            <li><strong>Verify claims</strong>—follow the data, not the hype</li>
-            <li><strong>Think independently</strong>—form your own conclusions, not someone else's</li>
-          </ul>
-          
-          <blockquote className="core-quote">
-            "The goal isn't to convince you. It's to hand you the flashlight and let you inspect the cave."
-          </blockquote>
-        </div>
-      </div>
-
-      {/* Why This Course Exists */}
-      <div className="why-course-exists">
-        <h2>💡 Why This Course Exists</h2>
-        <p className="course-premise">
-          Money runs your life—but most of us were never taught how it actually works.<br/>
-          This course helps you understand money systems—<strong>old and new</strong>—with tools, context, and curiosity.
+      {/* Course Introduction */}
+      <div className="course-introduction">
+        <h2>Why This Course Exists</h2>
+        <p className="introduction-context">
+          Money affects every aspect of our lives, yet most of us were never taught how it actually works. 
+          This course explores money systems—both traditional and emerging—through data, history, and practical examples.
         </p>
-        
-        <ul className="course-approach-list">
-          <li>Follow the data.</li>
-          <li>Trace the incentives.</li>
-          <li>See the patterns no one taught you to see.</li>
-        </ul>
-      </div>
-
-      {/* How We Teach */}
-      <div className="how-we-teach">
-        <h2>🧭 How We Teach (It's Not School, It's a System Reboot)</h2>
-        
-        <div className="teaching-methods">
-          <div className="method">
-            <h3>❓ We Begin With Better Questions</h3>
-            <p>We won't dump facts. We'll ask the <em>right</em> questions to unlock new thinking.</p>
-          </div>
-          
-          <div className="method">
-            <h3>📊 We Work With Evidence</h3>
-            <p>Historical data, real-world examples, and verifiable sources—no guessing.</p>
-          </div>
-          
-          <div className="method">
-            <h3>🧩 We Build from First Principles</h3>
-            <p>We connect dots from basics to breakthroughs—logically, step by step.</p>
+        <div className="course-approach">
+          <h3>Our Approach</h3>
+          <div className="approach-principles">
+            <div className="approach-item">
+              <span className="approach-icon">❓</span>
+              <div className="approach-text">
+                <strong>Start with Questions:</strong> Before presenting answers, we'll explore what questions are worth asking.
+              </div>
+            </div>
+            <div className="approach-item">
+              <span className="approach-icon">📊</span>
+              <div className="approach-text">
+                <strong>Examine Evidence:</strong> Look at historical data, real-world examples, and verifiable information.
+              </div>
+            </div>
+            <div className="approach-item">
+              <span className="approach-icon">🧩</span>
+              <div className="approach-text">
+                <strong>Build Understanding:</strong> Connect concepts logically from first principles to complex systems.
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {!showDataExploration ? (
-        <div className="ask-yourself-section">
-          <h2>💭 Before You Dive In: Ask Yourself</h2>
-          <p className="section-intro">These 4 questions will shape how you experience this course:</p>
-          
-          <div className="questions-modern-grid">
-            <div className="question-modern-card">
-              <h3>1. What is money, really?</h3>
-              <p>Is it paper? A number in an app? A shared belief?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>2. Should money hold its value over time?</h3>
-              <p>If you save $1000 today, what should it buy in 10 years?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>3. Who should control money creation?</h3>
-              <p>Governments? Banks? Code? What are the risks?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>4. What have you noticed about the economy in your life?</h3>
-              <p>Are things getting more expensive? Why?</p>
-            </div>
+        <div className="thoughtful-inquiry">
+          <div className="inquiry-header">
+            <h3>Key Questions to Consider</h3>
+            <p>Before diving into content, here are some fundamental questions about money and economics to keep in mind as you explore.</p>
           </div>
 
-          <div className="explore-data-cta">
+          <div className="questions-grid">
+            {thoughtProvokingQuestions.map((question, index) => (
+              <div key={question.id} className="question-card">
+                <div className="question-number">{index + 1}</div>
+                <h4 className="question-title">{question.question}</h4>
+                <p className="question-insight">{question.insight}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="inquiry-actions">
             <button 
               onClick={() => setShowDataExploration(true)}
-              className="modern-explore-button"
+              className="explore-data-button"
             >
-              📈 Explore the Data
-              <span className="button-subtitle">We'll show you the numbers—then let you decide what they mean.</span>
+              <span className="explore-icon">📊</span>
+              Explore the Data
+              <span className="explore-subtext">See what the numbers reveal</span>
             </button>
-            <p className="ready-text">Ready to follow the rabbit hole?</p>
           </div>
         </div>
       ) : (
-        <div className="data-exploration-modern">
-          <div className="data-header">
-            <h2>📊 The Numbers Don't Lie</h2>
-            <p>Here's the data. Look at the patterns. Draw your own conclusions.</p>
+        <div className="data-exploration">
+          <div className="exploration-header">
+            <h3>Now Let's Look at Some Data</h3>
+            <p>With those questions in mind, let's examine some historical and economic data together and see what patterns emerge.</p>
           </div>
 
-          <div className="data-embed-container">
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: 0,
-              paddingTop: '56.2225%',
-              paddingBottom: 0,
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-              marginTop: '2rem',
-              marginBottom: '1rem',
-              overflow: 'hidden',
-              borderRadius: '12px',
-              border: '2px solid rgba(255, 255, 255, 0.1)'
-            }}>
-              <iframe 
-                loading="lazy"
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: 0,
-                  left: 0,
-                  border: 'none',
-                  padding: 0,
-                  margin: 0
-                }}
-                src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
-                allowFullScreen="allowfullscreen"
-                allow="fullscreen"
-                title="Economic Data Analysis"
-              />
-            </div>
-            <div className="data-attribution">
-              <a 
-                href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="data-source-link"
-              >
-                📊 Economic Data & Money Systems Analysis
-              </a>
-              <span> by Dalia Platt</span>
+          <div className="data-invitation">
+            <div className="canva-embed-container">
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: 0,
+                paddingTop: '56.2225%',
+                paddingBottom: 0,
+                boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
+                marginTop: '1.6em',
+                marginBottom: '0.9em',
+                overflow: 'hidden',
+                borderRadius: '8px',
+                willChange: 'transform'
+              }}>
+                <iframe 
+                  loading="lazy"
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    border: 'none',
+                    padding: 0,
+                    margin: 0
+                  }}
+                  src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
+                  allowFullScreen="allowfullscreen"
+                  allow="fullscreen"
+                  title="Economic Data Exploration"
+                />
+              </div>
+              <div className="canva-attribution">
+                <a 
+                  href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="canva-link"
+                >
+                  Economic Data & Money Systems Exploration
+                </a>
+                <span> by Dalia Platt</span>
+              </div>
             </div>
           </div>
 
-          <div className="next-steps-modern">
-            <h3>What You Just Saw</h3>
+          <div className="next-steps">
+            <h4>After Exploring the Data</h4>
             <p>
-              Those aren't opinions. They're measurements. Patterns in the data that affect 
-              every person, every day, whether they know it or not.
+              Take time with the interactive content above. When you're ready, we'll begin our systematic 
+              exploration of money systems, starting with how money evolved and why different systems emerge.
             </p>
-            
-            <div className="whats-next">
-              <h4>What's Next?</h4>
+            <div className="transition-context">
               <p>
-                We'll start with how money works, why systems change, and what alternatives exist. 
-                You'll see the mechanics behind what you just observed.
+                <strong>What you'll explore:</strong> The evolution of money, characteristics of different 
+                monetary systems, economic trends and patterns, and emerging alternatives including Bitcoin.
               </p>
-              <p className="journey-promise">
-                <strong>Our promise:</strong> Every claim will be backed by data. Every concept will be tested with examples. 
-                Every conclusion will be yours to make.
+              <p>
+                <strong>How we'll explore it:</strong> Through historical analysis, data examination, 
+                hands-on examples, and practical exercises that help you form your own conclusions.
               </p>
             </div>
             
             <button 
               onClick={onComplete}
-              className="begin-journey-modern"
+              className="begin-journey-button"
             >
               <span className="journey-icon">🚀</span>
-              <div className="button-text">
-                <span className="main-text">Begin the Investigation</span>
-                <span className="sub-text">Start with: How Money Really Works</span>
-              </div>
+              Begin Systematic Exploration
+              <span className="journey-subtext">Start with: How Money Works</span>
             </button>
           </div>
         </div>

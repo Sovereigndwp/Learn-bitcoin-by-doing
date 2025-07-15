@@ -17,8 +17,8 @@ export const moduleRegistry = {
   // Core Foundations - Essential understanding before diving deeper
   money: {
     id: 'money',
-    title: 'If you don\'t define money, it will define you',
-    description: 'Discover why money exists, how it evolved, and why the current system is broken.',
+    title: 'Understanding Money',
+    description: 'Explore what money is, how it evolved, and why our current system has structural problems.',
     component: MoneyModule,
     order: 1,
     group: 'foundations',
@@ -26,8 +26,8 @@ export const moduleRegistry = {
   },
   'bitcoin-basics': {
     id: 'bitcoin-basics',
-    title: 'Bitcoin 101, But Actually Useful',
-    description: 'Learn Bitcoin\'s innovative approach to money and why it matters for humanity.',
+    title: 'Bitcoin Fundamentals',
+    description: 'Learn what Bitcoin is, how it works, and why it represents a different approach to money.',
     component: BitcoinBasicsModule,
     order: 2,
     group: 'foundations',
@@ -37,8 +37,8 @@ export const moduleRegistry = {
   // Technical Building Blocks - Core knowledge needed for everything else
   numbers: {
     id: 'numbers',
-    title: 'Numbers & Encoding',
-    description: 'Learn how computers represent and secure information using different number systems.',
+    title: 'Number Systems & Data Representation',
+    description: 'Learn how computers represent numbers and data - essential for understanding Bitcoin.',
     component: NumbersModule,
     order: 3,
     group: 'technical-blocks',
@@ -46,106 +46,106 @@ export const moduleRegistry = {
   },
   hashing: {
     id: 'hashing',
-    title: 'Digital Fingerprints (SHA-256)',
-    description: 'Discover how Bitcoin uses cryptographic hashing to create tamper-proof digital fingerprints.',
+    title: 'Cryptographic Hashing',
+    description: 'Understand how Bitcoin uses mathematical functions to create secure digital fingerprints.',
     component: HashingModule,
     order: 4,
     group: 'technical-blocks',
     prerequisites: ['numbers']
   },
-  keys: {
-    id: 'keys',
-    title: 'Digital Sovereignty: Your Keys, Your Bitcoin',
-    description: 'Master cryptographic ownership—from entropy to addresses, HD wallets to self-custody.',
-    component: KeysModule,
+  mining: {
+    id: 'mining',
+    title: 'Bitcoin Mining',
+    description: 'Learn how Bitcoin creates new coins and secures the network through proof-of-work.',
+    component: MiningModule,
     order: 5,
     group: 'technical-blocks',
     prerequisites: ['hashing']
   },
 
-  // Bitcoin Mechanics - How Bitcoin actually works
+  // Bitcoin Mechanics - How Bitcoin actually works under the hood
+  keys: {
+    id: 'keys',
+    title: 'Private Keys & Addresses',
+    description: 'Master Bitcoin ownership through cryptographic keys and address generation.',
+    component: KeysModule,
+    order: 6,
+    group: 'bitcoin-mechanics',
+    prerequisites: ['mining']
+  },
   transactions: {
     id: 'transactions',
-    title: 'Bitcoin Transactions: Digital Money in Motion',
-    description: 'Master UTXOs, transaction building, fee markets, and how Bitcoin moves around the world.',
+    title: 'Bitcoin Transactions',
+    description: 'Understand how Bitcoin moves value through the transaction system.',
     component: TransactionsModule,
-    order: 6,
+    order: 7,
     group: 'bitcoin-mechanics',
     prerequisites: ['keys']
   },
   scripts: {
     id: 'scripts',
-    title: 'Bitcoin Scripts: Programming Money',
-    description: 'Master stack operations, multisig, timelocks, and smart contracts on Bitcoin.',
+    title: 'Bitcoin Scripts',
+    description: 'Learn how Bitcoin uses programmable conditions to control spending.',
     component: ScriptsModule,
-    order: 7,
+    order: 8,
     group: 'bitcoin-mechanics',
     prerequisites: ['transactions']
   },
   merkle: {
     id: 'merkle',
-    title: 'Merkle Trees: Bitcoin\'s Efficient Data Structure',
-    description: 'Understand how Bitcoin organizes millions of transactions with logarithmic efficiency.',
+    title: 'Merkle Trees',
+    description: 'Discover how Bitcoin efficiently verifies large amounts of data using tree structures.',
     component: MerkleModule,
-    order: 8,
-    group: 'bitcoin-mechanics',
-    prerequisites: ['hashing', 'transactions']
-  },
-  mining: {
-    id: 'mining',
-    title: 'Energy → Security: How Bitcoin Transforms Physics into Trust',
-    description: 'Discover how Bitcoin transforms electrical energy into unbreakable digital security.',
-    component: MiningModule,
     order: 9,
     group: 'bitcoin-mechanics',
-    prerequisites: ['merkle']
+    prerequisites: ['scripts']
   },
 
   // Practical Mastery - Real-world application and advanced topics
   custody: {
     id: 'custody',
-    title: 'Who Holds the Keys to Your Kingdom?',
-    description: 'Master the art of not losing Bitcoin through advanced custody strategies and real-world scenarios.',
+    title: 'Self-Custody & Security',
+    description: 'Learn practical strategies for safely storing and managing your Bitcoin.',
     component: CustodyModule,
     order: 10,
     group: 'practical-mastery',
-    prerequisites: ['keys', 'scripts']
+    prerequisites: ['merkle']
   },
   lightning: {
     id: 'lightning',
-    title: 'Lightning Network: Instant Bitcoin',
-    description: 'Master Bitcoin\'s scaling solution: payment channels, routing, network topology, and real-world Lightning applications.',
+    title: 'Lightning Network',
+    description: 'Understand Bitcoin\'s second layer for fast, cheap payments.',
     component: LightningModule,
     order: 11,
     group: 'practical-mastery',
-    prerequisites: ['transactions', 'scripts']
+    prerequisites: ['custody']
   },
   'advanced-topics': {
     id: 'advanced-topics',
     title: 'Advanced Bitcoin Topics',
-    description: 'Cutting-edge Bitcoin technology: Taproot, Schnorr signatures, Layer 2 solutions, consensus mechanisms, and future innovations.',
+    description: 'Explore cutting-edge Bitcoin technology and future developments.',
     component: AdvancedTopicsModule,
     order: 12,
     group: 'practical-mastery',
-    prerequisites: ['lightning', 'scripts', 'merkle']
-  },
-  'bitcoin-toolkit': {
-    id: 'bitcoin-toolkit',
-    title: 'Bitcoin Developer Toolkit',
-    description: 'Master Bitcoin through 19 professional tools: wallets, transactions, network analysis, and development utilities.',
-    component: BitcoinToolkitModule,
-    order: 13,
-    group: 'practical-mastery',
-    prerequisites: ['transactions', 'scripts']
+    prerequisites: ['lightning']
   },
   myths: {
     id: 'myths',
-    title: 'Bitcoin Myths: The Technical Truth',
-    description: 'Expert-level myth busting with 12 comprehensive debunks, technical evidence, data comparisons, and credible sources.',
+    title: 'Bitcoin Myths & Facts',
+    description: 'Examine common misconceptions about Bitcoin with evidence and data.',
     component: MythsModule,
+    order: 13,
+    group: 'practical-mastery',
+    prerequisites: ['advanced-topics']
+  },
+  'bitcoin-toolkit': {
+    id: 'bitcoin-toolkit',
+    title: 'Bitcoin Tools & Practice',
+    description: 'Hands-on experience with Bitcoin tools and real-world applications.',
+    component: BitcoinToolkitModule,
     order: 14,
     group: 'practical-mastery',
-    prerequisites: ['mining']
+    prerequisites: ['myths']
   }
 };
 

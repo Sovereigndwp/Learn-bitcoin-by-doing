@@ -256,10 +256,10 @@ const BitcoinBasicsModule = () => {
       <div className="module-header">
         <h1 className="module-title">
           <Zap className="module-icon" />
-          Bitcoin Basics: From Barter to Digital Gold
+          Bitcoin Fundamentals
         </h1>
         <p className="module-subtitle">
-          Discover why Bitcoin solves humanity's oldest problem
+          Learn what Bitcoin is, how it works, and why it represents a different approach to money
         </p>
         </div>
 

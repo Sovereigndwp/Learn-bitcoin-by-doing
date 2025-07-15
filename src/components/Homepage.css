@@ -127,14 +127,14 @@
 }
 
 .reality-content h3 {
-  color: #2c3e50;
+  color: #5499de;
   font-size: 1.5rem;
   margin-bottom: 16px;
 }
 
 .reality-question {
   font-size: 1.2rem;
-  color: #34495e;
+  color: #eff2f5;
   margin-bottom: 12px;
   font-weight: 500;
 }
@@ -3017,5 +3017,595 @@
   .begin-journey-button {
     padding: 1rem 1.5rem;
     font-size: 1rem;
+  }
+}
+
+/* Questions Grid Layout */
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.question-card {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(155, 89, 182, 0.1) 100%);
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.question-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(52, 152, 219, 0.4);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+}
+
+.question-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.question-card:hover::before {
+  opacity: 1;
+}
+
+.question-number {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.question-title {
+  color: #ecf0f1;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+  padding-right: 2.5rem;
+}
+
+.question-insight {
+  color: #ecf0f1;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Explore Data Button */
+.explore-data-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.explore-data-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+.explore-icon {
+  font-size: 1.5rem;
+}
+
+.explore-subtext {
+  font-size: 0.875rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Responsive Design for Questions Grid */
+@media (max-width: 768px) {
+  .questions-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .question-card {
+    padding: 1.25rem;
+  }
+  
+  .question-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8125rem;
+  }
+  
+  .question-title {
+    font-size: 1rem;
+    padding-right: 2rem;
+  }
+  
+  .question-insight {
+    font-size: 0.875rem;
+  }
+  
+  .explore-data-button {
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Modern Homepage Introduction - Complete Redesign */
+.modern-homepage-introduction {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  line-height: 1.6;
+  color: #ecf0f1;
+}
+
+/* Trust & Verify Hero Section */
+.trust-verify-hero {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.stop-sign {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #ecf0f1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stop-sign strong {
+  color: #e74c3c;
+  font-weight: 800;
+}
+
+.before-we-begin {
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(192, 57, 43, 0.1));
+  border: 2px solid rgba(231, 76, 60, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.before-we-begin h3 {
+  color: #e74c3c;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.before-we-begin p {
+  font-size: 1.1rem;
+  color: #ecf0f1;
+  margin: 0;
+}
+
+/* Core Belief Section */
+.core-belief-section {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(41, 128, 185, 0.1));
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  border-left: 5px solid #3498db;
+}
+
+.core-belief-title {
+  color: #3498db;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.core-belief-statement {
+  font-size: 1.3rem;
+  color: #ecf0f1;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.what-youll-practice h3 {
+  color: #3498db;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.practice-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.practice-list li {
+  padding: 0.75rem 0;
+  font-size: 1.05rem;
+  color: #ecf0f1;
+  position: relative;
+  padding-left: 2rem;
+}
+
+.practice-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.core-quote {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #f39c12;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #f39c12;
+  border-radius: 8px;
+}
+
+/* Why Course Exists */
+.why-course-exists {
+  margin-bottom: 3rem;
+}
+
+.why-course-exists h2 {
+  color: #f39c12;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.course-premise {
+  font-size: 1.2rem;
+  color: #ecf0f1;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+}
+
+.course-approach-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.course-approach-list li {
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #ecf0f1;
+  position: relative;
+  padding-left: 2rem;
+  font-weight: 500;
+}
+
+.course-approach-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #f39c12;
+  font-weight: bold;
+}
+
+/* How We Teach */
+.how-we-teach {
+  background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(142, 68, 173, 0.1));
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  border-left: 5px solid #9b59b6;
+}
+
+.how-we-teach h2 {
+  color: #9b59b6;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.teaching-methods {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.method h3 {
+  color: #9b59b6;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.method p {
+  color: #ecf0f1;
+  font-size: 1.05rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Ask Yourself Section */
+.ask-yourself-section {
+  margin-bottom: 3rem;
+}
+
+.ask-yourself-section h2 {
+  color: #e67e22;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.section-intro {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #bdc3c7;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.questions-modern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.question-modern-card {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(41, 128, 185, 0.15));
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.question-modern-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(52, 152, 219, 0.5);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+}
+
+.question-modern-card h3 {
+  color: #3498db;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.question-modern-card p {
+  color: #ecf0f1;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Explore Data CTA */
+.explore-data-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.modern-explore-button {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 250px;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.modern-explore-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+.button-subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.ready-text {
+  font-size: 1.1rem;
+  color: #bdc3c7;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Data Exploration Modern */
+.data-exploration-modern {
+  margin-top: 2rem;
+}
+
+.data-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.data-header h2 {
+  color: #e74c3c;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.data-header p {
+  font-size: 1.2rem;
+  color: #ecf0f1;
+  margin: 0;
+}
+
+.data-embed-container {
+  margin: 2rem 0;
+}
+
+.data-attribution {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #bdc3c7;
+}
+
+.data-source-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.data-source-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Next Steps Modern */
+.next-steps-modern {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(39, 174, 96, 0.1));
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-top: 3rem;
+  border-left: 5px solid #27ae60;
+}
+
+.next-steps-modern h3 {
+  color: #27ae60;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.next-steps-modern p {
+  color: #ecf0f1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.whats-next h4 {
+  color: #27ae60;
+  font-size: 1.3rem;
+  margin: 2rem 0 1rem 0;
+  font-weight: 600;
+}
+
+.journey-promise {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #27ae60;
+  font-style: italic;
+}
+
+.begin-journey-modern {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem auto 0;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.begin-journey-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+  background: linear-gradient(135deg, #229954, #1e8449);
+}
+
+.journey-icon {
+  font-size: 1.5rem;
+}
+
+.button-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.main-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.sub-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-homepage-introduction {
+    padding: 1rem;
+  }
+  
+  .stop-sign {
+    font-size: 2.2rem;
+  }
+  
+  .questions-modern-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .before-we-begin,
+  .core-belief-section,
+  .how-we-teach,
+  .next-steps-modern {
+    padding: 1.5rem;
+  }
+  
+  .modern-explore-button {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .begin-journey-modern {
+    flex-direction: column;
+    text-align: center;
   }
 }

@@ -4,7 +4,7 @@ import ModuleLayout from '../components/ModuleLayout';
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton, 
+  OptionButton,
   NavigationButton, 
   PopupButton 
 } from '../components/EnhancedButtons';
@@ -388,7 +388,7 @@ const CustodyModule = () => {
           <ContinueButton onClick={handleContinue}>
             <Shield size={20} />
             Begin Risk Architecture
-          </ContinueButton>
+        </ContinueButton>
         )}
       </div>
     );
@@ -556,7 +556,7 @@ const CustodyModule = () => {
             <ContinueButton onClick={handleContinue}>
               <Crown size={20} />
               Engineer Self-Custody
-            </ContinueButton>
+                  </ContinueButton>
                 </div>
               )}
             </div>
@@ -808,7 +808,7 @@ const CustodyModule = () => {
             <Target size={20} />
             Achieve Custody Sovereignty
             <ArrowRight size={20} />
-          </ContinueButton>
+              </ContinueButton>
         )}
           </div>
         );

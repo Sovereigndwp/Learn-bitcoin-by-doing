@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Crown, Shield, Dice1, Lock, Globe, Eye, Flame, Castle, Swords, ChevronRight, ChevronLeft, Lightbulb } from 'lucide-react';
+import { Crown, Shield, Dice1, Lock, Globe, Eye, Flame, Castle, Swords, ChevronRight, ChevronLeft, Lightbulb, Key } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
@@ -18,42 +18,42 @@ const KeysModule = () => {
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userInsights, setUserInsights] = useState({});
 
-  // Sovereignty Architect Journey Steps
+  // Keys Learning Steps
   const sovereigntySteps = [
     {
-      id: "kingdom_under_siege",
-      title: "🏰 Kingdom Under Siege",
-      subtitle: "Experience losing access to your wealth through others' control...",
+      id: "understanding_ownership",
+      title: "🔑 Understanding Digital Ownership",
+      subtitle: "Learn why controlling your private keys is essential for Bitcoin ownership",
       component: KingdomUnderSiegeStep
     },
     {
-      id: "chaos_alchemist", 
-      title: "🎲 Chaos Alchemist",
-      subtitle: "Transform pure randomness into unbreakable mathematical power",
+      id: "entropy_and_randomness", 
+      title: "🎲 Entropy and Randomness",
+      subtitle: "Understand how true randomness creates secure cryptographic keys",
       component: ChaosAlchemistStep
     },
     {
-      id: "secret_guardian",
-      title: "🔐 Secret Guardian",
-      subtitle: "Forge your cryptographic identity that no one can steal or fake",
+      id: "private_keys",
+      title: "🔐 Private Keys and Signatures",
+      subtitle: "Learn how private keys create digital signatures that prove ownership",
       component: SecretGuardianStep
     },
     {
-      id: "sovereign_constructor",
-      title: "👑 Sovereign Constructor",
-      subtitle: "Build your hierarchy of keys and addresses from master seed", 
+      id: "address_generation",
+      title: "🏠 Address Generation",
+      subtitle: "Understand how Bitcoin addresses are derived from private keys", 
       component: SovereignConstructorStep
     },
     {
-      id: "independence_warrior",
-      title: "⚔️ Independence Warrior",
-      subtitle: "Battle dependency by comparing self-custody vs institutional control",
+      id: "custody_options",
+      title: "🏦 Custody Options",
+      subtitle: "Compare self-custody versus third-party custody trade-offs",
       component: IndependenceWarriorStep
     },
     {
-      id: "digital_sovereign",
-      title: "🌍 Digital Sovereign", 
-      subtitle: "Establish complete financial independence and sovereignty mastery",
+      id: "security_best_practices",
+      title: "🛡️ Security Best Practices", 
+      subtitle: "Learn practical strategies for keeping your Bitcoin secure",
       component: DigitalSovereignStep
     }
   ];
@@ -72,14 +72,14 @@ const KeysModule = () => {
       }));
     }
     
-    // Strategic achievement system with sovereignty theme
+    // Achievement system with educational focus
     const achievements = {
-      0: { title: "Siege Survivor", desc: "You understand why control equals vulnerability!" },
-      1: { title: "Chaos Master", desc: "You've mastered the art of transforming randomness into power!" },
-      2: { title: "Secret Guardian", desc: "You can forge unbreakable cryptographic identity!" },
-      3: { title: "Sovereign Constructor", desc: "You've built your digital kingdom from a single seed!" },
-      4: { title: "Independence Warrior", desc: "You've chosen self-custody over institutional dependency!" },
-      5: { title: "Digital Sovereign", desc: "You've achieved complete financial independence!" }
+      0: { title: "Understanding Ownership", desc: "You understand why controlling private keys is essential!" },
+      1: { title: "Entropy Mastery", desc: "You've learned how true randomness creates secure keys!" },
+      2: { title: "Private Key Knowledge", desc: "You understand how private keys create digital signatures!" },
+      3: { title: "Address Generation", desc: "You've learned how Bitcoin addresses are created!" },
+      4: { title: "Custody Awareness", desc: "You understand the trade-offs between custody options!" },
+      5: { title: "Security Mastery", desc: "You've learned best practices for Bitcoin security!" }
     };
     
     if (achievements[stepIndex]) {
@@ -139,40 +139,40 @@ const KeysModule = () => {
   // const progressPercentage = (completedSteps.size / sovereigntySteps.length) * 100;
 
   return (
-    <div className="sovereignty-module">
-      {/* Header with sovereignty theme */}
-      <div className="module-header sovereignty-header">
+    <div className="keys-module">
+      {/* Header with clean, educational theme */}
+      <div className="module-header">
         <div className="header-content">
-          <Crown className="sovereignty-crown" />
+          <Key className="module-icon" />
           <div className="header-text">
-            <h1>Sovereignty Architect</h1>
-            <p>Build Your Unbreakable Digital Kingdom</p>
+            <h1>Private Keys & Addresses</h1>
+            <p>Master Bitcoin ownership through cryptographic keys and address generation</p>
           </div>
         </div>
         
-        {/* Progress flame indicators */}
-        <div className="sovereignty-progress">
-          <div className="progress-flames">
+        {/* Progress indicators */}
+        <div className="module-progress">
+          <div className="progress-steps">
             {sovereigntySteps.map((step, index) => (
               <div 
                 key={step.id}
-                className={`progress-flame ${
+                className={`progress-step ${
                   completedSteps.has(index) ? 'completed' : ''
                 } ${index === currentStep ? 'active' : ''}`}
               >
-                <Flame className="flame-icon" />
-                <span className="flame-label">{step.title.split(' ')[1]}</span>
+                <div className="step-number">{index + 1}</div>
+                <span className="step-label">{step.title.replace(/^[^\s]+\s/, '')}</span>
         </div>
             ))}
         </div>
           <div className="progress-text">
-            Building your sovereignty: {completedSteps.size} / {sovereigntySteps.length} steps mastered
+            Learning progress: {completedSteps.size} / {sovereigntySteps.length} steps completed
           </div>
         </div>
       </div>
 
       {/* Step navigation */}
-      <div className="sovereignty-navigation">
+      <div className="module-navigation">
         <NavigationButton
           onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
           disabled={currentStep === 0}
@@ -196,7 +196,7 @@ const KeysModule = () => {
       </div>
 
       {/* Main content area */}
-      <div className="sovereignty-content">
+      <div className="module-content">
         {React.createElement(sovereigntySteps[currentStep].component, {
           onComplete: (userChoice) => handleStepComplete(currentStep, userChoice),
           userInsights: userInsights,

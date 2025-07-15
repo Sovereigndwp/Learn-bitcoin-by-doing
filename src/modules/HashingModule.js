@@ -3,7 +3,7 @@ import { sha256 } from '../utils/bitcoin';
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton, 
+  OptionButton,
   NavigationButton, 
   PopupButton 
 } from '../components/EnhancedButtons';

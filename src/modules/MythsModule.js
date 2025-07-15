@@ -504,7 +504,7 @@ const MythsModule = () => {
       achievement.style.opacity = '0';
       setTimeout(() => {
         if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
+        document.body.removeChild(achievement);
         }
       }, 300);
     });

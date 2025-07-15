@@ -1471,9 +1471,9 @@ const TransactionsModule = () => {
           <div className="module-icon">
             <Coins className="w-12 h-12" />
           </div>
-          Transaction Architect: Master Digital Money's Movement
+          Bitcoin Transactions
         </h1>
-        <p className="module-subtitle">Transform from payment crisis to commanding global Bitcoin flows</p>
+        <p className="module-subtitle">Understand how Bitcoin moves value through the transaction system</p>
         <div className="module-progress">
           <div className="progress-bar">
             <div 
