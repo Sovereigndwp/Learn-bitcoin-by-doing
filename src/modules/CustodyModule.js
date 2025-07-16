@@ -1,980 +1,1377 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
-import ModuleLayout from '../components/ModuleLayout';
+import { 
+  Shield, 
+  Key, 
+  Lock, 
+  CheckCircle, 
+  AlertTriangle, 
+  Users, 
+  Building, 
+  Home, 
+  Smartphone, 
+  HardDrive, 
+  Target, 
+  ArrowRight,
+  Zap,
+  Trophy,
+  Eye,
+  EyeOff,
+  Clock,
+  DollarSign,
+  BarChart3,
+  Settings,
+  FileText,
+  Globe
+} from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
   OptionButton,
   NavigationButton, 
-  PopupButton 
+  PopupButton,
+  Button
 } from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './CustodyModule.css';
-import { 
-  Shield, 
-  Key, 
-  Lock, 
-  Unlock, 
-  AlertTriangle, 
-  CheckCircle, 
-  XCircle, 
-  Zap, 
-  Clock, 
-  Users, 
-  Eye, 
-  EyeOff, 
-  Building, 
-  Home, 
-  Smartphone, 
-  HardDrive, 
-  Wifi, 
-  WifiOff, 
-  DollarSign, 
-  TrendingDown, 
-  Crown, 
-  Target, 
-  Award,
-  ArrowRight,
-  ChevronRight,
-  Cpu,
-  Database,
-  Server,
-  Cloud,
-  FileText,
-  BarChart3,
-  Globe,
-  Layers,
-  Coins
-} from 'lucide-react';
 
 const CustodyModule = () => {
-  const { updateProgress } = useProgress();
-  const [activeStep, setActiveStep] = useState(0);
+  const { completeModule, isModuleCompleted } = useProgress();
+  const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
-  const [achievements, setAchievements] = useState([]);
-  const [currentPhase, setCurrentPhase] = useState('crisis-detective');
-  const [showAchievement, setShowAchievement] = useState(false);
-  const [custodyScore, setCustodyScore] = useState(0);
-  const [totalLosses, setTotalLosses] = useState(0);
-  const [securityLevel, setSecurityLevel] = useState(1);
+  const [userPredictions, setUserPredictions] = useState({});
+  const [challengeMode, setChallengeMode] = useState({});
+  const [interactionState, setInteractionState] = useState({});
+  
+  // Custody Learning State
+  const [custodyScore, setCustodyScore] = useState(78);
+  const [securityLevel, setSecurityLevel] = useState(7);
   const [walletSetups, setWalletSetups] = useState([]);
-  const [emergencyScenarios, setEmergencyScenarios] = useState([]);
-  const [sovereigntyProgress, setSovereigntyProgress] = useState(0);
+  const [emergencyPlans, setEmergencyPlans] = useState([]);
+  const [custodyMethods, setCustodyMethods] = useState([]);
+  const [threatAssessment, setThreatAssessment] = useState(0);
+  const [backupSystems, setBackupSystems] = useState(0);
+  const [inheritancePlanning, setInheritancePlanning] = useState(0);
+  
+  // Additional state for interactive components
+  const [selectedMethod, setSelectedMethod] = useState(null);
+  const [customSetup, setCustomSetup] = useState(null);
+  const [assessedThreats, setAssessedThreats] = useState([]);
+  const [mitigationPlan, setMitigationPlan] = useState(null);
+  const [implementedBackups, setImplementedBackups] = useState([]);
+  const [recoveryTested, setRecoveryTested] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [inheritancePlan, setInheritancePlan] = useState(null);
 
-  // Crisis scenarios and real-world data
-  const crisisScenarios = [
+  const learningSteps = [
     {
-      id: 'mt-gox',
-      title: 'Mt. Gox Exchange Collapse',
-      year: '2014',
-      loss: '850,000 BTC',
-      dollarValue: '$450 million',
-      currentValue: '$25+ billion',
-      victims: '127,000+ users',
-      description: 'World\'s largest Bitcoin exchange at the time lost 7% of all Bitcoin due to security breaches and mismanagement.',
-      lessonType: 'exchange-custody',
-      impact: 'Destroyed trust in centralized exchanges'
+      id: 'custody-introduction',
+      title: 'Bitcoin Custody Introduction',
+      icon: <Shield className="step-icon" />,
+      description: 'Learn why custody matters and explore real-world security challenges',
+      learningObjectives: [
+        'Understand custody fundamentals',
+        'Explore historical security lessons',
+        'Learn risk vs convenience tradeoffs'
+      ]
     },
     {
-      id: 'quadrigacx',
-      title: 'QuadrigaCX CEO Death',
-      year: '2019',
-      loss: '190,000+ BTC/ETH',
-      dollarValue: '$190 million',
-      currentValue: '$5+ billion',
-      victims: '76,000+ users',
-      description: 'CEO died with sole access to cold storage wallets. No backup plans or shared custody protocols.',
-      lessonType: 'single-point-failure',
-      impact: 'Highlighted single point of failure risks'
+      id: 'custody-methods',
+      title: 'Custody Methods & Security',
+      icon: <Key className="step-icon" />,
+      description: 'Compare different custody solutions and their security models',
+      learningObjectives: [
+        'Evaluate custody options',
+        'Understand security tradeoffs',
+        'Build custom security setups'
+      ]
     },
     {
-      id: 'james-howells',
-      title: 'The $500M Hard Drive',
-      year: '2013-present',
-      loss: '7,500 BTC',
-      dollarValue: '$500+ million',
-      currentValue: '$300+ million',
-      victims: '1 person',
-      description: 'IT worker accidentally threw away hard drive containing Bitcoin wallet. Now searching landfill.',
-      lessonType: 'backup-failure',
-      impact: 'Physical storage vulnerability awareness'
+      id: 'threat-modeling',
+      title: 'Threat Modeling & Risk Assessment',
+      icon: <Target className="step-icon" />,
+      description: 'Identify potential threats and design defense strategies',
+      learningObjectives: [
+        'Assess personal threat model',
+        'Design defense strategies',
+        'Implement security layers'
+      ]
     },
     {
-      id: 'celsius-network',
-      title: 'Celsius Network Bankruptcy',
-      year: '2022',
-      loss: '$1.19 billion',
-      dollarValue: '$1.19 billion',
-      currentValue: '$1.5+ billion',
-      victims: '1.7 million users',
-      description: 'Yield platform froze all user funds, filed for bankruptcy amid liquidity crisis.',
-      lessonType: 'yield-custody-risk',
-      impact: 'DeFi custody risks exposed'
+      id: 'backup-recovery',
+      title: 'Backup & Recovery Systems',
+      icon: <FileText className="step-icon" />,
+      description: 'Create robust backup and recovery procedures',
+      learningObjectives: [
+        'Design backup strategies',
+        'Test recovery procedures',
+        'Plan for various scenarios'
+      ]
+    },
+    {
+      id: 'inheritance-planning',
+      title: 'Inheritance & Emergency Planning',
+      icon: <Users className="step-icon" />,
+      description: 'Plan for Bitcoin inheritance and emergency access',
+      learningObjectives: [
+        'Design inheritance systems',
+        'Create emergency procedures',
+        'Ensure family access'
+      ]
+    },
+    {
+      id: 'custody-mastery',
+      title: 'Custody Mastery',
+      icon: <Trophy className="step-icon" />,
+      description: 'Demonstrate comprehensive custody knowledge and best practices',
+      learningObjectives: [
+        'Complete custody assessment',
+        'Implement best practices',
+        'Achieve security mastery'
+      ]
     }
   ];
-
-  const custodyMethods = [
-    {
-      id: 'hot-wallet',
-      name: 'Hot Wallet (Exchange)',
-      security: 1,
-      convenience: 10,
-      control: 1,
-      risks: ['Exchange hack', 'Regulatory seizure', 'Exit scam', 'Technical failure'],
-      description: 'Funds stored on exchange servers, always online'
-    },
-    {
-      id: 'mobile-wallet',
-      name: 'Mobile Wallet',
-      security: 4,
-      convenience: 9,
-      control: 7,
-      risks: ['Phone theft', 'Malware', 'App vulnerability', 'Cloud backup risk'],
-      description: 'Smartphone app with private keys on device'
-    },
-    {
-      id: 'desktop-wallet',
-      name: 'Desktop Wallet',
-      security: 6,
-      convenience: 7,
-      control: 8,
-      risks: ['Computer hack', 'Malware', 'Hardware failure', 'Physical theft'],
-      description: 'Software wallet on personal computer'
-    },
-    {
-      id: 'hardware-wallet',
-      name: 'Hardware Wallet',
-      security: 9,
-      convenience: 6,
-      control: 9,
-      risks: ['Device loss', 'Firmware attack', 'Supply chain attack', 'User error'],
-      description: 'Dedicated device for key storage and signing'
-    },
-    {
-      id: 'multisig',
-      name: 'Multisig Setup',
-      security: 10,
-      convenience: 4,
-      control: 10,
-      risks: ['Key loss', 'Coordination failure', 'Setup complexity', 'Recovery difficulty'],
-      description: 'Multiple signatures required for transactions'
-    },
-    {
-      id: 'cold-storage',
-      name: 'Air-Gapped Cold Storage',
-      security: 10,
-      convenience: 2,
-      control: 10,
-      risks: ['Physical damage', 'Key loss', 'Inheritance issues', 'Technical complexity'],
-      description: 'Offline storage with no network connection'
-    }
-  ];
-
-  const emergencyTypes = [
-    { id: 'death', title: 'Sudden Death', urgency: 'critical' },
-    { id: 'disability', title: 'Incapacitation', urgency: 'critical' },
-    { id: 'arrest', title: 'Arrest/Detention', urgency: 'high' },
-    { id: 'divorce', title: 'Divorce/Separation', urgency: 'medium' },
-    { id: 'job-loss', title: 'Financial Crisis', urgency: 'medium' },
-    { id: 'natural-disaster', title: 'Natural Disaster', urgency: 'high' },
-    { id: 'home-invasion', title: 'Theft/Robbery', urgency: 'high' },
-    { id: 'government', title: 'Asset Seizure', urgency: 'critical' }
-  ];
-
-  const steps = [
-    {
-      id: 'crisis-detective',
-      title: 'Crisis Detective: The $50 Billion Investigation',
-      subtitle: 'Investigate the Greatest Custody Failures in Bitcoin History',
-      icon: AlertTriangle,
-      color: '#dc2626',
-      description: 'Examine real-world custody disasters that destroyed billions in Bitcoin and affected millions of people.',
-      objective: 'Understand the catastrophic consequences of poor custody decisions.'
-    },
-    {
-      id: 'risk-architect',
-      title: 'Risk Architect: Design Your Fortress',
-      subtitle: 'Engineer Multi-Layered Security Systems',
-      icon: Shield,
-      color: '#ea580c',
-      description: 'Design sophisticated custody architectures that protect against every attack vector.',
-      objective: 'Master the art of balancing security, convenience, and control.'
-    },
-    {
-      id: 'sovereignty-engineer',
-      title: 'Sovereignty Engineer: Break Free from Banks',
-      subtitle: 'Build Self-Custody Infrastructure',
-      icon: Crown,
-      color: '#ca8a04',
-      description: 'Engineer complete financial independence through advanced self-custody techniques.',
-      objective: 'Achieve true financial sovereignty with bulletproof custody.'
-    },
-    {
-      id: 'emergency-architect',
-      title: 'Emergency Architect: Plan for Chaos',
-      subtitle: 'Design Crisis-Proof Recovery Systems',
-      icon: Zap,
-      color: '#16a34a',
-      description: 'Design comprehensive emergency plans for every possible custody crisis scenario.',
-      objective: 'Create unbreakable inheritance and recovery systems.'
-    },
-    {
-      id: 'scale-commander',
-      title: 'Scale Commander: Institutional Mastery',
-      subtitle: 'Command Enterprise-Grade Custody',
-      icon: Building,
-      color: '#2563eb',
-      description: 'Master institutional-grade custody solutions for businesses and large holdings.',
-      objective: 'Design custody systems that scale from personal to institutional level.'
-    },
-    {
-      id: 'custody-sovereign',
-      title: 'Custody Sovereign: Ultimate Control',
-      subtitle: 'Achieve Complete Financial Sovereignty',
-      icon: Target,
-      color: '#7c3aed',
-      description: 'Command the complete spectrum of Bitcoin custody from individual to global scale.',
-      objective: 'Become a master of Bitcoin custody architecture and financial sovereignty.'
-    }
-  ];
-
-  const addAchievement = (title, description, points = 100) => {
-    const newAchievement = {
-      id: Date.now(),
-      title,
-      description,
-      points,
-      timestamp: new Date().toISOString()
-    };
-    setAchievements(prev => [newAchievement, ...prev]);
-    setCustodyScore(prev => prev + points);
-    setShowAchievement(true);
-    setTimeout(() => setShowAchievement(false), 6000); // Extended from 3000
-  };
 
   const handleStepComplete = (stepIndex) => {
     const newCompleted = new Set(completedSteps);
     newCompleted.add(stepIndex);
     setCompletedSteps(newCompleted);
     
-    const step = steps[stepIndex];
-    addAchievement(
-      `${step.title} Mastered!`,
-      `Completed: ${step.subtitle}`,
-      200
-    );
-
-    if (stepIndex === steps.length - 1) {
-      addAchievement(
-        'Custody Sovereign Achieved!',
-        'Master of Bitcoin Custody Architecture',
-        1000
-      );
-      updateProgress('custody', 100);
+    if (stepIndex === learningSteps.length - 1) {
+      completeModule('custody');
     } else {
-      updateProgress('custody', ((stepIndex + 1) / steps.length) * 100);
+      setTimeout(() => setCurrentStep(stepIndex + 1), 1000);
     }
   };
 
-  const handleContinue = () => {
-    if (activeStep < steps.length - 1) {
-      setActiveStep(activeStep + 1);
-      setCurrentPhase(steps[activeStep + 1].id);
-    }
+  const handlePrediction = (questionId, prediction) => {
+    setUserPredictions(prev => ({ ...prev, [questionId]: prediction }));
+    setChallengeMode(prev => ({ ...prev, [questionId]: false }));
   };
 
-  // Crisis Detective Phase
-  const CrisisDetectivePhase = () => {
-    const [selectedCrisis, setSelectedCrisis] = useState(null);
-    const [investigationComplete, setInvestigationComplete] = useState(false);
+  const handleInteraction = (key, value) => {
+    setInteractionState(prev => ({ ...prev, [key]: value }));
+  };
 
-    const handleCrisisSelect = (crisis) => {
-      setSelectedCrisis(crisis);
-      setTotalLosses(prev => prev + parseFloat(crisis.dollarValue.replace(/[$,\s]/g, '').split(' ')[0]));
-      addAchievement(
-        'Crisis Investigated',
-        `Analyzed the ${crisis.title} disaster`,
-        150
-      );
-    };
-
-    const completeInvestigation = () => {
-      setInvestigationComplete(true);
-      addAchievement(
-        'Crisis Detective Complete',
-        'Investigated $50+ billion in custody failures',
-        300
-      );
-      handleStepComplete(0);
-    };
+  const renderStepContent = () => {
+    const step = learningSteps[currentStep];
     
-    return (
-      <div className="crisis-detective-phase">
-        <div className="phase-header">
-          <h3>The $50 Billion Investigation</h3>
-          <p>Each card represents a real custody disaster. Click to investigate the catastrophic details.</p>
-          <div className="investigation-stats">
-            <div className="stat">
-              <span className="label">Total Losses Investigated:</span>
-              <span className="value">${totalLosses.toLocaleString()}M+</span>
-        </div>
-            <div className="stat">
-              <span className="label">Victims Affected:</span>
-              <span className="value">2M+ people</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="crisis-grid">
-          {crisisScenarios.map((crisis, index) => (
-            <div 
-              key={crisis.id} 
-              className={`crisis-card ${selectedCrisis?.id === crisis.id ? 'selected' : ''}`}
-              onClick={() => handleCrisisSelect(crisis)}
-            >
-              <div className="crisis-header">
-                <h4>{crisis.title}</h4>
-                <span className="crisis-year">{crisis.year}</span>
-                </div>
-              <div className="crisis-impact">
-                <div className="loss-amount">
-                  <span className="crypto-loss">{crisis.loss}</span>
-                  <span className="dollar-loss">{crisis.dollarValue}</span>
-                  <span className="current-value">Worth today: {crisis.currentValue}</span>
-              </div>
-                <div className="victims">
-                  <Users size={16} />
-                  <span>{crisis.victims}</span>
-                </div>
-              </div>
-              <div className="crisis-lesson">
-                <span className="lesson-type">{crisis.lessonType.replace('-', ' ')}</span>
-                </div>
-              </div>
-          ))}
-              </div>
-
-        {selectedCrisis && (
-          <div className="crisis-detail">
-            <h4>Investigation: {selectedCrisis.title}</h4>
-            <p className="crisis-description">{selectedCrisis.description}</p>
-            <div className="crisis-analysis">
-              <div className="impact-detail">
-                <strong>Long-term Impact:</strong> {selectedCrisis.impact}
-              </div>
-              <div className="lesson-learned">
-                <strong>Key Lesson:</strong> This disaster demonstrates the critical importance of 
-                {selectedCrisis.lessonType === 'exchange-custody' && ' never storing large amounts on exchanges'}
-                {selectedCrisis.lessonType === 'single-point-failure' && ' distributed custody and backup plans'}
-                {selectedCrisis.lessonType === 'backup-failure' && ' multiple secure backups'}
-                {selectedCrisis.lessonType === 'yield-custody-risk' && ' understanding custody risks in yield products'}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {selectedCrisis && !investigationComplete && (
-          <ActionButton 
-            className="investigation-complete" 
-            onClick={completeInvestigation}
-            variant="primary"
-            icon={<CheckCircle size={20} />}
-            iconPosition="left"
-          >
-            Complete Investigation & Design Solutions
-          </ActionButton>
-        )}
-
-        {investigationComplete && (
-          <ContinueButton onClick={handleContinue}>
-            <Shield size={20} />
-            Begin Risk Architecture
-        </ContinueButton>
-        )}
-      </div>
-    );
+    switch (step.id) {
+      case 'custody-introduction':
+        return renderCustodyIntroduction();
+      case 'custody-methods':
+        return renderCustodyMethods();
+      case 'threat-modeling':
+        return renderThreatModeling();
+      case 'backup-recovery':
+        return renderBackupRecovery();
+      case 'inheritance-planning':
+        return renderInheritancePlanning();
+      case 'custody-mastery':
+        return renderCustodyMastery();
+      default:
+        return null;
+    }
   };
 
-  // Risk Architect Phase
-  const RiskArchitectPhase = () => {
-    const [selectedMethod, setSelectedMethod] = useState(null);
-    const [securityAnalysis, setSecurityAnalysis] = useState({});
-    const [customSetup, setCustomSetup] = useState(null);
+  const renderCustodyIntroduction = () => {
+    const predictions = userPredictions;
+    const challenges = challengeMode;
 
-    const analyzeCustodyMethod = (method) => {
-      setSelectedMethod(method);
-      const analysis = {
-        securityScore: method.security * 10,
-        convenienceScore: method.convenience * 10,
-        controlScore: method.control * 10,
-        riskLevel: 10 - method.security,
-        recommendation: method.security >= 8 ? 'Recommended for large holdings' : 
-                      method.security >= 6 ? 'Good for medium amounts' : 
-                      'Only for small, spending amounts'
-      };
-      setSecurityAnalysis(analysis);
-      addAchievement(
-        'Custody Method Analyzed',
-        `Evaluated ${method.name} security architecture`,
-        100
-      );
-    };
-
-    const designCustomSetup = () => {
-      const setup = {
-        primary: custodyMethods[4], // multisig
-        secondary: custodyMethods[5], // cold storage
-        spending: custodyMethods[2], // desktop
-        emergency: custodyMethods[3] // hardware
-      };
-      setCustomSetup(setup);
-      setSecurityLevel(9);
-      addAchievement(
-        'Custom Custody Architecture',
-        'Designed multi-layered security system',
-        250
-      );
-  };
-
-  return (
-      <div className="risk-architect-phase">
-        <div className="phase-header">
-          <h3>Custody Method Analysis</h3>
-          <p>Analyze different custody methods and design your optimal security architecture.</p>
-        </div>
-
-        <div className="custody-methods-grid">
-          {custodyMethods.map((method, index) => (
-            <div 
-              key={method.id} 
-              className={`custody-method-card ${selectedMethod?.id === method.id ? 'selected' : ''}`}
-              onClick={() => analyzeCustodyMethod(method)}
-            >
-              <div className="method-header">
-                <h4>{method.name}</h4>
-                <div className="security-level">
-                  <Shield size={16} style={{ color: method.security >= 8 ? '#16a34a' : method.security >= 6 ? '#ca8a04' : '#dc2626' }} />
-                  <span>Security: {method.security}/10</span>
-                </div>
-              </div>
-              
-              <div className="method-scores">
-                <div className="score-bar">
-                  <span>Security</span>
-                  <div className="bar">
-                    <div className="fill" style={{ width: `${method.security * 10}%`, backgroundColor: '#16a34a' }}></div>
-      </div>
-                  <span>{method.security}/10</span>
-          </div>
-                <div className="score-bar">
-                  <span>Convenience</span>
-                  <div className="bar">
-                    <div className="fill" style={{ width: `${method.convenience * 10}%`, backgroundColor: '#2563eb' }}></div>
-      </div>
-                  <span>{method.convenience}/10</span>
-                </div>
-                <div className="score-bar">
-                  <span>Control</span>
-                  <div className="bar">
-                    <div className="fill" style={{ width: `${method.control * 10}%`, backgroundColor: '#7c3aed' }}></div>
-                  </div>
-                  <span>{method.control}/10</span>
-                </div>
-              </div>
-
-              <p className="method-description">{method.description}</p>
-              
-              <div className="risk-factors">
-                <h5>Risk Factors:</h5>
-                <ul>
-                  {method.risks.map((risk, idx) => (
-                    <li key={idx}>
-                      <AlertTriangle size={12} />
-                      {risk}
-                    </li>
-                  ))}
-                </ul>
-        </div>
-              </div>
-          ))}
-            </div>
-            
-        {selectedMethod && (
-          <div className="security-analysis">
-            <h4>Security Analysis: {selectedMethod.name}</h4>
-            <div className="analysis-metrics">
-              <div className="metric">
-                <span className="metric-label">Overall Security Score:</span>
-                <span className="metric-value">{securityAnalysis.securityScore}/100</span>
-                      </div>
-              <div className="metric">
-                <span className="metric-label">Risk Level:</span>
-                <span className={`metric-value ${securityAnalysis.riskLevel <= 2 ? 'low' : securityAnalysis.riskLevel <= 5 ? 'medium' : 'high'}`}>
-                  {securityAnalysis.riskLevel <= 2 ? 'Low' : securityAnalysis.riskLevel <= 5 ? 'Medium' : 'High'}
-                </span>
-                    </div>
-              <div className="metric">
-                <span className="metric-label">Recommendation:</span>
-                <span className="metric-value">{securityAnalysis.recommendation}</span>
-                  </div>
-                </div>
-          </div>
-        )}
-
-        {selectedMethod && !customSetup && (
-          <ActionButton 
-            className="design-setup" 
-            onClick={designCustomSetup}
-            variant="primary"
-            icon={<Target size={20} />}
-            iconPosition="left"
-          >
-            Design Custom Multi-Layer Setup
-          </ActionButton>
-        )}
-
-        {customSetup && (
-          <div className="custom-setup">
-            <h4>Your Custom Custody Architecture</h4>
-            <div className="setup-layers">
-              <div className="layer">
-                <span className="layer-type">Large Holdings (80%):</span>
-                <span className="layer-method">{customSetup.primary.name}</span>
-              </div>
-              <div className="layer">
-                <span className="layer-type">Long-term Storage (15%):</span>
-                <span className="layer-method">{customSetup.secondary.name}</span>
-              </div>
-              <div className="layer">
-                <span className="layer-type">Daily Spending (4%):</span>
-                <span className="layer-method">{customSetup.spending.name}</span>
-              </div>
-              <div className="layer">
-                <span className="layer-type">Emergency Access (1%):</span>
-                <span className="layer-method">{customSetup.emergency.name}</span>
-              </div>
-            </div>
-            <ContinueButton onClick={handleContinue}>
-              <Crown size={20} />
-              Engineer Self-Custody
-                  </ContinueButton>
-                </div>
-              )}
-            </div>
-    );
-  };
-
-  // Sovereignty Engineer Phase
-  const SovereigntyEngineerPhase = () => {
-    const [sovereigntySteps, setSovereigntySteps] = useState([
-      { id: 'keys', title: 'Generate Cryptographically Secure Keys', completed: false },
-      { id: 'backup', title: 'Create Distributed Backup System', completed: false },
-      { id: 'multisig', title: 'Deploy Multisig Architecture', completed: false },
-      { id: 'inheritance', title: 'Design Inheritance Protocol', completed: false },
-      { id: 'verification', title: 'Verify Complete Independence', completed: false }
-    ]);
-
-    const completeStep = (stepId) => {
-      setSovereigntySteps(prev => prev.map(step => 
-        step.id === stepId ? { ...step, completed: true } : step
-      ));
-      setSovereigntyProgress(prev => prev + 20);
-      addAchievement(
-        'Sovereignty Step Complete',
-        `Completed: ${sovereigntySteps.find(s => s.id === stepId).title}`,
-        200
-      );
-    };
-
-    const allStepsComplete = sovereigntySteps.every(step => step.completed);
-
-    return (
-      <div className="sovereignty-engineer-phase">
-        <div className="phase-header">
-          <h3>Build Your Financial Independence</h3>
-          <p>Engineer complete self-custody infrastructure that eliminates all third-party dependencies.</p>
-          <div className="sovereignty-progress">
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: `${sovereigntyProgress}%` }}></div>
-        </div>
-            <span>{sovereigntyProgress}% Financial Independence</span>
-            </div>
-          </div>
-
-        <div className="sovereignty-steps">
-          {sovereigntySteps.map((step, index) => (
-            <div key={step.id} className={`sovereignty-step ${step.completed ? 'completed' : ''}`}>
-              <div className="step-indicator">
-                {step.completed ? <CheckCircle size={24} /> : <span>{index + 1}</span>}
-            </div>
-              <div className="step-content">
-                <h4>{step.title}</h4>
-                {!step.completed && (
-                  <ActionButton 
-                    className="complete-step-btn"
-                    onClick={() => completeStep(step.id)}
-                    variant="secondary"
-                    size="small"
-                  >
-                    Complete Step
-                  </ActionButton>
-                )}
-              </div>
-            </div>
-          ))}
-            </div>
-
-        {allStepsComplete && (
-          <div className="sovereignty-achievement">
-            <h4>🎉 Financial Sovereignty Achieved!</h4>
-            <p>You now have complete control over your Bitcoin with no third-party dependencies.</p>
-            <ContinueButton onClick={handleContinue}>
-              <Zap size={20} />
-              Design Emergency Protocols
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  // Emergency Architect Phase
-  const EmergencyArchitectPhase = () => {
-    const [selectedEmergency, setSelectedEmergency] = useState(null);
-    const [emergencyPlans, setEmergencyPlans] = useState([]);
-
-    const createEmergencyPlan = (emergencyType) => {
-      const plan = {
-        id: emergencyType.id,
-        type: emergencyType,
-        protocols: [
-          'Immediate access protocol activated',
-          'Trusted contacts notified automatically',
-          'Backup systems engaged',
-          'Recovery procedures initiated'
-        ],
-        timeframe: emergencyType.urgency === 'critical' ? '24 hours' : 
-                  emergencyType.urgency === 'high' ? '72 hours' : '1 week'
-      };
-      setEmergencyPlans(prev => [...prev, plan]);
-      addAchievement(
-        'Emergency Plan Created',
-        `Designed protocol for ${emergencyType.title}`,
-        150
-      );
-    };
-
-    return (
-      <div className="emergency-architect-phase">
-        <div className="phase-header">
-          <h3>Crisis-Proof Recovery Systems</h3>
-          <p>Design comprehensive emergency plans for every possible custody crisis scenario.</p>
-        </div>
-
-        <div className="emergency-scenarios">
-          {emergencyTypes.map((emergency, index) => (
-            <div 
-              key={emergency.id} 
-              className={`emergency-card ${emergency.urgency}`}
-              onClick={() => setSelectedEmergency(emergency)}
-            >
-              <div className="emergency-header">
-                <h4>{emergency.title}</h4>
-                <span className={`urgency-badge ${emergency.urgency}`}>
-                  {emergency.urgency.toUpperCase()}
-                </span>
-        </div>
-              <div className="emergency-actions">
-                {!emergencyPlans.find(p => p.id === emergency.id) ? (
-                  <ActionButton 
-                    className="create-plan-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      createEmergencyPlan(emergency);
-                    }}
-                    variant="crisis"
-                    size="small"
-                  >
-                    Create Emergency Plan
-                  </ActionButton>
-                ) : (
-                  <div className="plan-created">
-                    <CheckCircle size={16} />
-                    Plan Created
-                      </div>
-                    )}
-                  </div>
-                </div>
-          ))}
-        </div>
-
-        {emergencyPlans.length === emergencyTypes.length && (
-          <div className="emergency-mastery">
-            <h4>🛡️ Emergency Architect Mastery!</h4>
-            <p>You've created comprehensive emergency plans for all crisis scenarios.</p>
-            <ContinueButton onClick={handleContinue}>
-              <Building size={20} />
-              Command Institutional Scale
-              <ArrowRight size={20} />
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  // Scale Commander Phase
-  const ScaleCommanderPhase = () => {
-    const [institutionalSetups, setInstitutionalSetups] = useState([]);
-    const [complianceLevel, setComplianceLevel] = useState(0);
-
-    const institutionalSolutions = [
+    const custodyLessons = [
       {
-        id: 'corporate-treasury',
-        title: 'Corporate Treasury Management',
-        scale: '$10M - $1B+',
-        requirements: ['Board approval workflows', 'Multi-department signing', 'Audit compliance', 'Insurance protocols']
+        id: 'mt-gox',
+        event: 'Mt. Gox Exchange Collapse (2014)',
+        question: 'What happened to 850,000 Bitcoin stored on Mt. Gox exchange?',
+        options: ['Safely returned to users', 'Lost forever due to hack', 'Frozen by government', 'Converted to cash'],
+        reality: 'Lost forever - 850,000 Bitcoin ($25+ billion today) disappeared',
+        explanation: 'Mt. Gox was the world\'s largest Bitcoin exchange, handling 70% of all Bitcoin transactions. Poor security and possible insider fraud led to massive losses.',
+        lesson: 'This disaster taught the Bitcoin community: "Not your keys, not your Bitcoin"',
+        thinkingQuestion: 'If you had Bitcoin on Mt. Gox, what would you have learned about custody?'
       },
       {
-        id: 'fund-management',
-        title: 'Investment Fund Custody',
-        scale: '$100M - $10B+',
-        requirements: ['Investor reporting', 'Regulatory compliance', 'Performance tracking', 'Risk management']
+        id: 'quadriga',
+        event: 'QuadrigaCX CEO Death (2019)',
+        question: 'What happened when QuadrigaCX CEO died with the only access to cold storage?',
+        options: ['Funds were recovered', 'Company hired experts', '$190M lost forever', 'Insurance covered losses'],
+        reality: '$190 million in cryptocurrency was lost forever',
+        explanation: 'The CEO was the only person with access to the exchange\'s cold storage wallets. When he died unexpectedly, 76,000 users lost their funds.',
+        lesson: 'Single points of failure in custody can be catastrophic - always have backup plans',
+        thinkingQuestion: 'How could proper custody planning have prevented this disaster?'
       },
       {
-        id: 'bank-integration',
-        title: 'Banking Institution Setup',
-        scale: '$1B - $100B+',
-        requirements: ['Central bank compliance', 'Customer custody', 'Liquidity management', 'Stress testing']
+        id: 'personal-loss',
+        event: 'Personal Key Loss Stories',
+        question: 'How much Bitcoin has been lost due to forgotten passwords and lost keys?',
+        options: ['Very little', 'About 1 million BTC', '4-6 million BTC', 'Over 10 million BTC'],
+        reality: 'Estimated 4-6 million Bitcoin are lost forever (20% of total supply)',
+        explanation: 'Chainalysis estimates that 20% of all Bitcoin is in lost wallets. This includes forgotten passwords, lost hardware, and discarded drives.',
+        lesson: 'Proper backup and recovery planning is essential for Bitcoin custody',
+        thinkingQuestion: 'What backup strategy would ensure you never lose access to your Bitcoin?'
       }
     ];
 
-    const deployInstitutionalSetup = (solution) => {
-      setInstitutionalSetups(prev => [...prev, solution]);
-      setComplianceLevel(prev => prev + 33.33);
-      addAchievement(
-        'Institutional Setup Deployed',
-        `Mastered ${solution.title}`,
-        300
-      );
-    };
+    const custodyPrinciples = [
+      {
+        id: 'control',
+        principle: 'Self-Custody Control',
+        description: 'You hold your own private keys and control your Bitcoin directly',
+        benefit: 'No third-party can freeze, seize, or lose your Bitcoin'
+      },
+      {
+        id: 'responsibility',
+        principle: 'Personal Responsibility',
+        description: 'You are responsible for security, backups, and recovery',
+        benefit: 'Complete ownership comes with complete responsibility'
+      },
+      {
+        id: 'security',
+        principle: 'Security First',
+        description: 'Multiple layers of protection against various threats',
+        benefit: 'Proper security protects against theft, loss, and accidents'
+      },
+      {
+        id: 'redundancy',
+        principle: 'Backup Redundancy',
+        description: 'Multiple secure backups ensure recovery is always possible',
+        benefit: 'Never lose access due to single point of failure'
+      }
+    ];
 
-        return (
-      <div className="scale-commander-phase">
-        <div className="phase-header">
-          <h3>Institutional-Grade Custody Mastery</h3>
-          <p>Command enterprise-level custody solutions for businesses and institutions.</p>
-          <div className="compliance-meter">
-            <div className="meter-bar">
-              <div className="meter-fill" style={{ width: `${complianceLevel}%` }}></div>
-            </div>
-            <span>Compliance Level: {Math.round(complianceLevel)}%</span>
+    return (
+      <div className="learning-step custody-introduction">
+        <div className="step-header">
+          <Shield className="step-icon-large" />
+          <div className="step-info">
+            <h2>Bitcoin Custody Introduction</h2>
+            <p>Understanding why custody matters through real-world lessons</p>
           </div>
-            </div>
+        </div>
 
-        <div className="institutional-solutions">
-          {institutionalSolutions.map((solution, index) => (
-            <div key={solution.id} className="solution-card">
-              <h4>{solution.title}</h4>
-              <div className="solution-scale">{solution.scale}</div>
-              <div className="requirements">
-                <h5>Key Requirements:</h5>
-                <ul>
-                  {solution.requirements.map((req, idx) => (
-                    <li key={idx}>{req}</li>
-                  ))}
-                </ul>
-              </div>
-              {!institutionalSetups.find(s => s.id === solution.id) ? (
-                <ActionButton 
-                  className="deploy-btn"
-                  onClick={() => deployInstitutionalSetup(solution)}
-                  variant="primary"
-                  size="small"
-                >
-                  Deploy Solution
-                </ActionButton>
-              ) : (
-                <div className="deployed">
-                  <CheckCircle size={16} />
-                  Deployed
+        <div className="introduction-content">
+          <div className="prediction-challenges">
+            <h3>🤔 Challenge Your Understanding</h3>
+            <p>Before we explore custody solutions, let's understand what can go wrong. Make your predictions:</p>
+            
+            {custodyLessons.map(lesson => (
+              <div key={lesson.id} className="prediction-challenge">
+                <div className="challenge-question">
+                  <h4>{lesson.event}</h4>
+                  <p>{lesson.question}</p>
                 </div>
-              )}
+                
+                {challenges[lesson.id] !== false ? (
+                  <div className="prediction-options">
+                    {lesson.options.map(option => (
+                      <button
+                        key={option}
+                        className="prediction-option"
+                        onClick={() => handlePrediction(lesson.id, option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="prediction-result">
+                    <div className="user-prediction">
+                      <strong>Your prediction:</strong> {predictions[lesson.id]}
+                    </div>
+                    <div className="reality-check">
+                      <strong>What happened:</strong> {lesson.reality}
+                    </div>
+                    <div className="explanation">
+                      {lesson.explanation}
+                    </div>
+                    <div className="lesson-learned">
+                      <strong>💡 Key lesson:</strong> {lesson.lesson}
+                    </div>
+                    <div className="thinking-question">
+                      <strong>💭 Think about it:</strong> {lesson.thinkingQuestion}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="custody-principles">
+            <h3>🛡️ Custody Principles</h3>
+            <p>These principles guide effective Bitcoin custody:</p>
+            
+            <div className="principles-grid">
+              {custodyPrinciples.map(principle => (
+                <div key={principle.id} className="principle-card">
+                  <h4>{principle.principle}</h4>
+                  <p className="description">{principle.description}</p>
+                  <p className="benefit"><strong>Benefit:</strong> {principle.benefit}</p>
                 </div>
               ))}
             </div>
-
-        {institutionalSetups.length === institutionalSolutions.length && (
-          <ContinueButton onClick={handleContinue}>
-            <Target size={20} />
-            Achieve Custody Sovereignty
-            <ArrowRight size={20} />
-              </ContinueButton>
-        )}
           </div>
-        );
-  };
 
-  // Custody Sovereign Phase
-  const CustodySovereignPhase = () => {
-    const globalImpactMetrics = {
-      personalSecurity: 100,
-      familyProtection: 100,
-      businessSolutions: 100,
-      institutionalMastery: 100,
-      globalInfluence: custodyScore / 50
-    };
-
-        return (
-      <div className="custody-sovereign-phase">
-        <div className="phase-header">
-          <h3>🏆 Custody Sovereignty Achieved</h3>
-          <p>You now command the complete spectrum of Bitcoin custody architecture.</p>
-        </div>
-
-        <div className="mastery-dashboard">
-          <div className="achievement-summary">
-            <h4>Your Custody Mastery</h4>
-            <div className="mastery-metrics">
-              <div className="metric-card">
-                <h5>Personal Security</h5>
-                <div className="metric-value">{globalImpactMetrics.personalSecurity}%</div>
-                <p>Complete self-custody mastery</p>
+          <div className="interactive-demo">
+            <h3>🎯 Interactive: Custody vs Exchange</h3>
+            <div className="custody-comparison">
+              <div className="comparison-scenario">
+                <h4>💰 Your Bitcoin Storage Decision</h4>
+                <p>You have 1 Bitcoin. Where should you store it?</p>
+                
+                <div className="storage-options">
+                  <div className="storage-option exchange">
+                    <h5>🏦 Leave on Exchange</h5>
+                    <div className="option-stats">
+                      <div className="stat convenience">Convenience: Very High</div>
+                      <div className="stat security">Security: Exchange Dependent</div>
+                      <div className="stat control">Control: None</div>
+                      <div className="stat risk">Risk: High (counterparty)</div>
                     </div>
-              <div className="metric-card">
-                <h5>Family Protection</h5>
-                <div className="metric-value">{globalImpactMetrics.familyProtection}%</div>
-                <p>Emergency & inheritance systems</p>
+                    <div className="real-examples">
+                      <p><strong>Real examples:</strong> Mt. Gox, QuadrigaCX, FTX</p>
+                    </div>
                   </div>
-              <div className="metric-card">
-                <h5>Business Solutions</h5>
-                <div className="metric-value">{globalImpactMetrics.businessSolutions}%</div>
-                <p>Corporate custody architecture</p>
+                  
+                  <div className="storage-option self-custody">
+                    <h5>🔐 Self-Custody</h5>
+                    <div className="option-stats">
+                      <div className="stat convenience">Convenience: Moderate</div>
+                      <div className="stat security">Security: Your Responsibility</div>
+                      <div className="stat control">Control: Complete</div>
+                      <div className="stat risk">Risk: User Error</div>
+                    </div>
+                    <div className="real-examples">
+                      <p><strong>Protection:</strong> No counterparty risk</p>
+                    </div>
+                  </div>
                 </div>
-              <div className="metric-card">
-                <h5>Institutional Mastery</h5>
-                <div className="metric-value">{globalImpactMetrics.institutionalMastery}%</div>
-                <p>Enterprise-grade solutions</p>
               </div>
             </div>
-            </div>
+          </div>
 
-          <div className="sovereignty-declaration">
-            <h4>🎯 Sovereignty Declaration</h4>
-            <div className="declaration-text">
-              <p>You have achieved complete mastery over Bitcoin custody architecture. You can:</p>
-              <ul>
-                <li>✅ Protect personal wealth with unbreakable security</li>
-                <li>✅ Design family inheritance systems that last generations</li>
-                <li>✅ Architect business custody solutions for any scale</li>
-                <li>✅ Command institutional-grade security protocols</li>
-                <li>✅ Lead the global transition to self-sovereign finance</li>
-          </ul>
-            </div>
-
-            <div className="final-score">
-              <h5>Total Custody Score: {custodyScore.toLocaleString()}</h5>
-              <p>Rank: Custody Sovereign 👑</p>
+          <div className="understanding-check">
+            <h3>💡 Understanding Check</h3>
+            <div className="check-questions">
+              <div className="check-question">
+                <p><strong>Why is "Not your keys, not your Bitcoin" important?</strong></p>
+                <div className="answer-reveal">
+                  <details>
+                    <summary>Click to reveal answer</summary>
+                    <p>When someone else holds your private keys (like an exchange), they have complete control over your Bitcoin. You're trusting them to give it back when you ask. History shows this trust is often misplaced.</p>
+                  </details>
+                </div>
+              </div>
+              
+              <div className="check-question">
+                <p><strong>What's the main tradeoff with self-custody?</strong></p>
+                <div className="answer-reveal">
+                  <details>
+                    <summary>Click to reveal answer</summary>
+                    <p>Self-custody gives you complete control and eliminates counterparty risk, but transfers all responsibility to you. You must handle security, backups, and recovery properly.</p>
+                  </details>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-          </div>
-        );
+
+        <div className="step-completion">
+          <Button
+            onClick={() => handleStepComplete(0)}
+            icon={ArrowRight}
+            text="Explore Custody Methods"
+            className="continue-btn"
+          />
+        </div>
+      </div>
+    );
   };
 
-  const renderCurrentPhase = () => {
-    switch (currentPhase) {
-      case 'crisis-detective':
-        return <CrisisDetectivePhase />;
-      case 'risk-architect':
-        return <RiskArchitectPhase />;
-      case 'sovereignty-engineer':
-        return <SovereigntyEngineerPhase />;
-      case 'emergency-architect':
-        return <EmergencyArchitectPhase />;
-      case 'scale-commander':
-        return <ScaleCommanderPhase />;
-      case 'custody-sovereign':
-        return <CustodySovereignPhase />;
-      default:
-        return <CrisisDetectivePhase />;
-    }
+  const renderCustodyMethods = () => {
+    const custodyOptions = [
+      {
+        id: 'mobile-wallet',
+        name: 'Mobile Wallet',
+        icon: <Smartphone className="method-icon" />,
+        security: 6,
+        convenience: 9,
+        control: 8,
+        cost: 'Free',
+        bestFor: 'Daily spending amounts ($10-500)',
+        risks: ['Phone theft/loss', 'Malware', 'App vulnerabilities', 'Cloud backup risks'],
+        benefits: ['Always accessible', 'Easy to use', 'QR code scanning', 'Quick payments'],
+        description: 'Software wallet app on your smartphone with keys stored on device'
+      },
+      {
+        id: 'desktop-wallet',
+        name: 'Desktop Wallet',
+        icon: <HardDrive className="method-icon" />,
+        security: 7,
+        convenience: 7,
+        control: 9,
+        cost: 'Free',
+        bestFor: 'Regular use amounts ($100-5,000)',
+        risks: ['Computer malware', 'Hardware failure', 'Theft', 'Online attacks'],
+        benefits: ['Full node option', 'Advanced features', 'Better privacy', 'Backup control'],
+        description: 'Software wallet installed on your personal computer'
+      },
+      {
+        id: 'hardware-wallet',
+        name: 'Hardware Wallet',
+        icon: <Shield className="method-icon" />,
+        security: 9,
+        convenience: 7,
+        control: 9,
+        cost: '$50-200',
+        bestFor: 'Long-term savings ($1,000+)',
+        risks: ['Device loss', 'Firmware vulnerabilities', 'Supply chain attacks', 'User error'],
+        benefits: ['Offline security', 'Tamper resistance', 'PIN protection', 'Recovery options'],
+        description: 'Dedicated device that stores keys offline and signs transactions'
+      },
+      {
+        id: 'multisig',
+        name: 'Multisig Setup',
+        icon: <Users className="method-icon" />,
+        security: 10,
+        convenience: 5,
+        control: 10,
+        cost: '$150-500',
+        bestFor: 'Large amounts ($10,000+)',
+        risks: ['Key coordination', 'Complexity', 'Multiple device management', 'Recovery planning'],
+        benefits: ['No single point of failure', 'Shared custody', 'Enhanced security', 'Theft resistance'],
+        description: 'Multiple signatures required to spend Bitcoin (e.g., 2-of-3, 3-of-5)'
+      },
+      {
+        id: 'paper-wallet',
+        name: 'Paper/Metal Storage',
+        icon: <FileText className="method-icon" />,
+        security: 8,
+        convenience: 3,
+        control: 10,
+        cost: '$10-100',
+        bestFor: 'Long-term storage (HODLing)',
+        risks: ['Physical damage', 'Fire/flood', 'Deterioration', 'Loss/theft'],
+        benefits: ['Completely offline', 'No electronics', 'Permanent storage', 'Air-gapped'],
+        description: 'Private keys written/engraved on physical materials'
+      }
+    ];
+
+    const analyzeMethod = (method) => {
+      setSelectedMethod(method);
+      setCustodyScore(prev => Math.min(prev + 5, 100));
+    };
+
+    const buildCustomSetup = () => {
+      const setup = {
+        spending: custodyOptions.find(m => m.id === 'mobile-wallet'),
+        savings: custodyOptions.find(m => m.id === 'hardware-wallet'),
+        longTerm: custodyOptions.find(m => m.id === 'multisig'),
+        backup: custodyOptions.find(m => m.id === 'paper-wallet')
+      };
+      setCustomSetup(setup);
+      setSecurityLevel(9);
+    };
+
+    return (
+      <div className="learning-step custody-methods">
+        <div className="step-header">
+          <Key className="step-icon-large" />
+          <div className="step-info">
+            <h2>Custody Methods & Security</h2>
+            <p>Compare different custody solutions and build your setup</p>
+          </div>
+        </div>
+
+        <div className="custody-content">
+          <div className="methods-explanation">
+            <h3>🔐 Custody Method Comparison</h3>
+            <p>Each custody method has different security, convenience, and control tradeoffs. Choose the right method for your needs and amount.</p>
+          </div>
+
+          <div className="custody-methods-grid">
+            {custodyOptions.map(method => (
+              <div 
+                key={method.id} 
+                className={`custody-method-card ${selectedMethod?.id === method.id ? 'selected' : ''}`}
+                onClick={() => analyzeMethod(method)}
+              >
+                <div className="method-header">
+                  {method.icon}
+                  <h4>{method.name}</h4>
+                  <div className="method-cost">{method.cost}</div>
+                </div>
+                
+                <div className="method-scores">
+                  <div className="score-bar">
+                    <span>Security</span>
+                    <div className="bar">
+                      <div className="fill security" style={{ width: `${method.security * 10}%` }}></div>
+                    </div>
+                    <span>{method.security}/10</span>
+                  </div>
+                  <div className="score-bar">
+                    <span>Convenience</span>
+                    <div className="bar">
+                      <div className="fill convenience" style={{ width: `${method.convenience * 10}%` }}></div>
+                    </div>
+                    <span>{method.convenience}/10</span>
+                  </div>
+                  <div className="score-bar">
+                    <span>Control</span>
+                    <div className="bar">
+                      <div className="fill control" style={{ width: `${method.control * 10}%` }}></div>
+                    </div>
+                    <span>{method.control}/10</span>
+                  </div>
+                </div>
+
+                <div className="method-details">
+                  <p className="description">{method.description}</p>
+                  <p className="best-for"><strong>Best for:</strong> {method.bestFor}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {selectedMethod && (
+            <div className="method-analysis">
+              <h3>📊 Analysis: {selectedMethod.name}</h3>
+              <div className="analysis-content">
+                <div className="analysis-section">
+                  <h4>✅ Benefits</h4>
+                  <ul>
+                    {selectedMethod.benefits.map((benefit, index) => (
+                      <li key={index}>{benefit}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="analysis-section">
+                  <h4>⚠️ Risks to Consider</h4>
+                  <ul>
+                    {selectedMethod.risks.map((risk, index) => (
+                      <li key={index}>{risk}</li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="recommendation">
+                  <h4>💡 Recommendation</h4>
+                  <p>{selectedMethod.bestFor}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="hands-on-exercise">
+            <h3>🛠️ Hands-on: Build Your Custody Setup</h3>
+            <p>Most people benefit from a layered approach using different methods for different amounts:</p>
+            
+            {!customSetup ? (
+              <button 
+                className="build-setup-btn"
+                onClick={buildCustomSetup}
+              >
+                <Settings className="btn-icon" />
+                Build Multi-Layer Setup
+              </button>
+            ) : (
+              <div className="custom-setup">
+                <h4>Your Multi-Layer Custody Setup</h4>
+                <div className="setup-layers">
+                  <div className="layer">
+                    <span className="layer-icon">📱</span>
+                    <div className="layer-info">
+                      <h5>Daily Spending (5%)</h5>
+                      <p>{customSetup.spending.name} - Quick access for daily transactions</p>
+                    </div>
+                  </div>
+                  
+                  <div className="layer">
+                    <span className="layer-icon">🔐</span>
+                    <div className="layer-info">
+                      <h5>Medium-term Savings (20%)</h5>
+                      <p>{customSetup.savings.name} - Secure but accessible when needed</p>
+                    </div>
+                  </div>
+                  
+                  <div className="layer">
+                    <span className="layer-icon">👥</span>
+                    <div className="layer-info">
+                      <h5>Long-term Holdings (70%)</h5>
+                      <p>{customSetup.longTerm.name} - Maximum security for large amounts</p>
+                    </div>
+                  </div>
+                  
+                  <div className="layer">
+                    <span className="layer-icon">📄</span>
+                    <div className="layer-info">
+                      <h5>Backup & Recovery (5%)</h5>
+                      <p>{customSetup.backup.name} - Emergency access and inheritance</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="setup-benefits">
+                  <p><strong>This setup provides:</strong></p>
+                  <ul>
+                    <li>Convenience for daily use without compromising security</li>
+                    <li>Multiple security layers protecting different amounts</li>
+                    <li>No single point of failure</li>
+                    <li>Balanced security vs convenience tradeoffs</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="step-completion">
+          <Button
+            onClick={() => handleStepComplete(1)}
+            icon={ArrowRight}
+            text="Learn Threat Modeling"
+            className="continue-btn"
+          />
+        </div>
+      </div>
+    );
   };
+
+  const renderThreatModeling = () => {
+    const threats = [
+      {
+        id: 'physical',
+        name: 'Physical Threats',
+        icon: <Home className="threat-icon" />,
+        examples: ['Theft/burglary', 'Natural disasters', 'Fire/flood', 'Physical violence'],
+        mitigations: ['Geographic distribution', 'Safe/vault storage', 'Insurance', 'Operational security'],
+        riskLevel: 'Medium'
+      },
+      {
+        id: 'digital',
+        name: 'Digital Threats',
+        icon: <Smartphone className="threat-icon" />,
+        examples: ['Malware/viruses', 'Phishing attacks', 'Sim swapping', 'Software vulnerabilities'],
+        mitigations: ['Air-gapped devices', 'Hardware wallets', '2FA authentication', 'Software updates'],
+        riskLevel: 'High'
+      },
+      {
+        id: 'human',
+        name: 'Human Threats',
+        icon: <Users className="threat-icon" />,
+        examples: ['Social engineering', 'Insider threats', 'Coercion/extortion', 'Human error'],
+        mitigations: ['Education/training', 'Compartmentalization', 'Multisig requirements', 'Operational security'],
+        riskLevel: 'High'
+      },
+      {
+        id: 'institutional',
+        name: 'Institutional Threats',
+        icon: <Building className="threat-icon" />,
+        examples: ['Government seizure', 'Legal disputes', 'Regulatory changes', 'Banking restrictions'],
+        mitigations: ['Geographic diversification', 'Legal compliance', 'Privacy techniques', 'Self-custody'],
+        riskLevel: 'Medium'
+      }
+    ];
+
+    const assessThreat = (threat) => {
+      setAssessedThreats(prev => [...prev, threat]);
+      setThreatAssessment(prev => Math.min(prev + 25, 100));
+    };
+
+    const createMitigationPlan = () => {
+      const plan = {
+        physical: ['Safe deposit box', 'Geographic distribution', 'Fire-proof storage'],
+        digital: ['Hardware wallets', 'Air-gapped devices', 'Regular security updates'],
+        human: ['Multisig setup', 'Operational security', 'Need-to-know basis'],
+        institutional: ['Self-custody priority', 'Privacy techniques', 'Legal consultation']
+      };
+      setMitigationPlan(plan);
+    };
+
+    return (
+      <div className="learning-step threat-modeling">
+        <div className="step-header">
+          <Target className="step-icon-large" />
+          <div className="step-info">
+            <h2>Threat Modeling & Risk Assessment</h2>
+            <p>Identify threats and design defense strategies</p>
+          </div>
+        </div>
+
+        <div className="threat-content">
+          <div className="threat-explanation">
+            <h3>🎯 What is Threat Modeling?</h3>
+            <p>Threat modeling helps you identify what you're protecting against and design appropriate defenses. Different people face different threats based on their situation.</p>
+          </div>
+
+          <div className="threats-grid">
+            {threats.map(threat => (
+              <div 
+                key={threat.id} 
+                className={`threat-card ${assessedThreats.find(t => t.id === threat.id) ? 'assessed' : ''}`}
+                onClick={() => assessThreat(threat)}
+              >
+                <div className="threat-header">
+                  {threat.icon}
+                  <h4>{threat.name}</h4>
+                  <span className={`risk-badge ${threat.riskLevel.toLowerCase()}`}>
+                    {threat.riskLevel} Risk
+                  </span>
+                </div>
+                
+                <div className="threat-details">
+                  <div className="examples">
+                    <h5>Examples:</h5>
+                    <ul>
+                      {threat.examples.map((example, index) => (
+                        <li key={index}>{example}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="mitigations">
+                    <h5>Mitigations:</h5>
+                    <ul>
+                      {threat.mitigations.map((mitigation, index) => (
+                        <li key={index}>{mitigation}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="threat-assessment">
+            <h3>📊 Your Threat Assessment</h3>
+            <div className="assessment-progress">
+              <div className="progress-bar">
+                <div className="progress-fill" style={{ width: `${threatAssessment}%` }}></div>
+              </div>
+              <span>{threatAssessment}% Complete</span>
+            </div>
+          </div>
+
+          {assessedThreats.length === threats.length && !mitigationPlan && (
+            <div className="create-plan">
+              <button 
+                className="create-plan-btn"
+                onClick={createMitigationPlan}
+              >
+                <Shield className="btn-icon" />
+                Create Mitigation Plan
+              </button>
+            </div>
+          )}
+
+          {mitigationPlan && (
+            <div className="mitigation-plan">
+              <h3>🛡️ Your Mitigation Plan</h3>
+              <div className="plan-sections">
+                {Object.entries(mitigationPlan).map(([category, mitigations]) => (
+                  <div key={category} className="plan-section">
+                    <h4>{category.charAt(0).toUpperCase() + category.slice(1)} Security</h4>
+                    <ul>
+                      {mitigations.map((mitigation, index) => (
+                        <li key={index}>
+                          <CheckCircle className="check-icon" />
+                          {mitigation}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="step-completion">
+          <Button
+            onClick={() => handleStepComplete(2)}
+            icon={ArrowRight}
+            text="Design Backup Systems"
+            className="continue-btn"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const renderBackupRecovery = () => {
+    const backupStrategies = [
+      {
+        id: 'seed-phrase',
+        name: 'Seed Phrase Backup',
+        description: '24-word recovery phrase that can restore your wallet',
+        security: 9,
+        complexity: 6,
+        steps: ['Write down 24 words', 'Verify accuracy', 'Store securely', 'Test recovery']
+      },
+      {
+        id: 'metal-backup',
+        name: 'Metal Seed Storage',
+        description: 'Engrave seed words on metal for fire/water resistance',
+        security: 10,
+        complexity: 7,
+        steps: ['Choose quality metal', 'Engrave carefully', 'Test readability', 'Secure storage']
+      },
+      {
+        id: 'geographic-distribution',
+        name: 'Geographic Distribution',
+        description: 'Store backups in multiple physical locations',
+        security: 9,
+        complexity: 8,
+        steps: ['Identify locations', 'Create copies', 'Secure transport', 'Regular checks']
+      },
+      {
+        id: 'shamir-backup',
+        name: 'Shamir Secret Sharing',
+        description: 'Split seed into multiple shares (e.g., 3-of-5)',
+        security: 10,
+        complexity: 9,
+        steps: ['Generate shares', 'Distribute safely', 'Document scheme', 'Test recovery']
+      }
+    ];
+
+    const implementBackup = (strategy) => {
+      setImplementedBackups(prev => [...prev, strategy]);
+      setBackupSystems(prev => Math.min(prev + 25, 100));
+    };
+
+    const testRecovery = () => {
+      setRecoveryTested(true);
+      setBackupSystems(100);
+    };
+
+    return (
+      <div className="learning-step backup-recovery">
+        <div className="step-header">
+          <FileText className="step-icon-large" />
+          <div className="step-info">
+            <h2>Backup & Recovery Systems</h2>
+            <p>Create robust backup and recovery procedures</p>
+          </div>
+        </div>
+
+        <div className="backup-content">
+          <div className="backup-explanation">
+            <h3>💾 Why Backup Matters</h3>
+            <p>Your Bitcoin is only as secure as your backup strategy. Without proper backups, hardware failure, loss, or damage could mean permanent loss of funds.</p>
+          </div>
+
+          <div className="backup-strategies">
+            <h3>🔄 Backup Strategies</h3>
+            <div className="strategies-grid">
+              {backupStrategies.map(strategy => (
+                <div 
+                  key={strategy.id} 
+                  className={`strategy-card ${implementedBackups.find(s => s.id === strategy.id) ? 'implemented' : ''}`}
+                >
+                  <div className="strategy-header">
+                    <h4>{strategy.name}</h4>
+                    <div className="strategy-scores">
+                      <span className="score">Security: {strategy.security}/10</span>
+                      <span className="score">Complexity: {strategy.complexity}/10</span>
+                    </div>
+                  </div>
+                  
+                  <p className="strategy-description">{strategy.description}</p>
+                  
+                  <div className="implementation-steps">
+                    <h5>Implementation Steps:</h5>
+                    <ol>
+                      {strategy.steps.map((step, index) => (
+                        <li key={index}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                  
+                  {!implementedBackups.find(s => s.id === strategy.id) ? (
+                    <button 
+                      className="implement-btn"
+                      onClick={() => implementBackup(strategy)}
+                    >
+                      Implement Strategy
+                    </button>
+                  ) : (
+                    <div className="implemented-badge">
+                      <CheckCircle className="check-icon" />
+                      Implemented
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="backup-progress">
+            <h3>📈 Backup Implementation Progress</h3>
+            <div className="progress-display">
+              <div className="progress-bar">
+                <div className="progress-fill" style={{ width: `${backupSystems}%` }}></div>
+              </div>
+              <span>{backupSystems}% Complete</span>
+            </div>
+          </div>
+
+          {implementedBackups.length >= 2 && !recoveryTested && (
+            <div className="recovery-test">
+              <h3>🧪 Test Your Recovery</h3>
+              <p>The final step is testing that your backups actually work. Practice recovering a test wallet.</p>
+              <button 
+                className="test-recovery-btn"
+                onClick={testRecovery}
+              >
+                <Target className="btn-icon" />
+                Test Recovery Process
+              </button>
+            </div>
+          )}
+
+          {recoveryTested && (
+            <div className="recovery-success">
+              <h3>✅ Recovery Test Successful</h3>
+              <p>You've successfully implemented and tested multiple backup strategies. Your Bitcoin is now protected against loss!</p>
+            </div>
+          )}
+        </div>
+
+        <div className="step-completion">
+          <Button
+            onClick={() => handleStepComplete(3)}
+            icon={ArrowRight}
+            text="Plan Inheritance"
+            className="continue-btn"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const renderInheritancePlanning = () => {
+    const inheritanceOptions = [
+      {
+        id: 'trusted-person',
+        name: 'Trusted Person Method',
+        description: 'Give backup access to a trusted family member or friend',
+        pros: ['Simple to implement', 'Quick access', 'Low cost'],
+        cons: ['Single point of trust', 'Requires disclosure', 'Trust can change'],
+        setup: ['Choose trusted person', 'Provide instructions', 'Secure backup delivery', 'Regular updates']
+      },
+      {
+        id: 'multisig-inheritance',
+        name: 'Multisig Inheritance',
+        description: 'Create multisig wallet that family can access after your death',
+        pros: ['No single point of failure', 'Flexible access', 'Secure'],
+        cons: ['Complex setup', 'Requires coordination', 'Technical knowledge needed'],
+        setup: ['Create multisig wallet', 'Distribute keys', 'Document process', 'Train beneficiaries']
+      },
+      {
+        id: 'time-locked',
+        name: 'Time-locked Inheritance',
+        description: 'Use Bitcoin time locks that automatically transfer after period',
+        pros: ['Automated process', 'No trust required', 'Programmable'],
+        cons: ['Complex to set up', 'Inflexible timing', 'Requires planning'],
+        setup: ['Create time-locked transaction', 'Set trigger conditions', 'Prepare documentation', 'Store safely']
+      },
+      {
+        id: 'legal-inheritance',
+        name: 'Legal Estate Planning',
+        description: 'Work with lawyers to include Bitcoin in legal will/trust',
+        pros: ['Legal framework', 'Professional guidance', 'Established process'],
+        cons: ['Expensive', 'Disclosure required', 'Legal complexity'],
+        setup: ['Consult estate lawyer', 'Draft documents', 'Update will/trust', 'Store instructions']
+      }
+    ];
+
+    const selectOption = (option) => {
+      setSelectedOptions(prev => [...prev, option]);
+      setInheritancePlanning(prev => Math.min(prev + 25, 100));
+    };
+
+    const createInheritancePlan = () => {
+      const plan = {
+        immediate: 'Trusted person with basic instructions',
+        intermediate: 'Multisig setup with family members',
+        longTerm: 'Legal estate planning with professional help',
+        backup: 'Time-locked inheritance as failsafe'
+      };
+      setInheritancePlan(plan);
+    };
+
+    return (
+      <div className="learning-step inheritance-planning">
+        <div className="step-header">
+          <Users className="step-icon-large" />
+          <div className="step-info">
+            <h2>Inheritance & Emergency Planning</h2>
+            <p>Ensure your Bitcoin can be accessed by family when needed</p>
+          </div>
+        </div>
+
+        <div className="inheritance-content">
+          <div className="inheritance-explanation">
+            <h3>👨‍👩‍👧‍👦 Why Inheritance Planning Matters</h3>
+            <p>Bitcoin inheritance is different from traditional assets. Without proper planning, your Bitcoin could be lost forever when you die or become incapacitated.</p>
+          </div>
+
+          <div className="inheritance-options">
+            <h3>🔄 Inheritance Methods</h3>
+            <div className="options-grid">
+              {inheritanceOptions.map(option => (
+                <div 
+                  key={option.id} 
+                  className={`option-card ${selectedOptions.find(o => o.id === option.id) ? 'selected' : ''}`}
+                >
+                  <div className="option-header">
+                    <h4>{option.name}</h4>
+                  </div>
+                  
+                  <p className="option-description">{option.description}</p>
+                  
+                  <div className="pros-cons">
+                    <div className="pros">
+                      <h5>✅ Pros:</h5>
+                      <ul>
+                        {option.pros.map((pro, index) => (
+                          <li key={index}>{pro}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="cons">
+                      <h5>❌ Cons:</h5>
+                      <ul>
+                        {option.cons.map((con, index) => (
+                          <li key={index}>{con}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="setup-steps">
+                    <h5>Setup Steps:</h5>
+                    <ol>
+                      {option.setup.map((step, index) => (
+                        <li key={index}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                  
+                  {!selectedOptions.find(o => o.id === option.id) ? (
+                    <button 
+                      className="select-option-btn"
+                      onClick={() => selectOption(option)}
+                    >
+                      Select This Method
+                    </button>
+                  ) : (
+                    <div className="selected-badge">
+                      <CheckCircle className="check-icon" />
+                      Selected
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="planning-progress">
+            <h3>📊 Inheritance Planning Progress</h3>
+            <div className="progress-display">
+              <div className="progress-bar">
+                <div className="progress-fill" style={{ width: `${inheritancePlanning}%` }}></div>
+              </div>
+              <span>{inheritancePlanning}% Complete</span>
+            </div>
+          </div>
+
+          {selectedOptions.length >= 2 && !inheritancePlan && (
+            <div className="create-plan">
+              <button 
+                className="create-plan-btn"
+                onClick={createInheritancePlan}
+              >
+                <FileText className="btn-icon" />
+                Create Comprehensive Plan
+              </button>
+            </div>
+          )}
+
+          {inheritancePlan && (
+            <div className="inheritance-plan">
+              <h3>📋 Your Inheritance Plan</h3>
+              <div className="plan-timeline">
+                <div className="timeline-item">
+                  <h4>Immediate (Now)</h4>
+                  <p>{inheritancePlan.immediate}</p>
+                </div>
+                <div className="timeline-item">
+                  <h4>Intermediate (3-6 months)</h4>
+                  <p>{inheritancePlan.intermediate}</p>
+                </div>
+                <div className="timeline-item">
+                  <h4>Long-term (6+ months)</h4>
+                  <p>{inheritancePlan.longTerm}</p>
+                </div>
+                <div className="timeline-item">
+                  <h4>Backup Plan</h4>
+                  <p>{inheritancePlan.backup}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="step-completion">
+          <Button
+            onClick={() => handleStepComplete(4)}
+            icon={ArrowRight}
+            text="Complete Custody Mastery"
+            className="continue-btn"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const renderCustodyMastery = () => (
+    <div className="learning-step custody-mastery">
+      <div className="step-header">
+        <Trophy className="step-icon-large" />
+        <div className="step-info">
+          <h2>Custody Mastery Achievement</h2>
+          <p>Demonstrate your comprehensive Bitcoin custody knowledge</p>
+        </div>
+      </div>
+
+      <div className="mastery-content">
+        <div className="mastery-overview">
+          <h3>🛡️ Bitcoin Custody Mastery</h3>
+          <p>You've successfully learned how to secure Bitcoin through proper custody practices, threat modeling, and inheritance planning.</p>
+          
+          <div className="mastery-categories">
+            <div className="mastery-category">
+              <div className="category-header">
+                <Shield className="category-icon" />
+                <h4>Security Knowledge</h4>
+              </div>
+              <div className="mastery-level">Expert</div>
+              <div className="category-skills">
+                <div className="skill">✅ Custody method evaluation</div>
+                <div className="skill">✅ Security vs convenience tradeoffs</div>
+                <div className="skill">✅ Multi-layer security design</div>
+                <div className="skill">✅ Hardware wallet operation</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <Target className="category-icon" />
+                <h4>Risk Management</h4>
+              </div>
+              <div className="mastery-level">Expert</div>
+              <div className="category-skills">
+                <div className="skill">✅ Threat modeling processes</div>
+                <div className="skill">✅ Mitigation strategy design</div>
+                <div className="skill">✅ Risk assessment techniques</div>
+                <div className="skill">✅ Operational security practices</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <FileText className="category-icon" />
+                <h4>Backup & Recovery</h4>
+              </div>
+              <div className="mastery-level">Expert</div>
+              <div className="category-skills">
+                <div className="skill">✅ Backup strategy implementation</div>
+                <div className="skill">✅ Recovery testing procedures</div>
+                <div className="skill">✅ Geographic distribution</div>
+                <div className="skill">✅ Redundancy planning</div>
+              </div>
+            </div>
+
+            <div className="mastery-category">
+              <div className="category-header">
+                <Users className="category-icon" />
+                <h4>Inheritance Planning</h4>
+              </div>
+              <div className="mastery-level">Expert</div>
+              <div className="category-skills">
+                <div className="skill">✅ Family access planning</div>
+                <div className="skill">✅ Emergency procedures</div>
+                <div className="skill">✅ Legal estate integration</div>
+                <div className="skill">✅ Multisig coordination</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="custody-capabilities">
+          <h3>🎯 Your Custody Capabilities</h3>
+          <div className="capabilities-grid">
+            <div className="capability">
+              <div className="capability-icon">🔐</div>
+              <div className="capability-info">
+                <h4>Secure Storage</h4>
+                <p>Implement multi-layer security appropriate for any amount</p>
+              </div>
+            </div>
+            <div className="capability">
+              <div className="capability-icon">🛡️</div>
+              <div className="capability-info">
+                <h4>Threat Protection</h4>
+                <p>Defend against physical, digital, and human threats</p>
+              </div>
+            </div>
+            <div className="capability">
+              <div className="capability-icon">💾</div>
+              <div className="capability-info">
+                <h4>Backup Mastery</h4>
+                <p>Create robust, tested backup and recovery systems</p>
+              </div>
+            </div>
+            <div className="capability">
+              <div className="capability-icon">👨‍👩‍👧‍👦</div>
+              <div className="capability-info">
+                <h4>Family Protection</h4>
+                <p>Ensure Bitcoin accessibility for family inheritance</p>
+              </div>
+            </div>
+            <div className="capability">
+              <div className="capability-icon">⚖️</div>
+              <div className="capability-info">
+                <h4>Risk Assessment</h4>
+                <p>Evaluate and mitigate personal security risks</p>
+              </div>
+            </div>
+            <div className="capability">
+              <div className="capability-icon">🎓</div>
+              <div className="capability-info">
+                <h4>Security Education</h4>
+                <p>Teach others proper Bitcoin custody practices</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mastery-impact">
+          <h3>🌟 Your Learning Impact</h3>
+          <div className="impact-summary">
+            <div className="impact-metric">
+              <div className="metric-value">6</div>
+              <div className="metric-label">Learning Steps Completed</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">20+</div>
+              <div className="metric-label">Security Techniques Learned</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">100%</div>
+              <div className="metric-label">Custody Understanding</div>
+            </div>
+            <div className="impact-metric">
+              <div className="metric-value">∞</div>
+              <div className="metric-label">Security Improvement</div>
+            </div>
+          </div>
+
+          <div className="mastery-message">
+            <p>You now understand how to properly secure Bitcoin through self-custody. You can evaluate custody methods, model threats, create backups, and plan inheritance. Most importantly, you understand that security is a process, not a product.</p>
+            
+            <div className="final-achievement">
+              <Trophy className="achievement-trophy" />
+              <span>Bitcoin Custody Mastery: ACHIEVED</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="next-steps">
+          <h3>🚀 What's Next?</h3>
+          <div className="next-steps-grid">
+            <div className="next-step">
+              <h4>🔐 Implement Your Setup</h4>
+              <p>Start with a hardware wallet and build your multi-layer security system</p>
+            </div>
+            <div className="next-step">
+              <h4>🧪 Practice Recovery</h4>
+              <p>Regularly test your backup and recovery procedures</p>
+            </div>
+            <div className="next-step">
+              <h4>📚 Stay Informed</h4>
+              <p>Keep up with new security techniques and threats</p>
+            </div>
+            <div className="next-step">
+              <h4>👥 Educate Others</h4>
+              <p>Help family and friends improve their Bitcoin security</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="step-completion">
+        <Button
+          onClick={() => handleStepComplete(5)}
+          icon={Trophy}
+          text="Complete Custody Module"
+          className="mastery-complete-btn"
+        />
+      </div>
+    </div>
+  );
 
   return (
-    <ModuleLayout
-      title="Self-Custody & Security"
-      subtitle="Learn practical strategies for safely storing and managing your Bitcoin"
-      description="Understand Bitcoin custody options, security best practices, and how to protect your Bitcoin from loss or theft through real-world examples and practical guidance."
-    >
-    <div className="custody-module">
-        {/* Achievement Popup */}
-        {showAchievement && achievements.length > 0 && (
-          <div className="achievement-popup">
-            <div className="achievement-content">
-              <Award size={24} />
-              <div>
-                <h4>{achievements[0].title}</h4>
-                <p>{achievements[0].description}</p>
-                <span className="points">+{achievements[0].points} points</span>
-        </div>
+    <div className="module-container custody-module">
+      <div className="custody-content">
+        <div className="module-header">
+          <div className="header-content">
+            <div className="module-icon">🛡️</div>
+            <div className="header-text">
+              <h1 className="module-title">Bitcoin Custody & Security</h1>
+              <p className="module-subtitle">Master secure Bitcoin storage and protection</p>
+              <div className="module-description">
+                Learn practical strategies for safely storing and managing your Bitcoin through real-world examples and hands-on security planning
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Progress Header */}
-        <div className="module-progress">
-          <div className="progress-stats">
-            <div className="stat">
-              <span className="label">Custody Score:</span>
-              <span className="value">{custodyScore.toLocaleString()}</span>
+          
+          {isModuleCompleted('custody') && (
+            <div className="completion-badge">
+              <Trophy className="completion-icon" />
+              <span>Custody Mastery Achieved!</span>
             </div>
-            <div className="stat">
-              <span className="label">Security Level:</span>
-              <span className="value">{securityLevel}/10</span>
-            </div>
-            <div className="stat">
-              <span className="label">Achievements:</span>
-              <span className="value">{achievements.length}</span>
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Step Navigation */}
-        <div className="step-navigation">
-          {steps.map((step, index) => {
-            const StepIcon = step.icon;
-            const isActive = index === activeStep;
-            const isCompleted = completedSteps.has(index);
-            
-            return (
-              <div 
-                key={step.id} 
-                className={`step-tab ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
-                style={{ '--step-color': step.color }}
-              >
-                <div className="step-icon">
-                  <StepIcon size={20} />
+        <div className="module-navigation">
+          {learningSteps.map((step, index) => (
+            <div
+              key={step.id}
+              className={`module-tab ${currentStep === index ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => setCurrentStep(index)}
+            >
+              <div className="tab-icon">{step.icon}</div>
+              <div className="tab-info">
+                <div className="tab-title">{step.title}</div>
+                <div className="tab-description">{step.description}</div>
+              </div>
+              {completedSteps.has(index) && (
+                <div className="tab-completion">
+                  <CheckCircle className="completion-check" />
+                </div>
+              )}
             </div>
-                <div className="step-info">
-                  <h4>{step.title}</h4>
-                  <p>{step.subtitle}</p>
+          ))}
         </div>
-                {isCompleted && (
-                  <div className="completion-badge">
-                    <CheckCircle size={16} />
+
+        <div className="module-content">
+          {renderStepContent()}
         </div>
-                )}
-        </div>
-            );
-          })}
       </div>
-
-        {/* Current Phase Content */}
-        <div className="phase-content">
-          {renderCurrentPhase()}
     </div>
-      </div>
-    </ModuleLayout>
   );
 };
 
