@@ -7370,3 +7370,2801 @@
     gap: 0.5rem;
   }
 }
+
+/* Enhanced Bitcoin Basics Module Styles */
+
+/* Problem Demos Section */
+.problem-demos {
+  margin: 2rem 0;
+}
+
+.demo-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.demo-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: #f7931a;
+}
+
+.demo-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.demo-content {
+  text-align: center;
+  flex: 1;
+}
+
+.demo-content h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.problem-statement {
+  margin: 0.75rem 0;
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.real-example {
+  margin: 0.75rem 0;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.demo-next-button {
+  background: #f7931a;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.demo-next-button:hover:not(:disabled) {
+  background: #e07c00;
+  transform: translateY(-2px);
+}
+
+.demo-next-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.demo-progress {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.demo-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #dee2e6;
+  transition: background 0.3s ease;
+}
+
+.demo-dot.completed {
+  background: #f7931a;
+}
+
+/* Solution Reveal Section */
+.solution-reveal {
+  background: linear-gradient(135deg, #fff8f0, #ffebcc);
+  border: 2px solid #f7931a;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.solution-box h3 {
+  margin: 0 0 1.5rem 0;
+  color: #f7931a;
+  font-size: 1.5rem;
+}
+
+.solution-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.solution-box li {
+  margin: 0.75rem 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.choice-prompt {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.choice-response {
+  background: #e8f5e8;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  color: #155724;
+}
+
+/* System Comparison Styles */
+.comparison-interface {
+  margin: 2rem 0;
+}
+
+.aspect-selector {
+  margin-bottom: 2rem;
+}
+
+.aspect-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.aspect-button {
+  padding: 0.75rem 1rem;
+  border: 2px solid #dee2e6;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.aspect-button:hover {
+  border-color: #f7931a;
+  background: #fff8f0;
+}
+
+.aspect-button.active {
+  background: #f7931a;
+  border-color: #f7931a;
+  color: white;
+}
+
+.system-comparison {
+  margin: 2rem 0;
+}
+
+.system-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.system-button {
+  padding: 1rem 2rem;
+  border: 2px solid #dee2e6;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.system-button:hover {
+  border-color: #f7931a;
+  background: #fff8f0;
+}
+
+.system-button.active {
+  background: #f7931a;
+  border-color: #f7931a;
+  color: white;
+}
+
+.comparison-display {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+
+.system-details h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+}
+
+.system-details.traditional h4 {
+  color: #dc3545;
+}
+
+.system-details.bitcoin h4 {
+  color: #f7931a;
+}
+
+.system-details p {
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+  color: #6c757d;
+}
+
+.system-details ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.system-details li {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.insight-capture {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.insight-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.exploration-progress {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.insights-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.insight-badge {
+  background: #28a745;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.continue-section {
+  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.continue-section h3 {
+  margin: 0 0 1rem 0;
+  color: #28a745;
+}
+
+/* Blockchain Demo Styles */
+.blockchain-visualization {
+  margin: 2rem 0;
+}
+
+.block-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.block {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.block.genesis-block {
+  border-color: #6c757d;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.block.user-block {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff8f0, #ffebcc);
+}
+
+.block.confirmed {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.block-header {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.block-header h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.block-hash, .previous-hash {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin: 0.25rem 0;
+}
+
+.transactions-list h5 {
+  margin: 0 0 0.75rem 0;
+  color: #495057;
+}
+
+.transaction-item {
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  font-family: 'Courier New', monospace;
+}
+
+.empty-block {
+  color: #adb5bd;
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+}
+
+.block-info {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.transaction-builder {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.quick-transactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.quick-tx-button {
+  background: #17a2b8;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.quick-tx-button:hover {
+  background: #138496;
+  transform: translateY(-2px);
+}
+
+.mining-section {
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.mine-button {
+  background: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mine-button:hover:not(:disabled) {
+  background: #e0a800;
+  transform: translateY(-2px);
+}
+
+.mine-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.mining-progress {
+  margin-top: 1.5rem;
+}
+
+.consensus-meter {
+  margin: 1rem 0;
+}
+
+.consensus-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.consensus-bar {
+  width: 100%;
+  height: 12px;
+  background: #e9ecef;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.consensus-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffc107, #28a745);
+  transition: width 0.3s ease;
+}
+
+.mining-explanation {
+  color: #6c757d;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.blockchain-complete {
+  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.blockchain-complete h3 {
+  margin: 0 0 1.5rem 0;
+  color: #28a745;
+}
+
+.blockchain-complete ul {
+  text-align: left;
+  max-width: 600px;
+  margin: 1.5rem auto;
+}
+
+.blockchain-complete li {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.key-insight {
+  background: white;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.key-insight h4 {
+  margin: 0 0 0.75rem 0;
+  color: #28a745;
+}
+
+/* Network Consensus Styles */
+.network-visualization {
+  margin: 2rem 0;
+}
+
+.network-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-item {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+.network-visual {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.network-pie {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.honest-nodes {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pie-center {
+  background: white;
+  border-radius: 50%;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.security-status {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.attack-scenarios {
+  margin: 3rem 0;
+}
+
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.scenario-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.scenario-card:hover {
+  border-color: #f7931a;
+  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
+}
+
+.scenario-card.selected {
+  border-color: #f7931a;
+  background: #fff8f0;
+}
+
+.scenario-card h4 {
+  margin: 0 0 0.75rem 0;
+  color: #333;
+}
+
+.scenario-card p {
+  margin: 0 0 1rem 0;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+.scenario-stats {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.scenario-stats div {
+  margin: 0.25rem 0;
+}
+
+.simulation-controls {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.simulation-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.simulation-button:hover:not(:disabled) {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.simulation-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.simulation-progress {
+  margin: 1.5rem 0;
+}
+
+.progress-animation {
+  font-size: 1.1rem;
+  color: #495057;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.attack-result {
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.attack-result.attack-failed {
+  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
+  border: 2px solid #28a745;
+}
+
+.attack-result.attack-success {
+  background: linear-gradient(135deg, #fff5f5, #ffe6e6);
+  border: 2px solid #dc3545;
+}
+
+.attack-result h5 {
+  margin: 0 0 1rem 0;
+}
+
+.attack-result.attack-failed h5 {
+  color: #28a745;
+}
+
+.attack-result.attack-success h5 {
+  color: #dc3545;
+}
+
+.security-insight {
+  background: white;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.security-insight h6 {
+  margin: 0 0 0.75rem 0;
+  color: #28a745;
+}
+
+.security-insight ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.security-insight li {
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.consensus-explanation {
+  margin: 3rem 0;
+}
+
+.consensus-rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.rule-item {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.rule-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.rule-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.rule-content p {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+/* Supply Scarcity Styles */
+.supply-comparison {
+  margin: 2rem 0;
+}
+
+.currency-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  justify-content: center;
+}
+
+.currency-button {
+  padding: 0.75rem 1rem;
+  border: 2px solid #dee2e6;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.currency-button:hover {
+  border-color: #f7931a;
+  background: #fff8f0;
+}
+
+.currency-button.active {
+  background: #f7931a;
+  border-color: #f7931a;
+  color: white;
+}
+
+.currency-display {
+  margin: 2rem 0;
+}
+
+.currency-info {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.currency-info h4 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+}
+
+.supply-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+.stat-value {
+  font-weight: 600;
+  color: #333;
+}
+
+.bitcoin-supply-meter {
+  margin: 3rem 0;
+}
+
+.supply-visualization {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.supply-bar {
+  width: 100%;
+  height: 20px;
+  background: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.supply-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f7931a, #ff8c00);
+  transition: width 0.5s ease;
+}
+
+.supply-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.supply-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f7931a;
+}
+
+.stat-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+.supply-simulation {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.simulation-controls {
+  margin: 1.5rem 0;
+}
+
+.current-year {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.simulation-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.reset-button {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background: #5a6268;
+}
+
+.simulation-complete {
+  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.simulation-complete h4 {
+  margin: 0 0 1rem 0;
+  color: #28a745;
+}
+
+.simulation-complete ul {
+  text-align: left;
+  max-width: 500px;
+  margin: 1.5rem auto;
+}
+
+.simulation-complete li {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+.scarcity-insights {
+  margin: 3rem 0;
+}
+
+.insight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.insight-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.insight-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.insight-card h4 {
+  margin: 0 0 1rem 0;
+  text-align: center;
+  color: #333;
+}
+
+.insight-card ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.insight-card li {
+  margin: 0.75rem 0;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .demo-card {
+    padding: 1.5rem;
+  }
+  
+  .choice-buttons {
+    gap: 0.75rem;
+  }
+  
+  .aspect-buttons, .currency-selector {
+    gap: 0.5rem;
+  }
+  
+  .aspect-button, .currency-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .system-toggle {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .system-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .quick-transactions {
+    flex-direction: column;
+  }
+  
+  .scenario-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .insight-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .simulation-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .consensus-rules {
+    grid-template-columns: 1fr;
+  }
+  
+  .rule-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .supply-stats {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+/* Enhanced Bitcoin Basics Module Styles */
+
+/* Thinking Challenge Styles */
+.thinking-challenge {
+  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+
+.thinking-challenge h5 {
+  margin: 0 0 1rem 0;
+  color: #856404;
+  font-size: 1.1rem;
+}
+
+.challenge-question {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1rem 0 1.5rem 0;
+  color: #333;
+  line-height: 1.4;
+}
+
+.challenge-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.challenge-options .option-button {
+  text-align: left;
+  padding: 1rem;
+  border: 2px solid #dee2e6;
+  background: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.challenge-options .option-button:hover {
+  border-color: #ffc107;
+  background: #fff8dc;
+}
+
+.challenge-options .option-button.selected {
+  border-color: #ffc107;
+  background: #fff8dc;
+  font-weight: 600;
+}
+
+/* Deeper Thinking Styles */
+.deeper-thinking {
+  margin: 1.5rem 0;
+}
+
+.your-answer {
+  background: #e8f5e8;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.your-answer h5 {
+  margin: 0;
+  color: #155724;
+}
+
+.reality-check {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.reality-check h5 {
+  margin: 0 0 0.75rem 0;
+  color: #856404;
+}
+
+.deeper-question {
+  background: #e7f3ff;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.deeper-question h5 {
+  margin: 0 0 0.75rem 0;
+  color: #004085;
+}
+
+.philosophical-prompt {
+  font-style: italic;
+  color: #495057;
+  margin: 0.75rem 0;
+  line-height: 1.4;
+}
+
+.reflection-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.reflection-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Predictions Summary */
+.reality-check-section {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.reality-check-section h4 {
+  margin: 0 0 1rem 0;
+  color: #495057;
+}
+
+.predictions-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prediction-item {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  font-size: 0.9rem;
+}
+
+/* Scenario Styles */
+.scenario-prompt {
+  margin: 2rem 0;
+}
+
+.scenario-card {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1rem 0;
+}
+
+.scenario-setup {
+  color: #6c757d;
+  font-style: italic;
+  margin: 1rem 0;
+  line-height: 1.5;
+}
+
+.scenario-question {
+  color: #333;
+  font-size: 1.1rem;
+  margin: 1rem 0 1.5rem 0;
+  line-height: 1.4;
+}
+
+.choice-made {
+  background: #e8f5e8;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.choice-made h5 {
+  margin: 0 0 0.75rem 0;
+  color: #155724;
+}
+
+.scenario-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scenario-button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Scenario Choices */
+.scenario-choices {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.scenario-choices h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.choice-card {
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.choice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.choice-card.low {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+}
+
+.choice-card.low:hover {
+  border-color: #1e7e34;
+  background: #e8f5e8;
+}
+
+.choice-card.medium {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fffbf0, #fff3cd);
+}
+
+.choice-card.medium:hover {
+  border-color: #e0a800;
+  background: #fff3cd;
+}
+
+.choice-card.high {
+  border-color: #fd7e14;
+  background: linear-gradient(135deg, #fff5f0, #ffe0cc);
+}
+
+.choice-card.high:hover {
+  border-color: #dc6502;
+  background: #ffe0cc;
+}
+
+.choice-card.very_high {
+  border-color: #dc3545;
+  background: linear-gradient(135deg, #fff5f5, #f8d7da);
+}
+
+.choice-card.very_high:hover {
+  border-color: #bd2130;
+  background: #f8d7da;
+}
+
+.choice-text {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.risk-indicator {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.risk-low {
+  color: #28a745;
+}
+
+.risk-medium {
+  color: #ffc107;
+}
+
+.risk-high {
+  color: #fd7e14;
+}
+
+.risk-very_high {
+  color: #dc3545;
+}
+
+/* Aspect Button Enhancements */
+.aspect-button.completed {
+  background: #e8f5e8;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.completed-check {
+  margin-left: 0.5rem;
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Reality Check Styles */
+.reality-check {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.reality-check.traditional {
+  background: #fff5f5;
+  border: 1px solid #dc3545;
+  color: #721c24;
+}
+
+.reality-check.bitcoin {
+  background: #fff8f0;
+  border: 1px solid #f7931a;
+  color: #8b4513;
+}
+
+/* Personalized Insights */
+.personalized-insights {
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 3rem 0;
+}
+
+.personalized-insights h4 {
+  margin: 0 0 1.5rem 0;
+  color: #495057;
+  text-align: center;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.insight-item {
+  background: white;
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.insight-item.risk-low {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+}
+
+.insight-item.risk-medium {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fffbf0, #fff3cd);
+}
+
+.insight-item.risk-high {
+  border-color: #fd7e14;
+  background: linear-gradient(135deg, #fff5f0, #ffe0cc);
+}
+
+.insight-item.risk-very_high {
+  border-color: #dc3545;
+  background: linear-gradient(135deg, #fff5f5, #f8d7da);
+}
+
+.insight-item h5 {
+  margin: 0 0 0.75rem 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.insight-item p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Progress Grid */
+.progress-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.progress-column h5 {
+  margin: 0 0 1rem 0;
+  color: #495057;
+  text-align: center;
+}
+
+.progress-item {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.progress-item.completed {
+  background: #e8f5e8;
+  color: #155724;
+  font-weight: 500;
+}
+
+/* Responsive Design for New Elements */
+@media (max-width: 768px) {
+  .thinking-challenge {
+    padding: 1.5rem;
+  }
+  
+  .challenge-options {
+    gap: 0.5rem;
+  }
+  
+  .challenge-options .option-button {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  
+  .choice-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .choice-card {
+    padding: 1rem;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .progress-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .scenario-card {
+    padding: 1.5rem;
+  }
+  
+  .scenario-choices {
+    padding: 1.5rem;
+  }
+  
+  .reflection-input {
+    font-size: 0.9rem;
+  }
+}
+
+/* Streamlined Bitcoin Basics Module Styles - Removed redundant scenario and investigation styles */
+
+/* Introduction Step - Simplified thought-provoking approach */
+.introduction .problem-exploration {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.introduction .problem-demo {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.introduction .setup-text {
+  font-size: 1.1em;
+  color: #444;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.introduction .thinking-challenge {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  border-left: 4px solid #f7931a;
+  margin: 20px 0;
+}
+
+.introduction .challenge-question h4 {
+  color: #f7931a;
+  margin-bottom: 12px;
+}
+
+.introduction .challenge-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.introduction .challenge-option {
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-size: 1em;
+}
+
+.introduction .challenge-option:hover {
+  background: #e3f2fd;
+  border-color: #f7931a;
+  transform: translateY(-2px);
+}
+
+.introduction .reality-reveal {
+  margin-top: 24px;
+}
+
+.introduction .user-prediction {
+  background: #e8f5e8;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-left: 4px solid #4caf50;
+}
+
+.introduction .reality-check {
+  background: #fff3e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 4px solid #ff9800;
+}
+
+.introduction .deeper-thinking {
+  background: #f3e5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #9c27b0;
+}
+
+.introduction .personal-reflection {
+  margin-top: 16px;
+}
+
+.introduction .reflection-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1em;
+  resize: vertical;
+}
+
+.introduction .reflection-input:focus {
+  outline: none;
+  border-color: #9c27b0;
+}
+
+.introduction .progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.introduction .progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  transition: all 0.3s ease;
+}
+
+.introduction .progress-dot.active {
+  background: #f7931a;
+  transform: scale(1.2);
+}
+
+.introduction .progress-dot.completed {
+  background: #4caf50;
+}
+
+/* Comparison Step - Enhanced for 5 fiat problem vs Bitcoin benefit aspects */
+.comparison .aspect-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 16px;
+}
+
+.comparison .aspect-tab {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  border-radius: 8px 8px 0 0;
+  min-width: 140px;
+  text-align: center;
+}
+
+.comparison .aspect-tab:hover {
+  color: #f7931a;
+  background: rgba(247, 147, 26, 0.1);
+}
+
+.comparison .aspect-tab.active {
+  color: #f7931a;
+  border-bottom-color: #f7931a;
+}
+
+.comparison .comparison-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.comparison .choice-prompt {
+  margin: 32px 0;
+}
+
+.comparison .choice-prompt p {
+  font-size: 1.2em;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.comparison .choice-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.comparison .choice-button {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border: 3px solid #ddd;
+  border-radius: 16px;
+  padding: 24px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.comparison .choice-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.comparison .choice-button.traditional:hover {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+
+.comparison .choice-button.bitcoin:hover {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.comparison .reality-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 32px 0;
+  max-width: 800px;
+}
+
+.comparison .system-column {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 3px solid #ddd;
+}
+
+.comparison .system-column.traditional {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.comparison .system-column.bitcoin {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.comparison .system-details {
+  text-align: left;
+}
+
+.comparison .system-details .controller {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.comparison .system-details .example {
+  color: #666;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.comparison .system-details .risk {
+  background: rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 500;
+  border-left: 4px solid currentColor;
+}
+
+.comparison .comparison-complete {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 32px;
+  text-align: center;
+  border: 3px solid #4caf50;
+}
+
+.comparison .comparison-complete h3 {
+  color: #2e7d32;
+  margin-bottom: 16px;
+}
+
+/* Remove all redundant scenario, investigation, and systemic analysis styles */
+/* Keep only blockchain builder, network consensus, and fixed supply styles as they remain in the module */
+
+/* Blockchain Builder Step */
+
+/* Banking Analogy Section - Help beginners connect blockchain to familiar banking concepts */
+.blockchain-builder .banking-analogy {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 2px solid #ddd;
+}
+
+.blockchain-builder .analogy-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.blockchain-builder .analogy-side {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 3px solid #ddd;
+}
+
+.blockchain-builder .bank-side {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.blockchain-builder .blockchain-side {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.blockchain-builder .ledger-example {
+  margin-top: 16px;
+}
+
+.blockchain-builder .ledger-title {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  border: 2px solid currentColor;
+}
+
+.blockchain-builder .bank-side .ledger-title {
+  color: #2196f3;
+  border-color: #2196f3;
+}
+
+.blockchain-builder .blockchain-side .ledger-title {
+  color: #f7931a;
+  border-color: #f7931a;
+}
+
+.blockchain-builder .ledger-entries {
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.blockchain-builder .entry {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.blockchain-builder .entry:last-child {
+  border-bottom: none;
+}
+
+.blockchain-builder .ledger-note {
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.blockchain-builder .continue-analogy-button {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto;
+  display: block;
+}
+
+.blockchain-builder .continue-analogy-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+}
+
+.blockchain-builder .blockchain-visual {
+  max-width: 1000px;
+  margin: 0 auto 32px;
+}
+
+.blockchain-builder .blockchain-chain {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 20px 0;
+  align-items: flex-start;
+}
+
+.blockchain-builder .block {
+  min-width: 280px;
+  background: #f8f9fa;
+  border: 3px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.blockchain-builder .block.genesis-block {
+  border-color: #4caf50;
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+}
+
+.blockchain-builder .block.user-block {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.blockchain-builder .block.confirmed {
+  animation: confirmPulse 0.5s ease-in-out;
+}
+
+@keyframes confirmPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.blockchain-builder .block-header {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.blockchain-builder .block-header h4 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.blockchain-builder .block-hash,
+.blockchain-builder .previous-hash {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8em;
+  color: #666;
+  word-break: break-all;
+}
+
+.blockchain-builder .transaction-builder {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  border: 2px dashed #ddd;
+}
+
+.blockchain-builder .quick-transactions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.blockchain-builder .quick-tx-button {
+  background: #e3f2fd;
+  border: 2px solid #2196f3;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.blockchain-builder .quick-tx-button:hover {
+  background: #bbdefb;
+  transform: translateY(-2px);
+}
+
+.blockchain-builder .mining-section {
+  background: #fff3e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  border-left: 4px solid #f7931a;
+}
+
+.blockchain-builder .consensus-meter {
+  margin: 16px 0;
+}
+
+.blockchain-builder .consensus-bar {
+  background: #ddd;
+  border-radius: 10px;
+  height: 20px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.blockchain-builder .consensus-fill {
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Network Consensus Step */
+.network-consensus .attack-scenarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.network-consensus .scenario-card {
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.network-consensus .scenario-card:hover {
+  border-color: #f7931a;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.network-consensus .scenario-card.selected {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.network-consensus .simulation-controls {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.network-consensus .network-visualization {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.network-consensus .node-group {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 3px solid #ddd;
+}
+
+.network-consensus .node-group.honest {
+  border-color: #4caf50;
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+}
+
+.network-consensus .node-group.attacker {
+  border-color: #f44336;
+  background: linear-gradient(135deg, #ffebee, #ffcdd2);
+}
+
+/* Fixed Supply Step */
+.fixed-supply .supply-visualization {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin: 24px 0;
+  text-align: center;
+  border: 2px solid #ddd;
+}
+
+.fixed-supply .supply-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.fixed-supply .stat-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  text-align: center;
+}
+
+.fixed-supply .stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #f7931a;
+  margin-bottom: 8px;
+}
+
+.fixed-supply .simulation-controls {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.fixed-supply .scarcity-insights {
+  margin: 32px 0;
+}
+
+.fixed-supply .insight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.fixed-supply .insight-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 3px solid #ddd;
+  text-align: center;
+}
+
+.fixed-supply .insight-card:first-child {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.fixed-supply .insight-card:last-child {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+/* Banking Analogy Section - Help beginners connect blockchain to familiar banking concepts */
+.blockchain-builder .banking-analogy {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 2px solid #ddd;
+}
+
+.blockchain-builder .analogy-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.blockchain-builder .analogy-side {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 3px solid #ddd;
+}
+
+.blockchain-builder .bank-side {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.blockchain-builder .blockchain-side {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.blockchain-builder .ledger-example {
+  margin-top: 16px;
+}
+
+.blockchain-builder .ledger-title {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  border: 2px solid currentColor;
+}
+
+.blockchain-builder .bank-side .ledger-title {
+  color: #2196f3;
+  border-color: #2196f3;
+}
+
+.blockchain-builder .blockchain-side .ledger-title {
+  color: #f7931a;
+  border-color: #f7931a;
+}
+
+.blockchain-builder .ledger-entries {
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.blockchain-builder .entry {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.blockchain-builder .entry:last-child {
+  border-bottom: none;
+}
+
+.blockchain-builder .ledger-note {
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.blockchain-builder .continue-analogy-button {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto;
+  display: block;
+}
+
+.blockchain-builder .continue-analogy-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+}
+
+/* Enhanced blockchain completion section with banking comparison */
+.blockchain-builder .completion-insight {
+  margin: 24px 0;
+}
+
+.blockchain-builder .comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+
+.blockchain-builder .comparison-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 3px solid #ddd;
+}
+
+.blockchain-builder .comparison-item:first-child {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.blockchain-builder .comparison-item:last-child {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.blockchain-builder .comparison-item h5 {
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.blockchain-builder .comparison-item ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.blockchain-builder .comparison-item li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Enhanced mining section with banking context */
+.blockchain-builder .mine-button {
+  background: linear-gradient(135deg, #f7931a, #ff9800);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 16px 0;
+}
+
+.blockchain-builder .mine-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(247,147,26,0.3);
+}
+
+.blockchain-builder .mine-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.blockchain-builder .continue-button {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto;
+  display: block;
+}
+
+.blockchain-builder .continue-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .comparison .choice-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .comparison .reality-comparison {
+    grid-template-columns: 1fr;
+  }
+  
+  .blockchain-builder .blockchain-chain {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .blockchain-builder .analogy-comparison {
+    grid-template-columns: 1fr;
+  }
+  
+  .blockchain-builder .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .blockchain-builder .banking-analogy {
+    padding: 20px;
+  }
+  
+  .network-consensus .network-visualization {
+    grid-template-columns: 1fr;
+  }
+  
+  .fixed-supply .insight-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .scarcity-value .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .scarcity-value .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .how-bitcoin-works .concept-card,
+  .scarcity-value .scarcity-example {
+    padding: 20px;
+  }
+}
+
+/* How Bitcoin Works Step - Simple concept explanations */
+.how-bitcoin-works .concept-card {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+  border: 2px solid #ddd;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.how-bitcoin-works .scenario-text {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #2196f3;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.how-bitcoin-works .question-section h4 {
+  color: #333;
+  margin: 24px 0 16px 0;
+  font-size: 1.2em;
+}
+
+.how-bitcoin-works .answer-options {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.how-bitcoin-works .answer-option {
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+.how-bitcoin-works .answer-option:hover {
+  background: #e3f2fd;
+  border-color: #f7931a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.how-bitcoin-works .explanation-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  border: 2px solid #4caf50;
+}
+
+.how-bitcoin-works .user-choice h4 {
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.how-bitcoin-works .correct-choice {
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.how-bitcoin-works .suboptimal-choice {
+  color: #ff9800;
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.how-bitcoin-works .explanation-content {
+  margin: 20px 0;
+}
+
+.how-bitcoin-works .why-section,
+.how-bitcoin-works .analogy-section,
+.how-bitcoin-works .bitcoin-connection {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.how-bitcoin-works .why-section {
+  border-left: 4px solid #2196f3;
+}
+
+.how-bitcoin-works .analogy-section {
+  border-left: 4px solid #ff9800;
+}
+
+.how-bitcoin-works .bitcoin-connection {
+  border-left: 4px solid #f7931a;
+}
+
+.how-bitcoin-works .why-section h5,
+.how-bitcoin-works .analogy-section h5,
+.how-bitcoin-works .bitcoin-connection h5 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.how-bitcoin-works .continue-concept-button {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto;
+  display: block;
+}
+
+.how-bitcoin-works .continue-concept-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+}
+
+.how-bitcoin-works .progress-indicator {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.how-bitcoin-works .progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Scarcity Value Step - Real-world examples and statistics */
+.scarcity-value .scarcity-example {
+  background: linear-gradient(135deg, #f8f9fa, #e8f4f8);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+  border: 2px solid #ddd;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.scarcity-value .setup-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #2196f3;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.scarcity-value .statistics-display {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  border: 3px solid #ff9800;
+}
+
+.scarcity-value .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.scarcity-value .stat-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  border: 2px solid #ddd;
+}
+
+.scarcity-value .stat-item.highlight {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border-color: #f7931a;
+  font-weight: bold;
+}
+
+.scarcity-value .stat-label {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.scarcity-value .stat-value {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #333;
+}
+
+.scarcity-value .comparison-display {
+  margin: 24px 0;
+}
+
+.scarcity-value .comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.scarcity-value .comparison-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 3px solid #ddd;
+}
+
+.scarcity-value .comparison-item.dollar-system {
+  border-color: #2196f3;
+  background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+}
+
+.scarcity-value .comparison-item.bitcoin-system {
+  border-color: #f7931a;
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.scarcity-value .comparison-details {
+  text-align: left;
+}
+
+.scarcity-value .comparison-details div {
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.scarcity-value .comparison-details .impact {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  border-left: 4px solid currentColor;
+  margin-top: 16px;
+}
+
+.scarcity-value .question-section h4 {
+  color: #333;
+  margin: 24px 0 16px 0;
+  font-size: 1.2em;
+}
+
+.scarcity-value .prediction-options {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.scarcity-value .prediction-option {
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.scarcity-value .prediction-option:hover {
+  background: #e3f2fd;
+  border-color: #f7931a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.scarcity-value .option-text {
+  font-size: 1em;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.scarcity-value .option-prediction {
+  color: #666;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.scarcity-value .reality-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  border: 2px solid #4caf50;
+}
+
+.scarcity-value .reality-truth {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 4px solid #2196f3;
+}
+
+.scarcity-value .bitcoin-connection {
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 4px solid #f7931a;
+}
+
+.scarcity-value .reality-truth h4,
+.scarcity-value .bitcoin-connection h4 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.scarcity-value .continue-example-button {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 24px auto;
+  display: block;
+}
+
+.scarcity-value .continue-example-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(76,175,80,0.3);
+}
+
+.scarcity-value .example-progress {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.scarcity-value .progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Enhanced comparison step with questions */
+.comparison .aspect-question {
+  background: #e3f2fd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 4px solid #2196f3;
+  font-size: 1.1em;
+  font-style: italic;
+  color: #333;
+}
+
+.comparison .system-details .real-example {
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  padding: 10px;
+  margin: 8px 0;
+  font-size: 0.95em;
+  border-left: 3px solid #ff9800;
+}
