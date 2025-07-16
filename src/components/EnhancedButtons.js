@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ArrowLeft, ArrowRight, Play, Pause } from 'lucide-react';
 
 // Enhanced Button Component with Visual Hierarchy, Feedback, and Accessibility
 const Button = ({
@@ -712,6 +713,115 @@ const PopupButton = ({
       )}
     </>
   );
+};
+
+// Step Navigation Controls for Multi-Step Modules
+export const StepNavigation = ({ 
+  currentStep, 
+  totalSteps, 
+  onPrevious, 
+  onNext, 
+  onPause,
+  onResume,
+  isPaused = false,
+  canGoNext = true,
+  canGoPrevious = true,
+  autoAdvance = false,
+  autoAdvanceDelay = 3000,
+  className = "",
+  nextLabel = "Next",
+  previousLabel = "Previous"
+}) => {
+  return (
+    <div className={`step-navigation ${className}`}>
+      <div className="nav-controls">
+        <button 
+          onClick={onPrevious}
+          disabled={!canGoPrevious || currentStep === 0}
+          className="nav-button nav-previous"
+        >
+          <ArrowLeft size={16} />
+          {previousLabel}
+        </button>
+        
+        {autoAdvance && (
+          <button 
+            onClick={isPaused ? onResume : onPause}
+            className={`nav-button nav-pause ${isPaused ? 'paused' : 'playing'}`}
+          >
+            {isPaused ? <Play size={16} /> : <Pause size={16} />}
+            {isPaused ? 'Resume' : 'Pause'}
+          </button>
+        )}
+        
+        <div className="step-counter">
+          {currentStep + 1} of {totalSteps}
+        </div>
+        
+        <button 
+          onClick={onNext}
+          disabled={!canGoNext || currentStep >= totalSteps - 1}
+          className="nav-button nav-next"
+        >
+          {nextLabel}
+          <ArrowRight size={16} />
+        </button>
+      </div>
+      
+      <div className="progress-dots">
+        {Array.from({ length: totalSteps }, (_, index) => (
+          <div 
+            key={index}
+            className={`progress-dot ${index === currentStep ? 'current' : ''} ${index < currentStep ? 'completed' : ''}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Auto-advance control hook for modules
+export const useAutoAdvance = (
+  currentStep, 
+  totalSteps, 
+  onAdvance, 
+  delay = 3000, 
+  autoStart = false
+) => {
+  const [isPaused, setIsPaused] = useState(!autoStart);
+  const [timeRemaining, setTimeRemaining] = useState(delay);
+  
+  useEffect(() => {
+    if (isPaused || currentStep >= totalSteps - 1) return;
+    
+    const timer = setInterval(() => {
+      setTimeRemaining(prev => {
+        if (prev <= 100) {
+          onAdvance();
+          return delay;
+        }
+        return prev - 100;
+      });
+    }, 100);
+    
+    return () => clearInterval(timer);
+  }, [isPaused, currentStep, totalSteps, onAdvance, delay]);
+  
+  const pause = () => setIsPaused(true);
+  const resume = () => setIsPaused(false);
+  const reset = () => {
+    setTimeRemaining(delay);
+    setIsPaused(!autoStart);
+  };
+  
+  return {
+    isPaused,
+    timeRemaining,
+    pause,
+    resume,
+    reset,
+    progress: ((delay - timeRemaining) / delay) * 100
+  };
 };
 
 export {

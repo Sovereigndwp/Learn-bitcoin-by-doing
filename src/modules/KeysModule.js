@@ -153,9 +153,9 @@ const KeysModule = () => {
     const userChoice = userChoices[challenge.id];
     const selectedOption = challenge.challengeOptions.find(opt => opt.id === userChoice);
 
-    return (
+  return (
       <div className="ownership-fundamentals">
-        <div className="module-header">
+      <div className="module-header">
           <h2>🔑 What Does Digital Ownership Really Mean?</h2>
           <p>Let's challenge some assumptions about ownership in the digital age...</p>
         </div>
@@ -167,8 +167,8 @@ const KeysModule = () => {
               <div className="thinking-prompt">
                 <Lightbulb className="w-5 h-5" />
                 <span>{challenge.thinkingQuestion}</span>
-              </div>
-              
+      </div>
+
               <div className="challenge-options">
                 {challenge.challengeOptions.map(option => (
                   <OptionButton
@@ -178,8 +178,8 @@ const KeysModule = () => {
                   >
                     {option.label}
                   </OptionButton>
-                ))}
-              </div>
+          ))}
+        </div>
 
               {userChoice && (
                 <div className="prediction-feedback">
@@ -187,10 +187,10 @@ const KeysModule = () => {
                   <ActionButton onClick={moveToReality}>
                     See Reality <ArrowRight className="w-4 h-4" />
                   </ActionButton>
-                </div>
+      </div>
               )}
-            </div>
-          </div>
+    </div>
+      </div>
         )}
 
         {thinkingLevel === 'reality' && (
@@ -209,8 +209,8 @@ const KeysModule = () => {
               <div className="prediction-comparison">
                 <p>You thought: <span className="user-prediction">{selectedOption.label}</span></p>
                 <p className="reality-note">Reality is often harsher than we expect...</p>
-              </div>
-
+          </div>
+          
               <ActionButton onClick={moveToDeeper} className="primary">
                 Think Deeper <ArrowRight className="w-4 h-4" />
               </ActionButton>
@@ -238,8 +238,8 @@ const KeysModule = () => {
                 <div className="key-realization">
                   <AlertCircle className="w-5 h-5" />
                   <span>With Bitcoin, you can have true digital ownership for the first time in history.</span>
-                </div>
-              </div>
+          </div>
+          </div>
 
               {Object.keys(userChoices).length < ownershipChallenges.length ? (
                 <ActionButton 
@@ -256,8 +256,8 @@ const KeysModule = () => {
                   Master Randomness & Security <ArrowRight className="w-4 h-4" />
                 </ContinueButton>
               )}
-            </div>
-          </div>
+        </div>
+      </div>
         )}
 
         <div className="progress-tracker">
@@ -269,8 +269,8 @@ const KeysModule = () => {
             />
           </div>
         </div>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 2: Randomness and Security
@@ -345,12 +345,12 @@ const KeysModule = () => {
     const userGuess = userGuesses[currentChallenge.id];
     const selectedOption = currentChallenge.options.find(opt => opt.id === userGuess);
 
-    return (
+  return (
       <div className="randomness-security">
         <div className="module-header">
           <h2>🎲 The Power of True Randomness</h2>
           <p>Random numbers are the foundation of all cryptographic security...</p>
-        </div>
+      </div>
 
         {demoMode === 'prediction' && (
           <div className="randomness-challenge">
@@ -370,9 +370,9 @@ const KeysModule = () => {
                         {option.entropy}
                       </span>
                     </div>
-                  </div>
-                ))}
-              </div>
+            </div>
+        ))}
+        </div>
 
               {userGuess && (
                 <div className="guess-feedback">
@@ -381,7 +381,7 @@ const KeysModule = () => {
                   <ActionButton onClick={() => setDemoMode('reality')}>
                     See Why <ArrowRight className="w-4 h-4" />
                   </ActionButton>
-                </div>
+      </div>
               )}
             </div>
           </div>
@@ -396,7 +396,7 @@ const KeysModule = () => {
               <div className="security-insight">
                 <Lightbulb className="w-5 h-5" />
                 <span>{currentChallenge.insight}</span>
-              </div>
+          </div>
 
               <div className="randomness-demo">
                 <h4>Randomness Demo</h4>
@@ -411,7 +411,7 @@ const KeysModule = () => {
                     ))}
                   </div>
                 )}
-              </div>
+        </div>
 
               {Object.keys(userGuesses).length < randomnessChallenges.length ? (
                 <ActionButton 
@@ -425,15 +425,15 @@ const KeysModule = () => {
                   Explore Private Keys <ArrowRight className="w-4 h-4" />
                 </ContinueButton>
               )}
-            </div>
-          </div>
+        </div>
+      </div>
         )}
 
         <div className="progress-tracker">
           <span>Randomness Challenge {Object.keys(userGuesses).length + 1} of {randomnessChallenges.length}</span>
         </div>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 3: Private Key Power  
@@ -472,14 +472,14 @@ const KeysModule = () => {
         signature: "30440220...(digital signature proving you own this Bitcoin)",
         verified: true
       });
-    };
+  };
 
-    return (
+  return (
       <div className="private-key-power">
         <div className="module-header">
           <h2>🔐 Your Private Key = Your Digital Identity</h2>
           <p>Understanding the most important piece of data in Bitcoin...</p>
-        </div>
+      </div>
 
         <div className="key-generation-lab">
           <div className="lab-section">
@@ -502,37 +502,37 @@ const KeysModule = () => {
                     >
                       {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
-                  </div>
+                </div>
                   <div className="key-value">
                     {showKey ? demoKey : '•'.repeat(64)}
-                  </div>
+              </div>
                   <div className="key-warning">
                     ⚠️ Anyone with this key controls the Bitcoin!
-                  </div>
                 </div>
+              </div>
 
                 <div className="key-item">
                   <div className="key-header">
                     <span>🔓 Public Key (Safe to Share)</span>
-                  </div>
+                </div>
                   <div className="key-value public">{publicKey}</div>
                   <div className="key-note">
                     ✅ Derived from private key - mathematically linked
-                  </div>
+              </div>
                 </div>
 
                 <div className="key-item">
                   <div className="key-header">
                     <span>🏠 Bitcoin Address (Your "Account Number")</span>
-                  </div>
+                </div>
                   <div className="key-value address">{address}</div>
                   <div className="key-note">
                     ✅ People send Bitcoin to this address
-                  </div>
-                </div>
               </div>
-            )}
+            </div>
           </div>
+        )}
+      </div>
 
           {keyGenerated && (
             <div className="signature-demo">
@@ -548,20 +548,20 @@ const KeysModule = () => {
                 <div className="signature-result">
                   <div className="signature-item">
                     <strong>Message:</strong> {signatureDemo.message}
-                  </div>
+            </div>
                   <div className="signature-item">
                     <strong>Digital Signature:</strong> 
                     <span className="signature-value">{signatureDemo.signature}</span>
-                  </div>
+          </div>
                   <div className="signature-verification">
                     <CheckCircle className="w-5 h-5 text-green-500" />
                     <span>Signature verified! This proves you own the Bitcoin.</span>
-                  </div>
+            </div>
                 </div>
               )}
             </div>
           )}
-        </div>
+          </div>
 
         <div className="key-insights">
           <h3>🧠 Key Insights</h3>
@@ -575,28 +575,28 @@ const KeysModule = () => {
               <Shield className="w-6 h-6" />
               <h4>Cryptographic Proof</h4>
               <p>Your signature proves you own Bitcoin without revealing your private key.</p>
-            </div>
+          </div>
             <div className="insight-card">
               <Key className="w-6 h-6" />
               <h4>Ultimate Responsibility</h4>
               <p>Lose your private key = lose your Bitcoin. No customer service can help.</p>
-            </div>
+        </div>
           </div>
         </div>
 
         <div className="real-world-warning">
           <AlertCircle className="w-6 h-6" />
-          <div>
+        <div>
             <h4>⚠️ Real World Warning</h4>
             <p>Never store large amounts on demo keys! This is for education only. Use proper wallet software for real Bitcoin.</p>
-          </div>
         </div>
+      </div>
 
         <ContinueButton onClick={() => setCurrentStep(3)}>
           Learn Address Generation <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 4: Address Generation Lab
@@ -660,12 +660,12 @@ const KeysModule = () => {
       }, 1000);
     };
 
-    return (
+  return (
       <div className="address-generation-lab">
         <div className="module-header">
           <h2>🏠 Address Generation Laboratory</h2>
           <p>Watch Bitcoin addresses come to life from mathematical transformations...</p>
-        </div>
+      </div>
 
         <div className="address-types-comparison">
           <h3>📋 Address Format Comparison</h3>
@@ -680,7 +680,7 @@ const KeysModule = () => {
                 <div className="address-example">
                   <span className="prefix">{format.prefix}</span>
                   <span className="address-text">{format.example}</span>
-                </div>
+      </div>
                 <p className="address-description">{format.description}</p>
                 
                 <div className="pros-cons">
@@ -691,7 +691,7 @@ const KeysModule = () => {
                         <li key={idx}>✅ {pro}</li>
                       ))}
                     </ul>
-                  </div>
+          </div>
                   <div className="cons">
                     <strong>Cons:</strong>
                     <ul>
@@ -699,12 +699,12 @@ const KeysModule = () => {
                         <li key={idx}>⚠️ {con}</li>
                       ))}
                     </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
+          </div>
+          </div>
+            ))}
         </div>
+      </div>
 
         <div className="generation-process">
           <h3>⚙️ Address Generation Process</h3>
@@ -725,11 +725,11 @@ const KeysModule = () => {
                   <div className="step-number">{index + 1}</div>
                   <div className="step-description">{step}</div>
                   {index <= currentStep && <CheckCircle className="w-5 h-5 text-green-500" />}
-                </div>
+      </div>
               ))}
-            </div>
+      </div>
           )}
-        </div>
+          </div>
 
         <div className="practical-insights">
           <h3>💡 Practical Insights</h3>
@@ -738,25 +738,25 @@ const KeysModule = () => {
               <div className="insight-icon">🔒</div>
               <h4>One-Way Function</h4>
               <p>Easy to generate address from private key, impossible to reverse.</p>
-            </div>
+          </div>
             <div className="insight-card">
               <div className="insight-icon">🎯</div>
               <h4>Perfect Accuracy</h4>
               <p>Checksums prevent typos - invalid addresses are rejected.</p>
-            </div>
+        </div>
             <div className="insight-card">
               <div className="insight-icon">🔄</div>
               <h4>Multiple Addresses</h4>
               <p>One private key can generate multiple address types for different use cases.</p>
-            </div>
-          </div>
+      </div>
         </div>
+      </div>
 
         <ContinueButton onClick={() => setCurrentStep(4)}>
           Master Custody Decisions <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 5: Custody Decisions
@@ -912,12 +912,12 @@ const KeysModule = () => {
       return advice;
     };
 
-    return (
+  return (
       <div className="custody-decisions">
         <div className="module-header">
           <h2>🛡️ Custody Decision Framework</h2>
           <p>Different situations require different custody approaches...</p>
-        </div>
+      </div>
 
         <div className="custody-scenarios">
           {custodyScenarios.map(scenario => (
@@ -942,18 +942,18 @@ const KeysModule = () => {
                         <span className={`convenience-badge ${option.convenience}`}>
                           Convenience: {option.convenience}
                         </span>
-                      </div>
+                    </div>
                     </div>
                     <div className="option-details">
                       <div className="risk">Risk: {option.risk}</div>
                       <div className="recommendation">{option.recommendation}</div>
-                    </div>
+                  </div>
                   </div>
                 ))}
-              </div>
+                  </div>
             </div>
           ))}
-        </div>
+      </div>
 
         {Object.keys(userDecisions).length === custodyScenarios.length && (
           <div className="personalized-advice">
@@ -963,10 +963,10 @@ const KeysModule = () => {
                 <div key={idx} className="advice-item">
                   <Lightbulb className="w-5 h-5" />
                   <span>{advice}</span>
-                </div>
-              ))}
             </div>
-            
+          ))}
+      </div>
+
             <div className="custody-principles">
               <h4>🏛️ Universal Custody Principles</h4>
               <ul>
@@ -976,7 +976,7 @@ const KeysModule = () => {
                 <li><strong>Test Everything:</strong> Practice recovery before you need it</li>
                 <li><strong>Plan for Inheritance:</strong> Ensure others can access if needed</li>
               </ul>
-            </div>
+          </div>
           </div>
         )}
 
@@ -998,9 +998,9 @@ const KeysModule = () => {
               Complete Keys Module
             </ActionButton>
           </div>
-        </div>
-      </div>
-    );
+          </div>
+    </div>
+  );
   }
 
   // Main component render
@@ -1013,8 +1013,8 @@ const KeysModule = () => {
         <div className="progress-header">
           <h1>🔑 Keys & Ownership Mastery</h1>
           <p>Master the fundamentals of Bitcoin ownership and security</p>
-        </div>
-        
+      </div>
+      
         <div className="steps-progress">
           {cryptoSteps.map((step, index) => (
             <div 
@@ -1025,8 +1025,8 @@ const KeysModule = () => {
               <div className="step-info">
                 <div className="step-title">{step.title}</div>
                 <div className="step-subtitle">{step.subtitle}</div>
-              </div>
-            </div>
+      </div>
+        </div>
           ))}
         </div>
       </div>

@@ -61,26 +61,26 @@ const HashingModule = () => {
   // Step 1: Hash Fundamentals
   function HashFundamentals() {
     const [inputText, setInputText] = useState('Hello Bitcoin!');
-    const [hashResult, setHashResult] = useState('');
-    const [isHashing, setIsHashing] = useState(false);
+  const [hashResult, setHashResult] = useState('');
+  const [isHashing, setIsHashing] = useState(false);
     const [hashHistory, setHashHistory] = useState([]);
 
     const performHash = async (text) => {
-      setIsHashing(true);
+    setIsHashing(true);
       
       // Simulate processing time for educational effect
       await new Promise(resolve => setTimeout(resolve, 500));
       
       try {
         const hash = await sha256(text);
-        setHashResult(hash);
+      setHashResult(hash);
         
         // Add to history
         setHashHistory(prev => [
           { input: text, hash, timestamp: new Date() },
           ...prev.slice(0, 4) // Keep last 5 entries
         ]);
-      } catch (error) {
+    } catch (error) {
         // Fallback simple hash for demo
         const simpleHash = text.split('').reduce((hash, char) => {
           const charCode = char.charCodeAt(0);
@@ -90,8 +90,8 @@ const HashingModule = () => {
         setHashResult(simpleHash);
       }
       
-      setIsHashing(false);
-    };
+    setIsHashing(false);
+  };
 
     useEffect(() => {
       performHash(inputText);
@@ -125,12 +125,12 @@ const HashingModule = () => {
       }
     ];
 
-    return (
+  return (
       <div className="hash-fundamentals">
         <div className="module-header">
           <h2>🔐 Hash Functions: The Foundation of Bitcoin Security</h2>
           <p>Discover how mathematical functions create unbreakable digital fingerprints...</p>
-        </div>
+      </div>
 
         <div className="interactive-hasher">
           <h3>🧪 Interactive Hash Generator</h3>
@@ -141,8 +141,8 @@ const HashingModule = () => {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Type your message here..."
-              className="hash-input"
-            />
+          className="hash-input"
+        />
             <ActionButton 
               onClick={() => performHash(inputText)}
               disabled={isHashing}
@@ -160,27 +160,27 @@ const HashingModule = () => {
                 </>
               )}
             </ActionButton>
-          </div>
+      </div>
 
           <div className="hash-output">
             <div className="hash-result-card">
               <div className="hash-label">SHA-256 Hash:</div>
               <div className="hash-value">
                 {hashResult}
-                <button 
+            <button
                   onClick={() => navigator.clipboard.writeText(hashResult)}
                   className="copy-button"
                   title="Copy hash"
                 >
                   <Copy className="w-4 h-4" />
-                </button>
+            </button>
               </div>
               <div className="hash-info">
                 Length: {hashResult.length} characters | 256 bits | 32 bytes
               </div>
             </div>
-          </div>
         </div>
+      </div>
 
         <div className="hash-properties">
           <h3>🏗️ Hash Function Properties</h3>
@@ -195,7 +195,7 @@ const HashingModule = () => {
               </div>
             ))}
           </div>
-        </div>
+          </div>
 
         {hashHistory.length > 0 && (
           <div className="hash-history">
@@ -220,8 +220,8 @@ const HashingModule = () => {
               <div>
                 <h4>Data Integrity</h4>
                 <p>Verify that transaction data hasn't been tampered with</p>
-              </div>
             </div>
+        </div>
             <div className="connection-point">
               <Zap className="w-6 h-6" />
               <div>
@@ -242,8 +242,8 @@ const HashingModule = () => {
         <ContinueButton onClick={() => setCurrentStep(1)}>
           Explore Avalanche Effect <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 2: Avalanche Effect
@@ -410,14 +410,14 @@ const HashingModule = () => {
               <CheckCircle className="w-6 h-6" />
               <h4>Data Integrity</h4>
               <p>You can verify that data hasn't changed by comparing hash values.</p>
-            </div>
+              </div>
             <div className="implication-card">
               <Zap className="w-6 h-6" />
               <h4>Mining Security</h4>
               <p>Miners can't predict which small changes will produce valid block hashes.</p>
+              </div>
+              </div>
             </div>
-          </div>
-        </div>
 
         <div className="practical-exercise">
           <h3>🎯 Try This Exercise</h3>
@@ -425,8 +425,8 @@ const HashingModule = () => {
             <p><strong>Challenge:</strong> Try to make the smallest possible change that keeps the hash as similar as possible.</p>
             <p><strong>Reality:</strong> You'll find it's impossible! Even changing one bit flips about half the output bits.</p>
             <p><strong>Bitcoin Insight:</strong> This is why Bitcoin is secure - attackers can't make "small" malicious changes that go unnoticed.</p>
+            </div>
           </div>
-        </div>
 
         <ContinueButton onClick={() => setCurrentStep(2)}>
           Understand One-Way Functions <ArrowRight className="w-4 h-4" />
@@ -487,12 +487,12 @@ const HashingModule = () => {
       setTimeEstimate(estimates);
     };
 
-    return (
+  return (
       <div className="one-way-functions">
-        <div className="module-header">
+      <div className="module-header">
           <h2>🚪 One-Way Functions: Easy Forward, Impossible Backward</h2>
           <p>Understanding why hash functions are cryptographically secure...</p>
-        </div>
+      </div>
 
         <div className="one-way-explanation">
           <div className="concept-card">
@@ -502,10 +502,10 @@ const HashingModule = () => {
                 <span className="direction-label">Forward (Easy):</span>
                 <div className="process">
                   Input → <span className="function">Hash Function</span> → Output
-                </div>
+        </div>
                 <div className="time-estimate">⚡ Milliseconds</div>
-              </div>
-              
+      </div>
+
               <div className="backward-direction">
                 <span className="direction-label">Backward (Impossible):</span>
                 <div className="process">
@@ -527,7 +527,7 @@ const HashingModule = () => {
               <div className="hash-value">{currentTarget.hash}</div>
               <div className="hint">Hint: {currentTarget.hint}</div>
             </div>
-
+            
             <div className="cracking-interface">
               <input
                 type="text"
@@ -587,15 +587,15 @@ const HashingModule = () => {
               <div>
                 <h4>Private Key Security</h4>
                 <p>Your Bitcoin private key creates a public key through one-way functions. Even if someone knows your public key, they can't reverse-engineer your private key.</p>
-              </div>
-            </div>
+          </div>
+        </div>
             
             <div className="security-point">
               <Hash className="w-6 h-6" />
               <div>
                 <h4>Block Mining</h4>
                 <p>Miners must try billions of different values to find a hash that starts with zeros. They can't work backward from the target.</p>
-              </div>
+      </div>
             </div>
             
             <div className="security-point">
@@ -622,8 +622,8 @@ const HashingModule = () => {
         <ContinueButton onClick={() => setCurrentStep(3)}>
           Learn Proof of Work <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 4: Proof of Work Demo
@@ -701,15 +701,15 @@ const HashingModule = () => {
         return `~${(timeInSeconds / 3600).toFixed(1)} hours`;
       } else {
         return `~${(timeInSeconds / 86400).toFixed(1)} days`;
-      }
-    };
+    }
+  };
 
-    return (
+  return (
       <div className="proof-of-work-demo">
         <div className="module-header">
           <h2>⛏️ Proof of Work: Digital Mining Simulation</h2>
           <p>Experience how Bitcoin mining actually works...</p>
-        </div>
+      </div>
 
         <div className="mining-explanation">
           <div className="concept-card">
@@ -735,7 +735,7 @@ const HashingModule = () => {
               </div>
             </div>
           </div>
-        </div>
+      </div>
 
         <div className="mining-simulator">
           <h3>🎮 Mining Simulator</h3>
@@ -797,9 +797,9 @@ const HashingModule = () => {
             ) : (
               <ActionButton onClick={stopMining} className="danger">
                 Stop Mining
-              </ActionButton>
-            )}
-          </div>
+            </ActionButton>
+          )}
+        </div>
 
           {currentHash.startsWith('0'.repeat(targetZeros)) && !isMining && (
             <div className="mining-success">
@@ -810,8 +810,8 @@ const HashingModule = () => {
                 <p>Hash: {currentHash}</p>
               </div>
             </div>
-          )}
-        </div>
+      )}
+    </div>
 
         <div className="difficulty-analysis">
           <h3>📊 Difficulty Analysis</h3>
@@ -820,7 +820,7 @@ const HashingModule = () => {
               <h4>Target Difficulty</h4>
               <div className="analysis-value">{targetZeros} leading zeros</div>
               <div className="analysis-note">1 in {calculateDifficulty().toLocaleString()} chance</div>
-            </div>
+    </div>
             
             <div className="analysis-card">
               <h4>Estimated Time</h4>
@@ -945,12 +945,12 @@ const HashingModule = () => {
 
     const application = hashApplications[selectedApplication];
 
-    return (
+  return (
       <div className="hash-applications">
         <div className="module-header">
           <h2>🛠️ Hash Applications in Bitcoin</h2>
           <p>Discover every way Bitcoin uses cryptographic hashing...</p>
-        </div>
+      </div>
 
         <div className="application-selector">
           <div className="selector-buttons">
@@ -994,9 +994,9 @@ const HashingModule = () => {
                 {application.useCases.map((useCase, index) => (
                   <li key={index}>{useCase}</li>
                 ))}
-              </ul>
-            </div>
-          </div>
+        </ul>
+      </div>
+        </div>
         </div>
 
         <div className="hash-security-summary">
@@ -1007,33 +1007,33 @@ const HashingModule = () => {
               <div>
                 <h4>Immutability</h4>
                 <p>Changing any transaction would change its hash, breaking the chain</p>
-              </div>
-            </div>
-            
+        </div>
+      </div>
+
             <div className="security-point">
               <Shield className="w-6 h-6" />
               <div>
                 <h4>Integrity</h4>
                 <p>Hash verification ensures data hasn't been corrupted or tampered with</p>
               </div>
-            </div>
-            
+      </div>
+
             <div className="security-point">
               <Zap className="w-6 h-6" />
               <div>
                 <h4>Efficiency</h4>
                 <p>Hash comparisons are much faster than comparing entire data structures</p>
               </div>
-            </div>
-            
+      </div>
+
             <div className="security-point">
               <Eye className="w-6 h-6" />
               <div>
                 <h4>Privacy</h4>
                 <p>Hashes hide original data while still allowing verification</p>
-              </div>
             </div>
-          </div>
+        </div>
+    </div>
         </div>
 
         <div className="module-completion">
@@ -1073,7 +1073,7 @@ const HashingModule = () => {
         <div className="progress-header">
           <h1>🔐 Cryptographic Hashing Mastery</h1>
           <p>Master the mathematical foundation of Bitcoin security</p>
-        </div>
+      </div>
         
         <div className="steps-progress">
           {hashingSteps.map((step, index) => (
@@ -1094,7 +1094,7 @@ const HashingModule = () => {
       <div className="step-content">
         {StepComponent && <StepComponent />}
       </div>
-
+      
       <div className="module-navigation">
         {currentStep > 0 && (
           <NavigationButton 

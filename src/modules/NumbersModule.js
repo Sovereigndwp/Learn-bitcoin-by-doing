@@ -107,15 +107,15 @@ const NumbersModule = () => {
       }));
     };
 
-    return (
+        return (
       <div className="binary-basics">
         <div className="module-header">
           <h2>🔢 Binary: The Language of Computers</h2>
           <p>Everything in Bitcoin - from addresses to transactions - is built on binary numbers...</p>
-        </div>
+            </div>
 
         <div className="learning-tabs">
-          <button 
+            <button 
             className={`tab ${mode === 'learn' ? 'active' : ''}`}
             onClick={() => setMode('learn')}
           >
@@ -132,8 +132,8 @@ const NumbersModule = () => {
             onClick={() => setMode('challenge')}
           >
             Challenge
-          </button>
-        </div>
+            </button>
+          </div>
 
         {mode === 'learn' && (
           <div className="binary-explanation">
@@ -252,9 +252,9 @@ const NumbersModule = () => {
                 {binaryChallenges[currentChallenge].decimal && (
                   <div className="decimal-display">
                     <span className="decimal-number">{binaryChallenges[currentChallenge].decimal}</span>
-                  </div>
-                )}
-              </div>
+          </div>
+        )}
+      </div>
 
               <input
                 type="text"
@@ -269,14 +269,14 @@ const NumbersModule = () => {
                     <div>
                       <CheckCircle className="w-5 h-5" />
                       <span>Correct! {binaryChallenges[currentChallenge].explanation}</span>
-                    </div>
+        </div>
                   ) : (
                     <div>
                       <Target className="w-5 h-5" />
                       <span>Try again. Think about place values...</span>
-                    </div>
+      </div>
                   )}
-                </div>
+        </div>
               )}
 
               {challengeAnswers[currentChallenge]?.correct && (
@@ -293,18 +293,18 @@ const NumbersModule = () => {
                       Master Hexadecimal <ArrowRight className="w-4 h-4" />
                     </ContinueButton>
                   )}
-                </div>
+        </div>
               )}
-            </div>
+      </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 2: Hexadecimal Power
   function HexadecimalPower() {
-    const [hexInput, setHexInput] = useState('');
+  const [hexInput, setHexInput] = useState('');
     const [decimalInput, setDecimalInput] = useState('');
     const [binaryInput, setBinaryInput] = useState('');
     const [colorDemo, setColorDemo] = useState('#FF5733');
@@ -349,7 +349,7 @@ const NumbersModule = () => {
         <div className="module-header">
           <h2>🎯 Hexadecimal: The Programmer's Shortcut</h2>
           <p>Bitcoin uses hexadecimal everywhere - addresses, hashes, transaction IDs...</p>
-        </div>
+              </div>
 
         <div className="hex-explanation">
           <div className="concept-card">
@@ -361,19 +361,19 @@ const NumbersModule = () => {
                 <div className="representation">
                   <span className="label">Binary:</span>
                   <span className="value">11111111</span>
-                </div>
+              </div>
                 <div className="representation">
                   <span className="label">Decimal:</span>
                   <span className="value">255</span>
-                </div>
+            </div>
                 <div className="representation">
                   <span className="label">Hexadecimal:</span>
                   <span className="value">FF</span>
-                </div>
-              </div>
-            </div>
           </div>
-
+            </div>
+              </div>
+          </div>
+          
           <div className="hex-digits-table">
             <h4>📋 Hexadecimal Digit Reference</h4>
             <div className="digits-grid">
@@ -382,11 +382,11 @@ const NumbersModule = () => {
                   <div className="hex-digit">{digit.hex}</div>
                   <div className="decimal-value">= {digit.decimal}</div>
                   <div className="binary-value">{digit.binary}</div>
-                </div>
+        </div>
               ))}
+              </div>
             </div>
           </div>
-        </div>
 
         <div className="hex-converter">
           <h3>🔄 Triple Converter: Hex ↔ Decimal ↔ Binary</h3>
@@ -404,9 +404,9 @@ const NumbersModule = () => {
               <div className="conversion-results">
                 <div>Decimal: <strong>{convertHexToDecimal(hexInput)}</strong></div>
                 <div>Binary: <strong>{convertHexToBinary(hexInput)}</strong></div>
-              </div>
             </div>
-            
+          </div>
+          
             <div className="converter-input">
               <label>Decimal:</label>
               <input
@@ -434,11 +434,11 @@ const NumbersModule = () => {
               <div className="conversion-results">
                 <div>Decimal: <strong>{binaryInput ? parseInt(binaryInput, 2) : ''}</strong></div>
                 <div>Hex: <strong>{binaryInput ? parseInt(binaryInput, 2).toString(16).toUpperCase() : ''}</strong></div>
-              </div>
+                </div>
+            </div>
             </div>
           </div>
-        </div>
-
+          
         <div className="practical-demo">
           <h3>🎨 Real-World Example: Colors</h3>
           <p>Web colors use hexadecimal! Try changing this color:</p>
@@ -456,7 +456,7 @@ const NumbersModule = () => {
               style={{ backgroundColor: colorDemo }}
             >
               {colorDemo}
-            </div>
+        </div>
           </div>
           
           <div className="color-breakdown">
@@ -471,9 +471,9 @@ const NumbersModule = () => {
               <div className="component blue">
                 Blue: {colorDemo.slice(5, 7)} = {parseInt(colorDemo.slice(5, 7), 16)}
               </div>
+              </div>
             </div>
           </div>
-        </div>
 
         <div className="bitcoin-examples">
           <h3>₿ Bitcoin Hexadecimal Examples</h3>
@@ -482,7 +482,7 @@ const NumbersModule = () => {
               <h4>Bitcoin Address Hash</h4>
               <div className="hex-example">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</div>
               <p>Contains Base58-encoded data (which includes hex)</p>
-            </div>
+              </div>
             <div className="example-card">
               <h4>Transaction ID</h4>
               <div className="hex-example">4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</div>
@@ -493,13 +493,13 @@ const NumbersModule = () => {
               <div className="hex-example">E9873D79C6D87DC0FB6A5778633389F4453213303DA61F20BD67FC233AA33262</div>
               <p>256-bit number in hexadecimal format</p>
             </div>
+            </div>
           </div>
-        </div>
-
+          
         <ContinueButton onClick={() => setCurrentStep(2)}>
           Learn Byte Order <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
+            </div>
     );
   }
 
@@ -560,22 +560,22 @@ const NumbersModule = () => {
           
           <div className="demo-input">
             <label>Enter 8 hex digits (4 bytes):</label>
-            <input
-              type="text"
+              <input
+                type="text"
               value={selectedBytes}
               onChange={(e) => setSelectedBytes(e.target.value.toUpperCase().slice(0, 8))}
               placeholder="12345678"
               pattern="[0-9A-Fa-f]{8}"
               maxLength="8"
             />
-          </div>
+                </div>
 
           {endianDemo && (
             <div className="demo-results">
               <div className="demo-row">
                 <span className="demo-label">Original hex:</span>
                 <span className="demo-value">{endianDemo.original}</span>
-              </div>
+            </div>
               <div className="demo-row">
                 <span className="demo-label">Decimal value:</span>
                 <span className="demo-value">{endianDemo.decimal.toLocaleString()}</span>
@@ -590,8 +590,8 @@ const NumbersModule = () => {
               </div>
             </div>
           )}
-        </div>
-
+          </div>
+          
         <div className="bitcoin-endianness">
           <h3>₿ Endianness in Bitcoin</h3>
           <div className="bitcoin-examples">
@@ -601,7 +601,7 @@ const NumbersModule = () => {
               <div className="example-code">
                 Block height 500,000 = 0x0007A120<br/>
                 Network bytes: 00 07 A1 20
-              </div>
+        </div>
             </div>
             
             <div className="example-card">
@@ -621,23 +621,23 @@ const NumbersModule = () => {
                 <li>Invalid transaction parsing</li>
                 <li>Difficulty target errors</li>
               </ul>
+              </div>
             </div>
           </div>
-        </div>
-
+          
         <div className="practical-exercise">
           <h3>🎯 Quick Exercise</h3>
           <p>Bitcoin block 1's hash (in big-endian) starts with:</p>
           <div className="exercise-code">
             00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048
-          </div>
+              </div>
           <p>Notice how it starts with many zeros - this is why it's called "proof of work"!</p>
-        </div>
-
+          </div>
+          
         <ContinueButton onClick={() => setCurrentStep(3)}>
           Master Hash Numbers <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
+        </div>
     );
   }
 
@@ -690,10 +690,10 @@ const NumbersModule = () => {
       {
         input: "Genesis Block",
         hash: "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
-      }
-    ];
+    }
+  ];
 
-    return (
+  return (
       <div className="hash-number-mastery">
         <div className="module-header">
           <h2>🧮 Hash Functions and Large Numbers</h2>
@@ -709,7 +709,7 @@ const NumbersModule = () => {
               <div className="property">
                 <h4>🔒 Deterministic</h4>
                 <p>Same input always produces same output</p>
-              </div>
+        </div>
               <div className="property">
                 <h4>⚡ Fast</h4>
                 <p>Quick to calculate in one direction</p>
@@ -724,8 +724,8 @@ const NumbersModule = () => {
               </div>
             </div>
           </div>
-        </div>
-
+      </div>
+      
         <div className="hash-demo">
           <h3>🧪 Hash Function Demo</h3>
           <p>Try changing the input text and see how dramatically the hash changes:</p>
@@ -738,8 +738,8 @@ const NumbersModule = () => {
               placeholder="Type anything..."
               className="hash-text-input"
             />
-          </div>
-
+      </div>
+      
           <div className="hash-output">
             <div className="hash-result">
               <span className="hash-label">Hash:</span>
@@ -761,8 +761,8 @@ const NumbersModule = () => {
                   <span>1 in {hashAnalysis.difficulty.toLocaleString()}</span>
                 </div>
               </div>
-            )}
-          </div>
+      )}
+    </div>
         </div>
 
         <div className="sha256-examples">
@@ -775,13 +775,13 @@ const NumbersModule = () => {
                 <div className="example-input">Input: "{example.input}"</div>
                 <div className="example-hash">
                   SHA-256: <span className="hash-display">{example.hash}</span>
-                </div>
+      </div>
                 {example.hash.startsWith('00000') && (
                   <div className="mining-note">
                     ⛏️ This hash has many leading zeros - perfect for Bitcoin mining!
-                  </div>
-                )}
-              </div>
+        </div>
+      )}
+    </div>
             ))}
           </div>
         </div>
@@ -872,12 +872,12 @@ const NumbersModule = () => {
       demonstratePrecision();
     }, []);
 
-    return (
+  return (
       <div className="bitcoin-precision">
         <div className="module-header">
           <h2>⚡ Bitcoin Number Precision</h2>
           <p>Understanding satoshis, precision, and why 21 million matters...</p>
-        </div>
+      </div>
 
         <div className="precision-explanation">
           <div className="concept-card">
@@ -905,8 +905,8 @@ const NumbersModule = () => {
           <div className="converter-grid">
             <div className="converter-input">
               <label>Bitcoin (BTC):</label>
-              <input
-                type="number"
+          <input
+            type="number"
                 value={bitcoinAmount}
                 onChange={(e) => {
                   setBitcoinAmount(e.target.value);
@@ -951,8 +951,8 @@ const NumbersModule = () => {
                 </div>
               ))}
             </div>
-          </div>
-        )}
+            </div>
+          )}
 
         <div className="twenty-one-million">
           <h3>🎯 Why 21 Million?</h3>
@@ -972,8 +972,8 @@ const NumbersModule = () => {
               <p>~2.6 million satoshis per person on Earth</p>
               <p>Enough precision for global adoption</p>
             </div>
-          </div>
         </div>
+      </div>
 
         <div className="precision-importance">
           <h3>🔍 Why Precision Matters</h3>
@@ -982,7 +982,7 @@ const NumbersModule = () => {
               <Calculator className="w-6 h-6" />
               <h4>Microtransactions</h4>
               <p>Can send as little as 1 satoshi (though fees may be higher)</p>
-            </div>
+    </div>
             <div className="importance-card">
               <Binary className="w-6 h-6" />
               <h4>Programming</h4>
@@ -1023,7 +1023,7 @@ const NumbersModule = () => {
   const currentStepData = numberSteps[currentStep];
   const StepComponent = currentStepData?.component;
 
-  return (
+    return (
     <div className="numbers-module">
       <div className="module-progress">
         <div className="progress-header">
@@ -1041,15 +1041,15 @@ const NumbersModule = () => {
               <div className="step-info">
                 <div className="step-title">{step.title}</div>
                 <div className="step-subtitle">{step.subtitle}</div>
-              </div>
-            </div>
-          ))}
+          </div>
         </div>
-      </div>
+          ))}
+            </div>
+          </div>
 
       <div className="step-content">
         {StepComponent && <StepComponent />}
-      </div>
+                  </div>
 
       <div className="module-navigation">
         {currentStep > 0 && (
@@ -1068,7 +1068,7 @@ const NumbersModule = () => {
         >
           Return to Dashboard
         </NavigationButton>
-      </div>
+                </div>
     </div>
   );
 };

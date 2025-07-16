@@ -27,9 +27,9 @@ import {
 } from 'lucide-react';
 import { 
   ContinueButton, 
-  ActionButton,
+  ActionButton, 
   OptionButton,
-  NavigationButton
+  NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './MerkleModule.css';
@@ -149,7 +149,7 @@ const MerkleModule = () => {
       currentLevel = nextLevel;
       tree.push(currentLevel);
     }
-
+    
     return {
       root: currentLevel[0],
       levels: tree.reverse(), // Root at top
@@ -168,17 +168,17 @@ const MerkleModule = () => {
       const sibling = currentLevel[siblingIndex];
       
       if (sibling) {
-        proof.push({
+          proof.push({
           hash: sibling.hash,
           position: currentIndex % 2 === 0 ? 'right' : 'left',
           level
-        });
-      }
-      
+          });
+        }
+        
       currentIndex = Math.floor(currentIndex / 2);
       currentLevel = tree.levels[level - 1];
     }
-
+    
     return proof;
   };
 
@@ -235,7 +235,7 @@ const MerkleModule = () => {
 
     return (
       <div className="merkle-introduction">
-        <div className="intro-header">
+      <div className="intro-header">
           <TreePine className="intro-icon" size={48} />
           <h2>Merkle Trees: Efficient Data Verification</h2>
           <p>Learn how tree structures revolutionize large-scale data verification</p>
@@ -263,8 +263,8 @@ const MerkleModule = () => {
                   >
                     See the Elegant Solution
                   </ActionButton>
-                </div>
-
+      </div>
+      
                 {showReality && (
                   <div className="reality-reveal">
                     <div className="insight-box">
@@ -272,12 +272,12 @@ const MerkleModule = () => {
                       <div>
                         <h4>You're thinking like a computer scientist!</h4>
                         <p>Merkle trees solve exactly this problem. They organize data in a tree structure where you can verify any piece of data using just a logarithmic number of hashes - that's the magic of trees!</p>
-                      </div>
+            </div>
                     </div>
                   </div>
                 )}
-              </div>
-
+          </div>
+          
               {showReality && (
                 <div className="verification-problems">
                   <h3>🎯 Real Verification Challenges</h3>
@@ -294,8 +294,8 @@ const MerkleModule = () => {
                         <p>{problem.problem}</p>
                         <div className="efficiency-gain">
                           <strong>Merkle Solution:</strong> {problem.scale}
-                        </div>
-                      </div>
+            </div>
+          </div>
                     ))}
                   </div>
                 </div>
@@ -319,19 +319,19 @@ const MerkleModule = () => {
                 </div>
                 <div className="complexity">
                   Complexity: O(n) - Linear with data size
-                </div>
-              </div>
+            </div>
+        </div>
 
               <div className="good-solution">
                 <h4>✅ Merkle Tree Approach</h4>
                 <div className="solution-box good">
                   {selectedProblem.goodSolution}
-                </div>
+            </div>
                 <div className="complexity">
                   Complexity: O(log n) - Logarithmic efficiency!
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             <div className="scale-visualization">
               <h4>📊 Scale Comparison</h4>
@@ -347,7 +347,7 @@ const MerkleModule = () => {
                   <strong>50,000x more efficient!</strong>
                 </div>
               </div>
-            </div>
+      </div>
 
             <div className="key-insight">
               <div className="insight-box">
@@ -365,12 +365,12 @@ const MerkleModule = () => {
               </ActionButton>
               <ContinueButton onClick={handleContinue}>
                 Learn Tree Construction →
-              </ContinueButton>
+      </ContinueButton>
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   // Tree Construction Component
@@ -423,11 +423,11 @@ const MerkleModule = () => {
               key={levelIndex} 
               className={`tree-level ${levelIndex === highlightLevel ? 'highlighted' : ''}`}
             >
-              <div className="level-label">
+                <div className="level-label">
                 {levelIndex === 0 ? 'Root' : levelIndex === tree.levels.length - 1 ? 'Leaves' : `Level ${levelIndex}`}
-              </div>
-              <div className="level-nodes">
-                {level.map((node, nodeIndex) => (
+                </div>
+                <div className="level-nodes">
+                  {level.map((node, nodeIndex) => (
                   <div 
                     key={nodeIndex} 
                     className={`tree-node ${node.type}`}
@@ -436,12 +436,12 @@ const MerkleModule = () => {
                     {node.data && (
                       <div className="node-data">{node.data}</div>
                     )}
-                  </div>
-                ))}
-              </div>
+                    </div>
+                  ))}
+                </div>
             </div>
           ))}
-        </div>
+          </div>
       );
     };
 
@@ -485,7 +485,7 @@ const MerkleModule = () => {
                   </div>
                 </div>
               </div>
-            </div>
+        </div>
 
             <div className="data-builder">
               <h3>🎯 Build Your Own Tree</h3>
@@ -581,7 +581,7 @@ const MerkleModule = () => {
               </ActionButton>
               <ContinueButton onClick={handleContinue}>
                 Learn Proof Verification →
-              </ContinueButton>
+        </ContinueButton>
             </div>
           </div>
         )}
@@ -632,13 +632,13 @@ const MerkleModule = () => {
     const VerificationVisualization = () => {
       if (!proof) return null;
 
-      return (
+    return (
         <div className="verification-visualization">
           <div className="verification-steps">
             <div className="step-header">
               <h4>Verification Process</h4>
               <p>Following the proof path from leaf to root</p>
-            </div>
+        </div>
 
             <div className="current-step">
               <div className="step-info">
@@ -649,28 +649,28 @@ const MerkleModule = () => {
                     ? `Combine with sibling and hash`
                     : `Compare with root hash`
                 }
-              </div>
-
+          </div>
+          
               {verificationStep <= proof.proofPath.length && (
                 <div className="hash-combination">
                   <div className="hash-inputs">
                     <div className="hash-input current">
                       Current: {verificationStep === 0 ? proof.targetHash : 'Combined Hash'}
-                    </div>
+        </div>
                     {verificationStep > 0 && verificationStep <= proof.proofPath.length && (
                       <div className="hash-input sibling">
                         Sibling: {proof.proofPath[verificationStep - 1]?.hash}
-                      </div>
+                </div>
                     )}
-                  </div>
+                      </div>
                   {verificationStep > 0 && verificationStep <= proof.proofPath.length && (
                     <div className="hash-result">
                       Result: Combined Hash
-                    </div>
+                  </div>
                   )}
                 </div>
               )}
-            </div>
+        </div>
 
             <div className="verification-progress">
               <div className="progress-bar">
@@ -678,14 +678,14 @@ const MerkleModule = () => {
                   className="progress-fill"
                   style={{ width: `${(verificationStep / (proof.proofPath.length + 1)) * 100}%` }}
                 />
-              </div>
+        </div>
               <span>Step {verificationStep} of {proof.proofPath.length + 1}</span>
             </div>
           </div>
-        </div>
-      );
-    };
-
+      </div>
+    );
+  };
+    
     return (
       <div className="proof-verification">
         <div className="verification-header">
@@ -708,8 +708,8 @@ const MerkleModule = () => {
                     <div>
                       <strong>Efficient</strong>
                       <p>Verify with log(n) hashes instead of n items</p>
-                    </div>
-                  </div>
+              </div>
+            </div>
                   <div className="benefit-item">
                     <Zap size={24} />
                     <div>
@@ -727,7 +727,7 @@ const MerkleModule = () => {
                 </div>
               </div>
             </div>
-
+            
             <div className="interactive-demo">
               <h3>🎯 Interactive Proof Generation</h3>
               <p>Click on any data item to generate its Merkle proof:</p>
@@ -741,10 +741,10 @@ const MerkleModule = () => {
                   >
                     <div className="data-content">{item}</div>
                     <div className="selection-hint">Click to generate proof</div>
-                  </div>
-                ))}
               </div>
-
+                ))}
+            </div>
+            
               <div className="proof-explanation">
                 <h4>💡 How Proofs Work</h4>
                 <p>To verify that "Transaction C" is in the tree, you only need:</p>
@@ -765,9 +765,9 @@ const MerkleModule = () => {
             <div className="verification-info">
               <h3>🔍 Verifying: "{proof.targetData}"</h3>
               <p>Watch how we verify this data using only a small proof:</p>
-            </div>
+          </div>
 
-            <div className="proof-details">
+          <div className="proof-details">
               <div className="proof-summary">
                 <h4>📋 Proof Information</h4>
                 <div className="proof-data">
@@ -785,18 +785,18 @@ const MerkleModule = () => {
                     <div key={index} className="path-item">
                       <span className="path-position">{pathItem.position}</span>
                       <span className="path-hash">{pathItem.hash}</span>
-                    </div>
-                  ))}
                 </div>
-              </div>
+              ))}
             </div>
+            </div>
+          </div>
 
             {!verificationInProgress && verificationStep === 0 && (
               <div className="verification-controls">
                 <ActionButton onClick={startVerification}>
                   🚀 Start Verification Process
                 </ActionButton>
-              </div>
+        </div>
             )}
 
             {(verificationInProgress || verificationStep > 0) && (
@@ -809,7 +809,7 @@ const MerkleModule = () => {
                   <CheckCircle size={48} className="success-icon" />
                   <h4>✅ Verification Successful!</h4>
                   <p>The data "{proof.targetData}" is proven to be in the original dataset.</p>
-                </div>
+        </div>
 
                 <div className="efficiency-stats">
                   <h4>📊 Efficiency Achieved</h4>
@@ -845,7 +845,7 @@ const MerkleModule = () => {
               {verificationStep > proof.proofPath.length && (
                 <ContinueButton onClick={handleContinue}>
                   See Bitcoin Integration →
-                </ContinueButton>
+        </ContinueButton>
               )}
             </div>
           </div>
@@ -903,7 +903,7 @@ const MerkleModule = () => {
           <Database className="integration-icon" size={48} />
           <h2>Bitcoin Block Verification</h2>
           <p>See how Bitcoin uses Merkle trees to verify millions of transactions efficiently</p>
-        </div>
+      </div>
 
         {currentView === 'overview' && (
           <div className="bitcoin-overview">
@@ -958,13 +958,13 @@ const MerkleModule = () => {
 
         {currentView === 'simulation' && blockSimulation && (
           <div className="block-simulation">
-            <div className="block-header">
+          <div className="block-header">
               <h3>🧊 Bitcoin Block #{blockSimulation.blockNumber}</h3>
               <div className="block-info">
                 <div><strong>Transactions:</strong> {blockSimulation.transactions.length}</div>
                 <div><strong>Merkle Root:</strong> {blockSimulation.merkleRoot}</div>
                 <div><strong>Proof Size:</strong> ~{blockSimulation.proofSize} hashes</div>
-              </div>
+            </div>
             </div>
 
             <div className="transaction-selector">
@@ -980,18 +980,18 @@ const MerkleModule = () => {
                   >
                     <div className="tx-id">{tx.id}</div>
                     <div className="tx-amount">{tx.amount} BTC</div>
-                  </div>
+            </div>
                 ))}
                 <div className="more-transactions">
                   ... and {blockSimulation.transactions.length - 20} more transactions
-                </div>
-              </div>
+            </div>
+            </div>
             </div>
 
             <div className="verification-explanation">
               <h4>💡 What This Demonstrates</h4>
               <p>In a real Bitcoin block with {blockSimulation.transactions.length} transactions, you can verify any single transaction using only ~{blockSimulation.proofSize} hashes instead of downloading all {blockSimulation.transactions.length} transactions.</p>
-            </div>
+          </div>
           </div>
         )}
 
@@ -1011,8 +1011,8 @@ const MerkleModule = () => {
                   <div><strong>Amount:</strong> {selectedTransaction.amount} BTC</div>
                   <div><strong>Fee:</strong> {selectedTransaction.fee} BTC</div>
                   <div><strong>Position:</strong> #{selectedTransaction.index + 1} of {blockSimulation.transactions.length}</div>
-                </div>
-              </div>
+            </div>
+          </div>
 
               <div className="proof-info">
                 <h4>🛤️ Merkle Proof</h4>
@@ -1020,9 +1020,9 @@ const MerkleModule = () => {
                   <div><strong>Proof Size:</strong> {selectedTransaction.proofSize} hashes</div>
                   <div><strong>Data Saved:</strong> {((1 - selectedTransaction.proofSize / blockSimulation.transactions.length) * 100).toFixed(1)}%</div>
                   <div><strong>Verification:</strong> Instant</div>
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             <div className="real-world-impact">
               <h4>🌍 Real-World Impact</h4>
@@ -1055,12 +1055,12 @@ const MerkleModule = () => {
               </ActionButton>
               <ContinueButton onClick={handleContinue}>
                 Explore Real-World Applications →
-              </ContinueButton>
+      </ContinueButton>
             </div>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   // Real World Applications Component
@@ -1142,7 +1142,7 @@ const MerkleModule = () => {
           <Globe className="applications-icon" size={48} />
           <h2>Real-World Merkle Tree Applications</h2>
           <p>Discover how Merkle trees power systems you use every day</p>
-        </div>
+      </div>
 
         {currentDemo === 'overview' && (
           <div className="applications-overview">
@@ -1163,8 +1163,8 @@ const MerkleModule = () => {
                   <p>{app.description}</p>
                   <div className="app-scale">
                     <strong>Scale:</strong> {app.scale}
-                  </div>
-                </div>
+            </div>
+            </div>
               ))}
             </div>
 
@@ -1176,14 +1176,14 @@ const MerkleModule = () => {
                   <div>
                     <strong>Efficient Verification</strong>
                     <p>O(log n) instead of O(n) operations</p>
-                  </div>
-                </div>
+          </div>
+          </div>
                 <div className="benefit">
                   <Shield size={24} />
                   <div>
                     <strong>Tamper Detection</strong>
                     <p>Any change cascades to root hash</p>
-                  </div>
+        </div>
                 </div>
                 <div className="benefit">
                   <Network size={24} />
@@ -1210,15 +1210,15 @@ const MerkleModule = () => {
                 <h4>🎯 Use Case</h4>
                 <div className="use-case-box">
                   {selectedApp.useCase}
-                </div>
-              </div>
+            </div>
+            </div>
 
               <div className="benefit-section">
                 <h4>✅ Key Benefit</h4>
                 <div className="benefit-box">
                   {selectedApp.benefit}
-                </div>
-              </div>
+            </div>
+          </div>
 
               <div className="technical-section">
                 <h4>⚙️ Technical Implementation</h4>
@@ -1231,9 +1231,9 @@ const MerkleModule = () => {
                 <h4>📊 Scale Achievement</h4>
                 <div className="scale-box">
                   {selectedApp.scale}
-                </div>
-              </div>
-            </div>
+          </div>
+        </div>
+      </div>
 
             {selectedApp.id === 'git' && (
               <div className="git-example">
@@ -1246,7 +1246,7 @@ const MerkleModule = () => {
                     <li>A commit object pointing to the tree hash</li>
                   </ul>
                   <p>This allows Git to detect any change in your project with a single hash comparison!</p>
-                </div>
+      </div>
               </div>
             )}
 
@@ -1262,8 +1262,8 @@ const MerkleModule = () => {
                     <li>File address is the root hash</li>
                   </ul>
                   <p>This enables deduplication, verification, and distributed storage!</p>
-                </div>
-              </div>
+        </div>
+      </div>
             )}
 
             <div className="key-insight">
@@ -1282,12 +1282,12 @@ const MerkleModule = () => {
               </ActionButton>
               <ContinueButton onClick={handleContinue}>
                 Master Advanced Concepts →
-              </ContinueButton>
+                </ContinueButton>
             </div>
           </div>
         )}
-      </div>
-    );
+              </div>
+  );
   }
 
   // Advanced Concepts Component
@@ -1362,7 +1362,7 @@ const MerkleModule = () => {
           <Cpu className="concepts-icon" size={48} />
           <h2>Advanced Merkle Concepts</h2>
           <p>Explore sophisticated applications and variations of Merkle trees</p>
-        </div>
+      </div>
 
         {currentConcept === 'overview' && (
           <div className="concepts-overview">
@@ -1376,10 +1376,10 @@ const MerkleModule = () => {
                   <div>
                     <h4>Advanced Territory</h4>
                     <p>These concepts are used by protocol designers and distributed systems engineers. Understanding them gives you insight into cutting-edge technology.</p>
-                  </div>
+          </div>
                 </div>
-              </div>
-            </div>
+          </div>
+        </div>
 
             <div className="concepts-grid">
               {advancedConcepts.map(concept => (
@@ -1393,24 +1393,24 @@ const MerkleModule = () => {
                     <span className={`difficulty ${concept.difficulty.toLowerCase()}`}>
                       {concept.difficulty}
                     </span>
-                  </div>
+          </div>
                   
                   <p>{concept.description}</p>
                   
                   <div className="concept-details">
                     <div><strong>Use Case:</strong> {concept.useCase}</div>
                     <div><strong>Benefit:</strong> {concept.benefit}</div>
-                  </div>
+        </div>
 
                   {completedConcepts.has(concept.id) && (
                     <div className="completion-badge">
                       <CheckCircle size={20} />
                       <span>Explored</span>
-                    </div>
+          </div>
                   )}
-                </div>
+          </div>
               ))}
-            </div>
+        </div>
           </div>
         )}
 
@@ -1421,37 +1421,37 @@ const MerkleModule = () => {
               <span className={`difficulty-badge ${selectedAdvanced.difficulty.toLowerCase()}`}>
                 {selectedAdvanced.difficulty}
               </span>
-            </div>
+          </div>
 
             <div className="concept-breakdown">
               <div className="description-section">
                 <h4>📋 What It Is</h4>
                 <div className="description-box">
                   {selectedAdvanced.description}
-                </div>
-              </div>
+          </div>
+        </div>
 
               <div className="explanation-section">
                 <h4>⚙️ How It Works</h4>
                 <div className="explanation-box">
                   {selectedAdvanced.explanation}
-                </div>
+          </div>
               </div>
 
               <div className="application-section">
                 <h4>🎯 Real-World Application</h4>
                 <div className="application-box">
                   {selectedAdvanced.useCase}
-                </div>
-              </div>
+          </div>
+        </div>
 
               <div className="benefit-section">
                 <h4>✅ Key Advantage</h4>
                 <div className="benefit-box">
                   {selectedAdvanced.benefit}
-                </div>
-              </div>
-            </div>
+          </div>
+          </div>
+        </div>
 
             {selectedAdvanced.id === 'sparse_trees' && (
               <div className="sparse-example">
@@ -1464,7 +1464,7 @@ const MerkleModule = () => {
                     <li>Sparse Merkle trees use default hashes for empty positions</li>
                     <li>Proof size stays constant (~160 hashes) regardless of sparsity</li>
                   </ul>
-                </div>
+      </div>
               </div>
             )}
 
@@ -1479,7 +1479,7 @@ const MerkleModule = () => {
                     <li>Create web-like structures of linked content</li>
                     <li>Maintain all Merkle tree verification properties</li>
                   </ul>
-                </div>
+      </div>
               </div>
             )}
 
@@ -1490,9 +1490,9 @@ const MerkleModule = () => {
                 <div 
                   className="check-option"
                   onClick={() => completeConcept(selectedAdvanced.id)}
-                >
+      >
                   It handles more complex data relationships and use cases
-                </div>
+    </div>
                 <div className="check-option">
                   It makes trees faster to build
                 </div>
@@ -1506,7 +1506,7 @@ const MerkleModule = () => {
               <ActionButton onClick={() => setCurrentConcept('overview')}>
                 ← Explore Other Concepts
               </ActionButton>
-            </div>
+      </div>
           </div>
         )}
 
@@ -1516,7 +1516,7 @@ const MerkleModule = () => {
               <CheckCircle size={64} className="success-icon" />
               <h3>🎉 Advanced Merkle Mastery!</h3>
               <p>You've explored the cutting edge of Merkle tree technology and understand how they power modern distributed systems.</p>
-            </div>
+        </div>
 
             <div className="mastery-insights">
               <h4>🧠 Advanced Insights Gained</h4>
@@ -1525,19 +1525,19 @@ const MerkleModule = () => {
                   <TreePine size={32} />
                   <h5>Tree Variants</h5>
                   <p>Different tree structures solve different problems</p>
-                </div>
+        </div>
                 <div className="insight-item">
                   <Network size={32} />
                   <h5>Complex Systems</h5>
                   <p>Merkle principles scale to any data structure</p>
-                </div>
+        </div>
                 <div className="insight-item">
                   <Zap size={32} />
                   <h5>Optimization</h5>
                   <p>Advanced techniques optimize for specific use cases</p>
-                </div>
-              </div>
-            </div>
+        </div>
+      </div>
+      </div>
 
             <div className="learning-journey">
               <h4>🎯 Your Merkle Tree Journey</h4>
@@ -1562,8 +1562,8 @@ const MerkleModule = () => {
                   <CheckCircle size={20} />
                   <span>Advanced concepts</span>
                 </div>
-              </div>
-            </div>
+        </div>
+      </div>
 
             <div className="next-steps">
               <h4>🚀 What's Next?</h4>
@@ -1578,11 +1578,11 @@ const MerkleModule = () => {
 
             <ContinueButton onClick={handleContinue}>
               Complete Merkle Module →
-            </ContinueButton>
+      </ContinueButton>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   }
 
   return (
@@ -1599,7 +1599,7 @@ const MerkleModule = () => {
         <div className="progress-section">
           <div className="progress-bar">
             <div 
-              className="progress-fill"
+              className="progress-fill" 
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -1611,7 +1611,7 @@ const MerkleModule = () => {
 
       <div className="module-navigation">
         {merkleSteps.map((step, index) => (
-          <div 
+          <div
             key={step.id}
             className={`nav-step ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
           >

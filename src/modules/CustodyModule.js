@@ -30,7 +30,8 @@ import {
   OptionButton,
   NavigationButton, 
   PopupButton,
-  Button
+  Button,
+  StepNavigation
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './CustodyModule.css';
@@ -62,6 +63,13 @@ const CustodyModule = () => {
   const [recoveryTested, setRecoveryTested] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inheritancePlan, setInheritancePlan] = useState(null);
+
+  // Section-specific state that was incorrectly in render functions
+  const [showPrinciples, setShowPrinciples] = useState(false);
+  const [methodStep, setMethodStep] = useState(0);
+  const [threatStep, setThreatStep] = useState(0);
+  const [backupStep, setBackupStep] = useState(0);
+  const [inheritanceStep, setInheritanceStep] = useState(0);
 
   const learningSteps = [
     {
@@ -139,9 +147,12 @@ const CustodyModule = () => {
     
     if (stepIndex === learningSteps.length - 1) {
       completeModule('custody');
-    } else {
-      setTimeout(() => setCurrentStep(stepIndex + 1), 1000);
     }
+    // Removed automatic navigation - users now control progression
+  };
+
+  const handleStepNavigation = (stepIndex) => {
+    setCurrentStep(stepIndex);
   };
 
   const handlePrediction = (questionId, prediction) => {
@@ -238,6 +249,8 @@ const CustodyModule = () => {
       }
     ];
 
+    const allAnswered = custodyLessons.every(lesson => challenges[lesson.id] === false);
+
     return (
       <div className="learning-step custody-introduction">
         <div className="step-header">
@@ -295,93 +308,107 @@ const CustodyModule = () => {
             ))}
           </div>
 
-          <div className="custody-principles">
-            <h3>🛡️ Custody Principles</h3>
-            <p>These principles guide effective Bitcoin custody:</p>
-            
-            <div className="principles-grid">
-              {custodyPrinciples.map(principle => (
-                <div key={principle.id} className="principle-card">
-                  <h4>{principle.principle}</h4>
-                  <p className="description">{principle.description}</p>
-                  <p className="benefit"><strong>Benefit:</strong> {principle.benefit}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          {allAnswered && !showPrinciples && (
+            <button 
+              className="show-principles-btn"
+              onClick={() => setShowPrinciples(true)}
+            >
+              Learn Custody Principles
+            </button>
+          )}
 
-          <div className="interactive-demo">
-            <h3>🎯 Interactive: Custody vs Exchange</h3>
-            <div className="custody-comparison">
-              <div className="comparison-scenario">
-                <h4>💰 Your Bitcoin Storage Decision</h4>
-                <p>You have 1 Bitcoin. Where should you store it?</p>
+          {showPrinciples && (
+            <>
+              <div className="custody-principles">
+                <h3>🛡️ Custody Principles</h3>
+                <p>These principles guide effective Bitcoin custody:</p>
                 
-                <div className="storage-options">
-                  <div className="storage-option exchange">
-                    <h5>🏦 Leave on Exchange</h5>
-                    <div className="option-stats">
-                      <div className="stat convenience">Convenience: Very High</div>
-                      <div className="stat security">Security: Exchange Dependent</div>
-                      <div className="stat control">Control: None</div>
-                      <div className="stat risk">Risk: High (counterparty)</div>
+                <div className="principles-grid">
+                  {custodyPrinciples.map(principle => (
+                    <div key={principle.id} className="principle-card">
+                      <h4>{principle.principle}</h4>
+                      <p className="description">{principle.description}</p>
+                      <p className="benefit"><strong>Benefit:</strong> {principle.benefit}</p>
                     </div>
-                    <div className="real-examples">
-                      <p><strong>Real examples:</strong> Mt. Gox, QuadrigaCX, FTX</p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="interactive-demo">
+                <h3>🎯 Interactive: Custody vs Exchange</h3>
+                <div className="custody-comparison">
+                  <div className="comparison-scenario">
+                    <h4>💰 Your Bitcoin Storage Decision</h4>
+                    <p>You have 1 Bitcoin. Where should you store it?</p>
+                    
+                    <div className="storage-options">
+                      <div className="storage-option exchange">
+                        <h5>🏦 Leave on Exchange</h5>
+                        <div className="option-stats">
+                          <div className="stat convenience">Convenience: Very High</div>
+                          <div className="stat security">Security: Exchange Dependent</div>
+                          <div className="stat control">Control: None</div>
+                          <div className="stat risk">Risk: High (counterparty)</div>
+                        </div>
+                        <div className="real-examples">
+                          <p><strong>Real examples:</strong> Mt. Gox, QuadrigaCX, FTX</p>
+                        </div>
+                      </div>
+                      
+                      <div className="storage-option self-custody">
+                        <h5>🔐 Self-Custody</h5>
+                        <div className="option-stats">
+                          <div className="stat convenience">Convenience: Moderate</div>
+                          <div className="stat security">Security: Your Responsibility</div>
+                          <div className="stat control">Control: Complete</div>
+                          <div className="stat risk">Risk: User Error</div>
+                        </div>
+                        <div className="real-examples">
+                          <p><strong>Protection:</strong> No counterparty risk</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="understanding-check">
+                <h3>💡 Understanding Check</h3>
+                <div className="check-questions">
+                  <div className="check-question">
+                    <p><strong>Why is "Not your keys, not your Bitcoin" important?</strong></p>
+                    <div className="answer-reveal">
+                      <details>
+                        <summary>Click to reveal answer</summary>
+                        <p>When someone else holds your private keys (like an exchange), they have complete control over your Bitcoin. You're trusting them to give it back when you ask. History shows this trust is often misplaced.</p>
+                      </details>
                     </div>
                   </div>
                   
-                  <div className="storage-option self-custody">
-                    <h5>🔐 Self-Custody</h5>
-                    <div className="option-stats">
-                      <div className="stat convenience">Convenience: Moderate</div>
-                      <div className="stat security">Security: Your Responsibility</div>
-                      <div className="stat control">Control: Complete</div>
-                      <div className="stat risk">Risk: User Error</div>
-                    </div>
-                    <div className="real-examples">
-                      <p><strong>Protection:</strong> No counterparty risk</p>
+                  <div className="check-question">
+                    <p><strong>What's the main tradeoff with self-custody?</strong></p>
+                    <div className="answer-reveal">
+                      <details>
+                        <summary>Click to reveal answer</summary>
+                        <p>Self-custody gives you complete control and eliminates counterparty risk, but transfers all responsibility to you. You must handle security, backups, and recovery properly.</p>
+                      </details>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="understanding-check">
-            <h3>💡 Understanding Check</h3>
-            <div className="check-questions">
-              <div className="check-question">
-                <p><strong>Why is "Not your keys, not your Bitcoin" important?</strong></p>
-                <div className="answer-reveal">
-                  <details>
-                    <summary>Click to reveal answer</summary>
-                    <p>When someone else holds your private keys (like an exchange), they have complete control over your Bitcoin. You're trusting them to give it back when you ask. History shows this trust is often misplaced.</p>
-                  </details>
-                </div>
-              </div>
-              
-              <div className="check-question">
-                <p><strong>What's the main tradeoff with self-custody?</strong></p>
-                <div className="answer-reveal">
-                  <details>
-                    <summary>Click to reveal answer</summary>
-                    <p>Self-custody gives you complete control and eliminates counterparty risk, but transfers all responsibility to you. You must handle security, backups, and recovery properly.</p>
-                  </details>
-                </div>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
 
-        <div className="step-completion">
-          <Button
-            onClick={() => handleStepComplete(0)}
-            icon={ArrowRight}
-            text="Explore Custody Methods"
-            className="continue-btn"
+        {showPrinciples && (
+          <StepNavigation
+            currentStep={0}
+            totalSteps={learningSteps.length}
+            onNext={() => handleStepNavigation(1)}
+            canGoBack={false}
+            nextLabel="Explore Custody Methods"
           />
-        </div>
+        )}
       </div>
     );
   };
@@ -396,36 +423,23 @@ const CustodyModule = () => {
         convenience: 9,
         control: 8,
         cost: 'Free',
-        bestFor: 'Daily spending amounts ($10-500)',
-        risks: ['Phone theft/loss', 'Malware', 'App vulnerabilities', 'Cloud backup risks'],
-        benefits: ['Always accessible', 'Easy to use', 'QR code scanning', 'Quick payments'],
-        description: 'Software wallet app on your smartphone with keys stored on device'
-      },
-      {
-        id: 'desktop-wallet',
-        name: 'Desktop Wallet',
-        icon: <HardDrive className="method-icon" />,
-        security: 7,
-        convenience: 7,
-        control: 9,
-        cost: 'Free',
-        bestFor: 'Regular use amounts ($100-5,000)',
-        risks: ['Computer malware', 'Hardware failure', 'Theft', 'Online attacks'],
-        benefits: ['Full node option', 'Advanced features', 'Better privacy', 'Backup control'],
-        description: 'Software wallet installed on your personal computer'
+        bestFor: 'Daily spending ($100-1,000)',
+        risks: ['Phone theft', 'Malware', 'App vulnerabilities', 'Device failure'],
+        benefits: ['Easy to use', 'Quick payments', 'Backup options', 'Wide compatibility'],
+        description: 'Smartphone app storing keys with backup phrase protection'
       },
       {
         id: 'hardware-wallet',
         name: 'Hardware Wallet',
-        icon: <Shield className="method-icon" />,
+        icon: <HardDrive className="method-icon" />,
         security: 9,
         convenience: 7,
         control: 9,
         cost: '$50-200',
-        bestFor: 'Long-term savings ($1,000+)',
-        risks: ['Device loss', 'Firmware vulnerabilities', 'Supply chain attacks', 'User error'],
-        benefits: ['Offline security', 'Tamper resistance', 'PIN protection', 'Recovery options'],
-        description: 'Dedicated device that stores keys offline and signs transactions'
+        bestFor: 'Savings ($1,000-100,000)',
+        risks: ['Device loss', 'Physical damage', 'Supply chain attacks', 'User error'],
+        benefits: ['Offline storage', 'Strong security', 'PIN protection', 'Recovery phrases'],
+        description: 'Dedicated device storing keys offline with secure chip protection'
       },
       {
         id: 'multisig',
@@ -469,6 +483,7 @@ const CustodyModule = () => {
       };
       setCustomSetup(setup);
       setSecurityLevel(9);
+      setMethodStep(1); // Navigate to the next step
     };
 
     return (
@@ -500,33 +515,37 @@ const CustodyModule = () => {
                   <div className="method-cost">{method.cost}</div>
                 </div>
                 
-                <div className="method-scores">
-                  <div className="score-bar">
-                    <span>Security</span>
-                    <div className="bar">
-                      <div className="fill security" style={{ width: `${method.security * 10}%` }}></div>
+                <div className="method-stats">
+                  <div className="stat-row">
+                    <span className="stat-label">Security:</span>
+                    <div className="stat-bar">
+                      <div className="stat-fill" style={{ width: `${method.security * 10}%` }}></div>
                     </div>
-                    <span>{method.security}/10</span>
+                    <span className="stat-value">{method.security}/10</span>
                   </div>
-                  <div className="score-bar">
-                    <span>Convenience</span>
-                    <div className="bar">
-                      <div className="fill convenience" style={{ width: `${method.convenience * 10}%` }}></div>
+                  
+                  <div className="stat-row">
+                    <span className="stat-label">Convenience:</span>
+                    <div className="stat-bar">
+                      <div className="stat-fill" style={{ width: `${method.convenience * 10}%` }}></div>
                     </div>
-                    <span>{method.convenience}/10</span>
+                    <span className="stat-value">{method.convenience}/10</span>
                   </div>
-                  <div className="score-bar">
-                    <span>Control</span>
-                    <div className="bar">
-                      <div className="fill control" style={{ width: `${method.control * 10}%` }}></div>
+                  
+                  <div className="stat-row">
+                    <span className="stat-label">Control:</span>
+                    <div className="stat-bar">
+                      <div className="stat-fill" style={{ width: `${method.control * 10}%` }}></div>
                     </div>
-                    <span>{method.control}/10</span>
+                    <span className="stat-value">{method.control}/10</span>
                   </div>
                 </div>
-
+                
                 <div className="method-details">
-                  <p className="description">{method.description}</p>
-                  <p className="best-for"><strong>Best for:</strong> {method.bestFor}</p>
+                  <p className="method-description">{method.description}</p>
+                  <div className="method-best-for">
+                    <strong>Best for:</strong> {method.bestFor}
+                  </div>
                 </div>
               </div>
             ))}
@@ -546,27 +565,19 @@ const CustodyModule = () => {
                 </div>
                 
                 <div className="analysis-section">
-                  <h4>⚠️ Risks to Consider</h4>
+                  <h4>⚠️ Risks</h4>
                   <ul>
                     {selectedMethod.risks.map((risk, index) => (
                       <li key={index}>{risk}</li>
                     ))}
                   </ul>
                 </div>
-                
-                <div className="recommendation">
-                  <h4>💡 Recommendation</h4>
-                  <p>{selectedMethod.bestFor}</p>
-                </div>
               </div>
             </div>
           )}
 
-          <div className="hands-on-exercise">
-            <h3>🛠️ Hands-on: Build Your Custody Setup</h3>
-            <p>Most people benefit from a layered approach using different methods for different amounts:</p>
-            
-            {!customSetup ? (
+          {selectedMethod && !customSetup && (
+            <div className="build-setup">
               <button 
                 className="build-setup-btn"
                 onClick={buildCustomSetup}
@@ -574,64 +585,20 @@ const CustodyModule = () => {
                 <Settings className="btn-icon" />
                 Build Multi-Layer Setup
               </button>
-            ) : (
-              <div className="custom-setup">
-                <h4>Your Multi-Layer Custody Setup</h4>
-                <div className="setup-layers">
-                  <div className="layer">
-                    <span className="layer-icon">📱</span>
-                    <div className="layer-info">
-                      <h5>Daily Spending (5%)</h5>
-                      <p>{customSetup.spending.name} - Quick access for daily transactions</p>
-                    </div>
-                  </div>
-                  
-                  <div className="layer">
-                    <span className="layer-icon">🔐</span>
-                    <div className="layer-info">
-                      <h5>Medium-term Savings (20%)</h5>
-                      <p>{customSetup.savings.name} - Secure but accessible when needed</p>
-                    </div>
-                  </div>
-                  
-                  <div className="layer">
-                    <span className="layer-icon">👥</span>
-                    <div className="layer-info">
-                      <h5>Long-term Holdings (70%)</h5>
-                      <p>{customSetup.longTerm.name} - Maximum security for large amounts</p>
-                    </div>
-                  </div>
-                  
-                  <div className="layer">
-                    <span className="layer-icon">📄</span>
-                    <div className="layer-info">
-                      <h5>Backup & Recovery (5%)</h5>
-                      <p>{customSetup.backup.name} - Emergency access and inheritance</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="setup-benefits">
-                  <p><strong>This setup provides:</strong></p>
-                  <ul>
-                    <li>Convenience for daily use without compromising security</li>
-                    <li>Multiple security layers protecting different amounts</li>
-                    <li>No single point of failure</li>
-                    <li>Balanced security vs convenience tradeoffs</li>
-                  </ul>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+            </div>
+          )}
 
-        <div className="step-completion">
-          <Button
-            onClick={() => handleStepComplete(1)}
-            icon={ArrowRight}
-            text="Learn Threat Modeling"
-            className="continue-btn"
-          />
+          {methodStep > 0 && (
+            <StepNavigation
+              currentStep={1}
+              totalSteps={learningSteps.length}
+              onPrevious={() => handleStepNavigation(0)}
+              onNext={() => handleStepNavigation(2)}
+              canGoBack={true}
+              nextLabel="Learn Threat Modeling"
+              previousLabel="Back to Introduction"
+            />
+          )}
         </div>
       </div>
     );
@@ -686,6 +653,7 @@ const CustodyModule = () => {
         institutional: ['Self-custody priority', 'Privacy techniques', 'Legal consultation']
       };
       setMitigationPlan(plan);
+      setThreatStep(1); // Navigate to the next step
     };
 
     return (
@@ -764,35 +732,17 @@ const CustodyModule = () => {
             </div>
           )}
 
-          {mitigationPlan && (
-            <div className="mitigation-plan">
-              <h3>🛡️ Your Mitigation Plan</h3>
-              <div className="plan-sections">
-                {Object.entries(mitigationPlan).map(([category, mitigations]) => (
-                  <div key={category} className="plan-section">
-                    <h4>{category.charAt(0).toUpperCase() + category.slice(1)} Security</h4>
-                    <ul>
-                      {mitigations.map((mitigation, index) => (
-                        <li key={index}>
-                          <CheckCircle className="check-icon" />
-                          {mitigation}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {threatStep > 0 && (
+            <StepNavigation
+              currentStep={2}
+              totalSteps={learningSteps.length}
+              onPrevious={() => handleStepNavigation(1)}
+              onNext={() => handleStepNavigation(3)}
+              canGoBack={true}
+              nextLabel="Design Backup Systems"
+              previousLabel="Back to Custody Methods"
+            />
           )}
-        </div>
-
-        <div className="step-completion">
-          <Button
-            onClick={() => handleStepComplete(2)}
-            icon={ArrowRight}
-            text="Design Backup Systems"
-            className="continue-btn"
-          />
         </div>
       </div>
     );
@@ -803,34 +753,34 @@ const CustodyModule = () => {
       {
         id: 'seed-phrase',
         name: 'Seed Phrase Backup',
-        description: '24-word recovery phrase that can restore your wallet',
-        security: 9,
-        complexity: 6,
-        steps: ['Write down 24 words', 'Verify accuracy', 'Store securely', 'Test recovery']
+        description: 'Write down your 12-24 word recovery phrase',
+        implementation: 'Write clearly on paper, verify accuracy, store securely',
+        pros: ['Universal standard', 'Easy to verify', 'Human readable'],
+        cons: ['Physical vulnerability', 'Writing errors', 'Single point of failure']
       },
       {
         id: 'metal-backup',
         name: 'Metal Seed Storage',
-        description: 'Engrave seed words on metal for fire/water resistance',
-        security: 10,
-        complexity: 7,
-        steps: ['Choose quality metal', 'Engrave carefully', 'Test readability', 'Secure storage']
+        description: 'Engrave seed words on metal plates or tiles',
+        implementation: 'Use steel plates, stamp words, verify legibility, fireproof storage',
+        pros: ['Fire resistant', 'Water resistant', 'Long-term durability'],
+        cons: ['Higher cost', 'More complex', 'Still physical medium']
       },
       {
         id: 'geographic-distribution',
         name: 'Geographic Distribution',
         description: 'Store backups in multiple physical locations',
-        security: 9,
-        complexity: 8,
-        steps: ['Identify locations', 'Create copies', 'Secure transport', 'Regular checks']
+        implementation: 'Safe deposit boxes, trusted locations, geographic separation',
+        pros: ['Disaster protection', 'Multiple access points', 'Risk distribution'],
+        cons: ['Access complexity', 'Multiple failure points', 'Coordination needed']
       },
       {
-        id: 'shamir-backup',
+        id: 'shamir-secret',
         name: 'Shamir Secret Sharing',
-        description: 'Split seed into multiple shares (e.g., 3-of-5)',
-        security: 10,
-        complexity: 9,
-        steps: ['Generate shares', 'Distribute safely', 'Document scheme', 'Test recovery']
+        description: 'Split seed into multiple shares requiring threshold to recover',
+        implementation: 'Generate shares mathematically, distribute separately, require M-of-N to reconstruct',
+        pros: ['No single point of failure', 'Flexible threshold', 'Mathematical security'],
+        cons: ['Complex setup', 'Share coordination', 'Recovery complexity']
       }
     ];
 
@@ -841,7 +791,7 @@ const CustodyModule = () => {
 
     const testRecovery = () => {
       setRecoveryTested(true);
-      setBackupSystems(100);
+      setBackupStep(1); // Navigate to the next step
     };
 
     return (
@@ -856,12 +806,12 @@ const CustodyModule = () => {
 
         <div className="backup-content">
           <div className="backup-explanation">
-            <h3>💾 Why Backup Matters</h3>
-            <p>Your Bitcoin is only as secure as your backup strategy. Without proper backups, hardware failure, loss, or damage could mean permanent loss of funds.</p>
+            <h3>💾 Why Backup Strategies Matter</h3>
+            <p>Your backup strategy determines whether you can recover your Bitcoin if something goes wrong. Different strategies offer different tradeoffs between security, convenience, and complexity.</p>
           </div>
 
           <div className="backup-strategies">
-            <h3>🔄 Backup Strategies</h3>
+            <h3>🛡️ Backup Strategy Options</h3>
             <div className="strategies-grid">
               {backupStrategies.map(strategy => (
                 <div 
@@ -870,35 +820,47 @@ const CustodyModule = () => {
                 >
                   <div className="strategy-header">
                     <h4>{strategy.name}</h4>
-                    <div className="strategy-scores">
-                      <span className="score">Security: {strategy.security}/10</span>
-                      <span className="score">Complexity: {strategy.complexity}/10</span>
-                    </div>
+                    {implementedBackups.find(s => s.id === strategy.id) && (
+                      <CheckCircle className="implemented-icon" />
+                    )}
                   </div>
                   
                   <p className="strategy-description">{strategy.description}</p>
                   
-                  <div className="implementation-steps">
-                    <h5>Implementation Steps:</h5>
-                    <ol>
-                      {strategy.steps.map((step, index) => (
-                        <li key={index}>{step}</li>
-                      ))}
-                    </ol>
+                  <div className="strategy-details">
+                    <div className="implementation">
+                      <h5>Implementation:</h5>
+                      <p>{strategy.implementation}</p>
+                    </div>
+                    
+                    <div className="pros-cons">
+                      <div className="pros">
+                        <h5>✅ Pros:</h5>
+                        <ul>
+                          {strategy.pros.map((pro, index) => (
+                            <li key={index}>{pro}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="cons">
+                        <h5>⚠️ Cons:</h5>
+                        <ul>
+                          {strategy.cons.map((con, index) => (
+                            <li key={index}>{con}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                   
-                  {!implementedBackups.find(s => s.id === strategy.id) ? (
+                  {!implementedBackups.find(s => s.id === strategy.id) && (
                     <button 
                       className="implement-btn"
                       onClick={() => implementBackup(strategy)}
                     >
                       Implement Strategy
                     </button>
-                  ) : (
-                    <div className="implemented-badge">
-                      <CheckCircle className="check-icon" />
-                      Implemented
-                    </div>
                   )}
                 </div>
               ))}
@@ -929,21 +891,17 @@ const CustodyModule = () => {
             </div>
           )}
 
-          {recoveryTested && (
-            <div className="recovery-success">
-              <h3>✅ Recovery Test Successful</h3>
-              <p>You've successfully implemented and tested multiple backup strategies. Your Bitcoin is now protected against loss!</p>
-            </div>
+          {backupStep > 0 && (
+            <StepNavigation
+              currentStep={3}
+              totalSteps={learningSteps.length}
+              onPrevious={() => handleStepNavigation(2)}
+              onNext={() => handleStepNavigation(4)}
+              canGoBack={true}
+              nextLabel="Plan Inheritance"
+              previousLabel="Back to Threat Modeling"
+            />
           )}
-        </div>
-
-        <div className="step-completion">
-          <Button
-            onClick={() => handleStepComplete(3)}
-            icon={ArrowRight}
-            text="Plan Inheritance"
-            className="continue-btn"
-          />
         </div>
       </div>
     );
@@ -992,12 +950,13 @@ const CustodyModule = () => {
 
     const createInheritancePlan = () => {
       const plan = {
-        immediate: 'Trusted person with basic instructions',
-        intermediate: 'Multisig setup with family members',
-        longTerm: 'Legal estate planning with professional help',
-        backup: 'Time-locked inheritance as failsafe'
+        immediate: 'Document Bitcoin holdings and access methods for family',
+        intermediate: 'Set up multisig wallet with trusted family members',
+        longTerm: 'Create comprehensive estate plan with legal counsel',
+        backup: 'Establish dead man\'s switch or time-locked transactions'
       };
       setInheritancePlan(plan);
+      setInheritanceStep(1); // Navigate to the next step
     };
 
     return (
@@ -1006,31 +965,29 @@ const CustodyModule = () => {
           <Users className="step-icon-large" />
           <div className="step-info">
             <h2>Inheritance & Emergency Planning</h2>
-            <p>Ensure your Bitcoin can be accessed by family when needed</p>
+            <p>Plan for Bitcoin inheritance and emergency access</p>
           </div>
         </div>
 
         <div className="inheritance-content">
           <div className="inheritance-explanation">
             <h3>👨‍👩‍👧‍👦 Why Inheritance Planning Matters</h3>
-            <p>Bitcoin inheritance is different from traditional assets. Without proper planning, your Bitcoin could be lost forever when you die or become incapacitated.</p>
+            <p>Bitcoin inheritance requires special planning because traditional estate processes don't automatically work with cryptocurrency. Without proper planning, your Bitcoin could be lost forever.</p>
           </div>
 
           <div className="inheritance-options">
-            <h3>🔄 Inheritance Methods</h3>
+            <h3>⚖️ Inheritance Methods</h3>
             <div className="options-grid">
               {inheritanceOptions.map(option => (
                 <div 
                   key={option.id} 
                   className={`option-card ${selectedOptions.find(o => o.id === option.id) ? 'selected' : ''}`}
+                  onClick={() => selectOption(option)}
                 >
-                  <div className="option-header">
-                    <h4>{option.name}</h4>
-                  </div>
-                  
+                  <h4>{option.name}</h4>
                   <p className="option-description">{option.description}</p>
                   
-                  <div className="pros-cons">
+                  <div className="option-analysis">
                     <div className="pros">
                       <h5>✅ Pros:</h5>
                       <ul>
@@ -1041,7 +998,7 @@ const CustodyModule = () => {
                     </div>
                     
                     <div className="cons">
-                      <h5>❌ Cons:</h5>
+                      <h5>⚠️ Cons:</h5>
                       <ul>
                         {option.cons.map((con, index) => (
                           <li key={index}>{con}</li>
@@ -1058,27 +1015,13 @@ const CustodyModule = () => {
                       ))}
                     </ol>
                   </div>
-                  
-                  {!selectedOptions.find(o => o.id === option.id) ? (
-                    <button 
-                      className="select-option-btn"
-                      onClick={() => selectOption(option)}
-                    >
-                      Select This Method
-                    </button>
-                  ) : (
-                    <div className="selected-badge">
-                      <CheckCircle className="check-icon" />
-                      Selected
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
           </div>
 
           <div className="planning-progress">
-            <h3>📊 Inheritance Planning Progress</h3>
+            <h3>📈 Inheritance Planning Progress</h3>
             <div className="progress-display">
               <div className="progress-bar">
                 <div className="progress-fill" style={{ width: `${inheritancePlanning}%` }}></div>
@@ -1088,49 +1031,28 @@ const CustodyModule = () => {
           </div>
 
           {selectedOptions.length >= 2 && !inheritancePlan && (
-            <div className="create-plan">
+            <div className="create-inheritance-plan">
               <button 
                 className="create-plan-btn"
                 onClick={createInheritancePlan}
               >
                 <FileText className="btn-icon" />
-                Create Comprehensive Plan
+                Create Inheritance Plan
               </button>
             </div>
           )}
 
-          {inheritancePlan && (
-            <div className="inheritance-plan">
-              <h3>📋 Your Inheritance Plan</h3>
-              <div className="plan-timeline">
-                <div className="timeline-item">
-                  <h4>Immediate (Now)</h4>
-                  <p>{inheritancePlan.immediate}</p>
-                </div>
-                <div className="timeline-item">
-                  <h4>Intermediate (3-6 months)</h4>
-                  <p>{inheritancePlan.intermediate}</p>
-                </div>
-                <div className="timeline-item">
-                  <h4>Long-term (6+ months)</h4>
-                  <p>{inheritancePlan.longTerm}</p>
-                </div>
-                <div className="timeline-item">
-                  <h4>Backup Plan</h4>
-                  <p>{inheritancePlan.backup}</p>
-                </div>
-              </div>
-            </div>
+          {inheritanceStep > 0 && (
+            <StepNavigation
+              currentStep={4}
+              totalSteps={learningSteps.length}
+              onPrevious={() => handleStepNavigation(3)}
+              onNext={() => handleStepNavigation(5)}
+              canGoBack={true}
+              nextLabel="Complete Custody Mastery"
+              previousLabel="Back to Backup Systems"
+            />
           )}
-        </div>
-
-        <div className="step-completion">
-          <Button
-            onClick={() => handleStepComplete(4)}
-            icon={ArrowRight}
-            text="Complete Custody Mastery"
-            className="continue-btn"
-          />
         </div>
       </div>
     );
@@ -1173,10 +1095,10 @@ const CustodyModule = () => {
               </div>
               <div className="mastery-level">Expert</div>
               <div className="category-skills">
-                <div className="skill">✅ Threat modeling processes</div>
-                <div className="skill">✅ Mitigation strategy design</div>
+                <div className="skill">✅ Threat modeling process</div>
                 <div className="skill">✅ Risk assessment techniques</div>
-                <div className="skill">✅ Operational security practices</div>
+                <div className="skill">✅ Mitigation strategy design</div>
+                <div className="skill">✅ Security layer implementation</div>
               </div>
             </div>
 
@@ -1187,8 +1109,8 @@ const CustodyModule = () => {
               </div>
               <div className="mastery-level">Expert</div>
               <div className="category-skills">
-                <div className="skill">✅ Backup strategy implementation</div>
-                <div className="skill">✅ Recovery testing procedures</div>
+                <div className="skill">✅ Backup strategy design</div>
+                <div className="skill">✅ Recovery process testing</div>
                 <div className="skill">✅ Geographic distribution</div>
                 <div className="skill">✅ Redundancy planning</div>
               </div>
@@ -1201,58 +1123,10 @@ const CustodyModule = () => {
               </div>
               <div className="mastery-level">Expert</div>
               <div className="category-skills">
-                <div className="skill">✅ Family access planning</div>
-                <div className="skill">✅ Emergency procedures</div>
-                <div className="skill">✅ Legal estate integration</div>
-                <div className="skill">✅ Multisig coordination</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="custody-capabilities">
-          <h3>🎯 Your Custody Capabilities</h3>
-          <div className="capabilities-grid">
-            <div className="capability">
-              <div className="capability-icon">🔐</div>
-              <div className="capability-info">
-                <h4>Secure Storage</h4>
-                <p>Implement multi-layer security appropriate for any amount</p>
-              </div>
-            </div>
-            <div className="capability">
-              <div className="capability-icon">🛡️</div>
-              <div className="capability-info">
-                <h4>Threat Protection</h4>
-                <p>Defend against physical, digital, and human threats</p>
-              </div>
-            </div>
-            <div className="capability">
-              <div className="capability-icon">💾</div>
-              <div className="capability-info">
-                <h4>Backup Mastery</h4>
-                <p>Create robust, tested backup and recovery systems</p>
-              </div>
-            </div>
-            <div className="capability">
-              <div className="capability-icon">👨‍👩‍👧‍👦</div>
-              <div className="capability-info">
-                <h4>Family Protection</h4>
-                <p>Ensure Bitcoin accessibility for family inheritance</p>
-              </div>
-            </div>
-            <div className="capability">
-              <div className="capability-icon">⚖️</div>
-              <div className="capability-info">
-                <h4>Risk Assessment</h4>
-                <p>Evaluate and mitigate personal security risks</p>
-              </div>
-            </div>
-            <div className="capability">
-              <div className="capability-icon">🎓</div>
-              <div className="capability-info">
-                <h4>Security Education</h4>
-                <p>Teach others proper Bitcoin custody practices</p>
+                <div className="skill">✅ Inheritance method evaluation</div>
+                <div className="skill">✅ Estate planning integration</div>
+                <div className="skill">✅ Family access procedures</div>
+                <div className="skill">✅ Emergency planning protocols</div>
               </div>
             </div>
           </div>
@@ -1312,14 +1186,15 @@ const CustodyModule = () => {
         </div>
       </div>
 
-      <div className="step-completion">
-        <Button
-          onClick={() => handleStepComplete(5)}
-          icon={Trophy}
-          text="Complete Custody Module"
-          className="mastery-complete-btn"
-        />
-      </div>
+      <StepNavigation
+        currentStep={5}
+        totalSteps={learningSteps.length}
+        onPrevious={() => handleStepNavigation(4)}
+        onNext={() => handleStepComplete(5)}
+        canGoBack={true}
+        nextLabel="Complete Custody Module"
+        previousLabel="Back to Inheritance Planning"
+      />
     </div>
   );
 

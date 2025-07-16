@@ -418,7 +418,7 @@ const MythsModule = () => {
                 {scenario.headline && (
                   <div className="news-headline">
                     📰 {scenario.headline}
-                  </div>
+      </div>
                 )}
                 {scenario.claim && (
                   <div className="expert-claim">
@@ -511,15 +511,15 @@ const MythsModule = () => {
 
     return (
       <div className="myth-analysis">
-        <div className="myth-header">
+              <div className="myth-header">
           <div className="myth-icon">{myth.icon}</div>
           <div className="myth-info">
             <h3>{myth.title}</h3>
             <div className="myth-claim">"{myth.claim}"</div>
             <div className="myth-difficulty">Difficulty: {myth.difficulty}</div>
           </div>
-        </div>
-
+              </div>
+              
         <div className="analysis-tabs">
           {tabs.map(tab => (
             <button
@@ -531,8 +531,8 @@ const MythsModule = () => {
               {tab.label}
             </button>
           ))}
-        </div>
-
+                  </div>
+                  
         <div className="tab-content">
           {activeTab === 'evidence' && (
             <div className="evidence-section">
@@ -546,8 +546,8 @@ const MythsModule = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
-              
+                      </div>
+                      
               <div className="evidence-category">
                 <h4>Evidence Countering the Claim:</h4>
                 <ul>
@@ -556,9 +556,9 @@ const MythsModule = () => {
                       <AlertTriangle size={16} />
                       {point}
                     </li>
-                  ))}
-                </ul>
-              </div>
+                          ))}
+                        </ul>
+                      </div>
             </div>
           )}
 
@@ -574,8 +574,8 @@ const MythsModule = () => {
                         ? `${(value / 1000000000).toFixed(1)}B`
                         : value.toLocaleString()
                       }
-                    </div>
-                  </div>
+                </div>
+                </div>
                 ))}
               </div>
             </div>
@@ -601,9 +601,9 @@ const MythsModule = () => {
                       <Lightbulb size={16} />
                       {question}
                     </li>
-                  ))}
-                </ul>
-              </div>
+                ))}
+              </ul>
+                      </div>
             </div>
           )}
 
@@ -647,7 +647,7 @@ const MythsModule = () => {
                   />
                   I've considered the broader context and implications
                 </label>
-              </div>
+                      </div>
 
               <textarea
                 placeholder="Write your nuanced analysis of this claim..."
@@ -666,10 +666,10 @@ const MythsModule = () => {
               >
                 Submit Analysis
               </ActionButton>
+                    </div>
+                  )}
+                </div>
             </div>
-          )}
-        </div>
-      </div>
     );
   };
 
@@ -720,7 +720,7 @@ const MythsModule = () => {
         <div className="framework-header">
           <h2>Critical Thinking Framework</h2>
           <p>Master systematic approaches to evaluate any Bitcoin claim</p>
-        </div>
+          </div>
 
         <div className="frameworks-grid">
           {evaluationFrameworks.map(framework => (
@@ -735,22 +735,22 @@ const MythsModule = () => {
                     <li key={index}>{criterion}</li>
                   ))}
                 </ul>
-              </div>
+            </div>
 
               <div className="framework-exercise">
                 <h4>Practice Exercise:</h4>
                 <div className="exercise-scenario">
                   <strong>Scenario:</strong> {framework.exercise.scenario}
-                </div>
+            </div>
                 <div className="exercise-questions">
                   {framework.exercise.questions.map((question, index) => (
                     <div key={index} className="exercise-question">
                       <Lightbulb size={16} />
                       {question}
-                    </div>
+          </div>
                   ))}
-                </div>
-              </div>
+        </div>
+        </div>
 
               <ActionButton
                 onClick={() => setFrameworkMastery(prev => ({
@@ -813,14 +813,14 @@ const MythsModule = () => {
         if (responses[index] === q.bestAnswer) correct++;
       });
       return (correct / masteryQuestions.length) * 100;
-    };
+  };
 
-    return (
+  return (
       <div className="mastery-assessment">
         <div className="assessment-header">
           <h2>Myth-Busting Mastery Assessment</h2>
           <p>Apply your critical thinking skills to complex scenarios</p>
-        </div>
+          </div>
 
         {!showResults ? (
           <div className="assessment-questions">
@@ -831,7 +831,7 @@ const MythsModule = () => {
                     <div className="question-scenario">
                       <h3>Scenario {index + 1}:</h3>
                       <p>{question.scenario}</p>
-                    </div>
+            </div>
 
                     <div className="question-prompt">
                       <h4>{question.question}</h4>
@@ -869,13 +869,13 @@ const MythsModule = () => {
                             Show Results
                           </ActionButton>
                         )}
-                      </div>
+            </div>
                     )}
                   </>
                 )}
-              </div>
+            </div>
             ))}
-          </div>
+            </div>
         ) : (
           <div className="assessment-results">
             <div className="score-display">
@@ -887,7 +887,7 @@ const MythsModule = () => {
                 <div key={question.id} className="question-feedback">
                   <div className="question-summary">
                     <strong>Question {index + 1}:</strong> {question.question}
-                  </div>
+          </div>
                   <div className="your-answer">
                     Your answer: {question.options[responses[index]]}
                     {responses[index] === question.bestAnswer ? ' ✅' : ' ❌'}
@@ -897,7 +897,7 @@ const MythsModule = () => {
                   </div>
                 </div>
               ))}
-            </div>
+        </div>
 
             <ContinueButton 
               onClick={() => {
@@ -931,7 +931,7 @@ const MythsModule = () => {
             <div className="category-header">
               <h2>{step.title}</h2>
               <p>{step.description}</p>
-            </div>
+          </div>
             
             <div className="myths-grid">
               {categoryMyths.map(myth => (
@@ -948,9 +948,9 @@ const MythsModule = () => {
                   >
                     Analyze This Myth
                   </ActionButton>
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
+        </div>
 
             {selectedMyth && (
               <div className="myth-analysis-modal">
@@ -963,9 +963,9 @@ const MythsModule = () => {
                     ×
                   </button>
                   {renderMythAnalysis(bitcoinMyths.find(m => m.id === selectedMyth))}
-                </div>
-              </div>
-            )}
+            </div>
+          </div>
+        )}
 
             {mythsBusted.size >= categoryMyths.length && (
               <ContinueButton 

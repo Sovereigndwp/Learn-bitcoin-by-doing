@@ -3777,3 +3777,179 @@ li {
   white-space: nowrap;
   border: 0;
 }
+
+/* Step Navigation Controls */
+.step-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nav-button.nav-previous {
+  background: rgba(108, 117, 125, 0.3);
+}
+
+.nav-button.nav-next {
+  background: linear-gradient(135deg, #f7931a, #e67e22);
+}
+
+.nav-button.nav-pause.paused {
+  background: rgba(40, 167, 69, 0.8);
+}
+
+.nav-button.nav-pause.playing {
+  background: rgba(255, 193, 7, 0.8);
+}
+
+.step-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f7931a;
+  min-width: 80px;
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.progress-dot.current {
+  background: #f7931a;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(247, 147, 26, 0.5);
+}
+
+.progress-dot.completed {
+  background: #28a745;
+}
+
+.progress-dot:hover {
+  transform: scale(1.1);
+}
+
+/* Auto-advance Progress Indicator */
+.auto-advance-progress {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.auto-advance-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f7931a, #e67e22);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .step-navigation {
+    margin: 1rem 0;
+    padding: 1rem;
+  }
+  
+  .nav-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .nav-button {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .step-counter {
+    order: -1;
+  }
+}
+
+/* Accessibility Focus States */
+.nav-button:focus {
+  outline: 2px solid #f7931a;
+  outline-offset: 2px;
+}
+
+.progress-dot:focus {
+  outline: 2px solid #f7931a;
+  outline-offset: 2px;
+}
+
+/* Animation for step transitions */
+.step-content-transition {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.step-content-transition.entering {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.step-content-transition.entered {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.step-content-transition.exiting {
+  opacity: 0;
+  transform: translateX(-20px);
+}

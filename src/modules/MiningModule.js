@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { Zap, Trophy, Cpu, ArrowRight, ArrowLeft, Battery, Globe, TrendingUp, Calculator, BarChart3, Lightbulb, CheckCircle, AlertCircle, Clock, DollarSign } from 'lucide-react';
 import { 
-  ContinueButton,
-  ActionButton,
+  ContinueButton, 
+  ActionButton, 
   OptionButton,
   NavigationButton 
 } from '../components/EnhancedButtons';
@@ -112,12 +112,12 @@ const MiningModule = () => {
       }
     };
 
-    return (
+        return (
       <div className="energy-comparison">
         <div className="module-header">
           <h2>⚡ Energy Reality Check: Bitcoin vs The World</h2>
           <p>Let's examine actual energy consumption data...</p>
-        </div>
+            </div>
 
         <div className="comparison-tabs">
           <button 
@@ -138,7 +138,7 @@ const MiningModule = () => {
           >
             Banking Breakdown
           </button>
-        </div>
+              </div>
 
         <div className="energy-visualization">
           <h3>{currentData.title}</h3>
@@ -150,7 +150,7 @@ const MiningModule = () => {
                   <div className="bar-info">
                     <span className="bar-name">{item.name}</span>
                     <span className="bar-value">{item.consumption} {currentData.unit}</span>
-                  </div>
+              </div>
                   <div className="bar-container">
                     <div 
                       className="bar-fill"
@@ -159,11 +159,11 @@ const MiningModule = () => {
                         backgroundColor: item.color 
                       }}
                     />
-                  </div>
+              </div>
                   <div className="bar-note">{item.note}</div>
-                </div>
-              ))}
             </div>
+              ))}
+          </div>
           )}
 
           {(selectedComparison === 'breakdown' || selectedComparison === 'banking') && (
@@ -173,19 +173,19 @@ const MiningModule = () => {
                   <div className="breakdown-header">
                     <span className="breakdown-component">{item.component}</span>
                     <span className="breakdown-percentage">{item.percentage}%</span>
-                  </div>
+              </div>
                   <div className="breakdown-bar">
                     <div 
                       className="breakdown-fill"
                       style={{ width: `${item.percentage}%` }}
                     />
-                  </div>
+              </div>
                   <div className="breakdown-description">{item.description}</div>
-                </div>
+              </div>
               ))}
             </div>
           )}
-        </div>
+          </div>
 
         <div className="energy-insights">
           <h3>💡 Key Energy Insights</h3>
@@ -194,21 +194,21 @@ const MiningModule = () => {
               <Battery className="w-6 h-6" />
               <h4>Bitcoin is More Efficient</h4>
               <p>Bitcoin uses ~3x less energy than traditional banking while serving as a global monetary system 24/7.</p>
-            </div>
+          </div>
             <div className="insight-card">
               <Globe className="w-6 h-6" />
               <h4>Global Perspective</h4>
               <p>Bitcoin's energy use is comparable to a single streaming service but secures a $1+ trillion network.</p>
-            </div>
+        </div>
             <div className="insight-card">
               <Zap className="w-6 h-6" />
               <div>
                 <h4>Energy = Security</h4>
                 <p>Unlike other energy uses, Bitcoin's energy directly converts to network security and monetary sovereignty.</p>
               </div>
+              </div>
             </div>
-          </div>
-        </div>
+            </div>
 
         <div className="energy-calculator">
           <h3>🧮 Personal Energy Calculator</h3>
@@ -224,7 +224,7 @@ const MiningModule = () => {
               <div className="comparison-note">
                 Bitcoin network = 14.3 million homes
               </div>
-            </div>
+              </div>
             
             <div className="example-card">
               <h4>✈️ Round-trip Flight (NYC-London)</h4>
@@ -234,7 +234,7 @@ const MiningModule = () => {
               </div>
               <div className="comparison-note">
                 Bitcoin's annual energy = 50M transatlantic flights
-              </div>
+            </div>
             </div>
           </div>
         </div>
@@ -306,12 +306,12 @@ const MiningModule = () => {
       }
     ];
 
-    return (
+        return (
       <div className="proof-of-work-mechanics">
         <div className="module-header">
           <h2>🔨 Proof of Work: Converting Electricity to Security</h2>
           <p>Understanding how physical energy creates digital security...</p>
-        </div>
+          </div>
 
         <div className="mining-calculator">
           <h3>⚖️ Interactive Mining Calculator</h3>
@@ -328,7 +328,7 @@ const MiningModule = () => {
                 step="10"
               />
               <span className="input-note">Higher = more mining power</span>
-            </div>
+          </div>
             
             <div className="input-group">
               <label>Power Consumption (Watts):</label>
@@ -361,11 +361,11 @@ const MiningModule = () => {
               <div className="result-row">
                 <span>Power Cost:</span>
                 <span>${calculationResults.dailyPowerCost?.toFixed(2)}</span>
-              </div>
+        </div>
               <div className="result-row">
                 <span>Expected Revenue:</span>
                 <span>${calculationResults.expectedDailyRevenue?.toFixed(2)}</span>
-              </div>
+      </div>
               <div className="result-row">
                 <span>Daily Profit:</span>
                 <span className={calculationResults.dailyProfit > 0 ? 'profit' : 'loss'}>
@@ -379,7 +379,7 @@ const MiningModule = () => {
               <div className="result-row">
                 <span>Network Share:</span>
                 <span>{calculationResults.shareOfNetwork?.toExponential(2)}%</span>
-              </div>
+        </div>
               <div className="result-row">
                 <span>Efficiency:</span>
                 <span>{calculationResults.efficiency?.toFixed(2)} TH/s per kW</span>
@@ -394,8 +394,8 @@ const MiningModule = () => {
                 </span>
               </div>
             </div>
-          </div>
         </div>
+      </div>
 
         <div className="security-concepts">
           <h3>🛡️ How Work Creates Security</h3>
@@ -421,7 +421,7 @@ const MiningModule = () => {
               <div className="step-content">
                 <h4>Collect Transactions</h4>
                 <p>Gather pending transactions from the mempool</p>
-              </div>
+      </div>
             </div>
             <div className="process-step">
               <div className="step-number">2</div>
@@ -477,8 +477,8 @@ const MiningModule = () => {
         <ContinueButton onClick={() => setCurrentStep(2)}>
           Explore Difficulty Adjustment <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 3: Difficulty Adjustment
@@ -558,14 +558,14 @@ const MiningModule = () => {
 
     const formatDifficulty = (difficulty) => {
       return (difficulty / 1e12).toFixed(2) + 'T';
-    };
+  };
 
-    return (
+  return (
       <div className="difficulty-adjustment">
         <div className="module-header">
           <h2>📊 Difficulty Adjustment: Bitcoin's Thermostat</h2>
           <p>How Bitcoin automatically maintains 10-minute blocks...</p>
-        </div>
+      </div>
 
         <div className="adjustment-explanation">
           <div className="concept-card">
@@ -575,7 +575,7 @@ const MiningModule = () => {
             <div className="algorithm-formula">
               <div className="formula">
                 <span>New Difficulty = Current Difficulty × (14 days / Actual Time)</span>
-              </div>
+          </div>
               <div className="formula-note">
                 Clamped between 25% and 400% to prevent extreme adjustments
               </div>
@@ -598,22 +598,22 @@ const MiningModule = () => {
                 </option>
               ))}
             </select>
-          </div>
+      </div>
 
           <div className="current-stats">
             <div className="stat-card">
               <h4>Current Network Hash Rate</h4>
               <div className="stat-value">{formatHashRate(simulationData.hashRate)}</div>
-            </div>
+              </div>
             <div className="stat-card">
               <h4>Current Difficulty</h4>
               <div className="stat-value">{formatDifficulty(simulationData.currentDifficulty)}</div>
-            </div>
+      </div>
             <div className="stat-card">
               <h4>Average Block Time</h4>
               <div className="stat-value">{(simulationData.actualTime / 60).toFixed(1)} min</div>
-            </div>
           </div>
+        </div>
 
           <ActionButton onClick={simulateAdjustment} className="primary">
             <Calculator className="w-4 h-4" />
@@ -632,12 +632,12 @@ const MiningModule = () => {
                       <div>Difficulty: {formatDifficulty(block.difficulty)}</div>
                       <div>Hash Rate: {formatHashRate(block.hashRate)}</div>
                     </div>
-                  </div>
-                ))}
-              </div>
             </div>
-          )}
+          ))}
         </div>
+      </div>
+          )}
+    </div>
 
         <div className="historical-adjustments">
           <h3>📚 Historical Difficulty Milestones</h3>
@@ -649,36 +649,36 @@ const MiningModule = () => {
                 <span>Hash Rate: ~7 MH/s</span>
               </div>
               <p>Satoshi mining alone on a CPU</p>
-            </div>
-            
+      </div>
+
             <div className="milestone-card">
               <h4>GPU Era (2010)</h4>
               <div className="milestone-stats">
                 <span>Difficulty: ~1,000</span>
                 <span>Hash Rate: ~100 MH/s</span>
-              </div>
+        </div>
               <p>Graphics cards take over from CPUs</p>
-            </div>
-            
+      </div>
+
             <div className="milestone-card">
               <h4>ASIC Revolution (2013)</h4>
               <div className="milestone-stats">
                 <span>Difficulty: ~10M</span>
                 <span>Hash Rate: ~10 TH/s</span>
-              </div>
-              <p>Specialized mining hardware emerges</p>
             </div>
-            
+              <p>Specialized mining hardware emerges</p>
+        </div>
+
             <div className="milestone-card">
               <h4>Today (2024)</h4>
               <div className="milestone-stats">
                 <span>Difficulty: ~50T</span>
                 <span>Hash Rate: ~400 EH/s</span>
-              </div>
+          </div>
               <p>Industrial-scale mining operations</p>
-            </div>
           </div>
         </div>
+      </div>
 
         <div className="adjustment-importance">
           <h3>🎯 Why Difficulty Adjustment Matters</h3>
@@ -692,20 +692,20 @@ const MiningModule = () => {
               <BarChart3 className="w-6 h-6" />
               <h4>Supply Schedule</h4>
               <p>Maintains the predictable Bitcoin issuance rate that leads to the 21 million limit</p>
-            </div>
+                </div>
             <div className="importance-card">
               <Zap className="w-6 h-6" />
               <h4>Network Stability</h4>
               <p>Prevents the network from becoming too fast or too slow as miners join or leave</p>
-            </div>
-          </div>
-        </div>
+                </div>
+              </div>
+              </div>
 
         <ContinueButton onClick={() => setCurrentStep(3)}>
           Analyze Mining Economics <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 4: Mining Economics
@@ -787,12 +787,12 @@ const MiningModule = () => {
       }));
     };
 
-    return (
+  return (
       <div className="mining-economics">
         <div className="module-header">
           <h2>💰 Mining Economics: The Business of Security</h2>
           <p>Understanding the financial mechanics that secure Bitcoin...</p>
-        </div>
+      </div>
 
         <div className="economics-calculator">
           <h3>📊 Mining Profitability Calculator</h3>
@@ -807,8 +807,8 @@ const MiningModule = () => {
                 step="10"
                 min="0"
               />
-            </div>
-            
+          </div>
+
             <div className="input-group">
               <label>Power (Watts):</label>
               <input
@@ -818,7 +818,7 @@ const MiningModule = () => {
                 step="100"
                 min="0"
               />
-            </div>
+          </div>
             
             <div className="input-group">
               <label>Electricity ($/kWh):</label>
@@ -829,7 +829,7 @@ const MiningModule = () => {
                 step="0.01"
                 min="0"
               />
-            </div>
+          </div>
             
             <div className="input-group">
               <label>Hardware Cost ($):</label>
@@ -840,7 +840,7 @@ const MiningModule = () => {
                 step="1000"
                 min="0"
               />
-            </div>
+          </div>
             
             <div className="input-group">
               <label>Bitcoin Price ($):</label>
@@ -851,8 +851,8 @@ const MiningModule = () => {
                 step="1000"
                 min="0"
               />
-            </div>
-            
+        </div>
+
             <div className="input-group">
               <label>Pool Fee (%):</label>
               <input
@@ -863,7 +863,7 @@ const MiningModule = () => {
                 min="0"
                 max="10"
               />
-            </div>
+          </div>
           </div>
         </div>
 
@@ -874,15 +874,15 @@ const MiningModule = () => {
               <div className="result-row">
                 <span>Bitcoin Earned:</span>
                 <span>{analysisResults.dailyBitcoinEarned?.toFixed(8)} BTC</span>
-              </div>
+        </div>
               <div className="result-row">
                 <span>Gross Revenue:</span>
                 <span>${analysisResults.dailyGrossRevenue?.toFixed(2)}</span>
-              </div>
+      </div>
               <div className="result-row">
                 <span>Pool Fee:</span>
                 <span>-${analysisResults.poolFeeCost?.toFixed(2)}</span>
-              </div>
+        </div>
               <div className="result-row">
                 <span>Power Cost:</span>
                 <span>-${analysisResults.dailyPowerCost?.toFixed(2)}</span>
@@ -893,14 +893,14 @@ const MiningModule = () => {
                   ${analysisResults.dailyProfit?.toFixed(2)}
                 </span>
               </div>
-            </div>
-            
+      </div>
+
             <div className="result-card">
               <h4>📈 Break-Even Analysis</h4>
               <div className="result-row">
                 <span>Break-even Electricity:</span>
                 <span>${analysisResults.breakEvenElectricityCost?.toFixed(3)}/kWh</span>
-              </div>
+            </div>
               <div className="result-row">
                 <span>Break-even BTC Price:</span>
                 <span>${analysisResults.breakEvenBitcoinPrice?.toFixed(0)}</span>
@@ -927,18 +927,18 @@ const MiningModule = () => {
               <div className="result-row">
                 <span>Hash Rate Efficiency:</span>
                 <span>{analysisResults.efficiency?.toFixed(2)} TH/s per kW</span>
-              </div>
+            </div>
               <div className="result-row">
                 <span>Network Share:</span>
                 <span>{analysisResults.shareOfNetwork?.toExponential(2)}%</span>
-              </div>
+          </div>
               <div className="result-row">
                 <span>Revenue per TH/s:</span>
                 <span>${(analysisResults.dailyNetRevenue / economicsInputs.hashRate)?.toFixed(4)}</span>
-              </div>
-            </div>
-          </div>
         </div>
+            </div>
+        </div>
+      </div>
 
         {profitabilityChart.length > 0 && (
           <div className="profitability-chart">
@@ -955,10 +955,10 @@ const MiningModule = () => {
                     }}
                   />
                   <div className="profit-value">${point.profit.toFixed(0)}</div>
-                </div>
-              ))}
             </div>
-          </div>
+          ))}
+            </div>
+                </div>
         )}
 
         <div className="economics-insights">
@@ -968,7 +968,7 @@ const MiningModule = () => {
               <TrendingUp className="w-6 h-6" />
               <h4>Market-Driven Security</h4>
               <p>As Bitcoin price rises, more miners join, increasing network security. Price and security are linked.</p>
-            </div>
+                </div>
             <div className="insight-card">
               <Zap className="w-6 h-6" />
               <h4>Efficiency Pressure</h4>
@@ -985,8 +985,8 @@ const MiningModule = () => {
         <ContinueButton onClick={() => setCurrentStep(4)}>
           Learn Network Security <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 5: Network Security
@@ -1078,12 +1078,12 @@ const MiningModule = () => {
 
     const attackCosts = calculateAttackCost();
 
-    return (
+  return (
       <div className="network-security">
         <div className="module-header">
           <h2>🛡️ Network Security: Why Bitcoin is Unbreakable</h2>
           <p>Analyzing the economic and technical barriers to attacking Bitcoin...</p>
-        </div>
+      </div>
 
         <div className="security-overview">
           <h3>🌐 Network Security Stats</h3>
@@ -1092,24 +1092,24 @@ const MiningModule = () => {
               <h4>Total Hash Rate</h4>
               <div className="stat-value">{networkStats.totalHashRate} EH/s</div>
               <div className="stat-note">400,000,000,000,000,000,000 hashes/second</div>
-            </div>
+                </div>
             <div className="stat-card">
               <h4>Estimated Miners</h4>
               <div className="stat-value">{networkStats.totalMiners.toLocaleString()}</div>
               <div className="stat-note">Distributed globally</div>
-            </div>
+                </div>
             <div className="stat-card">
               <h4>Countries</h4>
               <div className="stat-value">{networkStats.countries}+</div>
               <div className="stat-note">Mining operations worldwide</div>
-            </div>
+                </div>
             <div className="stat-card">
               <h4>Attack Cost</h4>
               <div className="stat-value">$20B+</div>
               <div className="stat-note">To attempt 51% attack</div>
-            </div>
+              </div>
           </div>
-        </div>
+          </div>
 
         <div className="attack-scenarios">
           <h3>⚔️ Attack Scenario Analysis</h3>
@@ -1126,7 +1126,7 @@ const MiningModule = () => {
                 </option>
               ))}
             </select>
-          </div>
+                </div>
 
           <div className="scenario-analysis">
             <div className="scenario-card">
@@ -1150,9 +1150,9 @@ const MiningModule = () => {
                 <ul className="challenges-list">
                   {currentScenario.challenges.map((challenge, index) => (
                     <li key={index}>{challenge}</li>
-                  ))}
-                </ul>
-              </div>
+                    ))}
+                  </ul>
+                </div>
 
               <div className="likelihood-section">
                 <h5>🎯 Likelihood</h5>
@@ -1160,9 +1160,9 @@ const MiningModule = () => {
                   {currentScenario.likelihood}
                 </div>
               </div>
-            </div>
           </div>
         </div>
+      </div>
 
         <div className="attack-cost-breakdown">
           <h3>💰 51% Attack Cost Breakdown</h3>
@@ -1182,8 +1182,8 @@ const MiningModule = () => {
               <div className="cost-value">{attackCosts.dailyElectricityCost}</div>
               <div className="cost-detail">Ongoing operational cost</div>
             </div>
-          </div>
         </div>
+      </div>
 
         <div className="security-features">
           <h3>🔒 Built-in Security Features</h3>
@@ -1192,22 +1192,22 @@ const MiningModule = () => {
               <CheckCircle className="w-6 h-6" />
               <h4>Distributed Mining</h4>
               <p>No single entity controls majority of hash rate. Miners spread across globe.</p>
-            </div>
+              </div>
             <div className="feature-card">
               <CheckCircle className="w-6 h-6" />
               <h4>Economic Incentives</h4>
               <p>Honest mining is profitable. Attacking destroys the value of your investment.</p>
-            </div>
+          </div>
             <div className="feature-card">
               <CheckCircle className="w-6 h-6" />
               <h4>Transparent Operation</h4>
               <p>All mining activity is visible. Unusual behavior is quickly detected.</p>
-            </div>
+        </div>
             <div className="feature-card">
               <CheckCircle className="w-6 h-6" />
               <h4>Confirmation Depth</h4>
               <p>Important transactions wait for multiple confirmations, making attacks exponentially harder.</p>
-            </div>
+      </div>
             <div className="feature-card">
               <CheckCircle className="w-6 h-6" />
               <h4>Network Response</h4>
@@ -1224,8 +1224,8 @@ const MiningModule = () => {
         <ContinueButton onClick={() => setCurrentStep(5)}>
           Explore Renewable Energy <ArrowRight className="w-4 h-4" />
         </ContinueButton>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Step 6: Renewable Energy
@@ -1273,12 +1273,12 @@ const MiningModule = () => {
       }
     ];
 
-    return (
+  return (
       <div className="renewable-energy">
         <div className="module-header">
           <h2>🌱 Bitcoin and Renewable Energy</h2>
           <p>How Bitcoin mining incentivizes clean energy adoption...</p>
-        </div>
+      </div>
 
         <div className="energy-mix-current">
           <h3>⚡ Current Bitcoin Mining Energy Mix</h3>
@@ -1294,9 +1294,9 @@ const MiningModule = () => {
                 <span className="pie-percentage">{energyMix.fossil}%</span>
                 <span className="pie-type">Fossil Fuels</span>
               </div>
-            </div>
           </div>
-          
+        </div>
+
           <div className="energy-breakdown">
             <h4>🔋 Renewable Energy Breakdown</h4>
             <div className="breakdown-list">
@@ -1308,10 +1308,10 @@ const MiningModule = () => {
                       className="breakdown-fill"
                       style={{ width: `${(type.percentage / 30) * 100}%` }}
                     />
-                  </span>
+        </span>
                   <span className="breakdown-percentage">{type.percentage}%</span>
                   <span className="breakdown-description">{type.description}</span>
-                </div>
+          </div>
               ))}
             </div>
           </div>
@@ -1329,13 +1329,13 @@ const MiningModule = () => {
                   <ul>
                     {incentive.examples.map((example, idx) => (
                       <li key={idx}>{example}</li>
-                    ))}
-                  </ul>
-                </div>
+                ))}
+              </ul>
+            </div>
               </div>
             ))}
+            </div>
           </div>
-        </div>
 
         <div className="case-studies">
           <h3>📚 Real-World Case Studies</h3>
@@ -1345,9 +1345,9 @@ const MiningModule = () => {
               <div className="case-study-stats">
                 <span>100% renewable energy</span>
                 <span>Geothermal + Hydroelectric</span>
-              </div>
+          </div>
               <p>Iceland's abundant renewable energy has attracted major Bitcoin mining operations, utilizing excess clean energy capacity.</p>
-            </div>
+        </div>
             
             <div className="case-study-card">
               <h4>☀️ Texas Solar + Mining</h4>
@@ -1356,18 +1356,18 @@ const MiningModule = () => {
                 <span>Grid stabilization</span>
               </div>
               <p>Texas miners use solar energy during the day and provide grid services, helping stabilize renewable energy integration.</p>
-            </div>
-            
+      </div>
+
             <div className="case-study-card">
               <h4>💨 Norwegian Wind Mining</h4>
               <div className="case-study-stats">
                 <span>Hydroelectric + Wind</span>
                 <span>Surplus energy use</span>
-              </div>
-              <p>Norwegian miners utilize excess hydroelectric and wind energy that would otherwise be curtailed or wasted.</p>
             </div>
-          </div>
+              <p>Norwegian miners utilize excess hydroelectric and wind energy that would otherwise be curtailed or wasted.</p>
         </div>
+      </div>
+    </div>
 
         <div className="energy-transition">
           <h3>🔄 The Great Energy Transition</h3>
@@ -1379,8 +1379,8 @@ const MiningModule = () => {
                 <p>Early mining concentrated in regions with cheap coal power</p>
                 <div className="timeline-stat">~70% fossil fuels</div>
               </div>
-            </div>
-            
+      </div>
+
             <div className="timeline-item">
               <div className="timeline-year">2020-2022</div>
               <div className="timeline-content">
@@ -1388,15 +1388,15 @@ const MiningModule = () => {
                 <p>Miners move to renewable-rich regions, ESG concerns drive change</p>
                 <div className="timeline-stat">~50% renewable</div>
               </div>
-            </div>
-            
+      </div>
+
             <div className="timeline-item">
               <div className="timeline-year">2023-2024</div>
               <div className="timeline-content">
                 <h4>Clean Mining Majority</h4>
                 <p>Renewable energy becomes majority of Bitcoin mining power</p>
                 <div className="timeline-stat">~52% renewable</div>
-              </div>
+            </div>
             </div>
             
             <div className="timeline-item">
@@ -1405,10 +1405,10 @@ const MiningModule = () => {
                 <h4>Renewable Acceleration</h4>
                 <p>Continued transition as renewable costs decrease and availability increases</p>
                 <div className="timeline-stat">Target: 70%+ renewable</div>
-              </div>
-            </div>
           </div>
         </div>
+        </div>
+      </div>
 
         <div className="environmental-impact">
           <h3>🌍 Environmental Impact Analysis</h3>
@@ -1434,8 +1434,8 @@ const MiningModule = () => {
                 <li>Public perception issues</li>
               </ul>
             </div>
-          </div>
-        </div>
+            </div>
+                </div>
 
         <div className="module-completion">
           <div className="completion-card">
@@ -1450,10 +1450,10 @@ const MiningModule = () => {
               <li>✅ Network security and attack economics</li>
               <li>✅ Renewable energy incentives and adoption</li>
             </ul>
-            
-            <div className="next-steps">
+
+      <div className="next-steps">
               <p><strong>Key Insight:</strong> Bitcoin mining is evolving into a renewable energy-driven industry that provides monetary security while incentivizing clean energy development.</p>
-            </div>
+                </div>
             
             <ActionButton onClick={() => completeModule('mining')} className="primary large">
               <Trophy className="w-5 h-5" />
@@ -1461,8 +1461,8 @@ const MiningModule = () => {
             </ActionButton>
           </div>
         </div>
-      </div>
-    );
+    </div>
+  );
   }
 
   // Main component render
@@ -1475,8 +1475,8 @@ const MiningModule = () => {
         <div className="progress-header">
           <h1>⛏️ Bitcoin Mining Mastery</h1>
           <p>Understand how energy becomes security in the Bitcoin network</p>
-        </div>
-        
+      </div>
+
         <div className="steps-progress">
           {miningSteps.map((step, index) => (
             <div 

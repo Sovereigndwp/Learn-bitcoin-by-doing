@@ -119,8 +119,8 @@ const BitcoinIntroduction = ({ onComplete }) => {
                 <div className="challenge-question">
                   <h4>🤔 Think First:</h4>
                   <p>{currentProblem.thinkingQuestion}</p>
-                </div>
-                
+        </div>
+
                 <div className="challenge-options">
                   {currentProblem.challengeOptions.map((option, index) => (
                     <button
@@ -131,18 +131,18 @@ const BitcoinIntroduction = ({ onComplete }) => {
                       {option}
                     </button>
                   ))}
-                </div>
+            </div>
               </div>
             ) : (
               <div className="reality-reveal">
                 <div className="user-prediction">
                   <h4>Your intuition: "{userPredictions[currentProblem.id]}"</h4>
-                </div>
-                
+          </div>
+
                 <div className="reality-check">
                   <h4>📊 The Reality:</h4>
                   <p>{currentProblem.reality}</p>
-                </div>
+            </div>
                 
                 {thinkingLevel === 2 && (
                   <div className="deeper-thinking">
@@ -157,8 +157,8 @@ const BitcoinIntroduction = ({ onComplete }) => {
                         placeholder="How does this make you feel about money?"
                         className="reflection-input"
                       />
-                    </div>
-                  </div>
+          </div>
+        </div>
                 )}
                 
                 <ActionButton 
@@ -168,10 +168,10 @@ const BitcoinIntroduction = ({ onComplete }) => {
                   {thinkingLevel === 1 ? "Reflect Deeper →" : 
                    currentDemo < problemDemos.length - 1 ? "Next Problem →" : "See Bitcoin's Solution →"}
                 </ActionButton>
-              </div>
-            )}
           </div>
-          
+            )}
+        </div>
+
           <div className="progress-dots">
             {problemDemos.map((_, index) => (
               <div 
@@ -179,12 +179,12 @@ const BitcoinIntroduction = ({ onComplete }) => {
                 className={`progress-dot ${index === currentDemo ? 'active' : ''} ${index < currentDemo ? 'completed' : ''}`}
               />
             ))}
-          </div>
+        </div>
         </div>
       </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // Simplified Bitcoin vs Traditional Comparison
 const BitcoinComparison = ({ onComplete }) => {
@@ -301,9 +301,9 @@ const BitcoinComparison = ({ onComplete }) => {
         <h2>How Bitcoin Fixes Fiat Money Problems</h2>
         <div className="intro-text">
           <p className="prime-text">You learned about fiat currency problems. Now see how Bitcoin solves each one:</p>
-        </div>
-      </div>
-      
+              </div>
+            </div>
+
       <div className="content-text">
         <div className="aspect-tabs">
           {aspects.map(aspect => (
@@ -315,7 +315,7 @@ const BitcoinComparison = ({ onComplete }) => {
               {aspect.title}
             </button>
           ))}
-        </div>
+                </div>
 
         <div className="comparison-content">
           <h3>{currentAspect.title}</h3>
@@ -337,9 +337,9 @@ const BitcoinComparison = ({ onComplete }) => {
                 >
                   Bitcoin System
                 </button>
+                  </div>
               </div>
-            </div>
-          )}
+            )}
 
           {showReality && (
             <div className="reality-comparison">
@@ -352,7 +352,7 @@ const BitcoinComparison = ({ onComplete }) => {
                   <div className="risk">Result: {currentAspect.traditional.risk}</div>
                 </div>
               </div>
-              
+
               <div className="system-column bitcoin">
                 <h4>🟠 Bitcoin Solution</h4>
                 <div className="system-details">
@@ -360,11 +360,11 @@ const BitcoinComparison = ({ onComplete }) => {
                   <div className="example">How it works: {currentAspect.bitcoin.example}</div>
                   <div className="real-example">Real examples: {currentAspect.bitcoin.realExample}</div>
                   <div className="risk">Result: {currentAspect.bitcoin.risk}</div>
-                </div>
+                 </div>
               </div>
-            </div>
-          )}
-        </div>
+             </div>
+           )}
+              </div>
 
         {completedAspects >= 5 && (
           <div className="comparison-complete">
@@ -372,13 +372,13 @@ const BitcoinComparison = ({ onComplete }) => {
             <p>Bitcoin systematically solves every major problem with fiat currency. Now let's understand how it works...</p>
             <ContinueButton onClick={() => onComplete(1)}>
               See How Bitcoin Works
-            </ContinueButton>
+          </ContinueButton>
           </div>
         )}
       </div>
-    </div>
-  );
-};
+          </div>
+        );
+  };
 
 // Blockchain Demonstration
 const BlockchainDemo = ({ onComplete }) => {
@@ -438,17 +438,17 @@ const BlockchainDemo = ({ onComplete }) => {
         }, 2000);
       }
     }, 200);
-  };
+    };
 
-  return (
+    return (
     <div className="step-content blockchain-demo">
       <div className="module-header-box">
         <h2>How Bitcoin's Blockchain Works</h2>
         <div className="intro-text">
           <p className="prime-text">Bitcoin uses a "blockchain" - a chain of transaction blocks that everyone can verify. Let's build one together!</p>
+          </div>
         </div>
-      </div>
-      
+            
       <div className="content-text">
         <div className="blockchain-visualization">
           <h3>📦 Live Blockchain</h3>
@@ -459,7 +459,7 @@ const BlockchainDemo = ({ onComplete }) => {
                   <h4>Block #{block.id}</h4>
                   <div className="block-hash">Hash: {block.hash}</div>
                   <div className="previous-hash">Previous: {block.previousHash}</div>
-                </div>
+          </div>
                 <div className="block-body">
                   <div className="transactions-list">
                     <h5>Transactions:</h5>
@@ -468,7 +468,7 @@ const BlockchainDemo = ({ onComplete }) => {
                         userTransactions.map(tx => (
                           <div key={tx.id} className="transaction-item">
                             {tx.from} → {tx.to}: {tx.amount} BTC
-                          </div>
+                </div>
                         ))
                       ) : (
                         <div className="empty-block">No transactions yet - add some below!</div>
@@ -477,17 +477,17 @@ const BlockchainDemo = ({ onComplete }) => {
                       block.transactions.map((tx, i) => (
                         <div key={i} className="transaction-item">{tx}</div>
                       ))
-                    )}
-                  </div>
+                  )}
+                </div>
                   <div className="block-info">
                     <div>Miner: {block.miner}</div>
                     <div>Time: {block.timestamp}</div>
+              </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
-        </div>
+            </div>
 
         {currentBlock === 0 && (
           <div className="transaction-builder">
@@ -495,7 +495,7 @@ const BlockchainDemo = ({ onComplete }) => {
             <p>Create some transactions to include in the next block:</p>
             
             <div className="quick-transactions">
-              <Button 
+            <Button 
                 onClick={() => handleAddTransaction('Alice', 'Bob', '0.5')}
                 className="quick-tx-button"
               >
@@ -512,8 +512,8 @@ const BlockchainDemo = ({ onComplete }) => {
                 className="quick-tx-button"
               >
                 Eve → Frank: 0.8 BTC
-              </Button>
-            </div>
+            </Button>
+          </div>
 
             {userTransactions.length >= 2 && (
               <div className="mining-section">
@@ -537,12 +537,12 @@ const BlockchainDemo = ({ onComplete }) => {
                           className="consensus-fill" 
                           style={{ width: `${networkConsensus}%` }}
                         />
-                      </div>
-                    </div>
+              </div>
+              </div>
                     <p className="mining-explanation">
                       Thousands of computers worldwide are verifying your block...
-                    </p>
-                  </div>
+              </p>
+            </div>
                 )}
               </div>
             )}
@@ -567,13 +567,13 @@ const BlockchainDemo = ({ onComplete }) => {
 
             <ContinueButton onClick={() => onComplete(2)}>
               Explore Bitcoin's Network
-            </ContinueButton>
+          </ContinueButton>
           </div>
         )}
       </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // Network Consensus Demonstration
 const NetworkConsensus = ({ onComplete }) => {
@@ -656,8 +656,8 @@ const NetworkConsensus = ({ onComplete }) => {
         <h2>Bitcoin's Decentralized Security</h2>
         <div className="intro-text">
           <p className="prime-text">Bitcoin's security comes from decentralization. Let's test how hard it is to attack the network.</p>
-        </div>
-      </div>
+                      </div>
+                      </div>
       
       <div className="content-text">
         <div className="network-visualization">
@@ -666,16 +666,16 @@ const NetworkConsensus = ({ onComplete }) => {
             <div className="stat-item">
               <div className="stat-value">{(networkSize - attackerNodes).toLocaleString()}</div>
               <div className="stat-label">Honest Nodes</div>
-            </div>
+                        </div>
             <div className="stat-item">
               <div className="stat-value">{attackerNodes.toLocaleString()}</div>
               <div className="stat-label">Attacker Nodes</div>
-            </div>
+                        </div>
             <div className="stat-item">
               <div className="stat-value">{attackerPercentage.toFixed(1)}%</div>
               <div className="stat-label">Attack Control</div>
-            </div>
-          </div>
+                      </div>
+                    </div>
           
           <div className="network-visual">
             <div className="network-pie">
@@ -688,12 +688,12 @@ const NetworkConsensus = ({ onComplete }) => {
                 <div className="pie-center">
                   <div className="security-status">
                     {attackerPercentage < 51 ? '🛡️ SECURE' : '⚠️ COMPROMISED'}
-                  </div>
-                </div>
-              </div>
+                      </div>
+                      </div>
+                    </div>
             </div>
           </div>
-        </div>
+                </div>
 
         <div className="attack-scenarios">
           <h3>🎯 Test Attack Scenarios</h3>
@@ -711,10 +711,10 @@ const NetworkConsensus = ({ onComplete }) => {
                 <div className="scenario-stats">
                   <div>Attackers: {scenario.attackerCount.toLocaleString()}</div>
                   <div>Control: {((scenario.attackerCount / networkSize) * 100).toFixed(1)}%</div>
-                </div>
-              </div>
+                  </div>
+                  </div>
             ))}
-          </div>
+                </div>
         </div>
 
         {attackScenario && (
@@ -733,8 +733,8 @@ const NetworkConsensus = ({ onComplete }) => {
             {simulationRunning && (
               <div className="simulation-progress">
                 <div className="progress-animation">⚡ Simulating network attack...</div>
-              </div>
-            )}
+                  </div>
+                )}
 
             {attackResult && (
               <div className={`attack-result ${attackResult.success ? 'attack-success' : 'attack-failed'}`}>
@@ -750,11 +750,11 @@ const NetworkConsensus = ({ onComplete }) => {
                       <li>Decentralized consensus rejected fraudulent transactions</li>
                       <li>Network automatically maintained integrity</li>
                     </ul>
-                  </div>
-                )}
               </div>
             )}
           </div>
+            )}
+        </div>
         )}
 
         <div className="consensus-explanation">
@@ -765,8 +765,8 @@ const NetworkConsensus = ({ onComplete }) => {
               <div className="rule-content">
                 <h4>Majority Rule</h4>
                 <p>The longest valid blockchain wins. Honest majority = honest blockchain.</p>
-              </div>
-            </div>
+                    </div>
+                  </div>
             <div className="rule-item">
               <div className="rule-icon">⚡</div>
               <div className="rule-content">
@@ -789,12 +789,12 @@ const NetworkConsensus = ({ onComplete }) => {
           <p>Bitcoin's security comes from decentralization. The more honest participants, the more secure the network becomes.</p>
           <ContinueButton onClick={() => onComplete(3)}>
             Discover Bitcoin's Fixed Supply
-          </ContinueButton>
+        </ContinueButton>
         </div>
       </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // Why Scarcity Creates Value
 const WhyScarcityMatters = ({ onComplete }) => {
@@ -888,17 +888,17 @@ const WhyScarcityMatters = ({ onComplete }) => {
     } else {
       onComplete(3);
     }
-  };
+    };
 
-  return (
+    return (
     <div className="step-content scarcity-value">
       <div className="module-header-box">
         <h2>Why Bitcoin Has Value</h2>
         <div className="intro-text">
           <p className="prime-text">Understanding scarcity through examples you already know:</p>
         </div>
-      </div>
-      
+        </div>
+
       <div className="content-text">
         <div className="scarcity-example">
           <h3>{currentExample_data.title}</h3>
@@ -906,8 +906,8 @@ const WhyScarcityMatters = ({ onComplete }) => {
           {currentExample_data.setup && (
             <div className="setup-section">
               <p>{currentExample_data.setup}</p>
-            </div>
-          )}
+                      </div>
+                    )}
           
           {currentExample_data.statistics && (
             <div className="statistics-display">
@@ -932,12 +932,12 @@ const WhyScarcityMatters = ({ onComplete }) => {
                 <div className="stat-item">
                   <div className="stat-label">National Debt 2024:</div>
                   <div className="stat-value">{currentExample_data.statistics.debt_2024}</div>
-                </div>
+              </div>
                 <div className="stat-item highlight">
                   <div className="stat-label">Debt Increase:</div>
                   <div className="stat-value">{currentExample_data.statistics.debt_increase}</div>
-                </div>
               </div>
+            </div>
             </div>
           )}
           
@@ -960,10 +960,10 @@ const WhyScarcityMatters = ({ onComplete }) => {
                     <div>Recent: {currentExample_data.comparison.bitcoin.recent}</div>
                     <div>Future: {currentExample_data.comparison.bitcoin.future}</div>
                     <div className="impact">Your share: {currentExample_data.comparison.bitcoin.your_share}</div>
+                      </div>
                   </div>
                 </div>
               </div>
-            </div>
           )}
           
           <div className="question-section">
@@ -981,28 +981,28 @@ const WhyScarcityMatters = ({ onComplete }) => {
                     <div className="option-prediction">→ {option.prediction}</div>
                   </button>
                 ))}
-              </div>
-            )}
           </div>
-
+        )}
+              </div>
+              
           {showReality && (
             <div className="reality-section">
               <div className="reality-truth">
                 <h4>💡 The Reality:</h4>
                 <p>{currentExample_data.reality.truth}</p>
-              </div>
-              
+            </div>
+
               <div className="bitcoin-connection">
                 <h4>🟠 Bitcoin Connection:</h4>
                 <p>{currentExample_data.reality.connection}</p>
-              </div>
-              
+            </div>
+
               <button className="continue-example-button" onClick={handleContinue}>
                 {currentExample < scarcityExamples.length - 1 ? 'Next Example →' : 'Complete Bitcoin Basics →'}
               </button>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
         
         <div className="example-progress">
           <div className="progress-dots">
@@ -1012,25 +1012,25 @@ const WhyScarcityMatters = ({ onComplete }) => {
                 className={`progress-dot ${index === currentExample ? 'active' : ''} ${index < currentExample ? 'completed' : ''}`}
               />
             ))}
-          </div>
-          <p>Example {currentExample + 1} of {scarcityExamples.length}</p>
         </div>
+          <p>Example {currentExample + 1} of {scarcityExamples.length}</p>
+            </div>
+          </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 // Module Completion Component
 const BitcoinCompletion = ({ onComplete }) => {
-  return (
+    return (
     <div className="step-content completion-step">
       <div className="module-header-box">
         <h2>🎉 Bitcoin Fundamentals: Complete!</h2>
         <div className="intro-text">
           <p className="prime-text">You now understand how Bitcoin systematically solves every major fiat currency problem. You're ready for the technical deep dive.</p>
         </div>
-      </div>
-      
+        </div>
+
       <div className="completion-content">
         <div className="achievement-summary">
           <h3>🏆 Bitcoin Benefits You've Mastered</h3>
@@ -1039,12 +1039,12 @@ const BitcoinCompletion = ({ onComplete }) => {
               <div className="accomplishment-icon">🛡️</div>
               <h4>Government Interference Protection</h4>
               <p>Bitcoin cannot be frozen, confiscated, or controlled by any authority</p>
-            </div>
+              </div>
             <div className="accomplishment-item">
               <div className="accomplishment-icon">💎</div>
               <h4>Store of Value Protection</h4>
               <p>Fixed 21 million supply protects against inflation and money printing</p>
-            </div>
+              </div>
             <div className="accomplishment-item">
               <div className="accomplishment-icon">💰</div>
               <h4>Lower Transaction Costs</h4>
@@ -1060,8 +1060,8 @@ const BitcoinCompletion = ({ onComplete }) => {
               <h4>Enhanced Privacy & Security</h4>
               <p>Pseudonymous transactions without complete financial surveillance</p>
             </div>
+            </div>
           </div>
-        </div>
 
         <div className="key-insights">
           <h3>💡 Core Bitcoin Advantages</h3>
@@ -1071,24 +1071,24 @@ const BitcoinCompletion = ({ onComplete }) => {
               <div className="insight-content">
                 <h4>Bitcoin Fixes Fiat Currency's Fatal Flaws</h4>
                 <p>Every problem with traditional money - from inflation to censorship to high fees - has a Bitcoin solution.</p>
-              </div>
-            </div>
+                      </div>
+                  </div>
             <div className="insight-item">
               <span className="insight-number">2</span>
               <div className="insight-content">
                 <h4>Mathematical Rules Trump Political Rules</h4>
                 <p>Bitcoin's code-based system eliminates human corruption and political manipulation of money.</p>
-              </div>
-            </div>
+                </div>
+                </div>
             <div className="insight-item">
               <span className="insight-number">3</span>
               <div className="insight-content">
                 <h4>True Financial Sovereignty is Possible</h4>
                 <p>For the first time in history, individuals can have complete control over their money without relying on institutions.</p>
-              </div>
+            </div>
+                </div>
             </div>
           </div>
-        </div>
 
         <div className="next-journey">
           <h3>🔮 Your Technical Journey Ahead</h3>
@@ -1103,11 +1103,11 @@ const BitcoinCompletion = ({ onComplete }) => {
                 <li><strong>Digital Signatures</strong> - How ownership is cryptographically proven</li>
                 <li><strong>Mining & Consensus</strong> - How the network stays honest and secure</li>
               </ul>
-            </div>
-            
-            <p className="ready-question"><strong>Ready to understand Bitcoin's technical brilliance?</strong></p>
-          </div>
         </div>
+
+            <p className="ready-question"><strong>Ready to understand Bitcoin's technical brilliance?</strong></p>
+            </div>
+          </div>
 
         <Button 
           className="complete-module-button"
@@ -1116,15 +1116,15 @@ const BitcoinCompletion = ({ onComplete }) => {
           Complete Bitcoin Fundamentals
         </Button>
       </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // How Bitcoin Works (No Technical Jargon)
 const HowBitcoinWorks = ({ onComplete }) => {
   const [currentConcept, setCurrentConcept] = useState(0);
   const [userAnswer, setUserAnswer] = useState(null);
-  const [showExplanation, setShowExplanation] = useState(false);
+    const [showExplanation, setShowExplanation] = useState(false);
 
   const concepts = [
     {
@@ -1187,8 +1187,8 @@ const HowBitcoinWorks = ({ onComplete }) => {
 
   const handleAnswer = (optionId) => {
     setUserAnswer(optionId);
-    setShowExplanation(true);
-  };
+      setShowExplanation(true);
+    };
 
   const handleContinue = () => {
     if (currentConcept < concepts.length - 1) {
@@ -1198,17 +1198,17 @@ const HowBitcoinWorks = ({ onComplete }) => {
     } else {
       onComplete(2);
     }
-  };
+    };
 
-  return (
+    return (
     <div className="step-content how-bitcoin-works">
       <div className="module-header-box">
         <h2>How Bitcoin Actually Works</h2>
         <div className="intro-text">
           <p className="prime-text">Let's understand the core ideas through simple examples:</p>
         </div>
-      </div>
-      
+        </div>
+
       <div className="content-text">
         <div className="concept-card">
           <h3>{currentConcept_data.title}</h3>
@@ -1232,9 +1232,9 @@ const HowBitcoinWorks = ({ onComplete }) => {
                 ))}
               </div>
             )}
-          </div>
+              </div>
 
-          {showExplanation && (
+              {showExplanation && (
             <div className="explanation-section">
               <div className="user-choice">
                 <h4>You chose: "{currentConcept_data.options.find(opt => opt.id === userAnswer)?.text}"</h4>
@@ -1242,31 +1242,31 @@ const HowBitcoinWorks = ({ onComplete }) => {
                   <div className="correct-choice">✅ Great choice!</div>
                 ) : (
                   <div className="suboptimal-choice">🤔 Here's why another option might be better:</div>
-                )}
-              </div>
+                  )}
+                </div>
               
               <div className="explanation-content">
                 <div className="why-section">
                   <h5>💡 Why this matters:</h5>
                   <p>{currentConcept_data.explanation.why}</p>
-                </div>
+            </div>
                 
                 <div className="analogy-section">
                   <h5>🏦 Banking vs Bitcoin:</h5>
                   <p>{currentConcept_data.explanation.bankingAnalogy}</p>
-                </div>
+          </div>
                 
                 <div className="bitcoin-connection">
                   <h5>🟠 Bitcoin Connection:</h5>
                   <p>{currentConcept_data.explanation.bitcoinConnection}</p>
                 </div>
-              </div>
-              
+            </div>
+
               <button className="continue-concept-button" onClick={handleContinue}>
                 {currentConcept < concepts.length - 1 ? 'Next Concept →' : 'Understand Bitcoin\'s Value →'}
               </button>
-            </div>
-          )}
+          </div>
+        )}
         </div>
         
         <div className="progress-indicator">
@@ -1281,9 +1281,9 @@ const HowBitcoinWorks = ({ onComplete }) => {
           <p>Concept {currentConcept + 1} of {concepts.length}</p>
         </div>
       </div>
-    </div>
-  );
-};
+          </div>
+        );
+  };
 
 const BitcoinBasicsModule = () => {
   const { completeModule } = useProgress();
@@ -1336,9 +1336,9 @@ const BitcoinBasicsModule = () => {
         </div>
         <div class="achievement-controls">
           <button class="achievement-dismiss" onclick="this.closest('.achievement-popup').remove()">
-            Continue
+              Continue
           </button>
-        </div>
+          </div>
       </div>
       <div class="achievement-hint">Click to dismiss or wait 6 seconds...</div>
     `;

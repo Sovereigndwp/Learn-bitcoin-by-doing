@@ -370,12 +370,12 @@ const AdvancedTopicsModule = () => {
   };
 
   const renderPrivacyTechnologies = () => {
-    return (
+  return (
       <div className="privacy-technologies">
         <div className="privacy-header">
           <h2>Bitcoin Privacy Technologies</h2>
           <p>Master advanced privacy and confidentiality techniques</p>
-        </div>
+          </div>
 
         <div className="privacy-overview">
           <div className="privacy-insight">
@@ -459,8 +459,8 @@ const AdvancedTopicsModule = () => {
             </ContinueButton>
           </div>
         )}
-      </div>
-    );
+    </div>
+  );
   };
 
   const renderScalingSolutions = () => {
@@ -506,7 +506,7 @@ const AdvancedTopicsModule = () => {
                 <div className="metric">
                   <div className="metric-value">{solution.maturity}</div>
                   <div className="metric-label">Maturity</div>
-                </div>
+            </div>
               </div>
 
               <div className="solution-description">
@@ -532,7 +532,7 @@ const AdvancedTopicsModule = () => {
                       <li key={index}>{limitation}</li>
                     ))}
                   </ul>
-                </div>
+            </div>
               </div>
 
               <div className="adoption-status">
@@ -547,7 +547,7 @@ const AdvancedTopicsModule = () => {
               </ActionButton>
             </div>
           ))}
-        </div>
+              </div>
 
         {Object.keys(explorationProgress).filter(k => k.startsWith('scaling_')).length >= scalingSolutions.length && (
           <div className="scaling-mastery">
@@ -666,7 +666,7 @@ const AdvancedTopicsModule = () => {
                   <div className={`status-badge ${upgrade.status.toLowerCase().replace(/[^a-z]/g, '-')}`}>
                     {upgrade.status}
                   </div>
-                </div>
+          </div>
 
                 <div className="upgrade-type">{upgrade.type}</div>
                 <div className="upgrade-description">{upgrade.description}</div>
@@ -677,8 +677,8 @@ const AdvancedTopicsModule = () => {
                     {upgrade.benefits.map((benefit, index) => (
                       <li key={index}>{benefit}</li>
                     ))}
-                  </ul>
-                </div>
+            </ul>
+          </div>
 
                 {exploredUpgrades.has(upgrade.id) && (
                   <div className="technical-details">
@@ -732,16 +732,16 @@ const AdvancedTopicsModule = () => {
                 You understand Bitcoin's careful approach to protocol development. This consensus-driven 
                 model ensures stability while enabling innovation through soft forks that maintain 
                 backward compatibility and network unity.
-              </p>
-            </div>
-            
+          </p>
+        </div>
+
             <ContinueButton 
               onClick={() => handleStepComplete(3)}
               className="protocol-complete"
             >
               Explore Ecosystem Architecture
             </ContinueButton>
-          </div>
+        </div>
         )}
       </div>
     );
@@ -789,7 +789,7 @@ const AdvancedTopicsModule = () => {
         <div className="ecosystem-overview">
           <div className="ecosystem-insight">
             <Globe className="ecosystem-icon" />
-            <div>
+          <div>
               <h4>Global Financial Architecture</h4>
               <p>
                 Bitcoin is evolving from a digital currency to the foundation of a new 
@@ -932,7 +932,7 @@ const AdvancedTopicsModule = () => {
                 <div className="challenge-header">
                   <h4>{challenge.title}</h4>
                   <div className="challenge-points">{challenge.points} points</div>
-                </div>
+      </div>
 
                 <div className="challenge-type">{challenge.type} challenge</div>
                 <div className="challenge-question">{challenge.question}</div>
@@ -1021,7 +1021,7 @@ const AdvancedTopicsModule = () => {
     }
   };
 
-  return (
+    return (
     <div className="module-container advanced-topics-module">
       {/* Progress Header */}
       <div className="module-header">
@@ -1062,8 +1062,8 @@ const AdvancedTopicsModule = () => {
       <div className="module-content">
         {renderCurrentStep()}
       </div>
-    </div>
-  );
+      </div>
+    );
 };
 
 export default AdvancedTopicsModule; 
