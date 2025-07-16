@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Crown, Shield, Dice1, Lock, Globe, Eye, Flame, Castle, Swords, ChevronRight, ChevronLeft, Lightbulb, Key } from 'lucide-react';
+import { Key, Lock, Shield, Eye, EyeOff, Copy, CheckCircle, AlertCircle, Lightbulb, ArrowRight, ArrowLeft, Dice6, Hash, FileKey, Crown } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
@@ -10,1322 +10,1049 @@ import {
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './KeysModule.css';
+import { generatePrivateKey, privateKeyToPublicKey, publicKeyToAddress } from '../utils/bitcoin';
 
 const KeysModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
-  const [userInsights, setUserInsights] = useState({});
 
-  // Keys Learning Steps
-  const sovereigntySteps = [
+  // Interactive state management
+  const [userPredictions, setUserPredictions] = useState({});
+  const [challengeMode, setChallengeMode] = useState({});
+  const [personalInsights, setPersonalInsights] = useState({});
+  const [realityChecks, setRealityChecks] = useState({});
+  const [keyDemos, setKeyDemos] = useState({});
+  const [scenarioChoices, setScenarioChoices] = useState({});
+
+  // Cryptography Learning Steps
+  const cryptoSteps = [
     {
-      id: "understanding_ownership",
-      title: "🔑 Understanding Digital Ownership",
-      subtitle: "Learn why controlling your private keys is essential for Bitcoin ownership",
-      component: KingdomUnderSiegeStep
+      id: "ownership_fundamentals",
+      title: "🔑 Digital Ownership Fundamentals",
+      subtitle: "What does it really mean to 'own' digital money?",
+      component: OwnershipFundamentals
     },
     {
-      id: "entropy_and_randomness", 
-      title: "🎲 Entropy and Randomness",
-      subtitle: "Understand how true randomness creates secure cryptographic keys",
-      component: ChaosAlchemistStep
+      id: "randomness_security", 
+      title: "🎲 Randomness and Security",
+      subtitle: "How randomness creates unbreakable digital locks",
+      component: RandomnessSecurity
     },
     {
-      id: "private_keys",
-      title: "🔐 Private Keys and Signatures",
-      subtitle: "Learn how private keys create digital signatures that prove ownership",
-      component: SecretGuardianStep
+      id: "private_key_power",
+      title: "🔐 Private Key Power",
+      subtitle: "Your private key is your digital identity - handle with care",
+      component: PrivateKeyPower
     },
     {
       id: "address_generation",
-      title: "🏠 Address Generation",
-      subtitle: "Understand how Bitcoin addresses are derived from private keys", 
-      component: SovereignConstructorStep
+      title: "🏠 Address Generation Lab",
+      subtitle: "Watch Bitcoin addresses come to life from private keys", 
+      component: AddressGenerationLab
     },
     {
-      id: "custody_options",
-      title: "🏦 Custody Options",
-      subtitle: "Compare self-custody versus third-party custody trade-offs",
-      component: IndependenceWarriorStep
-    },
-    {
-      id: "security_best_practices",
-      title: "🛡️ Security Best Practices", 
-      subtitle: "Learn practical strategies for keeping your Bitcoin secure",
-      component: DigitalSovereignStep
+      id: "custody_decisions",
+      title: "🛡️ Custody Decision Framework",
+      subtitle: "Self-custody vs third-party: making the right choice for you",
+      component: CustodyDecisions
     }
   ];
 
-  // Handle step completion with achievements
-  const handleStepComplete = (stepIndex, userChoice = null) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex);
-    setCompletedSteps(newCompleted);
-    
-    // Store user insights for personalized completion
-    if (userChoice) {
-      setUserInsights(prev => ({
-        ...prev,
-        [sovereigntySteps[stepIndex].id]: userChoice
-      }));
-    }
-    
-    // Achievement system with educational focus
-    const achievements = {
-      0: { title: "Understanding Ownership", desc: "You understand why controlling private keys is essential!" },
-      1: { title: "Entropy Mastery", desc: "You've learned how true randomness creates secure keys!" },
-      2: { title: "Private Key Knowledge", desc: "You understand how private keys create digital signatures!" },
-      3: { title: "Address Generation", desc: "You've learned how Bitcoin addresses are created!" },
-      4: { title: "Custody Awareness", desc: "You understand the trade-offs between custody options!" },
-      5: { title: "Security Mastery", desc: "You've learned best practices for Bitcoin security!" }
-    };
-    
-    if (achievements[stepIndex]) {
-      setTimeout(() => showAchievement(achievements[stepIndex].title, achievements[stepIndex].desc), 500);
-    }
-    
-    // Manual advance - user controls the pace
-    // No auto-advance, users click to continue when ready
-  };
+  // Step 1: Ownership Fundamentals
+  function OwnershipFundamentals() {
+    const [thinkingLevel, setThinkingLevel] = useState('prediction');
+    const [userChoices, setUserChoices] = useState({});
+    const [personalStory, setPersonalStory] = useState('');
 
-  // Achievement notification system
-  const showAchievement = (title, description) => {
-    const achievement = document.createElement('div');
-    achievement.className = 'achievement-popup sovereignty-achievement';
-    achievement.innerHTML = `
-      <div class="achievement-content">
-        <div class="achievement-icon sovereignty-icon">👑</div>
-        <div class="achievement-text">
-          <h4>${title}</h4>
-          <p>${description}</p>
+    const ownershipChallenges = [
+      {
+        id: 'bank_account',
+        scenario: "You have $10,000 in your bank account",
+        thinkingQuestion: "Who really controls this money?",
+        challengeOptions: [
+          { id: 'you', label: "You control it - it's your account", risk: 'low' },
+          { id: 'bank', label: "The bank controls it - they hold it", risk: 'medium' },
+          { id: 'government', label: "Government controls it - they regulate banks", risk: 'high' },
+          { id: 'shared', label: "Shared control - multiple parties involved", risk: 'very-high' }
+        ],
+        reality: {
+          truth: "The bank actually controls your money. They can freeze accounts, impose withdrawal limits, or even go bankrupt with your funds.",
+          examples: [
+            "2013: Cyprus banks froze accounts and took depositors' money",
+            "2008: Banks failed worldwide, customers lost access to funds",
+            "2022: Canadian truckers had accounts frozen for political protests"
+          ]
+        },
+        deeperQuestion: "If someone else can prevent you from accessing your money, do you really own it?"
+      },
+      {
+        id: 'digital_photos',
+        scenario: "You store family photos on Google Photos",
+        thinkingQuestion: "What would happen if Google decided to delete your account?",
+        challengeOptions: [
+          { id: 'keep_photos', label: "Photos stay safe - they're backed up", risk: 'low' },
+          { id: 'lose_some', label: "Might lose some photos but most are safe", risk: 'medium' },
+          { id: 'lose_all', label: "Could lose everything instantly", risk: 'high' },
+          { id: 'legal_help', label: "Legal action would get them back", risk: 'very-high' }
+        ],
+        reality: {
+          truth: "You could lose everything instantly. Google (or any platform) can delete accounts with little recourse for users.",
+          examples: [
+            "Users regularly lose Gmail accounts and all data forever",
+            "YouTube creators lose years of work from algorithm changes",
+            "Cloud storage companies have deleted accounts by mistake"
+          ]
+        },
+        deeperQuestion: "Should your precious memories depend on a company's terms of service?"
+      },
+      {
+        id: 'house_ownership',
+        scenario: "You own a house with a clear title deed",
+        thinkingQuestion: "Is this the closest thing to 'true ownership' we have?",
+        challengeOptions: [
+          { id: 'true_ownership', label: "Yes - property rights are absolute", risk: 'low' },
+          { id: 'government_limits', label: "Mostly, but government has some control", risk: 'medium' },
+          { id: 'many_restrictions', label: "Heavily restricted by laws and taxes", risk: 'high' },
+          { id: 'illusion_ownership', label: "Ownership is largely an illusion", risk: 'very-high' }
+        ],
+        reality: {
+          truth: "Even property ownership has significant limitations. Governments can seize property, impose unlimited taxes, or change zoning laws.",
+          examples: [
+            "Eminent domain allows government to take your property",
+            "Property taxes mean you're essentially renting from the state",
+            "Zoning changes can destroy property value overnight"
+          ]
+        },
+        deeperQuestion: "If you must pay yearly taxes or lose your property, do you own it or rent it?"
+      }
+    ];
+
+    const handlePrediction = (challengeId, choiceId) => {
+      setUserChoices(prev => ({
+        ...prev,
+        [challengeId]: choiceId
+      }));
+    };
+
+    const moveToReality = () => {
+      setThinkingLevel('reality');
+    };
+
+    const moveToDeeper = () => {
+      setThinkingLevel('deeper');
+    };
+
+    const getCurrentChallenge = () => {
+      const completedChallenges = Object.keys(userChoices).length;
+      return ownershipChallenges[completedChallenges] || ownershipChallenges[0];
+    };
+
+    const challenge = getCurrentChallenge();
+    const userChoice = userChoices[challenge.id];
+    const selectedOption = challenge.challengeOptions.find(opt => opt.id === userChoice);
+
+    return (
+      <div className="ownership-fundamentals">
+        <div className="module-header">
+          <h2>🔑 What Does Digital Ownership Really Mean?</h2>
+          <p>Let's challenge some assumptions about ownership in the digital age...</p>
         </div>
-        <div class="achievement-controls">
-          <button class="achievement-dismiss" onclick="this.closest('.achievement-popup').remove()">
-            Continue
-          </button>
+
+        {thinkingLevel === 'prediction' && (
+          <div className="prediction-mode">
+            <div className="scenario-card">
+              <h3>{challenge.scenario}</h3>
+              <div className="thinking-prompt">
+                <Lightbulb className="w-5 h-5" />
+                <span>{challenge.thinkingQuestion}</span>
+              </div>
+              
+              <div className="challenge-options">
+                {challenge.challengeOptions.map(option => (
+                  <OptionButton
+                    key={option.id}
+                    onClick={() => handlePrediction(challenge.id, option.id)}
+                    className={`risk-${option.risk} ${userChoice === option.id ? 'selected' : ''}`}
+                  >
+                    {option.label}
+                  </OptionButton>
+                ))}
+              </div>
+
+              {userChoice && (
+                <div className="prediction-feedback">
+                  <p>You predicted: <strong>{selectedOption.label}</strong></p>
+                  <ActionButton onClick={moveToReality}>
+                    See Reality <ArrowRight className="w-4 h-4" />
+                  </ActionButton>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {thinkingLevel === 'reality' && (
+          <div className="reality-mode">
+            <div className="reality-card">
+              <h3>💡 The Reality</h3>
+              <p className="reality-truth">{challenge.reality.truth}</p>
+              
+              <h4>Real Examples:</h4>
+              <ul className="reality-examples">
+                {challenge.reality.examples.map((example, idx) => (
+                  <li key={idx}>{example}</li>
+                ))}
+              </ul>
+
+              <div className="prediction-comparison">
+                <p>You thought: <span className="user-prediction">{selectedOption.label}</span></p>
+                <p className="reality-note">Reality is often harsher than we expect...</p>
+              </div>
+
+              <ActionButton onClick={moveToDeeper} className="primary">
+                Think Deeper <ArrowRight className="w-4 h-4" />
+              </ActionButton>
+            </div>
+          </div>
+        )}
+
+        {thinkingLevel === 'deeper' && (
+          <div className="deeper-mode">
+            <div className="deeper-question-card">
+              <h3>🤔 Go Deeper</h3>
+              <p className="deeper-question">{challenge.deeperQuestion}</p>
+              
+              <textarea
+                placeholder="What are your thoughts? How does this change your perspective on ownership?"
+                value={personalStory}
+                onChange={(e) => setPersonalStory(e.target.value)}
+                className="personal-reflection"
+              />
+
+              <div className="ownership-insight">
+                <h4>💎 Bitcoin's Revolutionary Answer</h4>
+                <p>Bitcoin introduces <strong>cryptographic ownership</strong> - ownership that doesn't depend on institutions, governments, or platforms. Your private key is the only thing between you and your Bitcoin.</p>
+                
+                <div className="key-realization">
+                  <AlertCircle className="w-5 h-5" />
+                  <span>With Bitcoin, you can have true digital ownership for the first time in history.</span>
+                </div>
+              </div>
+
+              {Object.keys(userChoices).length < ownershipChallenges.length ? (
+                <ActionButton 
+                  onClick={() => {
+                    setThinkingLevel('prediction');
+                    setPersonalStory('');
+                  }}
+                  className="primary"
+                >
+                  Next Challenge <ArrowRight className="w-4 h-4" />
+                </ActionButton>
+              ) : (
+                <ContinueButton onClick={() => setCurrentStep(1)}>
+                  Master Randomness & Security <ArrowRight className="w-4 h-4" />
+                </ContinueButton>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="progress-tracker">
+          <span>Challenge {Object.keys(userChoices).length + 1} of {ownershipChallenges.length}</span>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${(Object.keys(userChoices).length / ownershipChallenges.length) * 100}%` }}
+            />
+          </div>
         </div>
       </div>
-      <div class="achievement-hint">Click to dismiss or wait 8 seconds...</div>
-    `;
-    document.body.appendChild(achievement);
-    
-    // Click to dismiss
-    achievement.addEventListener('click', () => {
-      achievement.style.opacity = '0';
-      setTimeout(() => {
-        if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
-        }
-      }, 300);
-    });
-    
-    // Auto dismiss after longer delay
-    setTimeout(() => {
-      if (document.body.contains(achievement)) {
-        achievement.style.opacity = '0';
-        setTimeout(() => {
-          if (document.body.contains(achievement)) {
-            document.body.removeChild(achievement);
-          }
-        }, 300);
-      }
-    }, 8000); // Extended from 3000
-  };
+    );
+  }
 
-  // Progress tracking
-  // Progress tracking for visual feedback
-  // const progressPercentage = (completedSteps.size / sovereigntySteps.length) * 100;
+  // Step 2: Randomness and Security
+  function RandomnessSecurity() {
+    const [demoMode, setDemoMode] = useState('prediction');
+    const [userGuesses, setUserGuesses] = useState({});
+    const [randomnessDemo, setRandomnessDemo] = useState(null);
+    const [securityInsights, setSecurityInsights] = useState({});
+
+    const randomnessChallenges = [
+      {
+        id: 'password_strength',
+        question: "Which password would be harder for a computer to crack?",
+        options: [
+          { id: 'complex', text: "MyP@ssw0rd2024!", entropy: 'Medium', crackTime: '3 months' },
+          { id: 'random', text: "horse battery staple correct", entropy: 'High', crackTime: '500 years' },
+          { id: 'personal', text: "JohnSmith1985", entropy: 'Low', crackTime: '2 hours' },
+          { id: 'random_chars', text: "Kx9#mP2@vL8$", entropy: 'Very High', crackTime: '10,000 years' }
+        ],
+        reality: "Randomness beats complexity. 'horse battery staple correct' is stronger than 'MyP@ssw0rd2024!' because it's more random and longer.",
+        insight: "True randomness is the foundation of all digital security."
+      },
+      {
+        id: 'key_generation',
+        question: "How should Bitcoin generate your private key?",
+        options: [
+          { id: 'birthday', text: "Use your birthday + social security", entropy: 'None', crackTime: 'Instant' },
+          { id: 'timestamp', text: "Use current timestamp", entropy: 'Low', crackTime: '1 day' },
+          { id: 'pseudorandom', text: "Computer random number generator", entropy: 'Medium', crackTime: '1 year' },
+          { id: 'true_random', text: "True random from cosmic radiation", entropy: 'Maximum', crackTime: '10^77 years' }
+        ],
+        reality: "Bitcoin uses cryptographically secure random number generation, similar to cosmic radiation randomness. Your private key has so many possibilities that the universe doesn't have enough atoms to store them all.",
+        insight: "A Bitcoin private key has 2^256 possibilities - more than the number of atoms in the observable universe."
+      }
+    ];
+
+    const generateRandomnessDemo = () => {
+      // Simulate different levels of randomness
+      const demos = {
+        weak: {
+          pattern: [1, 2, 3, 4, 5, 6, 7, 8],
+          security: "Terrible - predictable pattern",
+          color: "danger"
+        },
+        medium: {
+          pattern: Array.from({length: 8}, () => Math.floor(Math.random() * 10)),
+          security: "Better - but computer random",
+          color: "warning"
+        },
+        strong: {
+          pattern: Array.from({length: 8}, () => Math.floor(Math.random() * 16).toString(16)),
+          security: "Excellent - cryptographically secure",
+          color: "success"
+        }
+      };
+      
+      setRandomnessDemo(demos);
+    };
+
+    const handleGuess = (challengeId, optionId) => {
+      setUserGuesses(prev => ({
+        ...prev,
+        [challengeId]: optionId
+      }));
+    };
+
+    useEffect(() => {
+      generateRandomnessDemo();
+    }, []);
+
+    const currentChallenge = randomnessChallenges[Object.keys(userGuesses).length] || randomnessChallenges[0];
+    const userGuess = userGuesses[currentChallenge.id];
+    const selectedOption = currentChallenge.options.find(opt => opt.id === userGuess);
+
+    return (
+      <div className="randomness-security">
+        <div className="module-header">
+          <h2>🎲 The Power of True Randomness</h2>
+          <p>Random numbers are the foundation of all cryptographic security...</p>
+        </div>
+
+        {demoMode === 'prediction' && (
+          <div className="randomness-challenge">
+            <div className="challenge-card">
+              <h3>{currentChallenge.question}</h3>
+              
+              <div className="options-grid">
+                {currentChallenge.options.map(option => (
+                  <div 
+                    key={option.id}
+                    className={`option-card ${userGuess === option.id ? 'selected' : ''}`}
+                    onClick={() => handleGuess(currentChallenge.id, option.id)}
+                  >
+                    <div className="option-text">{option.text}</div>
+                    <div className="option-meta">
+                      Entropy: <span className={`entropy-${option.entropy.toLowerCase().replace(' ', '-')}`}>
+                        {option.entropy}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {userGuess && (
+                <div className="guess-feedback">
+                  <p>You chose: <strong>{selectedOption.text}</strong></p>
+                  <p>Crack time: <span className="crack-time">{selectedOption.crackTime}</span></p>
+                  <ActionButton onClick={() => setDemoMode('reality')}>
+                    See Why <ArrowRight className="w-4 h-4" />
+                  </ActionButton>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {demoMode === 'reality' && (
+          <div className="reality-explanation">
+            <div className="reality-card">
+              <h3>🔍 The Reality</h3>
+              <p>{currentChallenge.reality}</p>
+              
+              <div className="security-insight">
+                <Lightbulb className="w-5 h-5" />
+                <span>{currentChallenge.insight}</span>
+              </div>
+
+              <div className="randomness-demo">
+                <h4>Randomness Demo</h4>
+                {randomnessDemo && (
+                  <div className="demo-grid">
+                    {Object.entries(randomnessDemo).map(([level, demo]) => (
+                      <div key={level} className={`demo-card ${demo.color}`}>
+                        <h5>{level.charAt(0).toUpperCase() + level.slice(1)} Randomness</h5>
+                        <div className="pattern">{demo.pattern.join(' ')}</div>
+                        <div className="security-note">{demo.security}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {Object.keys(userGuesses).length < randomnessChallenges.length ? (
+                <ActionButton 
+                  onClick={() => setDemoMode('prediction')}
+                  className="primary"
+                >
+                  Next Challenge <ArrowRight className="w-4 h-4" />
+                </ActionButton>
+              ) : (
+                <ContinueButton onClick={() => setCurrentStep(2)}>
+                  Explore Private Keys <ArrowRight className="w-4 h-4" />
+                </ContinueButton>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="progress-tracker">
+          <span>Randomness Challenge {Object.keys(userGuesses).length + 1} of {randomnessChallenges.length}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 3: Private Key Power  
+  function PrivateKeyPower() {
+    const [demoKey, setDemoKey] = useState('');
+    const [publicKey, setPublicKey] = useState('');
+    const [address, setAddress] = useState('');
+    const [showKey, setShowKey] = useState(false);
+    const [keyGenerated, setKeyGenerated] = useState(false);
+    const [signatureDemo, setSignatureDemo] = useState(null);
+
+    const generateNewKey = () => {
+      try {
+        const newPrivateKey = generatePrivateKey();
+        const newPublicKey = privateKeyToPublicKey(newPrivateKey);
+        const newAddress = publicKeyToAddress(newPublicKey);
+        
+        setDemoKey(newPrivateKey);
+        setPublicKey(newPublicKey);
+        setAddress(newAddress);
+        setKeyGenerated(true);
+        setShowKey(false);
+      } catch (error) {
+        console.error('Key generation error:', error);
+        // Fallback demo values
+        setDemoKey('L1234567890abcdef...(this would be your actual private key)');
+        setPublicKey('03234567890abcdef...(this would be your public key)');
+        setAddress('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa');
+        setKeyGenerated(true);
+      }
+    };
+
+    const simulateSignature = () => {
+      setSignatureDemo({
+        message: "Send 0.01 BTC to Alice",
+        signature: "30440220...(digital signature proving you own this Bitcoin)",
+        verified: true
+      });
+    };
+
+    return (
+      <div className="private-key-power">
+        <div className="module-header">
+          <h2>🔐 Your Private Key = Your Digital Identity</h2>
+          <p>Understanding the most important piece of data in Bitcoin...</p>
+        </div>
+
+        <div className="key-generation-lab">
+          <div className="lab-section">
+            <h3>🎯 Generate Your Own Bitcoin Key</h3>
+            <p>Let's create a real Bitcoin private key and see how it works:</p>
+            
+            <ActionButton onClick={generateNewKey} className="primary large">
+              <Dice6 className="w-5 h-5" />
+              Generate Random Private Key
+            </ActionButton>
+
+            {keyGenerated && (
+              <div className="key-results">
+                <div className="key-item">
+                  <div className="key-header">
+                    <span>🔑 Private Key (Keep Secret!)</span>
+                    <button 
+                      onClick={() => setShowKey(!showKey)}
+                      className="toggle-visibility"
+                    >
+                      {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  <div className="key-value">
+                    {showKey ? demoKey : '•'.repeat(64)}
+                  </div>
+                  <div className="key-warning">
+                    ⚠️ Anyone with this key controls the Bitcoin!
+                  </div>
+                </div>
+
+                <div className="key-item">
+                  <div className="key-header">
+                    <span>🔓 Public Key (Safe to Share)</span>
+                  </div>
+                  <div className="key-value public">{publicKey}</div>
+                  <div className="key-note">
+                    ✅ Derived from private key - mathematically linked
+                  </div>
+                </div>
+
+                <div className="key-item">
+                  <div className="key-header">
+                    <span>🏠 Bitcoin Address (Your "Account Number")</span>
+                  </div>
+                  <div className="key-value address">{address}</div>
+                  <div className="key-note">
+                    ✅ People send Bitcoin to this address
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {keyGenerated && (
+            <div className="signature-demo">
+              <h3>✍️ Digital Signature Demo</h3>
+              <p>Your private key can "sign" transactions to prove ownership:</p>
+              
+              <ActionButton onClick={simulateSignature} className="secondary">
+                <FileKey className="w-5 h-5" />
+                Sign a Transaction
+              </ActionButton>
+
+              {signatureDemo && (
+                <div className="signature-result">
+                  <div className="signature-item">
+                    <strong>Message:</strong> {signatureDemo.message}
+                  </div>
+                  <div className="signature-item">
+                    <strong>Digital Signature:</strong> 
+                    <span className="signature-value">{signatureDemo.signature}</span>
+                  </div>
+                  <div className="signature-verification">
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                    <span>Signature verified! This proves you own the Bitcoin.</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="key-insights">
+          <h3>🧠 Key Insights</h3>
+          <div className="insights-grid">
+            <div className="insight-card">
+              <Lock className="w-6 h-6" />
+              <h4>Mathematical Magic</h4>
+              <p>It's easy to go from private key → public key → address, but impossible to reverse.</p>
+            </div>
+            <div className="insight-card">
+              <Shield className="w-6 h-6" />
+              <h4>Cryptographic Proof</h4>
+              <p>Your signature proves you own Bitcoin without revealing your private key.</p>
+            </div>
+            <div className="insight-card">
+              <Key className="w-6 h-6" />
+              <h4>Ultimate Responsibility</h4>
+              <p>Lose your private key = lose your Bitcoin. No customer service can help.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="real-world-warning">
+          <AlertCircle className="w-6 h-6" />
+          <div>
+            <h4>⚠️ Real World Warning</h4>
+            <p>Never store large amounts on demo keys! This is for education only. Use proper wallet software for real Bitcoin.</p>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(3)}>
+          Learn Address Generation <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 4: Address Generation Lab
+  function AddressGenerationLab() {
+    const [addressTypes, setAddressTypes] = useState({});
+    const [selectedType, setSelectedType] = useState('legacy');
+    const [generationSteps, setGenerationSteps] = useState([]);
+    const [currentStep, setCurrentDemoStep] = useState(0);
+
+    const addressFormats = {
+      legacy: {
+        name: 'Legacy (P2PKH)',
+        prefix: '1',
+        example: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+        description: 'Original Bitcoin address format',
+        pros: ['Universal compatibility', 'Widely supported'],
+        cons: ['Higher transaction fees', 'Larger transaction size']
+      },
+      segwit: {
+        name: 'SegWit (P2SH)',
+        prefix: '3',
+        example: '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
+        description: 'Wrapped SegWit for backward compatibility',
+        pros: ['Lower fees than legacy', 'Good compatibility'],
+        cons: ['Higher fees than native SegWit']
+      },
+      bech32: {
+        name: 'Native SegWit (Bech32)',
+        prefix: 'bc1',
+        example: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
+        description: 'Modern, efficient address format',
+        pros: ['Lowest transaction fees', 'Error detection', 'Case insensitive'],
+        cons: ['Some older wallets don\'t support it']
+      }
+    };
+
+    const demonstrateGeneration = () => {
+      const steps = [
+        'Generate 256-bit random private key',
+        'Apply elliptic curve cryptography (secp256k1)',
+        'Generate public key from private key',
+        'Apply SHA-256 hash to public key',
+        'Apply RIPEMD-160 hash to result',
+        'Add version byte and checksum',
+        'Encode with Base58 (or Bech32 for native SegWit)',
+        'Final Bitcoin address ready!'
+      ];
+      
+      setGenerationSteps(steps);
+      setCurrentDemoStep(0);
+      
+      // Animate through steps
+      const interval = setInterval(() => {
+        setCurrentDemoStep(prev => {
+          if (prev >= steps.length - 1) {
+            clearInterval(interval);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    };
+
+    return (
+      <div className="address-generation-lab">
+        <div className="module-header">
+          <h2>🏠 Address Generation Laboratory</h2>
+          <p>Watch Bitcoin addresses come to life from mathematical transformations...</p>
+        </div>
+
+        <div className="address-types-comparison">
+          <h3>📋 Address Format Comparison</h3>
+          <div className="address-types-grid">
+            {Object.entries(addressFormats).map(([type, format]) => (
+              <div 
+                key={type}
+                className={`address-type-card ${selectedType === type ? 'selected' : ''}`}
+                onClick={() => setSelectedType(type)}
+              >
+                <h4>{format.name}</h4>
+                <div className="address-example">
+                  <span className="prefix">{format.prefix}</span>
+                  <span className="address-text">{format.example}</span>
+                </div>
+                <p className="address-description">{format.description}</p>
+                
+                <div className="pros-cons">
+                  <div className="pros">
+                    <strong>Pros:</strong>
+                    <ul>
+                      {format.pros.map((pro, idx) => (
+                        <li key={idx}>✅ {pro}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="cons">
+                    <strong>Cons:</strong>
+                    <ul>
+                      {format.cons.map((con, idx) => (
+                        <li key={idx}>⚠️ {con}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="generation-process">
+          <h3>⚙️ Address Generation Process</h3>
+          <p>See how a private key becomes a Bitcoin address through cryptographic transformations:</p>
+          
+          <ActionButton onClick={demonstrateGeneration} className="primary">
+            <Hash className="w-5 h-5" />
+            Demonstrate Generation Process
+          </ActionButton>
+
+          {generationSteps.length > 0 && (
+            <div className="generation-steps">
+              {generationSteps.map((step, index) => (
+                <div 
+                  key={index}
+                  className={`generation-step ${index <= currentStep ? 'completed' : 'pending'}`}
+                >
+                  <div className="step-number">{index + 1}</div>
+                  <div className="step-description">{step}</div>
+                  {index <= currentStep && <CheckCircle className="w-5 h-5 text-green-500" />}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="practical-insights">
+          <h3>💡 Practical Insights</h3>
+          <div className="insights-grid">
+            <div className="insight-card">
+              <div className="insight-icon">🔒</div>
+              <h4>One-Way Function</h4>
+              <p>Easy to generate address from private key, impossible to reverse.</p>
+            </div>
+            <div className="insight-card">
+              <div className="insight-icon">🎯</div>
+              <h4>Perfect Accuracy</h4>
+              <p>Checksums prevent typos - invalid addresses are rejected.</p>
+            </div>
+            <div className="insight-card">
+              <div className="insight-icon">🔄</div>
+              <h4>Multiple Addresses</h4>
+              <p>One private key can generate multiple address types for different use cases.</p>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(4)}>
+          Master Custody Decisions <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 5: Custody Decisions
+  function CustodyDecisions() {
+    const [scenarioActive, setScenarioActive] = useState(null);
+    const [userDecisions, setUserDecisions] = useState({});
+    const [custodyInsights, setCustodyInsights] = useState({});
+
+    const custodyScenarios = [
+      {
+        id: 'tech_newbie',
+        title: 'Tech Newbie Sarah',
+        profile: 'Just bought her first $500 in Bitcoin, not comfortable with technology',
+        question: 'How should Sarah store her Bitcoin?',
+        options: [
+          {
+            id: 'exchange',
+            label: 'Keep on Coinbase exchange',
+            security: 'medium',
+            convenience: 'high',
+            risk: 'Exchange hack, account freeze',
+            recommendation: 'Acceptable for small amounts while learning'
+          },
+          {
+            id: 'mobile_wallet',
+            label: 'Download a mobile wallet app',
+            security: 'high',
+            convenience: 'high',
+            risk: 'Phone loss, malware',
+            recommendation: 'Good balance for beginners'
+          },
+          {
+            id: 'hardware_wallet',
+            label: 'Buy a hardware wallet',
+            security: 'very-high',
+            convenience: 'medium',
+            risk: 'Device loss, setup complexity',
+            recommendation: 'Overkill for $500, but future-proof'
+          },
+          {
+            id: 'paper_wallet',
+            label: 'Create a paper wallet',
+            security: 'high',
+            convenience: 'low',
+            risk: 'Paper damage, generation security',
+            recommendation: 'Too complex for beginners'
+          }
+        ]
+      },
+      {
+        id: 'crypto_veteran',
+        title: 'Crypto Veteran Mike',
+        profile: 'Has $50,000 in Bitcoin, very tech-savvy, values maximum security',
+        question: 'What custody solution should Mike use?',
+        options: [
+          {
+            id: 'exchange',
+            label: 'Keep on exchange for easy trading',
+            security: 'medium',
+            convenience: 'very-high',
+            risk: 'Major hack risk with large amounts',
+            recommendation: 'Dangerous for $50k+'
+          },
+          {
+            id: 'hardware_multisig',
+            label: 'Hardware wallet with multisig',
+            security: 'maximum',
+            convenience: 'medium',
+            risk: 'Setup complexity',
+            recommendation: 'Ideal for large amounts'
+          },
+          {
+            id: 'single_hardware',
+            label: 'Single hardware wallet',
+            security: 'high',
+            convenience: 'high',
+            risk: 'Single point of failure',
+            recommendation: 'Good but not optimal for $50k'
+          },
+          {
+            id: 'cold_storage',
+            label: 'Air-gapped cold storage',
+            security: 'maximum',
+            convenience: 'low',
+            risk: 'Complexity, human error',
+            recommendation: 'Excellent security, high complexity'
+          }
+        ]
+      },
+      {
+        id: 'business_owner',
+        title: 'Business Owner Lisa',
+        profile: 'Company holds $500,000 in Bitcoin, needs institutional-grade security',
+        question: 'How should Lisa\'s company secure their Bitcoin?',
+        options: [
+          {
+            id: 'exchange_custody',
+            label: 'Institutional exchange custody',
+            security: 'high',
+            convenience: 'very-high',
+            risk: 'Counterparty risk, regulations',
+            recommendation: 'Good for active trading'
+          },
+          {
+            id: 'multisig_vault',
+            label: 'Multi-signature vault solution',
+            security: 'maximum',
+            convenience: 'medium',
+            risk: 'Key management complexity',
+            recommendation: 'Best for long-term storage'
+          },
+          {
+            id: 'third_party_custody',
+            label: 'Professional custody service',
+            security: 'high',
+            convenience: 'high',
+            risk: 'Trust third party, regulations',
+            recommendation: 'Good for compliance needs'
+          },
+          {
+            id: 'self_custody',
+            label: 'Full self-custody with procedures',
+            security: 'maximum',
+            convenience: 'low',
+            risk: 'Operational complexity',
+            recommendation: 'Ultimate control, high responsibility'
+          }
+        ]
+      }
+    ];
+
+    const handleDecision = (scenarioId, optionId) => {
+      setUserDecisions(prev => ({
+        ...prev,
+        [scenarioId]: optionId
+      }));
+    };
+
+    const getPersonalizedAdvice = () => {
+      const decisions = Object.values(userDecisions);
+      let advice = [];
+
+      if (decisions.includes('exchange')) {
+        advice.push('You lean toward convenience - consider starting with reputable exchanges but plan to move to self-custody as amounts grow.');
+      }
+      if (decisions.includes('hardware_multisig') || decisions.includes('multisig_vault')) {
+        advice.push('You value maximum security - multisig solutions are excellent for large amounts.');
+      }
+      if (decisions.includes('mobile_wallet')) {
+        advice.push('You appreciate balance between security and usability - mobile wallets are great for everyday use.');
+      }
+
+      return advice;
+    };
+
+    return (
+      <div className="custody-decisions">
+        <div className="module-header">
+          <h2>🛡️ Custody Decision Framework</h2>
+          <p>Different situations require different custody approaches...</p>
+        </div>
+
+        <div className="custody-scenarios">
+          {custodyScenarios.map(scenario => (
+            <div key={scenario.id} className="scenario-card">
+              <h3>{scenario.title}</h3>
+              <p className="profile">{scenario.profile}</p>
+              <p className="question">{scenario.question}</p>
+
+              <div className="custody-options">
+                {scenario.options.map(option => (
+                  <div 
+                    key={option.id}
+                    className={`custody-option ${userDecisions[scenario.id] === option.id ? 'selected' : ''}`}
+                    onClick={() => handleDecision(scenario.id, option.id)}
+                  >
+                    <div className="option-header">
+                      <span className="option-label">{option.label}</span>
+                      <div className="security-badges">
+                        <span className={`security-badge ${option.security}`}>
+                          Security: {option.security}
+                        </span>
+                        <span className={`convenience-badge ${option.convenience}`}>
+                          Convenience: {option.convenience}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="option-details">
+                      <div className="risk">Risk: {option.risk}</div>
+                      <div className="recommendation">{option.recommendation}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {Object.keys(userDecisions).length === custodyScenarios.length && (
+          <div className="personalized-advice">
+            <h3>🎯 Your Custody Profile</h3>
+            <div className="advice-list">
+              {getPersonalizedAdvice().map((advice, idx) => (
+                <div key={idx} className="advice-item">
+                  <Lightbulb className="w-5 h-5" />
+                  <span>{advice}</span>
+                </div>
+              ))}
+            </div>
+            
+            <div className="custody-principles">
+              <h4>🏛️ Universal Custody Principles</h4>
+              <ul>
+                <li><strong>Start Small:</strong> Begin with small amounts while learning</li>
+                <li><strong>Scale Security:</strong> Higher amounts need higher security</li>
+                <li><strong>Never All In One Place:</strong> Diversify custody solutions</li>
+                <li><strong>Test Everything:</strong> Practice recovery before you need it</li>
+                <li><strong>Plan for Inheritance:</strong> Ensure others can access if needed</li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <div className="module-completion">
+          <div className="completion-card">
+            <CheckCircle className="w-8 h-8 text-green-500" />
+            <h3>🎓 Keys & Custody Mastery Complete!</h3>
+            <p>You now understand:</p>
+            <ul>
+              <li>✅ True digital ownership vs traditional ownership</li>
+              <li>✅ How randomness creates cryptographic security</li>
+              <li>✅ Private keys, public keys, and digital signatures</li>
+              <li>✅ Bitcoin address generation and types</li>
+              <li>✅ Custody decisions for different situations</li>
+            </ul>
+            
+            <ActionButton onClick={() => completeModule('keys')} className="primary large">
+              <Crown className="w-5 h-5" />
+              Complete Keys Module
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main component render
+  const currentStepData = cryptoSteps[currentStep];
+  const StepComponent = currentStepData?.component;
 
   return (
     <div className="keys-module">
-      {/* Header with clean, educational theme */}
-      <div className="module-header">
-        <div className="header-content">
-          <Key className="module-icon" />
-          <div className="header-text">
-            <h1>Private Keys & Addresses</h1>
-            <p>Master Bitcoin ownership through cryptographic keys and address generation</p>
-          </div>
+      <div className="module-progress">
+        <div className="progress-header">
+          <h1>🔑 Keys & Ownership Mastery</h1>
+          <p>Master the fundamentals of Bitcoin ownership and security</p>
         </div>
         
-        {/* Progress indicators */}
-        <div className="module-progress">
-          <div className="progress-steps">
-            {sovereigntySteps.map((step, index) => (
-              <div 
-                key={step.id}
-                className={`progress-step ${
-                  completedSteps.has(index) ? 'completed' : ''
-                } ${index === currentStep ? 'active' : ''}`}
-              >
-                <div className="step-number">{index + 1}</div>
-                <span className="step-label">{step.title.replace(/^[^\s]+\s/, '')}</span>
-        </div>
-            ))}
-        </div>
-          <div className="progress-text">
-            Learning progress: {completedSteps.size} / {sovereigntySteps.length} steps completed
-          </div>
+        <div className="steps-progress">
+          {cryptoSteps.map((step, index) => (
+            <div 
+              key={step.id}
+              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+            >
+              <div className="step-number">{index + 1}</div>
+              <div className="step-info">
+                <div className="step-title">{step.title}</div>
+                <div className="step-subtitle">{step.subtitle}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Step navigation */}
+      <div className="step-content">
+        {StepComponent && <StepComponent />}
+      </div>
+
       <div className="module-navigation">
-        <NavigationButton
-          onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
-          disabled={currentStep === 0}
-          variant="secondary"
-        >
-          <ChevronLeft /> Previous
-        </NavigationButton>
-        
-        <div className="step-indicator">
-          <span className="current-step">{sovereigntySteps[currentStep].title}</span>
-          <span className="step-subtitle">{sovereigntySteps[currentStep].subtitle}</span>
-        </div>
-
-        <NavigationButton
-          onClick={() => setCurrentStep(Math.min(sovereigntySteps.length - 1, currentStep + 1))}
-          disabled={currentStep === sovereigntySteps.length - 1}
-          variant="secondary"
-        >
-          Next <ChevronRight />
-        </NavigationButton>
-      </div>
-
-      {/* Main content area */}
-      <div className="module-content">
-        {React.createElement(sovereigntySteps[currentStep].component, {
-          onComplete: (userChoice) => handleStepComplete(currentStep, userChoice),
-          userInsights: userInsights,
-          isCompleted: completedSteps.has(currentStep)
-        })}
-      </div>
-    </div>
-  );
-};
-
-// Step 1: Kingdom Under Siege - Experience losing access through others' control
-const KingdomUnderSiegeStep = ({ onComplete }) => {
-  const [scenario, setScenario] = useState('bank_freeze');
-  const [userReaction, setUserReaction] = useState(null);
-  const [showSolution, setShowSolution] = useState(false);
-
-  const siegeScenarios = {
-    bank_freeze: {
-      title: "🏦 Your Bank Account Gets Frozen",
-      story: "Tuesday morning: You wake up to find your bank account frozen due to 'suspicious activity.' Your rent payment bounced. Your cards don't work. The bank says it'll take 7-10 business days to resolve.",
-      impact: "Your wealth exists, but you can't access it",
-      emotion: "Helpless anger at being locked out of your own money"
-    },
-    exchange_hack: {
-      title: "🔓 Your Exchange Gets Hacked", 
-      story: "Breaking news: The exchange where you kept your crypto was hacked overnight. 400,000 users affected. Your Bitcoin balance shows zero. The exchange promises to 'investigate' but offers no timeline for recovery.",
-      impact: "Your digital wealth vanished in someone else's failure",
-      emotion: "Sick realization that you trusted strangers with your future"
-    },
-    government_seizure: {
-      title: "🏛️ Government Asset Seizure",
-      story: "A new financial regulation classifies your assets as 'reportable.' Banks freeze accounts pending compliance. You have 30 days to prove the source of every transaction from the past 5 years, or lose access permanently.",
-      impact: "Political winds changed, your wealth became a target",
-      emotion: "Betrayal by the system you thought protected you"
-    }
-  };
-
-  const reactions = [
-    { id: 'panic', text: "Panic and stress about losing everything", emotion: "😰" },
-    { id: 'accept', text: "Accept it as just how the system works", emotion: "😞" },
-    { id: 'fight', text: "Get angry and want to fight the system", emotion: "😡" },
-    { id: 'seek', text: "Seek alternatives where this can't happen", emotion: "🔍" }
-  ];
-
-  const handleReaction = (reaction) => {
-    setUserReaction(reaction);
-    setShowSolution(true);
-  };
-
-  const currentScenario = siegeScenarios[scenario];
-
-  return (
-    <div className="siege-step">
-      <div className="siege-header">
-        <Castle className="siege-icon" />
-        <div>
-          <h2>Your Financial Kingdom Is Under Attack</h2>
-          <p>Experience what happens when others control your wealth...</p>
-      </div>
-      </div>
-
-      {/* Scenario selection */}
-      <div className="scenario-selection">
-        <h3>Choose your siege scenario:</h3>
-        <div className="scenario-options">
-          {Object.entries(siegeScenarios).map(([key, scen]) => (
-            <OptionButton
-              key={key}
-              onClick={() => setScenario(key)}
-              className={scenario === key ? 'selected' : ''}
-            >
-              {scen.title}
-            </OptionButton>
-          ))}
-            </div>
-          </div>
-          
-      {/* Current scenario display */}
-      <div className="siege-scenario">
-        <div className="scenario-story">
-          <h3>{currentScenario.title}</h3>
-          <div className="story-text">{currentScenario.story}</div>
-          <div className="impact-box">
-            <strong>Impact:</strong> {currentScenario.impact}
-          </div>
-          <div className="emotion-box">
-            <strong>Feeling:</strong> {currentScenario.emotion}
-            </div>
-          </div>
-          
-        {!userReaction && (
-          <div className="reaction-prompt">
-            <h4>How does this make you feel?</h4>
-            <div className="reaction-options">
-              {reactions.map(reaction => (
-                <OptionButton
-                  key={reaction.id}
-                  onClick={() => handleReaction(reaction)}
-                >
-                  {reaction.emotion} {reaction.text}
-                </OptionButton>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {showSolution && (
-          <div className="sovereignty-solution">
-            <div className="solution-reveal">
-              <Shield className="solution-icon" />
-              <h3>The Sovereignty Solution</h3>
-              <div className="solution-text">
-                What if no bank, exchange, or government could EVER lock you out of your wealth? 
-                What if your money was protected by unbreakable mathematics instead of breakable institutions?
-        </div>
-      </div>
-
-            <div className="bitcoin-promise">
-              <h4>🗝️ Bitcoin's Cryptographic Promise:</h4>
-              <ul>
-                <li><strong>Your keys = Your absolute control</strong> - No one can freeze, seize, or deny access</li>
-                <li><strong>Mathematical ownership</strong> - Protected by cryptography, not institutions</li>
-                <li><strong>Global accessibility</strong> - Access your wealth from anywhere, anytime</li>
-                <li><strong>Sovereign immunity</strong> - No third party can betray your trust</li>
-              </ul>
-      </div>
-
-            <ContinueButton onClick={() => onComplete({ scenario, reaction: userReaction })}>
-              Learn How to Build True Sovereignty →
-            </ContinueButton>
-          </div>
-        )}
-          </div>
-    </div>
-  );
-};
-
-// Step 2: Chaos Alchemist - Transform randomness into cryptographic power
-const ChaosAlchemistStep = ({ onComplete }) => {
-  const [entropyMethod, setEntropyMethod] = useState('dice');
-  const [entropyData, setEntropyData] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showTransformation, setShowTransformation] = useState(false);
-
-  const entropyMethods = {
-    dice: {
-      title: "🎲 Dice Rolling Chaos",
-      description: "Roll physical dice to generate pure randomness",
-      strength: "High - True physical randomness",
-      method: "Roll 6-sided dice 50 times"
-    },
-    coin: {
-      title: "🪙 Coin Flip Entropy", 
-      description: "Flip coins to create binary randomness",
-      strength: "High - Physical quantum uncertainty",
-      method: "Flip coin 256 times (heads=1, tails=0)"
-    },
-    quantum: {
-      title: "⚛️ Quantum Fluctuations",
-      description: "Use quantum mechanics for ultimate randomness",
-      strength: "Maximum - Fundamental universe randomness",
-      method: "Quantum random number generator"
-    },
-    environment: {
-      title: "🌪️ Environmental Chaos",
-      description: "Mouse movements, typing patterns, ambient noise",
-      strength: "Medium - Human-generated entropy",
-      method: "Combine multiple environmental sources"
-    }
-  };
-
-  const generateEntropy = () => {
-    setIsGenerating(true);
-    
-    // Simulate entropy generation process
-    let fakeEntropy = '';
-    const chars = '0123456789abcdef';
-    
-    const interval = setInterval(() => {
-      if (fakeEntropy.length < 64) {
-        fakeEntropy += chars[Math.floor(Math.random() * chars.length)];
-        setEntropyData(fakeEntropy);
-      } else {
-        clearInterval(interval);
-        setIsGenerating(false);
-        setShowTransformation(true);
-      }
-    }, 100);
-  };
-
-  const currentMethod = entropyMethods[entropyMethod];
-
-  return (
-    <div className="chaos-alchemist-step">
-      <div className="alchemist-header">
-        <Dice1 className="chaos-icon" />
-        <div>
-          <h2>Transform Chaos Into Cryptographic Power</h2>
-          <p>You're about to become an entropy alchemist...</p>
-        </div>
-      </div>
-
-      <div className="chaos-explanation">
-      <div className="prime-text">
-          💡 Your Bitcoin security begins with chaos. The more random, the more unbreakable. 
-          You're about to transform pure randomness into mathematical sovereignty.
-        </div>
-      </div>
-
-      {/* Entropy method selection */}
-      <div className="entropy-methods">
-        <h3>Choose your chaos source:</h3>
-        <div className="method-grid">
-          {Object.entries(entropyMethods).map(([key, method]) => (
-            <div 
-              key={key}
-              className={`entropy-method ${entropyMethod === key ? 'selected' : ''}`}
-              onClick={() => setEntropyMethod(key)}
-            >
-              <div className="method-header">
-                <span className="method-title">{method.title}</span>
-                <span className="method-strength">{method.strength}</span>
-              </div>
-              <div className="method-description">{method.description}</div>
-              <div className="method-process">{method.method}</div>
-            </div>
-        ))}
-        </div>
-      </div>
-
-      {/* Entropy generation process */}
-      <div className="entropy-generation">
-        <div className="generation-display">
-          <h4>🧪 Entropy Alchemy in Progress</h4>
-          <div className="entropy-output">
-            <div className="entropy-label">Raw Entropy (256 bits):</div>
-            <div className={`entropy-hex ${isGenerating ? 'generating' : ''}`}>
-              {entropyData || 'Click "Generate Chaos" to begin...'}
-            </div>
-          </div>
-          
-          {!isGenerating && !showTransformation && (
-            <ActionButton onClick={generateEntropy}>
-              🎲 Generate Chaos from {currentMethod.title}
-            </ActionButton>
-          )}
-          
-          {isGenerating && (
-            <div className="generating-status">
-              <div className="loading-spinner"></div>
-              Extracting randomness from {currentMethod.title.toLowerCase()}...
-          </div>
-          )}
-        </div>
-
-        {showTransformation && (
-          <div className="transformation-reveal">
-            <div className="transformation-steps">
-              <h4>⚗️ The Alchemical Transformation</h4>
-              
-              <div className="transformation-step">
-                <div className="step-number">1</div>
-                <div className="step-content">
-                  <h5>Raw Chaos → Private Key</h5>
-                  <div className="transformation-visual">
-                    <div className="input">{entropyData}</div>
-                    <div className="arrow">→</div>
-                    <div className="output">Your Secret Mathematical Identity</div>
-                  </div>
-        </div>
-      </div>
-
-              <div className="transformation-step">
-                <div className="step-number">2</div>
-                <div className="step-content">
-                  <h5>Private Key → Public Key</h5>
-                  <div className="transformation-visual">
-                    <div className="input">Secret Identity</div>
-                    <div className="arrow">→</div>
-                    <div className="output">Verifiable Proof System</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="transformation-step">
-                <div className="step-number">3</div>
-                <div className="step-content">
-                  <h5>Public Key → Bitcoin Address</h5>
-                  <div className="transformation-visual">
-                    <div className="input">Proof System</div>
-                    <div className="arrow">→</div>
-                    <div className="output">Your Digital Sovereign Territory</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="alchemy-insight">
-              <Lightbulb className="insight-icon" />
-              <div className="insight-text">
-                <strong>The Alchemical Truth:</strong> You just transformed pure chaos into unbreakable 
-                mathematical ownership. This randomness becomes the foundation of your digital sovereignty—
-                impossible to guess, impossible to replicate, impossible to steal.
-              </div>
-            </div>
-
-            <ContinueButton onClick={() => onComplete({ method: entropyMethod, entropy: entropyData })}>
-              Master the Art of Cryptographic Identity →
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Step 3: Secret Guardian - Forge cryptographic identity
-const SecretGuardianStep = ({ onComplete }) => {
-  const [demoKeys, setDemoKeys] = useState(null);
-  const [showSigning, setShowSigning] = useState(false);
-  const [message, setMessage] = useState('I am the sovereign ruler of my digital kingdom');
-  const [signature, setSignature] = useState('');
-  const [verificationResult, setVerificationResult] = useState(null);
-
-  const generateDemoKeys = () => {
-    // Demo key generation (simplified for educational purposes)
-    const demoKeyPair = {
-      privateKey: '5KJvsngHeMpm884wtkJNzQGaCErckhHJBGFsvd3VyK5qMZXj3hS',
-      publicKey: '027de80cebd39ce408a7dd25ac33e18fa48c1bd9ad8cc1a3f9b25a15eddfd4f',
-      address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-      wif: 'L4rK1yDtCWekvXuE6oXD9jCYfFNV2cWRpVuPLBcCU2z8TrisoyY1'
-    };
-    setDemoKeys(demoKeyPair);
-  };
-
-  const signMessage = () => {
-    setShowSigning(true);
-    // Simulate signing process
-    setTimeout(() => {
-      setSignature('H5x8+vZ5x8/zxL6x8wZ5x8/zxL6w8Z5x8/zxL6w8Z5x8/zxL6x8wZ5x8==');
-      setVerificationResult('valid');
-    }, 1500);
-  };
-
-  const guardianPowers = [
-    {
-      power: "🔐 Sign Transactions",
-      description: "Prove you own Bitcoin without revealing your private key",
-      example: "Move your Bitcoin anywhere in the world"
-    },
-    {
-      power: "🛡️ Verify Identity", 
-      description: "Prove your identity cryptographically",
-      example: "Login without passwords or personal information"
-    },
-    {
-      power: "📜 Create Contracts",
-      description: "Enter agreements enforced by mathematics",
-      example: "Multisig contracts, time locks, conditional payments"
-    },
-    {
-      power: "🌍 Global Access",
-      description: "Access your wealth from anywhere",
-      example: "Your sovereignty travels with you across borders"
-    }
-  ];
-
-  return (
-    <div className="secret-guardian-step">
-      <div className="guardian-header">
-        <Lock className="guardian-icon" />
-        <div>
-          <h2>Forge Your Cryptographic Identity</h2>
-          <p>Become the guardian of unbreakable mathematical secrets...</p>
-        </div>
-      </div>
-
-      <div className="guardian-explanation">
-      <div className="prime-text">
-          💡 Your private key is your cryptographic DNA. It can sign messages and transactions that 
-          prove you are you—without revealing your secret. This is the power of guardianship.
-        </div>
-      </div>
-
-      {/* Key generation demo */}
-      <div className="key-forge">
-        <h3>🔥 The Cryptographic Forge</h3>
-        
-        {!demoKeys ? (
-          <div className="forge-start">
-            <div className="forge-description">
-              You're about to create a cryptographic identity that is:
-              <ul>
-                <li><strong>Unique</strong> - No one else in the universe has these keys</li>
-                <li><strong>Unbreakable</strong> - Protected by 256-bit mathematics</li>
-                <li><strong>Yours Forever</strong> - No authority can revoke or change them</li>
-              </ul>
-                </div>
-            <ActionButton onClick={generateDemoKeys}>
-              🔨 Forge My Cryptographic Identity
-            </ActionButton>
-              </div>
-        ) : (
-          <div className="keys-display">
-            <div className="key-item">
-              <h4>🔐 Private Key (Your Secret)</h4>
-              <div className="key-value secret">
-                <Eye className="key-icon" />
-                {demoKeys.privateKey}
-                </div>
-              <div className="key-description">
-                Guard this with your life. Anyone with this controls your Bitcoin.
-              </div>
-            </div>
-              
-            <div className="key-item">
-              <h4>🌍 Public Key (Your Proof)</h4>
-              <div className="key-value public">
-                <Globe className="key-icon" />
-                {demoKeys.publicKey}
-                </div>
-              <div className="key-description">
-                Share this freely. It proves signatures came from your private key.
-              </div>
-            </div>
-              
-            <div className="key-item">
-              <h4>📮 Bitcoin Address (Your Kingdom)</h4>
-              <div className="key-value address">
-                <Crown className="key-icon" />
-                {demoKeys.address}
-                </div>
-              <div className="key-description">
-                Your digital territory where Bitcoin can be sent and stored.
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Signing demonstration */}
-      {demoKeys && (
-        <div className="signing-demo">
-          <h3>✍️ Demonstrate Your Guardian Powers</h3>
-          
-          <div className="message-signing">
-            <div className="signing-input">
-              <label>Message to sign:</label>
-              <input 
-                type="text" 
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="message-input"
-              />
-          </div>
-
-            {!showSigning ? (
-              <ActionButton onClick={signMessage}>
-                ✍️ Sign with My Private Key
-              </ActionButton>
-            ) : (
-              <div className="signing-process">
-                <div className="signing-steps">
-                  <div className="signing-step">
-                    <div className="step-icon">📝</div>
-                    <div>Message: "{message}"</div>
-            </div>
-                  <div className="signing-step">
-                    <div className="step-icon">🔐</div>
-                    <div>Signing with private key...</div>
-          </div>
-                  {signature && (
-                    <>
-                      <div className="signing-step">
-                        <div className="step-icon">📋</div>
-                        <div>Signature: {signature}</div>
-            </div>
-                      <div className="signing-step">
-                        <div className="step-icon">✅</div>
-                        <div>Verification: Valid! This message was signed by your private key.</div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Guardian powers */}
-      {verificationResult && (
-        <div className="guardian-powers">
-          <h3>👑 Your Guardian Powers Unlocked</h3>
-          <div className="powers-grid">
-            {guardianPowers.map((power, index) => (
-              <div key={index} className="power-card">
-                <div className="power-header">
-                  <span className="power-icon">{power.power.split(' ')[0]}</span>
-                  <span className="power-name">{power.power.split(' ').slice(1).join(' ')}</span>
-        </div>
-                <div className="power-description">{power.description}</div>
-                <div className="power-example">{power.example}</div>
-              </div>
-            ))}
-      </div>
-
-          <div className="guardian-truth">
-            <Shield className="truth-icon" />
-            <div className="truth-text">
-              <strong>The Guardian's Truth:</strong> You now possess mathematical proof of identity 
-              that no government can issue, no authority can revoke, and no institution can control. 
-              You are your own digital sovereign.
-            </div>
-      </div>
-
-          <ContinueButton onClick={() => onComplete({ keys: demoKeys, message, signature })}>
-            Build Your Digital Kingdom's Architecture →
-          </ContinueButton>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Step 4: Sovereign Constructor - Build hierarchy from master seed
-const SovereignConstructorStep = ({ onComplete }) => {
-  const [, setSeedPhrase] = useState('');
-  const [generatedSeed, setGeneratedSeed] = useState(null);
-  // Derivation path for advanced users
-  // const [derivationPath, setDerivationPath] = useState("m/44'/0'/0'/0/0");
-  const [hierarchyLevel, setHierarchyLevel] = useState(0);
-  const [showConstruction, setShowConstruction] = useState(false);
-
-  const generateSeedPhrase = () => {
-    // Demo 12-word seed phrase
-    const words = [
-      'abandon', 'ability', 'able', 'about', 'above', 'absent',
-      'absorb', 'abstract', 'absurd', 'abuse', 'access', 'accident'
-    ];
-    const phrase = words.join(' ');
-    setSeedPhrase(phrase);
-    setGeneratedSeed({
-      phrase: phrase,
-      masterKey: 'xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHi',
-      masterChainCode: '873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d508'
-    });
-    setShowConstruction(true);
-  };
-
-  const hierarchyLevels = [
-    {
-      level: 0,
-      path: "m",
-      title: "👑 Master Seed",
-      description: "Your royal bloodline - the source of all power",
-      example: "12 or 24 word seed phrase"
-    },
-    {
-      level: 1,
-      path: "m/44'",
-      title: "🏰 Purpose (44 = BIP44)",
-      description: "The kingdom's constitution - defines the rules",
-      example: "Bitcoin's standard account structure"
-    },
-    {
-      level: 2,
-      path: "m/44'/0'",
-      title: "⚔️ Coin Type (0 = Bitcoin)",
-      description: "Your kingdom's currency - Bitcoin realm",
-      example: "0 for Bitcoin, 1 for Testnet, 2 for Litecoin"
-    },
-    {
-      level: 3,
-      path: "m/44'/0'/0'",
-      title: "🏛️ Account (0 = First account)",
-      description: "Your royal treasury - separate wealth pools",
-      example: "Different accounts for different purposes"
-    },
-    {
-      level: 4,
-      path: "m/44'/0'/0'/0",
-      title: "🚪 Chain (0 = External)",
-      description: "Kingdom gates - external vs internal addresses",
-      example: "0 for receiving, 1 for change addresses"
-    },
-    {
-      level: 5,
-      path: "m/44'/0'/0'/0/0",
-      title: "📮 Address Index (0 = First)",
-      description: "Individual address in your kingdom",
-      example: "Unique address for each transaction"
-    }
-  ];
-
-  const constructionInsights = [
-    "🌳 One seed creates infinite addresses - your digital family tree",
-    "🔐 Each path produces different keys - infinite expansion from one source",
-    "🛡️ Lose the seed, lose everything - guard it like your kingdom's crown",
-    "⚡ Deterministic generation - same seed always produces same addresses",
-    "🌍 Universal standard - your seed works in any compatible wallet"
-  ];
-
-  return (
-    <div className="sovereign-constructor-step">
-      <div className="constructor-header">
-        <Crown className="constructor-icon" />
-        <div>
-          <h2>Build Your Digital Kingdom's Architecture</h2>
-          <p>From one seed, construct infinite sovereign territories...</p>
-      </div>
-      </div>
-
-      <div className="constructor-explanation">
-      <div className="prime-text">
-          💡 Your seed phrase is the master blueprint for your entire digital kingdom. 
-          From these 12-24 words, you can generate millions of addresses, each one 
-          a sovereign territory under your mathematical rule.
-      </div>
-          </div>
-
-      {/* Seed generation */}
-      <div className="seed-generation">
-        <h3>🌱 Create Your Master Seed</h3>
-        
-        {!generatedSeed ? (
-          <div className="seed-start">
-            <div className="seed-importance">
-              Your seed phrase is:
-              <ul>
-                <li><strong>The Master Key</strong> - Controls your entire digital kingdom</li>
-                <li><strong>Portable Sovereignty</strong> - 12-24 words contain infinite wealth</li>
-                <li><strong>Universal Recovery</strong> - Works in any compatible wallet</li>
-                <li><strong>Your Responsibility</strong> - No one can recover it if lost</li>
-              </ul>
-          </div>
-            <ActionButton onClick={generateSeedPhrase}>
-              🌱 Generate My Master Seed
-            </ActionButton>
-          </div>
-        ) : (
-          <div className="seed-display">
-            <div className="seed-phrase">
-              <h4>🔐 Your Master Seed Phrase</h4>
-              <div className="phrase-grid">
-                {generatedSeed.phrase.split(' ').map((word, index) => (
-                  <div key={index} className="seed-word">
-                    <span className="word-number">{index + 1}</span>
-                    <span className="word-text">{word}</span>
-        </div>
-                ))}
-      </div>
-              <div className="seed-warning">
-                ⚠️ In reality, never store your seed digitally. Write it on paper/metal and guard it with your life.
-        </div>
-      </div>
-    </div>
-        )}
-      </div>
-
-      {/* Hierarchical construction */}
-      {showConstruction && (
-        <div className="hierarchy-construction">
-          <h3>🏗️ Kingdom Architecture Construction</h3>
-          
-          <div className="hierarchy-builder">
-            <div className="hierarchy-controls">
-              <label>Construction Level:</label>
-              <input 
-                type="range" 
-                min="0" 
-                max="5" 
-                value={hierarchyLevel}
-                onChange={(e) => setHierarchyLevel(parseInt(e.target.value))}
-                className="hierarchy-slider"
-              />
-              <span className="level-display">Level {hierarchyLevel}: {hierarchyLevels[hierarchyLevel].title}</span>
-          </div>
-
-            <div className="hierarchy-visualization">
-              {hierarchyLevels.slice(0, hierarchyLevel + 1).map((level, index) => (
-                <div key={index} className={`hierarchy-level ${index === hierarchyLevel ? 'active' : ''}`}>
-                  <div className="level-header">
-                    <span className="level-icon">{level.title.split(' ')[0]}</span>
-                    <span className="level-title">{level.title.split(' ').slice(1).join(' ')}</span>
-          </div>
-                  <div className="level-path">{level.path}</div>
-                  <div className="level-description">{level.description}</div>
-                  <div className="level-example">{level.example}</div>
-                  {index < hierarchyLevel && <div className="hierarchy-arrow">↓</div>}
-        </div>
-              ))}
-      </div>
-
-            {hierarchyLevel === 5 && (
-              <div className="final-address">
-                <div className="address-generation">
-                  <h4>🎯 Final Generated Address</h4>
-                  <div className="generated-address">
-                    <div className="address-type">Bitcoin Address:</div>
-                    <div className="address-value">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-          </div>
-                  <div className="address-power">
-                    This address is mathematically derived from your seed. 
-                    You can regenerate it anytime with the same seed + path.
-          </div>
-          </div>
-          </div>
-            )}
-          </div>
-
-          <div className="construction-insights">
-            <h4>🧠 Constructor's Wisdom</h4>
-            <div className="insights-list">
-              {constructionInsights.map((insight, index) => (
-                <div key={index} className="insight-item">
-                  <div className="insight-text">{insight}</div>
-          </div>
-              ))}
-        </div>
-      </div>
-
-          <ContinueButton onClick={() => onComplete({ seed: generatedSeed, finalLevel: hierarchyLevel })}>
-            Lead the Battle for Financial Independence →
-          </ContinueButton>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Step 5: Independence Warrior - Battle dependency vs self-custody
-const IndependenceWarriorStep = ({ onComplete }) => {
-  const [battleChoice, setBattleChoice] = useState(null);
-  const [showConsequences, setShowConsequences] = useState(false);
-  const [userCommitment, setUserCommitment] = useState('');
-
-  const battleOptions = [
-    {
-      id: 'institutional',
-      title: "🏦 Institutional Dependency",
-      subtitle: "Let trusted third parties manage your Bitcoin",
-      appeal: "Convenience, insurance, professional management",
-      weapon: "Trust in institutions"
-    },
-    {
-      id: 'self_custody',
-      title: "⚔️ Self-Custody Sovereignty", 
-      subtitle: "Be your own bank with complete control",
-      appeal: "Total control, unconfiscatable, true ownership",
-      weapon: "Mathematical proof and personal responsibility"
-    },
-    {
-      id: 'hybrid',
-      title: "🛡️ Hybrid Strategy",
-      subtitle: "Split between institutional and self-custody",
-      appeal: "Balance of convenience and sovereignty",
-      weapon: "Diversified risk and gradual independence"
-    }
-  ];
-
-  const consequences = {
-    institutional: {
-      pros: [
-        "✅ Easy to use, familiar interface",
-        "✅ Customer support when things go wrong", 
-        "✅ Professional security teams",
-        "✅ Insurance coverage (limited)"
-      ],
-      cons: [
-        "❌ Can freeze/seize your Bitcoin",
-        "❌ Single point of failure (exchange hacks)",
-        "❌ Requires KYC/AML compliance",
-        "❌ Not your keys, not your Bitcoin",
-        "❌ Vulnerable to regulatory changes"
-      ],
-      outcome: "You remain dependent on others for your financial sovereignty"
-    },
-    self_custody: {
-      pros: [
-        "✅ Complete control and ownership",
-        "✅ Unconfiscatable by any authority",
-        "✅ Access anywhere, anytime", 
-        "✅ True financial sovereignty",
-        "✅ Immune to exchange hacks/closures"
-      ],
-      cons: [
-        "❌ You're responsible for security",
-        "❌ No customer support if you mess up",
-        "❌ Need to learn proper backup procedures",
-        "❌ Inheritance planning complexity"
-      ],
-      outcome: "You achieve true financial independence and sovereignty"
-    },
-    hybrid: {
-      pros: [
-        "✅ Risk diversification",
-        "✅ Learning curve management",
-        "✅ Liquidity flexibility",
-        "✅ Gradual sovereignty building"
-      ],
-      cons: [
-        "❌ Partial exposure to institutional risks",
-        "❌ More complex management",
-        "❌ Still some dependency",
-        "❌ Potentially higher fees"
-      ],
-      outcome: "You balance convenience with gradual independence building"
-    }
-  };
-
-  const handleBattleChoice = (choice) => {
-    setBattleChoice(choice);
-    setShowConsequences(true);
-  };
-
-  const warriorCommitments = [
-    "I commit to learning proper backup and recovery procedures",
-    "I will start with small amounts while building confidence",
-    "I accept responsibility for my own financial security",
-    "I will educate myself on hardware wallets and best practices",
-    "I choose sovereignty over convenience"
-  ];
-
-  return (
-    <div className="independence-warrior-step">
-      <div className="warrior-header">
-        <Swords className="warrior-icon" />
-        <div>
-          <h2>The Battle for Financial Independence</h2>
-          <p>Choose your weapon in the war against financial dependency...</p>
-        </div>
-      </div>
-
-      <div className="battle-setup">
-        <div className="battle-description">
-      <div className="prime-text">
-            💡 This is the moment of truth. You understand Bitcoin's technology. 
-            Now you must choose: Will you be your own bank, or remain dependent 
-            on others to hold your wealth?
-          </div>
-      </div>
-
-        <div className="battle-scenario">
-          <h3>⚔️ The Independence Battleground</h3>
-          <div className="scenario-text">
-            You now own Bitcoin. The question is: who controls the keys? 
-            This choice determines whether you're truly sovereign or still dependent 
-            on the old system.
-                    </div>
-                    </div>
-                  </div>
-
-      {/* Battle choice selection */}
-      <div className="battle-choices">
-        <h3>Choose your battle strategy:</h3>
-        <div className="choice-grid">
-          {battleOptions.map(option => (
-            <div 
-              key={option.id}
-              className={`battle-option ${battleChoice === option.id ? 'selected' : ''}`}
-              onClick={() => handleBattleChoice(option.id)}
-            >
-              <div className="option-header">
-                <span className="option-icon">{option.title.split(' ')[0]}</span>
-                <span className="option-title">{option.title.split(' ').slice(1).join(' ')}</span>
-                  </div>
-              <div className="option-subtitle">{option.subtitle}</div>
-              <div className="option-appeal">
-                <strong>Appeal:</strong> {option.appeal}
-                  </div>
-              <div className="option-weapon">
-                <strong>Weapon:</strong> {option.weapon}
-                </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Battle consequences */}
-      {showConsequences && battleChoice && (
-        <div className="battle-consequences">
-          <h3>⚖️ Battle Consequences: {battleOptions.find(o => o.id === battleChoice).title}</h3>
-          
-          <div className="consequences-analysis">
-            <div className="pros-cons">
-              <div className="pros-section">
-                <h4>💪 Strategic Advantages</h4>
-                <div className="pros-list">
-                  {consequences[battleChoice].pros.map((pro, index) => (
-                    <div key={index} className="consequence-item">{pro}</div>
-          ))}
-        </div>
-      </div>
-
-              <div className="cons-section">
-                <h4>⚠️ Strategic Risks</h4>
-                <div className="cons-list">
-                  {consequences[battleChoice].cons.map((con, index) => (
-                    <div key={index} className="consequence-item">{con}</div>
-                  ))}
-          </div>
-          </div>
-          </div>
-            
-            <div className="outcome-section">
-              <h4>🎯 Ultimate Outcome</h4>
-              <div className="outcome-text">{consequences[battleChoice].outcome}</div>
-          </div>
-          </div>
-
-          {battleChoice === 'self_custody' && (
-            <div className="warrior-commitment">
-              <h4>⚔️ Warrior's Oath</h4>
-              <div className="commitment-text">
-                Self-custody is power, but power requires responsibility. 
-                Make your commitment to true financial sovereignty:
-          </div>
-              <div className="commitment-options">
-                {warriorCommitments.map((commitment, index) => (
-                  <label key={index} className="commitment-item">
-                    <input 
-                      type="checkbox" 
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setUserCommitment(prev => prev + commitment + '; ');
-                        }
-                      }}
-                    />
-                    <span>{commitment}</span>
-                  </label>
-                ))}
-        </div>
-      </div>
-          )}
-
-          <div className="battle-wisdom">
-            <Lightbulb className="wisdom-icon" />
-            <div className="wisdom-text">
-              <strong>Warrior's Wisdom:</strong> There's no "right" choice for everyone. 
-              The key is making an informed decision that aligns with your values, 
-              risk tolerance, and sovereignty goals. You can always evolve your strategy.
-            </div>
-          </div>
-
-          <ContinueButton onClick={() => onComplete({ choice: battleChoice, commitment: userCommitment })}>
-            Establish Your Digital Sovereignty →
-          </ContinueButton>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Step 6: Digital Sovereign - Complete sovereignty establishment
-const DigitalSovereignStep = ({ onComplete, userInsights }) => {
-  const [sovereigntyLevel, setSovereigntyLevel] = useState(0);
-  const [showManifesto, setShowManifesto] = useState(false);
-  const [, setReadyForTransactions] = useState(false);
-
-  useEffect(() => {
-    // Auto-advance sovereignty level
-    const interval = setInterval(() => {
-      setSovereigntyLevel(prev => {
-        if (prev < 100) {
-          return prev + 2;
-        } else {
-          setShowManifesto(true);
-          clearInterval(interval);
-          return 100;
-        }
-      });
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const sovereigntyMilestones = [
-    { level: 20, achievement: "🏰 Kingdom Foundations Established" },
-    { level: 40, achievement: "🎲 Entropy Mastery Achieved" },
-    { level: 60, achievement: "🔐 Cryptographic Identity Forged" },
-    { level: 80, achievement: "👑 Digital Architecture Built" },
-    { level: 100, achievement: "⚔️ Independence War Won" }
-  ];
-
-  const sovereigntyManifesto = [
-    "I understand that Bitcoin keys grant mathematical ownership",
-    "I know that entropy creates unbreakable cryptographic power",
-    "I can generate and verify digital signatures",
-    "I comprehend hierarchical deterministic key derivation",
-    "I choose my level of custody based on informed decision-making",
-    "I am ready to take responsibility for my financial sovereignty"
-  ];
-
-  const nextSteps = [
-    {
-      title: "🎯 Master Bitcoin Transactions",
-      description: "Learn how your sovereign keys control UTXOs and move Bitcoin globally",
-      action: "Continue to Transaction Module"
-    },
-    {
-      title: "📜 Explore Bitcoin Scripts", 
-      description: "Discover how to program money with smart contracts and conditions",
-      action: "Advanced custody strategies"
-    },
-    {
-      title: "🌐 Practice with Small Amounts",
-      description: "Start your sovereignty journey with small amounts while building confidence",
-      action: "Real-world application"
-    }
-  ];
-
-  return (
-    <div className="digital-sovereign-step">
-      <div className="sovereign-header">
-        <Crown className="sovereign-icon" />
-        <div>
-          <h2>Your Digital Sovereignty Is Complete</h2>
-          <p>You have built an unbreakable digital kingdom...</p>
-        </div>
-      </div>
-      
-      {/* Sovereignty building animation */}
-      <div className="sovereignty-building">
-        <h3>🏗️ Sovereignty Construction Progress</h3>
-        <div className="sovereignty-meter">
-          <div className="meter-background">
-            <div 
-              className="meter-fill" 
-              style={{ width: `${sovereigntyLevel}%` }}
-            />
-            <div className="meter-text">{sovereigntyLevel}% Digital Sovereign</div>
-          </div>
-      </div>
-
-        <div className="milestones">
-          {sovereigntyMilestones.map((milestone, index) => (
-            <div 
-              key={index}
-              className={`milestone ${sovereigntyLevel >= milestone.level ? 'achieved' : ''}`}
-            >
-              <div className="milestone-marker" />
-              <div className="milestone-text">{milestone.achievement}</div>
-        </div>
-          ))}
-        </div>
-        </div>
-
-      {/* Sovereignty manifesto */}
-      {showManifesto && (
-        <div className="sovereignty-manifesto">
-          <h3>👑 Digital Sovereignty Manifesto</h3>
-          <div className="manifesto-intro">
-            You have completed the transformation from financial dependent to digital sovereign. 
-            Here's what you've mastered:
-        </div>
-          
-          <div className="manifesto-items">
-            {sovereigntyManifesto.map((item, index) => (
-              <div key={index} className="manifesto-item">
-                <div className="manifesto-check">✅</div>
-                <div className="manifesto-text">{item}</div>
-              </div>
-            ))}
-      </div>
-
-          <div className="user-journey-summary">
-            <h4>🎯 Your Sovereignty Journey</h4>
-            <div className="journey-insights">
-              {userInsights.kingdom_under_siege && (
-                <div className="insight-item">
-                  <strong>Siege Awareness:</strong> You experienced {userInsights.kingdom_under_siege.scenario} 
-                  and felt {userInsights.kingdom_under_siege.reaction.text}
-          </div>
-              )}
-              {userInsights.chaos_alchemist && (
-                <div className="insight-item">
-                  <strong>Entropy Method:</strong> You chose {userInsights.chaos_alchemist.method} 
-                  to generate cryptographic randomness
-          </div>
-              )}
-              {userInsights.independence_warrior && (
-                <div className="insight-item">
-                  <strong>Custody Strategy:</strong> You selected {userInsights.independence_warrior.choice} 
-                  as your sovereignty approach
-          </div>
-              )}
-          </div>
-          </div>
-
-          <div className="sovereignty-power">
-            <Shield className="power-icon" />
-            <div className="power-text">
-              <strong>Your Sovereign Powers:</strong> You now possess the knowledge to be your own bank, 
-              control your wealth mathematically, and access your Bitcoin from anywhere in the world 
-              without permission from any authority.
-        </div>
-      </div>
-
-          <div className="next-steps-section">
-            <h4>🚀 Continue Your Sovereignty Mastery</h4>
-            <div className="next-steps">
-              {nextSteps.map((step, index) => (
-                <div key={index} className="next-step">
-                  <div className="step-header">
-                    <span className="step-icon">{step.title.split(' ')[0]}</span>
-                    <span className="step-title">{step.title.split(' ').slice(1).join(' ')}</span>
-                  </div>
-                  <div className="step-description">{step.description}</div>
-                  <div className="step-action">{step.action}</div>
-                </div>
-              ))}
-            </div>
-      </div>
-
-          <ContinueButton 
-            onClick={() => {
-              setReadyForTransactions(true);
-              onComplete({ 
-                sovereigntyLevel: 100, 
-                manifesto: sovereigntyManifesto,
-                nextAction: 'transactions'
-              });
-            }}
+        {currentStep > 0 && (
+          <NavigationButton 
+            onClick={() => setCurrentStep(currentStep - 1)}
+            direction="prev"
           >
-            Master Bitcoin Transactions with Your Sovereign Keys →
-          </ContinueButton>
-        </div>
-      )}
+            <ArrowLeft className="w-4 h-4" />
+            Previous Step
+          </NavigationButton>
+        )}
+        
+        <NavigationButton 
+          onClick={() => navigate('/dashboard')}
+          className="home-button"
+        >
+          Return to Dashboard
+        </NavigationButton>
+      </div>
     </div>
   );
 };

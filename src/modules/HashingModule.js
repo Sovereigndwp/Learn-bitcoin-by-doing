@@ -1,821 +1,1117 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useProgress } from '../contexts/ProgressContext';
+import { Hash, Shield, Zap, Eye, EyeOff, Copy, CheckCircle, AlertCircle, ArrowRight, ArrowLeft, RotateCcw, Lightbulb, Target } from 'lucide-react';
 import { sha256 } from '../utils/bitcoin';
 import { 
   ContinueButton, 
   ActionButton, 
   OptionButton,
-  NavigationButton, 
-  PopupButton 
+  NavigationButton 
 } from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './HashingModule.css';
 
 const HashingModule = () => {
-  // Core crisis state management
-  const [crisisPhase, setCrisisPhase] = useState('trust_collapse_detective');
-  const [crisisIntensity, setCrisisIntensity] = useState(0);
-  const [architectLevel, setArchitectLevel] = useState(1);
-  const [masteryPoints, setMasteryPoints] = useState(0);
-  const [totalTrustEliminated, setTotalTrustEliminated] = useState(0);
+  const { completeModule } = useProgress();
+  const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(new Set());
 
-  // Cryptographic mastery state
-  const [trustCollapseAlerts, setTrustCollapseAlerts] = useState([]);
-  const [cryptographicProofs, setCryptographicProofs] = useState({ verified: 0, mastery: 0 });
-  const [impossibilityMastery, setImpossibilityMastery] = useState({ attempts: 0, understanding: 0 });
-  const [trustMachineArchitecture, setTrustMachineArchitecture] = useState({ systems: [], efficiency: 0 });
-  const [chainIntegrity, setChainIntegrity] = useState({ blocks: 0, security: 0 });
-  const [digitalSovereignty, setDigitalSovereignty] = useState({ sovereignty: 0, independence: 0 });
+  // Interactive state management
+  const [hashInputs, setHashInputs] = useState({});
+  const [hashResults, setHashResults] = useState({});
+  const [hashComparisons, setHashComparisons] = useState({});
+  const [proofOfWorkDemo, setProofOfWorkDemo] = useState({});
 
-  // Interactive challenge state
-  const [activeChallenge, setActiveChallenge] = useState(null);
-  const [challengeProgress, setChallengeProgress] = useState(0);
-  const [userInput, setUserInput] = useState('');
-  const [hashResult, setHashResult] = useState('');
-  const [feedback, setFeedback] = useState('');
-  const [showHint, setShowHint] = useState(false);
-
-  // Crisis scenarios and challenges
-  const crisisScenarios = {
-    trust_collapse_detective: {
-      title: "Trust Collapse Detective",
-      crisis: "Global Trust System Collapse",
-      description: "Banks are failing, governments are lying, and institutions are corrupt. As a Trust Collapse Detective, you must investigate why human trust systems are fundamentally broken and find the mathematical alternative.",
-      objective: "Investigate trust system failures and discover cryptographic proof solutions",
-      threat: "Complete societal trust breakdown",
-      urgency: "CRITICAL",
-      challenges: [
-        {
-          id: 'trust_failure_analysis',
-          title: 'Trust Failure Pattern Analysis',
-          description: 'Analyze why human trust systems inevitably fail',
-          type: 'trust_analysis',
-          difficulty: 'detective'
-        },
-        {
-          id: 'proof_discovery',
-          title: 'Mathematical Proof Discovery',
-          description: 'Discover how mathematics can replace human trust',
-          type: 'proof_discovery',
-          difficulty: 'detective'
-        }
-      ]
+  // Hashing Learning Steps
+  const hashingSteps = [
+    {
+      id: "hash_fundamentals",
+      title: "🔐 Hash Function Fundamentals",
+      subtitle: "What are hash functions and why they're essential for Bitcoin",
+      component: HashFundamentals
     },
-    cryptographic_proof_engineer: {
-      title: "Cryptographic Proof Engineer",
-      crisis: "Verification Crisis Emergency",
-      description: "Without trust, how do you verify anything? As a Cryptographic Proof Engineer, you must engineer unbreakable mathematical proofs using hash functions to create absolute verification.",
-      objective: "Engineer cryptographic proof systems using hash functions",
-      threat: "Inability to verify any information",
-      urgency: "HIGH",
-      challenges: [
-        {
-          id: 'hash_engineering',
-          title: 'Hash Function Engineering',
-          description: 'Engineer perfect hash functions for digital fingerprinting',
-          type: 'hash_engineering',
-          difficulty: 'engineer'
-        },
-        {
-          id: 'proof_construction',
-          title: 'Cryptographic Proof Construction',
-          description: 'Construct mathematical proofs that eliminate human trust',
-          type: 'proof_construction',
-          difficulty: 'engineer'
-        }
-      ]
+    {
+      id: "avalanche_effect", 
+      title: "🌊 The Avalanche Effect",
+      subtitle: "How tiny changes create completely different hashes",
+      component: AvalancheEffect
     },
-    impossibility_proof_master: {
-      title: "Impossibility Proof Master",
-      crisis: "Mathematical Impossibility Challenge",
-      description: "Critics claim cryptographic hashing can be broken. As an Impossibility Proof Master, you must prove the mathematical impossibility of breaking properly designed hash functions.",
-      objective: "Master the art of proving mathematical impossibility",
-      threat: "Doubt in cryptographic security",
-      urgency: "HIGH",
-      challenges: [
-        {
-          id: 'impossibility_proof',
-          title: 'Hash Impossibility Proof',
-          description: 'Prove the mathematical impossibility of reversing hash functions',
-          type: 'impossibility_proof',
-          difficulty: 'master'
-        },
-        {
-          id: 'collision_resistance',
-          title: 'Collision Resistance Mastery',
-          description: 'Master the impossibility of finding hash collisions',
-          type: 'collision_resistance',
-          difficulty: 'master'
-        }
-      ]
+    {
+      id: "one_way_functions",
+      title: "🚪 One-Way Functions",
+      subtitle: "Easy to calculate forward, impossible to reverse",
+      component: OneWayFunctions
     },
-    trust_machine_architect: {
-      title: "Trust Machine Architect",
-      crisis: "Trust Machine Construction Crisis",
-      description: "Bitcoin needs a trust machine that never fails. As a Trust Machine Architect, you must architect the perfect trustless verification system using cryptographic proofs.",
-      objective: "Architect flawless trustless verification systems",
-      threat: "Trust machine failure",
-      urgency: "CRITICAL",
-      challenges: [
-        {
-          id: 'trustless_architecture',
-          title: 'Trustless System Architecture',
-          description: 'Architect systems that require zero human trust',
-          type: 'trustless_architecture',
-          difficulty: 'architect'
-        },
-        {
-          id: 'verification_perfection',
-          title: 'Verification Perfection',
-          description: 'Create perfect verification systems using hash functions',
-          type: 'verification_perfection',
-          difficulty: 'architect'
-        }
-      ]
+    {
+      id: "proof_of_work",
+      title: "⛏️ Proof of Work Mining",
+      subtitle: "How Bitcoin uses hash difficulty for security", 
+      component: ProofOfWorkDemo
     },
-    chain_integrity_guardian: {
-      title: "Chain Integrity Guardian",
-      crisis: "Blockchain Integrity Crisis",
-      description: "The Bitcoin blockchain must be unbreakable. As a Chain Integrity Guardian, you must secure the blockchain foundation using cryptographic hash chains.",
-      objective: "Guard blockchain integrity using cryptographic hash chains",
-      threat: "Blockchain corruption",
-      urgency: "MAXIMUM",
-      challenges: [
-        {
-          id: 'chain_security',
-          title: 'Hash Chain Security Mastery',
-          description: 'Master the art of securing blockchain with hash chains',
-          type: 'chain_security',
-          difficulty: 'guardian'
-        },
-        {
-          id: 'integrity_protection',
-          title: 'Integrity Protection Systems',
-          description: 'Protect blockchain integrity against all attacks',
-          type: 'integrity_protection',
-          difficulty: 'guardian'
-        }
-      ]
-    },
-    digital_sovereignty_defender: {
-      title: "Digital Sovereignty Defender",
-      crisis: "Digital Sovereignty Defense",
-      description: "You've achieved mastery over cryptographic proof. As a Digital Sovereignty Defender, you must defend mathematical sovereignty against all trust-based attacks.",
-      objective: "Defend digital sovereignty using cryptographic mastery",
-      threat: "Sovereignty erosion",
-      urgency: "ETERNAL",
-      challenges: [
-        {
-          id: 'sovereignty_defense',
-          title: 'Digital Sovereignty Defense',
-          description: 'Defend digital sovereignty against trust-based attacks',
-          type: 'sovereignty_defense',
-          difficulty: 'sovereign'
-        },
-        {
-          id: 'proof_legacy',
-          title: 'Cryptographic Proof Legacy',
-          description: 'Create lasting cryptographic proof systems',
-          type: 'proof_legacy',
-          difficulty: 'sovereign'
-        }
-      ]
+    {
+      id: "hash_applications",
+      title: "🛠️ Hash Applications in Bitcoin",
+      subtitle: "Every way Bitcoin uses cryptographic hashing",
+      component: HashApplications
     }
-  };
+  ];
 
-  // Challenge implementations
-  const challengeImplementations = {
-    trust_failure_analysis: {
-      question: "Why do human trust systems inevitably fail? Choose the fundamental reason:",
-      options: [
-        "Humans are inherently evil",
-        "Humans have conflicting incentives",
-        "Systems become too complex",
-        "Trust requires verification, but verification requires trust"
-      ],
-      correctAnswer: 3,
-      explanation: "The fundamental problem is circular: trust requires verification, but verification requires trust. This creates an infinite regress that can only be solved by mathematics.",
-      reward: 100
-    },
-    proof_discovery: {
-      question: "What makes mathematical proof superior to human trust?",
-      options: [
-        "Mathematics is faster",
-        "Mathematics is cheaper",
-        "Mathematics is deterministic and verifiable",
-        "Mathematics is more popular"
-      ],
-      correctAnswer: 2,
-      explanation: "Mathematical proof is superior because it's deterministic (same input always produces same output) and independently verifiable by anyone.",
-      reward: 150
-    },
-    hash_engineering: {
-      question: "Hash the word 'Bitcoin' and find the first character of the result:",
-      type: 'hash_input',
-      answer: "b",
-      hint: "Use SHA-256 to hash 'Bitcoin' and look at the first character",
-      validator: (input) => {
-        const hash = sha256('Bitcoin');
-        return input.toLowerCase() === hash.charAt(0).toLowerCase();
-      },
-      reward: 200
-    },
-    proof_construction: {
-      question: "If you change 'Bitcoin' to 'bitcoin' (lowercase), how many characters change in the hash?",
-      type: 'hash_comparison',
-      answer: "most",
-      hint: "Hash both 'Bitcoin' and 'bitcoin' and compare the results",
-      validator: (input) => {
-        const hash1 = sha256('Bitcoin');
-        const hash2 = sha256('bitcoin');
-        let differences = 0;
-        for (let i = 0; i < hash1.length; i++) {
-          if (hash1[i] !== hash2[i]) differences++;
-        }
-        return input.toLowerCase().includes('most') || input.toLowerCase().includes('many') || differences > 30;
-      },
-      reward: 250
-    },
-    impossibility_proof: {
-      question: "Try to find the original input that produced this hash: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'",
-      type: 'reverse_hash',
-      answer: "impossible",
-      hint: "This demonstrates the one-way nature of hash functions",
-      validator: (input) => input.toLowerCase().includes('impossible') || input.toLowerCase().includes('cannot'),
-      reward: 300
-    },
-    collision_resistance: {
-      question: "How many attempts would it take on average to find two inputs that produce the same SHA-256 hash?",
-      options: [
-        "1,000 attempts",
-        "1,000,000 attempts", 
-        "2^128 attempts",
-        "2^256 attempts"
-      ],
-      correctAnswer: 2,
-      explanation: "Due to the birthday paradox, finding a collision in SHA-256 requires approximately 2^128 attempts, which is computationally infeasible.",
-      reward: 350
-    },
-    trustless_architecture: {
-      question: "In a trustless system, what replaces human trust?",
-      options: [
-        "Government regulation",
-        "Mathematical proof",
-        "Social consensus",
-        "Economic incentives"
-      ],
-      correctAnswer: 1,
-      explanation: "Mathematical proof replaces human trust because it's verifiable, deterministic, and doesn't require trusting any person or institution.",
-      reward: 400
-    },
-    verification_perfection: {
-      question: "What property of hash functions makes them perfect for verification?",
-      options: [
-        "They're fast to compute",
-        "They're deterministic and one-way",
-        "They're easy to understand",
-        "They're widely adopted"
-      ],
-      correctAnswer: 1,
-      explanation: "Hash functions are perfect for verification because they're deterministic (same input = same output) and one-way (can't reverse the process).",
-      reward: 450
-    },
-    chain_security: {
-      question: "How does changing one character in a block affect the entire blockchain?",
-      options: [
-        "Only that block changes",
-        "That block and the next block change",
-        "All subsequent blocks become invalid",
-        "Nothing changes"
-      ],
-      correctAnswer: 2,
-      explanation: "Changing one character changes the block's hash, which breaks the chain reference in the next block, invalidating all subsequent blocks.",
-      reward: 500
-    },
-    integrity_protection: {
-      question: "What makes blockchain integrity tamper-evident?",
-      options: [
-        "Government oversight",
-        "Cryptographic hash chains",
-        "Social consensus",
-        "Economic incentives"
-      ],
-      correctAnswer: 1,
-      explanation: "Cryptographic hash chains make any tampering immediately detectable because changing any data breaks the mathematical chain of proof.",
-      reward: 550
-    },
-    sovereignty_defense: {
-      question: "How does cryptographic proof enable digital sovereignty?",
-      options: [
-        "By making transactions faster",
-        "By reducing costs",
-        "By eliminating the need to trust authorities",
-        "By increasing privacy"
-      ],
-      correctAnswer: 2,
-      explanation: "Cryptographic proof enables digital sovereignty by eliminating the need to trust any authority - you can verify everything yourself mathematically.",
-      reward: 600
-    },
-    proof_legacy: {
-      question: "What is the ultimate legacy of cryptographic proof?",
-      type: 'open_ended',
-      answer: "freedom",
-      hint: "Think about what happens when you don't need to trust anyone",
-      validator: (input) => input.toLowerCase().includes('freedom') || input.toLowerCase().includes('sovereignty') || input.toLowerCase().includes('independence'),
-      reward: 700
-    }
-  };
+  // Step 1: Hash Fundamentals
+  function HashFundamentals() {
+    const [inputText, setInputText] = useState('Hello Bitcoin!');
+    const [hashResult, setHashResult] = useState('');
+    const [isHashing, setIsHashing] = useState(false);
+    const [hashHistory, setHashHistory] = useState([]);
 
-  // Crisis alert system
-  const generateTrustCollapseAlert = useCallback(() => {
-    const alerts = [
-      "🚨 BREAKING: Major bank declares bankruptcy - trust system failing",
-      "⚠️ CRITICAL: Government currency manipulation detected - trust eroding",
-      "🔥 URGENT: Financial institution fraud exposed - trust crisis deepening",
-      "💥 ALERT: Trust-based verification system compromised - immediate action required",
-      "⚡ CRISIS: Human trust networks collapsing worldwide - mathematical proof needed",
-      "🛡️ DEFEND: Digital sovereignty under attack - cryptographic proof required"
-    ];
-    
-    const newAlert = {
-      id: Date.now(),
-      message: alerts[Math.floor(Math.random() * alerts.length)],
-      timestamp: new Date().toLocaleTimeString(),
-      intensity: Math.floor(Math.random() * 100) + 1
-    };
-    
-    setTrustCollapseAlerts(prev => [newAlert, ...prev.slice(0, 4)]);
-    setCrisisIntensity(prev => Math.min(prev + 10, 100));
-  }, []);
-
-  // Initialize crisis alerts
-  useEffect(() => {
-    generateTrustCollapseAlert();
-    const interval = setInterval(generateTrustCollapseAlert, 7000);
-    return () => clearInterval(interval);
-  }, [generateTrustCollapseAlert]);
-
-  // Handle challenge completion
-  const handleChallengeComplete = (challengeId, success) => {
-    if (success) {
-      const challenge = challengeImplementations[challengeId];
-      setMasteryPoints(prev => prev + challenge.reward);
-      setTotalTrustEliminated(prev => prev + 1);
-      setCrisisIntensity(prev => Math.max(prev - 15, 0));
+    const performHash = async (text) => {
+      setIsHashing(true);
       
-      // Update specific mastery systems
-      switch (crisisPhase) {
-        case 'trust_collapse_detective':
-          setTrustCollapseAlerts(prev => prev.map(alert => ({ ...alert, resolved: true })));
-          break;
-        case 'cryptographic_proof_engineer':
-          setCryptographicProofs(prev => ({ 
-            ...prev, 
-            verified: prev.verified + 1,
-            mastery: prev.mastery + 20
-          }));
-          break;
-        case 'impossibility_proof_master':
-          setImpossibilityMastery(prev => ({
-            ...prev,
-            attempts: prev.attempts + 1,
-            understanding: prev.understanding + 25
-          }));
-          break;
-        case 'trust_machine_architect':
-          setTrustMachineArchitecture(prev => ({
-            ...prev,
-            systems: [...prev.systems, challengeId],
-            efficiency: prev.efficiency + 15
-          }));
-          break;
-        case 'chain_integrity_guardian':
-          setChainIntegrity(prev => ({
-            ...prev,
-            blocks: prev.blocks + 1,
-            security: prev.security + 20
-          }));
-          break;
-        case 'digital_sovereignty_defender':
-          setDigitalSovereignty(prev => ({
-            ...prev,
-            sovereignty: prev.sovereignty + 25,
-            independence: prev.independence + 20
-          }));
-          break;
-      }
+      // Simulate processing time for educational effect
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      setFeedback(`🎯 PROOF MASTERY ACHIEVED! +${challenge.reward} points`);
-      
-      // Check for phase advancement
-      if (masteryPoints + challenge.reward >= architectLevel * 500) {
-        advancePhase();
-      }
-    } else {
-      setFeedback("❌ Trust crisis continues - strengthen your cryptographic proof");
-      setCrisisIntensity(prev => Math.min(prev + 5, 100));
-    }
-  };
-
-  // Phase advancement system
-  const advancePhase = () => {
-    const phases = Object.keys(crisisScenarios);
-    const currentIndex = phases.indexOf(crisisPhase);
-    
-    if (currentIndex < phases.length - 1) {
-      setCrisisPhase(phases[currentIndex + 1]);
-      setArchitectLevel(prev => prev + 1);
-      setFeedback(`🚀 PHASE ADVANCED! You are now a ${crisisScenarios[phases[currentIndex + 1]].title}`);
-    } else {
-      setFeedback("👑 ULTIMATE MASTERY ACHIEVED! You are the Digital Sovereignty Defender!");
-    }
-  };
-
-  // Challenge submission handler
-  const handleSubmit = () => {
-    if (!activeChallenge) return;
-    
-    const challenge = challengeImplementations[activeChallenge.id];
-    let isCorrect = false;
-    
-    if (challenge.type === 'hash_input' || challenge.type === 'hash_comparison' || challenge.type === 'reverse_hash' || challenge.type === 'open_ended') {
-      isCorrect = challenge.validator(userInput);
-      if (challenge.type === 'hash_input' && userInput.toLowerCase() === 'bitcoin') {
-        setHashResult(sha256('Bitcoin'));
-      }
-    } else if (challenge.options) {
-      isCorrect = parseInt(userInput) === challenge.correctAnswer;
-    }
-    
-    handleChallengeComplete(activeChallenge.id, isCorrect);
-    
-    if (isCorrect) {
-      setActiveChallenge(null);
-      setUserInput('');
-      setHashResult('');
-      setShowHint(false);
-    }
-  };
-
-  // Start challenge
-  const startChallenge = (challenge) => {
-    setActiveChallenge(challenge);
-    setUserInput('');
-    setHashResult('');
-    setFeedback('');
-    setShowHint(false);
-  };
-
-  // Hash demonstration
-  const demonstrateHash = (input) => {
-    if (input) {
-      setHashResult(sha256(input));
-    } else {
-      setHashResult('');
-    }
-  };
-
-  const currentScenario = crisisScenarios[crisisPhase];
-
-        return (
-    <div className="hashing-module">
-      {/* Crisis Command Center */}
-      <div className="crisis-command-center">
-        <div className="crisis-header">
-          <h1 className="crisis-title">Cryptographic Proof Crisis Architect</h1>
-          <div className="crisis-status">
-            <div className="architect-level">Level {architectLevel} {currentScenario.title}</div>
-            <div className="mastery-points">{masteryPoints} Mastery Points</div>
-            <div className="crisis-meter">
-              <div 
-                className="crisis-intensity" 
-                style={{ width: `${crisisIntensity}%` }}
-              />
-              <span>Crisis: {crisisIntensity}%</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Trust Collapse Alerts */}
-        <div className="crisis-alerts">
-          <h3>🚨 Trust Collapse Feed</h3>
-          <div className="alerts-container">
-            {trustCollapseAlerts.map(alert => (
-              <div 
-                key={alert.id} 
-                className={`crisis-alert ${alert.resolved ? 'resolved' : ''}`}
-              >
-                <span className="alert-time">{alert.timestamp}</span>
-                <span className="alert-message">{alert.message}</span>
-                <span className="alert-intensity">{alert.intensity}%</span>
-              </div>
-            ))}
-              </div>
-              </div>
-            </div>
-
-      {/* Current Crisis Scenario */}
-      <div className="crisis-scenario">
-        <div className="scenario-header">
-          <h2>{currentScenario.title}</h2>
-          <div className="crisis-badge">{currentScenario.urgency}</div>
-            </div>
+      try {
+        const hash = await sha256(text);
+        setHashResult(hash);
         
-        <div className="crisis-description">
-          <h3>🔥 {currentScenario.crisis}</h3>
-          <p>{currentScenario.description}</p>
-          <div className="objective">
-            <strong>Mission:</strong> {currentScenario.objective}
-          </div>
-          <div className="threat">
-            <strong>Threat:</strong> {currentScenario.threat}
-          </div>
-      </div>
+        // Add to history
+        setHashHistory(prev => [
+          { input: text, hash, timestamp: new Date() },
+          ...prev.slice(0, 4) // Keep last 5 entries
+        ]);
+      } catch (error) {
+        // Fallback simple hash for demo
+        const simpleHash = text.split('').reduce((hash, char) => {
+          const charCode = char.charCodeAt(0);
+          hash = ((hash << 5) - hash) + charCode;
+          return Math.abs(hash).toString(16).padStart(64, '0').slice(0, 64);
+        }, 0);
+        setHashResult(simpleHash);
+      }
+      
+      setIsHashing(false);
+    };
 
-        {/* Crisis Challenges */}
-        <div className="crisis-challenges">
-          <h3>⚡ Active Challenges</h3>
-          <div className="challenges-grid">
-            {currentScenario.challenges.map(challenge => (
-              <div key={challenge.id} className="challenge-card">
-                <h4>{challenge.title}</h4>
-                <p>{challenge.description}</p>
-                <div className="challenge-meta">
-                  <span className="challenge-type">{challenge.type}</span>
-                  <span className="challenge-difficulty">{challenge.difficulty}</span>
-                </div>
-                <ActionButton 
-                  className="challenge-start-btn"
-                  onClick={() => startChallenge(challenge)}
-                  variant="crisis"
-                  size="small"
-                >
-                  Begin Challenge
-                </ActionButton>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    useEffect(() => {
+      performHash(inputText);
+    }, []);
 
-      {/* Active Challenge Interface */}
-      {activeChallenge && (
-        <div className="active-challenge">
-          <div className="challenge-header">
-            <h3>🎯 {activeChallenge.title}</h3>
-            <NavigationButton
-              className="challenge-close"
-              onClick={() => setActiveChallenge(null)}
-              variant="close"
-              size="small"
-            >
-              ×
-            </NavigationButton>
+    const hashProperties = [
+      {
+        title: "🎯 Deterministic",
+        description: "Same input always produces the same hash",
+        example: "\"Hello\" always hashes to the same value"
+      },
+      {
+        title: "⚡ Fast Computation",
+        description: "Quick to calculate in one direction",
+        example: "Can hash gigabytes of data in seconds"
+      },
+      {
+        title: "🔒 Fixed Output Size",
+        description: "Always produces 256-bit (64 character) output",
+        example: "Whether input is 1 byte or 1 GB, output is always 64 hex chars"
+      },
+      {
+        title: "🌊 Avalanche Effect",
+        description: "Tiny input change = completely different output",
+        example: "\"Hello\" vs \"hello\" produce totally different hashes"
+      },
+      {
+        title: "🚪 One-Way",
+        description: "Impossible to reverse engineer the input",
+        example: "Given a hash, can't determine what created it"
+      }
+    ];
+
+    return (
+      <div className="hash-fundamentals">
+        <div className="module-header">
+          <h2>🔐 Hash Functions: The Foundation of Bitcoin Security</h2>
+          <p>Discover how mathematical functions create unbreakable digital fingerprints...</p>
         </div>
+
+        <div className="interactive-hasher">
+          <h3>🧪 Interactive Hash Generator</h3>
+          <p>Type anything and watch it transform into a unique digital fingerprint:</p>
           
-          <div className="challenge-content">
-            <div className="challenge-question">
-              {challengeImplementations[activeChallenge.id].question}
-            </div>
-            
-            {challengeImplementations[activeChallenge.id].options ? (
-              <div className="challenge-options">
-                {challengeImplementations[activeChallenge.id].options.map((option, index) => (
-                  <OptionButton
-                    key={index}
-                    className={`option-btn ${userInput === index.toString() ? 'selected' : ''}`}
-                    onClick={() => setUserInput(index.toString())}
-                    selected={userInput === index.toString()}
-                    variant="quiz"
-                  >
-                    {option}
-                  </OptionButton>
-                ))}
-              </div>
-            ) : (
-              <div className="challenge-input">
-                <input
-                  type="text"
-                  value={userInput}
-                  onChange={(e) => {
-                    setUserInput(e.target.value);
-                    if (challengeImplementations[activeChallenge.id].type === 'hash_input') {
-                      demonstrateHash(e.target.value);
-                    }
-                  }}
-                  placeholder="Enter your answer..."
-                  onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                />
-                <ActionButton 
-                  onClick={handleSubmit}
-                  variant="primary"
-                  size="small"
-                >
-                  Submit
-                </ActionButton>
-              </div>
-            )}
-            
-            {hashResult && (
-              <div className="hash-result">
-                <h4>Hash Result:</h4>
-                <div className="hash-display">{hashResult}</div>
-              </div>
-            )}
-            
-            {showHint && challengeImplementations[activeChallenge.id].hint && (
-              <div className="challenge-hint">
-                💡 {challengeImplementations[activeChallenge.id].hint}
-              </div>
-            )}
-            
-            {challengeImplementations[activeChallenge.id].hint && (
-              <PopupButton 
-                className="hint-btn"
-                onClick={() => setShowHint(!showHint)}
-                variant="secondary"
-                size="small"
-              >
-                {showHint ? 'Hide Hint' : 'Show Hint'}
-              </PopupButton>
-            )}
-            
-            {feedback && (
-              <div className={`challenge-feedback ${feedback.includes('ACHIEVED') ? 'success' : 'error'}`}>
-                {feedback}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Hash Demonstration Lab */}
-      <div className="hash-lab">
-        <h3>🧪 Cryptographic Hash Laboratory</h3>
-        <div className="hash-demo">
           <div className="hash-input-section">
-            <label>Input any text to see its SHA-256 hash:</label>
-            <input
-              type="text"
-              placeholder="Type anything here..."
-              onChange={(e) => demonstrateHash(e.target.value)}
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Type your message here..."
               className="hash-input"
             />
+            <ActionButton 
+              onClick={() => performHash(inputText)}
+              disabled={isHashing}
+              className="primary"
+            >
+              {isHashing ? (
+                <>
+                  <RotateCcw className="w-4 h-4 animate-spin" />
+                  Hashing...
+                </>
+              ) : (
+                <>
+                  <Hash className="w-4 h-4" />
+                  Generate Hash
+                </>
+              )}
+            </ActionButton>
           </div>
-          {hashResult && (
-            <div className="hash-output">
-              <label>SHA-256 Hash:</label>
-              <div className="hash-display">{hashResult}</div>
-              <div className="hash-properties">
-                <div className="property">Length: {hashResult.length} characters</div>
-                <div className="property">Hexadecimal: 0-9, A-F</div>
-                <div className="property">One-way: Cannot be reversed</div>
+
+          <div className="hash-output">
+            <div className="hash-result-card">
+              <div className="hash-label">SHA-256 Hash:</div>
+              <div className="hash-value">
+                {hashResult}
+                <button 
+                  onClick={() => navigator.clipboard.writeText(hashResult)}
+                  className="copy-button"
+                  title="Copy hash"
+                >
+                  <Copy className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="hash-info">
+                Length: {hashResult.length} characters | 256 bits | 32 bytes
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hash-properties">
+          <h3>🏗️ Hash Function Properties</h3>
+          <div className="properties-grid">
+            {hashProperties.map((property, index) => (
+              <div key={index} className="property-card">
+                <h4>{property.title}</h4>
+                <p>{property.description}</p>
+                <div className="property-example">
+                  Example: {property.example}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {hashHistory.length > 0 && (
+          <div className="hash-history">
+            <h3>📜 Hash History</h3>
+            <div className="history-list">
+              {hashHistory.map((entry, index) => (
+                <div key={index} className="history-entry">
+                  <div className="history-input">"{entry.input}"</div>
+                  <div className="history-arrow">→</div>
+                  <div className="history-hash">{entry.hash.slice(0, 16)}...</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="bitcoin-connection">
+          <h3>₿ Why Bitcoin Needs Hash Functions</h3>
+          <div className="connection-points">
+            <div className="connection-point">
+              <Shield className="w-6 h-6" />
+              <div>
+                <h4>Data Integrity</h4>
+                <p>Verify that transaction data hasn't been tampered with</p>
+              </div>
+            </div>
+            <div className="connection-point">
+              <Zap className="w-6 h-6" />
+              <div>
+                <h4>Proof of Work</h4>
+                <p>Mining requires finding hashes with specific properties</p>
+              </div>
+            </div>
+            <div className="connection-point">
+              <Hash className="w-6 h-6" />
+              <div>
+                <h4>Unique Identifiers</h4>
+                <p>Every block and transaction gets a unique hash ID</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(1)}>
+          Explore Avalanche Effect <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 2: Avalanche Effect
+  function AvalancheEffect() {
+    const [originalText, setOriginalText] = useState('The quick brown fox');
+    const [modifiedText, setModifiedText] = useState('The quick brown fox');
+    const [originalHash, setOriginalHash] = useState('');
+    const [modifiedHash, setModifiedHash] = useState('');
+    const [differences, setDifferences] = useState(0);
+    const [avalancheDemo, setAvalancheDemo] = useState(null);
+
+    const calculateHashes = async () => {
+      try {
+        const hash1 = await sha256(originalText);
+        const hash2 = await sha256(modifiedText);
+        
+        setOriginalHash(hash1);
+        setModifiedHash(hash2);
+        
+        // Calculate differences
+        let diffs = 0;
+        for (let i = 0; i < hash1.length; i++) {
+          if (hash1[i] !== hash2[i]) diffs++;
+        }
+        setDifferences(diffs);
+      } catch (error) {
+        // Fallback for demo
+        setOriginalHash('a'.repeat(64));
+        setModifiedHash('b'.repeat(64));
+        setDifferences(64);
+      }
+    };
+
+    useEffect(() => {
+      calculateHashes();
+    }, [originalText, modifiedText]);
+
+    const demonstrateAvalanche = () => {
+      const examples = [
+        { 
+          original: 'Bitcoin', 
+          modified: 'bitcoin',
+          change: 'Changed "B" to "b"'
+        },
+        {
+          original: 'Hello World',
+          modified: 'Hello World!',
+          change: 'Added exclamation mark'
+        },
+        {
+          original: '1234567890',
+          modified: '1234567891',
+          change: 'Changed last digit'
+        }
+      ];
+      
+      setAvalancheDemo(examples);
+    };
+
+    const highlightDifferences = (hash1, hash2) => {
+      return hash1.split('').map((char, index) => (
+        <span 
+          key={index}
+          className={char !== hash2[index] ? 'hash-diff' : 'hash-same'}
+        >
+          {char}
+        </span>
+      ));
+    };
+
+    return (
+      <div className="avalanche-effect">
+        <div className="module-header">
+          <h2>🌊 The Avalanche Effect</h2>
+          <p>See how the tiniest change creates a completely different hash...</p>
+        </div>
+
+        <div className="avalanche-demo">
+          <h3>🔬 Live Avalanche Demonstration</h3>
+          <p>Make tiny changes to the text and watch how dramatically the hash changes:</p>
+          
+          <div className="comparison-inputs">
+            <div className="input-group">
+              <label>Original Text:</label>
+              <input
+                type="text"
+                value={originalText}
+                onChange={(e) => setOriginalText(e.target.value)}
+                className="comparison-input"
+              />
+              <div className="hash-display">
+                {originalHash && highlightDifferences(originalHash, modifiedHash)}
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label>Modified Text:</label>
+              <input
+                type="text"
+                value={modifiedText}
+                onChange={(e) => setModifiedText(e.target.value)}
+                className="comparison-input"
+              />
+              <div className="hash-display">
+                {modifiedHash && highlightDifferences(modifiedHash, originalHash)}
+              </div>
+            </div>
+          </div>
+
+          <div className="avalanche-stats">
+            <div className="stat-card">
+              <h4>Characters Different</h4>
+              <div className="stat-value">{differences} / 64</div>
+              <div className="stat-percentage">
+                {((differences / 64) * 100).toFixed(1)}% different
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <h4>Input Difference</h4>
+              <div className="stat-value">
+                {Math.abs(originalText.length - modifiedText.length) + 
+                 originalText.split('').filter((char, i) => char !== modifiedText[i]).length}
+              </div>
+              <div className="stat-note">character(s) changed</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="avalanche-examples">
+          <h3>📋 Classic Avalanche Examples</h3>
+          <ActionButton onClick={demonstrateAvalanche} className="secondary">
+            <Target className="w-4 h-4" />
+            Show Examples
+          </ActionButton>
+
+          {avalancheDemo && (
+            <div className="examples-grid">
+              {avalancheDemo.map((example, index) => (
+                <div key={index} className="example-card">
+                  <h4>{example.change}</h4>
+                  <div className="example-texts">
+                    <div className="original">"{example.original}"</div>
+                    <div className="modified">"{example.modified}"</div>
+                  </div>
+                  <div className="example-note">
+                    Result: Completely different 256-bit hashes
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="security-implications">
+          <h3>🛡️ Security Implications</h3>
+          <div className="implications-grid">
+            <div className="implication-card">
+              <AlertCircle className="w-6 h-6" />
+              <h4>Tamper Detection</h4>
+              <p>Any change to Bitcoin transaction data produces a completely different hash, making tampering immediately obvious.</p>
+            </div>
+            <div className="implication-card">
+              <CheckCircle className="w-6 h-6" />
+              <h4>Data Integrity</h4>
+              <p>You can verify that data hasn't changed by comparing hash values.</p>
+            </div>
+            <div className="implication-card">
+              <Zap className="w-6 h-6" />
+              <h4>Mining Security</h4>
+              <p>Miners can't predict which small changes will produce valid block hashes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="practical-exercise">
+          <h3>🎯 Try This Exercise</h3>
+          <div className="exercise-card">
+            <p><strong>Challenge:</strong> Try to make the smallest possible change that keeps the hash as similar as possible.</p>
+            <p><strong>Reality:</strong> You'll find it's impossible! Even changing one bit flips about half the output bits.</p>
+            <p><strong>Bitcoin Insight:</strong> This is why Bitcoin is secure - attackers can't make "small" malicious changes that go unnoticed.</p>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(2)}>
+          Understand One-Way Functions <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 3: One-Way Functions
+  function OneWayFunctions() {
+    const [crackingAttempt, setCrackingAttempt] = useState('');
+    const [targetHash, setTargetHash] = useState('');
+    const [attempts, setAttempts] = useState(0);
+    const [timeEstimate, setTimeEstimate] = useState('');
+    const [bruteForcDemo, setBruteForcDemo] = useState(false);
+
+    const targetHashes = [
+      {
+        hash: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
+        hint: '5-letter common greeting',
+        answer: 'hello'
+      },
+      {
+        hash: '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
+        hint: '5-letter common greeting',
+        answer: 'world'
+      }
+    ];
+
+    const [currentTarget, setCurrentTarget] = useState(targetHashes[0]);
+
+    const attemptCrack = async () => {
+      setAttempts(prev => prev + 1);
+      
+      try {
+        const hash = await sha256(crackingAttempt);
+        if (hash === currentTarget.hash) {
+          alert('🎉 Congratulations! You found it! But notice this only worked because you knew it was a common word...');
+        } else {
+          alert('❌ Wrong! The hash doesn\'t match. Try again or see the hint.');
+        }
+      } catch (error) {
+        alert('Error calculating hash');
+      }
+    };
+
+    const demonstrateBruteForce = () => {
+      setBruteForcDemo(true);
+      
+      // Calculate time estimates for different password lengths
+      const estimates = [
+        { length: 4, chars: 'lowercase', time: '0.02 seconds', combinations: '456,976' },
+        { length: 8, chars: 'lowercase', time: '5.4 hours', combinations: '208 billion' },
+        { length: 12, chars: 'mixed case + numbers', time: '2 million years', combinations: '8.9 × 10²¹' },
+        { length: 16, chars: 'mixed + symbols', time: '2 × 10²⁰ years', combinations: '7.2 × 10³¹' }
+      ];
+      
+      setTimeEstimate(estimates);
+    };
+
+    return (
+      <div className="one-way-functions">
+        <div className="module-header">
+          <h2>🚪 One-Way Functions: Easy Forward, Impossible Backward</h2>
+          <p>Understanding why hash functions are cryptographically secure...</p>
+        </div>
+
+        <div className="one-way-explanation">
+          <div className="concept-card">
+            <h3>What Makes a Function "One-Way"?</h3>
+            <div className="direction-demo">
+              <div className="forward-direction">
+                <span className="direction-label">Forward (Easy):</span>
+                <div className="process">
+                  Input → <span className="function">Hash Function</span> → Output
+                </div>
+                <div className="time-estimate">⚡ Milliseconds</div>
+              </div>
+              
+              <div className="backward-direction">
+                <span className="direction-label">Backward (Impossible):</span>
+                <div className="process">
+                  Output → <span className="function">??? Reverse ???</span> → Input
+                </div>
+                <div className="time-estimate">🕰️ Longer than age of universe</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="hash-cracking-challenge">
+          <h3>🎯 Hash Cracking Challenge</h3>
+          <p>Can you find the input that creates this hash?</p>
+          
+          <div className="challenge-setup">
+            <div className="target-hash-display">
+              <strong>Target Hash:</strong>
+              <div className="hash-value">{currentTarget.hash}</div>
+              <div className="hint">Hint: {currentTarget.hint}</div>
+            </div>
+
+            <div className="cracking-interface">
+              <input
+                type="text"
+                value={crackingAttempt}
+                onChange={(e) => setCrackingAttempt(e.target.value)}
+                placeholder="Enter your guess..."
+                className="crack-input"
+              />
+              <ActionButton onClick={attemptCrack} className="primary">
+                <Target className="w-4 h-4" />
+                Try This Input
+              </ActionButton>
+            </div>
+
+            <div className="attempt-counter">
+              Attempts: {attempts}
+            </div>
+          </div>
+        </div>
+
+        <div className="brute-force-analysis">
+          <h3>💻 Brute Force Reality Check</h3>
+          <p>What if an attacker tried every possible combination?</p>
+          
+          <ActionButton onClick={demonstrateBruteForce} className="secondary">
+            <Zap className="w-4 h-4" />
+            Calculate Brute Force Times
+          </ActionButton>
+
+          {bruteForcDemo && timeEstimate && (
+            <div className="brute-force-table">
+              <div className="table-header">
+                <span>Password Length</span>
+                <span>Character Set</span>
+                <span>Combinations</span>
+                <span>Time to Crack</span>
+              </div>
+              {timeEstimate.map((estimate, index) => (
+                <div key={index} className="table-row">
+                  <span>{estimate.length} characters</span>
+                  <span>{estimate.chars}</span>
+                  <span>{estimate.combinations}</span>
+                  <span className={index > 1 ? 'secure-time' : 'insecure-time'}>
+                    {estimate.time}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="bitcoin-implications">
+          <h3>₿ Bitcoin Security Implications</h3>
+          <div className="security-points">
+            <div className="security-point">
+              <Shield className="w-6 h-6" />
+              <div>
+                <h4>Private Key Security</h4>
+                <p>Your Bitcoin private key creates a public key through one-way functions. Even if someone knows your public key, they can't reverse-engineer your private key.</p>
+              </div>
+            </div>
+            
+            <div className="security-point">
+              <Hash className="w-6 h-6" />
+              <div>
+                <h4>Block Mining</h4>
+                <p>Miners must try billions of different values to find a hash that starts with zeros. They can't work backward from the target.</p>
+              </div>
+            </div>
+            
+            <div className="security-point">
+              <AlertCircle className="w-6 h-6" />
+              <div>
+                <h4>Data Protection</h4>
+                <p>Transaction data is protected by hashes. Attackers can't figure out how to modify data to produce a specific hash.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mathematical-insight">
+          <h3>🧮 The Mathematics</h3>
+          <div className="math-explanation">
+            <p>SHA-256 has 2²⁵⁶ possible outputs. That's approximately:</p>
+            <div className="big-number">
+              115,792,089,237,316,195,423,570,985,008,687,907,853,269,984,665,640,564,039,457,584,007,913,129,639,936
+            </div>
+            <p>To put this in perspective: there are only about 10⁸⁰ atoms in the observable universe!</p>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(3)}>
+          Learn Proof of Work <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 4: Proof of Work Demo
+  function ProofOfWorkDemo() {
+    const [miningData, setMiningData] = useState('Bitcoin Block #1');
+    const [targetZeros, setTargetZeros] = useState(4);
+    const [nonce, setNonce] = useState(0);
+    const [currentHash, setCurrentHash] = useState('');
+    const [isMining, setIsMining] = useState(false);
+    const [attempts, setAttempts] = useState(0);
+    const [miningSpeed, setMiningSpeed] = useState(1000); // hashes per second
+
+    const mineBlock = async () => {
+      setIsMining(true);
+      setAttempts(0);
+      let currentNonce = 0;
+      let hash = '';
+      const target = '0'.repeat(targetZeros);
+
+      while (true) {
+        const data = `${miningData}${currentNonce}`;
+        try {
+          hash = await sha256(data);
+        } catch (error) {
+          // Fallback hash for demo
+          hash = data.split('').reduce((hash, char) => {
+            const charCode = char.charCodeAt(0);
+            hash = ((hash << 5) - hash) + charCode;
+            return Math.abs(hash).toString(16).padStart(64, '0').slice(0, 64);
+          }, 0);
+        }
+
+        setCurrentHash(hash);
+        setNonce(currentNonce);
+        setAttempts(prev => prev + 1);
+
+        if (hash.startsWith(target)) {
+          setIsMining(false);
+          break;
+        }
+
+        currentNonce++;
+        
+        // Simulate realistic mining speed
+        if (currentNonce % 100 === 0) {
+          await new Promise(resolve => setTimeout(resolve, 10));
+        }
+
+        // Safety break to prevent infinite loops in demo
+        if (currentNonce > 1000000) {
+          setIsMining(false);
+          break;
+        }
+      }
+    };
+
+    const stopMining = () => {
+      setIsMining(false);
+    };
+
+    const calculateDifficulty = () => {
+      return Math.pow(16, targetZeros);
+    };
+
+    const estimateTime = () => {
+      const difficulty = calculateDifficulty();
+      const estimatedAttempts = difficulty / 2; // Average case
+      const timeInSeconds = estimatedAttempts / miningSpeed;
+      
+      if (timeInSeconds < 60) {
+        return `~${timeInSeconds.toFixed(1)} seconds`;
+      } else if (timeInSeconds < 3600) {
+        return `~${(timeInSeconds / 60).toFixed(1)} minutes`;
+      } else if (timeInSeconds < 86400) {
+        return `~${(timeInSeconds / 3600).toFixed(1)} hours`;
+      } else {
+        return `~${(timeInSeconds / 86400).toFixed(1)} days`;
+      }
+    };
+
+    return (
+      <div className="proof-of-work-demo">
+        <div className="module-header">
+          <h2>⛏️ Proof of Work: Digital Mining Simulation</h2>
+          <p>Experience how Bitcoin mining actually works...</p>
+        </div>
+
+        <div className="mining-explanation">
+          <div className="concept-card">
+            <h3>How Bitcoin Mining Works</h3>
+            <p>Miners compete to find a special number (called a "nonce") that, when combined with transaction data, produces a hash starting with a certain number of zeros.</p>
+            
+            <div className="mining-process">
+              <div className="process-step">
+                <span className="step-number">1</span>
+                <span>Take block data + nonce number</span>
+              </div>
+              <div className="process-step">
+                <span className="step-number">2</span>
+                <span>Calculate SHA-256 hash</span>
+              </div>
+              <div className="process-step">
+                <span className="step-number">3</span>
+                <span>Check if hash starts with enough zeros</span>
+              </div>
+              <div className="process-step">
+                <span className="step-number">4</span>
+                <span>If not, increment nonce and try again</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mining-simulator">
+          <h3>🎮 Mining Simulator</h3>
+          
+          <div className="mining-controls">
+            <div className="control-group">
+              <label>Block Data:</label>
+              <input
+                type="text"
+                value={miningData}
+                onChange={(e) => setMiningData(e.target.value)}
+                disabled={isMining}
+                className="mining-input"
+              />
+            </div>
+            
+            <div className="control-group">
+              <label>Difficulty (zeros required):</label>
+              <input
+                type="number"
+                value={targetZeros}
+                onChange={(e) => setTargetZeros(Math.max(1, Math.min(8, parseInt(e.target.value) || 1)))}
+                disabled={isMining}
+                min="1"
+                max="8"
+                className="difficulty-input"
+              />
+            </div>
+          </div>
+
+          <div className="mining-status">
+            <div className="status-row">
+              <span>Current Nonce:</span>
+              <span className="status-value">{nonce.toLocaleString()}</span>
+            </div>
+            <div className="status-row">
+              <span>Attempts:</span>
+              <span className="status-value">{attempts.toLocaleString()}</span>
+            </div>
+            <div className="status-row">
+              <span>Current Hash:</span>
+              <span className="hash-display">
+                <span className="leading-zeros">
+                  {currentHash.slice(0, targetZeros)}
+                </span>
+                <span className="rest-of-hash">
+                  {currentHash.slice(targetZeros)}
+                </span>
+              </span>
+            </div>
+          </div>
+
+          <div className="mining-actions">
+            {!isMining ? (
+              <ActionButton onClick={mineBlock} className="primary large">
+                <Zap className="w-5 h-5" />
+                Start Mining
+              </ActionButton>
+            ) : (
+              <ActionButton onClick={stopMining} className="danger">
+                Stop Mining
+              </ActionButton>
+            )}
+          </div>
+
+          {currentHash.startsWith('0'.repeat(targetZeros)) && !isMining && (
+            <div className="mining-success">
+              <CheckCircle className="w-6 h-6" />
+              <div>
+                <h4>🎉 Block Mined Successfully!</h4>
+                <p>Found nonce {nonce} after {attempts} attempts!</p>
+                <p>Hash: {currentHash}</p>
               </div>
             </div>
           )}
         </div>
-      </div>
 
-      {/* Mastery Dashboard */}
-      <div className="mastery-dashboard">
-        <h3>🏆 Cryptographic Mastery Systems</h3>
-        <div className="mastery-grid">
-          <div className="mastery-card">
-            <h4>🔍 Trust Collapse Analysis</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(trustCollapseAlerts.filter(a => a.resolved).length * 25, 100)}%` }}
-                />
-    </div>
-              <span>{trustCollapseAlerts.filter(a => a.resolved).length}/4 Alerts Resolved</span>
-      </div>
-      </div>
-
-          <div className="mastery-card">
-            <h4>🔐 Cryptographic Proofs</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(cryptographicProofs.mastery, 100)}%` }}
-                />
-        </div>
-              <span>{cryptographicProofs.verified} Proofs Verified</span>
-    </div>
-    </div>
-
-          <div className="mastery-card">
-            <h4>⚡ Impossibility Mastery</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(impossibilityMastery.understanding, 100)}%` }}
-                />
-              </div>
-              <span>{impossibilityMastery.understanding}% Understanding</span>
-      </div>
-      </div>
-      
-          <div className="mastery-card">
-            <h4>🏗️ Trust Machine Architecture</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(trustMachineArchitecture.efficiency, 100)}%` }}
-                />
-        </div>
-              <span>{trustMachineArchitecture.systems.length} Systems Built</span>
-        </div>
-      </div>
-
-          <div className="mastery-card">
-            <h4>⛓️ Chain Integrity</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(chainIntegrity.security, 100)}%` }}
-                />
-              </div>
-              <span>{chainIntegrity.blocks} Blocks Secured</span>
+        <div className="difficulty-analysis">
+          <h3>📊 Difficulty Analysis</h3>
+          <div className="analysis-grid">
+            <div className="analysis-card">
+              <h4>Target Difficulty</h4>
+              <div className="analysis-value">{targetZeros} leading zeros</div>
+              <div className="analysis-note">1 in {calculateDifficulty().toLocaleString()} chance</div>
             </div>
-      </div>
-
-          <div className="mastery-card">
-            <h4>👑 Digital Sovereignty</h4>
-            <div className="mastery-progress">
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${Math.min(digitalSovereignty.sovereignty, 100)}%` }}
-                />
-      </div>
-              <span>{digitalSovereignty.sovereignty}% Sovereignty</span>
+            
+            <div className="analysis-card">
+              <h4>Estimated Time</h4>
+              <div className="analysis-value">{estimateTime()}</div>
+              <div className="analysis-note">At {miningSpeed.toLocaleString()} hashes/sec</div>
+            </div>
+            
+            <div className="analysis-card">
+              <h4>Real Bitcoin</h4>
+              <div className="analysis-value">~19 leading zeros</div>
+              <div className="analysis-note">Quadrillions of attempts needed</div>
             </div>
           </div>
         </div>
+
+        <div className="real-mining-comparison">
+          <h3>⚡ Real Bitcoin Mining</h3>
+          <div className="comparison-facts">
+            <div className="fact-card">
+              <h4>🏭 Mining Hardware</h4>
+              <p>ASIC miners perform 100+ terahashes per second</p>
+              <p>(100,000,000,000,000 hashes/second)</p>
+            </div>
+            
+            <div className="fact-card">
+              <h4>🌍 Global Network</h4>
+              <p>Total network: ~400 exahashes per second</p>
+              <p>That's 400,000,000,000,000,000,000 hashes/second!</p>
+            </div>
+            
+            <div className="fact-card">
+              <h4>⚡ Energy & Security</h4>
+              <p>All this computing power secures the network</p>
+              <p>Makes attacking Bitcoin extremely expensive</p>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(4)}>
+          Explore Hash Applications <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 5: Hash Applications
+  function HashApplications() {
+    const [selectedApplication, setSelectedApplication] = useState('blocks');
+
+    const hashApplications = {
+      blocks: {
+        title: 'Block Hashing',
+        description: 'Every block gets a unique hash that must meet difficulty requirements',
+        example: {
+          input: 'Block Header (Previous Hash + Merkle Root + Timestamp + Nonce)',
+          output: '00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048',
+          note: 'Notice the leading zeros - this required massive computational effort!'
+        },
+        useCases: [
+          'Unique block identification',
+          'Proof of work verification',
+          'Blockchain linking (each block references previous block\'s hash)'
+        ]
+      },
+      transactions: {
+        title: 'Transaction IDs',
+        description: 'Every transaction gets a unique identifier through double SHA-256',
+        example: {
+          input: 'Transaction Data (inputs + outputs + amounts + signatures)',
+          output: 'f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16',
+          note: 'This is the hash of the first Bitcoin transaction!'
+        },
+        useCases: [
+          'Unique transaction identification',
+          'Transaction verification',
+          'Building Merkle trees for blocks'
+        ]
+      },
+      merkle: {
+        title: 'Merkle Trees',
+        description: 'Hash transactions together to create efficient verification structures',
+        example: {
+          input: 'Hash(Hash(TxA + TxB) + Hash(TxC + TxD))',
+          output: 'Single root hash representing all transactions',
+          note: 'Allows verification of any transaction without downloading the entire block'
+        },
+        useCases: [
+          'Efficient transaction verification',
+          'Reduced storage requirements',
+          'Light client support (SPV)'
+        ]
+      },
+      addresses: {
+        title: 'Address Generation',
+        description: 'Bitcoin addresses are created using multiple hash functions',
+        example: {
+          input: 'Public Key → SHA-256 → RIPEMD-160 → Base58Check',
+          output: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+          note: 'Multiple hash functions provide layered security'
+        },
+        useCases: [
+          'Privacy (public key not revealed until spending)',
+          'Shorter addresses (160 bits vs 256 bits)',
+          'Additional security layer'
+        ]
+      },
+      scripts: {
+        title: 'Script Hashing',
+        description: 'Complex spending conditions are hashed for efficiency',
+        example: {
+          input: 'Complex Script (multisig, timelocks, etc.)',
+          output: 'Script Hash (used in P2SH addresses)',
+          note: 'Allows complex conditions without revealing them until spending'
+        },
+        useCases: [
+          'Multisignature wallets',
+          'Time-locked transactions',
+          'Complex smart contracts'
+        ]
+      }
+    };
+
+    const application = hashApplications[selectedApplication];
+
+    return (
+      <div className="hash-applications">
+        <div className="module-header">
+          <h2>🛠️ Hash Applications in Bitcoin</h2>
+          <p>Discover every way Bitcoin uses cryptographic hashing...</p>
+        </div>
+
+        <div className="application-selector">
+          <div className="selector-buttons">
+            {Object.entries(hashApplications).map(([key, app]) => (
+              <button
+                key={key}
+                className={`selector-button ${selectedApplication === key ? 'active' : ''}`}
+                onClick={() => setSelectedApplication(key)}
+              >
+                {app.title}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="application-details">
+          <div className="application-card">
+            <h3>{application.title}</h3>
+            <p>{application.description}</p>
+            
+            <div className="example-section">
+              <h4>📝 Example</h4>
+              <div className="example-flow">
+                <div className="example-input">
+                  <strong>Input:</strong> {application.example.input}
+                </div>
+                <div className="arrow">↓</div>
+                <div className="example-output">
+                  <strong>Output:</strong> 
+                  <div className="hash-example">{application.example.output}</div>
+                </div>
+                <div className="example-note">
+                  💡 {application.example.note}
+                </div>
+              </div>
+            </div>
+
+            <div className="use-cases">
+              <h4>🎯 Use Cases</h4>
+              <ul>
+                {application.useCases.map((useCase, index) => (
+                  <li key={index}>{useCase}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="hash-security-summary">
+          <h3>🛡️ Hash Security in Bitcoin</h3>
+          <div className="security-grid">
+            <div className="security-point">
+              <CheckCircle className="w-6 h-6" />
+              <div>
+                <h4>Immutability</h4>
+                <p>Changing any transaction would change its hash, breaking the chain</p>
+              </div>
+            </div>
+            
+            <div className="security-point">
+              <Shield className="w-6 h-6" />
+              <div>
+                <h4>Integrity</h4>
+                <p>Hash verification ensures data hasn't been corrupted or tampered with</p>
+              </div>
+            </div>
+            
+            <div className="security-point">
+              <Zap className="w-6 h-6" />
+              <div>
+                <h4>Efficiency</h4>
+                <p>Hash comparisons are much faster than comparing entire data structures</p>
+              </div>
+            </div>
+            
+            <div className="security-point">
+              <Eye className="w-6 h-6" />
+              <div>
+                <h4>Privacy</h4>
+                <p>Hashes hide original data while still allowing verification</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="module-completion">
+          <div className="completion-card">
+            <CheckCircle className="w-8 h-8 text-green-500" />
+            <h3>🎓 Hash Mastery Complete!</h3>
+            <p>You now understand:</p>
+            <ul>
+              <li>✅ Hash function properties and security</li>
+              <li>✅ The avalanche effect and tamper detection</li>
+              <li>✅ One-way functions and cryptographic security</li>
+              <li>✅ Proof of work mining mechanics</li>
+              <li>✅ Every Bitcoin application of cryptographic hashing</li>
+            </ul>
+            
+            <div className="next-steps">
+              <p><strong>Next:</strong> Now that you understand hashing, you're ready to explore how Bitcoin uses these concepts in mining, transactions, and the blockchain structure.</p>
+            </div>
+            
+            <ActionButton onClick={() => completeModule('hashing')} className="primary large">
+              <CheckCircle className="w-5 h-5" />
+              Complete Hashing Module
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main component render
+  const currentStepData = hashingSteps[currentStep];
+  const StepComponent = currentStepData?.component;
+
+  return (
+    <div className="hashing-module">
+      <div className="module-progress">
+        <div className="progress-header">
+          <h1>🔐 Cryptographic Hashing Mastery</h1>
+          <p>Master the mathematical foundation of Bitcoin security</p>
+        </div>
+        
+        <div className="steps-progress">
+          {hashingSteps.map((step, index) => (
+            <div 
+              key={step.id}
+              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+            >
+              <div className="step-number">{index + 1}</div>
+              <div className="step-info">
+                <div className="step-title">{step.title}</div>
+                <div className="step-subtitle">{step.subtitle}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Crisis Statistics */}
-      <div className="crisis-statistics">
-        <h3>📊 Trust Elimination Statistics</h3>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-number">{totalTrustEliminated}</div>
-            <div className="stat-label">Trust Points Eliminated</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{masteryPoints}</div>
-            <div className="stat-label">Mastery Points</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{architectLevel}</div>
-            <div className="stat-label">Architect Level</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-number">{100 - crisisIntensity}%</div>
-            <div className="stat-label">Crisis Controlled</div>
-          </div>
-        </div>
+      <div className="step-content">
+        {StepComponent && <StepComponent />}
       </div>
-      
-      {/* Achievement System */}
-      <div className="achievement-system">
-        <h3>🏅 Cryptographic Achievement Unlocks</h3>
-        <div className="achievements-grid">
-          <div className={`achievement ${masteryPoints >= 500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🔍</div>
-            <div className="achievement-name">Trust Collapse Detective</div>
-            <div className="achievement-desc">Master trust system failure analysis</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 1000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🔐</div>
-            <div className="achievement-name">Cryptographic Proof Engineer</div>
-            <div className="achievement-desc">Engineer mathematical proof systems</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 1500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">⚡</div>
-            <div className="achievement-name">Impossibility Proof Master</div>
-            <div className="achievement-desc">Prove mathematical impossibility</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 2000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">🏗️</div>
-            <div className="achievement-name">Trust Machine Architect</div>
-            <div className="achievement-desc">Architect trustless systems</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 2500 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">⛓️</div>
-            <div className="achievement-name">Chain Integrity Guardian</div>
-            <div className="achievement-desc">Secure blockchain foundations</div>
-          </div>
-          <div className={`achievement ${masteryPoints >= 3000 ? 'unlocked' : 'locked'}`}>
-            <div className="achievement-icon">👑</div>
-            <div className="achievement-name">Digital Sovereignty Defender</div>
-            <div className="achievement-desc">Achieve cryptographic sovereignty</div>
-          </div>
-        </div>
+
+      <div className="module-navigation">
+        {currentStep > 0 && (
+          <NavigationButton 
+            onClick={() => setCurrentStep(currentStep - 1)}
+            direction="prev"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Previous Step
+          </NavigationButton>
+        )}
+        
+        <NavigationButton 
+          onClick={() => navigate('/dashboard')}
+          className="home-button"
+        >
+          Return to Dashboard
+        </NavigationButton>
       </div>
     </div>
   );
