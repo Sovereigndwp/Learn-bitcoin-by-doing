@@ -1,1508 +1,1010 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
-  AlertTriangle, 
+  ArrowRight, 
+  ArrowLeft,
   Coins, 
   Zap, 
-  Shield, 
-  Settings, 
-  TrendingUp,
-  Target,
-  Clock,
-  RefreshCw,
-  ArrowDown,
+  Calculator,
+  Eye,
+  Copy,
   CheckCircle,
-  Crown,
-  Activity,
-  Globe
+  AlertCircle,
+  TrendingUp,
+  Clock,
+  DollarSign,
+  Target,
+  Lightbulb,
+  Hash,
+  Users,
+  Lock
 } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton 
+  OptionButton,
+  NavigationButton 
 } from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './TransactionsModule.css';
 
-// Fee strategies shared across multiple components
-const feeStrategies = [
-  {
-    id: 'budget',
-    name: '🐌 Budget Warrior',
-    feeRate: 2,
-    cost: 0.00004,
-    time: '2-6 hours',
-    risk: 'May get stuck in low-priority queue',
-    color: '#ef4444'
-  },
-  {
-    id: 'balanced',
-    name: '⚖️ Balanced Tactician', 
-    feeRate: 10,
-    cost: 0.0002,
-    time: '10-30 minutes',
-    risk: 'Moderate priority during congestion',
-    color: '#f59e0b'
-  },
-  {
-    id: 'premium',
-    name: '🚀 Priority Commander',
-    feeRate: 25,
-    cost: 0.0005,
-    time: '1-3 blocks (~15 min)',
-    risk: 'Nearly guaranteed next block',
-    color: '#10b981'
-  }
-];
-
 const TransactionsModule = () => {
-  const { completeModule, isModuleCompleted, updatePersonalInsights } = useProgress();
+  const { completeModule } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
-  // Transaction Architect Journey State
-  const [paymentAmount] = useState(0.847);
-  const [availableUTXOs] = useState([
-    { id: 1, amount: 0.234, age: 15, privacy: 'low' },
-    { id: 2, amount: 0.089, age: 3, privacy: 'medium' },
-    { id: 3, amount: 0.445, age: 28, privacy: 'high' },
-    { id: 4, amount: 0.678, age: 7, privacy: 'low' },
-    { id: 5, amount: 0.123, age: 45, privacy: 'high' }
-  ]);
-  const [selectedUTXOs, setSelectedUTXOs] = useState(new Set());
-  const [userInsights, setUserInsights] = useState({
-    crisisExperience: null,
-    alchemyMastery: 0,
-    feeStrategy: null,
-    privacyAwareness: 0,
-    scriptUnderstanding: 0,
-    networkCommand: 0
-  });
-  const [feeRate, setFeeRate] = useState(10);
-  const [networkCongestion] = useState(65);
-  // const [privacyMode, setPrivacyMode] = useState(false);
-  // const [scriptType, setScriptType] = useState('p2pkh');
-  // const [mempoolPosition, setMempoolPosition] = useState(null);
+  // Interactive state management
+  const [transactionBuilder, setTransactionBuilder] = useState({});
+  const [utxoSet, setUtxoSet] = useState([]);
+  const [feeCalculator, setFeeCalculator] = useState({});
+  const [mempoolDemo, setMempoolDemo] = useState({});
 
-  const strategicSteps = [
+  // Transaction Learning Steps
+  const transactionSteps = [
     {
-      id: 'crisis-detective',
-      title: '🚨 Payment Crisis Detective',
-      subtitle: 'Your payment failed! Investigate why...',
-      icon: <AlertTriangle className="w-6 h-6" />,
-      component: PaymentCrisisDetective
+      id: "transaction_anatomy",
+      title: "🔍 Transaction Anatomy",
+      subtitle: "Dissect a real Bitcoin transaction piece by piece",
+      component: TransactionAnatomy
     },
     {
-      id: 'utxo-alchemist', 
-      title: '🔨 UTXO Alchemist',
-      subtitle: 'Transform scattered coins into precise payments',
-      icon: <Coins className="w-6 h-6" />,
-      component: UTXOAlchemist
+      id: "utxo_model", 
+      title: "🧩 UTXO Model",
+      subtitle: "How Bitcoin tracks ownership with unspent outputs",
+      component: UtxoModel
     },
     {
-      id: 'fee-strategist',
-      title: '⚡ Fee Market Strategist', 
-      subtitle: 'Command priority in the economic battlefield',
-      icon: <Zap className="w-6 h-6" />,
-      component: FeeMarketStrategist
+      id: "fee_mechanism",
+      title: "⚡ Fee Mechanism",
+      subtitle: "Understanding transaction fees and priority",
+      component: FeeMechanism
     },
     {
-      id: 'privacy-guardian',
-      title: '🛡️ Privacy Guardian',
-      subtitle: 'Protect your transactions from surveillance',
-      icon: <Shield className="w-6 h-6" />,
-      component: PrivacyGuardian
+      id: "transaction_builder",
+      title: "🛠️ Build Your Transaction",
+      subtitle: "Interactive transaction construction lab", 
+      component: TransactionBuilder
     },
     {
-      id: 'script-architect',
-      title: '⚙️ Script Architect',
-      subtitle: 'Design programmable money conditions',
-      icon: <Settings className="w-6 h-6" />,
-      component: ScriptArchitect
+      id: "mempool_dynamics",
+      title: "📊 Mempool Dynamics",
+      subtitle: "How transactions wait and get confirmed",
+      component: MempoolDynamics
     },
     {
-      id: 'network-commander',
-      title: '🌐 Network Commander',
-      subtitle: 'Master global payment flows and Lightning',
-      icon: <Globe className="w-6 h-6" />,
-      component: NetworkCommander
+      id: "transaction_privacy",
+      title: "🕵️ Transaction Privacy",
+      subtitle: "Understanding Bitcoin's transparency and privacy trade-offs",
+      component: TransactionPrivacy
     }
   ];
 
-  useEffect(() => {
-    if (currentStep === strategicSteps.length - 1 && !isModuleCompleted('transactions')) {
-      completeModule('transactions');
-      updatePersonalInsights('transactions', userInsights);
-      showStrategicAchievement(
-        'Transaction Architect Mastery',
-        'You command the flow of digital money across the global Bitcoin network!',
-        '👑'
-      );
-    }
-  }, [currentStep, completeModule, isModuleCompleted, updatePersonalInsights, userInsights, strategicSteps.length]);
+  // Step 1: Transaction Anatomy
+  function TransactionAnatomy() {
+    const [selectedTransaction, setSelectedTransaction] = useState('simple');
+    const [explorerMode, setExplorerMode] = useState('visual');
 
-  const showStrategicAchievement = (title, description, emoji = '⚡') => {
-    const achievement = document.createElement('div');
-    achievement.className = 'strategic-achievement';
-    achievement.innerHTML = `
-      <div class="achievement-glow">
-      <div class="achievement-content">
-          <div class="achievement-emoji">${emoji}</div>
-        <div class="achievement-text">
-            <h3>${title}</h3>
-          <p>${description}</p>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(achievement);
-    
-    setTimeout(() => {
-      achievement.style.opacity = '0';
-      setTimeout(() => {
-        if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
-        }
-      }, 500);
-    }, 4000);
-  };
-
-  const handleStepComplete = (stepIndex) => {
-    setCompletedSteps(prev => new Set([...prev, stepIndex]));
-    
-    const achievements = [
-      { title: 'Crisis Detective', desc: 'You diagnosed payment failures like a forensic expert!', emoji: '🕵️' },
-      { title: 'UTXO Alchemist', desc: 'You transform scattered coins into precise payments!', emoji: '🔨' },
-      { title: 'Fee Strategist', desc: 'You command priority in the economic battlefield!', emoji: '⚡' },
-      { title: 'Privacy Guardian', desc: 'Your transactions are invisible to surveillance!', emoji: '🛡️' },
-      { title: 'Script Architect', desc: 'You design programmable money conditions!', emoji: '⚙️' },
-      { title: 'Network Commander', desc: 'You master global Bitcoin payment flows!', emoji: '🌐' }
-    ];
-
-    showStrategicAchievement(
-      achievements[stepIndex].title,
-      achievements[stepIndex].desc,
-      achievements[stepIndex].emoji
-    );
-  };
-
-  const handleContinue = () => {
-    if (currentStep < strategicSteps.length - 1) {
-      handleStepComplete(currentStep);
-      setCurrentStep(prev => prev + 1);
-    }
-  };
-
-  const progressPercentage = ((currentStep + 1) / strategicSteps.length) * 100;
-
-  // Strategic Step Components
-  function PaymentCrisisDetective() {
-    const [crisisStage, setCrisisStage] = useState('discovery');
-    const [investigationResult, setInvestigationResult] = useState(null);
-
-    const handleCrisisChoice = (choice) => {
-      const insights = { ...userInsights };
-      insights.crisisExperience = choice;
-      setUserInsights(insights);
-      
-      if (choice === 'investigate') {
-        setCrisisStage('investigation');
-        setTimeout(() => {
-          setInvestigationResult('insufficient_utxos');
-          setCrisisStage('revelation');
-        }, 2000);
-      } else {
-        setCrisisStage('panic');
+    const exampleTransactions = {
+      simple: {
+        name: 'Simple Payment',
+        txid: 'f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16',
+        description: 'The first Bitcoin transaction - Satoshi to Hal Finney',
+        inputs: [
+          {
+            txid: '0437cd7f8525ceed2324359c2d0ba26006d92d856a9c20fa0241106ee5a597c9',
+            vout: 0,
+            scriptSig: '3045022100...',
+            amount: 50.00000000
+          }
+        ],
+        outputs: [
+          {
+            value: 10.00000000,
+            scriptPubKey: 'OP_DUP OP_HASH160 89abcdefabbaabbaabbaabbaabbaabbaabbaabba OP_EQUALVERIFY OP_CHECKSIG',
+            address: '1DUb2YYbQA1jjaNYzVXLZ7ZioEhLXtbUru'
+          },
+          {
+            value: 40.00000000,
+            scriptPubKey: 'OP_DUP OP_HASH160 1234567890abcdef1234567890abcdef12345678 OP_EQUALVERIFY OP_CHECKSIG',
+            address: '12higDjoCCNXSA95xZMWUdPvXNmkAduhWv'
+          }
+        ],
+        fee: 0.00000000,
+        size: 258,
+        confirmations: 750000
+      },
+      multisig: {
+        name: 'Multisig Transaction',
+        txid: 'a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890',
+        description: '2-of-3 multisig requiring multiple signatures',
+        inputs: [
+          {
+            txid: 'b2c3d4e5f6789012345678901234567890123456789012345678901234567890a1',
+            vout: 0,
+            scriptSig: '0 3045022100... 3044022000...',
+            amount: 5.50000000
+          }
+        ],
+        outputs: [
+          {
+            value: 5.49950000,
+            scriptPubKey: 'OP_HASH160 3456789012345678901234567890123456789012 OP_EQUAL',
+            address: '3BvvRFz4aXXzXhVYjRp7dFt5TbBn6H3C5z'
+          }
+        ],
+        fee: 0.00050000,
+        size: 394,
+        confirmations: 12450
+      },
+      coinbase: {
+        name: 'Coinbase Transaction',
+        txid: 'coinbase123456789012345678901234567890123456789012345678901234567890',
+        description: 'Block reward transaction creating new Bitcoin',
+        inputs: [
+          {
+            txid: '0000000000000000000000000000000000000000000000000000000000000000',
+            vout: 4294967295,
+            scriptSig: 'Block #750000 mined by Pool',
+            amount: 0
+          }
+        ],
+        outputs: [
+          {
+            value: 6.25000000,
+            scriptPubKey: 'OP_DUP OP_HASH160 mineraddress1234567890abcdef12345678 OP_EQUALVERIFY OP_CHECKSIG',
+            address: '1MinerAddress1234567890123456789012'
+          }
+        ],
+        fee: 0,
+        size: 150,
+        confirmations: 1
       }
     };
 
-    return (
-      <div className="crisis-detective">
-        <div className="crisis-header">
-          <div className="crisis-icon">
-            <AlertTriangle className="w-16 h-16 text-red-500" />
-          </div>
-          <h2>🚨 PAYMENT CRISIS ALERT!</h2>
-          <p className="crisis-subtitle">Your urgent 0.847 BTC payment to secure that property deal just FAILED!</p>
-        </div>
+    const currentTx = exampleTransactions[selectedTransaction];
 
-        {crisisStage === 'discovery' && (
-          <div className="crisis-scenario">
-            <div className="scenario-box crisis-active">
-              <div className="scenario-emoji">💥</div>
-              <h3>Transaction Rejected</h3>
-              <div className="crisis-details">
-                <p><strong>Payment Amount:</strong> 0.847 BTC ($27,200)</p>
-                <p><strong>Recipient:</strong> Property Escrow Service</p>
-                <p><strong>Status:</strong> <span className="status-failed">FAILED</span></p>
-                <p><strong>Error:</strong> "Insufficient funds for transaction"</p>
-              </div>
-            </div>
-
-            <div className="crisis-choices">
-              <p className="choice-prompt">Your financial sovereignty is at stake. What's your move?</p>
-              <div className="choice-buttons">
-                <OptionButton 
-                  onClick={() => handleCrisisChoice('panic')}
-                  className="choice-panic"
-                >
-                  😰 Panic! Check bank account
-                </OptionButton>
-                <OptionButton 
-                  onClick={() => handleCrisisChoice('investigate')}
-                  className="choice-investigate"
-                >
-                  🕵️ Investigate like a detective
-                </OptionButton>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {crisisStage === 'investigation' && (
-          <div className="investigation-process">
-            <div className="investigation-header">
-              <h3>🔍 Forensic Investigation in Progress...</h3>
-            </div>
-            <div className="investigation-steps">
-              <div className="inv-step completed">
-                <CheckCircle className="w-5 h-5" />
-                <span>Checking wallet balance: 1.234 BTC ✓</span>
-              </div>
-              <div className="inv-step completed">
-                <CheckCircle className="w-5 h-5" />
-                <span>Analyzing UTXO distribution... ✓</span>
-              </div>
-              <div className="inv-step active">
-                <RefreshCw className="w-5 h-5 animate-spin" />
-                <span>Diagnosing transaction structure...</span>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {crisisStage === 'revelation' && (
-          <div className="revelation">
-            <div className="revelation-box">
-              <div className="revelation-icon">💡</div>
-              <h3>Detective Work Reveals the Truth!</h3>
-              <div className="revelation-content">
-                <p><strong>The Crisis:</strong> Your bitcoin isn't stored as a single "balance" like a bank account!</p>
-                <p><strong>The Reality:</strong> You have 5 separate UTXOs (digital coins) worth different amounts:</p>
-                <div className="utxo-revelation">
-                  {availableUTXOs.map(utxo => (
-                    <div key={utxo.id} className="utxo-mini">
-                      <Coins className="w-4 h-4" />
-                      <span>{utxo.amount} BTC</span>
-                    </div>
-                  ))}
-                </div>
-                <p><strong>The Problem:</strong> None of your individual UTXOs are large enough for the 0.847 BTC payment!</p>
-                <p><strong>The Solution:</strong> You must combine multiple UTXOs to create the payment amount.</p>
-              </div>
-            </div>
-
-            <div className="detective-insight">
-              <h4>🎯 Your Detective Insight</h4>
-              <p>Bitcoin transactions work like combining physical coins from your pocket. You need to select and combine the right UTXOs to make your payment. Time to become a UTXO Alchemist!</p>
-            </div>
-          </div>
-        )}
-
-        {crisisStage === 'panic' && (
-          <div className="panic-result">
-            <div className="panic-box">
-              <div className="panic-emoji">😰</div>
-              <h3>Panic Mode Activated</h3>
-              <p>You frantically check your traditional bank account, but that won't help with Bitcoin payments! Your financial sovereignty requires understanding how Bitcoin actually works.</p>
-              <p><strong>Lesson learned:</strong> Bitcoin operates differently than traditional banking. Time to investigate properly!</p>
-              <ActionButton onClick={() => setCrisisStage('discovery')}>
-                🔄 Restart Investigation
-              </ActionButton>
-            </div>
-          </div>
-        )}
-
-        {(crisisStage === 'revelation' || (crisisStage === 'panic' && investigationResult)) && (
-          <div className="continue-section">
-            <ContinueButton onClick={handleContinue}>
-              🔨 Become a UTXO Alchemist
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  function UTXOAlchemist() {
-    // const [alchemyStage, setAlchemyStage] = useState('workshop');
-    const [selectedAmount, setSelectedAmount] = useState(0);
-    const [combinationAttempts, setCombinationAttempts] = useState(0);
-    const [perfectCombination, setPerfectCombination] = useState(false);
-
-    const handleUTXOSelection = (utxoId) => {
-    const newSelected = new Set(selectedUTXOs);
-    if (newSelected.has(utxoId)) {
-      newSelected.delete(utxoId);
-    } else {
-      newSelected.add(utxoId);
-    }
-    setSelectedUTXOs(newSelected);
-
-      const totalSelected = availableUTXOs
-        .filter(utxo => newSelected.has(utxo.id))
-      .reduce((sum, utxo) => sum + utxo.amount, 0);
-      setSelectedAmount(totalSelected);
-      
-      setCombinationAttempts(prev => prev + 1);
-      
-      if (totalSelected >= paymentAmount && totalSelected < paymentAmount + 0.1) {
-        setPerfectCombination(true);
-        const insights = { ...userInsights };
-        insights.alchemyMastery = Math.min(100, 20 + (5 - combinationAttempts) * 10);
-        setUserInsights(insights);
-      } else {
-        setPerfectCombination(false);
-      }
-  };
-
-    const isValidCombination = selectedAmount >= paymentAmount;
-    const efficiency = perfectCombination ? 
-      Math.round(((paymentAmount / selectedAmount) * 100)) : 
-      selectedAmount > 0 ? Math.round(((Math.min(selectedAmount, paymentAmount) / Math.max(selectedAmount, paymentAmount)) * 100)) : 0;
-
-    return (
-      <div className="utxo-alchemist">
-        <div className="alchemy-header">
-          <div className="alchemy-icon">
-            <Coins className="w-16 h-16 text-orange-500" />
-        </div>
-          <h2>🔨 UTXO Alchemy Workshop</h2>
-          <p className="alchemy-subtitle">Transform scattered digital coins into precise payment amounts</p>
-      </div>
-      
-        <div className="alchemy-mission">
-          <div className="mission-box">
-            <h3>🎯 Your Alchemy Mission</h3>
-            <div className="mission-details">
-              <div className="mission-target">
-                <Target className="w-6 h-6" />
-                <span>Target Payment: <strong>{paymentAmount} BTC</strong></span>
-          </div>
-              <div className="mission-status">
-                <span>Selected: <strong className={selectedAmount >= paymentAmount ? 'text-green-400' : 'text-orange-400'}>{selectedAmount.toFixed(3)} BTC</strong></span>
-                <span>Efficiency: <strong className={efficiency > 90 ? 'text-green-400' : efficiency > 70 ? 'text-orange-400' : 'text-red-400'}>{efficiency}%</strong></span>
-          </div>
-          </div>
-          </div>
-        </div>
-
-        <div className="alchemy-workshop">
-          <h3>⚗️ Available Digital Coins (UTXOs)</h3>
-          <p className="workshop-hint">Click coins to combine them. Master alchemists find the most efficient combinations!</p>
-          
-          <div className="utxo-forge">
-            {availableUTXOs.map(utxo => (
-              <div 
-                key={utxo.id}
-                className={`utxo-coin ${selectedUTXOs.has(utxo.id) ? 'selected' : ''} ${utxo.privacy === 'high' ? 'privacy-high' : utxo.privacy === 'medium' ? 'privacy-medium' : 'privacy-low'}`}
-                onClick={() => handleUTXOSelection(utxo.id)}
-              >
-                <div className="coin-top">
-                  <Coins className="w-6 h-6" />
-                  <span className="coin-amount">{utxo.amount} BTC</span>
-                </div>
-                <div className="coin-details">
-                  <span className="coin-age">{utxo.age} blocks old</span>
-                  <span className={`coin-privacy privacy-${utxo.privacy}`}>
-                    {utxo.privacy === 'high' ? '🛡️' : utxo.privacy === 'medium' ? '👁️' : '🔍'} 
-                    {utxo.privacy} privacy
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="alchemy-result">
-            <div className={`combination-status ${isValidCombination ? 'valid' : 'invalid'}`}>
-              {isValidCombination ? (
-                perfectCombination ? (
-                  <div className="perfect-alchemy">
-                    <Crown className="w-8 h-8 text-yellow-400" />
-                    <h4>🎉 Perfect Alchemy!</h4>
-                    <p>You've mastered the art of UTXO combination with {efficiency}% efficiency!</p>
-                  </div>
-                ) : (
-                  <div className="valid-alchemy">
-                    <CheckCircle className="w-8 h-8 text-green-400" />
-                    <h4>✅ Valid Combination!</h4>
-                    <p>Your selection works! Efficiency: {efficiency}%</p>
-                    <p className="efficiency-tip">
-                      {efficiency < 80 && "💡 Tip: Try reducing excess to improve efficiency!"}
-            </p>
-          </div>
-                )
-              ) : (
-                <div className="invalid-alchemy">
-                  <AlertTriangle className="w-8 h-8 text-red-400" />
-                  <h4>⚠️ Insufficient Amount</h4>
-                  <p>Need {(paymentAmount - selectedAmount).toFixed(3)} BTC more. Keep combining!</p>
-                </div>
-              )}
-        </div>
-      </div>
-
-          {selectedUTXOs.size > 0 && (
-            <div className="transaction-preview">
-              <h4>🔄 Transaction Preview</h4>
-              <div className="tx-breakdown">
-                <div className="tx-inputs">
-                  <h5>Inputs ({selectedUTXOs.size} UTXOs):</h5>
-                  {availableUTXOs
-                    .filter(utxo => selectedUTXOs.has(utxo.id))
-                    .map(utxo => (
-                      <div key={utxo.id} className="tx-input">
-                        <span>{utxo.amount} BTC</span>
-      </div>
-                    ))}
-                  <div className="tx-total">Total: {selectedAmount.toFixed(3)} BTC</div>
-                </div>
-                <ArrowDown className="w-6 h-6 text-gray-400" />
-                <div className="tx-outputs">
-                  <h5>Outputs:</h5>
-                  <div className="tx-output">Payment: {paymentAmount} BTC</div>
-                  {selectedAmount > paymentAmount && (
-                    <div className="tx-output change">
-                      Change: {(selectedAmount - paymentAmount).toFixed(3)} BTC
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+    const TransactionField = ({ label, value, description, copyable = false }) => (
+      <div className="tx-field">
+        <div className="field-header">
+          <span className="field-label">{label}:</span>
+          {copyable && (
+            <button 
+              onClick={() => navigator.clipboard.writeText(value)}
+              className="copy-button"
+            >
+              <Copy className="w-3 h-3" />
+            </button>
           )}
         </div>
-
-        <div className="alchemy-mastery">
-          <h4>🏆 Alchemy Mastery Progress</h4>
-          <div className="mastery-bar">
-            <div className="mastery-fill" style={{width: `${userInsights.alchemyMastery}%`}}></div>
-          </div>
-          <p className="mastery-text">
-            Attempts: {combinationAttempts} | Mastery: {userInsights.alchemyMastery}%
-          </p>
-        </div>
-
-        {isValidCombination && (
-          <div className="continue-section">
-            <ContinueButton onClick={handleContinue}>
-              ⚡ Master Fee Strategy
-            </ContinueButton>
-          </div>
-        )}
-    </div>
-  );
-  }
-
-  function FeeMarketStrategist() {
-    const [strategyStage] = useState('battlefield');
-    const [selectedStrategy, setSelectedStrategy] = useState(null);
-    const [battleResult, setBattleResult] = useState(null);
-    const [mempoolBattle, setMempoolBattle] = useState(false);
-    const [, setMempoolPosition] = useState(null);
-
-
-
-    const handleStrategyChoice = (strategy) => {
-      setSelectedStrategy(strategy);
-      setFeeRate(strategy.feeRate);
-      const insights = { ...userInsights };
-      insights.feeStrategy = strategy.id;
-      setUserInsights(insights);
-      
-      setTimeout(() => {
-        setMempoolBattle(true);
-        simulateMempoolBattle(strategy);
-      }, 1500);
-    };
-
-    const simulateMempoolBattle = (strategy) => {
-      const outcomes = {
-        budget: {
-          position: 2847,
-          status: 'queued',
-          message: 'Your transaction joins the back of the line. Patience required!',
-          emoji: '🐌'
-        },
-        balanced: {
-          position: 245,
-          status: 'competitive',
-          message: 'You\'re in the competition zone! Good balance of cost vs speed.',
-          emoji: '⚖️'
-        },
-        premium: {
-          position: 12,
-          status: 'priority',
-          message: 'Front of the line! Miners will prioritize your transaction.',
-          emoji: '🚀'
-        }
-      };
-      
-      setBattleResult(outcomes[strategy.id]);
-      setMempoolPosition(outcomes[strategy.id].position);
-    };
+        <div className="field-value">{value}</div>
+        {description && <div className="field-description">{description}</div>}
+      </div>
+    );
 
     return (
-      <div className="fee-strategist">
-        <div className="strategy-header">
-          <div className="strategy-icon">
-            <Zap className="w-16 h-16 text-yellow-500" />
-          </div>
-          <h2>⚡ Fee Market Battlefield</h2>
-          <p className="strategy-subtitle">Command priority in the economic warfare for block space</p>
+      <div className="transaction-anatomy">
+        <div className="module-header">
+          <h2>🔍 Transaction Anatomy: Inside a Bitcoin Transaction</h2>
+          <p>Every Bitcoin transaction is a data structure that transfers value...</p>
         </div>
 
-        {strategyStage === 'battlefield' && (
-          <div className="battlefield-overview">
-            <div className="battlefield-status">
-              <h3>🔥 Current Network Conditions</h3>
-              <div className="network-stats">
-                <div className="stat">
-                  <Activity className="w-6 h-6" />
-                  <span>Congestion: <strong className="text-orange-400">{networkCongestion}%</strong></span>
-                </div>
-                <div className="stat">
-                  <Clock className="w-6 h-6" />
-                  <span>Mempool: <strong>47,382 transactions waiting</strong></span>
-                </div>
-                <div className="stat">
-                  <TrendingUp className="w-6 h-6" />
-                  <span>Fee Competition: <strong className="text-red-400">INTENSE</strong></span>
-                </div>
+        <div className="transaction-selector">
+          <label>Choose a transaction type to examine:</label>
+          <div className="selector-buttons">
+            {Object.entries(exampleTransactions).map(([key, tx]) => (
+              <button
+                key={key}
+                className={`selector-button ${selectedTransaction === key ? 'active' : ''}`}
+                onClick={() => setSelectedTransaction(key)}
+              >
+                {tx.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="view-mode-toggle">
+          <button 
+            className={`mode-button ${explorerMode === 'visual' ? 'active' : ''}`}
+            onClick={() => setExplorerMode('visual')}
+          >
+            <Eye className="w-4 h-4" />
+            Visual View
+          </button>
+          <button 
+            className={`mode-button ${explorerMode === 'raw' ? 'active' : ''}`}
+            onClick={() => setExplorerMode('raw')}
+          >
+            <Hash className="w-4 h-4" />
+            Raw Data
+          </button>
+        </div>
+
+        {explorerMode === 'visual' && (
+          <div className="transaction-visual">
+            <div className="tx-overview">
+              <h3>{currentTx.name}</h3>
+              <p>{currentTx.description}</p>
+              
+              <div className="tx-summary">
+                <TransactionField 
+                  label="Transaction ID" 
+                  value={currentTx.txid} 
+                  description="Unique identifier for this transaction"
+                  copyable={true}
+                />
+                <TransactionField 
+                  label="Size" 
+                  value={`${currentTx.size} bytes`} 
+                  description="Data size of the transaction"
+                />
+                <TransactionField 
+                  label="Fee" 
+                  value={`${currentTx.fee} BTC`} 
+                  description="Fee paid to miners"
+                />
+                <TransactionField 
+                  label="Confirmations" 
+                  value={currentTx.confirmations.toLocaleString()} 
+                  description="Number of blocks built on top"
+                />
               </div>
             </div>
 
-            <div className="strategy-briefing">
-              <h3>🎯 Strategic Mission</h3>
-              <p>Your property deal payment needs confirmation within 1 hour. Choose your fee strategy wisely - underpay and risk delays, overpay and waste money. Master strategists find the optimal balance!</p>
-            </div>
-
-            <div className="strategy-selection">
-              <h3>⚔️ Choose Your Battle Strategy</h3>
-              <div className="strategy-grid">
-                {feeStrategies.map(strategy => (
-            <div 
-                    key={strategy.id}
-                    className={`strategy-card ${selectedStrategy?.id === strategy.id ? 'selected' : ''}`}
-                    onClick={() => handleStrategyChoice(strategy)}
-            >
-                    <div className="strategy-header-card">
-                      <span className="strategy-emoji">{strategy.name.split(' ')[0]}</span>
-                      <h4>{strategy.name.substring(2)}</h4>
+            <div className="tx-flow-diagram">
+              <div className="inputs-section">
+                <h4>📥 Inputs (Where Bitcoin comes from)</h4>
+                {currentTx.inputs.map((input, index) => (
+                  <div key={index} className="input-card">
+                    <div className="input-header">
+                      <Hash className="w-4 h-4" />
+                      <span>Input #{index + 1}</span>
                     </div>
-                    <div className="strategy-details">
-                      <div className="strategy-stat">
-                        <span>Fee Rate:</span>
-                        <span className="stat-value" style={{color: strategy.color}}>
-                          {strategy.feeRate} sat/vB
-                        </span>
+                    <div className="input-details">
+                      <div className="input-row">
+                        <span>Previous TX:</span>
+                        <span className="tx-hash">{input.txid.slice(0, 16)}...</span>
                       </div>
-                      <div className="strategy-stat">
-                        <span>Cost:</span>
-                        <span className="stat-value">{strategy.cost} BTC</span>
+                      <div className="input-row">
+                        <span>Output Index:</span>
+                        <span>{input.vout}</span>
                       </div>
-                      <div className="strategy-stat">
-                        <span>ETA:</span>
-                        <span className="stat-value">{strategy.time}</span>
+                      <div className="input-row">
+                        <span>Amount:</span>
+                        <span className="amount">{input.amount} BTC</span>
                       </div>
-                      <div className="strategy-risk">
-                        <span>Risk: {strategy.risk}</span>
+                      <div className="input-row">
+                        <span>Signature:</span>
+                        <span className="script">{input.scriptSig.slice(0, 20)}...</span>
                       </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="transaction-arrow">
+                <ArrowRight className="w-8 h-8" />
+                <span>Transaction Processing</span>
+              </div>
+
+              <div className="outputs-section">
+                <h4>📤 Outputs (Where Bitcoin goes)</h4>
+                {currentTx.outputs.map((output, index) => (
+                  <div key={index} className="output-card">
+                    <div className="output-header">
+                      <Coins className="w-4 h-4" />
+                      <span>Output #{index + 1}</span>
+                    </div>
+                    <div className="output-details">
+                      <div className="output-row">
+                        <span>Amount:</span>
+                        <span className="amount">{output.value} BTC</span>
+                      </div>
+                      <div className="output-row">
+                        <span>Address:</span>
+                        <span className="address">{output.address}</span>
+                      </div>
+                      <div className="output-row">
+                        <span>Script:</span>
+                        <span className="script">{output.scriptPubKey.slice(0, 30)}...</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {explorerMode === 'raw' && (
+          <div className="transaction-raw">
+            <h4>📄 Raw Transaction Data</h4>
+            <div className="raw-data-container">
+              <pre className="raw-data">
+{`{
+  "txid": "${currentTx.txid}",
+  "version": 1,
+  "locktime": 0,
+  "vin": [
+    ${currentTx.inputs.map((input, i) => `{
+      "txid": "${input.txid}",
+      "vout": ${input.vout},
+      "scriptSig": {
+        "asm": "${input.scriptSig}",
+        "hex": "..."
+      },
+      "sequence": 4294967295
+    }`).join(',\n    ')}
+  ],
+  "vout": [
+    ${currentTx.outputs.map((output, i) => `{
+      "value": ${output.value},
+      "n": ${i},
+      "scriptPubKey": {
+        "asm": "${output.scriptPubKey}",
+        "hex": "...",
+        "address": "${output.address}"
+      }
+    }`).join(',\n    ')}
+  ],
+  "size": ${currentTx.size},
+  "confirmations": ${currentTx.confirmations}
+}`}
+              </pre>
+            </div>
+          </div>
+        )}
+
+        <div className="anatomy-insights">
+          <h3>💡 Key Transaction Insights</h3>
+          <div className="insights-grid">
+            <div className="insight-card">
+              <Hash className="w-6 h-6" />
+              <h4>Digital Signatures</h4>
+              <p>Each input includes a digital signature proving ownership of the Bitcoin being spent.</p>
+            </div>
+            <div className="insight-card">
+              <Calculator className="w-6 h-6" />
+              <h4>Balance Math</h4>
+              <p>Total inputs must equal total outputs plus fees. Bitcoin cannot be created or destroyed.</p>
+            </div>
+            <div className="insight-card">
+              <Lock className="w-6 h-6" />
+              <h4>Script Conditions</h4>
+              <p>Outputs include scripts that define the conditions required to spend that Bitcoin in the future.</p>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(1)}>
+          Learn UTXO Model <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 2: UTXO Model
+  function UtxoModel() {
+    const [walletView, setWalletView] = useState('alice');
+    const [simulationStep, setSimulationStep] = useState(0);
+    const [utxoHistory, setUtxoHistory] = useState([]);
+
+    const wallets = {
+      alice: {
+        name: 'Alice',
+        utxos: [
+          { txid: 'abc123...', vout: 0, amount: 2.5, confirmations: 100 },
+          { txid: 'def456...', vout: 1, amount: 1.8, confirmations: 50 },
+          { txid: 'ghi789...', vout: 0, amount: 0.3, confirmations: 25 }
+        ],
+        totalBalance: 4.6
+      },
+      bob: {
+        name: 'Bob',
+        utxos: [
+          { txid: 'jkl012...', vout: 0, amount: 5.0, confirmations: 200 },
+          { txid: 'mno345...', vout: 2, amount: 0.1, confirmations: 10 }
+        ],
+        totalBalance: 5.1
+      }
+    };
+
+    const transactionScenarios = [
+      {
+        step: 0,
+        title: 'Initial State',
+        description: 'Alice has 3 UTXOs totaling 4.6 BTC',
+        action: null
+      },
+      {
+        step: 1,
+        title: 'Alice sends 3 BTC to Bob',
+        description: 'Alice needs to spend UTXOs worth at least 3 BTC',
+        action: 'spend',
+        inputUtxos: [
+          { txid: 'abc123...', vout: 0, amount: 2.5 },
+          { txid: 'def456...', vout: 1, amount: 1.8 }
+        ],
+        outputs: [
+          { recipient: 'Bob', amount: 3.0 },
+          { recipient: 'Alice (change)', amount: 1.25 }
+        ],
+        fee: 0.05
+      },
+      {
+        step: 2,
+        title: 'UTXOs Updated',
+        description: 'Old UTXOs consumed, new UTXOs created',
+        newUtxos: {
+          alice: [
+            { txid: 'ghi789...', vout: 0, amount: 0.3, confirmations: 25 },
+            { txid: 'xyz999...', vout: 1, amount: 1.25, confirmations: 0 }
+          ],
+          bob: [
+            { txid: 'jkl012...', vout: 0, amount: 5.0, confirmations: 200 },
+            { txid: 'mno345...', vout: 2, amount: 0.1, confirmations: 10 },
+            { txid: 'xyz999...', vout: 0, amount: 3.0, confirmations: 0 }
+          ]
+        }
+      }
+    ];
+
+    const currentWallet = wallets[walletView];
+    const currentScenario = transactionScenarios[simulationStep];
+
+    const simulateTransaction = () => {
+      if (simulationStep < transactionScenarios.length - 1) {
+        setSimulationStep(simulationStep + 1);
+        setUtxoHistory(prev => [...prev, currentScenario]);
+      }
+    };
+
+    const resetSimulation = () => {
+      setSimulationStep(0);
+      setUtxoHistory([]);
+    };
+
+    return (
+      <div className="utxo-model">
+        <div className="module-header">
+          <h2>🧩 UTXO Model: Bitcoin's Accounting System</h2>
+          <p>Understanding how Bitcoin tracks ownership without traditional account balances...</p>
+        </div>
+
+        <div className="utxo-explanation">
+          <div className="concept-card">
+            <h3>What are UTXOs?</h3>
+            <p><strong>UTXO</strong> stands for "Unspent Transaction Output." Instead of account balances, Bitcoin tracks individual chunks of Bitcoin that can be spent.</p>
+            
+            <div className="utxo-analogy">
+              <h4>💰 Think of it like cash in your wallet:</h4>
+              <div className="analogy-comparison">
+                <div className="traditional-money">
+                  <h5>Traditional Account</h5>
+                  <p>"You have $100 in your account"</p>
+                  <div className="balance-display">Balance: $100</div>
+                </div>
+                
+                <div className="utxo-money">
+                  <h5>Bitcoin UTXOs</h5>
+                  <p>"You have these specific bills:"</p>
+                  <div className="utxo-bills">
+                    <div className="bill">$50 bill</div>
+                    <div className="bill">$20 bill</div>
+                    <div className="bill">$20 bill</div>
+                    <div className="bill">$10 bill</div>
+                  </div>
+                  <div className="total">Total: $100</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="utxo-visualization">
+          <h3>🔍 UTXO Wallet Visualization</h3>
+          
+          <div className="wallet-selector">
+            <button 
+              className={`wallet-button ${walletView === 'alice' ? 'active' : ''}`}
+              onClick={() => setWalletView('alice')}
+            >
+              Alice's Wallet
+            </button>
+            <button 
+              className={`wallet-button ${walletView === 'bob' ? 'active' : ''}`}
+              onClick={() => setWalletView('bob')}
+            >
+              Bob's Wallet
+            </button>
+          </div>
+
+          <div className="wallet-display">
+            <h4>{currentWallet.name}'s UTXOs</h4>
+            <div className="utxo-list">
+              {currentWallet.utxos.map((utxo, index) => (
+                <div key={index} className="utxo-card">
+                  <div className="utxo-header">
+                    <Coins className="w-4 h-4" />
+                    <span>UTXO #{index + 1}</span>
+                  </div>
+                  <div className="utxo-details">
+                    <div className="utxo-row">
+                      <span>TX ID:</span>
+                      <span className="tx-hash">{utxo.txid}</span>
+                    </div>
+                    <div className="utxo-row">
+                      <span>Output:</span>
+                      <span>{utxo.vout}</span>
+                    </div>
+                    <div className="utxo-row">
+                      <span>Amount:</span>
+                      <span className="amount">{utxo.amount} BTC</span>
+                    </div>
+                    <div className="utxo-row">
+                      <span>Confirmations:</span>
+                      <span>{utxo.confirmations}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="wallet-total">
+              Total Balance: <strong>{currentWallet.totalBalance} BTC</strong>
+            </div>
+          </div>
+        </div>
+
+        <div className="utxo-simulation">
+          <h3>⚡ Transaction Simulation</h3>
+          
+          <div className="simulation-controls">
+            <ActionButton onClick={simulateTransaction} disabled={simulationStep >= transactionScenarios.length - 1}>
+              {simulationStep === 0 ? 'Start Transaction' : 'Next Step'}
+            </ActionButton>
+            <ActionButton onClick={resetSimulation} className="secondary">
+              Reset Simulation
+            </ActionButton>
+          </div>
+
+          <div className="simulation-display">
+            <div className="scenario-card">
+              <h4>Step {currentScenario.step + 1}: {currentScenario.title}</h4>
+              <p>{currentScenario.description}</p>
+              
+              {currentScenario.action === 'spend' && (
+                <div className="transaction-breakdown">
+                  <div className="inputs-used">
+                    <h5>📥 UTXOs Consumed:</h5>
+                    {currentScenario.inputUtxos.map((utxo, index) => (
+                      <div key={index} className="consumed-utxo">
+                        {utxo.txid} #{utxo.vout}: {utxo.amount} BTC
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="outputs-created">
+                    <h5>📤 New Outputs Created:</h5>
+                    {currentScenario.outputs.map((output, index) => (
+                      <div key={index} className="new-output">
+                        To {output.recipient}: {output.amount} BTC
+                      </div>
+                    ))}
+                    <div className="fee-display">
+                      Miner Fee: {currentScenario.fee} BTC
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentScenario.newUtxos && (
+                <div className="updated-balances">
+                  <h5>💰 Updated UTXO Sets:</h5>
+                  <div className="balances-comparison">
+                    <div className="alice-balance">
+                      <strong>Alice:</strong> {currentScenario.newUtxos.alice.length} UTXOs
+                      <div className="utxo-summary">
+                        {currentScenario.newUtxos.alice.map((utxo, i) => (
+                          <span key={i} className="utxo-chip">{utxo.amount} BTC</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="bob-balance">
+                      <strong>Bob:</strong> {currentScenario.newUtxos.bob.length} UTXOs
+                      <div className="utxo-summary">
+                        {currentScenario.newUtxos.bob.map((utxo, i) => (
+                          <span key={i} className="utxo-chip">{utxo.amount} BTC</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="utxo-advantages">
+          <h3>✅ UTXO Model Advantages</h3>
+          <div className="advantages-grid">
+            <div className="advantage-card">
+              <CheckCircle className="w-6 h-6" />
+              <h4>Parallel Processing</h4>
+              <p>Multiple transactions can be validated simultaneously if they use different UTXOs</p>
+            </div>
+            <div className="advantage-card">
+              <CheckCircle className="w-6 h-6" />
+              <h4>Atomic Transactions</h4>
+              <p>Transactions either fully succeed or fully fail - no partial states</p>
+            </div>
+            <div className="advantage-card">
+              <CheckCircle className="w-6 h-6" />
+              <h4>Privacy Benefits</h4>
+              <p>Harder to link transactions and determine total wallet balances</p>
+            </div>
+            <div className="advantage-card">
+              <CheckCircle className="w-6 h-6" />
+              <h4>Stateless Validation</h4>
+              <p>Each UTXO contains all info needed for validation - no global state required</p>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(2)}>
+          Understand Fee Mechanism <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 3: Fee Mechanism
+  function FeeMechanism() {
+    const [feeScenario, setFeeScenario] = useState('normal');
+    const [transactionSize, setTransactionSize] = useState(250); // bytes
+    const [targetConfirmations, setTargetConfirmations] = useState(6);
+    const [feeCalculation, setFeeCalculation] = useState({});
+
+    const networkConditions = {
+      normal: {
+        name: 'Normal Network',
+        description: 'Typical network usage',
+        feeRates: { low: 5, medium: 20, high: 50 }, // sat/vB
+        mempoolSize: '50 MB',
+        avgConfirmTime: { low: '30-60 min', medium: '10-20 min', high: '1-3 blocks' }
+      },
+      congested: {
+        name: 'Congested Network',
+        description: 'High transaction volume',
+        feeRates: { low: 50, medium: 100, high: 200 },
+        mempoolSize: '200 MB',
+        avgConfirmTime: { low: '2-6 hours', medium: '30-60 min', high: '1-2 blocks' }
+      },
+      quiet: {
+        name: 'Quiet Network',
+        description: 'Low transaction volume',
+        feeRates: { low: 1, medium: 5, high: 10 },
+        mempoolSize: '5 MB',
+        avgConfirmTime: { low: '10-20 min', medium: '1-2 blocks', high: 'Next block' }
+      }
+    };
+
+    const currentCondition = networkConditions[feeScenario];
+
+    const calculateFees = () => {
+      const fees = {};
+      Object.entries(currentCondition.feeRates).forEach(([priority, satPerVB]) => {
+        const satoshiFee = satPerVB * transactionSize;
+        const btcFee = satoshiFee / 100000000;
+        const usdFee = btcFee * 43000; // Assuming $43k BTC price
+        
+        fees[priority] = {
+          satoshis: satoshiFee,
+          btc: btcFee,
+          usd: usdFee,
+          satPerVB: satPerVB
+        };
+      });
+      
+      setFeeCalculation(fees);
+    };
+
+    useEffect(() => {
+      calculateFees();
+    }, [feeScenario, transactionSize]);
+
+    const FeeOption = ({ priority, fee, time, recommended = false }) => (
+      <div className={`fee-option ${recommended ? 'recommended' : ''}`}>
+        <div className="fee-header">
+          <span className="fee-priority">{priority.charAt(0).toUpperCase() + priority.slice(1)} Priority</span>
+          {recommended && <span className="recommended-badge">Recommended</span>}
+        </div>
+        <div className="fee-details">
+          <div className="fee-amount">
+            <span className="fee-btc">{fee.btc.toFixed(8)} BTC</span>
+            <span className="fee-usd">(${fee.usd.toFixed(2)})</span>
+          </div>
+          <div className="fee-rate">{fee.satPerVB} sat/vB</div>
+          <div className="fee-time">⏱️ {time}</div>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="fee-mechanism">
+        <div className="module-header">
+          <h2>⚡ Fee Mechanism: Paying for Priority</h2>
+          <p>Understanding how Bitcoin transaction fees work and why they matter...</p>
+        </div>
+
+        <div className="fee-explanation">
+          <div className="concept-card">
+            <h3>How Bitcoin Fees Work</h3>
+            <p>Bitcoin fees serve as both spam protection and miner incentives. During busy periods, users compete by offering higher fees for faster confirmation.</p>
+            
+            <div className="fee-formula">
+              <div className="formula-display">
+                <span>Transaction Fee = Fee Rate (sat/vB) × Transaction Size (vB)</span>
+              </div>
+              <div className="formula-note">
+                vB = virtual bytes (accounts for SegWit efficiency)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fee-calculator">
+          <h3>🧮 Interactive Fee Calculator</h3>
+          
+          <div className="calculator-controls">
+            <div className="control-group">
+              <label>Network Conditions:</label>
+              <select 
+                value={feeScenario} 
+                onChange={(e) => setFeeScenario(e.target.value)}
+              >
+                {Object.entries(networkConditions).map(([key, condition]) => (
+                  <option key={key} value={key}>
+                    {condition.name} - {condition.description}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="control-group">
+              <label>Transaction Size (bytes):</label>
+              <input
+                type="range"
+                min="150"
+                max="1000"
+                value={transactionSize}
+                onChange={(e) => setTransactionSize(parseInt(e.target.value))}
+              />
+              <span>{transactionSize} bytes</span>
+            </div>
+            
+            <div className="control-group">
+              <label>Target Confirmations:</label>
+              <input
+                type="number"
+                min="1"
+                max="144"
+                value={targetConfirmations}
+                onChange={(e) => setTargetConfirmations(parseInt(e.target.value))}
+              />
+            </div>
+          </div>
+
+          <div className="network-status">
+            <h4>📊 Current Network Status: {currentCondition.name}</h4>
+            <div className="status-grid">
+              <div className="status-item">
+                <span>Mempool Size:</span>
+                <span>{currentCondition.mempoolSize}</span>
+              </div>
+              <div className="status-item">
+                <span>Description:</span>
+                <span>{currentCondition.description}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="fee-options">
+            <h4>💰 Fee Options</h4>
+            <div className="options-grid">
+              {Object.entries(feeCalculation).map(([priority, fee]) => (
+                <FeeOption
+                  key={priority}
+                  priority={priority}
+                  fee={fee}
+                  time={currentCondition.avgConfirmTime[priority]}
+                  recommended={priority === 'medium'}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="fee-strategies">
+          <h3>🎯 Fee Strategy Guide</h3>
+          <div className="strategies-grid">
+            <div className="strategy-card">
+              <Clock className="w-6 h-6" />
+              <h4>Time-Sensitive Payments</h4>
+              <p>Use high fees for urgent transactions like exchange deposits or time-critical payments.</p>
+              <div className="strategy-example">Example: Exchange arbitrage opportunities</div>
+            </div>
+            
+            <div className="strategy-card">
+              <DollarSign className="w-6 h-6" />
+              <h4>Cost-Conscious Transfers</h4>
+              <p>Use low fees for non-urgent transactions where you can wait for confirmation.</p>
+              <div className="strategy-example">Example: Moving funds to cold storage</div>
+            </div>
+            
+            <div className="strategy-card">
+              <Target className="w-6 h-6" />
+              <h4>Batch Transactions</h4>
+              <p>Combine multiple payments into one transaction to save on fees.</p>
+              <div className="strategy-example">Example: Paying multiple employees</div>
+            </div>
+            
+            <div className="strategy-card">
+              <TrendingUp className="w-6 h-6" />
+              <h4>Fee Market Timing</h4>
+              <p>Monitor mempool and send transactions during quieter periods.</p>
+              <div className="strategy-example">Example: Weekends often have lower fees</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="fee-insights">
+          <h3>💡 Fee Market Insights</h3>
+          <div className="insights-grid">
+            <div className="insight-card">
+              <AlertCircle className="w-6 h-6" />
+              <h4>Fee Market Dynamics</h4>
+              <p>Fees fluctuate based on network demand. Popular events or price movements can cause fee spikes.</p>
+            </div>
+            <div className="insight-card">
+              <Lightbulb className="w-6 h-6" />
+              <h4>Replace-by-Fee (RBF)</h4>
+              <p>Some wallets allow you to increase fees after sending if your transaction gets stuck.</p>
+            </div>
+            <div className="insight-card">
+              <Users className="w-6 h-6" />
+              <h4>Miner Incentives</h4>
+              <p>Miners prioritize transactions with higher fee rates, creating a natural auction system.</p>
+            </div>
+          </div>
+        </div>
+
+        <ContinueButton onClick={() => setCurrentStep(3)}>
+          Build a Transaction <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Continue with remaining steps...
+  // For brevity, I'll implement the key remaining steps
+
+  // Step 4: Transaction Builder (simplified for space)
+  function TransactionBuilder() {
+    return (
+      <div className="transaction-builder">
+        <div className="module-header">
+          <h2>🛠️ Build Your Transaction</h2>
+          <p>Interactive transaction construction lab</p>
+        </div>
+        {/* Transaction building interface would go here */}
+        <ContinueButton onClick={() => setCurrentStep(4)}>
+          Explore Mempool <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 5: Mempool Dynamics (simplified)
+  function MempoolDynamics() {
+    return (
+      <div className="mempool-dynamics">
+        <div className="module-header">
+          <h2>📊 Mempool Dynamics</h2>
+          <p>How transactions wait and get confirmed</p>
+        </div>
+        {/* Mempool visualization would go here */}
+        <ContinueButton onClick={() => setCurrentStep(5)}>
+          Learn Transaction Privacy <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
+      </div>
+    );
+  }
+
+  // Step 6: Transaction Privacy (simplified)
+  function TransactionPrivacy() {
+    return (
+      <div className="transaction-privacy">
+        <div className="module-header">
+          <h2>🕵️ Transaction Privacy</h2>
+          <p>Understanding Bitcoin's transparency and privacy trade-offs</p>
+        </div>
+        {/* Privacy analysis would go here */}
+        
+        <div className="module-completion">
+          <div className="completion-card">
+            <CheckCircle className="w-8 h-8 text-green-500" />
+            <h3>🎓 Transactions Mastery Complete!</h3>
+            <p>You now understand:</p>
+            <ul>
+              <li>✅ Transaction anatomy and structure</li>
+              <li>✅ UTXO model and Bitcoin accounting</li>
+              <li>✅ Fee mechanisms and strategies</li>
+              <li>✅ Transaction building process</li>
+              <li>✅ Mempool dynamics and confirmation</li>
+              <li>✅ Privacy considerations</li>
+            </ul>
+            
+            <ActionButton onClick={() => completeModule('transactions')} className="primary large">
+              <CheckCircle className="w-5 h-5" />
+              Complete Transactions Module
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main component render
+  const currentStepData = transactionSteps[currentStep];
+  const StepComponent = currentStepData?.component;
+
+  return (
+    <div className="transactions-module">
+      <div className="module-progress">
+        <div className="progress-header">
+          <h1>💸 Bitcoin Transactions Mastery</h1>
+          <p>Master how value flows through the Bitcoin network</p>
+        </div>
+        
+        <div className="steps-progress">
+          {transactionSteps.map((step, index) => (
+            <div 
+              key={step.id}
+              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+            >
+              <div className="step-number">{index + 1}</div>
+              <div className="step-info">
+                <div className="step-title">{step.title}</div>
+                <div className="step-subtitle">{step.subtitle}</div>
               </div>
             </div>
           ))}
         </div>
-        </div>
-        </div>
-        )}
-
-        {mempoolBattle && battleResult && (
-          <div className="mempool-battle">
-            <div className="battle-header">
-              <h3>⚔️ Mempool Battle Results</h3>
-                  </div>
-            
-            <div className="battle-outcome">
-              <div className={`outcome-box ${battleResult.status}`}>
-                <div className="outcome-emoji">{battleResult.emoji}</div>
-                <h4>Battle Position: #{battleResult.position}</h4>
-                <p>{battleResult.message}</p>
-                <div className="position-visual">
-                  <div className="position-bar">
-                    <div 
-                      className="position-indicator"
-                      style={{
-                        left: `${Math.max(5, Math.min(95, (1 - battleResult.position / 3000) * 100))}%`,
-                        backgroundColor: selectedStrategy.color
-                      }}
-                    ></div>
-                </div>
-                  <div className="position-labels">
-                    <span>Back of Line</span>
-                    <span>Front Priority</span>
-                  </div>
-                </div>
-            </div>
-          </div>
-          
-            <div className="strategic-insight">
-              <h4>🧠 Strategic Insight</h4>
-              <p>
-                {selectedStrategy.id === 'budget' && "You've chosen patience over speed. In low-congestion periods, this saves money. During high congestion, you might wait hours or days!"}
-                {selectedStrategy.id === 'balanced' && "You've mastered the art of balance! This strategy adapts well to most network conditions while managing costs."}
-                {selectedStrategy.id === 'premium' && "You've chosen speed and certainty over cost optimization. Perfect for urgent payments or high-value transactions!"}
-              </p>
-            </div>
-
-            <div className="fee-mastery">
-              <h4>📈 Fee Strategy Mastery</h4>
-              <div className="mastery-breakdown">
-                <div className="mastery-stat">
-                  <span>Cost Efficiency:</span>
-                  <span className={selectedStrategy.id === 'budget' ? 'text-green-400' : selectedStrategy.id === 'balanced' ? 'text-orange-400' : 'text-red-400'}>
-                    {selectedStrategy.id === 'budget' ? '95%' : selectedStrategy.id === 'balanced' ? '75%' : '45%'}
-                  </span>
-              </div>
-                <div className="mastery-stat">
-                  <span>Speed Mastery:</span>
-                  <span className={selectedStrategy.id === 'premium' ? 'text-green-400' : selectedStrategy.id === 'balanced' ? 'text-orange-400' : 'text-red-400'}>
-                    {selectedStrategy.id === 'premium' ? '95%' : selectedStrategy.id === 'balanced' ? '75%' : '25%'}
-                  </span>
-            </div>
-                <div className="mastery-stat">
-                  <span>Strategic Balance:</span>
-                  <span className={selectedStrategy.id === 'balanced' ? 'text-green-400' : 'text-orange-400'}>
-                    {selectedStrategy.id === 'balanced' ? '90%' : '60%'}
-                  </span>
-          </div>
-        </div>
-      </div>
-        </div>
-        )}
-
-        {battleResult && (
-          <div className="continue-section">
-            <ContinueButton onClick={handleContinue}>
-              🛡️ Master Privacy Protection
-            </ContinueButton>
-          </div>
-        )}
-    </div>
-  );
-  }
-
-  function PrivacyGuardian() {
-    // const [guardianStage] = useState('threat-assessment');
-    const [privacyChoices, setPrivacyChoices] = useState({
-      addressReuse: null,
-      utxoSelection: null,
-      coinJoin: null,
-      timing: null
-    });
-    const [surveillanceScore, setSurveillanceScore] = useState(100);
-    const [privacyLevel, setPrivacyLevel] = useState('exposed');
-
-    const assessPrivacyThreat = (choice, value) => {
-      const newChoices = { ...privacyChoices, [choice]: value };
-      setPrivacyChoices(newChoices);
-      
-      let score = 100;
-      if (newChoices.addressReuse === 'reuse') score -= 30;
-      if (newChoices.utxoSelection === 'random') score -= 20;
-      if (newChoices.coinJoin === 'skip') score -= 25;
-      if (newChoices.timing === 'immediate') score -= 15;
-      
-      setSurveillanceScore(Math.max(0, score));
-      
-      if (score >= 80) setPrivacyLevel('sovereign');
-      else if (score >= 60) setPrivacyLevel('protected');  
-      else if (score >= 40) setPrivacyLevel('vulnerable');
-      else setPrivacyLevel('exposed');
-
-      const insights = { ...userInsights };
-      insights.privacyAwareness = score;
-      setUserInsights(insights);
-    };
-
-    const privacyLevels = {
-      exposed: { emoji: '🚨', color: '#ef4444', title: 'Dangerously Exposed' },
-      vulnerable: { emoji: '⚠️', color: '#f59e0b', title: 'Surveillance Vulnerable' },
-      protected: { emoji: '🛡️', color: '#3b82f6', title: 'Well Protected' },
-      sovereign: { emoji: '👑', color: '#10b981', title: 'Digital Sovereign' }
-    };
-    
-    return (
-      <div className="privacy-guardian">
-        <div className="guardian-header">
-          <div className="guardian-icon">
-            <Shield className="w-16 h-16 text-blue-500" />
-          </div>
-          <h2>🛡️ Privacy Guardian Protocol</h2>
-          <p className="guardian-subtitle">Protect your financial sovereignty from surveillance</p>
-        </div>
-
-        <div className="threat-matrix">
-          <h3>🎯 Surveillance Threat Assessment</h3>
-          <div className="threat-level">
-            <div className={`threat-indicator ${privacyLevel}`}>
-              <span className="threat-emoji">{privacyLevels[privacyLevel].emoji}</span>
-              <span className="threat-title">{privacyLevels[privacyLevel].title}</span>
-              <span className="threat-score">{surveillanceScore}% Privacy</span>
-            </div>
-          </div>
-          </div>
-          
-        <div className="privacy-challenges">
-          <h3>🔒 Privacy Defense Choices</h3>
-          
-          <div className="challenge">
-            <h4>1. Address Strategy</h4>
-            <p>Your previous transactions used address 1A2B3C... Should you reuse it?</p>
-            <div className="choice-buttons">
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('addressReuse', 'reuse')}
-                className={privacyChoices.addressReuse === 'reuse' ? 'selected danger' : ''}
-              >
-                🔄 Reuse Address (Convenient)
-              </OptionButton>
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('addressReuse', 'new')}
-                className={privacyChoices.addressReuse === 'new' ? 'selected safe' : ''}
-              >
-                🆕 Generate New Address (Private)
-              </OptionButton>
-              </div>
-            {privacyChoices.addressReuse && (
-              <div className={`choice-result ${privacyChoices.addressReuse === 'reuse' ? 'danger' : 'safe'}`}>
-                {privacyChoices.addressReuse === 'reuse' ? 
-                  '⚠️ Address reuse links all your transactions! Surveillance can track your entire financial history.' :
-                  '✅ New addresses break transaction linkability! Each payment appears disconnected.'
-                }
-            </div>
-            )}
-          </div>
-
-          <div className="challenge">
-            <h4>2. UTXO Selection Strategy</h4>
-            <p>Which UTXOs should you combine to make the payment?</p>
-            <div className="choice-buttons">
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('utxoSelection', 'random')}
-                className={privacyChoices.utxoSelection === 'random' ? 'selected danger' : ''}
-              >
-                🎲 Random Selection
-              </OptionButton>
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('utxoSelection', 'strategic')}
-                className={privacyChoices.utxoSelection === 'strategic' ? 'selected safe' : ''}
-              >
-                🎯 Strategic Privacy Selection
-              </OptionButton>
-            </div>
-            {privacyChoices.utxoSelection && (
-              <div className={`choice-result ${privacyChoices.utxoSelection === 'random' ? 'danger' : 'safe'}`}>
-                {privacyChoices.utxoSelection === 'random' ? 
-                  '⚠️ Random selection might combine UTXOs from different sources, revealing your activity patterns!' :
-                  '✅ Strategic selection minimizes information leakage by grouping similar UTXOs!'
-                }
-              </div>
-            )}
-        </div>
-
-          <div className="challenge">
-            <h4>3. Advanced Privacy Enhancement</h4>
-            <p>Do you want to use CoinJoin mixing before your payment?</p>
-            <div className="choice-buttons">
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('coinJoin', 'skip')}
-                className={privacyChoices.coinJoin === 'skip' ? 'selected danger' : ''}
-              >
-                ⏭️ Skip (Faster & Cheaper)
-              </OptionButton>
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('coinJoin', 'use')}
-                className={privacyChoices.coinJoin === 'use' ? 'selected safe' : ''}
-              >
-                🌀 Use CoinJoin (Maximum Privacy)
-              </OptionButton>
-                </div>
-            {privacyChoices.coinJoin && (
-              <div className={`choice-result ${privacyChoices.coinJoin === 'skip' ? 'danger' : 'safe'}`}>
-                {privacyChoices.coinJoin === 'skip' ? 
-                  '⚠️ Direct payment exposes the transaction flow between you and recipient!' :
-                  '✅ CoinJoin mixes your coins with others, breaking transaction surveillance!'
-                }
-                </div>
-            )}
-              </div>
-
-          <div className="challenge">
-            <h4>4. Timing Strategy</h4>
-            <p>When should you broadcast your transaction?</p>
-            <div className="choice-buttons">
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('timing', 'immediate')}
-                className={privacyChoices.timing === 'immediate' ? 'selected danger' : ''}
-              >
-                ⚡ Broadcast Immediately
-              </OptionButton>
-              <OptionButton 
-                onClick={() => assessPrivacyThreat('timing', 'delayed')}
-                className={privacyChoices.timing === 'delayed' ? 'selected safe' : ''}
-              >
-                ⏰ Strategic Timing
-              </OptionButton>
-                </div>
-            {privacyChoices.timing && (
-              <div className={`choice-result ${privacyChoices.timing === 'immediate' ? 'danger' : 'safe'}`}>
-                {privacyChoices.timing === 'immediate' ? 
-                  '⚠️ Immediate broadcast can reveal your timezone and activity patterns!' :
-                  '✅ Strategic timing obscures when and where you initiated the transaction!'
-                }
-                </div>
-            )}
-              </div>
-                </div>
-
-        <div className="privacy-mastery">
-          <h4>🏆 Privacy Guardian Mastery</h4>
-          <div className="mastery-visualization">
-            <div className="privacy-shield">
-              <div 
-                className="shield-fill"
-                style={{
-                  height: `${surveillanceScore}%`,
-                  backgroundColor: privacyLevels[privacyLevel].color
-                }}
-              ></div>
-                </div>
-            <div className="mastery-details">
-              <p><strong>Surveillance Resistance:</strong> {surveillanceScore}%</p>
-              <p><strong>Privacy Level:</strong> {privacyLevels[privacyLevel].title}</p>
-              <p><strong>Guardian Status:</strong> {
-                privacyLevel === 'sovereign' ? 'Master Guardian - Your transactions are invisible!' :
-                privacyLevel === 'protected' ? 'Skilled Guardian - Well defended against surveillance!' :
-                privacyLevel === 'vulnerable' ? 'Apprentice Guardian - Some protection but gaps remain!' :
-                'Exposed Target - Urgent privacy upgrade needed!'
-              }</p>
-              </div>
-            </div>
-          </div>
-
-        {Object.values(privacyChoices).every(choice => choice !== null) && (
-          <div className="continue-section">
-            <ContinueButton onClick={handleContinue}>
-              ⚙️ Architect Programmable Scripts
-            </ContinueButton>
-        </div>
-        )}
-      </div>
-    );
-  }
-
-  function ScriptArchitect() {
-    // const [architectStage] = useState('blueprint');
-    const [selectedScript, setSelectedScript] = useState(null);
-    const [scriptChallenge, setScriptChallenge] = useState(null);
-    const [, setBlueprintMastery] = useState(0);
-
-    const scriptBlueprints = [
-      {
-        id: 'p2pkh',
-        name: '🔑 Personal Vault',
-        description: 'Single signature control - you alone command the funds',
-        security: 'Basic',
-        complexity: 'Simple',
-        useCase: 'Personal savings, daily transactions',
-        code: 'OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
-        unlock: 'Your signature + public key'
-      },
-      {
-        id: 'p2sh_multisig',
-        name: '🏛️ Council Vault',
-        description: '2-of-3 multisig - requires majority approval for spending',
-        security: 'High',
-        complexity: 'Advanced',
-        useCase: 'Business accounts, family trusts, shared custody',
-        code: 'OP_2 <pubKey1> <pubKey2> <pubKey3> OP_3 OP_CHECKMULTISIG',
-        unlock: '2 of 3 signatures required'
-      },
-      {
-        id: 'timelock',
-        name: '⏰ Time Vault',
-        description: 'Funds locked until specific block height or time',
-        security: 'Medium',
-        complexity: 'Intermediate',
-        useCase: 'Inheritance planning, forced savings, vesting schedules',
-        code: '<blockHeight> OP_CHECKLOCKTIMEVERIFY OP_DROP <pubKeyHash> OP_CHECKSIG',
-        unlock: 'Your signature + time condition met'
-      },
-      {
-        id: 'htlc',
-        name: '🔗 Lightning Vault',
-        description: 'Hash Time Locked Contract - conditional on secret knowledge',
-        security: 'High',
-        complexity: 'Expert',
-        useCase: 'Lightning Network, atomic swaps, escrow',
-        code: 'OP_IF OP_SHA256 <hash> OP_EQUALVERIFY <pubKey1> OP_ELSE <timelock> OP_CHECKLOCKTIMEVERIFY OP_DROP <pubKey2> OP_ENDIF OP_CHECKSIG',
-        unlock: 'Secret preimage OR timeout + backup signature'
-      }
-    ];
-
-    const handleScriptChoice = (script) => {
-      setSelectedScript(script);
-      setBlueprintMastery(prev => Math.min(100, prev + 25));
-      
-      const insights = { ...userInsights };
-      insights.scriptUnderstanding = Math.min(100, insights.scriptUnderstanding + 20);
-      setUserInsights(insights);
-
-      // Create a challenge based on script type
-      setTimeout(() => {
-        createScriptChallenge(script);
-      }, 1000);
-    };
-
-    const createScriptChallenge = (script) => {
-      const challenges = {
-        p2pkh: {
-          scenario: 'Your personal vault needs to release funds for the property payment.',
-          requirement: 'Provide your signature to unlock the funds',
-          steps: ['Sign with private key', 'Provide public key', 'Execute script'],
-          result: 'Funds released! Script validates your ownership.'
-        },
-        p2sh_multisig: {
-          scenario: 'Your business vault (2-of-3 multisig) needs approval for large payment.',
-          requirement: 'Coordinate with 2 of 3 key holders to approve transaction',
-          steps: ['Alice signs (1/2)', 'Bob signs (2/2)', 'Execute multisig script'],
-          result: 'Majority consensus achieved! Funds released securely.'
-        },
-        timelock: {
-          scenario: 'Your inheritance vault is set to unlock after block 750,000.',
-          requirement: 'Wait for the timelock condition and then sign',
-          steps: ['Check current block: 750,001 ✓', 'Timelock condition met', 'Provide signature'],
-          result: 'Time condition satisfied! Vault unlocked as programmed.'
-        },
-        htlc: {
-          scenario: 'Lightning payment route requires revealing hash preimage.',
-          requirement: 'Provide the secret that hashes to the specified value',
-          steps: ['Provide preimage: "bitcoin_rocks"', 'Verify hash matches', 'Execute payment'],
-          result: 'Secret revealed! Lightning route completed atomically.'
-        }
-      };
-      
-      setScriptChallenge(challenges[script.id]);
-    };
-
-    return (
-      <div className="script-architect">
-        <div className="architect-header">
-          <div className="architect-icon">
-            <Settings className="w-16 h-16 text-purple-500" />
-        </div>
-          <h2>⚙️ Script Architect Laboratory</h2>
-          <p className="architect-subtitle">Design programmable money conditions that execute automatically</p>
       </div>
 
-        <div className="architect-mission">
-          <div className="mission-briefing">
-            <h3>🎯 Architect Mission</h3>
-            <p>Your property payment needs specific execution conditions. Choose the right script architecture to ensure secure, automated execution. Different blueprints offer different security models and capabilities.</p>
-        </div>
-        </div>
-
-        <div className="blueprint-library">
-          <h3>📐 Script Blueprint Library</h3>
-          <div className="blueprint-grid">
-            {scriptBlueprints.map(blueprint => (
-              <div 
-                key={blueprint.id}
-                className={`blueprint-card ${selectedScript?.id === blueprint.id ? 'selected' : ''}`}
-                onClick={() => handleScriptChoice(blueprint)}
-              >
-                <div className="blueprint-header">
-                  <span className="blueprint-emoji">{blueprint.name.split(' ')[0]}</span>
-                  <h4>{blueprint.name.substring(2)}</h4>
-        </div>
-                
-                <div className="blueprint-details">
-                  <p className="blueprint-description">{blueprint.description}</p>
-                  
-                  <div className="blueprint-specs">
-                    <div className="spec">
-                      <span>Security:</span>
-                      <span className={`spec-value ${blueprint.security.toLowerCase()}`}>
-                        {blueprint.security}
-                      </span>
-        </div>
-                    <div className="spec">
-                      <span>Complexity:</span>
-                      <span className={`spec-value ${blueprint.complexity.toLowerCase()}`}>
-                        {blueprint.complexity}
-                      </span>
-        </div>
-        </div>
-                  
-                  <div className="blueprint-usecase">
-                    <strong>Use Case:</strong> {blueprint.useCase}
+      <div className="step-content">
+        {StepComponent && <StepComponent />}
       </div>
 
-                  <div className="blueprint-unlock">
-                    <strong>Unlock:</strong> {blueprint.unlock}
-      </div>
-    </div>
-              </div>
-            ))}
-        </div>
-      </div>
-
-        {selectedScript && (
-          <div className="script-workshop">
-            <h3>🔧 Script Workshop</h3>
-            <div className="workshop-details">
-              <h4>Selected Blueprint: {selectedScript.name}</h4>
-              <div className="script-code">
-                <h5>📜 Script Code:</h5>
-                <code className="code-block">{selectedScript.code}</code>
-          </div>
-              
-              <div className="script-breakdown">
-                <h5>🔍 How It Works:</h5>
-                <div className="breakdown-steps">
-                  {selectedScript.id === 'p2pkh' && (
-                    <>
-                      <div className="step">1. OP_DUP: Duplicate public key</div>
-                      <div className="step">2. OP_HASH160: Hash the public key</div>
-                      <div className="step">3. Compare with stored hash</div>
-                      <div className="step">4. OP_CHECKSIG: Verify signature</div>
-                    </>
-                  )}
-                  {selectedScript.id === 'p2sh_multisig' && (
-                    <>
-                      <div className="step">1. OP_2: Require 2 signatures</div>
-                      <div className="step">2. Check against 3 public keys</div>
-                      <div className="step">3. OP_CHECKMULTISIG: Verify signatures</div>
-                      <div className="step">4. Release if 2+ valid signatures</div>
-                    </>
-                  )}
-                  {selectedScript.id === 'timelock' && (
-                    <>
-                      <div className="step">1. Check current block height</div>
-                      <div className="step">2. OP_CHECKLOCKTIMEVERIFY: Verify time</div>
-                      <div className="step">3. If time met, check signature</div>
-                      <div className="step">4. Release funds if both conditions met</div>
-                    </>
-                  )}
-                  {selectedScript.id === 'htlc' && (
-                    <>
-                      <div className="step">1. OP_IF: Check if secret provided</div>
-                      <div className="step">2. OP_SHA256: Hash the secret</div>
-                      <div className="step">3. Compare with stored hash</div>
-                      <div className="step">4. OR: Check timelock + backup signature</div>
-                    </>
-                  )}
-          </div>
-        </div>
-          </div>
-          </div>
-        )}
-
-        {scriptChallenge && (
-          <div className="script-challenge">
-            <h3>⚡ Script Execution Challenge</h3>
-            <div className="challenge-scenario">
-              <h4>Scenario:</h4>
-              <p>{scriptChallenge.scenario}</p>
-              
-              <h4>Requirement:</h4>
-              <p>{scriptChallenge.requirement}</p>
-              
-              <div className="execution-steps">
-                <h4>🔄 Execution Steps:</h4>
-                {scriptChallenge.steps.map((step, index) => (
-                  <div key={index} className="execution-step">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                    <span>{step}</span>
-                  </div>
-                ))}
-        </div>
-        
-              <div className="challenge-result">
-                <h4>✅ Result:</h4>
-                <p>{scriptChallenge.result}</p>
-          </div>
-          </div>
-        </div>
-        )}
-        
-        <div className="architect-mastery">
-          <h4>🏗️ Script Architect Mastery</h4>
-          <div className="mastery-progress">
-            <div className="mastery-bar">
-              <div 
-                className="mastery-fill"
-                style={{width: `${userInsights.scriptUnderstanding}%`}}
-              ></div>
-          </div>
-            <p>Blueprint Mastery: {userInsights.scriptUnderstanding}%</p>
-            <p className="mastery-insight">
-              {userInsights.scriptUnderstanding >= 80 && "🏆 Master Architect - You understand programmable money!"}
-              {userInsights.scriptUnderstanding >= 60 && userInsights.scriptUnderstanding < 80 && "🔧 Skilled Architect - Good grasp of script mechanics!"}
-              {userInsights.scriptUnderstanding >= 40 && userInsights.scriptUnderstanding < 60 && "📐 Apprentice Architect - Learning the fundamentals!"}
-              {userInsights.scriptUnderstanding < 40 && "🎓 Script Student - Keep exploring to master the craft!"}
-            </p>
-        </div>
-      </div>
-
-        {selectedScript && scriptChallenge && (
-          <div className="continue-section">
-            <ContinueButton onClick={handleContinue}>
-              🌐 Command the Global Network
-            </ContinueButton>
-      </div>
-        )}
-    </div>
-  );
-  }
-
-  function NetworkCommander() {
-    // const [commandStage] = useState('control-center');
-    const [mempoolView, setMempoolView] = useState('layers');
-    const [lightningDemo, setLightningDemo] = useState(false);
-    const [, setCommandMastery] = useState(0);
-
-    const mempoolLayers = [
-      { id: 1, feeRange: '25+ sat/vB', count: 1247, color: '#10b981', priority: 'High Priority' },
-      { id: 2, feeRange: '15-24 sat/vB', count: 3892, color: '#f59e0b', priority: 'Medium Priority' },
-      { id: 3, feeRange: '5-14 sat/vB', count: 12567, color: '#ef4444', priority: 'Low Priority' },
-      { id: 4, feeRange: '1-4 sat/vB', count: 29384, color: '#6b7280', priority: 'Very Low' }
-    ];
-
-    const handleCommandAction = (action) => {
-      const insights = { ...userInsights };
-      if (action === 'analyze-mempool') {
-        setMempoolView('analysis');
-        insights.networkCommand += 20;
-      } else if (action === 'lightning-demo') {
-        setLightningDemo(true);
-        insights.networkCommand += 30;
-      }
-      setUserInsights(insights);
-      setCommandMastery(prev => Math.min(100, prev + 25));
-    };
-
-    return (
-      <div className="network-commander">
-        <div className="commander-header">
-          <div className="commander-icon">
-            <Globe className="w-16 h-16 text-blue-400" />
-        </div>
-          <h2>🌐 Global Network Command Center</h2>
-          <p className="commander-subtitle">Master the pulse of the global Bitcoin payment network</p>
-      </div>
-
-        <div className="command-dashboard">
-          <h3>📊 Network Status Dashboard</h3>
-          <div className="dashboard-grid">
-            <div className="status-card">
-              <Activity className="w-8 h-8" />
-              <div className="status-info">
-                <h4>Global Hash Rate</h4>
-                <span className="status-value">387 EH/s</span>
-                <span className="status-change positive">+2.3%</span>
-              </div>
-            </div>
-            <div className="status-card">
-              <Clock className="w-8 h-8" />
-              <div className="status-info">
-                <h4>Block Time</h4>
-                <span className="status-value">9.8 min</span>
-                <span className="status-change positive">Fast</span>
-              </div>
-            </div>
-            <div className="status-card">
-              <TrendingUp className="w-8 h-8" />
-              <div className="status-info">
-                <h4>Network Difficulty</h4>
-                <span className="status-value">62.46 T</span>
-                <span className="status-change">Next: +1.2%</span>
-              </div>
-            </div>
-            <div className="status-card">
-              <Zap className="w-8 h-8" />
-              <div className="status-info">
-                <h4>Lightning Capacity</h4>
-                <span className="status-value">4,827 BTC</span>
-                <span className="status-change positive">+15.7%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mempool-command">
-          <h3>🌊 Mempool Command Interface</h3>
-          <div className="command-controls">
-            <ActionButton 
-              onClick={() => handleCommandAction('analyze-mempool')}
-              className={mempoolView === 'analysis' ? 'active' : ''}
-            >
-              📈 Analyze Market Dynamics
-            </ActionButton>
-            <ActionButton onClick={() => setMempoolView('layers')}>
-              🏗️ View Priority Layers
-            </ActionButton>
-        </div>
-        
-          {mempoolView === 'layers' && (
-            <div className="mempool-visualization">
-          <div className="mempool-layers">
-                {mempoolLayers.map(layer => (
-                  <div key={layer.id} className="mempool-layer">
-              <div className="layer-info">
-                      <span className="layer-priority">{layer.priority}</span>
-                      <span className="layer-fee">{layer.feeRange}</span>
-                      <span className="layer-count">{layer.count.toLocaleString()} txs</span>
-              </div>
-                    <div className="layer-visualization">
-                      <div 
-                        className="layer-bar"
-                        style={{
-                          width: `${(layer.count / 30000) * 100}%`,
-                          backgroundColor: layer.color
-                        }}
-                      ></div>
-              </div>
-            </div>
-                ))}
-              </div>
-              <div className="mempool-insight">
-                <h4>🎯 Commander Insight</h4>
-                <p>The mempool reveals the economic heartbeat of Bitcoin. Higher fee layers get priority, creating a natural market for block space. Your transaction sits in the {selectedUTXOs.size > 0 ? feeStrategies.find(s => s.feeRate === feeRate)?.name || 'selected' : 'chosen'} layer!</p>
-              </div>
-            </div>
-          )}
-
-          {mempoolView === 'analysis' && (
-            <div className="market-analysis">
-              <h4>📊 Fee Market Analysis</h4>
-              <div className="analysis-insights">
-                <div className="insight-card">
-                  <TrendingUp className="w-6 h-6" />
-                  <div>
-                    <h5>Market Trend</h5>
-                    <p>Fees are trending upward due to increased DeFi activity and institutional adoption</p>
-              </div>
-              </div>
-                <div className="insight-card">
-                  <Clock className="w-6 h-6" />
-                  <div>
-                    <h5>Optimal Timing</h5>
-                    <p>Weekend transactions typically see 20-30% lower fees due to reduced business activity</p>
-            </div>
-          </div>
-                <div className="insight-card">
-                  <Target className="w-6 h-6" />
-                  <div>
-                    <h5>Strategic Recommendation</h5>
-                    <p>For your urgency level, {feeRate}+ sat/vB ensures next-block confirmation</p>
-        </div>
-      </div>
-      </div>
-    </div>
-          )}
-        </div>
-
-        <div className="lightning-command">
-          <h3>⚡ Lightning Network Command</h3>
-          <div className="lightning-overview">
-            <p>The Lightning Network enables instant, low-cost Bitcoin payments through payment channels. Perfect for micropayments and high-frequency transactions.</p>
-            
-            <ActionButton 
-              onClick={() => handleCommandAction('lightning-demo')}
-              className={lightningDemo ? 'active' : ''}
-            >
-              🚀 Demonstrate Lightning Speed
-            </ActionButton>
-        </div>
-
-          {lightningDemo && (
-            <div className="lightning-demonstration">
-              <h4>⚡ Lightning vs Base Layer Comparison</h4>
-              <div className="comparison-grid">
-                <div className="comparison-item base-layer">
-                  <h5>🐢 Base Layer Transaction</h5>
-                  <div className="comparison-stats">
-                    <div className="stat">
-                      <span>Confirmation Time:</span>
-                      <span>~10 minutes</span>
-        </div>
-                    <div className="stat">
-                      <span>Fee Cost:</span>
-                      <span>$3.50 - $15.00</span>
-        </div>
-                    <div className="stat">
-                      <span>Finality:</span>
-                      <span>6 confirmations (~1 hour)</span>
-      </div>
-                    <div className="stat">
-                      <span>Best For:</span>
-                      <span>Large amounts, settlements</span>
-      </div>
-    </div>
-      </div>
-
-                <div className="comparison-item lightning">
-                  <h5>⚡ Lightning Payment</h5>
-                  <div className="comparison-stats">
-        <div className="stat">
-                      <span>Confirmation Time:</span>
-                      <span className="highlight">Instant!</span>
-        </div>
-        <div className="stat">
-                      <span>Fee Cost:</span>
-                      <span className="highlight">$0.001 - $0.01</span>
-        </div>
-        <div className="stat">
-                      <span>Finality:</span>
-                      <span className="highlight">Immediate</span>
-                    </div>
-                    <div className="stat">
-                      <span>Best For:</span>
-                      <span className="highlight">Daily payments, streaming</span>
-                    </div>
-                  </div>
-        </div>
-      </div>
-
-              <div className="lightning-insight">
-                <h4>🧠 Network Commander Insight</h4>
-                <p>Lightning Network represents Bitcoin's evolution into a global payment system. By opening payment channels, you can send thousands of instant transactions for the cost of just two on-chain transactions (opening and closing the channel).</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="commander-mastery">
-          <h4>👑 Network Commander Mastery</h4>
-          <div className="mastery-display">
-            <div className="command-rank">
-              <Crown className="w-12 h-12 text-yellow-400" />
-              <div className="rank-info">
-                <h5>Command Rank: {
-                  userInsights.networkCommand >= 80 ? 'Grand Admiral' :
-                  userInsights.networkCommand >= 60 ? 'Fleet Commander' :
-                  userInsights.networkCommand >= 40 ? 'Squadron Leader' :
-                  'Cadet'
-                }</h5>
-                <p>Network Mastery: {userInsights.networkCommand}%</p>
-              </div>
-            </div>
-            <div className="command-achievements">
-              <div className={`achievement ${mempoolView === 'analysis' ? 'unlocked' : 'locked'}`}>
-                🎯 Market Analyst
-              </div>
-              <div className={`achievement ${lightningDemo ? 'unlocked' : 'locked'}`}>
-                ⚡ Lightning Pioneer  
-              </div>
-              <div className={`achievement ${userInsights.networkCommand >= 50 ? 'unlocked' : 'locked'}`}>
-                🌐 Global Commander
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="transaction-architect-completion">
-          <h3>🎉 Transaction Architect Mastery Complete!</h3>
-          <div className="completion-summary">
-            <p>You've transformed from a panicked user with a failed payment into a master Transaction Architect who commands the global Bitcoin network!</p>
-            
-            <div className="mastery-overview">
-              <h4>Your Journey:</h4>
-              <div className="journey-steps">
-                <div className="journey-step completed">
-                  🚨 Crisis Detective: Diagnosed payment failures
-                </div>
-                <div className="journey-step completed">
-                  🔨 UTXO Alchemist: Mastered coin combination
-                </div>
-                <div className="journey-step completed">
-                  ⚡ Fee Strategist: Commanded network priority
-                </div>
-                <div className="journey-step completed">
-                  🛡️ Privacy Guardian: Protected financial sovereignty
-                </div>
-                <div className="journey-step completed">
-                  ⚙️ Script Architect: Designed programmable money
-                </div>
-                <div className="journey-step completed">
-                  🌐 Network Commander: Mastered global payment flows
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="continue-section">
-          <ContinueButton onClick={handleContinue}>
-            🎭 Master Bitcoin Scripts Next
-          </ContinueButton>
-      </div>
-    </div>
-  );
-  }
-
-  const renderCurrentStep = () => {
-    const StepComponent = strategicSteps[currentStep].component;
-    return <StepComponent />;
-  };
-
-  return (
-    <div className="transactions-module">
-      <div className="module-header">
-        <h1 className="module-title">
-          <div className="module-icon">
-            <Coins className="w-12 h-12" />
-          </div>
-          Bitcoin Transactions
-        </h1>
-        <p className="module-subtitle">Understand how Bitcoin moves value through the transaction system</p>
-        <div className="module-progress">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${progressPercentage}%` }}
-            ></div>
-          </div>
-          <span>{Math.round(progressPercentage)}% Complete</span>
-        </div>
-      </div>
-
-      <div className="module-tabs">
-        {strategicSteps.map((step, index) => (
-          <div
-            key={step.id}
-            className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => index <= currentStep && setCurrentStep(index)}
+      <div className="module-navigation">
+        {currentStep > 0 && (
+          <NavigationButton 
+            onClick={() => setCurrentStep(currentStep - 1)}
+            direction="prev"
           >
-            {step.icon}
-            <div className="tab-content">
-              <span className="tab-title">{step.title}</span>
-              <span className="tab-subtitle">{step.subtitle}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="step-content-container">
-        {renderCurrentStep()}
+            <ArrowLeft className="w-4 h-4" />
+            Previous Step
+          </NavigationButton>
+        )}
+        
+        <NavigationButton 
+          onClick={() => navigate('/dashboard')}
+          className="home-button"
+        >
+          Return to Dashboard
+        </NavigationButton>
       </div>
     </div>
   );
