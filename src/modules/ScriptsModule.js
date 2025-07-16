@@ -1,1347 +1,1488 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
+import { useNavigate } from 'react-router-dom';
 import { 
-  AlertTriangle, 
-  Code, 
-  Shield, 
-  Zap, 
-  TrendingUp,
-  Crown,
+  Code2, 
+  Play, 
+  Eye, 
+  EyeOff,
+  Copy,
   CheckCircle,
-  Play
+  ArrowRight,
+  ArrowLeft,
+  RotateCcw,
+  Lightbulb,
+  Target,
+  Users,
+  Clock,
+  Shield,
+  Zap,
+  Hash,
+  Key,
+  Calculator,
+  Layers,
+  FileText,
+  Brain,
+  Settings,
+  Globe
 } from 'lucide-react';
 import { 
   ContinueButton, 
-  ActionButton
+  ActionButton,
+  OptionButton,
+  NavigationButton
 } from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 import './ScriptsModule.css';
 
 const ScriptsModule = () => {
-  const { completeModule, updatePersonalInsights } = useProgress();
+  const { completeModule } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
 
-  // Script Architect Journey State (initial state for future features)
-  const [userInsights, setUserInsights] = useState({
-    crisisAwareness: 0,
-    codeCreativity: 0,
-    securityDesign: 0,
-    liquidityEngineering: 0,
-    protocolMastery: 0,
-    economicSovereignty: 0
-  });
+  // Interactive state management
+  const [scriptPlayground, setScriptPlayground] = useState({});
+  const [executionVisualization, setExecutionVisualization] = useState({});
+  const [userScripts, setUserScripts] = useState([]);
+  const [challenges, setChallenges] = useState({});
+  const [insights, setInsights] = useState({});
 
-  const architectSteps = [
+  // Learning progression steps
+  const scriptSteps = [
     {
-      id: 'contract-crisis',
-      title: '🚨 Contract Crisis Detective',
-      subtitle: 'Billion-dollar failures expose the fatal flaw in traditional contracts...',
-      icon: <AlertTriangle className="w-6 h-6" />,
-      component: ContractCrisisDetective
+      id: "script_introduction",
+      title: "🎯 Bitcoin Script Playground",
+      subtitle: "Discover how Bitcoin programs money with simple, powerful scripts",
+      component: ScriptIntroduction
     },
     {
-      id: 'code-alchemist',
-      title: '⚡ Code Alchemist', 
-      subtitle: 'Transform human logic into unstoppable mathematical law',
-      icon: <Code className="w-6 h-6" />,
-      component: CodeAlchemist
+      id: "stack_operations", 
+      title: "📚 Stack-Based Programming",
+      subtitle: "Learn the stack machine that executes every Bitcoin transaction",
+      component: StackOperations
     },
     {
-      id: 'security-architect',
-      title: '🛡️ Security Architect',
-      subtitle: 'Design bulletproof contracts that no single party can break',
-      icon: <Shield className="w-6 h-6" />,
-      component: SecurityArchitect
+      id: "signature_verification",
+      title: "🔐 Digital Signature Verification",
+      subtitle: "Build scripts that verify ownership through cryptographic proofs",
+      component: SignatureVerification
     },
     {
-      id: 'liquidity-engineer',
-      title: '🌊 Liquidity Engineer',
-      subtitle: 'Build payment channels and instant global money flows',
-      icon: <Zap className="w-6 h-6" />,
-      component: LiquidityEngineer
+      id: "multisig_contracts",
+      title: "👥 Multi-Signature Contracts",
+      subtitle: "Create collaborative spending conditions requiring multiple parties",
+      component: MultisigContracts
     },
     {
-      id: 'protocol-designer',
-      title: '🏛️ Protocol Designer',
-      subtitle: 'Master privacy-preserving scripts and next-generation protocols',
-      icon: <TrendingUp className="w-6 h-6" />,
-      component: ProtocolDesigner
+      id: "timelock_conditions",
+      title: "⏰ Time-Locked Transactions",
+      subtitle: "Program money that can only be spent at specific times",
+      component: TimelockConditions
     },
     {
-      id: 'economic-sovereign',
-      title: '💰 Economic Sovereign',
-      subtitle: 'Command global financial infrastructure through programmable money',
-      icon: <Crown className="w-6 h-6" />,
-      component: EconomicSovereign
+      id: "advanced_patterns",
+      title: "🚀 Advanced Script Patterns",
+      subtitle: "Explore complex conditions and modern Bitcoin script techniques",
+      component: AdvancedPatterns
     }
   ];
 
-  useEffect(() => {
-    if (currentStep === architectSteps.length - 1) {
-      completeModule('scripts');
-      updatePersonalInsights('scripts', userInsights);
-      showStrategicAchievement(
-        'Script Architect Mastery',
-        'You can now program unstoppable money contracts that reshape global finance!',
-        '👑'
-      );
-    }
-  }, [currentStep, completeModule, updatePersonalInsights, userInsights, architectSteps.length]);
-
-  const showStrategicAchievement = (title, description, emoji = '⚡') => {
-    const achievement = document.createElement('div');
-    achievement.className = 'strategic-achievement';
-    achievement.innerHTML = `
-      <div class="achievement-glow">
-      <div class="achievement-content">
-          <div class="achievement-emoji">${emoji}</div>
-        <div class="achievement-text">
-            <h3>${title}</h3>
-          <p>${description}</p>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(achievement);
-    
-    setTimeout(() => {
-      achievement.style.opacity = '0';
-      setTimeout(() => {
-        if (document.body.contains(achievement)) {
-          document.body.removeChild(achievement);
-        }
-      }, 500);
-    }, 4000);
-  };
-
   const handleStepComplete = (stepIndex) => {
     setCompletedSteps(prev => new Set([...prev, stepIndex]));
-    
-    const achievements = [
-      { title: 'Crisis Detective', desc: 'You exposed the trillion-dollar flaw in traditional contracts!', emoji: '🕵️' },
-      { title: 'Code Alchemist', desc: 'You transform human logic into mathematical law!', emoji: '⚡' },
-      { title: 'Security Architect', desc: 'You design unbreakable multi-party contracts!', emoji: '🛡️' },
-      { title: 'Liquidity Engineer', desc: 'You build the infrastructure for instant global payments!', emoji: '🌊' },
-      { title: 'Protocol Designer', desc: 'You master privacy-preserving financial protocols!', emoji: '🏛️' },
-      { title: 'Economic Sovereign', desc: 'You command global money flows through code!', emoji: '💰' }
-    ];
-
-    showStrategicAchievement(
-      achievements[stepIndex].title,
-      achievements[stepIndex].desc,
-      achievements[stepIndex].emoji
-    );
+    if (stepIndex === scriptSteps.length - 1) {
+      completeModule('scripts');
+    }
   };
 
   const handleContinue = () => {
-    if (currentStep < architectSteps.length - 1) {
+    if (currentStep < scriptSteps.length - 1) {
       handleStepComplete(currentStep);
       setCurrentStep(prev => prev + 1);
+    } else {
+      handleStepComplete(currentStep);
     }
   };
 
-  const progressPercentage = ((currentStep + 1) / architectSteps.length) * 100;
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(prev => prev - 1);
+    }
+  };
 
-  // Strategic Step Components
-  function ContractCrisisDetective() {
-    const [crisisPhase, setCrisisPhase] = useState('discovery');
-    const [selectedCrisis, setSelectedCrisis] = useState(null);
-    const [investigationResult, setInvestigationResult] = useState(null);
+  const progressPercentage = ((currentStep + 1) / scriptSteps.length) * 100;
+  const CurrentStepComponent = scriptSteps[currentStep]?.component;
 
-    const contractCrises = [
-      {
-        id: 'equifax',
-        title: '💳 Equifax Data Breach Settlement',
-        problem: 'Your personal data was exposed. The settlement contract promised $125 cash to millions.',
-        crisis: 'Only $31 million was allocated. Actual payouts: $6.75 per person maximum.',
-        insight: 'Traditional contracts can change terms when inconvenient',
-        cost: '$31M insufficient for 147M affected people',
-        lesson: 'Contract terms were dependent on human discretion'
-      },
-      {
-        id: 'insurance',
-        title: '🏠 Hurricane Insurance Denial',
-        problem: 'Your home was destroyed. Insurance contract clearly covers storm damage.',
-        crisis: 'Company classified it as "flood damage" (not covered) despite wind destruction.',
-        insight: 'Humans interpret contracts to benefit themselves',
-        cost: '$2.7T in denied claims annually',
-        lesson: 'Contract interpretation is subjective and biased'
-      },
-      {
-        id: 'bank_freeze',
-        title: '🏦 Bank Account Freeze',
-        problem: 'You need emergency funds for medical bills. Money is yours, account is active.',
-        crisis: 'Bank flags "suspicious activity" and freezes account for 30+ days.',
-        insight: 'Contracts give institutions power to override your rights',
-        cost: '$40B in frozen legitimate funds yearly',
-        lesson: 'Contract enforcement depends on centralized authority'
-      }
-    ];
+  // Script Introduction Component
+  function ScriptIntroduction() {
+    const [currentDemo, setCurrentDemo] = useState('overview');
+    const [userPrediction, setUserPrediction] = useState('');
+    const [showReality, setShowReality] = useState(false);
+    const [selectedScript, setSelectedScript] = useState(null);
 
-    const handleCrisisChoice = (crisis) => {
-      setSelectedCrisis(crisis);
-      setCrisisPhase('investigation');
-      
-      setTimeout(() => {
-        setInvestigationResult({
-          rootCause: 'Human Interpretation Problem',
-          solution: 'Mathematical Contract Execution',
-          impact: 'Removes human discretion and bias'
-        });
-        setCrisisPhase('revelation');
-        
-        // Update user insights
-        const insights = { ...userInsights };
-        insights.crisisAwareness = Math.min(insights.crisisAwareness + 25, 100);
-        setUserInsights(insights);
-      }, 2000);
-    };
-
-    return (
-      <div className="crisis-detective">
-        <div className="crisis-header">
-          <div className="crisis-icon">
-            <AlertTriangle className="w-16 h-16 text-red-500" />
-          </div>
-          <h2>🚨 THE CONTRACT CRISIS EPIDEMIC</h2>
-          <p className="crisis-subtitle">Billions lost to broken promises and human interpretation...</p>
-        </div>
-
-        {crisisPhase === 'discovery' && (
-          <div className="crisis-scenarios">
-            <div className="crisis-explanation">
-              <div className="prime-text">
-                💰 Every year, trillions of dollars are lost to contract failures. Not because the contracts 
-                were unclear, but because humans get to decide what they mean.
-              </div>
-            </div>
-
-            <h3>Choose a contract crisis to investigate:</h3>
-            <div className="crisis-grid">
-              {contractCrises.map(crisis => (
-                <div 
-                  key={crisis.id}
-                  className="crisis-card"
-                  onClick={() => handleCrisisChoice(crisis)}
-                >
-                  <div className="crisis-title">{crisis.title}</div>
-                  <div className="crisis-problem">{crisis.problem}</div>
-                  <div className="crisis-cost">{crisis.cost}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {crisisPhase === 'investigation' && selectedCrisis && (
-          <div className="crisis-investigation">
-            <div className="investigation-header">
-              <h3>🔍 Investigating: {selectedCrisis.title}</h3>
-            </div>
-            
-            <div className="investigation-details">
-              <div className="investigation-step">
-                <h4>📋 The Contract Promise</h4>
-                <p>{selectedCrisis.problem}</p>
-              </div>
-              
-              <div className="investigation-step">
-                <h4>💥 What Actually Happened</h4>
-                <p>{selectedCrisis.crisis}</p>
-              </div>
-
-              <div className="investigation-loading">
-                <div className="loading-spinner"></div>
-                <p>Analyzing root cause...</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {crisisPhase === 'revelation' && selectedCrisis && investigationResult && (
-          <div className="crisis-revelation">
-            <div className="revelation-header">
-              <h3>⚡ REVELATION: The Fatal Flaw Exposed</h3>
-            </div>
-
-            <div className="revelation-analysis">
-              <div className="flaw-identified">
-                <h4>🎯 Root Cause Identified</h4>
-                <div className="flaw-box">
-                  <strong>{investigationResult.rootCause}</strong>
-                  <p>{selectedCrisis.lesson}</p>
-                </div>
-              </div>
-
-              <div className="solution-preview">
-                <h4>💡 The Bitcoin Script Solution</h4>
-                <div className="solution-box">
-                  <strong>Mathematical Contract Execution</strong>
-                  <p>Code that executes exactly as written, with no human interpretation</p>
-                  <ul>
-                    <li>✅ No subjective interpretation</li>
-                    <li>✅ No centralized control</li>
-                    <li>✅ No ability to change terms</li>
-                    <li>✅ Mathematically guaranteed execution</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="revelation-impact">
-              <div className="prime-text">
-                🔥 What if contracts could execute automatically, exactly as agreed, with no human 
-                able to override or reinterpret them? That's what Bitcoin scripts make possible.
-              </div>
-            </div>
-
-            <ContinueButton onClick={() => handleContinue()}>
-              Transform Crisis Into Code →
-            </ContinueButton>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  function CodeAlchemist() {
-    const [alchemyPhase, setAlchemyPhase] = useState('learning');
-    const [currentScript, setCurrentScript] = useState('');
-    const [executionSteps, setExecutionSteps] = useState([]);
-    const [completedTransformations, setCompletedTransformations] = useState(new Set());
-
-    const logicTransformations = [
+    const scriptDemos = [
       {
         id: 'simple_payment',
-        title: '💰 Simple Payment',
-        humanLogic: 'If Alice provides a valid signature proving she owns this key, then she can spend the money.',
-        scriptCode: 'OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
-        explanation: 'Duplicate signature, hash it, compare to stored hash, verify signature',
-        difficulty: 'Beginner'
+        name: 'Simple Payment',
+        description: 'Basic "pay to public key hash" - the most common Bitcoin transaction',
+        humanLogic: 'If you can prove you own this address, you can spend the money',
+        script: 'OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        realWorld: 'Like a digital check that only you can cash with your signature'
       },
       {
         id: 'multisig',
-        title: '👥 Corporate Approval',
-        humanLogic: 'If any 2 out of 3 executives provide valid signatures, then approve the payment.',
-        scriptCode: 'OP_2 <pubKey1> <pubKey2> <pubKey3> OP_3 OP_CHECKMULTISIG',
-        explanation: 'Require 2 signatures from 3 possible public keys',
-        difficulty: 'Intermediate'
+        name: 'Multi-Signature',
+        description: 'Requires multiple people to agree before money can be spent',
+        humanLogic: 'If 2 out of 3 board members sign, approve the payment',
+        script: 'OP_2 <pubKey1> <pubKey2> <pubKey3> OP_3 OP_CHECKMULTISIG',
+        realWorld: 'Like a business account requiring multiple signatures on large checks'
       },
       {
         id: 'timelock',
-        title: '⏰ Time Release',
-        humanLogic: 'If the current time is after January 1, 2025, AND Alice provides a valid signature, then release the funds.',
-        scriptCode: '1735689600 OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
-        explanation: 'Check timestamp, then verify signature if time requirement met',
-        difficulty: 'Advanced'
+        name: 'Time Lock',
+        description: 'Money that can only be spent after a certain time',
+        humanLogic: 'If it\'s after January 2025 AND you have the key, spend the money',
+        script: '1735689600 OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        realWorld: 'Like a trust fund that unlocks on your 18th birthday'
       }
     ];
 
-    const executeScriptStep = (script) => {
-      const steps = [];
-      const stack = [];
-    const operations = script.split(' ');
-    
-      operations.forEach((op, index) => {
-        if (op.startsWith('OP_')) {
-          switch (op) {
-            case 'OP_DUP':
-              if (stack.length > 0) {
-                const top = stack[stack.length - 1];
-                stack.push(top);
-                steps.push({ step: index + 1, operation: op, action: `Duplicate top item: ${top}`, stack: [...stack] });
-              }
-              break;
-            case 'OP_HASH160':
-              if (stack.length > 0) {
-                const value = stack.pop();
-                const hashed = `hash160(${value})`;
-                stack.push(hashed);
-                steps.push({ step: index + 1, operation: op, action: `Hash ${value} → ${hashed}`, stack: [...stack] });
-              }
-              break;
-            case 'OP_EQUALVERIFY':
-              if (stack.length >= 2) {
-                const b = stack.pop();
-                const a = stack.pop();
-                steps.push({ step: index + 1, operation: op, action: `Verify ${a} equals ${b}`, stack: [...stack] });
-              }
-              break;
-            case 'OP_CHECKSIG':
-              steps.push({ step: index + 1, operation: op, action: 'Verify signature is valid', stack: [...stack] });
-              break;
-            default:
-              steps.push({ step: index + 1, operation: op, action: `Execute ${op}`, stack: [...stack] });
-          }
-        } else if (!op.startsWith('<')) {
-          stack.push(op);
-          steps.push({ step: index + 1, operation: 'PUSH', action: `Push ${op} to stack`, stack: [...stack] });
-    }
-      });
-      
-      return steps;
-  };
+    const handlePredictionSubmit = () => {
+      setShowReality(true);
+      setInsights(prev => ({
+        ...prev,
+        introduction: {
+          ...prev.introduction,
+          userPrediction,
+          thoughtful: userPrediction.length > 50
+        }
+      }));
+    };
 
-    const handleTransformLogic = (transformation) => {
-      setCurrentScript(transformation.scriptCode);
-      const steps = executeScriptStep(transformation.scriptCode);
-      setExecutionSteps(steps);
-      setAlchemyPhase('demonstration');
-      
-      // Mark transformation as completed
-      setCompletedTransformations(prev => new Set([...prev, transformation.id]));
-      
-      // Update user insights
-      const insights = { ...userInsights };
-      insights.codeCreativity = Math.min(insights.codeCreativity + 30, 100);
-      setUserInsights(insights);
+    const handleScriptSelect = (script) => {
+      setSelectedScript(script);
+      setCurrentDemo('execution');
     };
 
     return (
-      <div className="code-alchemist">
-        <div className="alchemist-header">
-          <div className="alchemist-icon">
-            <Code className="w-16 h-16 text-blue-500" />
-          </div>
-          <h2>⚡ TRANSFORM LOGIC INTO LAW</h2>
-          <p className="alchemist-subtitle">Watch human intentions become unstoppable mathematical operations...</p>
+      <div className="script-introduction">
+        <div className="intro-header">
+          <Code2 className="intro-icon" size={48} />
+          <h2>Bitcoin Scripts: Programming Money</h2>
+          <p>Learn how Bitcoin uses simple programs to control when and how money can be spent</p>
         </div>
 
-        {alchemyPhase === 'learning' && (
-          <div className="alchemy-workshop">
-            <div className="workshop-explanation">
-        <div className="prime-text">
-                🧪 Every Bitcoin script starts as human logic: "If this, then that." 
-                Your job as a Code Alchemist is to transform fuzzy human intentions into 
-                precise mathematical operations that execute exactly as specified.
-        </div>
-      </div>
-      
-            <h3>Choose a logic transformation to master:</h3>
-            <div className="transformations-grid">
-              {logicTransformations.map(transformation => (
-                <div 
-                  key={transformation.id}
-                  className={`transformation-card ${completedTransformations.has(transformation.id) ? 'completed' : ''}`}
-                  onClick={() => handleTransformLogic(transformation)}
-                >
-                  <div className="transformation-header">
-                    <span className="transformation-title">{transformation.title}</span>
-                    <span className="transformation-difficulty">{transformation.difficulty}</span>
-          </div>
-                  
-                  <div className="human-logic">
-                    <h4>🧠 Human Logic</h4>
-                    <p>{transformation.humanLogic}</p>
-          </div>
-                  
-                  {completedTransformations.has(transformation.id) && (
-                    <div className="transformation-status">
-                      <CheckCircle className="w-5 h-5" />
-                      <span>Transformation Complete</span>
-          </div>
-                  )}
-          </div>
-              ))}
-        </div>
-      </div>
-        )}
-
-        {alchemyPhase === 'demonstration' && (
-          <div className="alchemy-demonstration">
-            <div className="demonstration-header">
-              <h3>⚡ Transformation in Progress</h3>
-              <p>Watch logic become mathematical law...</p>
-      </div>
-
-            <div className="script-execution">
-              <div className="script-display">
-                <h4>📜 Generated Script</h4>
-                <div className="script-code">
-                  {currentScript}
-        </div>
-        </div>
-
-              <div className="execution-visualization">
-                <h4>🔥 Step-by-Step Execution</h4>
-                <div className="execution-steps">
-                  {executionSteps.map((step, index) => (
-                    <div key={index} className="execution-step">
-                      <div className="step-number">{step.step}</div>
-                      <div className="step-details">
-                        <div className="step-operation">{step.operation}</div>
-                        <div className="step-action">{step.action}</div>
-                        <div className="step-stack">
-                          Stack: [{step.stack.join(', ')}]
-              </div>
-            </div>
-                    </div>
-                  ))}
-                    </div>
-                </div>
-              </div>
-
-            <div className="transformation-insight">
-              <div className="prime-text">
-                🎯 The transformation is complete! Human logic is now mathematical law. 
-                No court, no judge, no interpretation—just pure, unstoppable execution.
-            </div>
-          </div>
-
-            <div className="demonstration-controls">
-              <ActionButton onClick={() => setAlchemyPhase('learning')}>
-                Transform More Logic
-              </ActionButton>
-              
-              {completedTransformations.size >= 2 && (
-                <ContinueButton onClick={() => handleContinue()}>
-                  Master Security Architecture →
-                </ContinueButton>
-              )}
-          </div>
-        </div>
-        )}
-      </div>
-    );
-  }
-
-  function SecurityArchitect() {
-    const [architectPhase, setArchitectPhase] = useState('challenge');
-    const [securityScenario, setSecurityScenario] = useState(null);
-    const [contractDesign, setContractDesign] = useState(null);
-    const [simulationActive, setSimulationActive] = useState(false);
-
-    const securityChallenges = [
-      {
-        id: 'corporate_treasury',
-        title: '🏢 Corporate Treasury Protection',
-        problem: 'Your company holds $50M in Bitcoin. Single signature = single point of failure.',
-        threat: 'CEO could go rogue, key could be compromised, or executive could be coerced.',
-        solution: '2-of-3 multisig',
-        participants: ['CEO', 'CFO', 'Board Chair'],
-        requirement: 'Any 2 executives must approve large transactions',
-        script: 'OP_2 <CEO_key> <CFO_key> <Chair_key> OP_3 OP_CHECKMULTISIG'
-      },
-      {
-        id: 'inheritance_planning',
-        title: '👨‍👩‍👧‍👦 Inheritance Time Lock',
-        problem: 'You want to pass Bitcoin to your children, but not until they mature.',
-        threat: 'Kids could access funds too early, or you could lose access due to accident.',
-        solution: 'Time-locked inheritance',
-        participants: ['Parent', 'Child (after 21)', 'Emergency Backup'],
-        requirement: 'Child can access after 21st birthday, parent has emergency override',
-        script: '2025-01-01 OP_CHECKLOCKTIMEVERIFY OP_DROP <child_key> OP_CHECKSIG'
-      },
-      {
-        id: 'escrow_protection',
-        title: '🤝 High-Stakes Escrow',
-        problem: 'Buying a $2M property with Bitcoin. Neither party should be able to steal.',
-        threat: 'Seller could disappear, buyer could reverse payment, or dispute could arise.',
-        solution: '2-of-3 escrow with timelock',
-        participants: ['Buyer', 'Seller', 'Escrow Agent'],
-        requirement: 'Any 2 parties can release, or automatic release after 90 days',
-        script: 'OP_IF OP_2 <buyer> <seller> <agent> OP_3 OP_CHECKMULTISIG OP_ELSE 90 OP_CHECKLOCKTIMEVERIFY OP_DROP <buyer> OP_CHECKSIG OP_ENDIF'
-      }
-    ];
-
-    const handleSecurityChallenge = (challenge) => {
-      setSecurityScenario(challenge);
-      setArchitectPhase('design');
-      
-      // Update user insights
-      const insights = { ...userInsights };
-      insights.securityDesign = Math.min(insights.securityDesign + 25, 100);
-      setUserInsights(insights);
-    };
-
-    const handleContractTest = () => {
-      setSimulationActive(true);
-      
-      // Simulate contract testing
-      setTimeout(() => {
-        setContractDesign({
-          security_rating: 'MAXIMUM',
-          attack_vectors: 0,
-          single_points_failure: 0,
-          trust_requirements: 'MINIMIZED'
-        });
-        setSimulationActive(false);
-        setArchitectPhase('validation');
-      }, 3000);
-    };
-
-    return (
-      <div className="security-architect">
-        <div className="architect-header">
-          <div className="architect-icon">
-            <Shield className="w-16 h-16 text-green-500" />
-      </div>
-          <h2>🛡️ BULLETPROOF CONTRACTS</h2>
-          <p className="architect-subtitle">Design security that no single party can break...</p>
-    </div>
-
-        {architectPhase === 'challenge' && (
-          <div className="security-challenges">
-            <div className="challenge-explanation">
-        <div className="prime-text">
-                🎯 Single signatures are security disasters waiting to happen. Your mission: 
-                architect contracts so secure that even coordinated attacks fail.
-        </div>
-      </div>
-
-            <h3>Choose a security challenge to solve:</h3>
-            <div className="challenges-grid">
-              {securityChallenges.map(challenge => (
-                <div 
-                  key={challenge.id}
-                  className="challenge-card"
-                  onClick={() => handleSecurityChallenge(challenge)}
-                >
-                  <div className="challenge-title">{challenge.title}</div>
-                  <div className="challenge-problem">{challenge.problem}</div>
-                  <div className="challenge-threat">
-                    <strong>Threat:</strong> {challenge.threat}
-          </div>
-                  <div className="challenge-solution">
-                    <strong>Solution:</strong> {challenge.solution}
-          </div>
-          </div>
-              ))}
-          </div>
-        </div>
-        )}
-
-        {architectPhase === 'design' && securityScenario && (
-          <div className="contract-design">
-            <div className="design-header">
-              <h3>🏗️ Designing: {securityScenario.title}</h3>
-          </div>
-
-            <div className="design-requirements">
-              <div className="requirement-analysis">
-                <h4>📋 Security Requirements</h4>
-                <ul>
-                  <li><strong>Participants:</strong> {securityScenario.participants.join(', ')}</li>
-                  <li><strong>Requirement:</strong> {securityScenario.requirement}</li>
-                  <li><strong>Solution Type:</strong> {securityScenario.solution}</li>
-                </ul>
-          </div>
-
-              <div className="script-blueprint">
-                <h4>⚡ Security Script</h4>
-          <div className="script-code">
-                  {securityScenario.script}
-          </div>
-          </div>
-        </div>
-
-            <div className="security-analysis">
-              <h4>🔒 Security Properties</h4>
-              <div className="security-properties">
-                <div className="property">
-                  <span className="property-icon">✅</span>
-                  <span>No single point of failure</span>
-          </div>
-                <div className="property">
-                  <span className="property-icon">✅</span>
-                  <span>Resistance to coercion</span>
-          </div>
-                <div className="property">
-                  <span className="property-icon">✅</span>
-                  <span>Transparent verification</span>
-          </div>
-                <div className="property">
-                  <span className="property-icon">✅</span>
-                  <span>Immutable execution</span>
-                </div>
-          </div>
-        </div>
-
-            <ActionButton onClick={handleContractTest}>
-              <Play className="w-4 h-4" />
-              Test Contract Security
-            </ActionButton>
-          </div>
-        )}
-
-        {architectPhase === 'validation' && contractDesign && (
-          <div className="security-validation">
-            <div className="validation-header">
-              <h3>🎯 Security Validation Complete</h3>
-          </div>
-
-            <div className="security-metrics">
-              <div className="metric">
-                <span className="metric-label">Security Rating:</span>
-                <span className="metric-value">{contractDesign.security_rating}</span>
-          </div>
-              <div className="metric">
-                <span className="metric-label">Attack Vectors:</span>
-                <span className="metric-value">{contractDesign.attack_vectors}</span>
-          </div>
-              <div className="metric">
-                <span className="metric-label">Single Points of Failure:</span>
-                <span className="metric-value">{contractDesign.single_points_failure}</span>
-              </div>
-              <div className="metric">
-                <span className="metric-label">Trust Requirements:</span>
-                <span className="metric-value">{contractDesign.trust_requirements}</span>
-        </div>
-      </div>
-
-            <div className="validation-insight">
-      <div className="prime-text">
-                🛡️ Contract security achieved! You've eliminated single points of failure 
-                and created a system where no individual can compromise the funds.
-      </div>
-            </div>
-
-            <ContinueButton onClick={() => handleContinue()}>
-              Engineer Global Liquidity →
-            </ContinueButton>
-          </div>
-        )}
-
-        {simulationActive && (
-          <div className="security-simulation">
-            <div className="simulation-status">
-              <div className="loading-spinner"></div>
-              <p>Testing contract against attack vectors...</p>
-            </div>
-          </div>
-        )}
-    </div>
-  );
-  }
-
-  function LiquidityEngineer() {
-    const [engineerPhase, setEngineerPhase] = useState('discovery');
-    const [channelDemo, setChannelDemo] = useState({ alice: 5, bob: 5, payments: [] });
-    const [lightningMetrics, setLightningMetrics] = useState(null);
-
-    const handleChannelPayment = (amount, direction) => {
-      const newChannel = { ...channelDemo };
-      const payment = {
-        id: Date.now(),
-        amount,
-        direction,
-        timestamp: new Date().toLocaleTimeString()
-      };
-
-      if (direction === 'alice_to_bob') {
-        newChannel.alice -= amount;
-        newChannel.bob += amount;
-      } else {
-        newChannel.bob -= amount;
-        newChannel.alice += amount;
-      }
-
-      newChannel.payments = [...newChannel.payments, payment];
-      setChannelDemo(newChannel);
-
-      // Update user insights
-      const insights = { ...userInsights };
-      insights.liquidityEngineering = Math.min(insights.liquidityEngineering + 10, 100);
-      setUserInsights(insights);
-    };
-
-    const handleLightningReveal = () => {
-      setLightningMetrics({
-        total_nodes: '15,000+',
-        total_capacity: '5,000+ BTC',
-        daily_payments: '1M+',
-        avg_fee: '0.001%',
-        settlement_time: '<1 second'
-      });
-      setEngineerPhase('mastery');
-    };
-
-    return (
-      <div className="liquidity-engineer">
-        <div className="engineer-header">
-          <div className="engineer-icon">
-            <Zap className="w-16 h-16 text-yellow-500" />
-                  </div>
-          <h2>🌊 GLOBAL LIQUIDITY INFRASTRUCTURE</h2>
-          <p className="engineer-subtitle">Build the pipes that carry instant money worldwide...</p>
-                  </div>
-
-        {engineerPhase === 'discovery' && (
-          <div className="liquidity-discovery">
-            <div className="discovery-problem">
-              <h3>💸 The Liquidity Problem</h3>
-              <div className="problem-stats">
-                <div className="stat">
-                  <span className="stat-value">$40</span>
-                  <span className="stat-label">Average Bitcoin transaction fee during congestion</span>
-                  </div>
-                <div className="stat">
-                  <span className="stat-value">10-60 min</span>
-                  <span className="stat-label">Transaction confirmation time</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-value">7 TPS</span>
-                  <span className="stat-label">Bitcoin's base layer transaction limit</span>
-              </div>
-          </div>
-
-              <div className="prime-text">
-                🚫 These limitations make Bitcoin unusable for daily payments. But what if we could 
-                build a second layer that enables millions of instant, cheap transactions?
-              </div>
-          </div>
-
-            <div className="channel-introduction">
-              <h3>⚡ Payment Channel Solution</h3>
-              <p>Create a shared account that enables instant payments without touching the blockchain:</p>
-              
-              <div className="channel-demo">
-                <div className="channel-participants">
-                  <div className="participant">
-                    <div className="participant-name">Alice</div>
-                    <div className="participant-balance">{channelDemo.alice} BTC</div>
-        </div>
-
-                  <div className="channel-connection">
-                    <div className="channel-capacity">
-                      Total: {channelDemo.alice + channelDemo.bob} BTC
-        </div>
-      </div>
-                  
-                  <div className="participant">
-                    <div className="participant-name">Bob</div>
-                    <div className="participant-balance">{channelDemo.bob} BTC</div>
-        </div>
-      </div>
-
-                <div className="payment-controls">
+        {currentDemo === 'overview' && (
+          <div className="intro-content">
+            <div className="concept-intro">
+              <div className="thinking-challenge">
+                <h3>🤔 Before we dive in, what do you think?</h3>
+                <p>When you send someone Bitcoin, you're not just sending digital coins. You're creating a small computer program that defines exactly how those coins can be spent.</p>
+                
+                <div className="prediction-challenge">
+                  <p><strong>Question:</strong> If you could program money, what kinds of conditions would you want to set? (e.g., "only spendable after my birthday", "requires my spouse's approval", etc.)</p>
+                  <textarea
+                    value={userPrediction}
+                    onChange={(e) => setUserPrediction(e.target.value)}
+                    placeholder="Share your ideas about programmable money..."
+                    className="prediction-input"
+                    rows={3}
+                  />
                   <ActionButton 
-                    onClick={() => handleChannelPayment(1, 'alice_to_bob')}
-                    disabled={channelDemo.alice < 1}
+                    onClick={handlePredictionSubmit}
+                    disabled={userPrediction.length < 10}
                   >
-                    Alice → Bob (1 BTC)
+                    See What's Actually Possible
                   </ActionButton>
-                  <ActionButton 
-                    onClick={() => handleChannelPayment(1, 'bob_to_alice')}
-                    disabled={channelDemo.bob < 1}
-                  >
-                    Bob → Alice (1 BTC)
-                  </ActionButton>
-        </div>
+                </div>
 
-                {channelDemo.payments.length > 0 && (
-                  <div className="payment-history">
-                    <h4>Payment History</h4>
-                    {channelDemo.payments.slice(-3).map(payment => (
-                      <div key={payment.id} className="payment-record">
-                        {payment.direction === 'alice_to_bob' ? 'Alice → Bob' : 'Bob → Alice'}: 
-                        {payment.amount} BTC at {payment.timestamp}
-              </div>
-                    ))}
-              </div>
+                {showReality && (
+                  <div className="reality-reveal">
+                    <div className="insight-box">
+                      <Lightbulb size={24} />
+                      <div>
+                        <h4>Your instincts are spot-on!</h4>
+                        <p>Bitcoin scripts can do exactly what you imagined and more. Every Bitcoin transaction contains a small program that must be successfully executed for the money to be spent.</p>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
-            </div>
 
-            {channelDemo.payments.length >= 2 && (
-              <div className="discovery-insight">
-                <div className="prime-text">
-                  🎯 Notice: Instant payments, zero fees, no blockchain congestion! 
-                  Now imagine connecting millions of these channels...
-            </div>
-                
-                <ActionButton onClick={handleLightningReveal}>
-                  Reveal the Lightning Network →
-                </ActionButton>
-          </div>
-            )}
-        </div>
-        )}
-
-        {engineerPhase === 'mastery' && lightningMetrics && (
-          <div className="lightning-mastery">
-            <div className="mastery-header">
-              <h3>⚡ Lightning Network: Global Payment Infrastructure</h3>
-      </div>
-
-            <div className="lightning-stats">
-              <div className="stat-grid">
-                <div className="network-stat">
-                  <span className="stat-icon">🌐</span>
-                  <span className="stat-value">{lightningMetrics.total_nodes}</span>
-                  <span className="stat-label">Active Nodes</span>
-          </div>
-                <div className="network-stat">
-                  <span className="stat-icon">💰</span>
-                  <span className="stat-value">{lightningMetrics.total_capacity}</span>
-                  <span className="stat-label">Total Capacity</span>
-          </div>
-                <div className="network-stat">
-                  <span className="stat-icon">⚡</span>
-                  <span className="stat-value">{lightningMetrics.daily_payments}</span>
-                  <span className="stat-label">Daily Payments</span>
-        </div>
-                <div className="network-stat">
-                  <span className="stat-icon">💸</span>
-                  <span className="stat-value">{lightningMetrics.avg_fee}</span>
-                  <span className="stat-label">Average Fee</span>
-          </div>
-          </div>
-        </div>
-
-            <div className="engineering-achievements">
-              <h4>🏗️ Your Engineering Impact</h4>
-              <div className="achievements-grid">
-                <div className="achievement">
-                  <span className="achievement-icon">🚀</span>
-                  <span>Enabled instant global payments</span>
-          </div>
-                <div className="achievement">
-                  <span className="achievement-icon">💰</span>
-                  <span>Reduced fees by 99.9%</span>
-          </div>
-                <div className="achievement">
-                  <span className="achievement-icon">🌍</span>
-                  <span>Connected global liquidity pools</span>
-                </div>
-                <div className="achievement">
-                  <span className="achievement-icon">⚡</span>
-                  <span>Powered millions of micropayments</span>
-                </div>
-        </div>
-      </div>
-
-            <div className="mastery-insight">
-      <div className="prime-text">
-                🌊 You've engineered the infrastructure for global instant payments! 
-                Payment channels and routing create a parallel financial system that 
-                settles instantly and scales infinitely.
-      </div>
-            </div>
-
-            <ContinueButton onClick={() => handleContinue()}>
-              Design Advanced Protocols →
-            </ContinueButton>
-          </div>
-        )}
-    </div>
-  );
-  }
-
-  function ProtocolDesigner() {
-    const [designPhase, setDesignPhase] = useState('evolution');
-    const [selectedProtocol, setSelectedProtocol] = useState(null);
-    const [privacyComparison, setPrivacyComparison] = useState(null);
-
-    const protocolEvolution = [
-      {
-        id: 'p2pkh',
-        name: 'P2PKH (Legacy)',
-        era: '2009-2012',
-        privacy: 'Low',
-        efficiency: 'Basic',
-        features: ['Simple payments', 'Single signature'],
-        address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-        description: 'The original Bitcoin script type'
-      },
-      {
-        id: 'p2sh',
-        name: 'P2SH (Script Hash)',
-        era: '2012-2017',
-        privacy: 'Medium',
-        efficiency: 'Better',
-        features: ['Multisig support', 'Complex conditions', 'Smaller transactions'],
-        address: '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy',
-        description: 'Enabled complex scripts with simpler addresses'
-      },
-      {
-        id: 'segwit',
-        name: 'SegWit (Witness)',
-        era: '2017-2021',
-        privacy: 'Medium',
-        efficiency: 'Much Better',
-        features: ['Lower fees', 'Malleability fix', 'Lightning ready'],
-        address: 'bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4',
-        description: 'Separated signatures for better scaling'
-      },
-      {
-        id: 'taproot',
-        name: 'Taproot (Privacy)',
-        era: '2021-Present',
-        privacy: 'Maximum',
-        efficiency: 'Optimal',
-        features: ['Schnorr signatures', 'Script privacy', 'Smart contract hiding'],
-        address: 'bc1p5d7rjq7g6rdk2yhzks9smlaqtedr4dekq08ge8ztwac72sfr9rusxg3297',
-        description: 'Complex scripts look like simple payments'
-      }
-    ];
-
-    const handleProtocolSelect = (protocol) => {
-      setSelectedProtocol(protocol);
-      setDesignPhase('analysis');
-      
-      // Generate privacy comparison
-      setPrivacyComparison({
-        public_visibility: protocol.id === 'taproot' ? 'Simple payment only' : 'Script structure visible',
-        key_aggregation: protocol.id === 'taproot' ? 'Multiple keys → Single key' : 'Individual keys visible',
-        smart_contracts: protocol.id === 'taproot' ? 'Hidden until used' : 'Always visible',
-        analysis_resistance: protocol.id === 'taproot' ? 'Maximum' : 'Limited'
-      });
-
-      // Update user insights
-      const insights = { ...userInsights };
-      insights.protocolMastery = Math.min(insights.protocolMastery + 20, 100);
-      setUserInsights(insights);
-    };
-
-    return (
-      <div className="protocol-designer">
-        <div className="designer-header">
-          <div className="designer-icon">
-            <TrendingUp className="w-16 h-16 text-purple-500" />
-        </div>
-          <h2>🏛️ PROTOCOL EVOLUTION MASTERY</h2>
-          <p className="designer-subtitle">Design privacy-preserving protocols that scale to global adoption...</p>
-      </div>
-
-        {designPhase === 'evolution' && (
-          <div className="protocol-evolution">
-            <div className="evolution-explanation">
-              <div className="prime-text">
-                🚀 Bitcoin scripts have evolved from simple payments to sophisticated privacy-preserving 
-                protocols. Each generation solves new problems while maintaining backward compatibility.
-          </div>
-          </div>
-
-            <h3>Explore the protocol evolution:</h3>
-            <div className="evolution-timeline">
-              {protocolEvolution.map((protocol, index) => (
-                <div 
-                  key={protocol.id}
-                  className="protocol-era"
-                  onClick={() => handleProtocolSelect(protocol)}
-                >
-                  <div className="era-header">
-                    <span className="era-name">{protocol.name}</span>
-                    <span className="era-period">{protocol.era}</span>
-        </div>
-
-                  <div className="era-metrics">
-                    <div className="metric">
-                      <span className="metric-label">Privacy:</span>
-                      <span className={`metric-value ${protocol.privacy.toLowerCase()}`}>
-                        {protocol.privacy}
-                      </span>
-          </div>
-                    <div className="metric">
-                      <span className="metric-label">Efficiency:</span>
-                      <span className="metric-value">{protocol.efficiency}</span>
-          </div>
-        </div>
-
-                  <div className="era-features">
-                    {protocol.features.map(feature => (
-                      <span key={feature} className="feature-tag">{feature}</span>
+              {showReality && (
+                <div className="script-examples">
+                  <h3>🎯 Real Bitcoin Script Examples</h3>
+                  <p>Here are three common types of Bitcoin scripts. Click one to see how it works:</p>
+                  
+                  <div className="script-grid">
+                    {scriptDemos.map(demo => (
+                      <div 
+                        key={demo.id} 
+                        className="script-card"
+                        onClick={() => handleScriptSelect(demo)}
+                      >
+                        <h4>{demo.name}</h4>
+                        <p>{demo.description}</p>
+                        <div className="script-logic">
+                          <strong>Logic:</strong> {demo.humanLogic}
+                        </div>
+                        <div className="real-world">
+                          <strong>Real World:</strong> {demo.realWorld}
+                        </div>
+                      </div>
                     ))}
-          </div>
-
-                  <div className="era-address">
-                    <code>{protocol.address}</code>
-          </div>
-
-                  <div className="era-description">
-                    {protocol.description}
-        </div>
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         )}
 
-        {designPhase === 'analysis' && selectedProtocol && privacyComparison && (
-          <div className="protocol-analysis">
-            <div className="analysis-header">
-              <h3>🔬 Deep Dive: {selectedProtocol.name}</h3>
-          </div>
+        {currentDemo === 'execution' && selectedScript && (
+          <div className="script-execution-demo">
+            <div className="execution-header">
+              <h3>🔍 How "{selectedScript.name}" Works</h3>
+              <p>{selectedScript.description}</p>
+            </div>
 
-            <div className="privacy-analysis">
-              <h4>🔒 Privacy Analysis</h4>
-              <div className="privacy-metrics">
-                <div className="privacy-metric">
-                  <span className="metric-label">Public Visibility:</span>
-                  <span className="metric-value">{privacyComparison.public_visibility}</span>
-          </div>
-                <div className="privacy-metric">
-                  <span className="metric-label">Key Aggregation:</span>
-                  <span className="metric-value">{privacyComparison.key_aggregation}</span>
-                </div>
-                <div className="privacy-metric">
-                  <span className="metric-label">Smart Contracts:</span>
-                  <span className="metric-value">{privacyComparison.smart_contracts}</span>
-                </div>
-                <div className="privacy-metric">
-                  <span className="metric-label">Analysis Resistance:</span>
-                  <span className="metric-value">{privacyComparison.analysis_resistance}</span>
-                </div>
-        </div>
-      </div>
-
-            {selectedProtocol.id === 'taproot' && (
-              <div className="taproot-innovation">
-                <h4>🌳 Taproot Innovation Breakthrough</h4>
-                <div className="innovation-grid">
-                  <div className="innovation-item">
-                    <span className="innovation-icon">🎭</span>
-                    <div className="innovation-text">
-                      <strong>Script Privacy</strong>
-                      <p>Complex smart contracts look identical to simple payments</p>
-      </div>
-    </div>
-                  <div className="innovation-item">
-                    <span className="innovation-icon">🔑</span>
-                    <div className="innovation-text">
-                      <strong>Key Aggregation</strong>
-                      <p>Multiple signers appear as a single signature</p>
-                    </div>
-                  </div>
-                  <div className="innovation-item">
-                    <span className="innovation-icon">⚡</span>
-                    <div className="innovation-text">
-                      <strong>Schnorr Signatures</strong>
-                      <p>Smaller, faster, more private signatures</p>
-                    </div>
-                  </div>
-                  <div className="innovation-item">
-                    <span className="innovation-icon">🌿</span>
-                    <div className="innovation-text">
-                      <strong>Script Trees</strong>
-                      <p>Reveal only the execution path used</p>
-                    </div>
-                  </div>
+            <div className="script-breakdown">
+              <div className="human-logic-section">
+                <h4>🧠 Human Logic</h4>
+                <div className="logic-box">
+                  {selectedScript.humanLogic}
                 </div>
               </div>
-            )}
 
-            <div className="design-insight">
-        <div className="prime-text">
-                🎯 {selectedProtocol.id === 'taproot' 
-                  ? 'You\'ve mastered the pinnacle of Bitcoin script evolution! Taproot enables maximum privacy while maintaining unlimited functionality.'
-                  : `This protocol was a crucial step in Bitcoin's evolution, enabling ${selectedProtocol.features.join(', ').toLowerCase()}.`
-                }
-        </div>
-      </div>
-
-            <div className="analysis-controls">
-              <ActionButton onClick={() => setDesignPhase('evolution')}>
-                Explore More Protocols
-              </ActionButton>
-              
-              {userInsights.protocolMastery >= 60 && (
-                <ContinueButton onClick={() => handleContinue()}>
-                  Achieve Economic Sovereignty →
-                </ContinueButton>
-              )}
-          </div>
-          </div>
-        )}
-        </div>
-    );
-  }
-
-  function EconomicSovereign() {
-    const [sovereignPhase] = useState('revelation');
-    const [impactMetrics, setImpactMetrics] = useState(null);
-    const [sovereigntyLevel, setSovereigntyLevel] = useState(0);
-
-    useEffect(() => {
-      if (sovereignPhase === 'revelation') {
-        // Calculate impact based on user journey
-        const totalInsights = Object.values(userInsights).reduce((sum, val) => sum + val, 0);
-        setImpactMetrics({
-          scripts_mastered: completedSteps.size,
-          contracts_designed: Math.floor(totalInsights / 50),
-          security_level: 'MAXIMUM',
-          global_impact: 'TRANSFORMATIONAL'
-        });
-        
-        setSovereigntyLevel(Math.min(totalInsights / 4, 100));
-      }
-    }, [sovereignPhase]);
-
-    const globalApplications = [
-      {
-        icon: '⚡',
-        title: 'Lightning Network',
-        impact: '$5B+ in payment capacity',
-        description: 'Your script knowledge powers instant global payments'
-      },
-      {
-        icon: '🏢',
-        title: 'Corporate Treasury',
-        impact: '$100B+ in multisig protection',
-        description: 'Companies secure billions using scripts you now understand'
-      },
-      {
-        icon: '🌉',
-        title: 'Cross-Chain Bridges',
-        impact: '$50B+ in locked value',
-        description: 'Script contracts enable value transfer between blockchains'
-      },
-      {
-        icon: '🏦',
-        title: 'DeFi Protocols',
-        impact: '$200B+ total value locked',
-        description: 'Smart contracts built on script foundations you\'ve mastered'
-      }
-    ];
-
-    return (
-      <div className="economic-sovereign">
-        <div className="sovereign-header">
-          <div className="sovereign-icon">
-            <Crown className="w-20 h-20 text-yellow-500" />
-          </div>
-          <h2>💰 ECONOMIC SOVEREIGNTY ACHIEVED</h2>
-          <p className="sovereign-subtitle">You command the global financial infrastructure through code...</p>
-        </div>
-
-        {sovereignPhase === 'revelation' && impactMetrics && (
-          <div className="sovereignty-revelation">
-            <div className="achievement-metrics">
-              <h3>📊 Your Script Architect Impact</h3>
-              <div className="metrics-grid">
-                <div className="impact-metric">
-                  <span className="metric-icon">📜</span>
-                  <span className="metric-value">{impactMetrics.scripts_mastered}</span>
-                  <span className="metric-label">Script Types Mastered</span>
-          </div>
-                <div className="impact-metric">
-                  <span className="metric-icon">🏗️</span>
-                  <span className="metric-value">{impactMetrics.contracts_designed}</span>
-                  <span className="metric-label">Contracts Designed</span>
+              <div className="script-code-section">
+                <h4>💻 Bitcoin Script Code</h4>
+                <div className="script-code">
+                  {selectedScript.script}
                 </div>
-                <div className="impact-metric">
-                  <span className="metric-icon">🛡️</span>
-                  <span className="metric-value">{impactMetrics.security_level}</span>
-                  <span className="metric-label">Security Level</span>
-                </div>
-                <div className="impact-metric">
-                  <span className="metric-icon">🌍</span>
-                  <span className="metric-value">{sovereigntyLevel.toFixed(0)}%</span>
-                  <span className="metric-label">Sovereignty Mastery</span>
-                </div>
-          </div>
-        </div>
+              </div>
 
-            <div className="global-impact">
-              <h3>🌎 Your Knowledge Powers Global Finance</h3>
-              <div className="applications-grid">
-                {globalApplications.map((app, index) => (
-                  <div key={index} className="application-card">
-                    <span className="app-icon">{app.icon}</span>
-                    <div className="app-content">
-                      <h4>{app.title}</h4>
-                      <div className="app-impact">{app.impact}</div>
-                      <p>{app.description}</p>
-          </div>
-          </div>
-                ))}
-        </div>
-      </div>
-
-            <div className="sovereignty-powers">
-              <h3>👑 Your Script Architect Powers</h3>
-              <div className="powers-grid">
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Design unbreakable multisig contracts</span>
-      </div>
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Program time-locked inheritance plans</span>
-    </div>
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Build instant payment channels</span>
-      </div>
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Create atomic swap contracts</span>
-        </div>
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Implement privacy-preserving protocols</span>
-        </div>
-                <div className="power-item">
-                  <CheckCircle className="power-icon" />
-                  <span>Engineer global financial infrastructure</span>
+              <div className="real-world-section">
+                <h4>🌍 Real World Analogy</h4>
+                <div className="analogy-box">
+                  {selectedScript.realWorld}
                 </div>
-        </div>
-      </div>
-
-            <div className="final-insight">
-      <div className="prime-text">
-                🎓 You are now a Script Architect! You understand how code becomes law, 
-                how logic becomes money, and how programmable contracts reshape global finance. 
-                The power to design unstoppable financial systems is in your hands.
-      </div>
+              </div>
             </div>
 
-            <div className="sovereignty-navigation">
-              <ContinueButton onClick={() => handleContinue()}>
-                Command Global Financial Networks →
+            <div className="key-insight">
+              <div className="insight-box">
+                <Target size={24} />
+                <div>
+                  <h4>Key Insight: Unstoppable Execution</h4>
+                  <p>Unlike traditional contracts that require human interpretation, Bitcoin scripts execute exactly as programmed. No one can override, change, or reinterpret them once they're in the blockchain.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="demo-controls">
+              <ActionButton onClick={() => setCurrentDemo('overview')}>
+                ← See Other Examples
+              </ActionButton>
+              <ContinueButton onClick={handleContinue}>
+                Learn Stack Operations →
               </ContinueButton>
             </div>
           </div>
         )}
-    </div>
-  );
+      </div>
+    );
   }
 
-  const renderCurrentStep = () => {
-    const StepComponent = architectSteps[currentStep].component;
-    return <StepComponent />;
-  };
+  // Stack Operations Component
+  function StackOperations() {
+    const [currentExercise, setCurrentExercise] = useState('concept');
+    const [stack, setStack] = useState([]);
+    const [executionStep, setExecutionStep] = useState(0);
+    const [userAnswer, setUserAnswer] = useState('');
+    const [showStackVisualization, setShowStackVisualization] = useState(false);
+
+    const stackExercises = [
+      {
+        id: 'basic_push',
+        name: 'Basic Push Operations',
+        operations: ['PUSH 5', 'PUSH 3', 'PUSH 8'],
+        description: 'Add numbers to the stack',
+        question: 'What will be on top of the stack?',
+        answer: '8'
+      },
+      {
+        id: 'dup_operation',
+        name: 'Duplicate Operation',
+        operations: ['PUSH 5', 'PUSH 3', 'OP_DUP'],
+        description: 'Duplicate the top stack item',
+        question: 'How many items will be on the stack?',
+        answer: '3'
+      },
+      {
+        id: 'add_operation',
+        name: 'Addition Operation',
+        operations: ['PUSH 5', 'PUSH 3', 'OP_ADD'],
+        description: 'Add the top two stack items',
+        question: 'What will be the result?',
+        answer: '8'
+      }
+    ];
+
+    const executeOperation = (operation) => {
+      const newStack = [...stack];
+      
+      if (operation.startsWith('PUSH ')) {
+        const value = operation.split(' ')[1];
+        newStack.push(value);
+      } else if (operation === 'OP_DUP') {
+        if (newStack.length > 0) {
+          newStack.push(newStack[newStack.length - 1]);
+        }
+      } else if (operation === 'OP_ADD') {
+        if (newStack.length >= 2) {
+          const b = parseInt(newStack.pop());
+          const a = parseInt(newStack.pop());
+          newStack.push((a + b).toString());
+        }
+      }
+      
+      setStack(newStack);
+    };
+
+    const runExercise = (exercise) => {
+      setStack([]);
+      setExecutionStep(0);
+      setShowStackVisualization(true);
+      setCurrentExercise(exercise);
+      
+      // Animate through each operation
+      exercise.operations.forEach((operation, index) => {
+        setTimeout(() => {
+          executeOperation(operation);
+          setExecutionStep(index + 1);
+        }, (index + 1) * 1000);
+      });
+    };
+
+    return (
+      <div className="stack-operations">
+        <div className="stack-header">
+          <Layers className="stack-icon" size={48} />
+          <h2>The Bitcoin Stack Machine</h2>
+          <p>Bitcoin scripts execute on a simple stack-based computer. Let's learn how it works!</p>
+        </div>
+
+        {currentExercise === 'concept' && (
+          <div className="stack-concept">
+            <div className="concept-explanation">
+              <h3>🥞 What is a Stack?</h3>
+              <p>Think of a stack like a stack of plates. You can only add plates to the top (PUSH) and remove plates from the top (POP). This "Last In, First Out" (LIFO) behavior is perfect for executing mathematical operations in order.</p>
+              
+              <div className="stack-analogy">
+                <div className="analogy-visual">
+                  <div className="plate">Plate 3 (Top)</div>
+                  <div className="plate">Plate 2</div>
+                  <div className="plate">Plate 1 (Bottom)</div>
+                </div>
+                <div className="analogy-explanation">
+                  <p>When you ADD a plate → it goes on top</p>
+                  <p>When you REMOVE a plate → it comes from the top</p>
+                  <p>You can never reach plates in the middle!</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="exercise-intro">
+              <h3>🎯 Interactive Stack Exercises</h3>
+              <p>Try these exercises to see how Bitcoin's stack machine works:</p>
+              
+              <div className="exercise-grid">
+                {stackExercises.map(exercise => (
+                  <div 
+                    key={exercise.id}
+                    className="exercise-card"
+                    onClick={() => runExercise(exercise)}
+                  >
+                    <h4>{exercise.name}</h4>
+                    <p>{exercise.description}</p>
+                    <div className="exercise-operations">
+                      Operations: {exercise.operations.join(' → ')}
+                    </div>
+                    <ActionButton>Run Exercise</ActionButton>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showStackVisualization && currentExercise !== 'concept' && (
+          <div className="stack-visualization">
+            <div className="visualization-header">
+              <h3>🔍 Executing: {currentExercise.name}</h3>
+              <p>Step {executionStep} of {currentExercise.operations.length}</p>
+            </div>
+
+            <div className="stack-display">
+              <div className="stack-visual">
+                <h4>Current Stack:</h4>
+                <div className="stack-items">
+                  {stack.map((item, index) => (
+                    <div 
+                      key={index} 
+                      className={`stack-item ${index === stack.length - 1 ? 'top' : ''}`}
+                    >
+                      {item} {index === stack.length - 1 && <span>(top)</span>}
+                    </div>
+                  )).reverse()}
+                  {stack.length === 0 && (
+                    <div className="empty-stack">Empty Stack</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="operations-display">
+                <h4>Operations:</h4>
+                <div className="operations-list">
+                  {currentExercise.operations.map((operation, index) => (
+                    <div 
+                      key={index}
+                      className={`operation-item ${index < executionStep ? 'completed' : index === executionStep ? 'current' : 'pending'}`}
+                    >
+                      {operation}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {executionStep === currentExercise.operations.length && (
+              <div className="exercise-complete">
+                <div className="quiz-question">
+                  <h4>🤔 {currentExercise.question}</h4>
+                  <input
+                    type="text"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                    placeholder="Your answer..."
+                    className="answer-input"
+                  />
+                  <ActionButton 
+                    onClick={() => {
+                      if (userAnswer === currentExercise.answer) {
+                        alert('Correct! Great understanding of stack operations.');
+                      } else {
+                        alert(`Not quite. The correct answer is ${currentExercise.answer}. Try again!`);
+                      }
+                    }}
+                  >
+                    Check Answer
+                  </ActionButton>
+                </div>
+              </div>
+            )}
+
+            <div className="visualization-controls">
+              <ActionButton onClick={() => {
+                setShowStackVisualization(false);
+                setCurrentExercise('concept');
+                setStack([]);
+                setExecutionStep(0);
+              }}>
+                ← Try Another Exercise
+              </ActionButton>
+              
+              {executionStep === currentExercise.operations.length && userAnswer === currentExercise.answer && (
+                <ContinueButton onClick={handleContinue}>
+                  Master Signature Verification →
+                </ContinueButton>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Signature Verification Component
+  function SignatureVerification() {
+    const [currentPhase, setCurrentPhase] = useState('concept');
+    const [selectedChallenge, setSelectedChallenge] = useState(null);
+    const [scriptExecution, setScriptExecution] = useState([]);
+    const [userBuiltScript, setUserBuiltScript] = useState([]);
+
+    const signatureScripts = [
+      {
+        id: 'p2pkh',
+        name: 'Pay to Public Key Hash (P2PKH)',
+        description: 'The most common Bitcoin transaction type',
+        unlockingScript: '<signature> <publicKey>',
+        lockingScript: 'OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        steps: [
+          'Push signature and public key to stack',
+          'Duplicate public key',
+          'Hash the public key',
+          'Compare hash with stored hash',
+          'Verify signature matches public key'
+        ],
+        security: 'Proves ownership without revealing private key'
+      },
+      {
+        id: 'p2pk',
+        name: 'Pay to Public Key (P2PK)',
+        description: 'Direct public key payment (less common)',
+        unlockingScript: '<signature>',
+        lockingScript: '<publicKey> OP_CHECKSIG',
+        steps: [
+          'Push signature to stack',
+          'Push public key to stack',
+          'Verify signature matches public key'
+        ],
+        security: 'Simpler but exposes public key in locking script'
+      }
+    ];
+
+    const buildScriptChallenge = () => {
+      return (
+        <div className="script-builder">
+          <h3>🔨 Build Your Own Signature Script</h3>
+          <p>Drag the operations in the correct order to verify a signature:</p>
+          
+          <div className="available-operations">
+            <h4>Available Operations:</h4>
+            <div className="operation-blocks">
+              {['OP_DUP', 'OP_HASH160', '<pubKeyHash>', 'OP_EQUALVERIFY', 'OP_CHECKSIG'].map(op => (
+                <div 
+                  key={op}
+                  className="operation-block"
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData('text/plain', op)}
+                >
+                  {op}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div 
+            className="script-builder-area"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const operation = e.dataTransfer.getData('text/plain');
+              setUserBuiltScript(prev => [...prev, operation]);
+            }}
+          >
+            <h4>Your Script:</h4>
+            <div className="built-script">
+              {userBuiltScript.map((op, index) => (
+                <span key={index} className="script-operation">{op}</span>
+              ))}
+              {userBuiltScript.length === 0 && (
+                <span className="placeholder">Drag operations here...</span>
+              )}
+            </div>
+          </div>
+
+          <div className="builder-controls">
+            <ActionButton onClick={() => setUserBuiltScript([])}>
+              Clear Script
+            </ActionButton>
+            <ActionButton 
+              onClick={() => {
+                const correctScript = ['OP_DUP', 'OP_HASH160', '<pubKeyHash>', 'OP_EQUALVERIFY', 'OP_CHECKSIG'];
+                if (JSON.stringify(userBuiltScript) === JSON.stringify(correctScript)) {
+                  alert('Perfect! You\'ve built a correct P2PKH script.');
+                  setCurrentPhase('mastery');
+                } else {
+                  alert('Not quite right. Check the order of operations.');
+                }
+              }}
+            >
+              Check Script
+            </ActionButton>
+          </div>
+        </div>
+      );
+    };
+
+    return (
+      <div className="signature-verification">
+        <div className="signature-header">
+          <Key className="signature-icon" size={48} />
+          <h2>Digital Signature Verification</h2>
+          <p>Learn how Bitcoin proves ownership without revealing private keys</p>
+        </div>
+
+        {currentPhase === 'concept' && (
+          <div className="signature-concept">
+            <div className="concept-intro">
+              <h3>🔐 The Signature Challenge</h3>
+              <p>How do you prove you own something without showing your secret? Digital signatures solve this puzzle using mathematics.</p>
+              
+              <div className="signature-analogy">
+                <div className="analogy-box">
+                  <h4>🖋️ Real World Analogy</h4>
+                  <p>Your handwritten signature proves documents came from you, but someone could forge it if they practice enough.</p>
+                  <p><strong>Digital signatures</strong> are mathematically impossible to forge, even with unlimited practice!</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="signature-examples">
+              <h3>🎯 Common Signature Scripts</h3>
+              <div className="script-examples">
+                {signatureScripts.map(script => (
+                  <div 
+                    key={script.id}
+                    className="script-example"
+                    onClick={() => setSelectedChallenge(script)}
+                  >
+                    <h4>{script.name}</h4>
+                    <p>{script.description}</p>
+                    <div className="script-preview">
+                      <div><strong>Unlocking:</strong> {script.unlockingScript}</div>
+                      <div><strong>Locking:</strong> {script.lockingScript}</div>
+                    </div>
+                    <div className="security-note">
+                      🛡️ {script.security}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="concept-challenge">
+              <ActionButton onClick={() => setCurrentPhase('builder')}>
+                Build Your Own Script →
+              </ActionButton>
+            </div>
+          </div>
+        )}
+
+        {currentPhase === 'builder' && buildScriptChallenge()}
+
+        {currentPhase === 'mastery' && (
+          <div className="signature-mastery">
+            <div className="mastery-celebration">
+              <CheckCircle size={64} className="success-icon" />
+              <h3>🎉 Signature Script Mastery!</h3>
+              <p>You understand how Bitcoin uses cryptographic proofs to verify ownership without revealing secrets.</p>
+            </div>
+
+            <div className="key-insights">
+              <div className="insight-grid">
+                <div className="insight-item">
+                  <Shield size={32} />
+                  <h4>Security</h4>
+                  <p>Private keys never leave your device</p>
+                </div>
+                <div className="insight-item">
+                  <Zap size={32} />
+                  <h4>Efficiency</h4>
+                  <p>Verification is fast and cheap</p>
+                </div>
+                <div className="insight-item">
+                  <Globe size={32} />
+                  <h4>Global</h4>
+                  <p>Works anywhere, no central authority</p>
+                </div>
+              </div>
+            </div>
+
+            <ContinueButton onClick={handleContinue}>
+              Learn Multi-Signature Contracts →
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Multisig Contracts Component  
+  function MultisigContracts() {
+    const [currentDemo, setCurrentDemo] = useState('intro');
+    const [selectedScenario, setSelectedScenario] = useState(null);
+    const [multisigSetup, setMultisigSetup] = useState({ m: 2, n: 3 });
+    const [signatures, setSignatures] = useState([]);
+
+    const multisigScenarios = [
+      {
+        id: 'business',
+        name: 'Business Treasury',
+        description: '2-of-3 multisig for company funds',
+        participants: ['CEO', 'CFO', 'CTO'],
+        requirement: 'Any 2 executives must approve large payments',
+        script: 'OP_2 <pubKey_CEO> <pubKey_CFO> <pubKey_CTO> OP_3 OP_CHECKMULTISIG',
+        benefit: 'Prevents single point of failure'
+      },
+      {
+        id: 'inheritance',
+        name: 'Family Inheritance',
+        description: '2-of-3 multisig for family trust',
+        participants: ['Parent', 'Child', 'Lawyer'],
+        requirement: 'Parent + child OR parent + lawyer can access funds',
+        script: 'OP_2 <pubKey_Parent> <pubKey_Child> <pubKey_Lawyer> OP_3 OP_CHECKMULTISIG',
+        benefit: 'Secure inheritance planning'
+      },
+      {
+        id: 'escrow',
+        name: 'Escrow Service',
+        description: '2-of-3 multisig for secure trading',
+        participants: ['Buyer', 'Seller', 'Escrow_Agent'],
+        requirement: 'Buyer + seller (happy) OR buyer/seller + escrow (dispute)',
+        script: 'OP_2 <pubKey_Buyer> <pubKey_Seller> <pubKey_Escrow> OP_3 OP_CHECKMULTISIG',
+        benefit: 'Trustless trading with dispute resolution'
+      }
+    ];
+
+    const simulateMultisigTransaction = (scenario) => {
+      setSelectedScenario(scenario);
+      setCurrentDemo('simulation');
+      setSignatures([]);
+    };
+
+    const addSignature = (participant) => {
+      if (!signatures.includes(participant)) {
+        const newSignatures = [...signatures, participant];
+        setSignatures(newSignatures);
+        
+        if (newSignatures.length >= 2) {
+          setTimeout(() => {
+            alert(`Transaction approved! ${newSignatures.join(' and ')} have signed.`);
+            setCurrentDemo('success');
+          }, 1000);
+        }
+      }
+    };
+
+    return (
+      <div className="multisig-contracts">
+        <div className="multisig-header">
+          <Users className="multisig-icon" size={48} />
+          <h2>Multi-Signature Contracts</h2>
+          <p>Learn how Bitcoin enables collaborative control over funds</p>
+        </div>
+
+        {currentDemo === 'intro' && (
+          <div className="multisig-intro">
+            <div className="concept-explanation">
+              <h3>👥 What is Multi-Signature?</h3>
+              <p>Multi-signature (multisig) requires multiple people to approve a transaction before it can be executed. It's like requiring multiple keys to open a safe.</p>
+              
+              <div className="multisig-benefits">
+                <h4>🎯 Why Use Multisig?</h4>
+                <div className="benefit-grid">
+                  <div className="benefit-item">
+                    <Shield size={24} />
+                    <div>
+                      <strong>Enhanced Security</strong>
+                      <p>No single point of failure</p>
+                    </div>
+                  </div>
+                  <div className="benefit-item">
+                    <Users size={24} />
+                    <div>
+                      <strong>Shared Control</strong>
+                      <p>Democratic decision making</p>
+                    </div>
+                  </div>
+                  <div className="benefit-item">
+                    <CheckCircle size={24} />
+                    <div>
+                      <strong>Backup Protection</strong>
+                      <p>Lost keys don't mean lost funds</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="multisig-scenarios">
+              <h3>🎯 Real-World Multisig Scenarios</h3>
+              <p>Click a scenario to see how multisig solves real problems:</p>
+              
+              <div className="scenario-grid">
+                {multisigScenarios.map(scenario => (
+                  <div 
+                    key={scenario.id}
+                    className="scenario-card"
+                    onClick={() => simulateMultisigTransaction(scenario)}
+                  >
+                    <h4>{scenario.name}</h4>
+                    <p>{scenario.description}</p>
+                    <div className="participants">
+                      <strong>Participants:</strong> {scenario.participants.join(', ')}
+                    </div>
+                    <div className="requirement">
+                      <strong>Rule:</strong> {scenario.requirement}
+                    </div>
+                    <div className="benefit">
+                      ✅ {scenario.benefit}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentDemo === 'simulation' && selectedScenario && (
+          <div className="multisig-simulation">
+            <div className="simulation-header">
+              <h3>🎬 Simulating: {selectedScenario.name}</h3>
+              <p>{selectedScenario.description}</p>
+            </div>
+
+            <div className="script-display">
+              <h4>📜 Multisig Script</h4>
+              <div className="script-code">
+                {selectedScenario.script}
+              </div>
+              <p className="script-explanation">
+                This script requires 2 signatures from the 3 possible participants
+              </p>
+            </div>
+
+            <div className="signing-simulation">
+              <h4>🖋️ Sign the Transaction</h4>
+              <p>Click on participants to add their signatures (need 2 of 3):</p>
+              
+              <div className="participants-grid">
+                {selectedScenario.participants.map(participant => (
+                  <div 
+                    key={participant}
+                    className={`participant-card ${signatures.includes(participant) ? 'signed' : ''}`}
+                    onClick={() => addSignature(participant)}
+                  >
+                    <div className="participant-name">{participant}</div>
+                    <div className="signing-status">
+                      {signatures.includes(participant) ? (
+                        <><CheckCircle size={20} /> Signed</>
+                      ) : (
+                        <><Key size={20} /> Click to Sign</>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="signature-progress">
+                <p>Signatures: {signatures.length} of 2 required</p>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill"
+                    style={{ width: `${(signatures.length / 2) * 100}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentDemo === 'success' && (
+          <div className="multisig-success">
+            <div className="success-celebration">
+              <CheckCircle size={64} className="success-icon" />
+              <h3>🎉 Transaction Approved!</h3>
+              <p>The multisig contract has been successfully executed with {signatures.length} signatures.</p>
+            </div>
+
+            <div className="success-details">
+              <h4>What Just Happened:</h4>
+              <ul>
+                <li>✅ {signatures.join(' and ')} provided valid signatures</li>
+                <li>✅ Bitcoin script verified all signatures mathematically</li>
+                <li>✅ Transaction was approved and funds can be spent</li>
+                <li>✅ No central authority was needed for verification</li>
+              </ul>
+            </div>
+
+            <div className="key-insight">
+              <div className="insight-box">
+                <Lightbulb size={24} />
+                <div>
+                  <h4>Key Insight: Trustless Cooperation</h4>
+                  <p>Multisig enables groups to control funds together without trusting any single member or central authority. The mathematics ensures fairness.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="success-controls">
+              <ActionButton onClick={() => {
+                setCurrentDemo('intro');
+                setSelectedScenario(null);
+                setSignatures([]);
+              }}>
+                Try Another Scenario
+              </ActionButton>
+              <ContinueButton onClick={handleContinue}>
+                Learn Time-Locked Transactions →
+              </ContinueButton>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Timelock Conditions Component
+  function TimelockConditions() {
+    const [currentMode, setCurrentMode] = useState('concept');
+    const [selectedTimelock, setSelectedTimelock] = useState(null);
+    const [currentTime, setCurrentTime] = useState(Date.now());
+    const [timelockDemo, setTimelockDemo] = useState(null);
+
+    const timelockTypes = [
+      {
+        id: 'absolute_time',
+        name: 'Absolute Time Lock',
+        description: 'Funds can only be spent after a specific date/time',
+        script: '<timestamp> OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        example: 'Trust fund that unlocks on 18th birthday',
+        timeCondition: 'January 1, 2025 at 00:00 UTC',
+        timestamp: 1735689600
+      },
+      {
+        id: 'relative_time',
+        name: 'Relative Time Lock',
+        description: 'Funds can only be spent after a certain time has passed',
+        script: '<blocks> OP_CHECKSEQUENCEVERIFY OP_DROP OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG',
+        example: 'Inheritance that requires 6 months waiting period',
+        timeCondition: '144 blocks (~24 hours) after transaction confirmed',
+        blocks: 144
+      }
+    ];
+
+    const timelockScenarios = [
+      {
+        id: 'inheritance',
+        name: 'Family Inheritance',
+        description: 'Parents set up inheritance for children',
+        setup: 'Funds locked until child turns 21',
+        unlockDate: new Date('2025-06-15').getTime(),
+        amount: '5.0 BTC',
+        benefit: 'Ensures responsible access to inheritance'
+      },
+      {
+        id: 'savings',
+        name: 'Savings Plan',
+        description: 'Personal savings with commitment device',
+        setup: 'Cannot touch savings for 1 year',
+        unlockDate: new Date('2024-12-31').getTime(),
+        amount: '2.5 BTC',
+        benefit: 'Prevents impulsive spending'
+      },
+      {
+        id: 'business',
+        name: 'Business Milestone',
+        description: 'Contractor payment upon project completion',
+        setup: 'Payment released 30 days after delivery',
+        unlockDate: currentTime + (30 * 24 * 60 * 60 * 1000),
+        amount: '1.0 BTC',
+        benefit: 'Automatic milestone payments'
+      }
+    ];
+
+    const simulateTimelock = (scenario) => {
+      setTimelockDemo(scenario);
+      setCurrentMode('simulation');
+    };
+
+    const checkTimelockStatus = (unlockTime) => {
+      const now = currentTime;
+      const isUnlocked = now >= unlockTime;
+      const timeRemaining = unlockTime - now;
+      
+      return { isUnlocked, timeRemaining };
+    };
+
+    return (
+      <div className="timelock-conditions">
+        <div className="timelock-header">
+          <Clock className="timelock-icon" size={48} />
+          <h2>Time-Locked Transactions</h2>
+          <p>Program money that can only be spent at specific times</p>
+        </div>
+
+        {currentMode === 'concept' && (
+          <div className="timelock-concept">
+            <div className="concept-intro">
+              <h3>⏰ What are Time Locks?</h3>
+              <p>Time locks prevent Bitcoin from being spent until a certain time or block height is reached. It's like programming money with a timer.</p>
+              
+              <div className="timelock-analogy">
+                <div className="analogy-box">
+                  <h4>🏦 Real World Analogy</h4>
+                  <p>Like a time-locked bank vault that can only be opened on a specific date, or a CD (Certificate of Deposit) that matures after a fixed period.</p>
+                  <p><strong>Bitcoin time locks</strong> are enforced by mathematics and the entire network, not just a single bank.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="timelock-types">
+              <h3>🎯 Types of Time Locks</h3>
+              <div className="types-grid">
+                {timelockTypes.map(type => (
+                  <div key={type.id} className="type-card">
+                    <h4>{type.name}</h4>
+                    <p>{type.description}</p>
+                    <div className="type-example">
+                      <strong>Example:</strong> {type.example}
+                    </div>
+                    <div className="type-condition">
+                      <strong>Condition:</strong> {type.timeCondition}
+                    </div>
+                    <div className="script-preview">
+                      <details>
+                        <summary>View Script</summary>
+                        <code>{type.script}</code>
+                      </details>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="timelock-scenarios">
+              <h3>🎯 Real-World Timelock Scenarios</h3>
+              <p>Click a scenario to simulate time-locked Bitcoin:</p>
+              
+              <div className="scenario-grid">
+                {timelockScenarios.map(scenario => (
+                  <div 
+                    key={scenario.id}
+                    className="scenario-card"
+                    onClick={() => simulateTimelock(scenario)}
+                  >
+                    <h4>{scenario.name}</h4>
+                    <p>{scenario.description}</p>
+                    <div className="scenario-details">
+                      <div><strong>Setup:</strong> {scenario.setup}</div>
+                      <div><strong>Amount:</strong> {scenario.amount}</div>
+                      <div><strong>Benefit:</strong> {scenario.benefit}</div>
+                    </div>
+                    <div className="unlock-status">
+                      {checkTimelockStatus(scenario.unlockDate).isUnlocked ? (
+                        <span className="unlocked">🔓 Unlocked</span>
+                      ) : (
+                        <span className="locked">🔒 Locked</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentMode === 'simulation' && timelockDemo && (
+          <div className="timelock-simulation">
+            <div className="simulation-header">
+              <h3>🎬 Simulating: {timelockDemo.name}</h3>
+              <p>{timelockDemo.description}</p>
+            </div>
+
+            <div className="timelock-status">
+              <div className="status-display">
+                <h4>⏰ Time Lock Status</h4>
+                <div className="time-info">
+                  <div className="current-time">
+                    <strong>Current Time:</strong> {new Date(currentTime).toLocaleString()}
+                  </div>
+                  <div className="unlock-time">
+                    <strong>Unlock Time:</strong> {new Date(timelockDemo.unlockDate).toLocaleString()}
+                  </div>
+                </div>
+                
+                {(() => {
+                  const status = checkTimelockStatus(timelockDemo.unlockDate);
+                  return (
+                    <div className={`lock-status ${status.isUnlocked ? 'unlocked' : 'locked'}`}>
+                      {status.isUnlocked ? (
+                        <div className="unlocked-message">
+                          <CheckCircle size={24} />
+                          <span>🔓 Funds are UNLOCKED and can be spent!</span>
+                        </div>
+                      ) : (
+                        <div className="locked-message">
+                          <Clock size={24} />
+                          <span>🔒 Funds are LOCKED</span>
+                          <div className="time-remaining">
+                            Time remaining: {Math.ceil(status.timeRemaining / (24 * 60 * 60 * 1000))} days
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+
+              <div className="timelock-script">
+                <h4>📜 Timelock Script</h4>
+                <div className="script-code">
+                  {Math.floor(timelockDemo.unlockDate / 1000)} OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 &lt;pubKeyHash&gt; OP_EQUALVERIFY OP_CHECKSIG
+                </div>
+                <p className="script-explanation">
+                  This script checks if the current time is after the unlock timestamp before allowing the signature verification
+                </p>
+              </div>
+            </div>
+
+            <div className="time-controls">
+              <h4>🎮 Time Travel Simulation</h4>
+              <p>Fast-forward time to see the timelock in action:</p>
+              
+              <div className="time-buttons">
+                <ActionButton onClick={() => setCurrentTime(prev => prev + (7 * 24 * 60 * 60 * 1000))}>
+                  +1 Week
+                </ActionButton>
+                <ActionButton onClick={() => setCurrentTime(prev => prev + (30 * 24 * 60 * 60 * 1000))}>
+                  +1 Month
+                </ActionButton>
+                <ActionButton onClick={() => setCurrentTime(timelockDemo.unlockDate + 1000)}>
+                  Jump to Unlock
+                </ActionButton>
+                <ActionButton onClick={() => setCurrentTime(Date.now())}>
+                  Reset to Now
+                </ActionButton>
+              </div>
+            </div>
+
+            <div className="simulation-controls">
+              <ActionButton onClick={() => {
+                setCurrentMode('concept');
+                setTimelockDemo(null);
+                setCurrentTime(Date.now());
+              }}>
+                ← Try Another Scenario
+              </ActionButton>
+              <ContinueButton onClick={handleContinue}>
+                Explore Advanced Patterns →
+              </ContinueButton>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Advanced Patterns Component
+  function AdvancedPatterns() {
+    const [currentPattern, setCurrentPattern] = useState('overview');
+    const [selectedAdvanced, setSelectedAdvanced] = useState(null);
+    const [completedPatterns, setCompletedPatterns] = useState(new Set());
+
+    const advancedPatterns = [
+      {
+        id: 'htlc',
+        name: 'Hash Time Locked Contracts (HTLC)',
+        description: 'Conditional payments that require a secret to unlock',
+        useCase: 'Lightning Network payment channels',
+        script: 'OP_IF OP_SHA256 <hash> OP_EQUALVERIFY OP_DUP OP_HASH160 <pubKeyHash> OP_ELSE <timelock> OP_CHECKLOCKTIMEVERIFY OP_DROP OP_DUP OP_HASH160 <refundPubKeyHash> OP_ENDIF OP_EQUALVERIFY OP_CHECKSIG',
+        explanation: 'Allows instant payments with cryptographic proof, with automatic refund if secret not revealed',
+        difficulty: 'Advanced'
+      },
+      {
+        id: 'atomic_swap',
+        name: 'Atomic Swaps',
+        description: 'Trustless exchange between different cryptocurrencies',
+        useCase: 'Cross-chain trading without exchanges',
+        script: 'Similar to HTLC but coordinated across two blockchains',
+        explanation: 'Either both parties get what they want, or both get refunded - no middle state possible',
+        difficulty: 'Expert'
+      },
+      {
+        id: 'commitment',
+        name: 'Commitment Schemes',
+        description: 'Reveal secrets in stages without changing them',
+        useCase: 'Fair auctions and games',
+        script: 'OP_SHA256 <commitment> OP_EQUALVERIFY OP_SHA256 <reveal> OP_EQUALVERIFY',
+        explanation: 'Commit to a value without revealing it, then prove later you didn\'t cheat',
+        difficulty: 'Advanced'
+      }
+    ];
+
+    const explorePattern = (pattern) => {
+      setSelectedAdvanced(pattern);
+      setCurrentPattern('exploration');
+    };
+
+    const completePattern = (patternId) => {
+      setCompletedPatterns(prev => new Set([...prev, patternId]));
+      if (completedPatterns.size + 1 >= 2) {
+        setCurrentPattern('mastery');
+      }
+    };
+
+    return (
+      <div className="advanced-patterns">
+        <div className="advanced-header">
+          <Brain className="advanced-icon" size={48} />
+          <h2>Advanced Script Patterns</h2>
+          <p>Explore cutting-edge Bitcoin script techniques used in real applications</p>
+        </div>
+
+        {currentPattern === 'overview' && (
+          <div className="patterns-overview">
+            <div className="overview-intro">
+              <h3>🚀 Advanced Bitcoin Scripting</h3>
+              <p>These patterns combine basic operations to create sophisticated financial contracts that power next-generation Bitcoin applications.</p>
+              
+              <div className="complexity-note">
+                <div className="note-box">
+                  <Lightbulb size={24} />
+                  <div>
+                    <h4>Note on Complexity</h4>
+                    <p>These patterns are used by advanced developers building Bitcoin infrastructure. Understanding them gives you insight into Bitcoin's true capabilities.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="patterns-grid">
+              {advancedPatterns.map(pattern => (
+                <div 
+                  key={pattern.id}
+                  className={`pattern-card ${completedPatterns.has(pattern.id) ? 'completed' : ''}`}
+                  onClick={() => explorePattern(pattern)}
+                >
+                  <div className="pattern-header">
+                    <h4>{pattern.name}</h4>
+                    <span className={`difficulty ${pattern.difficulty.toLowerCase()}`}>
+                      {pattern.difficulty}
+                    </span>
+                  </div>
+                  
+                  <p>{pattern.description}</p>
+                  
+                  <div className="pattern-details">
+                    <div><strong>Use Case:</strong> {pattern.useCase}</div>
+                    <div><strong>Key Feature:</strong> {pattern.explanation}</div>
+                  </div>
+
+                  {completedPatterns.has(pattern.id) && (
+                    <div className="completion-badge">
+                      <CheckCircle size={20} />
+                      <span>Explored</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentPattern === 'exploration' && selectedAdvanced && (
+          <div className="pattern-exploration">
+            <div className="exploration-header">
+              <h3>🔍 Exploring: {selectedAdvanced.name}</h3>
+              <p>{selectedAdvanced.description}</p>
+            </div>
+
+            <div className="pattern-breakdown">
+              <div className="use-case-section">
+                <h4>🎯 Real-World Use Case</h4>
+                <div className="use-case-box">
+                  {selectedAdvanced.useCase}
+                </div>
+              </div>
+
+              <div className="script-section">
+                <h4>📜 Script Pattern</h4>
+                <div className="script-code">
+                  {selectedAdvanced.script}
+                </div>
+              </div>
+
+              <div className="explanation-section">
+                <h4>💡 How It Works</h4>
+                <div className="explanation-box">
+                  {selectedAdvanced.explanation}
+                </div>
+              </div>
+
+              {selectedAdvanced.id === 'htlc' && (
+                <div className="detailed-example">
+                  <h4>🌐 Lightning Network Example</h4>
+                  <div className="example-steps">
+                    <div className="step">
+                      <strong>1. Setup:</strong> Alice wants to pay Charlie through Bob
+                    </div>
+                    <div className="step">
+                      <strong>2. Secret:</strong> Charlie creates a secret and shares its hash
+                    </div>
+                    <div className="step">
+                      <strong>3. Chain:</strong> Alice → Bob → Charlie, each requiring the secret
+                    </div>
+                    <div className="step">
+                      <strong>4. Reveal:</strong> Charlie reveals secret to claim payment
+                    </div>
+                    <div className="step">
+                      <strong>5. Propagate:</strong> Secret propagates back, completing all payments
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="exploration-quiz">
+              <h4>🤔 Understanding Check</h4>
+              <p>What makes this pattern special compared to simple payments?</p>
+              <div className="quiz-options">
+                <div className="quiz-option" onClick={() => completePattern(selectedAdvanced.id)}>
+                  It adds conditional logic that creates new possibilities
+                </div>
+                <div className="quiz-option">
+                  It makes transactions faster
+                </div>
+                <div className="quiz-option">
+                  It reduces fees
+                </div>
+              </div>
+            </div>
+
+            <div className="exploration-controls">
+              <ActionButton onClick={() => setCurrentPattern('overview')}>
+                ← Explore Other Patterns
+              </ActionButton>
+            </div>
+          </div>
+        )}
+
+        {currentPattern === 'mastery' && (
+          <div className="advanced-mastery">
+            <div className="mastery-celebration">
+              <CheckCircle size={64} className="success-icon" />
+              <h3>🎉 Advanced Script Mastery!</h3>
+              <p>You've explored the cutting edge of Bitcoin's programmable money capabilities.</p>
+            </div>
+
+            <div className="mastery-insights">
+              <h4>🧠 Key Insights Gained</h4>
+              <div className="insight-grid">
+                <div className="insight-item">
+                  <Code2 size={32} />
+                  <h5>Conditional Logic</h5>
+                  <p>Bitcoin scripts can implement complex conditional behaviors</p>
+                </div>
+                <div className="insight-item">
+                  <Zap size={32} />
+                  <h5>Layer 2 Scaling</h5>
+                  <p>Advanced patterns enable instant payments and complex applications</p>
+                </div>
+                <div className="insight-item">
+                  <Shield size={32} />
+                  <h5>Trustless Contracts</h5>
+                  <p>Mathematics replaces trust in sophisticated financial agreements</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="learning-journey">
+              <h4>🎯 Your Bitcoin Script Journey</h4>
+              <div className="journey-summary">
+                <div className="journey-step completed">
+                  <CheckCircle size={20} />
+                  <span>Basic stack operations</span>
+                </div>
+                <div className="journey-step completed">
+                  <CheckCircle size={20} />
+                  <span>Signature verification</span>
+                </div>
+                <div className="journey-step completed">
+                  <CheckCircle size={20} />
+                  <span>Multi-signature contracts</span>
+                </div>
+                <div className="journey-step completed">
+                  <CheckCircle size={20} />
+                  <span>Time-locked transactions</span>
+                </div>
+                <div className="journey-step completed">
+                  <CheckCircle size={20} />
+                  <span>Advanced patterns</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="next-steps">
+              <h4>🚀 What's Next?</h4>
+              <p>You now understand how Bitcoin's scripting system enables programmable money. This knowledge opens doors to:</p>
+              <ul>
+                <li>Building Bitcoin applications</li>
+                <li>Understanding Lightning Network</li>
+                <li>Creating custom smart contracts</li>
+                <li>Contributing to Bitcoin development</li>
+              </ul>
+            </div>
+
+            <ContinueButton onClick={handleContinue}>
+              Complete Scripts Module →
+            </ContinueButton>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <div className="scripts-module">
+    <div className="module-container scripts-module">
       <div className="module-header">
-        <h1 className="module-title">
-          <div className="module-icon">
-            <Code className="w-12 h-12" />
+        <div className="header-content">
+          <Code2 className="module-icon" size={48} />
+          <div className="header-text">
+            <h1>Bitcoin Scripts</h1>
+            <p>Learn how Bitcoin uses simple programs to control when and how money can be spent</p>
           </div>
-          Bitcoin Scripts
-        </h1>
-        <p className="module-subtitle">Learn how Bitcoin uses programmable conditions to control spending</p>
-        <div className="module-progress">
+        </div>
+        
+        <div className="progress-section">
           <div className="progress-bar">
             <div 
-              className="progress-fill" 
+              className="progress-fill"
               style={{ width: `${progressPercentage}%` }}
-            ></div>
+            />
           </div>
-          <span>{Math.round(progressPercentage)}% Complete</span>
+          <span className="progress-text">
+            Step {currentStep + 1} of {scriptSteps.length}
+          </span>
         </div>
       </div>
 
-      <div className="module-tabs">
-        {architectSteps.map((step, index) => (
-          <div
+      <div className="module-navigation">
+        {scriptSteps.map((step, index) => (
+          <div 
             key={step.id}
-            className={`tab ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => index <= currentStep && setCurrentStep(index)}
+            className={`nav-step ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
           >
-            {step.icon}
-            <div className="tab-content">
-              <span className="tab-title">{step.title}</span>
-              <span className="tab-subtitle">{step.subtitle}</span>
-            </div>
+            <div className="step-number">{index + 1}</div>
+            <div className="step-title">{step.title}</div>
           </div>
         ))}
       </div>
 
-      <div className="step-content-container">
-        {renderCurrentStep()}
+      <div className="module-content">
+        {CurrentStepComponent && <CurrentStepComponent />}
+      </div>
+
+      <div className="module-controls">
+        {currentStep > 0 && (
+          <NavigationButton onClick={handleBack} variant="secondary">
+            <ArrowLeft size={20} />
+            Previous
+          </NavigationButton>
+        )}
+        
+        <div className="control-spacer" />
+        
+        {currentStep === scriptSteps.length - 1 && completedSteps.has(currentStep) && (
+          <NavigationButton 
+            onClick={() => navigate('/module/merkle')}
+            variant="primary"
+          >
+            Next Module: Merkle Trees
+            <ArrowRight size={20} />
+          </NavigationButton>
+        )}
       </div>
     </div>
   );
