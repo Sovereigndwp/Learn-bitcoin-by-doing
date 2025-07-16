@@ -3,16 +3,21 @@ import { Link } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { useNotifications } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
-import { Trophy, Target, Zap, Users, Clock, Brain, Award, Star, CheckCircle, Play, ArrowRight, Map, Lightbulb, Shield, RotateCcw } from 'lucide-react';
+import { 
+  Trophy, Target, Zap, Users, Clock, Brain, Award, Star, 
+  CheckCircle, Play, ArrowRight, Map, Lightbulb, Shield, 
+  RotateCcw, BookOpen, TrendingUp, Eye, ChevronRight,
+  DollarSign, Coins, Lock, Unlock, MessageCircle, BarChart3
+} from 'lucide-react';
 import './Homepage.css';
 
 const Homepage = () => {
   const { getModuleProgress, isModuleCompleted, completeModule, resetProgress } = useProgress();
   const { showNotification } = useNotifications();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [currentView, setCurrentView] = useState('welcome'); // welcome, learning, progress
 
-  const [selectedValueProposition, setSelectedValueProposition] = useState(null);
-  const [showJourneyMap, setShowJourneyMap] = useState(false);
+  // Calculate user statistics
   const [userStats, setUserStats] = useState({
     totalModules: 0,
     completedModules: 0,
@@ -20,9 +25,299 @@ const Homepage = () => {
     achievements: []
   });
 
+  useEffect(() => {
+    const modules = Object.values(moduleRegistry);
+    const completed = modules.filter(module => isModuleCompleted(module.id));
+    const totalProgress = modules.reduce((sum, module) => sum + getModuleProgress(module.id), 0);
+    
+    const achievements = [];
+    if (isModuleCompleted('money')) achievements.push('Money Master');
+    if (isModuleCompleted('bitcoin-basics')) achievements.push('Bitcoin Explorer');
+    if (isModuleCompleted('hashing')) achievements.push('Cryptography Student');
+    if (isModuleCompleted('keys')) achievements.push('Digital Sovereign');
+    if (completed.length >= 3) achievements.push('Learning Streak');
+    if (completed.length >= 6) achievements.push('Dedicated Student');
+    if (completed.length === modules.length) achievements.push('Bitcoin Scholar');
+
+    setUserStats({
+      totalModules: modules.length,
+      completedModules: completed.length,
+      totalProgress: Math.round(totalProgress / modules.length),
+      achievements
+    });
+  }, [getModuleProgress, isModuleCompleted]);
+
+  // Check if user has started their journey
+  const hasStarted = userStats.completedModules > 0;
+  const bankingExperienceCompleted = isModuleCompleted('banking-intro');
+
+  // Get next recommended module
+  const getNextRecommendedModule = () => {
+    const completedModuleIds = Object.values(moduleRegistry)
+      .filter(module => getModuleProgress(module.id) === 100)
+      .map(module => module.id);
+    return getNextModule(completedModuleIds);
+  };
+
+  const nextModule = getNextRecommendedModule();
+
+  const handleStartJourney = () => {
+    completeModule('banking-intro');
+    setCurrentView('learning');
+    showNotification({
+      type: 'achievement',
+      title: 'Journey Begins! 🎯',
+      message: "Let's start with understanding how money really works."
+    });
+  };
+
+  const handleResetProgress = () => {
+    resetProgress();
+    setShowResetConfirm(false);
+    setCurrentView('welcome');
+    showNotification({
+      type: 'insight',
+      title: 'Fresh Start 🔄',
+      message: "Your learning journey has been reset. Ready to begin again!"
+    });
+  };
+
+  // Progressive unlocking logic
+  const isModuleUnlocked = (module) => {
+    if (module.id === 'money') {
+      return bankingExperienceCompleted;
+    }
+    
+    if (module.prerequisites.length === 0) {
+      return bankingExperienceCompleted;
+    }
+    
+    return module.prerequisites.every(prereq => isModuleCompleted(prereq));
+  };
+
+  return (
+    <div className="homepage-modern">
+      {/* Modern Header */}
+      <header className="modern-header">
+        <div className="header-content">
+          <div className="logo-section">
+            <span className="bitcoin-symbol">₿</span>
+            <div className="logo-text">
+              <h1>Bitcoin Learning Journey</h1>
+              <p>From monetary confusion to digital clarity</p>
+            </div>
+          </div>
+          <nav className="header-nav">
+            <button 
+              onClick={() => setCurrentView('progress')} 
+              className={`nav-tab ${currentView === 'progress' ? 'active' : ''}`}
+            >
+              <BarChart3 size={16} />
+              Progress
+            </button>
+            <button 
+              onClick={() => setCurrentView('learning')} 
+              className={`nav-tab ${currentView === 'learning' ? 'active' : ''}`}
+            >
+              <BookOpen size={16} />
+              Learning
+            </button>
+            {hasStarted && (
+              <button 
+                onClick={() => setShowResetConfirm(true)} 
+                className="nav-tab reset-tab"
+              >
+                <RotateCcw size={16} />
+                Reset
+              </button>
+            )}
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content Based on Current View */}
+      <main className="main-content">
+        {currentView === 'welcome' && !hasStarted && (
+          <WelcomeSection onStartJourney={handleStartJourney} />
+        )}
+
+        {(currentView === 'learning' || hasStarted) && (
+          <LearningSection 
+            userStats={userStats}
+            nextModule={nextModule}
+            isModuleUnlocked={isModuleUnlocked}
+            getModuleProgress={getModuleProgress}
+            isModuleCompleted={isModuleCompleted}
+          />
+        )}
+
+        {currentView === 'progress' && hasStarted && (
+          <ProgressSection userStats={userStats} />
+        )}
+      </main>
+
+      {/* Reset Confirmation Dialog */}
+      {showResetConfirm && (
+        <ResetConfirmationDialog 
+          userStats={userStats}
+          onConfirm={handleResetProgress}
+          onCancel={() => setShowResetConfirm(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+// Modern Welcome Section
+const WelcomeSection = ({ onStartJourney }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const slides = [
+    {
+      icon: "💰",
+      title: "Money Shapes Everything",
+      description: "Yet most of us were never taught how it actually works. This changes today.",
+      highlight: "Start with the basics"
+    },
+    {
+      icon: "🧠", 
+      title: "Think Independently",
+      description: "We'll show you the data, ask the right questions, and let you draw your own conclusions.",
+      highlight: "Evidence-based learning"
+    },
+    {
+      icon: "📊",
+      title: "Optional: Modern Money Foundation",
+      description: "Before diving into Bitcoin, explore how traditional monetary systems work in this interactive presentation.",
+      highlight: "Preparatory learning",
+      isCanvaSlide: true
+    },
+    {
+      icon: "₿",
+      title: "Master Bitcoin",
+      description: "Understand the technology that's changing money forever through hands-on exploration.",
+      highlight: "Interactive education"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  return (
+    <section className="welcome-section">
+      <div className="welcome-hero">
+        <div className="hero-content">
+          <div className="slide-container">
+            <div className="slide-icon">{slides[currentSlide].icon}</div>
+            <h2 className="hero-title">{slides[currentSlide].title}</h2>
+            <p className="hero-description">{slides[currentSlide].description}</p>
+            <span className="hero-highlight">{slides[currentSlide].highlight}</span>
+            
+            {slides[currentSlide].isCanvaSlide && (
+              <div className="canva-presentation-container">
+                <div style={{
+                  position: 'relative', 
+                  width: '100%', 
+                  height: '0', 
+                  paddingTop: '56.2225%',
+                  paddingBottom: '0', 
+                  boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)', 
+                  margin: '1.5em 0', 
+                  overflow: 'hidden',
+                  borderRadius: '12px', 
+                  willChange: 'transform'
+                }}>
+                  <iframe 
+                    loading="lazy" 
+                    style={{
+                      position: 'absolute', 
+                      width: '100%', 
+                      height: '100%', 
+                      top: '0', 
+                      left: '0', 
+                      border: 'none', 
+                      padding: '0',
+                      margin: '0'
+                    }}
+                    src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed" 
+                    allowFullScreen="allowfullscreen" 
+                    allow="fullscreen">
+                  </iframe>
+                </div>
+                <div className="presentation-attribution">
+                  <a 
+                    href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="presentation-link"
+                  >
+                    📈 View Full Presentation
+                  </a>
+                  <p className="attribution-text">Educational content by Dalia Platt</p>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <div className="slide-indicators">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                className={`slide-indicator ${index === currentSlide ? 'active' : ''}`}
+                onClick={() => setCurrentSlide(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="learning-preview">
+        <h3>What You'll Learn</h3>
+        <div className="preview-grid">
+          <div className="preview-card">
+            <Coins className="preview-icon" />
+            <h4>How Money Really Works</h4>
+            <p>Trace money from gold to government promises to digital scarcity</p>
+          </div>
+          <div className="preview-card">
+            <Shield className="preview-icon" />
+            <h4>Bitcoin Fundamentals</h4>
+            <p>Master the technology enabling trustless digital money</p>
+          </div>
+          <div className="preview-card">
+            <Brain className="preview-icon" />
+            <h4>Critical Thinking</h4>
+            <p>Learn to evaluate claims and think from first principles</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="cta-section">
+        <button onClick={onStartJourney} className="start-journey-button">
+          <Play size={20} />
+          <span>Begin Your Journey</span>
+          <ArrowRight size={16} />
+        </button>
+        <p className="cta-subtitle">~5 minutes to start • No signup required</p>
+      </div>
+    </section>
+  );
+};
+
+// Modern Learning Section
+const LearningSection = ({ 
+  userStats, 
+  nextModule, 
+  isModuleUnlocked, 
+  getModuleProgress,
+  isModuleCompleted 
+}) => {
   const moduleIcons = {
     money: '💰',
-    'money-designer': '⚡',
     'bitcoin-basics': '₿',
     numbers: '🔢',
     hashing: '🔐',
@@ -38,670 +333,94 @@ const Homepage = () => {
     'bitcoin-toolkit': '🛠️'
   };
 
-  // Holistic Journey Narrative
-  const journeySteps = [
-    {
-      id: "wake_up",
-      title: "🎭 The Illusion Breaks",
-      question: "What if everything you believed about money was carefully designed to benefit someone else?",
-      revelation: "You discover that money isn't neutral—it's a tool that shapes society, and currently, it's working against most people.",
-      modules: [],
-      insight: "The first step to freedom is recognizing the cage."
-    },
-    {
-      id: "understand_money",
-      title: "💰 Money's True Story", 
-      question: "How did we go from trading real value to trusting promises from institutions?",
-      revelation: "You trace money's evolution from gold to government promises, understanding each step that led to today's crisis.",
-      modules: ['money'],
-      insight: "Money is either a tool of freedom or a weapon of control—there's no middle ground."
-    },
-    {
-      id: "discover_solution",
-      title: "₿ The Bitcoin Breakthrough",
-      question: "What would money look like if it was designed for people, not institutions?",
-      revelation: "You explore Bitcoin's revolutionary approach: a system that works without requiring trust in any authority.",
-      modules: ['bitcoin-basics'],
-      insight: "For the first time in history, we have money that serves people, not power."
-    },
-    {
-      id: "learn_language",
-      title: "🔢 The Digital Language",
-      question: "How do computers create things that can't be copied or counterfeited?",
-      revelation: "You master the mathematical foundations that make digital scarcity possible.",
-      modules: ['numbers', 'hashing'],
-      insight: "Code becomes law when mathematics enforces the rules."
-    },
-    {
-      id: "own_sovereignty", 
-      title: "🔑 True Ownership",
-      question: "What does it mean to truly own something in the digital age?",
-      revelation: "You learn to control your own wealth without asking permission from anyone.",
-      modules: ['keys'],
-      insight: "Your keys, your Bitcoin. No keys, no Bitcoin. No exceptions."
-    },
-    {
-      id: "master_system",
-      title: "⚙️ The Machine Works",
-      question: "How does a leaderless network coordinate the actions of millions?",
-      revelation: "You understand the elegant mechanics that turn individual incentives into collective security.",
-      modules: ['transactions', 'scripts', 'merkle', 'mining'],
-      insight: "Incentives aligned with mathematics create unstoppable systems."
-    },
-    {
-      id: "practical_mastery",
-      title: "🚀 Real-World Application", 
-      question: "How do you actually live in a Bitcoin world?",
-      revelation: "You master the practical skills needed to thrive in the new financial system.",
-      modules: ['custody', 'lightning', 'advanced-topics', 'bitcoin-toolkit', 'myths'],
-      insight: "Knowledge without application is just expensive entertainment."
-    }
-  ];
-
-  // Personal Value Propositions
-  const valuePropositions = [
-    {
-      id: "financial_freedom",
-      title: "🎯 Financial Freedom",
-      problem: "You're tired of banks controlling your money",
-      solution: "Learn to be your own bank",
-      outcome: "Complete financial sovereignty and independence",
-      timeframe: "~3 months of focused learning"
-    },
-    {
-      id: "inflation_protection", 
-      title: "🛡️ Inflation Defense",
-      problem: "Your savings lose value every year",
-      solution: "Understand sound money principles",
-      outcome: "Protect and grow your wealth over time", 
-      timeframe: "~6 weeks to master the basics"
-    },
-    {
-      id: "technology_mastery",
-      title: "🔧 Technical Mastery",
-      problem: "You want to understand Bitcoin deeply",
-      solution: "Master the technical foundations",
-      outcome: "Become a Bitcoin expert and educator",
-      timeframe: "~4 months for complete mastery"
-    },
-    {
-      id: "investment_wisdom",
-      title: "📈 Investment Intelligence", 
-      problem: "You're confused by conflicting financial advice",
-      solution: "Learn to think from first principles",
-      outcome: "Make informed decisions about your future",
-      timeframe: "~2 months to build conviction"
-    }
-  ];
-
-  // Calculate user statistics
-  useEffect(() => {
-    const modules = Object.values(moduleRegistry);
-    const completed = modules.filter(module => isModuleCompleted(module.id));
-    const totalProgress = modules.reduce((sum, module) => sum + getModuleProgress(module.id), 0);
-    
-    const achievements = [];
-    if (isModuleCompleted('banking-intro')) achievements.push('Journey Begins');
-    if (isModuleCompleted('money')) achievements.push('Money Master');
-    if (isModuleCompleted('bitcoin-basics')) achievements.push('Bitcoin Explorer');
-    if (isModuleCompleted('hashing')) achievements.push('Cryptography Student');
-    if (isModuleCompleted('keys')) achievements.push('Digital Sovereign');
-    if (isModuleCompleted('transactions')) achievements.push('Transaction Expert');
-    if (isModuleCompleted('merkle')) achievements.push('Tree Architect');
-    if (isModuleCompleted('mining')) achievements.push('Energy Pioneer');
-    if (completed.length >= 3) achievements.push('Learning Streak');
-    if (completed.length >= 6) achievements.push('Dedicated Student');
-    if (completed.length === modules.length) achievements.push('Bitcoin Scholar');
-
-    setUserStats({
-      totalModules: modules.length,
-      completedModules: completed.length,
-      totalProgress: Math.round(totalProgress / modules.length),
-      achievements
-    });
-  }, [getModuleProgress, isModuleCompleted]);
-
-  // Check if banking experience is completed
-  const bankingExperienceCompleted = isModuleCompleted('banking-intro');
-  
-  // Progressive unlocking logic
-  const isModuleUnlocked = (module) => {
-    if (module.id === 'money') {
-      return bankingExperienceCompleted;
-    }
-    
-    if (module.prerequisites.length === 0) {
-      return bankingExperienceCompleted;
-    }
-    
-    return module.prerequisites.every(prereq => isModuleCompleted(prereq));
-  };
-
-  const handleExperienceComplete = () => {
-    completeModule('banking-intro');
-    showNotification({
-      type: 'achievement',
-      title: 'Journey Begins! 🎯',
-      message: "You've taken your first step toward financial understanding!"
-    });
-  };
-
-  const handleResetProgress = () => {
-    resetProgress();
-    setShowResetConfirm(false);
-    showNotification({
-      type: 'insight',
-      title: 'Fresh Start 🔄',
-      message: "Your learning journey has been reset. Ready to begin again!"
-    });
-  };
-
-  const getCurrentJourneyStep = () => {
-    for (let i = journeySteps.length - 1; i >= 0; i--) {
-      const step = journeySteps[i];
-      if (step.modules.length === 0) continue; // Skip intro step
-      if (step.modules.every(moduleId => isModuleCompleted(moduleId))) {
-        return i + 1; // Next step
-      }
-    }
-    return bankingExperienceCompleted ? 1 : 0; // Start with money if ready
-  };
-
-  const currentStep = getCurrentJourneyStep();
-  const activeJourneyStep = journeySteps[currentStep];
-
-
-
   return (
-    <div className="homepage">
-      <header className="homepage-header">
-        <div className="logo">
-          <span className="bitcoin-symbol">₿</span>
-          <div className="logo-content">
-            <h1>Money's Mess & Bitcoin's Fix</h1>
-            <p className="tagline">A logical journey from broken money to digital sovereignty</p>
-          </div>
-        </div>
-        <div className="nav-buttons">
-          <Link to="/about" className="nav-button">
-            <Users size={16} />
-            <span>By Dalia</span>
-          </Link>
-          <button 
-            onClick={() => setShowJourneyMap(!showJourneyMap)} 
-            className="nav-button"
-          >
-            <Map size={16} />
-            <span>Journey Map</span>
-          </button>
-          {bankingExperienceCompleted && (
-            <button 
-              onClick={() => setShowResetConfirm(true)} 
-              className="nav-button reset-button"
-            >
-              <RotateCcw size={16} />
-              <span>Reset Journey</span>
-            </button>
-          )}
-        </div>
-      </header>
-
-      {/* Reality Check Section */}
-      {!bankingExperienceCompleted ? (
-        <RealityCheckStep onComplete={handleExperienceComplete} />
-      ) : (
-        <>
-          {/* Journey Map Overlay */}
-          {showJourneyMap && (
-            <JourneyMapView 
-              journeySteps={journeySteps}
-              currentStep={currentStep}
-              userStats={userStats}
-              onClose={() => setShowJourneyMap(false)}
-            />
-          )}
-
-          {/* Current Journey Step */}
-          <CurrentJourneyStep 
-            step={activeJourneyStep}
-            stepIndex={currentStep}
-            totalSteps={journeySteps.length}
-            userStats={userStats}
-            moduleIcons={moduleIcons}
-          />
-
-          {/* Value Discovery */}
-          {!selectedValueProposition && (
-            <ValueDiscoveryStep 
-              valuePropositions={valuePropositions}
-              onSelect={setSelectedValueProposition}
-            />
-          )}
-
-          {/* Continue Learning CTA */}
-          {(() => {
-            const completedModuleIds = Object.values(moduleRegistry)
-              .filter(module => getModuleProgress(module.id) === 100)
-              .map(module => module.id);
-            const nextModule = getNextModule(completedModuleIds);
-            return nextModule ? (
-              <ContinueLearningSection 
-                nextModule={nextModule}
-                selectedPath={selectedValueProposition}
-              />
-            ) : null;
-          })()}
-
-          {/* Enhanced Module Groups */}
-          <div className="enhanced-module-groups">
-            {Object.entries(moduleGroups)
-              .sort(([,a], [,b]) => a.order - b.order)
-              .map(([groupKey, groupInfo]) => (
-                <EnhancedGroupSection
-                  key={groupKey}
-                  groupKey={groupKey}
-                  groupInfo={groupInfo}
-                  modules={Object.values(moduleRegistry).filter(m => m.group === groupKey)}
-                  isModuleUnlocked={isModuleUnlocked}
-                  getModuleProgress={getModuleProgress}
-                  moduleIcons={moduleIcons}
-                  selectedPath={selectedValueProposition}
-                />
-              ))}
-          </div>
-
-          {/* Momentum Builder */}
-          {userStats.completedModules >= 2 && (
-            <MomentumBuilderSection userStats={userStats} />
-          )}
-        </>
-      )}
-
-      {/* Reset Confirmation Dialog */}
-      {showResetConfirm && (
-        <ResetConfirmationDialog 
-          userStats={userStats}
-          onConfirm={handleResetProgress}
-          onCancel={() => setShowResetConfirm(false)}
-        />
-      )}
-    </div>
-  );
-};
-
-// New Interactive Components
-
-const RealityCheckStep = ({ onComplete }) => {
-  const [showDataExploration, setShowDataExploration] = useState(false);
-
-  return (
-    <div className="modern-homepage-introduction">
-      {/* Don't Trust, Verify Header */}
-      <div className="trust-verify-hero">
-        <h1 className="stop-sign">🛑 Don't Trust. <strong>Verify.</strong></h1>
-        
-        <div className="before-we-begin">
-          <h3>❗ Before We Begin</h3>
-          <p>
-            This <strong>isn't</strong> a brainwashing course. It's not about preaching Bitcoin.<br/>
-            It's about <em>thinking for yourself</em>—asking better questions, finding real answers, 
-            and reclaiming clarity in a system designed to confuse you.
-          </p>
-        </div>
-      </div>
-
-      {/* Core Belief Section */}
-      <div className="core-belief-section">
-        <h2 className="core-belief-title">🧠 Our Core Belief:</h2>
-        <p className="core-belief-statement"><strong>Question everything.</strong> Even us.</p>
-        
-        <div className="what-youll-practice">
-          <h3>🔍 What You'll Practice:</h3>
-          <ul className="practice-list">
-            <li><strong>Challenge assumptions</strong>—ours, yours, and the system's</li>
-            <li><strong>Verify claims</strong>—follow the data, not the hype</li>
-            <li><strong>Think independently</strong>—form your own conclusions, not someone else's</li>
-          </ul>
-          
-          <blockquote className="core-quote">
-            "The goal isn't to convince you. It's to hand you the flashlight and let you inspect the cave."
-          </blockquote>
-        </div>
-      </div>
-
-      {/* Why This Course Exists */}
-      <div className="why-course-exists">
-        <h2>💡 Why This Course Exists</h2>
-        <p className="course-premise">
-          Money runs your life—but most of us were never taught how it actually works.<br/>
-          This course helps you understand money systems—<strong>old and new</strong>—with tools, context, and curiosity.
-        </p>
-        
-        <ul className="course-approach-list">
-          <li>Follow the data.</li>
-          <li>Trace the incentives.</li>
-          <li>See the patterns no one taught you to see.</li>
-        </ul>
-      </div>
-
-      {/* How We Teach */}
-      <div className="how-we-teach">
-        <h2>🧭 How We Teach (It's Not School, It's a System Reboot)</h2>
-        
-        <div className="teaching-methods">
-          <div className="method">
-            <h3>❓ We Begin With Better Questions</h3>
-            <p>We won't dump facts. We'll ask the <em>right</em> questions to unlock new thinking.</p>
-          </div>
-          
-          <div className="method">
-            <h3>📊 We Work With Evidence</h3>
-            <p>Historical data, real-world examples, and verifiable sources—no guessing.</p>
-          </div>
-          
-          <div className="method">
-            <h3>🧩 We Build from First Principles</h3>
-            <p>We connect dots from basics to breakthroughs—logically, step by step.</p>
-          </div>
-        </div>
-      </div>
-
-      {!showDataExploration ? (
-        <div className="ask-yourself-section">
-          <h2>💭 Before You Dive In: Ask Yourself</h2>
-          <p className="section-intro">These 4 questions will shape how you experience this course:</p>
-          
-          <div className="questions-modern-grid">
-            <div className="question-modern-card">
-              <h3>1. What is money, really?</h3>
-              <p>Is it paper? A number in an app? A shared belief?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>2. Should money hold its value over time?</h3>
-              <p>If you save $1000 today, what should it buy in 10 years?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>3. Who should control money creation?</h3>
-              <p>Governments? Banks? Code? What are the risks?</p>
-            </div>
-            
-            <div className="question-modern-card">
-              <h3>4. What have you noticed about the economy in your life?</h3>
-              <p>Are things getting more expensive? Why?</p>
-            </div>
-          </div>
-
-          <div className="explore-data-cta">
-            <button 
-              onClick={() => setShowDataExploration(true)}
-              className="modern-explore-button"
-            >
-              📈 Explore the Data
-              <span className="button-subtitle">We'll show you the numbers—then let you decide what they mean.</span>
-            </button>
-            <p className="ready-text">Ready to follow the rabbit hole?</p>
-          </div>
-        </div>
-      ) : (
-        <div className="data-exploration-modern">
-          <div className="data-header">
-            <h2>📊 The Numbers Don't Lie</h2>
-            <p>Here's the data. Look at the patterns. Draw your own conclusions.</p>
-          </div>
-
-          <div className="data-embed-container">
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: 0,
-              paddingTop: '56.2225%',
-              paddingBottom: 0,
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-              marginTop: '2rem',
-              marginBottom: '1rem',
-              overflow: 'hidden',
-              borderRadius: '12px',
-              border: '2px solid rgba(255, 255, 255, 0.1)'
-            }}>
-              <iframe 
-                loading="lazy"
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: 0,
-                  left: 0,
-                  border: 'none',
-                  padding: 0,
-                  margin: 0
-                }}
-                src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed"
-                allowFullScreen="allowfullscreen"
-                allow="fullscreen"
-                title="Economic Data Analysis"
-              />
-            </div>
-            <div className="data-attribution">
-              <a 
-                href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="data-source-link"
-              >
-                📊 Economic Data & Money Systems Analysis
-              </a>
-              <span> by Dalia Platt</span>
-            </div>
-          </div>
-
-          <div className="next-steps-modern">
-            <h3>What You Just Saw</h3>
-            <p>
-              Those aren't opinions. They're measurements. Patterns in the data that affect 
-              every person, every day, whether they know it or not.
-            </p>
-            
-            <div className="whats-next">
-              <h4>What's Next?</h4>
-              <p>
-                We'll start with how money works, why systems change, and what alternatives exist. 
-                You'll see the mechanics behind what you just observed.
-              </p>
-              <p className="journey-promise">
-                <strong>Our promise:</strong> Every claim will be backed by data. Every concept will be tested with examples. 
-                Every conclusion will be yours to make.
-              </p>
-            </div>
-            
-            <button 
-              onClick={onComplete}
-              className="begin-journey-modern"
-            >
-              <span className="journey-icon">🚀</span>
-              <div className="button-text">
-                <span className="main-text">Begin the Investigation</span>
-                <span className="sub-text">Start with: How Money Really Works</span>
+    <section className="learning-section">
+      {/* Next Step CTA */}
+      {nextModule && (
+        <div className="next-step-cta">
+          <div className="next-step-content">
+            <h3>Continue Learning</h3>
+            <p>Your next recommended module</p>
+            <Link to={`/module/${nextModule.id}`} className="next-module-card">
+              <div className="module-icon">{moduleIcons[nextModule.id]}</div>
+              <div className="module-info">
+                <h4>{nextModule.title}</h4>
+                <p>{nextModule.description}</p>
               </div>
-            </button>
+              <ChevronRight className="continue-arrow" />
+            </Link>
+          </div>
+          <div className="progress-summary">
+            <div className="progress-ring">
+              <svg width="60" height="60">
+                <circle cx="30" cy="30" r="25" fill="none" stroke="#333" strokeWidth="4" />
+                <circle 
+                  cx="30" cy="30" r="25" fill="none" 
+                  stroke="#f7931a" strokeWidth="4"
+                  strokeDasharray={`${userStats.totalProgress * 1.57} 157`}
+                  strokeDashoffset="39.25"
+                />
+              </svg>
+              <span className="progress-text">{userStats.totalProgress}%</span>
+            </div>
           </div>
         </div>
       )}
-    </div>
-  );
-};
 
-// New Interactive Components
-
-const CurrentJourneyStep = ({ step, stepIndex, totalSteps, userStats, moduleIcons }) => {
-  return (
-    <div className="current-journey-step">
-      <div className="journey-header">
-        <h2>{step.title}</h2>
-        <div className="journey-progress">
-          <span>{stepIndex + 1} of {totalSteps}</span>
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${((stepIndex + 1) / totalSteps) * 100}%` }}
-            />
-          </div>
+      {/* Learning Path */}
+      <div className="learning-path">
+        <h3>Your Learning Path</h3>
+        <div className="modules-grid">
+          {Object.entries(moduleGroups)
+            .sort(([,a], [,b]) => a.order - b.order)
+            .map(([groupKey, groupInfo]) => (
+              <ModuleGroup
+                key={groupKey}
+                groupInfo={groupInfo}
+                modules={Object.values(moduleRegistry).filter(m => m.group === groupKey)}
+                isModuleUnlocked={isModuleUnlocked}
+                getModuleProgress={getModuleProgress}
+                isModuleCompleted={isModuleCompleted}
+                moduleIcons={moduleIcons}
+              />
+            ))}
         </div>
       </div>
-      
-      <div className="journey-content">
-        <p className="journey-question">{step.question}</p>
-        <p className="journey-revelation">{step.revelation}</p>
-        <blockquote className="journey-insight">
-          💡 {step.insight}
-        </blockquote>
-      </div>
-
-      {step.modules.length > 0 && (
-        <div className="journey-modules">
-          <h4>Complete these modules to continue:</h4>
-          <div className="journey-module-list">
-            {step.modules.map(moduleId => {
-              const module = moduleRegistry[moduleId];
-              if (!module) return null;
-              return (
-                <Link 
-                  key={moduleId}
-                  to={`/module/${moduleId}`}
-                  className="journey-module-link"
-                >
-                  <span className="module-emoji">{moduleIcons[moduleId]}</span>
-                  <span className="module-title">{module.title}</span>
-                  <ArrowRight size={16} />
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
+    </section>
   );
 };
 
-const ValueDiscoveryStep = ({ valuePropositions, onSelect }) => {
-  const [selectedId, setSelectedId] = useState(null);
-
-  return (
-    <div className="value-discovery-step">
-      <h2>🎯 Why Are You Here?</h2>
-      <p>Choose your primary motivation to get personalized guidance:</p>
-      
-      <div className="value-propositions-grid">
-        {valuePropositions.map(vp => (
-          <div 
-            key={vp.id}
-            className={`value-proposition-card ${selectedId === vp.id ? 'selected' : ''}`}
-            onClick={() => setSelectedId(vp.id)}
-          >
-            <h3>{vp.title}</h3>
-            <div className="vp-problem">
-              <strong>Problem:</strong> {vp.problem}
-            </div>
-            <div className="vp-solution">
-              <strong>Solution:</strong> {vp.solution}
-            </div>
-            <div className="vp-outcome">
-              <strong>Outcome:</strong> {vp.outcome}
-            </div>
-            <div className="vp-timeframe">
-              <Clock size={14} />
-              {vp.timeframe}
-            </div>
-          </div>
-        ))}
-      </div>
-      
-      {selectedId && (
-        <button 
-          onClick={() => onSelect(valuePropositions.find(vp => vp.id === selectedId)?.title)}
-          className="select-path-button"
-        >
-          <Target size={16} />
-          Start This Journey
-        </button>
-      )}
-    </div>
-  );
-};
-
-const ContinueLearningSection = ({ nextModule, selectedPath }) => {
-  return (
-    <div className="continue-learning-section">
-      <div className="continue-content">
-        <h3>🔥 Continue Your Journey</h3>
-        {selectedPath && (
-          <p className="path-context">
-            On your path to <strong>{selectedPath}</strong>
-          </p>
-        )}
-        <Link to={`/module/${nextModule.id}`} className="continue-learning-button">
-          <Play size={20} />
-          <div className="continue-details">
-            <span className="continue-text">Continue Learning</span>
-            <span className="next-module-name">{nextModule.title}</span>
-          </div>
-          <ArrowRight size={20} />
-        </Link>
-      </div>
-    </div>
-  );
-};
-
-const EnhancedGroupSection = ({ 
-  groupKey, 
+// Module Group Component
+const ModuleGroup = ({ 
   groupInfo, 
   modules, 
   isModuleUnlocked, 
   getModuleProgress, 
-  moduleIcons,
-  selectedPath 
+  isModuleCompleted,
+  moduleIcons 
 }) => {
+  const completedCount = modules.filter(m => isModuleCompleted(m.id)).length;
   const unlockedCount = modules.filter(m => isModuleUnlocked(m)).length;
-  const completedCount = modules.filter(m => getModuleProgress(m.id) === 100).length;
   
   return (
-    <div className="enhanced-group-section">
+    <div className="module-group">
       <div className="group-header">
-        <div className="group-title-section">
-          <h2>{groupInfo.title}</h2>
-          <p className="group-description">{groupInfo.description}</p>
-        </div>
-        <div className="group-stats">
-          <div className="completion-stats">
-            <span>{completedCount}/{unlockedCount} completed</span>
-            <div className="group-progress-bar">
-              <div 
-                className="group-progress-fill"
-                style={{ width: `${unlockedCount > 0 ? (completedCount / unlockedCount) * 100 : 0}%` }}
-              />
-            </div>
-          </div>
-          {completedCount === modules.length && modules.length > 0 && (
-            <div className="group-mastery">
-              <Star size={16} />
-              <span>Mastered!</span>
-            </div>
-          )}
-        </div>
+        <h4>{groupInfo.title}</h4>
+        <span className="group-progress">{completedCount}/{modules.length}</span>
       </div>
+      <p className="group-description">{groupInfo.description}</p>
       
-      <div className="enhanced-modules-grid">
+      <div className="modules-list">
         {modules
           .sort((a, b) => a.order - b.order)
           .map(module => (
-            <EnhancedModuleCard 
+            <ModuleCard 
               key={module.id}
               module={module}
               isUnlocked={isModuleUnlocked(module)}
               progress={getModuleProgress(module.id)}
+              isCompleted={isModuleCompleted(module.id)}
               icon={moduleIcons[module.id]}
-              selectedPath={selectedPath}
             />
           ))}
       </div>
@@ -709,22 +428,15 @@ const EnhancedGroupSection = ({
   );
 };
 
-const EnhancedModuleCard = ({ module, isUnlocked, progress, icon, selectedPath }) => {
-  const isCompleted = progress === 100;
-  
+// Module Card Component
+const ModuleCard = ({ module, isUnlocked, progress, isCompleted, icon }) => {
   if (!isUnlocked) {
     return (
-      <div className="enhanced-module-card locked">
-        <div className="module-icon">🔒</div>
-        <div className="card-content">
-          <h3>{module.title}</h3>
-          <p>{module.description}</p>
-          <div className="locked-message">
-            📋 Complete: {module.prerequisites.map(prereq => {
-              const prereqModule = moduleRegistry[prereq];
-              return prereqModule ? prereqModule.title : prereq;
-            }).join(', ')}
-          </div>
+      <div className="module-card locked">
+        <Lock className="lock-icon" />
+        <div className="module-content">
+          <h5>{module.title}</h5>
+          <p className="unlock-requirement">Complete prerequisites first</p>
         </div>
       </div>
     );
@@ -733,174 +445,94 @@ const EnhancedModuleCard = ({ module, isUnlocked, progress, icon, selectedPath }
   return (
     <Link 
       to={`/module/${module.id}`}
-      className={`enhanced-module-card ${isCompleted ? 'completed' : ''} ${progress > 0 ? 'started' : ''}`}
+      className={`module-card ${isCompleted ? 'completed' : ''} ${progress > 0 ? 'started' : ''}`}
     >
-      <div className="module-icon">{icon}</div>
-      <div className="card-content">
-        <h3>{module.title}</h3>
+      <div className="module-header">
+        <span className="module-icon">{icon}</span>
+        {isCompleted && <CheckCircle className="completed-icon" />}
+      </div>
+      <div className="module-content">
+        <h5>{module.title}</h5>
         <p>{module.description}</p>
-        
-        {selectedPath && (
-          <div className="path-relevance">
-            <Shield size={14} />
-            <span>High relevance to {selectedPath}</span>
-          </div>
-        )}
-        
-        <div className="module-progress-section">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <span className="progress-text">{progress}%</span>
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: `${progress}%` }} />
         </div>
-
-        <div className="module-status">
-          {isCompleted ? (
-            <div className="status-completed">
-              <Trophy size={14} />
-              <span>Mastered</span>
-            </div>
-          ) : progress > 0 ? (
-            <div className="status-in-progress">
-              <Brain size={14} />
-              <span>In Progress</span>
-            </div>
-          ) : (
-            <div className="status-start">
-              <Zap size={14} />
-              <span>Ready to Start</span>
-            </div>
-          )}
-        </div>
+        <span className="progress-text">{progress}% complete</span>
       </div>
     </Link>
   );
 };
 
-const MomentumBuilderSection = ({ userStats }) => {
+// Progress Section
+const ProgressSection = ({ userStats }) => {
   return (
-    <div className="momentum-builder-section">
-      <div className="momentum-content">
-        <h3>🔥 You're Building Unstoppable Momentum!</h3>
-        <div className="momentum-stats">
-          <div className="stat-item">
-            <Trophy size={20} />
-            <span>{userStats.completedModules} modules mastered</span>
+    <section className="progress-section">
+      <div className="progress-header">
+        <h3>Your Learning Progress</h3>
+        <div className="overall-stats">
+          <div className="stat-card">
+            <Trophy size={24} />
+            <div className="stat-info">
+              <span className="stat-number">{userStats.completedModules}</span>
+              <span className="stat-label">Modules Completed</span>
+            </div>
           </div>
-          <div className="stat-item">
-            <Target size={20} />
-            <span>{userStats.totalProgress}% journey complete</span>
+          <div className="stat-card">
+            <Target size={24} />
+            <div className="stat-info">
+              <span className="stat-number">{userStats.totalProgress}%</span>
+              <span className="stat-label">Overall Progress</span>
+            </div>
           </div>
-          <div className="stat-item">
-            <Award size={20} />
-            <span>{userStats.achievements.length} achievements earned</span>
+          <div className="stat-card">
+            <Award size={24} />
+            <div className="stat-info">
+              <span className="stat-number">{userStats.achievements.length}</span>
+              <span className="stat-label">Achievements</span>
+            </div>
           </div>
-        </div>
-        
-        <div className="momentum-insight">
-          💡 Knowledge compounds. Each module builds on the previous ones, creating complete understanding of sound money and Bitcoin's revolutionary approach.
-        </div>
-        
-        <div className="next-milestone">
-          {userStats.completedModules < 6 ? (
-            <p>🎯 Complete {6 - userStats.completedModules} more modules to earn "Dedicated Student"!</p>
-          ) : userStats.completedModules < userStats.totalModules ? (
-            <p>🏆 You're close to becoming a Bitcoin Scholar! Keep going!</p>
-          ) : (
-            <p>🎓 Congratulations! You've mastered the complete Bitcoin education journey!</p>
-          )}
         </div>
       </div>
-    </div>
-  );
-};
 
-const JourneyMapView = ({ journeySteps, currentStep, userStats, onClose }) => {
-  return (
-    <div className="journey-map-overlay" onClick={onClose}>
-      <div className="journey-map-content" onClick={(e) => e.stopPropagation()}>
-        <div className="journey-map-header">
-          <h3>🗺️ Your Learning Journey</h3>
-          <button onClick={onClose} className="close-button">×</button>
-        </div>
-        
-        <div className="journey-steps-visualization">
-          {journeySteps.map((step, index) => (
-            <div 
-              key={step.id}
-              className={`journey-step-visual ${index === currentStep ? 'current' : ''} ${index < currentStep ? 'completed' : ''}`}
-            >
-              <div className="step-number">{index + 1}</div>
-              <div className="step-content">
-                <h4>{step.title}</h4>
-                <p>{step.insight}</p>
-                {step.modules.length > 0 && (
-                  <div className="step-modules">
-                    {step.modules.map(moduleId => (
-                      <span key={moduleId} className="module-tag">
-                        {moduleRegistry[moduleId]?.title}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
+      <div className="achievements-section">
+        <h4>Your Achievements</h4>
+        <div className="achievements-grid">
+          {userStats.achievements.map((achievement, index) => (
+            <div key={index} className="achievement-card">
+              <Star className="achievement-icon" />
+              <span className="achievement-name">{achievement}</span>
             </div>
           ))}
         </div>
-        
-        <div className="journey-map-stats">
-          <div className="map-stat">
-            <strong>{userStats.completedModules}</strong> modules completed
-          </div>
-          <div className="map-stat">
-            <strong>{userStats.totalProgress}%</strong> journey complete
-          </div>
-          <div className="map-stat">
-            <strong>{userStats.achievements.length}</strong> achievements earned
-          </div>
-        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
+// Reset Confirmation Dialog
 const ResetConfirmationDialog = ({ userStats, onConfirm, onCancel }) => {
   return (
-    <div className="reset-overlay" onClick={onCancel}>
+    <div className="modal-overlay" onClick={onCancel}>
       <div className="reset-dialog" onClick={(e) => e.stopPropagation()}>
-        <div className="reset-dialog-header">
-          <h3>🔄 Reset to Financial Awakening</h3>
+        <div className="dialog-header">
+          <h3>Reset Learning Progress?</h3>
         </div>
-        <div className="reset-dialog-content">
-          <div className="warning-message">
-            <div className="warning-icon">⚠️</div>
-            <div>
-              <h4>Return to the beginning of your journey?</h4>
-              <p>This will reset your progress and return you to the <strong>Financial Awakening</strong> section, permanently deleting:</p>
-              <ul>
-                <li>✅ All completed modules ({userStats.completedModules})</li>
-                <li>🏆 All earned achievements ({userStats.achievements.length})</li>
-                <li>📊 Your overall progress ({userStats.totalProgress}%)</li>
-                <li>🔥 Your learning streak</li>
-              </ul>
-              <p><strong>This action cannot be undone.</strong></p>
-              <div className="reset-benefit">
-                <h5>💡 Why reset?</h5>
-                <p>Experience the complete awakening journey again or share it with someone new to Bitcoin.</p>
-              </div>
-            </div>
-          </div>
+        <div className="dialog-content">
+          <p>This will permanently delete:</p>
+          <ul>
+            <li>{userStats.completedModules} completed modules</li>
+            <li>{userStats.achievements.length} earned achievements</li>
+            <li>All progress data</li>
+          </ul>
+          <p><strong>This action cannot be undone.</strong></p>
         </div>
-        <div className="reset-dialog-actions">
+        <div className="dialog-actions">
           <button className="cancel-button" onClick={onCancel}>
             Cancel
           </button>
-          <button className="confirm-reset-button" onClick={onConfirm}>
+          <button className="confirm-button" onClick={onConfirm}>
             <RotateCcw size={16} />
-            Yes, Reset to Beginning
+            Reset Progress
           </button>
         </div>
       </div>
