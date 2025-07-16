@@ -5,12 +5,8 @@ import { Coins } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton,
-  Button, 
-  OptionButton,
-  NavigationButton,
-  StepNavigation,
-  useAutoAdvance
-} from '../components/EnhancedButtons';
+  StepNavigation
+} from '../components/ModernButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import '../components/MoneyModule.css';
@@ -18,7 +14,6 @@ import '../components/MoneyModule.css';
 // Simplified Introduction 
 const Introduction = ({ onComplete }) => {
   const [currentDemo, setCurrentDemo] = useState(0);
-  const [userReflection, setUserReflection] = useState('');
   const [showAnalysis, setShowAnalysis] = useState(false);
 
   const modernPaymentDemos = [
@@ -62,80 +57,80 @@ const Introduction = ({ onComplete }) => {
   };
 
   return (
-    <div className="step-content introduction">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="payment-demo-section">
         <h2>What's Really Happening When You Pay?</h2>
-        <div className="intro-text">
-          <p className="prime-text">Modern payments look simple, but there's a lot happening behind the scenes. Let's see what's really going on.</p>
-        </div>
-      </div>
-      
-      <div className="content-text">
-        <div className="payment-analysis-section">
-          <h3>Let's Look at Common Payments</h3>
-          <p>Click through these everyday payment examples to see what really happens...</p>
+        <p>Modern payments look simple, but there's a lot happening behind the scenes. Let's see what's really going on.</p>
+        
+        <h3>Let's Look at Common Payments</h3>
+        <p>Click through these everyday payment examples to see what really happens...</p>
 
-          <div className="demo-container">
-            <div className="payment-demo-card">
-              <div className="demo-header">
-                <h4>{currentDemoData.title}</h4>
-                <p>{currentDemoData.description}</p>
-              </div>
-              
-              <div className="demo-interaction">
-                <ActionButton 
-                  onClick={handleDemoAction}
-                  className="demo-action-button"
-                  variant="primary"
-                >
-                  {currentDemoData.action}
-                </ActionButton>
-              </div>
-              
-              <div className="demo-result">
-                <p className="surface-result">{currentDemoData.effect}</p>
-                <div className="hidden-complexity">
-                  <p><strong>What Really Happens:</strong></p>
-                  <p className="complexity-text">{currentDemoData.hidden}</p>
-                </div>
+        <div className="demo-container">
+          <div className="payment-demo-card">
+            <h4>{currentDemoData.title}</h4>
+            <p>{currentDemoData.description}</p>
+            
+            <div className="demo-interaction">
+              <ActionButton 
+                onClick={handleDemoAction}
+                variant="primary"
+              >
+                {currentDemoData.action}
+              </ActionButton>
+            </div>
+            
+            <div className="demo-result">
+              <div className="demo-effect">{currentDemoData.effect}</div>
+              <div className="demo-hidden">
+                <strong>What Really Happens:</strong><br />
+                {currentDemoData.hidden}
               </div>
             </div>
           </div>
 
-          {showAnalysis && (
-            <div className="deeper-analysis">
-              <h3>🤔 Think About This</h3>
-              <div className="analysis-insights">
-                <div className="insight-item">
-                  <h4>💡 Many Middlemen</h4>
-                  <p>Even simple payments go through many companies and systems you never see.</p>
-                </div>
-                <div className="insight-item">
-                  <h4>⏱️ Not Actually Instant</h4>
-                  <p>Real settlement can take days, even when your app says "sent instantly."</p>
-                </div>
-                <div className="insight-item">
-                  <h4>💰 Hidden Costs</h4>
-                  <p>Many fees are invisible - built into exchange rates and monthly charges.</p>
-                </div>
-                <div className="insight-item">
-                  <h4>🔒 Permission Required</h4>
-                  <p>Someone else decides if you can send your money and where it can go.</p>
-                </div>
-              </div>
-              
-              <div className="transition-text">
-                <p><strong>So what would payments look like without all these middlemen?</strong></p>
-                <p>To understand this, let's first look at what money is supposed to do...</p>
-              </div>
+          <div className="demo-navigation">
+            <div className="demo-counter">
+              Demo {currentDemo + 1} of {modernPaymentDemos.length}
             </div>
-          )}
+            <div className="demo-buttons">
+              <ActionButton 
+                onClick={() => setCurrentDemo(Math.max(0, currentDemo - 1))}
+                disabled={currentDemo === 0}
+                variant="secondary"
+              >
+                Previous
+              </ActionButton>
+              <ActionButton 
+                onClick={() => setCurrentDemo(Math.min(modernPaymentDemos.length - 1, currentDemo + 1))}
+                disabled={currentDemo === modernPaymentDemos.length - 1}
+                variant="secondary"
+              >
+                Next
+              </ActionButton>
+            </div>
+          </div>
         </div>
 
         {showAnalysis && (
-          <ContinueButton onClick={handleContinue}>
-            Continue: Why Do We Need Money?
-          </ContinueButton>
+          <div className="analysis-section">
+            <h4>The Hidden Complexity</h4>
+            <p>Every "simple" payment involves multiple companies, systems, and potential points of failure. This complexity is invisible to users but creates:</p>
+            <ul>
+              <li>Higher costs (fees hidden in exchange rates and processing)</li>
+              <li>Slower settlement (your money doesn't move instantly)</li>
+              <li>Privacy concerns (every transaction is tracked)</li>
+              <li>Control points (accounts can be frozen or restricted)</li>
+            </ul>
+            
+            <div className="insight-box">
+              <h5>Key Insight</h5>
+              What if money could work more like the internet - direct, open, and without requiring permission from intermediaries?
+            </div>
+
+            <ActionButton onClick={handleContinue} variant="primary">
+              Continue Learning
+            </ActionButton>
+          </div>
         )}
       </div>
     </div>
@@ -288,27 +283,23 @@ const BarterWorld = ({ onComplete }) => {
   const currentScenarioData = economicScenarios[currentScenario];
   
   return (
-    <div className="step-content barter-world">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="barter-world-section">
         <h2>Life Without Money</h2>
-        <div className="intro-text">
-          <p className="prime-text">Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
-        </div>
-      </div>
-      
-      <div className="content-text">
-        <div className="economic-analysis">
-          <div className="scenario-tracker">
-            <h3>Trading Scenarios</h3>
-            <div className="analysis-stats">
-              <div className="stat-item">
-                <span className="stat-label">Scenario:</span>
-                <span className="stat-value">{currentScenario + 1} of {economicScenarios.length}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Problems Found:</span>
-                <span className="stat-value">{discoveredProblems.size}</span>
-              </div>
+        <p>Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
+        
+        <h3>Trading Scenarios</h3>
+        <p>Click through these everyday trading examples to see what really happens...</p>
+
+        <div className="scenario-tracker">
+          <div className="analysis-stats">
+            <div className="stat-item">
+              <span className="stat-label">Scenario:</span>
+              <span className="stat-value">{currentScenario + 1} of {economicScenarios.length}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Problems Found:</span>
+              <span className="stat-value">{discoveredProblems.size}</span>
             </div>
           </div>
         </div>
@@ -317,26 +308,25 @@ const BarterWorld = ({ onComplete }) => {
           <div className="scenario-header">
             <h3>{currentScenarioData.title}</h3>
             <div className="scenario-setup">
-              <p className="situation"><strong>Situation:</strong> {currentScenarioData.situation}</p>
-              <p className="trader-response"><strong>What happens:</strong> {currentScenarioData.trader}</p>
+              <p><strong>Situation:</strong> {currentScenarioData.situation}</p>
+              <p><strong>What happens:</strong> {currentScenarioData.trader}</p>
             </div>
           </div>
           
           <div className="choice-section">
-            <p className="choice-prompt"><strong>{currentScenarioData.choice}</strong></p>
+            <p><strong>{currentScenarioData.choice}</strong></p>
             
             {!showOutcome ? (
               <div className="choice-options">
                 {currentScenarioData.options.map(option => (
-                  <OptionButton
+                  <ActionButton
                     key={option.id}
                     onClick={() => handleChoice(option.id)}
-                    className="analysis-choice-button"
-                    variant="default"
+                    variant="outline"
                   >
                     <span className="option-letter">{option.id}.</span>
                     <span className="option-text">{option.text}</span>
-                  </OptionButton>
+                  </ActionButton>
                 ))}
               </div>
             ) : (
@@ -433,15 +423,15 @@ const CarlosFlowerExport = ({ onComplete }) => {
   };
 
   return (
-    <div className="step-content carlos-export-step">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="carlos-export-section">
         <h2>Real-World Payment System Analysis</h2>
-        <div className="intro-text">
-          <p className="prime-text">Having established money's theoretical functions, let's examine how current systems perform in practice through a real international commerce case study.</p>
-        </div>
-      </div>
+        <p>Having established money's theoretical functions, let's examine how current systems perform in practice through a real international commerce case study.</p>
+        
+        <h3>International Commerce Case Study</h3>
+        <p>Carlos operates a flower export business between Colombia and Japan. This represents a typical international commercial transaction involving cross-border payments.</p>
+        <p><strong>Analysis Focus:</strong> How effectively do modern payment systems serve legitimate international commerce?</p>
 
-      <div className="content-text">
         <div className="case-study-introduction">
           <div className="case-study-frame">
             <div className="case-visual">
@@ -459,7 +449,6 @@ const CarlosFlowerExport = ({ onComplete }) => {
             
             <ActionButton 
               onClick={handleExploreStory} 
-              className="case-study-button"
               variant="primary"
             >
               Analyze Payment Process
@@ -467,7 +456,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
             
             {storyViewed && (
               <div className="analysis-instructions">
-                <p className="instruction-text">📊 <em>Review the payment process carefully. Focus on system efficiency, cost structure, and reliability...</em></p>
+                <p><em>Review the payment process carefully. Focus on system efficiency, cost structure, and reliability...</em></p>
               </div>
             )}
           </div>
@@ -481,41 +470,37 @@ const CarlosFlowerExport = ({ onComplete }) => {
             </div>
             
             <div className="analysis-options">
-              <OptionButton 
+              <ActionButton 
                 onClick={() => handleChoice('fees')}
-                className="analysis-option-button"
                 variant="outline"
               >
                 💸 <strong>Fee Structure</strong><br/>
                 <span className="analysis-detail">Multiple intermediaries extracting value at each step</span>
-              </OptionButton>
+              </ActionButton>
               
-              <OptionButton 
+              <ActionButton 
                 onClick={() => handleChoice('time')}
-                className="analysis-option-button" 
                 variant="outline"
               >
                 ⏰ <strong>Settlement Time</strong><br/>
                 <span className="analysis-detail">Multi-day processing creating cash flow inefficiencies</span>
-              </OptionButton>
+              </ActionButton>
               
-              <OptionButton 
+              <ActionButton 
                 onClick={() => handleChoice('control')}
-                className="analysis-option-button"
                 variant="outline"
               >
                 🏦 <strong>Centralized Dependencies</strong><br/>
                 <span className="analysis-detail">Multiple single points of failure and control</span>
-              </OptionButton>
+              </ActionButton>
               
-              <OptionButton 
+              <ActionButton 
                 onClick={() => handleChoice('system')}
-                className="analysis-option-button"
                 variant="outline"
               >
                 🕸️ <strong>Structural Inefficiency</strong><br/>
                 <span className="analysis-detail">System designed for intermediary benefit, not user efficiency</span>
-              </OptionButton>
+              </ActionButton>
             </div>
 
             {playerChoice && (
@@ -632,15 +617,11 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
   const currentScenarioData = scenarios[currentScenario];
   
   return (
-    <div className="step-content functions-analysis-step">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="functions-analysis-section">
         <h2>What Jobs Does Money Do?</h2>
-        <div className="intro-text">
-          <p className="prime-text">Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
-        </div>
-      </div>
-
-      <div className="content-text">
+        <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
+        
         <div className="scenario-progress">
           <div className="progress-indicators">
             {scenarios.map((_, index) => (
@@ -662,13 +643,13 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
           {!feedback[currentScenarioData.id] && (
             <div className="analysis-options">
               {currentScenarioData.options.map(option => (
-                <button
+                <ActionButton
                   key={option.value}
-                  className={`analysis-button ${answers[currentScenarioData.id] === option.value ? 'selected' : ''}`}
+                  variant={answers[currentScenarioData.id] === option.value ? 'primary' : 'outline'}
                   onClick={() => handleAnswer(currentScenarioData.id, option.value)}
                 >
                   {option.label}
-                </button>
+                </ActionButton>
               ))}
             </div>
           )}
@@ -825,30 +806,24 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
 
   if (showIntro) {
     return (
-      <div className="step-content historical-intro">
-        <div className="module-header-box">
+      <div className="module-container dark-theme">
+        <div className="historical-intro-section">
           <h2>Learning from History</h2>
-          <div className="intro-text">
-            <p className="prime-text">Let's look at real examples from history to understand what makes money work well.</p>
-          </div>
-        </div>
-        
-        <div className="content-text">
-          <div className="intro-content">
-            <h3>Why Look at History?</h3>
-            <p>People have been trying different forms of money for thousands of years. Some worked well, others failed spectacularly.</p>
-            <p>By understanding what went wrong (and right) in the past, we can figure out what makes good money.</p>
-            
-            <div className="what-we-learn">
-              <h4>What We'll Discover:</h4>
-              <ul>
-                <li>Why some money systems failed</li>
-                <li>What properties good money needs</li>
-                <li>Lessons that apply to money today</li>
-              </ul>
-            </div>
-          </div>
+          <p>Let's look at real examples from history to understand what makes money work well.</p>
           
+          <h3>Why Look at History?</h3>
+          <p>People have been trying different forms of money for thousands of years. Some worked well, others failed spectacularly.</p>
+          <p>By understanding what went wrong (and right) in the past, we can figure out what makes good money.</p>
+          
+          <div className="what-we-learn">
+            <h4>What We'll Discover:</h4>
+            <ul>
+              <li>Why some money systems failed</li>
+              <li>What properties good money needs</li>
+              <li>Lessons that apply to money today</li>
+            </ul>
+          </div>
+
           <ContinueButton onClick={handleShowIntro}>
             Start Learning from History
           </ContinueButton>
@@ -860,15 +835,11 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
   const currentQuestionData = questions[currentQuestion];
   
   return (
-    <div className="step-content historical-analysis">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="historical-analysis-section">
         <h2>Historical Examples</h2>
-        <div className="intro-text">
-          <p className="prime-text">Question {currentQuestion + 1} of {questions.length}</p>
-        </div>
-      </div>
-
-      <div className="content-text">
+        <p>Question {currentQuestion + 1} of {questions.length}</p>
+        
         <div className="question-progress">
           <div className="progress-bar">
             <div 
@@ -893,13 +864,12 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
             {!showFeedback && (
               <div className="answer-options">
                 {currentQuestionData.options.map((option, index) => (
-                  <button
+                  <ActionButton
                     key={index}
-                    className="answer-button"
                     onClick={() => handleAnswer(index)}
                   >
                     {option}
-                  </button>
+                  </ActionButton>
                 ))}
               </div>
             )}
@@ -1060,15 +1030,11 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
   };
 
   return (
-    <div className="step-content sound-money-framework">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="sound-money-framework-section">
         <h2>{frameworkSteps[step].title}</h2>
-        <div className="intro-text">
-          <p className="prime-text">Step {step + 1} of {frameworkSteps.length}</p>
-        </div>
-      </div>
-
-      <div className="content-text">
+        <p>Step {step + 1} of {frameworkSteps.length}</p>
+        
         {frameworkSteps[step].content}
         
         <StepNavigation
@@ -1087,41 +1053,34 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
 // Module Completion - Simplified
 const ModuleCompletion = ({ onComplete }) => {
   return (
-    <div className="step-content module-completion">
-      <div className="module-header-box">
+    <div className="module-container dark-theme">
+      <div className="module-completion-section">
         <h2>🎉 Congratulations!</h2>
-        <div className="intro-text">
-          <p className="prime-text">You've built a solid foundation for understanding money and Bitcoin.</p>
-        </div>
-      </div>
-      
-      <div className="content-text">
-        <div className="completion-summary">
-          <h3>What You've Learned</h3>
+        <p>You've built a solid foundation for understanding money and Bitcoin.</p>
+        
+        <h3>What You've Learned</h3>
+        <div className="learning-outcomes">
+          <div className="outcome-item">
+            <span className="outcome-number">1</span>
+            <div className="outcome-content">
+              <h4>Why Money Exists</h4>
+              <p>You understand the problems money solves and why every society needs it.</p>
+            </div>
+          </div>
           
-          <div className="learning-outcomes">
-            <div className="outcome-item">
-              <span className="outcome-number">1</span>
-              <div className="outcome-content">
-                <h4>Why Money Exists</h4>
-                <p>You understand the problems money solves and why every society needs it.</p>
-              </div>
+          <div className="outcome-item">
+            <span className="outcome-number">2</span>
+            <div className="outcome-content">
+              <h4>How Money Works</h4>
+              <p>You know the three jobs money does and how to recognize when it's working well.</p>
             </div>
-            
-            <div className="outcome-item">
-              <span className="outcome-number">2</span>
-              <div className="outcome-content">
-                <h4>How Money Works</h4>
-                <p>You know the three jobs money does and how to recognize when it's working well.</p>
-              </div>
-            </div>
-            
-            <div className="outcome-item">
-              <span className="outcome-number">3</span>
-              <div className="outcome-content">
-                <h4>Lessons from History</h4>
-                <p>You've learned from past successes and failures to understand what makes good money.</p>
-              </div>
+          </div>
+          
+          <div className="outcome-item">
+            <span className="outcome-number">3</span>
+            <div className="outcome-content">
+              <h4>Lessons from History</h4>
+              <p>You've learned from past successes and failures to understand what makes good money.</p>
             </div>
           </div>
         </div>
@@ -1150,12 +1109,9 @@ const ModuleCompletion = ({ onComplete }) => {
           </a>
         </div>
 
-        <Button 
-          className="complete-module-button"
-          onClick={() => onComplete(6)}
-        >
+        <ContinueButton onClick={() => onComplete(6)}>
           Complete Money Module
-        </Button>
+        </ContinueButton>
       </div>
     </div>
   );
@@ -1217,9 +1173,9 @@ const MoneyModule = () => {
         </h1>
       </div>
 
-      <Button className="reset-progress-button" onClick={handleResetProgress}>
+      <ContinueButton className="reset-progress-button" onClick={handleResetProgress}>
         Reset Progress
-      </Button>
+      </ContinueButton>
 
       <div className="module-progress">
         <div className="progress-bar">
@@ -1235,7 +1191,7 @@ const MoneyModule = () => {
 
       <div className="top-navigation">
         {['How Payments Work', 'Life Without Money', 'What Money Does', 'Real World Example', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
-          <Button
+          <ContinueButton
             key={index}
             className={`top-nav-button ${
               index === currentStep ? 'active' : ''
@@ -1245,7 +1201,7 @@ const MoneyModule = () => {
             <span className="nav-text">
               {index + 1}. {step}
             </span>
-          </Button>
+          </ContinueButton>
         ))}
       </div>
 

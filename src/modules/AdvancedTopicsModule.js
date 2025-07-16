@@ -457,7 +457,7 @@ const AdvancedTopicsModule = () => {
             >
               Master Scaling Solutions
             </ContinueButton>
-          </div>
+      </div>
         )}
     </div>
   );
