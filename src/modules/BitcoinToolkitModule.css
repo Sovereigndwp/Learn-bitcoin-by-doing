@@ -162,7 +162,7 @@
 
 .tool-description {
   color: #94a3b8;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
   line-height: 1.4;
   margin: 0;
 }
@@ -195,7 +195,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 .status-completed {
@@ -218,7 +218,7 @@
   color: #fed7aa;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   border: 1px solid rgba(249, 115, 22, 0.3);
 }
@@ -301,7 +301,7 @@
 
 .tool-button.small {
   padding: 0.5rem 1rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 .tool-button:disabled {
@@ -327,7 +327,7 @@
   color: white;
   font-weight: 500;
   margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .form-input,
@@ -339,7 +339,7 @@
   border-radius: 10px;
   padding: 0.75rem 1rem;
   color: white;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   transition: all 0.2s ease;
 }
 
@@ -359,7 +359,7 @@
 }
 
 .form-hint {
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   color: #94a3b8;
   margin-top: 0.5rem;
 }
@@ -442,7 +442,7 @@
   padding: 0.5rem 1rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   transition: all 0.2s ease;
 }
 
@@ -461,7 +461,7 @@
   border-radius: 8px;
   padding: 1rem;
   font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-all;
@@ -500,7 +500,7 @@
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   border-bottom: 1px solid rgba(100, 116, 139, 0.2);
 }
 
@@ -508,7 +508,7 @@
   padding: 0.75rem 1rem;
   border-bottom: 1px solid rgba(100, 116, 139, 0.1);
   color: #cbd5e1;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .data-table tr:hover {
@@ -539,7 +539,7 @@
 }
 
 .chart-subtitle {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #94a3b8;
 }
 
@@ -640,7 +640,7 @@
 .category-description {
   color: #94a3b8;
   margin: 0.25rem 0 0 0;
-  font-size: 0.95rem;
+  font-size: var(--font-size-lg);
 }
 
 /* ================= */
@@ -667,7 +667,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .step-content {
@@ -682,7 +682,7 @@
 
 .step-description {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 /* ================= */
@@ -773,7 +773,7 @@
 .security-badge {
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -822,7 +822,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   flex-shrink: 0;
 }
 
@@ -840,13 +840,13 @@
 .step-description {
   color: white;
   margin-bottom: 0.25rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .step-stack {
   color: #94a3b8;
   font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 /* QR Code Generator */
@@ -865,7 +865,7 @@
 }
 
 .qr-info {
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   color: #94a3b8;
 }
 
@@ -881,7 +881,7 @@
   border-radius: 6px;
   margin-top: 0.5rem;
   word-break: break-all;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
 }
 
 /* Block Explorer */
@@ -910,7 +910,7 @@
   background: rgba(255, 255, 255, 0.1);
   padding: 0.5rem;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   word-break: break-all;
   margin-top: 0.25rem;
 }
@@ -956,7 +956,7 @@
 
 .flow-address {
   font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   color: #94a3b8;
 }
 
@@ -966,7 +966,7 @@
 }
 
 .flow-status {
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1132,7 +1132,7 @@
   color: #CCC;
   text-align: center;
   line-height: 1.5;
-  font-size: 0.95rem;
+  font-size: var(--font-size-lg);
   opacity: 0.9;
 }
 
@@ -1148,7 +1148,7 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   opacity: 0;
   transform: scale(0);
   transition: all 0.3s ease;
@@ -1208,7 +1208,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: var(--font-size-lg);
   position: relative;
   overflow: hidden;
 }
@@ -1293,7 +1293,7 @@
 
 .form-hint {
   color: #888;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
   margin-top: 0.5rem;
   font-style: italic;
 }
@@ -1315,7 +1315,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .template-button:hover {
@@ -1432,7 +1432,7 @@
   color: #FF8C00;
   display: block;
   margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .hash-display {
@@ -1441,7 +1441,7 @@
   border-radius: 6px;
   color: #10B981;
   font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
   word-break: break-all;
   border: 1px solid #333;
 }
@@ -1528,7 +1528,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -1536,7 +1536,7 @@
 .stack-operation {
   color: #E2E8F0;
   font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 /* QR Code Display */
@@ -1577,7 +1577,7 @@
   color: #FF8C00;
   display: block;
   margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .qr-data {
@@ -1586,7 +1586,7 @@
   border-radius: 4px;
   color: #10B981;
   font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
   word-break: break-all;
   border: 1px solid #333;
 }
@@ -1639,7 +1639,7 @@
 .output-address {
   color: #10B981;
   font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   margin-bottom: 0.5rem;
   word-break: break-all;
 }
@@ -1654,7 +1654,7 @@
 
 .input-prev {
   color: #888;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-family: 'Courier New', monospace;
 }
 
@@ -1697,7 +1697,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .example-button:hover {
@@ -1722,7 +1722,7 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
 }
 
 .history-item:hover {
@@ -1735,7 +1735,7 @@
   color: white;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  font-size: 0.7rem;
+  font-size: var(--font-size-sm);
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -1770,7 +1770,7 @@
   color: #FF8C00;
   display: block;
   margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 /* Address Transactions */
@@ -1806,7 +1806,7 @@
 .transaction-hash {
   color: #10B981;
   font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
+  font-size: var(--font-size-base);
   word-break: break-all;
 }
 
@@ -1906,12 +1906,12 @@
   
   .tool-button {
     padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
   }
   
   .form-input {
     padding: 0.8rem;
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
   }
 }
 

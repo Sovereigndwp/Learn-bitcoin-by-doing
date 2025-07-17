@@ -103,8 +103,8 @@
 }
 
 .progress-bar.paused {
-  animation-play-state: paused !important;
-  background: #ffd700 !important;
+  animation-play-state: paused;
+  background: var(--color-warning-500);
 }
 
 /* Notification Content */
@@ -507,12 +507,12 @@
   .celebration-icon,
   .celebration-title,
   .badge-showcase {
-    animation: none !important;
-    transition: opacity 0.2s ease !important;
+      animation: none;
+  transition: opacity 0.2s ease;
   }
   
   .notification-icon {
-    animation: none !important;
+    animation: none;
   }
 }
 
@@ -520,10 +520,10 @@
 @media (prefers-contrast: high) {
   .notification {
     border: 2px solid white;
-    background: #000 !important;
+    background: var(--color-dark-bg);
   }
   
   .celebration-overlay {
-    background: rgba(0, 0, 0, 0.9) !important;
+    background: var(--color-dark-bgOverlay);
   }
 } 

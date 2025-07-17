@@ -1,8 +1,4 @@
-.module-container {
-  
-  margin: 0 auto;
-  padding: 2rem;
-}
+/* Removed duplicate .module-container - using global definition from ModuleCommon.css */
 
 .module-title {
   font-size: 2.5rem;

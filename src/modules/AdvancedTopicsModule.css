@@ -159,7 +159,7 @@
 }
 
 .phase-indicator span {
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   color: #cbd5e1;
 }

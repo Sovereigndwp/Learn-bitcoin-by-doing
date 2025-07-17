@@ -1107,10 +1107,10 @@ const HashingModule = () => {
         )}
         
         <NavigationButton 
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/')}
           className="home-button"
         >
-          Return to Dashboard
+          Return to Homepage
         </NavigationButton>
       </div>
     </div>

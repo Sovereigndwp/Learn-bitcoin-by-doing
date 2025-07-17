@@ -127,7 +127,7 @@
 }
 
 .flame-label {
-  font-size: 0.75rem;
+  font-size: var(--font-size-sm);
   color: rgba(255, 255, 255, 0.8);
   text-align: center;
   font-weight: 600;
@@ -415,7 +415,7 @@
 }
 
 .method-strength {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #22c55e;
   font-weight: 600;
 }
@@ -426,7 +426,7 @@
 }
 
 .method-process {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #f7931a;
   font-style: italic;
 }
@@ -464,7 +464,7 @@
   border-radius: 8px;
   padding: 1rem;
   font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #22c55e;
   min-height: 3rem;
   display: flex;
@@ -566,7 +566,7 @@
   border-radius: 6px;
   padding: 0.5rem;
   font-family: monospace;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   flex: 1;
   min-width: 120px;
 }
@@ -698,7 +698,7 @@
   border-radius: 6px;
   padding: 1rem;
   font-family: 'Monaco', 'Menlo', monospace;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   word-break: break-all;
   margin-bottom: 1rem;
   display: flex;
@@ -728,7 +728,7 @@
 }
 
 .key-description {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #94a3b8;
   font-style: italic;
 }
@@ -848,7 +848,7 @@
 }
 
 .power-example {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #f7931a;
   font-style: italic;
 }
@@ -982,7 +982,7 @@
   background: rgba(247, 147, 26, 0.2);
   border-radius: 4px;
   padding: 0.2rem 0.4rem;
-  font-size: 0.8rem;
+  font-size: var(--font-size-sm);
   color: #f7931a;
   font-weight: 600;
   min-width: 20px;
@@ -1102,7 +1102,7 @@
 }
 
 .level-example {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #f7931a;
   font-style: italic;
 }
@@ -1151,7 +1151,7 @@
 
 .address-power {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   text-align: center;
 }
 
@@ -1296,7 +1296,7 @@
 .option-appeal,
 .option-weapon {
   margin: 0.5rem 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
 }
 
 .option-appeal strong,
@@ -1568,7 +1568,7 @@
 }
 
 .milestone-text {
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   color: #94a3b8;
   transition: all 0.3s ease;
 }
@@ -1741,7 +1741,7 @@
 
 .step-action {
   color: #f7931a;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   font-style: italic;
 }
 
@@ -1809,7 +1809,7 @@
 .achievement-text p {
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--font-size-base);
   line-height: 1.3;
   }
   
@@ -1854,7 +1854,7 @@
   }
   
   .flame-label {
-    font-size: 0.7rem;
+    font-size: var(--font-size-sm);
   }
   
   .scenario-options,

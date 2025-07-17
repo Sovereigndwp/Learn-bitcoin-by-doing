@@ -1,9 +1,11 @@
-/* Module Layout Styles */
+/* Module Layout Styles - Maximized */
 .module-layout {
   min-height: 100vh;
   background: linear-gradient(135deg, #ff8c00 0%, #000000 100%);
   color: white;
-  padding-bottom: 2rem; /* Add padding to prevent content from touching bottom */
+  padding-bottom: var(--spacing-2xl);
+  font-size: var(--text-base);
+  line-height: 1.7;
 }
 
 /* Module Header */
@@ -163,19 +165,28 @@
   transform: translateY(-2px);
 }
 
-/* Module Main Content */
+/* Module Main Content - Maximized Layout */
 .module-main {
-  padding: 2rem 0;
+  padding: var(--page-padding) 0;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* ========================================
    COMMON MODULE CONTENT STYLES
 ======================================== */
 
-/* Step Content Common Styles */
+/* Step Content Common Styles - Maximized */
 .step-content {
-  padding: 2rem;
-  background: white;
+  padding: var(--section-padding);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  text-align: left;
   color: #333;
 }
 

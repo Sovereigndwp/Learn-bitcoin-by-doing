@@ -8,7 +8,7 @@ import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
 import './styles/globalTheme.css';
 import './styles/modernComponents.css';
-import './styles/moduleThemeOverrides.css';
+
 import './App.css';
 
 // Import all modules

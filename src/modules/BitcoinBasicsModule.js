@@ -1320,7 +1320,7 @@ const BitcoinBasicsModule = () => {
     } else {
       completeModule('bitcoin-basics');
       showAchievement("Bitcoin Graduate", "You've mastered Bitcoin fundamentals!");
-      navigate('/learning-dashboard');
+      navigate('/');
     }
   };
 
