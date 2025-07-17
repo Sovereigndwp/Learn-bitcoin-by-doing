@@ -166,7 +166,7 @@
 
 .architect-level {
   background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  color: var(--dark-text);
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 700;
@@ -177,7 +177,7 @@
 
 .mastery-points {
   background: linear-gradient(45deg, var(--success-green), var(--success-green-dark));
-  color: white;
+  color: var(--dark-text);
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 700;
@@ -212,7 +212,7 @@
   position: relative;
   z-index: 2;
   font-weight: 700;
-  color: white;
+  color: var(--dark-text);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
@@ -303,7 +303,7 @@
 
 .crisis-badge {
   background: linear-gradient(45deg, var(--crisis-red), var(--crisis-red-dark));
-  color: white;
+  color: var(--dark-text);
   padding: 8px 16px;
   border-radius: var(--border-radius);
   font-weight: 700;
@@ -426,7 +426,7 @@
 
 .challenge-start-btn {
   background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  color: var(--dark-text);
   border: none;
   padding: 12px 24px;
   border-radius: var(--border-radius);
@@ -478,7 +478,7 @@
 
 .challenge-close {
   background: var(--crisis-red);
-  color: white;
+  color: var(--dark-text);
   border: none;
   width: 40px;
   height: 40px;
@@ -558,7 +558,7 @@
 
 .challenge-input button {
   background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  color: var(--dark-text);
   border: none;
   padding: 15px 30px;
   border-radius: var(--border-radius);

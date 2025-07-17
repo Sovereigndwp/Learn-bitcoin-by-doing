@@ -111,7 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: white;
+  color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   opacity: 0;
   transform: scale(0);
@@ -179,7 +179,7 @@
 
 .tool-button.primary {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
 }
 
@@ -210,7 +210,7 @@
 
 .tool-button.back {
   background: linear-gradient(135deg, #6B46C1, #7C3AED);
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .tool-button.back:hover {
@@ -290,7 +290,7 @@
 .template-button.active {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
   border-color: #FF8C00;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 /* Size Controls */
@@ -361,7 +361,7 @@
 
 .output-header {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -485,7 +485,7 @@
 
 .step-number {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -512,7 +512,7 @@
 }
 
 .qr-code {
-  background: white;
+  background: var(--color-dark-bgCard);
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -666,7 +666,7 @@
 
 .example-button:hover {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   transform: translateY(-1px);
 }
 
@@ -696,7 +696,7 @@
 
 .history-type {
   background: #FF8C00;
-  color: white;
+  color: var(--color-text-primary);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-size: var(--font-size-sm);

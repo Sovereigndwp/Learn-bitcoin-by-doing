@@ -1,1 +1,420 @@
- 
+/* =====================================================
+   MASTER DARK THEME ENFORCEMENT
+   Ensures no white backgrounds with light text anywhere
+   ===================================================== */
+
+/* Force dark background on all elements */
+* {
+  box-sizing: border-box;
+}
+
+/* Root body styling - enforce dark theme */
+body {
+  background: var(--color-dark-bg) !important;
+  color: var(--color-dark-text) !important;
+  min-height: 100vh;
+  font-family: var(--font-family-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure all main containers have dark backgrounds */
+.app, .App, #root, main, .main-content {
+  background: var(--color-dark-bg) !important;
+  color: var(--color-dark-text) !important;
+  min-height: 100vh;
+}
+
+/* =====================================================
+   UNIVERSAL TEXT COLOR ENFORCEMENT
+   ===================================================== */
+
+/* All headings must be white */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-dark-text) !important;
+  text-shadow: none !important;
+}
+
+/* All paragraph text must be light gray */
+p, span, div, li, td, th, label {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+/* Ensure strong text is white */
+strong, b, em, i {
+  color: var(--color-dark-text) !important;
+}
+
+/* Links should be orange */
+a {
+  color: var(--color-primary-500);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-400) !important;
+}
+
+/* =====================================================
+   CARD AND CONTAINER ENFORCEMENT
+   ===================================================== */
+
+/* All cards must have dark glassmorphic background */
+.card, .question-card, .explanation-card, .quiz-container, .content-section,
+.module-content, .step-content, .lab-content, .tool-content {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-2xl) !important;
+  color: var(--color-dark-textSecondary) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: var(--shadow-glass) !important;
+  text-align: left !important;
+}
+
+/* Ensure all text within cards is left-aligned */
+.card *, .question-card *, .explanation-card *, .quiz-container *,
+.content-section *, .module-content *, .step-content *, .lab-content *, .tool-content * {
+  text-align: left !important;
+}
+
+/* Exception for centered elements that should remain centered */
+.card .text-center, .question-card .text-center, .explanation-card .text-center,
+.quiz-container .text-center, .content-section .text-center, .module-content .text-center,
+.step-content .text-center, .lab-content .text-center, .tool-content .text-center {
+  text-align: center !important;
+}
+
+/* Exception for right-aligned elements */
+.card .text-right, .question-card .text-right, .explanation-card .text-right,
+.quiz-container .text-right, .content-section .text-right, .module-content .text-right,
+.step-content .text-right, .lab-content .text-right, .tool-content .text-right {
+  text-align: right !important;
+}
+
+/* Module containers */
+.module-container, .module-wrapper, .module-layout {
+  background: var(--color-dark-bg) !important;
+  color: var(--color-dark-text) !important;
+  min-height: 100vh;
+}
+
+/* =====================================================
+   BUTTON ENFORCEMENT
+   ===================================================== */
+
+/* All buttons must be properly themed */
+button[class*='button'], .btn, .quiz-option {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  color: var(--color-dark-textSecondary);
+  cursor: pointer;
+  transition: all var(--transition-hover);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--text-base);
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+/* Primary buttons */
+button.primary, .button.primary, .btn.primary, .btn--primary {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600)) !important;
+  color: var(--color-dark-text) !important;
+  border-color: var(--color-primary-500) !important;
+  box-shadow: var(--shadow-glow-orange) !important;
+}
+
+/* Button hover states */
+button:hover, .button:hover, .btn:hover, .quiz-option:hover,
+.nav-button:hover, .top-nav-button:hover, .module-tab:hover {
+  background: var(--glass-bg-hover) !important;
+  border-color: var(--color-primary-500) !important;
+  color: var(--color-primary-500) !important;
+  transform: translateY(-1px) scale(1.02) !important;
+}
+
+/* Primary button hover */
+button.primary:hover, .button.primary:hover, .btn.primary:hover, .btn--primary:hover {
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)) !important;
+  color: var(--color-dark-text) !important;
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-orange-lg) !important;
+}
+
+/* Active/selected states */
+button.active, .button.active, .btn.active, .quiz-option.selected,
+.nav-button.active, .top-nav-button.active, .module-tab.active {
+  background: var(--color-primary-500) !important;
+  color: var(--color-dark-text) !important;
+  border-color: var(--color-primary-500) !important;
+  box-shadow: var(--shadow-glow-orange) !important;
+}
+
+/* Disabled states */
+button:disabled, .button:disabled, .btn:disabled, .quiz-option:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* =====================================================
+   QUIZ COMPONENT FIXES
+   ===================================================== */
+
+/* Quiz containers must be dark */
+.quiz-container {
+  background: var(--color-dark-bg) !important;
+  color: var(--color-dark-text) !important;
+}
+
+/* Quiz options - fix white background issue */
+.quiz-option {
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  color: var(--color-dark-textSecondary) !important;
+}
+
+.quiz-option:hover {
+  background: var(--glass-bg-hover) !important;
+  border-color: var(--color-primary-500) !important;
+  color: var(--color-primary-500) !important;
+}
+
+.quiz-option.selected {
+  background: var(--color-primary-alpha-20) !important;
+  border-color: var(--color-primary-500) !important;
+  color: var(--color-dark-text) !important;
+}
+
+.quiz-option.correct {
+  background: var(--color-success-alpha-20) !important;
+  border-color: var(--color-success-500) !important;
+  color: var(--color-dark-text) !important;
+}
+
+.quiz-option.incorrect {
+  background: var(--color-error-alpha-20) !important;
+  border-color: var(--color-error-500) !important;
+  color: var(--color-dark-text) !important;
+}
+
+/* Explanation cards */
+.explanation-card {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--color-dark-textSecondary) !important;
+}
+
+.explanation-card.correct {
+  background: var(--color-success-alpha-10) !important;
+  border-color: var(--color-success-500) !important;
+}
+
+.explanation-card.incorrect {
+  background: var(--color-error-alpha-10) !important;
+  border-color: var(--color-error-500) !important;
+}
+
+/* Fix explanation text colors */
+.explanation-card .feedback-text,
+.explanation-card .explanation-text {
+  color: var(--color-dark-text) !important;
+}
+
+/* =====================================================
+   INPUT AND FORM CONTROLS
+   ===================================================== */
+
+/* All inputs must be dark themed */
+input, textarea, select, .input, .form-control {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-lg) !important;
+  color: var(--color-dark-text) !important;
+  padding: var(--spacing-md) !important;
+  font-size: var(--text-base) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--color-primary-500) !important;
+  outline-offset: 2px !important;
+  border-color: var(--color-primary-500) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-dark-textMuted) !important;
+}
+
+/* =====================================================
+   NAVIGATION COMPONENTS
+   ===================================================== */
+
+/* Navigation bars */
+.navigation, .nav, .navbar, .top-navigation, .module-navigation {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Navigation items */
+.nav-item, .nav-link, .navbar-item, .navbar-link {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+.nav-item:hover, .nav-link:hover, .navbar-item:hover, .navbar-link:hover {
+  color: var(--color-primary-500) !important;
+}
+
+.nav-item.active, .nav-link.active, .navbar-item.active, .navbar-link.active {
+  color: var(--color-primary-500) !important;
+  border-bottom: 2px solid var(--color-primary-500) !important;
+}
+
+/* =====================================================
+   MODAL AND POPUP FIXES
+   ===================================================== */
+
+/* All modals and popups must be dark */
+.modal, .popup, .overlay, .dialog, .dropdown, .tooltip {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-2xl) !important;
+  color: var(--color-dark-textSecondary) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: var(--shadow-glass-lg) !important;
+}
+
+/* Modal overlays */
+.modal-overlay, .popup-overlay, .overlay-backdrop {
+  background: var(--color-dark-bgOverlay) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* =====================================================
+   PROGRESS AND STATUS ELEMENTS
+   ===================================================== */
+
+/* Progress bars */
+.progress-bar, .progress {
+  background: var(--glass-bg) !important;
+  border-radius: var(--radius-full) !important;
+  overflow: hidden;
+}
+
+.progress-fill, .progress-value {
+  background: var(--color-primary-500) !important;
+  transition: width 0.3s ease !important;
+}
+
+/* Status indicators */
+.status-success {
+  color: var(--color-success-500) !important;
+}
+
+.status-warning {
+  color: var(--color-warning-500) !important;
+}
+
+.status-error {
+  color: var(--color-error-500) !important;
+}
+
+/* =====================================================
+   ACCESSIBILITY AND FOCUS STATES
+   ===================================================== */
+
+/* Focus indicators */
+*:focus {
+  outline: 2px solid var(--color-primary-500) !important;
+  outline-offset: 2px !important;
+}
+
+/* Keyboard navigation */
+.keyboard-navigation *:focus {
+  box-shadow: 0 0 0 2px var(--color-primary-500) !important;
+}
+
+/* =====================================================
+   ANIMATION AND TRANSITION OVERRIDES
+   ===================================================== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================
+   RESPONSIVE OVERRIDES
+   ===================================================== */
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  /* Ensure buttons remain accessible on mobile */
+  button, .button, .btn, .quiz-option {
+    min-height: 48px !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    font-size: var(--text-base) !important;
+  }
+  
+  /* Ensure text remains readable on mobile */
+  h1, h2, h3 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem) !important;
+  }
+  
+  p, span, div {
+    font-size: clamp(1rem, 3vw, 1.25rem) !important;
+  }
+}
+
+/* =====================================================
+   PRINT STYLES
+   ===================================================== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .card, .question-card, .explanation-card {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+  }
+}
+
+/* =====================================================
+   HIGH CONTRAST MODE
+   ===================================================== */
+
+@media (prefers-contrast: high) {
+  * {
+    border-color: var(--color-primary-500) !important;
+  }
+  
+  .card, .question-card, .explanation-card {
+    border: 2px solid var(--color-primary-500) !important;
+  }
+  
+  button, .button, .btn {
+    border: 2px solid var(--color-primary-500) !important;
+  }
+}

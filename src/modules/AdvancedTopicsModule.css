@@ -6,7 +6,7 @@
 .advanced-bitcoin-topics {
   background: linear-gradient(135deg, var(--color-neutral-900) 0%, var(--color-neutral-800) 25%, var(--color-neutral-700) 50%, var(--color-neutral-600) 75%, var(--color-neutral-500) 100%);
   min-height: 100vh;
-  color: var(--color-neutral-50);
+  color: var(--dark-text);
   position: relative;
   overflow-x: hidden;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
@@ -60,7 +60,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .module-text h1 {
@@ -72,7 +72,7 @@
 
 .module-text p {
   font-size: 1.1rem;
-  color: var(--color-neutral-300);
+  color: var(--dark-text-muted);
   font-weight: 400;
 }
 

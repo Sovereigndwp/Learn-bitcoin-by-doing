@@ -93,7 +93,7 @@
 
 .interactive-demo-link {
   display: inline-block;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   color: #333;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -136,7 +136,7 @@
 }
 
 .completion-button {
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   color: #333;
   border: 1px solid #dee2e6;
   padding: 0.75rem 1.5rem;

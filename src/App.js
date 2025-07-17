@@ -7,7 +7,10 @@ import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
 import './styles/globalTheme.css';
+import './styles/GlobalContrast.css';
 import './styles/modernComponents.css';
+import './components/EnhancedButtons.css';
+import './components/NotificationSystem.css';
 
 import './App.css';
 

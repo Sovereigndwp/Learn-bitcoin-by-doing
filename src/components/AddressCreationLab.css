@@ -5,7 +5,7 @@
 }
 
 .pubkey-input-section {
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   padding: 1.5rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -17,7 +17,7 @@
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background-color: #f7931a;
-  color: white;
+  color: var(--color-text-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -32,24 +32,24 @@
 .pubkey-display {
   margin-top: 1rem;
   padding: 1rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border-radius: 8px;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .pubkey-display h3 {
   margin: 0 0 0.5rem 0;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .pubkey-display code {
   display: block;
   word-break: break-all;
   padding: 0.5rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border-radius: 4px;
   font-size: var(--font-size-lg);
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .address-format-selector {
@@ -63,10 +63,10 @@
   padding: 1rem;
   border: 2px solid #dee2e6;
   border-radius: 8px;
-  background: white;
+  background: var(--color-dark-bgCard);
   cursor: pointer;
   transition: all 0.2s;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .format-button:hover {
@@ -75,7 +75,7 @@
 
 .format-button.active {
   border-color: #f7931a;
-  background: #fff8f0;
+  background: var(--color-dark-bgCard);
   color: #f7931a;
 }
 
@@ -86,7 +86,7 @@
   gap: 1rem;
   margin: 2rem 0;
   padding: 2rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -94,10 +94,10 @@
 .step {
   width: 100%;
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border-radius: 8px;
   text-align: center;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .step h4 {
@@ -111,7 +111,7 @@
   justify-content: center;
   gap: 0.5rem;
   font-size: var(--font-size-lg);
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .step-arrow {
@@ -124,11 +124,11 @@
 
 .address-box {
   padding: 1.5rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border: 2px solid #dee2e6;
   border-radius: 12px;
   transition: all 0.2s;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .address-box:hover {
@@ -145,7 +145,7 @@
 
 .address-header h3 {
   margin: 0;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .copy-button {
@@ -163,17 +163,17 @@
 
 .address-content {
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border-radius: 6px;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .address-content code {
   display: block;
   word-break: break-all;
   font-size: 1.1rem;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .address-info {
@@ -182,7 +182,7 @@
 }
 
 .address-facts {
-  background: #fff8f0;
+  background: var(--color-dark-bgCard);
   padding: 1.5rem;
   border-radius: 12px;
   margin: 2rem 0;
@@ -190,7 +190,7 @@
 
 .address-facts h3 {
   margin-top: 0;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .address-facts ul {
@@ -210,8 +210,8 @@
 
 .verify-button {
   padding: 1rem 2rem;
-  background: #f7931a;
-  color: white;
+  background: var(--color-dark-bgCard);
+  color: var(--color-text-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;

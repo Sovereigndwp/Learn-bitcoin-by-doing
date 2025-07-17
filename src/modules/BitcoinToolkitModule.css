@@ -73,7 +73,7 @@
   align-items: center;
   gap: 0.5rem;
   background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
+  color: var(--color-text-primary);
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   font-weight: 600;
@@ -155,7 +155,7 @@
 
 .tool-title {
   font-size: 1.1rem;
-  color: white;
+  color: var(--color-text-primary);
   margin: 0 0 0.5rem 0;
   font-weight: 600;
 }
@@ -188,7 +188,7 @@
 }
 
 .difficulty-dot.active {
-  background: #f97316;
+  background: var(--color-dark-bgCard);
 }
 
 .tool-status {
@@ -252,7 +252,7 @@
 }
 
 .tool-interface-title h2 {
-  color: white;
+  color: var(--color-text-primary);
   margin: 0;
   font-weight: 600;
   font-size: 1.5rem;
@@ -278,7 +278,7 @@
 
 .tool-button.primary {
   background: linear-gradient(135deg, #f97316, #ea580c);
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
@@ -290,7 +290,7 @@
 
 .tool-button.secondary {
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: var(--color-text-primary);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -324,7 +324,7 @@
 
 .form-label {
   display: block;
-  color: white;
+  color: var(--color-text-primary);
   font-weight: 500;
   margin-bottom: 0.5rem;
   font-size: var(--font-size-base);
@@ -338,7 +338,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 0.75rem 1rem;
-  color: white;
+  color: var(--color-text-primary);
   font-size: var(--font-size-base);
   transition: all 0.2s ease;
 }
@@ -377,7 +377,7 @@
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: #f97316;
+  background: var(--color-dark-bgCard);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -386,7 +386,7 @@
 .form-range::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: #f97316;
+  background: var(--color-dark-bgCard);
   border-radius: 50%;
   cursor: pointer;
   border: none;
@@ -427,7 +427,7 @@
 }
 
 .output-title {
-  color: white;
+  color: var(--color-text-primary);
   font-weight: 600;
   font-size: 1rem;
 }
@@ -453,7 +453,7 @@
 
 .output-content {
   padding: 1.5rem;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .output-json {
@@ -632,7 +632,7 @@
 
 .category-title {
   font-size: 1.75rem;
-  color: white;
+  color: var(--color-text-primary);
   margin: 0;
   font-weight: 600;
 }
@@ -662,7 +662,7 @@
   height: 32px;
   border-radius: 50%;
   background: #3b82f6;
-  color: white;
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -815,8 +815,8 @@
 .step-number {
   width: 30px;
   height: 30px;
-  background: #f97316;
-  color: white;
+  background: var(--color-dark-bgCard);
+  color: var(--color-text-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -838,7 +838,7 @@
 }
 
 .step-description {
-  color: white;
+  color: var(--color-text-primary);
   margin-bottom: 0.25rem;
   font-size: var(--font-size-base);
 }
@@ -860,7 +860,7 @@
   height: auto;
   border-radius: 8px;
   margin-bottom: 1rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   padding: 1rem;
 }
 
@@ -925,7 +925,7 @@
 }
 
 .flow-section h4 {
-  color: white;
+  color: var(--color-text-primary);
   margin: 0 0 1rem 0;
   font-size: 1rem;
 }
@@ -962,7 +962,7 @@
 
 .flow-amount {
   font-weight: 600;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .flow-status {
@@ -1013,7 +1013,7 @@
   }
   
   .tool-button.primary {
-    background: #f97316;
+    background: var(--color-dark-bgCard);
   }
 }
 
@@ -1147,7 +1147,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: white;
+  color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   opacity: 0;
   transform: scale(0);
@@ -1215,7 +1215,7 @@
 
 .tool-button.primary {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
 }
 
@@ -1246,7 +1246,7 @@
 
 .tool-button.back {
   background: linear-gradient(135deg, #6B46C1, #7C3AED);
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .tool-button.back:hover {
@@ -1326,7 +1326,7 @@
 .template-button.active {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
   border-color: #FF8C00;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 /* Size Controls */
@@ -1397,7 +1397,7 @@
 
 .output-header {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -1521,7 +1521,7 @@
 
 .step-number {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -1548,7 +1548,7 @@
 }
 
 .qr-code {
-  background: white;
+  background: var(--color-dark-bgCard);
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -1702,7 +1702,7 @@
 
 .example-button:hover {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   transform: translateY(-1px);
 }
 
@@ -1732,7 +1732,7 @@
 
 .history-type {
   background: #FF8C00;
-  color: white;
+  color: var(--color-text-primary);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-size: var(--font-size-sm);

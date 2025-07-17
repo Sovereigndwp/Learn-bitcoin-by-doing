@@ -355,13 +355,13 @@
 /* Print Styles */
 @media print {
   .module-container {
-    background: white !important;
+    background: var(--color-dark-bgCard) !important;
     color: black !important;
   }
   
   .section-card, .exercise-card, .checklist-card,
   .question-card, .explanation-card, .warmup-step {
-    background: white !important;
+    background: var(--color-dark-bgCard) !important;
     border: 1px solid #cccccc !important;
     color: black !important;
     box-shadow: none !important;

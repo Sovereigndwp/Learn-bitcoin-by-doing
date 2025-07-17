@@ -7,19 +7,19 @@
 .generate-section {
   text-align: center;
   padding: 2rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border-radius: 12px;
   margin-bottom: 2rem;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .generate-section h3 {
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
 .generate-section p {
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -31,7 +31,7 @@
   padding: 1rem 2rem;
   font-size: 1.1rem;
   background-color: #f7931a;
-  color: white;
+  color: var(--color-text-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -53,13 +53,13 @@
 .seed-word {
   position: relative;
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border: 2px solid #dee2e6;
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
   transition: all 0.2s;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .seed-word:hover {
@@ -69,15 +69,15 @@
 .seed-word.revealed {
   background: #fff;
   border-color: #f7931a;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .word-number {
   position: absolute;
   top: -0.5rem;
   left: -0.5rem;
-  background: #f7931a;
-  color: white;
+  background: var(--color-dark-bgCard);
+  color: var(--color-text-primary);
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -110,8 +110,8 @@
 
 .toggle-reveal:hover,
 .verify-button:hover {
-  background: #f7931a;
-  color: white;
+  background: var(--color-dark-bgCard);
+  color: var(--color-text-primary);
 }
 
 .verify-section {
@@ -127,14 +127,14 @@
 
 .selected-word-slot {
   padding: 1rem;
-  background: #f8f9fa;
+  background: var(--color-dark-bgCard);
   border: 2px dashed #dee2e6;
   border-radius: 8px;
   min-height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .word-pool {
@@ -146,17 +146,17 @@
 
 .pool-word {
   padding: 0.75rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border: 2px solid #dee2e6;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
-  color: #1a1a1a;
+  color: var(--color-text-primary);
 }
 
 .pool-word:hover:not(:disabled) {
   border-color: #f7931a;
-  background: #fff8f0;
+  background: var(--color-dark-bgCard);
 }
 
 .pool-word.selected {
@@ -166,8 +166,8 @@
 
 .verify-complete {
   padding: 1rem 2rem;
-  background: #f7931a;
-  color: white;
+  background: var(--color-dark-bgCard);
+  color: var(--color-text-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;

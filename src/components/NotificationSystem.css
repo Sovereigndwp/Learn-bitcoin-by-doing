@@ -66,7 +66,7 @@
   border-radius: 50%;
   width: 24px;
   height: 24px;
-  color: white;
+  color: var(--color-dark-text);
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -89,7 +89,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.8);
-  color: white;
+  color: var(--color-text-primary);
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-lg);
   font-size: var(--font-size-sm);
@@ -135,7 +135,7 @@
 
 .notification-text {
   flex: 1;
-  color: white;
+  color: var(--color-dark-text);
 }
 
 .notification-title {
@@ -175,12 +175,12 @@
 }
 
 .badge-text {
-  font-size: var(--font-size-sm);
-  color: white;
+  font-size: var(--text-sm);
+  color: var(--color-dark-text);
   opacity: 0.8;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: var(--font-weight-medium);
+  font-weight: 600;
 }
 
 /* Progress Bar */
@@ -196,7 +196,7 @@
 
 .progress-bar {
   height: 100%;
-  background: white;
+  background: var(--color-dark-bgCard);
   transform-origin: left;
   animation: progressShrink linear forwards;
 }
@@ -273,7 +273,7 @@
 
 .celebration-content {
   text-align: left;
-  color: white;
+  color: var(--color-text-primary);
   position: relative;
   z-index: 2;
   max-width: 500px;
@@ -420,7 +420,7 @@
   background: rgba(255, 255, 255, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-lg);
-  color: white;
+  color: var(--color-text-primary);
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
@@ -431,7 +431,7 @@
 
 .celebration-dismiss:hover {
   background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
+  border-color: var(--color-text-primary);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
@@ -441,7 +441,7 @@
   bottom: var(--spacing-lg);
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: var(--font-size-md);
   text-align: left;
   animation: fadeInOut 2s ease-in-out infinite;

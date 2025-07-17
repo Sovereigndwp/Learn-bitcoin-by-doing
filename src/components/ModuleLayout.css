@@ -2,7 +2,7 @@
 .module-layout {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-neutral-900) 100%);
-  color: white;
+  color: var(--color-text-primary);
   padding-bottom: var(--spacing-2xl);
   font-size: var(--text-base);
   line-height: 1.7;
@@ -46,7 +46,7 @@
 .logo-text {
   font-size: 1.5rem;
   line-height: 1.2;
-  color: white;
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
@@ -66,7 +66,7 @@
 
 .author-name {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-weight: 500;
   font-style: italic;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -100,7 +100,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
+  background: var(--color-dark-bgCard);
   border-top: 1px solid #e5e7eb;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -155,7 +155,7 @@
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
-  color: white;
+  color: var(--color-text-primary);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -198,7 +198,7 @@
 .quiz-content,
 .barter-world {
   padding: 2rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border-radius: 12px;
   box-shadow: 0 2px 8px var(--color-shadow-sm);
   color: var(--color-neutral-800);
@@ -206,7 +206,7 @@
 
 .quiz-step {
   padding: 2rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   color: var(--color-neutral-800);
 }
 
@@ -226,7 +226,7 @@
 .exercise-card,
 .checklist-card,
 .comparison-card {
-  background: white;
+  background: var(--color-dark-bgCard);
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 8px var(--color-shadow-sm);
@@ -266,7 +266,7 @@
 .next-button,
 .continue-button {
   background: var(--color-primary-500);
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .primary-button:hover,
@@ -286,7 +286,7 @@
 
 .complete-button {
   background: var(--color-success-500);
-  color: white;
+  color: var(--color-text-primary);
   margin-top: 16px;
   padding: 8px 16px;
 }
@@ -315,7 +315,7 @@
   padding: 1rem;
   border: 2px solid var(--color-neutral-200);
   border-radius: 8px;
-  background: white;
+  background: var(--color-dark-bgCard);
   text-align: left;
   font-size: 1rem;
   cursor: pointer;
@@ -640,7 +640,7 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 1.5rem;
-  background: white;
+  background: var(--color-dark-bgCard);
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--color-shadow-sm);
   transition: transform 0.2s ease;
@@ -728,7 +728,7 @@
 .primary-button,
 .continue-button {
   background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 4px 12px var(--color-primary-shadow);
   border: 2px solid transparent;
   font-size: 1.1rem;
@@ -752,7 +752,7 @@
 /* Secondary Action Buttons - Medium Priority */
 .secondary-button {
   background: linear-gradient(135deg, var(--color-neutral-500) 0%, var(--color-neutral-600) 100%);
-  color: white;
+  color: var(--color-text-primary);
   border: 2px solid var(--color-neutral-500);
   box-shadow: 0 2px 8px var(--color-neutral-shadow);
 }
@@ -767,7 +767,7 @@
 /* Success/Completion Buttons - Special State */
 .complete-button {
   background: linear-gradient(135deg, var(--color-success-500) 0%, var(--color-success-600) 100%);
-  color: white;
+  color: var(--color-text-primary);
   border: 2px solid var(--color-success-500);
   box-shadow: 0 4px 12px var(--color-success-shadow);
   font-size: 1.1rem;
@@ -813,7 +813,7 @@
 
 /* Option Buttons - Interactive Choices */
 .option-button {
-  background: white;
+  background: var(--color-dark-bgCard);
   color: var(--color-neutral-700);
   border: 2px solid var(--color-neutral-200);
   text-align: left;
@@ -847,7 +847,7 @@
 /* Tool Buttons - Specialized Actions */
 .tool-button {
   background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
-  color: white;
+  color: var(--color-text-primary);
   border: 2px solid var(--color-secondary-500);
   box-shadow: 0 4px 12px var(--color-secondary-shadow);
 }
@@ -871,7 +871,7 @@
 /* Demo Buttons - Interactive Demonstrations */
 .demo-button {
   background: linear-gradient(135deg, var(--color-success-500) 0%, var(--color-success-400) 100%);
-  color: white;
+  color: var(--color-text-primary);
   border: 2px solid var(--color-success-500);
   box-shadow: 0 4px 12px var(--color-success-shadow);
 }

@@ -88,10 +88,11 @@
 /* ===== MAIN CONTAINER ===== */
 .numbers-module {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
-  color: var(--dark-text);
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--color-dark-bgSecondary) 100%);
+  color: var(--color-text-primary);
+  padding: var(--spacing-lg);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-base);
   position: relative;
   overflow-x: hidden;
 }
@@ -115,14 +116,127 @@
   z-index: 1;
 }
 
+/* ===== MODULE LAYOUT & NAVIGATION ===== */
+.module-progress {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-glass);
+}
+
+.progress-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.progress-header h1 {
+  font-size: var(--text-4xl);
+  color: var(--color-primary-500);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.progress-header p {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.steps-progress {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.step-indicator {
+  background: var(--color-dark-bgTertiary);
+  border: 2px solid var(--color-dark-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.step-indicator:hover {
+  border-color: var(--color-primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+.step-indicator.active {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-bg-subtle);
+}
+
+.step-indicator.completed {
+  border-color: var(--color-success-500);
+  background: var(--color-success-bg-subtle);
+}
+
+.step-number {
+  background: var(--color-primary-500);
+  color: var(--color-text-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-base);
+  margin-bottom: var(--spacing-md);
+}
+
+.step-info {
+  flex: 1;
+}
+
+.step-title {
+  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-xs);
+}
+
+.step-subtitle {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.step-content {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  min-height: 500px;
+}
+
+.module-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-xl);
+}
+
 /* ===== CRISIS COMMAND CENTER ===== */
 .crisis-command-center {
-  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 2px solid var(--bitcoin-orange);
-  border-radius: var(--border-radius-large);
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: var(--shadow-bitcoin);
+  background: var(--color-dark-bgCard);
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-glass);
   animation: bitcoinPulse 3s infinite;
 }
 
@@ -136,13 +250,13 @@
 }
 
 .crisis-title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-black);
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-primary-400));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 20px var(--bitcoin-orange-glow);
+  text-shadow: 0 0 20px var(--color-primary-glow, rgba(247, 147, 26, 0.3));
   margin: 0;
 }
 
@@ -154,8 +268,8 @@
 }
 
 .architect-level {
-  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  background: linear-gradient(45deg, var(--color-primary-500), var(--bitcoin-orange-dark));
+  color: var(--color-text-primary);
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 700;
@@ -166,7 +280,7 @@
 
 .mastery-points {
   background: linear-gradient(45deg, var(--success-green), var(--success-green-dark));
-  color: white;
+  color: var(--color-text-primary);
   padding: 12px 20px;
   border-radius: var(--border-radius);
   font-weight: 700;
@@ -178,7 +292,7 @@
   position: relative;
   width: 200px;
   height: 40px;
-  background: var(--dark-bg);
+  background: var(--color-dark-bg);
   border: 2px solid var(--crisis-red);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -201,7 +315,7 @@
   position: relative;
   z-index: 2;
   font-weight: 700;
-  color: white;
+  color: var(--color-text-primary);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
@@ -248,7 +362,7 @@
 
 .alert-time {
   color: var(--dark-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-lg);
   min-width: 80px;
 }
 
@@ -261,13 +375,13 @@
 .alert-intensity {
   color: var(--crisis-red);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-lg);
 }
 
 /* ===== CRISIS SCENARIO ===== */
 .crisis-scenario {
   background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius-large);
   padding: 30px;
   margin-bottom: 30px;
@@ -285,18 +399,18 @@
 
 .scenario-header h2 {
   font-size: 2rem;
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   margin: 0;
   font-weight: 700;
 }
 
 .crisis-badge {
   background: linear-gradient(45deg, var(--crisis-red), var(--crisis-red-dark));
-  color: white;
+  color: var(--color-text-primary);
   padding: 8px 16px;
   border-radius: var(--border-radius);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-lg);
   animation: crisisAlert 2s infinite;
 }
 
@@ -318,8 +432,8 @@
 }
 
 .objective, .threat {
-  background: var(--dark-bg);
-  border: 1px solid var(--bitcoin-orange);
+  background: var(--color-dark-bg);
+  border: 1px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 15px;
   margin-bottom: 15px;
@@ -335,7 +449,7 @@
 
 /* ===== CRISIS CHALLENGES ===== */
 .crisis-challenges h3 {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.4rem;
   margin-bottom: 20px;
 }
@@ -347,8 +461,8 @@
 }
 
 .challenge-card {
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 25px;
   transition: all var(--transition-smooth);
@@ -378,7 +492,7 @@
 }
 
 .challenge-card h4 {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.3rem;
   margin-bottom: 15px;
   font-weight: 600;
@@ -398,7 +512,7 @@
 
 .challenge-type, .challenge-difficulty {
   background: var(--dark-bg-lighter);
-  color: var(--dark-text);
+  color: var(--color-text-primary);
   padding: 6px 12px;
   border-radius: var(--border-radius);
   font-size: var(--font-size-lg);
@@ -406,7 +520,7 @@
 }
 
 .challenge-type {
-  border: 1px solid var(--bitcoin-orange);
+  border: 1px solid var(--color-primary-500);
 }
 
 .challenge-difficulty {
@@ -414,22 +528,23 @@
 }
 
 .challenge-start-btn {
-  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-primary-600));
+  color: var(--color-text-primary);
   border: none;
-  padding: 12px 24px;
-  border-radius: var(--border-radius);
-  font-weight: 700;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all var(--transition-smooth);
+  transition: all var(--transition-normal);
   width: 100%;
-  font-size: 1rem;
+  font-size: var(--text-lg);
+  margin: var(--spacing-md) 0;
 }
 
 .challenge-start-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-bitcoin);
-  background: linear-gradient(45deg, var(--bitcoin-orange-light), var(--bitcoin-orange));
+  background: linear-gradient(45deg, var(--bitcoin-orange-light), var(--color-primary-500));
 }
 
 /* ===== ACTIVE CHALLENGE ===== */
@@ -438,15 +553,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 3px solid var(--bitcoin-orange);
-  border-radius: var(--border-radius-large);
-  padding: 40px;
-  box-shadow: var(--shadow-heavy);
+  background: var(--color-dark-bgCard);
+  border: 3px solid var(--color-primary-500);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-2xl);
   z-index: 1000;
-  min-width: 500px;
+  min-width: 600px;
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
   animation: sovereigntyRise var(--transition-slow);
 }
@@ -459,15 +574,15 @@
 }
 
 .challenge-header h3 {
-  color: var(--bitcoin-orange);
-  font-size: 1.8rem;
+  color: var(--color-primary-500);
+  font-size: var(--text-2xl);
   margin: 0;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .challenge-close {
   background: var(--crisis-red);
-  color: white;
+  color: var(--color-text-primary);
   border: none;
   width: 40px;
   height: 40px;
@@ -483,14 +598,14 @@
 }
 
 .challenge-question {
-  background: var(--dark-bg);
-  border: 2px solid var(--bitcoin-orange);
+  background: var(--color-dark-bg);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 25px;
   margin-bottom: 25px;
   font-size: 1.2rem;
   line-height: 1.6;
-  color: var(--dark-text);
+  color: var(--color-text-primary);
 }
 
 .challenge-input {
@@ -501,11 +616,11 @@
 
 .challenge-input input {
   flex: 1;
-  background: var(--dark-bg);
-  border: 2px solid var(--bitcoin-orange);
+  background: var(--color-dark-bg);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 15px;
-  color: var(--dark-text);
+  color: var(--color-text-primary);
   font-size: 1.1rem;
   transition: all var(--transition-smooth);
 }
@@ -517,15 +632,15 @@
 }
 
 .challenge-input button {
-  background: linear-gradient(45deg, var(--bitcoin-orange), var(--bitcoin-orange-dark));
-  color: white;
+  background: linear-gradient(45deg, var(--color-primary-500), var(--color-primary-600));
+  color: var(--color-text-primary);
   border: none;
-  padding: 15px 30px;
-  border-radius: var(--border-radius);
-  font-weight: 700;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition: all var(--transition-smooth);
-  font-size: 1.1rem;
+  transition: all var(--transition-normal);
+  font-size: var(--text-lg);
 }
 
 .challenge-input button:hover {
@@ -539,20 +654,21 @@
   border-radius: var(--border-radius);
   padding: 20px;
   margin-bottom: 20px;
-  color: var(--dark-text);
+  color: var(--color-text-primary);
   font-style: italic;
 }
 
 .hint-btn {
-  background: linear-gradient(45deg, var(--warning-yellow), var(--warning-yellow-dark));
-  color: var(--dark-bg);
+  background: linear-gradient(45deg, var(--color-warning-500), var(--color-warning-600));
+  color: var(--color-dark-text);
   border: none;
-  padding: 10px 20px;
-  border-radius: var(--border-radius);
-  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: all var(--transition-smooth);
-  margin-bottom: 20px;
+  transition: all var(--transition-normal);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--text-base);
 }
 
 .hint-btn:hover {
@@ -583,19 +699,19 @@
 
 /* ===== MASTERY DASHBOARD ===== */
 .mastery-dashboard {
-  background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 2px solid var(--bitcoin-orange);
-  border-radius: var(--border-radius-large);
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: var(--shadow-bitcoin);
+  background: var(--color-dark-bgCard);
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: var(--shadow-glass);
 }
 
 .mastery-dashboard h3 {
-  color: var(--bitcoin-orange);
-  font-size: 1.8rem;
-  margin-bottom: 25px;
-  font-weight: 700;
+  color: var(--color-primary-500);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--spacing-lg);
+  font-weight: var(--font-weight-bold);
 }
 
 .mastery-grid {
@@ -605,8 +721,8 @@
 }
 
 .mastery-card {
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 20px;
   transition: all var(--transition-smooth);
@@ -618,7 +734,7 @@
 }
 
 .mastery-card h4 {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.2rem;
   margin-bottom: 15px;
   font-weight: 600;
@@ -631,8 +747,8 @@
 }
 
 .progress-bar {
-  background: var(--dark-bg);
-  border: 1px solid var(--bitcoin-orange);
+  background: var(--color-dark-bg);
+  border: 1px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   height: 20px;
   overflow: hidden;
@@ -641,7 +757,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--bitcoin-orange), var(--bitcoin-orange-light));
+  background: linear-gradient(90deg, var(--color-primary-500), var(--bitcoin-orange-light));
   transition: width var(--transition-slow);
   position: relative;
 }
@@ -659,14 +775,14 @@
 
 .mastery-progress span {
   color: var(--dark-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-lg);
   font-weight: 500;
 }
 
 /* ===== CRISIS STATISTICS ===== */
 .crisis-statistics {
   background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius-large);
   padding: 30px;
   margin-bottom: 30px;
@@ -674,7 +790,7 @@
 }
 
 .crisis-statistics h3 {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.8rem;
   margin-bottom: 25px;
   font-weight: 700;
@@ -687,8 +803,8 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--dark-bg-light) 100%);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius);
   padding: 25px;
   text-align: center;
@@ -704,7 +820,7 @@
 .stat-number {
   font-size: 3rem;
   font-weight: 800;
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   margin-bottom: 10px;
   text-shadow: 0 0 20px var(--bitcoin-orange-glow);
 }
@@ -720,7 +836,7 @@
 /* ===== ACHIEVEMENT SYSTEM ===== */
 .achievement-system {
   background: linear-gradient(135deg, var(--dark-bg-light) 0%, var(--dark-bg-lighter) 100%);
-  border: 2px solid var(--bitcoin-orange);
+  border: 2px solid var(--color-primary-500);
   border-radius: var(--border-radius-large);
   padding: 30px;
   margin-bottom: 30px;
@@ -728,7 +844,7 @@
 }
 
 .achievement-system h3 {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.8rem;
   margin-bottom: 25px;
   font-weight: 700;
@@ -741,7 +857,7 @@
 }
 
 .achievement {
-  background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg-light) 100%);
+  background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--dark-bg-light) 100%);
   border: 2px solid var(--dark-bg-lighter);
   border-radius: var(--border-radius);
   padding: 20px;
@@ -751,7 +867,7 @@
 }
 
 .achievement.unlocked {
-  border-color: var(--bitcoin-orange);
+  border-color: var(--color-primary-500);
   opacity: 1;
   animation: masteryGlow 3s infinite;
 }
@@ -772,7 +888,7 @@
 }
 
 .achievement-name {
-  color: var(--bitcoin-orange);
+  color: var(--color-primary-500);
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 10px;
@@ -784,7 +900,7 @@
 
 .achievement-desc {
   color: var(--dark-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-lg);
   line-height: 1.4;
 }
 
@@ -795,21 +911,41 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .numbers-module {
-    padding: 15px;
+    padding: var(--spacing-md);
+  }
+  
+  .progress-header h1 {
+    font-size: var(--text-3xl);
+  }
+  
+  .steps-progress {
+    grid-template-columns: 1fr;
+  }
+  
+  .step-content {
+    padding: var(--spacing-lg);
+  }
+  
+  .module-navigation {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-md);
   }
   
   .crisis-title {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
   
   .crisis-header {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--spacing-md);
   }
   
   .crisis-status {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--spacing-sm);
   }
   
   .crisis-meter {
@@ -821,22 +957,23 @@
   }
   
   .active-challenge {
-    min-width: 300px;
-    padding: 20px;
+    min-width: 95vw;
+    max-width: 95vw;
+    padding: var(--spacing-lg);
+    max-height: 90vh;
   }
   
   .challenge-input {
     flex-direction: column;
+    gap: var(--spacing-sm);
   }
   
-  .mastery-grid {
-    grid-template-columns: 1fr;
+  .challenge-input button {
+    width: 100%;
   }
   
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
+  .mastery-grid,
+  .stats-grid,
   .achievements-grid {
     grid-template-columns: 1fr;
   }
@@ -885,7 +1022,7 @@
   bottom: 0;
   color: var(--bitcoin-orange-glow);
   font-family: 'Courier New', monospace;
-  font-size: 0.6rem;
+  font-size: var(--text-sm);
   line-height: 1;
   opacity: 0.1;
   animation: binaryFlicker 3s infinite;
@@ -905,7 +1042,7 @@
   transform: translate(-50%, -50%);
   color: var(--bitcoin-orange-glow);
   font-family: 'Courier New', monospace;
-  font-size: 0.8rem;
+  font-size: var(--text-base);
   opacity: 0.1;
   animation: hexTransform 5s infinite;
   pointer-events: none;
@@ -919,13 +1056,13 @@
 
 .alerts-container::-webkit-scrollbar-track,
 .active-challenge::-webkit-scrollbar-track {
-  background: var(--dark-bg);
+  background: var(--color-dark-bg);
   border-radius: var(--border-radius);
 }
 
 .alerts-container::-webkit-scrollbar-thumb,
 .active-challenge::-webkit-scrollbar-thumb {
-  background: var(--bitcoin-orange);
+  background: var(--color-primary-500);
   border-radius: var(--border-radius);
 }
 
@@ -989,7 +1126,7 @@
   .endian-discovery-step,
   .security-demo-step,
   .reflection-step {
-    background: white !important;
+    background: var(--color-dark-bgCard) !important;
     box-shadow: none !important;
     border: 1px solid var(--color-neutral-900) !important;
   }

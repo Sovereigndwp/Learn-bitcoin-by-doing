@@ -18,49 +18,49 @@ const NOTIFICATION_TYPES = {
     icon: Trophy,
     color: '#FFD700',
     gradient: 'linear-gradient(135deg, #FFD700, #FFA500)',
-    duration: 8000, // Extended from 5000
+    duration: 12000, // Extended to 12 seconds for better readability
     sound: 'achievement'
   },
   badge: {
     icon: Award,
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981, #059669)',
-    duration: 7000, // Extended from 4000
+    duration: 10000, // Extended to 10 seconds
     sound: 'badge'
   },
   streak: {
     icon: Flame,
     color: '#EF4444',
     gradient: 'linear-gradient(135deg, #EF4444, #DC2626)',
-    duration: 7000, // Extended from 4000
+    duration: 10000, // Extended to 10 seconds
     sound: 'streak'
   },
   milestone: {
     icon: Star,
     color: '#8B5CF6',
     gradient: 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
-    duration: 8000, // Extended from 5000
+    duration: 12000, // Extended to 12 seconds
     sound: 'milestone'
   },
   insight: {
     icon: Brain,
     color: '#06B6D4',
     gradient: 'linear-gradient(135deg, #06B6D4, #0891B2)',
-    duration: 7000, // Extended from 4000
+    duration: 10000, // Extended to 10 seconds
     sound: 'insight'
   },
   levelUp: {
     icon: TrendingUp,
     color: '#F59E0B',
     gradient: 'linear-gradient(135deg, #F59E0B, #D97706)',
-    duration: 7000, // Extended from 4000
+    duration: 10000, // Extended to 10 seconds
     sound: 'levelup'
   },
   completion: {
     icon: CheckCircle,
     color: '#10B981',
     gradient: 'linear-gradient(135deg, #10B981, #059669)',
-    duration: 6000, // Extended from 3000
+    duration: 8000, // Extended to 8 seconds
     sound: 'completion'
   }
 };

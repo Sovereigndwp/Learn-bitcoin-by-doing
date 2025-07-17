@@ -120,7 +120,7 @@
 
 .progress-text {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -140,7 +140,7 @@
 
 .step-subtitle {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--color-text-primary);
   margin: 0.5rem 0 0 0;
   font-weight: 400;
 }
@@ -172,7 +172,7 @@
 
 .insight-indicator {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
 }
 
 /* Achievement Popup */
@@ -209,7 +209,7 @@
 
 .alchemy-achievement-text p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -253,7 +253,7 @@
 .urgency-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
@@ -330,7 +330,7 @@
 }
 
 .crisis-problem {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   font-size: 1rem;
   margin-bottom: 1rem;
   font-weight: 500;
@@ -362,7 +362,7 @@
 
 .evidence-section p,
 .hidden-cost p {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -417,7 +417,7 @@
 .scandal-summary p {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   text-align: center;
   margin-bottom: 1.5rem;
 }
@@ -494,7 +494,7 @@
 .concept-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -583,7 +583,7 @@
 }
 
 .description {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
@@ -605,7 +605,7 @@
 
 .security-level,
 .real-world {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
@@ -681,7 +681,7 @@
 }
 
 .stat-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   display: block;
 }
@@ -711,7 +711,7 @@
 }
 
 .work-display {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: var(--font-size-lg);
   animation: computingText 1.5s ease-in-out infinite;
 }
@@ -735,7 +735,7 @@
 }
 
 .target-info {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -836,7 +836,7 @@
 }
 
 .summary-stat .stat-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
 }
 
 .summary-stat .stat-value {
@@ -861,7 +861,7 @@
 }
 
 .alchemy-revelation p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -929,7 +929,7 @@
 .challenge-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
@@ -979,7 +979,7 @@
 }
 
 .attack-description {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -999,7 +999,7 @@
 }
 
 .requirements-preview ul {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   margin: 0;
   padding-left: 1.2rem;
 }
@@ -1055,7 +1055,7 @@
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   animation: calcStepAppear 0.8s ease-out;
 }
 
@@ -1094,7 +1094,7 @@
 }
 
 .progress-text {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -1128,7 +1128,7 @@
 }
 
 .target-description {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   margin-bottom: 2rem;
 }
 
@@ -1161,7 +1161,7 @@
 }
 
 .cost-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
 }
 
 .cost-value {
@@ -1260,7 +1260,7 @@
 }
 
 .lesson-summary p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   line-height: 1.6;
   font-size: 1.05rem;
 }
@@ -1313,7 +1313,7 @@
 .concept-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -1357,7 +1357,7 @@
 }
 
 .rhythm-description {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   text-align: center;
   font-style: italic;
 }
@@ -1418,7 +1418,7 @@
 }
 
 .step-content {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -1448,7 +1448,7 @@
 }
 
 .stat-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -1472,7 +1472,7 @@
 }
 
 .simulation-challenge p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -1504,7 +1504,7 @@
 }
 
 .scenario-description {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -1609,7 +1609,7 @@
 }
 
 .metric-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
 }
 
@@ -1620,7 +1620,7 @@
 }
 
 .step-status {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   font-style: italic;
   font-size: 0.9rem;
 }
@@ -1695,7 +1695,7 @@
 }
 
 .achievement-text p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -1724,7 +1724,7 @@
   border: 1px solid rgba(247, 147, 26, 0.3);
   border-radius: 8px;
     padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   }
   
 .insight-item strong {
@@ -1747,7 +1747,7 @@
   }
   
 .personal-impact p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   line-height: 1.6;
   margin: 0;
   }
@@ -1782,7 +1782,7 @@
 .mission-text {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -1844,7 +1844,7 @@
 }
 
 .project-location {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
 }
 
@@ -1853,7 +1853,7 @@
 }
 
 .project-description {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -1890,7 +1890,7 @@
 }
 
 .impact-preview ul {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   margin: 0;
   padding-left: 1.2rem;
 }
@@ -1972,7 +1972,7 @@
 }
 
 .metric-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-size: 0.85rem;
 }
 
@@ -1995,7 +1995,7 @@
   border-radius: 6px;
   padding: 0.8rem;
   margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-primary);
   transition: all 0.3s ease;
 }
 
@@ -2085,7 +2085,7 @@
 }
 
 .stat-description {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
     font-size: 0.85rem;
   line-height: 1.4;
 }
@@ -2106,7 +2106,7 @@
 }
 
 .mission-summary p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -2139,7 +2139,7 @@
 }
 
 .next-journey p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--color-text-primary);
   margin: 0;
 }
 

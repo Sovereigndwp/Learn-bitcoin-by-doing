@@ -84,7 +84,7 @@ const Button = ({
           // Reset state after animation
           timeoutRef.current = setTimeout(() => {
             setButtonState('default');
-          }, 600);
+          }, 1200); // Extended to 1.2 seconds for better visual feedback
         }
       }
     } catch (error) {

@@ -60,7 +60,7 @@
 
 .tab-button.active {
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
 }
 
@@ -381,7 +381,7 @@
   align-items: center;
   gap: 0.5rem;
   background: linear-gradient(135deg, #FF8C00, #FFA500);
-  color: white;
+  color: var(--color-text-primary);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -597,7 +597,7 @@
   top: 1rem;
   right: 1rem;
   background: #10B981;
-  color: white;
+  color: var(--color-text-primary);
   width: 24px;
   height: 24px;
   border-radius: 50%;

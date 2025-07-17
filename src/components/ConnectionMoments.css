@@ -5,7 +5,7 @@
   border-radius: 20px;
   padding: 2rem;
   margin: 2rem 0;
-  color: white;
+  color: var(--color-text-primary);
   box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
   position: relative;
   overflow: hidden;
@@ -157,7 +157,7 @@
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .thinking-strategy-prompt {
@@ -174,7 +174,7 @@
   gap: 0.5rem;
   font-weight: 500;
   margin-bottom: 0.75rem;
-  color: white;
+  color: var(--color-text-primary);
   font-size: 0.95rem;
 }
 
@@ -184,20 +184,20 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   backdrop-filter: blur(5px);
 }
 
 .strategy-selector:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: var(--color-text-primary);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 .strategy-selector option {
   background: #2d3748;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .connection-response {
@@ -211,7 +211,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: var(--color-text-primary);
   font-size: 1rem;
   resize: vertical;
   backdrop-filter: blur(5px);
@@ -220,12 +220,12 @@
 
 .connection-input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: var(--color-text-primary);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
 .connection-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-primary);
 }
 
 .confidence-level {
@@ -236,7 +236,7 @@
 
 .confidence-label {
   font-weight: 500;
-  color: white;
+  color: var(--color-text-primary);
   font-size: 0.95rem;
 }
 
@@ -350,7 +350,7 @@
   padding: 1rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   font-style: italic;
   font-size: 0.95rem;
 }

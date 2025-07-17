@@ -21,7 +21,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: bold;
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .code-editor-actions {
@@ -44,7 +44,7 @@
 
 .run-button {
   background: linear-gradient(45deg, #10B981, #059669);
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .run-button:hover:not(:disabled) {
@@ -54,13 +54,13 @@
 
 .run-button:disabled {
   background: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-primary);
   cursor: not-allowed;
 }
 
 .reset-button {
   background: rgba(255, 255, 255, 0.2);
-  color: white;
+  color: var(--color-text-primary);
 }
 
 .reset-button:hover:not(:disabled) {
@@ -69,7 +69,7 @@
 }
 
 .reset-button:disabled {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-primary);
   cursor: not-allowed;
 }
 
@@ -91,7 +91,7 @@
 .output-label,
 .expected-label {
   font-weight: 600;
-  color: white;
+  color: var(--color-text-primary);
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -104,7 +104,7 @@
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
-  color: white;
+  color: var(--color-text-primary);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -124,7 +124,7 @@
 }
 
 .code-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-text-primary);
 }
 
 .output-header {
@@ -159,7 +159,7 @@
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
-  color: white;
+  color: var(--color-text-primary);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -182,7 +182,7 @@
 .expected-output {
   min-height: auto;
   padding: 0.75rem 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-primary);
   border-color: #F59E0B;
   background: rgba(245, 158, 11, 0.1);
 }
