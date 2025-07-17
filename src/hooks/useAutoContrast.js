@@ -10,6 +10,7 @@ export const useAutoContrast = (backgroundColor, dependencies = []) => {
 
     const element = elementRef.current;
     applyAutoContrast(element, backgroundColor);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [backgroundColor, ...dependencies]);
 
   return elementRef;

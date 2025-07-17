@@ -286,7 +286,7 @@ const MiningModule = () => {
 
     useEffect(() => {
       calculateMiningMetrics();
-    }, [hashRate, powerConsumption, electricityCost]);
+    }, [hashRate, powerConsumption, electricityCost, calculateMiningMetrics]);
 
     const securityConcepts = [
       {
@@ -778,7 +778,7 @@ const MiningModule = () => {
 
     useEffect(() => {
       calculateEconomics();
-    }, [economicsInputs]);
+    }, [economicsInputs, calculateEconomics]);
 
     const updateInput = (key, value) => {
       setEconomicsInputs(prev => ({
@@ -992,7 +992,7 @@ const MiningModule = () => {
   // Step 5: Network Security
   function NetworkSecurity() {
     const [attackScenario, setAttackScenario] = useState('51percent');
-    const [networkStats, setNetworkStats] = useState({
+  const [networkStats] = useState({
       totalHashRate: 400, // EH/s
       totalMiners: 1000000,
       countries: 50,
@@ -1230,7 +1230,7 @@ const MiningModule = () => {
 
   // Step 6: Renewable Energy
   function RenewableEnergy() {
-    const [energyMix, setEnergyMix] = useState({
+    const [energyMix] = useState({
       renewable: 52.2,
       fossil: 47.8
     });

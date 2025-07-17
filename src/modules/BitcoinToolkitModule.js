@@ -2,16 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Wrench, CheckCircle, Trophy, Copy, Hash, Key, 
-  Calculator, Search, Activity, Code, Zap, Shield,
-  ArrowRight, Info, AlertTriangle, Clock, Settings,
-  Layers, Network, Eye, Download, Upload, Target
+  Calculator, Search, Code, Clock, Download, Target, Info
 } from 'lucide-react';
 import { 
-  ContinueButton, 
-  ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton 
+  ActionButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './BitcoinToolkitModule.css';
@@ -240,7 +234,7 @@ const BitcoinToolkitModule = () => {
   };
 
   const renderDifficultyIndicator = (difficulty) => {
-          return (
+    return (
       <div className="difficulty-indicator">
         <span>Difficulty:</span>
         <div className="difficulty-dots">
@@ -251,15 +245,15 @@ const BitcoinToolkitModule = () => {
             />
           ))}
         </div>
-            </div>
-          );
+      </div>
+    );
   };
 
   const renderToolCard = (tool) => {
     const isCompleted = completedTools.has(tool.id);
     const isActive = currentTool?.id === tool.id;
 
-          return (
+    return (
       <div 
         key={tool.id}
         className={`tool-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
@@ -283,12 +277,12 @@ const BitcoinToolkitModule = () => {
         
         <div className="tool-status">
           {renderDifficultyIndicator(tool.difficulty)}
-          {isCompleted && (
-            <div className="tool-progress">
-              <CheckCircle size={16} />
-              <span>Completed</span>
-            </div>
-          )}
+      {isCompleted && (
+        <div className="tool-progress">
+          <CheckCircle size={16} color="green" />
+          <span>Completed</span>
+        </div>
+      )}
         </div>
       </div>
     );
@@ -300,10 +294,8 @@ const BitcoinToolkitModule = () => {
         <div className="tool-interface">
           <div className="tool-interface-header">
             <div className="tool-interface-title">
-              <div className="tool-interface-title">
-                <Wrench size={24} />
-                <h2>Bitcoin Toolkit Workshop</h2>
-              </div>
+              <Wrench size={24} />
+              <h2>Bitcoin Toolkit Workshop</h2>
             </div>
           </div>
           <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
@@ -314,8 +306,8 @@ const BitcoinToolkitModule = () => {
               Each tool is designed to teach you practical skills while working with real Bitcoin data and concepts.
             </p>
           </div>
-            </div>
-          );
+        </div>
+      );
         }
 
     // Render specific tool interface based on tool ID
@@ -347,7 +339,7 @@ const BitcoinToolkitModule = () => {
     }
   };
 
-        return (
+  return (
     <div className="module-container toolkit-module">
       <div className="toolkit-content">
         <div className="toolkit-header">
@@ -448,8 +440,8 @@ const BitcoinToolkitModule = () => {
           </div>
         </div>
       </div>
-          </div>
-        );
+    </div>
+  );
 };
 
 // Individual Tool Components
@@ -480,7 +472,7 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
     setTimeout(() => onComplete(), 1000);
   };
 
-          return (
+  return (
     <div className="tool-interface">
       <div className="tool-interface-header">
         <div className="tool-interface-title">
@@ -562,8 +554,8 @@ const MnemonicGeneratorTool = ({ tool, onComplete }) => {
           )}
         </div>
       )}
-            </div>
-          );
+    </div>
+  );
 };
 
 const HashCalculatorTool = ({ tool, onComplete }) => {
@@ -755,7 +747,7 @@ const TransactionDecoderTool = ({ tool, onComplete }) => {
     onComplete();
   };
 
-        return (
+  return (
     <div className="tool-interface">
       <div className="tool-interface-header">
         <div className="tool-interface-title">
@@ -1027,13 +1019,13 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           <label className="form-label">Script Templates</label>
           <div className="template-buttons">
             {Object.entries(scriptTemplates).map(([key, template]) => (
-            <OptionButton 
+            <ActionButton 
                 key={key}
                 onClick={() => loadTemplate(key)}
                 className={`template-button ${selectedTemplate === key ? 'active' : ''}`}
             >
                 {key.toUpperCase()}
-            </OptionButton>
+            </ActionButton>
             ))}
           </div>
         </div>
@@ -1093,8 +1085,8 @@ const ScriptExplorerTool = ({ tool, onComplete }) => {
           </div>
         </div>
       )}
-          </div>
-        );
+    </div>
+  );
 };
 
 // QR Code Generator Tool for Bitcoin data

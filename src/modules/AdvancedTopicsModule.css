@@ -4,9 +4,9 @@
 /* ================================================= */
 
 .advanced-bitcoin-topics {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+  background: linear-gradient(135deg, var(--color-neutral-900) 0%, var(--color-neutral-800) 25%, var(--color-neutral-700) 50%, var(--color-neutral-600) 75%, var(--color-neutral-500) 100%);
   min-height: 100vh;
-  color: #f1f5f9;
+  color: var(--color-neutral-50);
   position: relative;
   overflow-x: hidden;
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
@@ -21,8 +21,8 @@
   right: 0;
   bottom: 0;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(247, 147, 26, 0.03) 0%, transparent 50%);
+      radial-gradient(circle at 10% 20%, var(--color-primary-alpha-5) 0%, transparent 50%),
+  radial-gradient(circle at 90% 80%, var(--color-primary-alpha-3) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -44,18 +44,18 @@
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--color-neutral-900-alpha-80);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(247, 147, 26, 0.2);
+  border: 1px solid var(--color-primary-alpha-20);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--color-shadow-sm);
 }
 
 .module-icon {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -66,13 +66,13 @@
 .module-text h1 {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 0.5rem;
 }
 
 .module-text p {
   font-size: 1.1rem;
-  color: #cbd5e1;
+  color: var(--color-neutral-300);
   font-weight: 400;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .progress-header h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.3rem;
   font-weight: 600;
 }
@@ -104,21 +104,21 @@
 .progress-percentage {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .progress-bar-advanced {
   height: 8px;
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--color-neutral-800-alpha-80);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 2rem;
-  border: 1px solid rgba(247, 147, 26, 0.1);
+  border: 1px solid var(--color-primary-alpha-10);
 }
 
 .progress-fill-advanced {
   height: 100%;
-  background: linear-gradient(90deg, #f7931a, #fbbf24);
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-400));
   border-radius: 4px;
   transition: width 0.8s ease;
 }
@@ -134,22 +134,22 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(100, 116, 139, 0.2);
+  background: var(--color-neutral-800-alpha-60);
+  border: 1px solid var(--color-neutral-500-alpha-20);
   border-radius: 8px;
   transition: all 0.2s ease;
   text-align: center;
 }
 
 .phase-indicator.active {
-  border-color: #f7931a;
-  background: rgba(247, 147, 26, 0.1);
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-alpha-10);
   transform: translateY(-1px);
 }
 
 .phase-indicator.completed {
-  border-color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--color-success-500);
+  background: var(--color-success-alpha-10);
 }
 
 .phase-indicator .phase-icon {
@@ -161,15 +161,15 @@
 .phase-indicator span {
   font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #cbd5e1;
+  color: var(--color-neutral-300);
 }
 
 .phase-indicator.active span {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .phase-indicator.completed span {
-  color: #10b981;
+  color: var(--color-success-500);
 }
 
 /* ===================== */
@@ -189,13 +189,13 @@
 /* ===================== */
 
 .topic-section {
-  background: rgba(15, 23, 42, 0.7);
+  background: var(--color-neutral-900-alpha-70);
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(247, 147, 26, 0.1);
+  border: 1px solid var(--color-primary-alpha-10);
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--color-shadow-sm);
 }
 
 /* ===================== */
@@ -208,30 +208,30 @@
   gap: 1.5rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(247, 147, 26, 0.1);
+  border-bottom: 1px solid var(--color-primary-alpha-10);
 }
 
 .topic-icon {
   width: 50px;
   height: 50px;
-  background: rgba(247, 147, 26, 0.1);
-  border: 1px solid rgba(247, 147, 26, 0.2);
+  background: var(--color-primary-alpha-10);
+  border: 1px solid var(--color-primary-alpha-20);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .topic-title h2 {
   font-size: 1.6rem;
   font-weight: 600;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 0.3rem;
 }
 
 .topic-subtitle {
   font-size: 1rem;
-  color: #94a3b8;
+  color: var(--color-neutral-400);
   font-weight: 400;
 } 

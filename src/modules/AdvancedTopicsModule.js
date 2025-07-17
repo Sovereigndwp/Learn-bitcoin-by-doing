@@ -1,28 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Search, Shield, Zap, Cpu, Globe, Trophy, Target,
-  TrendingUp, Network, Users, Database, Layers,
-  CheckCircle, ArrowRight, Activity, BarChart3, Settings,
-  Eye, Code, FileText, Award, Lightbulb, Brain,
-  DollarSign, Coins, Building, Smartphone, Server
+  Lightbulb
 } from 'lucide-react';
 import { 
   ContinueButton, 
-  ActionButton, 
-  Button 
+  ActionButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
 import './AdvancedTopicsModule.css';
 
 const AdvancedTopicsModule = () => {
-  const { completeModule, updatePersonalInsights } = useProgress();
+  const { completeModule } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userExplorations, setUserExplorations] = useState({});
-  const [selectedTopic, setSelectedTopic] = useState(null);
   const [explorationProgress, setExplorationProgress] = useState({});
-  const [masteryInsights, setMasteryInsights] = useState({});
 
   // Additional state for render functions
   const [exploredUpgrades, setExploredUpgrades] = useState(new Set());

@@ -523,7 +523,7 @@ const NumbersModule = () => {
 
     useEffect(() => {
       demonstrateEndianness();
-    }, [selectedBytes]);
+    }, [selectedBytes, demonstrateEndianness]);
 
     return (
       <div className="byte-order-mastery">

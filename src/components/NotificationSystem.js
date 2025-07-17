@@ -190,7 +190,7 @@ const Notification = ({ notification, onClose }) => {
       clearTimeout(timer);
       clearInterval(progressInterval);
     };
-  }, [notification, onClose, config.duration]);
+  }, [notification, onClose, config.duration, isPaused]);
 
   // Handle pause/resume on hover
   const handleMouseEnter = () => {

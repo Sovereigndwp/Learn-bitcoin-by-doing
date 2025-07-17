@@ -95,7 +95,7 @@ const HashingModule = () => {
 
     useEffect(() => {
       performHash(inputText);
-    }, []);
+    }, [inputText]);
 
     const hashProperties = [
       {
@@ -279,7 +279,7 @@ const HashingModule = () => {
 
     useEffect(() => {
       calculateHashes();
-    }, [originalText, modifiedText]);
+    }, [originalText, modifiedText, calculateHashes]);
 
     const demonstrateAvalanche = () => {
       const examples = [

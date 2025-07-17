@@ -16,7 +16,8 @@ import {
   Lightbulb,
   Hash,
   Users,
-  Lock
+  Lock,
+  CircleDollarSign
 } from 'lucide-react';
 import { 
   ContinueButton, 
@@ -285,7 +286,7 @@ const TransactionsModule = () => {
                 {currentTx.outputs.map((output, index) => (
                   <div key={index} className="output-card">
                     <div className="output-header">
-                      <Coins className="w-4 h-4" />
+                      <CircleDollarSign className="w-4 h-4" />
                       <span>Output #{index + 1}</span>
                     </div>
                     <div className="output-details">
@@ -380,7 +381,7 @@ const TransactionsModule = () => {
   function UtxoModel() {
     const [walletView, setWalletView] = useState('alice');
     const [simulationStep, setSimulationStep] = useState(0);
-  const [utxoHistory] = useState([]);
+  const [utxoHistory, setUtxoHistory] = useState([]);
 
     const wallets = {
       alice: {
@@ -518,7 +519,7 @@ const TransactionsModule = () => {
               {currentWallet.utxos.map((utxo, index) => (
                 <div key={index} className="utxo-card">
                   <div className="utxo-header">
-                    <Coins className="w-4 h-4" />
+                    <CircleDollarSign className="w-4 h-4" />
                     <span>UTXO #{index + 1}</span>
                   </div>
                   <div className="utxo-details">
@@ -656,6 +657,7 @@ const TransactionsModule = () => {
     const [transactionSize, setTransactionSize] = useState(250); // bytes
     const [targetConfirmations, setTargetConfirmations] = useState(6);
     const [feeCalculation, setFeeCalculation] = useState({});
+    const [feeRate, setFeeRate] = useState(20);
 
     const networkConditions = {
       normal: {
@@ -703,7 +705,7 @@ const TransactionsModule = () => {
 
     useEffect(() => {
       calculateFees();
-    }, [feeRate, transactionSize, calculateFees]);
+    }, [feeRate, transactionSize, calculateFees, feeScenario]);
 
     const FeeOption = ({ priority, fee, time, recommended = false }) => (
       <div className={`fee-option ${recommended ? 'recommended' : ''}`}>

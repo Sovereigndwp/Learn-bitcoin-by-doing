@@ -12,25 +12,18 @@ import {
   Smartphone, 
   HardDrive, 
   Target, 
-  ArrowRight,
-  Zap,
   Trophy,
-  Eye,
   EyeOff,
-  Clock,
-  DollarSign,
   BarChart3,
   Settings,
   FileText,
   Globe
 } from 'lucide-react';
 import { 
-  ContinueButton, 
   ActionButton, 
   OptionButton,
   NavigationButton, 
   PopupButton,
-  Button,
   StepNavigation
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';

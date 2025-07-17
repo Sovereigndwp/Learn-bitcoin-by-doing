@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Zap, Clock, DollarSign, Users, ArrowRight, Play, TrendingUp, Shield, Globe, Cpu } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton, 
-  Button, 
-  OptionButton,
-  NavigationButton
+  Button
 } from '../components/EnhancedButtons';
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
@@ -69,7 +66,6 @@ const BitcoinIntroduction = ({ onComplete }) => {
   ];
 
   const currentProblem = problemDemos[currentDemo];
-  const hasUserPrediction = userPredictions[currentProblem?.id];
 
   const handleChallengeChoice = (choice) => {
     setUserPredictions(prev => ({
@@ -578,7 +574,7 @@ const BlockchainDemo = ({ onComplete }) => {
 // Network Consensus Demonstration
 const NetworkConsensus = ({ onComplete }) => {
   const [attackScenario, setAttackScenario] = useState(null);
-  const [networkSize, setNetworkSize] = useState(10000);
+  const [networkSize] = useState(10000);
   const [attackerNodes, setAttackerNodes] = useState(1000);
   const [simulationRunning, setSimulationRunning] = useState(false);
   const [attackResult, setAttackResult] = useState(null);

@@ -241,6 +241,7 @@ const WelcomeSection = ({ onStartJourney }) => {
                 willChange: 'transform'
               }}>
                 <iframe 
+                  title="Interactive Money Foundations Presentation"
                   loading="lazy" 
                   style={{
                     position: 'absolute',

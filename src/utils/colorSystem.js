@@ -384,7 +384,7 @@ export const DESIGN_TOKENS = {
   }
 };
 
-export default {
+const colorSystemExport = {
   COLORS,
   getOptimalTextColor,
   detectCardTheme,
@@ -394,4 +394,6 @@ export default {
   applyAutoContrast,
   DESIGN_TOKENS,
   getContrastRatio
-}; 
+};
+
+export default colorSystemExport;

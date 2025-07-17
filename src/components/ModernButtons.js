@@ -288,7 +288,7 @@ export {
 // Export original names for backward compatibility
 export const Button = ModernButton;
 
-export default {
+const ModernButtonsExport = {
   ModernButton,
   ActionButton,
   ContinueButton,
@@ -301,4 +301,6 @@ export default {
   SmartCard,
   // Backward compatibility
   Button: ModernButton
-}; 
+};
+
+export default ModernButtonsExport;
