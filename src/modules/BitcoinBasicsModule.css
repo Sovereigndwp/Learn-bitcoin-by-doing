@@ -20,7 +20,7 @@
 .top-nav-button {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.3rem;
   padding: 0.6rem 0.8rem;
   border: 2px solid var(--color-white-10);
@@ -405,7 +405,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
   font-size: var(--font-size-base);
 }
@@ -459,7 +459,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
   font-size: var(--font-size-base);
 }
@@ -1142,7 +1142,7 @@
 .voting-options {
   display: flex;
   gap: 1.5rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 2rem 0;
 }
 
@@ -1568,7 +1568,7 @@
 .question-number {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 24px;
   height: 24px;
   background: var(--color-primary-500);
@@ -1856,7 +1856,7 @@
 .transformation-steps {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin: 2rem 0;
   flex-wrap: wrap;
@@ -1948,7 +1948,7 @@
 .chart-controls {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 2rem;
 }
 
@@ -2015,7 +2015,7 @@
 .system-toggles {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 1rem 0;
 }
 
@@ -2308,7 +2308,7 @@
   align-items: center;
   gap: 1rem;
   margin: 1rem 0;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .alien-emoji {
@@ -2350,7 +2350,7 @@
 .river-selector {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 2rem;
 }
 
@@ -2421,7 +2421,7 @@
 .process-steps {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
   margin: 2rem 0;
@@ -2447,7 +2447,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
 }
 
@@ -2529,7 +2529,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 1rem;
@@ -2678,7 +2678,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 1rem;
@@ -2773,7 +2773,7 @@
 .conclusion-tabs {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 2rem 0;
 }
 
@@ -2866,7 +2866,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .reflection-icon {
@@ -3594,7 +3594,7 @@
 
 .timeline-controls {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
@@ -3666,7 +3666,7 @@
   gap: 1rem;
   font-size: 1.5rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .gold-bar, .gold-bars {
@@ -3973,7 +3973,7 @@
 
 .timeline-controls {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
@@ -4086,7 +4086,7 @@
   gap: 1rem;
   font-size: 1.5rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .gold-bar, .gold-bars {
@@ -4768,7 +4768,7 @@
 .accounts-ledger {
   display: flex;
   gap: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   margin: 2rem 0;
 }
@@ -5036,7 +5036,7 @@
 .version-mystery {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 80px;
   background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
   border-radius: 8px;
@@ -5095,7 +5095,7 @@
   border-right: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
 }
 
@@ -5453,7 +5453,7 @@
 .flow-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
@@ -6214,7 +6214,7 @@
 .before-after {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2rem;
   flex-wrap: wrap;
 }
@@ -6311,7 +6311,7 @@
 
 .progress-dots {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -6507,7 +6507,7 @@
 
 .story-progress {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -7102,7 +7102,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
   font-size: var(--font-size-base);
   transition: all 0.3s ease;
@@ -7389,7 +7389,7 @@
   }
   
   .progress-levels {
-    justify-content: center;
+    justify-content: flex-start;
   }
   
   .journey-step {
@@ -7475,7 +7475,7 @@
 
 .demo-progress {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   margin-top: 1rem;
 }
@@ -7585,7 +7585,7 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .system-button {
@@ -7674,7 +7674,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 1rem;
 }
 
@@ -7950,7 +7950,7 @@
 
 .network-visual {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 2rem 0;
 }
 
@@ -7960,7 +7960,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
 }
 
@@ -7970,7 +7970,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .pie-center {
@@ -7980,7 +7980,7 @@
   height: 60%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -8183,7 +8183,7 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin: 1.5rem 0;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .currency-button {
@@ -8328,7 +8328,7 @@
 .simulation-buttons {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
@@ -9059,7 +9059,7 @@
 
 .introduction .progress-dots {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   margin-top: 24px;
 }
@@ -9084,7 +9084,7 @@
 /* Comparison Step - Enhanced for 5 fiat problem vs Bitcoin benefit aspects */
 .comparison .aspect-tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 32px;
@@ -9960,7 +9960,7 @@
 
 .how-bitcoin-works .progress-dots {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   margin-bottom: 12px;
 }
@@ -10171,7 +10171,7 @@
 
 .scarcity-value .progress-dots {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   margin-bottom: 12px;
 }

@@ -143,7 +143,7 @@
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: rgba(249, 115, 22, 0.2);
   border-radius: 12px;
   border: 1px solid rgba(249, 115, 22, 0.3);
@@ -547,7 +547,7 @@
   height: 300px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border: 1px solid rgba(100, 116, 139, 0.2);
   border-radius: 8px;
   background: rgba(15, 23, 42, 0.5);
@@ -624,7 +624,7 @@
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   backdrop-filter: blur(10px);
@@ -665,7 +665,7 @@
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: 600;
   font-size: var(--font-size-base);
 }
@@ -718,7 +718,7 @@
   }
   
   .tool-button {
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 
@@ -820,7 +820,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: 600;
   font-size: var(--font-size-sm);
   flex-shrink: 0;
@@ -977,7 +977,7 @@
   color: #f97316;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Animations */
@@ -1146,7 +1146,7 @@
   background: #10B981;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: white;
   font-size: var(--font-size-sm);
   opacity: 0;
@@ -1527,7 +1527,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: var(--font-size-sm);
   font-weight: 600;
   flex-shrink: 0;
@@ -1661,7 +1661,7 @@
 .flow-arrow {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 2rem;
   color: #FF8C00;
   font-weight: bold;
@@ -1863,7 +1863,7 @@
   }
   
   .tool-controls {
-    justify-content: center;
+    justify-content: flex-start;
   }
   
   .transaction-flow {
@@ -1882,7 +1882,7 @@
   }
   
   .template-buttons {
-    justify-content: center;
+    justify-content: flex-start;
   }
   
   .example-searches {

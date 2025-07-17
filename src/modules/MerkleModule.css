@@ -32,7 +32,7 @@
 .module-title {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   font-size: 2.5rem;
   font-weight: 800;
@@ -60,7 +60,7 @@
 .module-progress {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   font-weight: 600;
   position: relative;
@@ -339,7 +339,7 @@
   align-items: center;
   gap: 1rem;
   margin: 2rem 0;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .loading-spinner {
@@ -511,7 +511,7 @@
 
 .level-nodes {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
 }
@@ -664,7 +664,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -740,7 +740,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 2rem 0;
 }
 
@@ -1128,7 +1128,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 2rem;
 }
 
@@ -1136,7 +1136,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 2rem;
 }
 

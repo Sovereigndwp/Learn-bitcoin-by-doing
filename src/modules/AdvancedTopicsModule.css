@@ -42,7 +42,7 @@
 .module-header-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1.5rem;
   background: var(--color-neutral-900-alpha-80);
   backdrop-filter: blur(10px);
@@ -59,7 +59,7 @@
   border-radius: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: white;
 }
 
@@ -219,7 +219,7 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: var(--color-primary-500);
 }
 
