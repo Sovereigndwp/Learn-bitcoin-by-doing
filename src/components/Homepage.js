@@ -153,8 +153,8 @@ const Homepage = () => {
           />
         )}
 
-        {currentView === 'progress' && hasStarted && (
-          <ProgressSection userStats={userStats} />
+        {currentView === 'progress' && (
+          <ProgressSection userStats={userStats} hasStarted={hasStarted} setCurrentView={setCurrentView} />
         )}
       </main>
 
@@ -508,7 +508,33 @@ const ModuleCard = ({ module, isUnlocked, progress, isCompleted, icon }) => {
 };
 
 // Progress Section
-const ProgressSection = ({ userStats }) => {
+const ProgressSection = ({ userStats, hasStarted, setCurrentView }) => {
+  if (!hasStarted) {
+    return (
+      <section className="progress-section">
+        <div className="progress-header">
+          <h3>Ready to Start Learning?</h3>
+          <p>Your learning journey hasn't begun yet. Track your progress here as you explore Bitcoin!</p>
+        </div>
+        
+        <div className="getting-started">
+          <div className="start-info">
+            <Brain size={48} />
+            <h4>Your Journey Awaits</h4>
+            <p>Complete modules to unlock achievements and track your Bitcoin mastery.</p>
+            <button 
+              className="start-learning-btn"
+              onClick={() => setCurrentView('learning')}
+            >
+              <Play size={20} />
+              Start Learning
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="progress-section">
       <div className="progress-header">
@@ -541,12 +567,19 @@ const ProgressSection = ({ userStats }) => {
       <div className="achievements-section">
         <h4>Your Achievements</h4>
         <div className="achievements-grid">
-          {userStats.achievements.map((achievement, index) => (
-            <div key={index} className="achievement-card">
-              <Star className="achievement-icon" />
-              <span className="achievement-name">{achievement}</span>
+          {userStats.achievements.length > 0 ? (
+            userStats.achievements.map((achievement, index) => (
+              <div key={index} className="achievement-card">
+                <Star className="achievement-icon" />
+                <span className="achievement-name">{achievement}</span>
+              </div>
+            ))
+          ) : (
+            <div className="no-achievements">
+              <Award size={32} />
+              <p>Complete modules to earn achievements!</p>
             </div>
-          ))}
+          )}
             </div>
           </div>
     </section>
