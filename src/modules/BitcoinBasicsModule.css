@@ -14,7 +14,7 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-primary-500) rgba(255, 255, 255, 0.1);
+  scrollbar-color: var(--color-primary-500) var(--color-white-10);
 }
 
 .top-nav-button {
@@ -23,8 +23,8 @@
   justify-content: center;
   gap: 0.3rem;
   padding: 0.6rem 0.8rem;
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--color-white-10);
+  background: var(--color-white-5);
   color: var(--color-dark-text);
   cursor: pointer;
   border-radius: 8px;
@@ -39,7 +39,7 @@
 }
 
 .top-nav-button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--color-white-10);
   border-color: var(--color-primary-500);
   transform: translateY(-1px);
 }
@@ -60,8 +60,8 @@
 .top-nav-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--color-white-5);
+  border-color: var(--color-white-10);
   transform: none;
 }
 
@@ -481,7 +481,7 @@
 }
 
 .revelation-section p {
-  color: #555;
+  color: var(--color-neutral-600);
   font-size: 1rem;
   line-height: 1.6;
   margin: 0;
@@ -496,7 +496,7 @@
 }
 
 .interactive-step .scenario-steps li {
-  color: #555;
+  color: var(--color-neutral-600);
   font-size: 1rem;
   line-height: 1.5;
   margin: 0.75rem 0;
@@ -533,7 +533,7 @@
 }
 
 .scenario-card p {
-  color: #555;
+  color: var(--color-neutral-600);
   font-size: var(--font-size-lg);
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -903,7 +903,7 @@
 
 .subtitle {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--color-neutral-500);
   margin: 0.5rem 0 1.5rem 0;
   font-style: italic;
 }
@@ -918,7 +918,7 @@
 }
 
 .final-reflection h3 {
-  color: #495057;
+  color: var(--color-neutral-600);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -926,7 +926,7 @@
 .final-reflection p {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #495057;
+  color: var(--color-neutral-600);
   font-weight: 500;
 }
 
@@ -942,11 +942,11 @@
 }
 
 .achievement-content {
-  background: linear-gradient(135deg, #f7931a, #ff6b35);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff6b35);
   color: var(--color-dark-text);
   padding: 1rem 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.3);
+  box-shadow: 0 8px 25px var(--color-primary-300);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -1068,7 +1068,7 @@
 
 .double-spend-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+  box-shadow: 0 6px 20px var(--color-danger-300);
 }
 
 .hint {
@@ -1201,31 +1201,31 @@
 }
 
 .winner-announcement.daughter {
-  border-color: #6f42c1;
-  background: #e2d9f3;
+  border-color: var(--color-secondary-500);
+  background: var(--color-secondary-100);
 }
 
 .winner-announcement h3 {
-  color: #155724;
+  color: var(--color-success-700);
   margin-bottom: 1rem;
 }
 
 .bribe-success {
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #ffeaa7;
+  border: 1px solid var(--color-warning-100);
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
-  color: #856404;
+  color: var(--color-warning-700);
 }
 
 .bribe-failed {
-  background: #f8d7da;
-  border: 1px solid #f1aeb5;
+  background: var(--color-danger-100);
+  border: 1px solid var(--color-danger-200);
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
-  color: #721c24;
+  color: var(--color-danger-700);
 }
 
 .ledger-update {
@@ -1248,7 +1248,7 @@
   border-radius: 8px;
   font-family: monospace;
   font-size: 1.1rem;
-  color: #e65100;
+  color: var(--color-warning-600);
 }
 
 .final-question-section {
@@ -1275,7 +1275,7 @@
 }
 
 .lesson-btn:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   transform: translateX(5px);
 }
@@ -1352,12 +1352,12 @@
 .balance {
   font-size: 2rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .context {
   font-size: 1rem;
-  color: #666;
+  color: var(--color-neutral-500);
   margin-top: 0.5rem;
   font-style: italic;
 }
@@ -1401,24 +1401,24 @@
 }
 
 .transaction-btn:hover:not(:disabled) {
-  background: #e9ecef;
-  border-color: #f7931a;
+  background: var(--color-neutral-200);
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
 }
 
 .transaction-btn.sent {
-  background: #d4edda;
-  border-color: #28a745;
-  color: #155724;
+  background: var(--color-success-100);
+  border-color: var(--color-success-500);
+  color: var(--color-success-700);
 }
 
 .carlos-btn:hover:not(:disabled) {
-  border-color: #28a745;
+  border-color: var(--color-success-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
 .self-btn:hover:not(:disabled) {
-  border-color: #dc3545;
+  border-color: var(--color-danger-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
@@ -1439,8 +1439,8 @@
 }
 
 .conflict-message {
-  background: #f8d7da;
-  border: 2px solid #dc3545;
+  background: var(--color-danger-100);
+  border: 2px solid var(--color-danger-500);
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem 0;
@@ -1448,7 +1448,7 @@
 }
 
 .conflict-message h3 {
-  color: #721c24;
+  color: var(--color-danger-700);
   margin-bottom: 1rem;
 }
 
@@ -1516,13 +1516,13 @@
 }
 
 .ledger-option:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .ledger-option.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
@@ -1534,7 +1534,7 @@
 
 .ledger-option p {
   margin: 0;
-  color: #666;
+  color: var(--color-neutral-500);
   line-height: 1.5;
 }
 
@@ -1558,7 +1558,7 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-neutral-300);
 }
 
 .question-box:last-child {
@@ -1571,7 +1571,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border-radius: 50%;
   font-weight: 600;
@@ -1581,13 +1581,13 @@
 
 .question-box p {
   margin: 0;
-  color: #1a1a1a;
+  color: var(--color-neutral-900);
   font-size: 1rem;
   line-height: 1.5;
 }
 
 .reveal-button {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -1600,7 +1600,7 @@
 }
 
 .reveal-button:hover {
-  background: #e68a17;
+  background: var(--color-warning-500);
   transform: translateY(-1px);
 }
 
@@ -1626,20 +1626,20 @@
   padding: 1rem;
   margin: 0.5rem 0;
   border-radius: 8px;
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   opacity: 0.5;
   transition: all 0.5s ease;
   font-size: 1.1rem;
 }
 
 .step-item.revealed {
-  background: #d4edda;
+  background: var(--color-success-100);
   opacity: 1;
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--color-success-500);
 }
 
 .next-step-button {
-  background: #28a745;
+  background: var(--color-success-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1.5rem;
@@ -1653,7 +1653,7 @@
 }
 
 .next-step-button:hover {
-  background: #218838;
+  background: var(--color-success-600);
   transform: translateY(-1px);
 }
 
@@ -1662,8 +1662,8 @@
 }
 
 .analogy-box {
-  background: #e8f5e8;
-  border-left: 4px solid #28a745;
+  background: var(--color-success-50);
+  border-left: 4px solid var(--color-success-500);
   padding: 1.5rem;
   margin: 1rem 0;
   border-radius: 8px;
@@ -1679,7 +1679,7 @@
 }
 
 .final-question h3 {
-  color: #e65100;
+  color: var(--color-warning-600);
   margin-bottom: 1.5rem;
 }
 
@@ -1726,7 +1726,7 @@
 
 .timeline-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
 }
 
@@ -1748,8 +1748,8 @@
 
 .version-card:hover,
 .version-card.selected {
-  border-color: #f7931a;
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 4px 12px var(--color-primary-200);
   transform: translateY(-2px);
 }
 
@@ -1772,13 +1772,13 @@
 
 .version-info h4 {
   font-size: 1.1rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin: 0.5rem 0;
 }
 
 .version-period {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .version-details {
@@ -1789,7 +1789,7 @@
 
 .version-row {
   font-size: var(--font-size-lg);
-  color: #555;
+  color: var(--color-neutral-600);
 }
 
 .version-spotlight {
@@ -1886,13 +1886,13 @@
 .step-content p {
   font-size: var(--font-size-base);
   margin: 0;
-  color: #666;
+  color: var(--color-neutral-500);
   text-align: center;
 }
 
 .arrow {
   font-size: 1.5rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: bold;
 }
 
@@ -1915,12 +1915,12 @@
 
 .cost-item.gold {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #daa520;
+  border: 2px solid var(--color-warning-400);
 }
 
 .cost-item.fiat {
-  background: #f0f8ff;
-  border: 2px solid #4169e1;
+  background: var(--color-info-50);
+  border: 2px solid var(--color-info-500);
 }
 
 .cost-item.bitcoin {
@@ -1965,9 +1965,9 @@
 
 .chart-btn:hover,
 .chart-btn.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .chart-display {
@@ -1994,11 +1994,11 @@
 }
 
 .volatile-line {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 .steady-line {
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .perception {
@@ -2032,9 +2032,9 @@
 
 .system-btn:hover,
 .system-btn.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .system-details {
@@ -2085,12 +2085,12 @@
 .energy-amount {
   font-size: 3rem;
   font-weight: bold;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .energy-unit {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .mining-blocks {
@@ -2110,7 +2110,7 @@
 
 .mine-button {
   padding: 1rem 2rem;
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   border: none;
   border-radius: 8px;
@@ -2127,7 +2127,7 @@
 }
 
 .mine-button.disabled {
-  background: #ccc;
+  background: var(--color-neutral-300);
   cursor: not-allowed;
 }
 
@@ -2136,8 +2136,8 @@
 }
 
 .error-message {
-  background: #f8d7da;
-  border: 2px solid #dc3545;
+  background: var(--color-danger-100);
+  border: 2px solid var(--color-danger-500);
   padding: 2rem;
   border-radius: 12px;
   margin: 2rem 0;
@@ -2145,7 +2145,7 @@
 
 .physics-lesson {
   background: #d1ecf1;
-  border: 2px solid #17a2b8;
+  border: 2px solid var(--color-info-500);
   padding: 2rem;
   border-radius: 12px;
   margin: 2rem 0;
@@ -2175,13 +2175,13 @@
 }
 
 .traditional {
-  background: #f8d7da;
-  border: 2px solid #dc3545;
+  background: var(--color-danger-100);
+  border: 2px solid var(--color-danger-500);
 }
 
 .bitcoin {
-  background: #d4edda;
-  border: 2px solid #28a745;
+  background: var(--color-success-100);
+  border: 2px solid var(--color-success-500);
 }
 
 .final-question {
@@ -2217,14 +2217,14 @@
 .matrix-header {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
 }
 
 .matrix-row {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-neutral-200);
 }
 
 .property-cell {
@@ -2245,13 +2245,13 @@
 }
 
 .property-cell.yes {
-  background: #d4edda;
-  color: #155724;
+  background: var(--color-success-100);
+  color: var(--color-success-700);
 }
 
 .property-cell.no {
-  background: #f8d7da;
-  color: #721c24;
+  background: var(--color-danger-100);
+  color: var(--color-danger-700);
 }
 
 .conquest-dimensions {
@@ -2282,17 +2282,17 @@
 
 .conquest-item.gold {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-left: 4px solid #daa520;
+  border-left: 4px solid var(--color-warning-400);
 }
 
 .conquest-item.fiat {
-  background: #f0f8ff;
-  border-left: 4px solid #4169e1;
+  background: var(--color-info-50);
+  border-left: 4px solid var(--color-info-500);
 }
 
 .conquest-item.bitcoin {
-  background: #d4edda;
-  border-left: 4px solid #28a745;
+  background: var(--color-success-100);
+  border-left: 4px solid var(--color-success-500);
 }
 
 .alien-test {
@@ -2319,18 +2319,18 @@
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   border-radius: 20px;
-  border: 2px solid #ccc;
+  border: 2px solid var(--color-neutral-300);
   position: relative;
   max-width: 400px;
   font-style: italic;
 }
 
 .alien-conclusion {
-  background: #d4edda;
+  background: var(--color-success-100);
   padding: 1rem;
   border-radius: 8px;
   margin-top: 1rem;
-  border: 2px solid #28a745;
+  border: 2px solid var(--color-success-500);
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -2367,9 +2367,9 @@
 
 .river-btn:hover,
 .river-btn.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .river-details {
@@ -2440,7 +2440,7 @@
 }
 
 .step-number {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   width: 30px;
   height: 30px;
@@ -2459,7 +2459,7 @@
 
 .step-arrow {
   font-size: 1.5rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: bold;
 }
 
@@ -2467,10 +2467,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #d4edda;
+  background: var(--color-success-100);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 2px solid #28a745;
+  border: 2px solid var(--color-success-500);
   margin-top: 2rem;
 }
 
@@ -2516,13 +2516,13 @@
 
 .phase-card:hover,
 .phase-card.active {
-  border-color: #f7931a;
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 4px 12px var(--color-primary-200);
   transform: translateY(-2px);
 }
 
 .phase-number {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   width: 40px;
   height: 40px;
@@ -2542,7 +2542,7 @@
 
 .phase-example {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-top: 0.5rem;
 }
 
@@ -2559,7 +2559,7 @@
 }
 
 .show-resilience-btn {
-  background: #17a2b8;
+  background: var(--color-info-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -2571,7 +2571,7 @@
 }
 
 .show-resilience-btn:hover {
-  background: #138496;
+  background: var(--color-info-600);
 }
 
 .resilience-points {
@@ -2585,10 +2585,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #d4edda;
+  background: var(--color-success-100);
   padding: 1rem;
   border-radius: 8px;
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--color-success-500);
 }
 
 .point-icon {
@@ -2632,10 +2632,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #f8d7da;
+  background: var(--color-danger-100);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 2px solid #dc3545;
+  border: 2px solid var(--color-danger-500);
   margin-top: 2rem;
 }
 
@@ -2665,13 +2665,13 @@
 
 .solution-part:hover,
 .solution-part.active {
-  border-color: #f7931a;
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 4px 12px var(--color-primary-200);
   transform: translateY(-2px);
 }
 
 .part-number {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   width: 40px;
   height: 40px;
@@ -2710,7 +2710,7 @@
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 2px solid #17a2b8;
+  border: 2px solid var(--color-info-500);
 }
 
 .reason-icon {
@@ -2726,7 +2726,7 @@
 }
 
 .show-possibilities-btn {
-  background: #28a745;
+  background: var(--color-success-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -2738,7 +2738,7 @@
 }
 
 .show-possibilities-btn:hover {
-  background: #218838;
+  background: var(--color-success-600);
 }
 
 .possibilities-grid {
@@ -2752,10 +2752,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #d4edda;
+  background: var(--color-success-100);
   padding: 1rem;
   border-radius: 8px;
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--color-success-500);
 }
 
 .possibility-icon {
@@ -2790,9 +2790,9 @@
 
 .tab-btn:hover,
 .tab-btn.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .tab-content {
@@ -3016,14 +3016,14 @@
 
 .discovery-header .subtitle {
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
 .discovery-header .prime-text {
   font-size: clamp(1.2rem, 2.8vw, 1.4rem);
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem 1.5rem;
@@ -3069,11 +3069,11 @@
 }
 
 .comparison-card.traditional {
-  border-color: #dc3545;
+  border-color: var(--color-danger-500);
 }
 
 .comparison-card.bitcoin {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .card-icon {
@@ -3091,7 +3091,7 @@
 
 .comparison-card p {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -3103,15 +3103,15 @@
   padding: 0.75rem;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border-radius: 6px;
-  border-left: 3px solid #6c757d;
+  border-left: 3px solid var(--color-neutral-500);
 }
 
 .comparison-card.traditional .trust-model {
-  border-left-color: #dc3545;
+  border-left-color: var(--color-danger-500);
 }
 
 .comparison-card.bitcoin .trust-model {
-  border-left-color: #f7931a;
+  border-left-color: var(--color-primary-500);
 }
 
 .trust-label {
@@ -3121,7 +3121,7 @@
 }
 
 .trust-value {
-  color: #666;
+  color: var(--color-neutral-500);
   font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
@@ -3129,10 +3129,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #e8f5e8;
+  background: var(--color-success-50);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #28a745;
+  border-left: 4px solid var(--color-success-500);
 }
 
 .analogy-icon {
@@ -3166,7 +3166,7 @@
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid var(--color-warning-400);
   margin-bottom: 2rem;
 }
 
@@ -3183,7 +3183,7 @@
 }
 
 .show-consensus-btn {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -3199,7 +3199,7 @@
 }
 
 .show-consensus-btn:hover {
-  background: #e67e22;
+  background: var(--color-warning-500);
   transform: translateY(-1px);
 }
 
@@ -3223,7 +3223,7 @@
 
 .solution-card p {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -3232,7 +3232,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #e8f5e8;
+  background: var(--color-success-50);
   padding: 1rem;
   border-radius: 6px;
 }
@@ -3275,7 +3275,7 @@
 
 .blocks-explanation p {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -3303,7 +3303,7 @@
 }
 
 .show-blocks-btn {
-  background: #6c757d;
+  background: var(--color-neutral-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -3328,7 +3328,7 @@
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 2px solid #6c757d;
+  border: 2px solid var(--color-neutral-500);
 }
 
 .block-chain {
@@ -3360,14 +3360,14 @@
 }
 
 .transaction {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 0.25rem;
   line-height: 1.4;
 }
 
 .block-arrow {
   font-size: 1.5rem;
-  color: #6c757d;
+  color: var(--color-neutral-500);
   font-weight: bold;
 }
 
@@ -3387,10 +3387,10 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #f8d7da;
+  background: var(--color-danger-100);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #dc3545;
+  border-left: 4px solid var(--color-danger-500);
 }
 
 .security-icon {
@@ -3485,13 +3485,13 @@
 
 .energy-work-lab .lab-header .subtitle {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1rem;
 }
 
 .energy-work-lab .lab-header .prime-text {
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 0.75rem 1rem;
@@ -3523,7 +3523,7 @@
 .lab-floor {
   position: relative;
   height: 60px;
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   border-radius: 6px;
   margin-bottom: 1.5rem;
   overflow: hidden;
@@ -3539,7 +3539,7 @@
 
 .instructions {
   font-size: clamp(0.95rem, 2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
 }
 
@@ -3564,14 +3564,14 @@
 
 .fiat-definition .definition-header .subtitle {
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
 .fiat-definition .definition-header .prime-text {
   font-size: clamp(1.2rem, 2.8vw, 1.4rem);
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem 1.5rem;
@@ -3601,7 +3601,7 @@
 }
 
 .timeline-btn {
-  background: #6c757d;
+  background: var(--color-neutral-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1rem;
@@ -3619,8 +3619,8 @@
 }
 
 .timeline-btn.active {
-  background: #f7931a;
-  box-shadow: 0 2px 8px rgba(247, 147, 26, 0.3);
+  background: var(--color-primary-500);
+  box-shadow: 0 2px 8px var(--color-primary-300);
 }
 
 .timeline-content {
@@ -3640,7 +3640,7 @@
 
 .period-description {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -3706,7 +3706,7 @@
 }
 
 .not-equals {
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: pulse 1s ease-in-out infinite;
 }
 
@@ -3717,14 +3717,14 @@
 
 .story-explanation {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   text-align: center;
   font-weight: 500;
   margin-top: 0.5rem;
 }
 
 .story-explanation.sarcastic {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   font-style: italic;
 }
@@ -3745,7 +3745,7 @@
 
 .break-symbol {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: flash 1.5s ease-in-out infinite;
   margin: 1rem 0;
 }
@@ -3766,7 +3766,7 @@
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   border-radius: 6px;
-  border-left: 3px solid #6c757d;
+  border-left: 3px solid var(--color-neutral-500);
 }
 
 .property strong {
@@ -3781,7 +3781,7 @@
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   border-radius: 6px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid var(--color-warning-400);
   margin-top: 1rem;
 }
 
@@ -3801,7 +3801,7 @@
 }
 
 .show-consequences-btn {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -3817,7 +3817,7 @@
 }
 
 .show-consequences-btn:hover {
-  background: #e67e22;
+  background: var(--color-warning-500);
   transform: translateY(-1px);
 }
 
@@ -3852,7 +3852,7 @@
 
 .consequence-description {
   font-size: clamp(0.95rem, 2vw, 1.05rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -3943,14 +3943,14 @@
 
 .fiat-definition .definition-header .subtitle {
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
 .fiat-definition .definition-header .prime-text {
   font-size: clamp(1.2rem, 2.8vw, 1.4rem);
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem 1.5rem;
@@ -3980,7 +3980,7 @@
 }
 
 .timeline-btn {
-  background: #6c757d;
+  background: var(--color-neutral-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1rem;
@@ -3998,8 +3998,8 @@
 }
 
 .timeline-btn.active {
-  background: #f7931a;
-  box-shadow: 0 2px 8px rgba(247, 147, 26, 0.3);
+  background: var(--color-primary-500);
+  box-shadow: 0 2px 8px var(--color-primary-300);
 }
 
 .timeline-content {
@@ -4019,7 +4019,7 @@
 
 .period-description {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1.5rem;
 }
@@ -4035,7 +4035,7 @@
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   border-radius: 6px;
-  border-left: 3px solid #6c757d;
+  border-left: 3px solid var(--color-neutral-500);
 }
 
 .property strong {
@@ -4050,7 +4050,7 @@
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem;
   border-radius: 6px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid var(--color-warning-400);
   margin-top: 1rem;
 }
 
@@ -4126,7 +4126,7 @@
 }
 
 .not-equals {
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: pulse 1s ease-in-out infinite;
 }
 
@@ -4137,14 +4137,14 @@
 
 .story-explanation {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   text-align: center;
   font-weight: 500;
   margin-top: 0.5rem;
 }
 
 .story-explanation.sarcastic {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   font-style: italic;
 }
@@ -4165,7 +4165,7 @@
 
 .break-symbol {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: flash 1.5s ease-in-out infinite;
   margin: 1rem 0;
 }
@@ -4212,7 +4212,7 @@
 }
 
 .show-consequences-btn {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2rem;
@@ -4228,7 +4228,7 @@
 }
 
 .show-consequences-btn:hover {
-  background: #e67e22;
+  background: var(--color-warning-500);
   transform: translateY(-1px);
 }
 
@@ -4263,7 +4263,7 @@
 
 .consequence-description {
   font-size: clamp(0.95rem, 2vw, 1.05rem);
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin-bottom: 1rem;
 }
@@ -4313,15 +4313,15 @@
 }
 
 .money-version.gold {
-  border-color: #ffc107;
+  border-color: var(--color-warning-400);
 }
 
 .money-version.fiat {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .money-version.bitcoin {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .version-icon {
@@ -4408,11 +4408,11 @@
 }
 
 .simple-money-version.fiat {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .simple-money-version.bitcoin {
-  border-color: #28a745;
+  border-color: var(--color-success-500);
 }
 
 .simple-money-version .version-icon {
@@ -4454,7 +4454,7 @@
 }
 
 .physical-deposits {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--color-white-10);
   padding: 1.5rem;
   border-radius: 8px;
   min-width: 200px;
@@ -4469,7 +4469,7 @@
 }
 
 .deposit-amount {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -4483,7 +4483,7 @@
 
 .digital-ledger {
   flex-grow: 1;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-white-5);
   padding: 1.5rem;
   border-radius: 8px;
 }
@@ -4498,7 +4498,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--color-white-10);
   color: var(--color-dark-text);
   font-family: monospace;
 }
@@ -4513,17 +4513,17 @@
 }
 
 .entry-amount {
-  color: #4caf50;
+  color: var(--color-success-500);
   font-weight: bold;
 }
 
 .entry-amount.debt {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .money-multiplier {
   background: rgba(76, 175, 80, 0.1);
-  border: 2px solid #4caf50;
+  border: 2px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1.5rem;
   margin-top: 2rem;
@@ -4531,7 +4531,7 @@
 }
 
 .multiplier-label {
-  color: #4caf50;
+  color: var(--color-success-500);
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -4539,12 +4539,12 @@
 
 .multiplier-value {
   font-size: 2rem;
-  color: #4caf50;
+  color: var(--color-success-500);
   font-weight: bold;
 }
 
 .multiplier-explanation {
-  color: #666;
+  color: var(--color-neutral-500);
   font-size: var(--font-size-base);
   margin-top: 0.5rem;
   line-height: 1.4;
@@ -4575,7 +4575,7 @@
   display: block;
   margin: 2rem auto 0;
   padding: 1rem 2rem;
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   border-radius: 8px;
@@ -4588,7 +4588,7 @@
 }
 
 .continue-button:hover {
-  background: #e67e22;
+  background: var(--color-warning-500);
   transform: translateY(-1px);
 }
 
@@ -4631,7 +4631,7 @@
   position: relative;
   height: 160px;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -4684,11 +4684,11 @@
 }
 
 .system-metrics.efficient .metric-value {
-  color: #4caf50;
+  color: var(--color-success-500);
 }
 
 .system-metrics.inefficient .metric-value {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 @media (max-width: 768px) {
@@ -4703,7 +4703,7 @@
   bottom: 0;
   left: 0;
   height: 14px;
-  background: linear-gradient(90deg, #f7931a 0%, #dc3545 100%);
+  background: linear-gradient(90deg, var(--color-primary-500) 0%, var(--color-danger-500) 100%);
   opacity: 0.7;
   border-top-right-radius: 6px;
 }
@@ -4719,7 +4719,7 @@
 
 .socratic-section h4 {
   margin: 0 0 0.75rem 0;
-  color: #e65100;
+  color: var(--color-warning-600);
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -4750,7 +4750,7 @@
 
 .context-text {
   font-size: 1rem;
-  color: #555;
+  color: var(--color-neutral-600);
   line-height: 1.6;
   margin: 0.75rem 0 1.5rem 0;
   max-width: 760px;
@@ -4794,7 +4794,7 @@
 .account-balance {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -4803,17 +4803,17 @@
   display: block;
   font-size: var(--font-size-base);
   font-weight: 600;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .account-note {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
   text-align: center;
 }
 
 .new-credit, .new-loan-row {
-  color: #4caf50;
+  color: var(--color-success-500);
   font-weight: 600;
   animation: fadeIn 0.6s ease-out;
 }
@@ -4827,7 +4827,7 @@
 .ledger-list li {
   padding: 0.4rem 0;
   font-size: var(--font-size-lg);
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-neutral-300);
 }
 
 .ledger-list li:last-child {
@@ -4836,7 +4836,7 @@
 
 /* Create Loan Button */
 .create-loan-btn {
-  background: #28a745;
+  background: var(--color-success-500);
   color: var(--color-dark-text);
   border: none;
   padding: 1rem 2.5rem;
@@ -4851,7 +4851,7 @@
 }
 
 .create-loan-btn:hover:not(:disabled) {
-  background: #218838;
+  background: var(--color-success-600);
   transform: translateY(-2px);
 }
 
@@ -4883,7 +4883,7 @@
 }
 
 .evolution-header .subtitle {
-  color: #666;
+  color: var(--color-neutral-500);
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
@@ -4898,7 +4898,7 @@
 
 .progress-text {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
   font-weight: 500;
 }
 
@@ -4947,14 +4947,14 @@
 }
 
 .version-card.unexplored:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 4px 12px var(--color-primary-200);
 }
 
 .version-card.explored {
   background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: scale(1);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
 }
@@ -5010,13 +5010,13 @@
 }
 
 .property-bullet {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: bold;
 }
 
 .version-period {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
   font-style: italic;
   margin-bottom: 1rem;
 }
@@ -5309,14 +5309,14 @@
 
 .enhanced-bank-waste .waste-header .subtitle {
   font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
 .enhanced-bank-waste .waste-header .prime-text {
   font-size: clamp(1.2rem, 2.8vw, 1.4rem);
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1rem 1.5rem;
@@ -5339,7 +5339,7 @@
 
 .visual-description {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #555;
+  color: var(--color-neutral-600);
   text-align: center;
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -5364,13 +5364,13 @@
 }
 
 .waste-source:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 4px 12px var(--color-primary-200);
 }
 
 .waste-source.active {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
 }
@@ -5390,7 +5390,7 @@
 
 .waste-cost {
   font-size: clamp(1rem, 2.2vw, 1.1rem);
-  color: #dc3545;
+  color: var(--color-danger-500);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -5400,7 +5400,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: clamp(0.9rem, 2vw, 1rem);
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .energy-icon {
@@ -5410,13 +5410,13 @@
 .waste-impact {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-neutral-200);
   animation: slideInUp 0.3s ease;
 }
 
 .impact-bar {
   height: 8px;
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -5424,13 +5424,13 @@
 
 .impact-fill {
   height: 100%;
-  background: linear-gradient(90deg, #f7931a, #ff6b35);
+  background: linear-gradient(90deg, var(--color-primary-500), #ff6b35);
   transition: width 0.5s ease;
 }
 
 .impact-text {
   font-size: var(--font-size-base);
-  color: #666;
+  color: var(--color-neutral-500);
   font-weight: 500;
 }
 
@@ -5483,13 +5483,13 @@
 
 .step-amount {
   font-size: var(--font-size-sm);
-  color: #666;
+  color: var(--color-neutral-500);
   font-weight: 600;
 }
 
 .flow-arrow {
   font-size: 1.5rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: bold;
 }
 
@@ -5498,17 +5498,17 @@
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   padding: 1.5rem;
   border-radius: 8px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid var(--color-warning-400);
 }
 
 .waste-question h4 {
-  color: #856404;
+  color: var(--color-warning-700);
   margin-bottom: 0.5rem;
   font-size: clamp(1.1rem, 2.3vw, 1.3rem);
 }
 
 .waste-question p {
-  color: #856404;
+  color: var(--color-warning-700);
   margin: 0;
   font-size: clamp(1rem, 2.2vw, 1.1rem);
 }
@@ -5517,7 +5517,7 @@
   display: block;
   margin: 2rem auto;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #f7931a, #ff6b35);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff6b35);
   color: var(--color-dark-text);
   border: none;
   border-radius: 8px;
@@ -5525,7 +5525,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+  box-shadow: 0 4px 12px var(--color-primary-300);
 }
 
 .transform-btn:hover {
@@ -5573,7 +5573,7 @@
 }
 
 .energy-meter, .bitcoin-amount {
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   border-radius: 8px;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -5583,7 +5583,7 @@
 
 .meter-fill {
   height: 100%;
-  background: linear-gradient(90deg, #dc3545, #fd7e14);
+  background: linear-gradient(90deg, var(--color-danger-500), #fd7e14);
   transition: width 0.1s ease;
   position: absolute;
   top: 0;
@@ -5600,7 +5600,7 @@
 .bitcoin-amount {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border: 2px solid var(--color-primary-500);
 }
@@ -5626,11 +5626,11 @@
 }
 
 .heat-particle {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 .bitcoin-particle {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .heat-particle.transformed {
@@ -5653,7 +5653,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  background: linear-gradient(135deg, #f7931a, #ff6b35);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff6b35);
   color: var(--color-dark-text);
   padding: 2rem;
   border-radius: 12px;
@@ -5725,13 +5725,13 @@
 }
 
 .comparison-card.traditional {
-  background: #f8d7da;
-  border-color: #dc3545;
+  background: var(--color-danger-100);
+  border-color: var(--color-danger-500);
 }
 
 .comparison-card.bitcoin {
-  background: #d4edda;
-  border-color: #28a745;
+  background: var(--color-success-100);
+  border-color: var(--color-success-500);
 }
 
 .comparison-card h4 {
@@ -5741,11 +5741,11 @@
 }
 
 .comparison-card.traditional h4 {
-  color: #721c24;
+  color: var(--color-danger-700);
 }
 
 .comparison-card.bitcoin h4 {
-  color: #155724;
+  color: var(--color-success-700);
 }
 
 .comparison-points {
@@ -5763,38 +5763,38 @@
 
 .point.negative {
   background: rgba(220, 53, 69, 0.1);
-  color: #721c24;
+  color: var(--color-danger-700);
 }
 
 .point.positive {
   background: rgba(40, 167, 69, 0.1);
-  color: #155724;
+  color: var(--color-success-700);
 }
 
 .key-insight {
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid var(--color-warning-400);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
 }
 
 .key-insight h4 {
-  color: #856404;
+  color: var(--color-warning-700);
   margin-bottom: 1rem;
   font-size: clamp(1.1rem, 2.3vw, 1.3rem);
   font-weight: 600;
 }
 
 .key-insight p {
-  color: #856404;
+  color: var(--color-warning-700);
   margin: 0;
   font-size: clamp(1rem, 2.2vw, 1.1rem);
   line-height: 1.6;
 }
 
 .key-insight strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 /* Responsive Design for Enhanced Bank Waste */
@@ -5854,14 +5854,14 @@
 }
 
 .hook-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .hook-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1rem;
 }
 
@@ -5874,7 +5874,7 @@
 
 .scenario-card {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   padding: 1.5rem;
   cursor: pointer;
@@ -5883,14 +5883,14 @@
 }
 
 .scenario-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.1);
 }
 
 .scenario-card.active {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: #fef8f1;
-  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 6px 20px var(--color-primary-200);
 }
 
 .scenario-card h3 {
@@ -5900,7 +5900,7 @@
 }
 
 .scenario-description {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
@@ -5908,7 +5908,7 @@
 .scenario-result {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-neutral-300);
 }
 
 .result-visual {
@@ -5932,7 +5932,7 @@
 
 .energy-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4caf50, #ff9800, #f44336);
+  background: linear-gradient(90deg, var(--color-success-500), #ff9800, #f44336);
   border-radius: 20px;
   transition: width 0.3s ease;
 }
@@ -5974,7 +5974,7 @@
 
 .stat-label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .stat-value {
@@ -5985,7 +5985,7 @@
 }
 
 .stat-value.easy {
-  background: #e8f5e8;
+  background: var(--color-success-50);
   color: #2e7d32;
 }
 
@@ -6001,11 +6001,11 @@
 
 .stat-value.none {
   background: #f5f5f5;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .stat-value.high {
-  background: #e8f5e8;
+  background: var(--color-success-50);
   color: #2e7d32;
 }
 
@@ -6016,7 +6016,7 @@
 
 .insight {
   font-style: italic;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 500;
 }
 
@@ -6056,7 +6056,7 @@
 }
 
 .result-indicator.correct {
-  color: #4caf50;
+  color: var(--color-success-500);
 }
 
 .result-indicator.partial {
@@ -6076,14 +6076,14 @@
 }
 
 .creation-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .creation-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .sarah-story {
@@ -6114,13 +6114,13 @@
 }
 
 .character-details p {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1rem;
 }
 
 .savings-amount {
   font-weight: bold;
-  color: #4caf50;
+  color: var(--color-success-500);
   margin-bottom: 0.5rem;
 }
 
@@ -6140,7 +6140,7 @@
 }
 
 .bank-visit p {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 2rem;
 }
 
@@ -6160,7 +6160,7 @@
 }
 
 .creation-animation {
-  background: #f0f8ff;
+  background: var(--color-info-50);
   padding: 2rem;
   border-radius: 12px;
   border: 2px dashed #2196f3;
@@ -6169,13 +6169,13 @@
 .typing-effect {
   font-size: 1.2rem;
   margin-bottom: 1rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .money-counter {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #4caf50;
+  color: var(--color-success-500);
   margin: 1rem 0;
 }
 
@@ -6190,7 +6190,7 @@
 }
 
 .creation-caption {
-  color: #666;
+  color: var(--color-neutral-500);
   font-style: italic;
 }
 
@@ -6200,7 +6200,7 @@
 }
 
 .creation-complete h3 {
-  color: #4caf50;
+  color: var(--color-success-500);
   margin-bottom: 2rem;
 }
 
@@ -6228,7 +6228,7 @@
 
 .label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
   font-size: var(--font-size-base);
 }
 
@@ -6242,12 +6242,12 @@
 }
 
 .after .amount {
-  color: #4caf50;
+  color: var(--color-success-500);
 }
 
 .arrow {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .reaction-prompt {
@@ -6271,7 +6271,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #f0f8ff;
+  background: var(--color-info-50);
   padding: 1.5rem;
   border-radius: 8px;
   border-left: 4px solid var(--color-primary-500);
@@ -6295,14 +6295,14 @@
 }
 
 .evolution-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .evolution-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .version-journey {
@@ -6320,18 +6320,18 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #e0e0e0;
+  background: var(--color-neutral-300);
   transition: all 0.3s ease;
 }
 
 .progress-dot.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   transform: scale(1.2);
 }
 
 .version-card-large {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -6360,7 +6360,7 @@
 
 .story-text {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -6388,7 +6388,7 @@
 
 .tradeoff-label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .tradeoff-value {
@@ -6409,7 +6409,7 @@
 }
 
 .tradeoff-value.bitcoin {
-  background: #e8f5e8;
+  background: var(--color-success-50);
   color: #2e7d32;
 }
 
@@ -6422,17 +6422,17 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .property-bullet {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: bold;
 }
 
 .verdict {
   padding: 1rem;
-  background: #f0f8ff;
+  background: var(--color-info-50);
   border-radius: 8px;
   border-left: 4px solid #2196f3;
   font-size: 1.1rem;
@@ -6487,14 +6487,14 @@
 }
 
 .definition-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .definition-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .nixon-story {
@@ -6516,12 +6516,12 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #e0e0e0;
+  background: var(--color-neutral-300);
   transition: all 0.3s ease;
 }
 
 .story-dot.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   transform: scale(1.2);
 }
 
@@ -6552,13 +6552,13 @@
 }
 
 .scene-description {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
 }
 
 .dialogue-box {
-  background: #f0f8ff;
+  background: var(--color-info-50);
   padding: 1.5rem;
   border-radius: 8px;
   border-left: 4px solid #2196f3;
@@ -6623,14 +6623,14 @@
 }
 
 .waste-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .waste-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .systems-comparison {
@@ -6642,7 +6642,7 @@
 
 .system-card {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   padding: 2rem;
   cursor: pointer;
@@ -6650,14 +6650,14 @@
 }
 
 .system-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.1);
 }
 
 .system-card.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: #fef8f1;
-  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 6px 20px var(--color-primary-200);
 }
 
 .system-header {
@@ -6686,7 +6686,7 @@
 
 .flow-label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -6702,14 +6702,14 @@
 .flow-arrow {
   text-align: center;
   font-size: 1.5rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin: 0.5rem 0;
 }
 
 .system-details {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-neutral-300);
 }
 
 .detail-stats {
@@ -6727,7 +6727,7 @@
 
 .stat-label {
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .stat-value {
@@ -6743,7 +6743,7 @@
 }
 
 .stat-value.bitcoin {
-  background: #e8f5e8;
+  background: var(--color-success-50);
   color: #2e7d32;
 }
 
@@ -6760,7 +6760,7 @@
 }
 
 .waste-description {
-  color: #666;
+  color: var(--color-neutral-500);
   font-weight: 500;
   margin: 0;
 }
@@ -6807,14 +6807,14 @@
 }
 
 .lab-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .lab-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .scenarios-grid {
@@ -6826,21 +6826,21 @@
 
 .scenario-card {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
 }
 
 .scenario-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.1);
 }
 
 .scenario-card.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: #fef8f1;
-  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 6px 20px var(--color-primary-200);
 }
 
 .scenario-card h3 {
@@ -6850,7 +6850,7 @@
 }
 
 .scenario-description {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -6875,11 +6875,11 @@
 .scenario-result {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--color-neutral-300);
 }
 
 .result-box {
-  background: #f0f8ff;
+  background: var(--color-info-50);
   padding: 1rem;
   border-radius: 8px;
   border-left: 4px solid #2196f3;
@@ -6933,14 +6933,14 @@
 }
 
 .reflection-header h2 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 
 .reflection-header .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--color-neutral-500);
 }
 
 .insights-summary {
@@ -6961,7 +6961,7 @@
 
 .insight-card {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--color-neutral-300);
   border-radius: 12px;
   padding: 1.5rem;
   text-align: left;
@@ -6970,14 +6970,14 @@
 }
 
 .insight-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.1);
 }
 
 .insight-card.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: #fef8f1;
-  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.15);
+  box-shadow: 0 6px 20px var(--color-primary-200);
 }
 
 .insight-icon {
@@ -6993,7 +6993,7 @@
 }
 
 .insight-card p {
-  color: #666;
+  color: var(--color-neutral-500);
   line-height: 1.5;
   margin: 0;
 }
@@ -7082,7 +7082,7 @@
   padding: 1rem;
   background: rgba(247, 147, 26, 0.1);
   border-radius: 12px;
-  border: 1px solid rgba(247, 147, 26, 0.3);
+  border: 1px solid var(--color-primary-300);
 }
 
 .progress-label {
@@ -7112,8 +7112,8 @@
 }
 
 .progress-level.active {
-  border-color: #f7931a;
-  background: #f7931a;
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-500);
   color: var(--color-dark-text); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   transform: scale(1.1);
 }
@@ -7183,14 +7183,14 @@
 
 .reflection-input:focus {
   outline: none;
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 0 0 3px rgba(247, 147, 26, 0.1);
 }
 
 .follow-up {
   margin-top: 0.5rem;
   font-style: italic;
-  color: #666;
+  color: var(--color-neutral-500);
   font-size: var(--font-size-base);
 }
 
@@ -7421,7 +7421,7 @@
 
 .demo-card:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
 }
 
 .demo-icon {
@@ -7442,18 +7442,18 @@
 
 .problem-statement {
   margin: 0.75rem 0;
-  color: #dc3545;
+  color: var(--color-danger-500);
   font-weight: 500;
 }
 
 .real-example {
   margin: 0.75rem 0;
-  color: #6c757d;
+  color: var(--color-neutral-500);
   font-style: italic;
 }
 
 .demo-next-button {
-  background: #f7931a;
+  background: var(--color-primary-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1.5rem;
@@ -7489,7 +7489,7 @@
 }
 
 .demo-dot.completed {
-  background: #f7931a;
+  background: var(--color-primary-500);
 }
 
 /* Solution Reveal Section */
@@ -7503,7 +7503,7 @@
 
 .solution-box h3 {
   margin: 0 0 1.5rem 0;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.5rem;
 }
 
@@ -7532,12 +7532,12 @@
 }
 
 .choice-response {
-  background: #e8f5e8;
-  border: 1px solid #28a745;
+  background: var(--color-success-50);
+  border: 1px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
-  color: #155724;
+  color: var(--color-success-700);
 }
 
 /* System Comparison Styles */
@@ -7567,13 +7567,13 @@
 }
 
 .aspect-button:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
 .aspect-button.active {
-  background: #f7931a;
-  border-color: #f7931a;
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
   color: var(--color-dark-text);
 }
 
@@ -7600,13 +7600,13 @@
 }
 
 .system-button:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
 .system-button.active {
-  background: #f7931a;
-  border-color: #f7931a;
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
   color: var(--color-dark-text);
 }
 
@@ -7624,17 +7624,17 @@
 }
 
 .system-details.traditional h4 {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 .system-details.bitcoin h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .system-details p {
   margin: 0 0 1.5rem 0;
   line-height: 1.6;
-  color: #6c757d;
+  color: var(--color-neutral-500);
 }
 
 .system-details ul {
@@ -7679,7 +7679,7 @@
 }
 
 .insight-badge {
-  background: #28a745;
+  background: var(--color-success-500);
   color: var(--color-dark-text);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
@@ -7688,8 +7688,8 @@
 }
 
 .continue-section {
-  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
-  border: 2px solid #28a745;
+  background: linear-gradient(135deg, var(--color-success-50), #f0fff4);
+  border: 2px solid var(--color-success-500);
   border-radius: 12px;
   padding: 2rem;
   margin-top: 2rem;
@@ -7698,7 +7698,7 @@
 
 .continue-section h3 {
   margin: 0 0 1rem 0;
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 /* Blockchain Demo Styles */
@@ -7722,18 +7722,18 @@
 }
 
 .block.genesis-block {
-  border-color: #6c757d;
-  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-color: var(--color-neutral-500);
+  background: linear-gradient(135deg, #f8f9fa, var(--color-neutral-200));
 }
 
 .block.user-block {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff8f0, #ffebcc);
 }
 
 .block.confirmed {
-  border-color: #28a745;
-  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+  border-color: var(--color-success-500);
+  background: linear-gradient(135deg, #f8fff9, var(--color-success-50));
   box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
 }
 
@@ -7751,13 +7751,13 @@
 .block-hash, .previous-hash {
   font-family: 'Courier New', monospace;
   font-size: var(--font-size-base);
-  color: #6c757d;
+  color: var(--color-neutral-500);
   margin: 0.25rem 0;
 }
 
 .transactions-list h5 {
   margin: 0 0 0.75rem 0;
-  color: #495057;
+  color: var(--color-neutral-600);
 }
 
 .transaction-item {
@@ -7779,7 +7779,7 @@
 .block-info {
   margin-top: 1rem;
   font-size: var(--font-size-base);
-  color: #6c757d;
+  color: var(--color-neutral-500);
 }
 
 .transaction-builder {
@@ -7798,7 +7798,7 @@
 }
 
 .quick-tx-button {
-  background: #17a2b8;
+  background: var(--color-info-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1rem;
@@ -7810,13 +7810,13 @@
 }
 
 .quick-tx-button:hover {
-  background: #138496;
+  background: var(--color-info-600);
   transform: translateY(-2px);
 }
 
 .mining-section {
-  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-  border: 2px solid #ffc107;
+  background: linear-gradient(135deg, #fff3cd, var(--color-warning-100));
+  border: 2px solid var(--color-warning-400);
   border-radius: 12px;
   padding: 2rem;
   margin-top: 2rem;
@@ -7824,7 +7824,7 @@
 }
 
 .mine-button {
-  background: #ffc107;
+  background: var(--color-warning-400);
   color: #212529;
   border: none;
   padding: 1rem 2rem;
@@ -7855,32 +7855,32 @@
 .consensus-label {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #495057;
+  color: var(--color-neutral-600);
 }
 
 .consensus-bar {
   width: 100%;
   height: 12px;
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   border-radius: 6px;
   overflow: hidden;
 }
 
 .consensus-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ffc107, #28a745);
+  background: linear-gradient(90deg, var(--color-warning-400), var(--color-success-500));
   transition: width 0.3s ease;
 }
 
 .mining-explanation {
-  color: #6c757d;
+  color: var(--color-neutral-500);
   margin-top: 1rem;
   font-style: italic;
 }
 
 .blockchain-complete {
-  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
-  border: 2px solid #28a745;
+  background: linear-gradient(135deg, var(--color-success-50), #f0fff4);
+  border: 2px solid var(--color-success-500);
   border-radius: 12px;
   padding: 2rem;
   margin-top: 2rem;
@@ -7889,7 +7889,7 @@
 
 .blockchain-complete h3 {
   margin: 0 0 1.5rem 0;
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .blockchain-complete ul {
@@ -7905,7 +7905,7 @@
 
 .key-insight {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #28a745;
+  border: 1px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -7913,7 +7913,7 @@
 
 .key-insight h4 {
   margin: 0 0 0.75rem 0;
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 /* Network Consensus Styles */
@@ -7944,7 +7944,7 @@
 
 .stat-label {
   font-size: var(--font-size-base);
-  color: #6c757d;
+  color: var(--color-neutral-500);
   margin-top: 0.25rem;
 }
 
@@ -8012,12 +8012,12 @@
 }
 
 .scenario-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   box-shadow: 0 4px 12px rgba(247, 147, 26, 0.2);
 }
 
 .scenario-card.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
@@ -8028,13 +8028,13 @@
 
 .scenario-card p {
   margin: 0 0 1rem 0;
-  color: #6c757d;
+  color: var(--color-neutral-500);
   line-height: 1.4;
 }
 
 .scenario-stats {
   font-size: var(--font-size-base);
-  color: #495057;
+  color: var(--color-neutral-600);
 }
 
 .scenario-stats div {
@@ -8051,7 +8051,7 @@
 }
 
 .simulation-button {
-  background: #dc3545;
+  background: var(--color-danger-500);
   color: var(--color-dark-text); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   border: none;
   padding: 1rem 2rem;
@@ -8077,7 +8077,7 @@
 
 .progress-animation {
   font-size: 1.1rem;
-  color: #495057;
+  color: var(--color-neutral-600);
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -8093,13 +8093,13 @@
 }
 
 .attack-result.attack-failed {
-  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
-  border: 2px solid #28a745;
+  background: linear-gradient(135deg, var(--color-success-50), #f0fff4);
+  border: 2px solid var(--color-success-500);
 }
 
 .attack-result.attack-success {
   background: linear-gradient(135deg, #fff5f5, #ffe6e6);
-  border: 2px solid #dc3545;
+  border: 2px solid var(--color-danger-500);
 }
 
 .attack-result h5 {
@@ -8107,16 +8107,16 @@
 }
 
 .attack-result.attack-failed h5 {
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .attack-result.attack-success h5 {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 .security-insight {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #28a745;
+  border: 1px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1.5rem;
   margin-top: 1rem;
@@ -8124,7 +8124,7 @@
 
 .security-insight h6 {
   margin: 0 0 0.75rem 0;
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .security-insight ul {
@@ -8169,7 +8169,7 @@
 
 .rule-content p {
   margin: 0;
-  color: #6c757d;
+  color: var(--color-neutral-500);
   line-height: 1.4;
 }
 
@@ -8197,13 +8197,13 @@
 }
 
 .currency-button:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
 .currency-button.active {
-  background: #f7931a;
-  border-color: #f7931a;
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-500);
   color: var(--color-dark-text);
 }
 
@@ -8236,7 +8236,7 @@
 
 .stat-label {
   font-weight: 500;
-  color: #495057;
+  color: var(--color-neutral-600);
 }
 
 .stat-value {
@@ -8258,7 +8258,7 @@
 .supply-bar {
   width: 100%;
   height: 20px;
-  background: #e9ecef;
+  background: var(--color-neutral-200);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -8267,7 +8267,7 @@
 
 .supply-fill {
   height: 100%;
-  background: linear-gradient(90deg, #f7931a, #ff8c00);
+  background: linear-gradient(90deg, var(--color-primary-500), #ff8c00);
   transition: width 0.5s ease;
 }
 
@@ -8276,7 +8276,7 @@
   justify-content: space-between;
   margin-top: 0.5rem;
   font-size: var(--font-size-base);
-  color: #6c757d;
+  color: var(--color-neutral-500);
 }
 
 .supply-stats {
@@ -8296,12 +8296,12 @@
 .stat-number {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .stat-text {
   font-size: var(--font-size-base);
-  color: #6c757d;
+  color: var(--color-neutral-500);
   margin-top: 0.25rem;
 }
 
@@ -8333,7 +8333,7 @@
 }
 
 .reset-button {
-  background: #6c757d;
+  background: var(--color-neutral-500);
   color: var(--color-dark-text);
   border: none;
   padding: 0.75rem 1.5rem;
@@ -8347,8 +8347,8 @@
 }
 
 .simulation-complete {
-  background: linear-gradient(135deg, #e8f5e8, #f0fff4);
-  border: 2px solid #28a745;
+  background: linear-gradient(135deg, var(--color-success-50), #f0fff4);
+  border: 2px solid var(--color-success-500);
   border-radius: 12px;
   padding: 2rem;
   margin-top: 2rem;
@@ -8356,7 +8356,7 @@
 
 .simulation-complete h4 {
   margin: 0 0 1rem 0;
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .simulation-complete ul {
@@ -8475,8 +8475,8 @@
 
 /* Thinking Challenge Styles */
 .thinking-challenge {
-  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-  border: 2px solid #ffc107;
+  background: linear-gradient(135deg, #fff3cd, var(--color-warning-100));
+  border: 2px solid var(--color-warning-400);
   border-radius: 12px;
   padding: 2rem;
   margin: 1.5rem 0;
@@ -8484,7 +8484,7 @@
 
 .thinking-challenge h5 {
   margin: 0 0 1rem 0;
-  color: #856404;
+  color: var(--color-warning-700);
   font-size: 1.1rem;
 }
 
@@ -8512,12 +8512,12 @@
 }
 
 .challenge-options .option-button:hover {
-  border-color: #ffc107;
+  border-color: var(--color-warning-400);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 
 .challenge-options .option-button.selected {
-  border-color: #ffc107;
+  border-color: var(--color-warning-400);
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   font-weight: 600;
 }
@@ -8528,8 +8528,8 @@
 }
 
 .your-answer {
-  background: #e8f5e8;
-  border: 1px solid #28a745;
+  background: var(--color-success-50);
+  border: 1px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
@@ -8537,12 +8537,12 @@
 
 .your-answer h5 {
   margin: 0;
-  color: #155724;
+  color: var(--color-success-700);
 }
 
 .reality-check {
   background: var(--color-warning-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #ffc107;
+  border: 1px solid var(--color-warning-400);
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
@@ -8550,7 +8550,7 @@
 
 .reality-check h5 {
   margin: 0 0 0.75rem 0;
-  color: #856404;
+  color: var(--color-warning-700);
 }
 
 .deeper-question {
@@ -8568,7 +8568,7 @@
 
 .philosophical-prompt {
   font-style: italic;
-  color: #495057;
+  color: var(--color-neutral-600);
   margin: 0.75rem 0;
   line-height: 1.4;
 }
@@ -8602,7 +8602,7 @@
 
 .reality-check-section h4 {
   margin: 0 0 1rem 0;
-  color: #495057;
+  color: var(--color-neutral-600);
 }
 
 .predictions-summary {
@@ -8633,7 +8633,7 @@
 }
 
 .scenario-setup {
-  color: #6c757d;
+  color: var(--color-neutral-500);
   font-style: italic;
   margin: 1rem 0;
   line-height: 1.5;
@@ -8647,8 +8647,8 @@
 }
 
 .choice-made {
-  background: #e8f5e8;
-  border: 1px solid #28a745;
+  background: var(--color-success-50);
+  border: 1px solid var(--color-success-500);
   border-radius: 8px;
   padding: 1.5rem;
   text-align: center;
@@ -8656,7 +8656,7 @@
 
 .choice-made h5 {
   margin: 0 0 0.75rem 0;
-  color: #155724;
+  color: var(--color-success-700);
 }
 
 .scenario-button {
@@ -8712,17 +8712,17 @@
 }
 
 .choice-card.low {
-  border-color: #28a745;
-  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+  border-color: var(--color-success-500);
+  background: linear-gradient(135deg, #f8fff9, var(--color-success-50));
 }
 
 .choice-card.low:hover {
   border-color: #1e7e34;
-  background: #e8f5e8;
+  background: var(--color-success-50);
 }
 
 .choice-card.medium {
-  border-color: #ffc107;
+  border-color: var(--color-warning-400);
   background: linear-gradient(135deg, #fffbf0, #fff3cd);
 }
 
@@ -8742,13 +8742,13 @@
 }
 
 .choice-card.very_high {
-  border-color: #dc3545;
-  background: linear-gradient(135deg, #fff5f5, #f8d7da);
+  border-color: var(--color-danger-500);
+  background: linear-gradient(135deg, #fff5f5, var(--color-danger-100));
 }
 
 .choice-card.very_high:hover {
   border-color: #bd2130;
-  background: #f8d7da;
+  background: var(--color-danger-100);
 }
 
 .choice-text {
@@ -8766,11 +8766,11 @@
 }
 
 .risk-low {
-  color: #28a745;
+  color: var(--color-success-500);
 }
 
 .risk-medium {
-  color: #ffc107;
+  color: var(--color-warning-400);
 }
 
 .risk-high {
@@ -8778,19 +8778,19 @@
 }
 
 .risk-very_high {
-  color: #dc3545;
+  color: var(--color-danger-500);
 }
 
 /* Aspect Button Enhancements */
 .aspect-button.completed {
-  background: #e8f5e8;
-  border-color: #28a745;
-  color: #155724;
+  background: var(--color-success-50);
+  border-color: var(--color-success-500);
+  color: var(--color-success-700);
 }
 
 .completed-check {
   margin-left: 0.5rem;
-  color: #28a745;
+  color: var(--color-success-500);
   font-weight: bold;
 }
 
@@ -8804,13 +8804,13 @@
 
 .reality-check.traditional {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #dc3545;
-  color: #721c24;
+  border: 1px solid var(--color-danger-500);
+  color: var(--color-danger-700);
 }
 
 .reality-check.bitcoin {
   background: var(--glass-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid #f7931a;
+  border: 1px solid var(--color-primary-500);
   color: #8b4513;
 }
 
@@ -8825,7 +8825,7 @@
 
 .personalized-insights h4 {
   margin: 0 0 1.5rem 0;
-  color: #495057;
+  color: var(--color-neutral-600);
   text-align: center;
 }
 
@@ -8843,12 +8843,12 @@
 }
 
 .insight-item.risk-low {
-  border-color: #28a745;
-  background: linear-gradient(135deg, #f8fff9, #e8f5e8);
+  border-color: var(--color-success-500);
+  background: linear-gradient(135deg, #f8fff9, var(--color-success-50));
 }
 
 .insight-item.risk-medium {
-  border-color: #ffc107;
+  border-color: var(--color-warning-400);
   background: linear-gradient(135deg, #fffbf0, #fff3cd);
 }
 
@@ -8858,8 +8858,8 @@
 }
 
 .insight-item.risk-very_high {
-  border-color: #dc3545;
-  background: linear-gradient(135deg, #fff5f5, #f8d7da);
+  border-color: var(--color-danger-500);
+  background: linear-gradient(135deg, #fff5f5, var(--color-danger-100));
 }
 
 .insight-item h5 {
@@ -8884,7 +8884,7 @@
 
 .progress-column h5 {
   margin: 0 0 1rem 0;
-  color: #495057;
+  color: var(--color-neutral-600);
   text-align: center;
 }
 
@@ -8897,8 +8897,8 @@
 }
 
 .progress-item.completed {
-  background: #e8f5e8;
-  color: #155724;
+  background: var(--color-success-50);
+  color: var(--color-success-700);
   font-weight: 500;
 }
 
@@ -8982,7 +8982,7 @@
 }
 
 .introduction .challenge-question h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 12px;
 }
 
@@ -9005,7 +9005,7 @@
 
 .introduction .challenge-option:hover {
   background: #e3f2fd;
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
 }
 
@@ -9014,11 +9014,11 @@
 }
 
 .introduction .user-prediction {
-  background: #e8f5e8;
+  background: var(--color-success-50);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  border-left: 4px solid #4caf50;
+  border-left: 4px solid var(--color-success-500);
 }
 
 .introduction .reality-check {
@@ -9073,12 +9073,12 @@
 }
 
 .introduction .progress-dot.active {
-  background: #f7931a;
+  background: var(--color-primary-500);
   transform: scale(1.2);
 }
 
 .introduction .progress-dot.completed {
-  background: #4caf50;
+  background: var(--color-success-500);
 }
 
 /* Comparison Step - Enhanced for 5 fiat problem vs Bitcoin benefit aspects */
@@ -9098,7 +9098,7 @@
   padding: 12px 16px;
   font-size: 0.9em;
   font-weight: 500;
-  color: #666;
+  color: var(--color-neutral-500);
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
@@ -9108,13 +9108,13 @@
 }
 
 .comparison .aspect-tab:hover {
-  color: #f7931a;
+  color: var(--color-primary-500);
   background: rgba(247, 147, 26, 0.1);
 }
 
 .comparison .aspect-tab.active {
-  color: #f7931a;
-  border-bottom-color: #f7931a;
+  color: var(--color-primary-500);
+  border-bottom-color: var(--color-primary-500);
 }
 
 .comparison .comparison-content {
@@ -9163,7 +9163,7 @@
 }
 
 .comparison .choice-button.bitcoin:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9188,7 +9188,7 @@
 }
 
 .comparison .system-column.bitcoin {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9204,7 +9204,7 @@
 }
 
 .comparison .system-details .example {
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 12px;
   font-style: italic;
 }
@@ -9218,12 +9218,12 @@
 }
 
 .comparison .comparison-complete {
-  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  background: linear-gradient(135deg, var(--color-success-50), #c8e6c9);
   border-radius: 16px;
   padding: 32px;
   margin-top: 32px;
   text-align: center;
-  border: 3px solid #4caf50;
+  border: 3px solid var(--color-success-500);
 }
 
 .comparison .comparison-complete h3 {
@@ -9265,7 +9265,7 @@
 }
 
 .blockchain-builder .blockchain-side {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9289,8 +9289,8 @@
 }
 
 .blockchain-builder .blockchain-side .ledger-title {
-  color: #f7931a;
-  border-color: #f7931a;
+  color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
 }
 
 .blockchain-builder .ledger-entries {
@@ -9320,7 +9320,7 @@
 }
 
 .blockchain-builder .continue-analogy-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, var(--color-success-500), #66bb6a);
   color: var(--color-dark-text);
   border: none;
   border-radius: 12px;
@@ -9361,12 +9361,12 @@
 }
 
 .blockchain-builder .block.genesis-block {
-  border-color: #4caf50;
-  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border-color: var(--color-success-500);
+  background: linear-gradient(135deg, var(--color-success-50), #c8e6c9);
 }
 
 .blockchain-builder .block.user-block {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9395,7 +9395,7 @@
 .blockchain-builder .previous-hash {
   font-family: 'Courier New', monospace;
   font-size: 0.8em;
-  color: #666;
+  color: var(--color-neutral-500);
   word-break: break-all;
 }
 
@@ -9450,7 +9450,7 @@
 }
 
 .blockchain-builder .consensus-fill {
-  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  background: linear-gradient(90deg, var(--color-success-500), #8bc34a);
   height: 100%;
   transition: width 0.3s ease;
 }
@@ -9473,13 +9473,13 @@
 }
 
 .network-consensus .scenario-card:hover {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
 .network-consensus .scenario-card.selected {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9506,8 +9506,8 @@
 }
 
 .network-consensus .node-group.honest {
-  border-color: #4caf50;
-  background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+  border-color: var(--color-success-500);
+  background: linear-gradient(135deg, var(--color-success-50), #c8e6c9);
 }
 
 .network-consensus .node-group.attacker {
@@ -9543,7 +9543,7 @@
 .fixed-supply .stat-number {
   font-size: 2.5em;
   font-weight: bold;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 8px;
 }
 
@@ -9580,7 +9580,7 @@
 }
 
 .fixed-supply .insight-card:last-child {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9613,7 +9613,7 @@
 }
 
 .blockchain-builder .blockchain-side {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9637,8 +9637,8 @@
 }
 
 .blockchain-builder .blockchain-side .ledger-title {
-  color: #f7931a;
-  border-color: #f7931a;
+  color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
 }
 
 .blockchain-builder .ledger-entries {
@@ -9668,7 +9668,7 @@
 }
 
 .blockchain-builder .continue-analogy-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, var(--color-success-500), #66bb6a);
   color: var(--color-dark-text);
   border: none;
   border-radius: 12px;
@@ -9711,7 +9711,7 @@
 }
 
 .blockchain-builder .comparison-item:last-child {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -9732,7 +9732,7 @@
 
 /* Enhanced mining section with banking context */
 .blockchain-builder .mine-button {
-  background: linear-gradient(135deg, #f7931a, #ff9800);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff9800);
   color: var(--color-dark-text);
   border: none;
   border-radius: 8px;
@@ -9755,7 +9755,7 @@
 }
 
 .blockchain-builder .continue-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, var(--color-success-500), #66bb6a);
   color: var(--color-dark-text);
   border: none;
   border-radius: 12px;
@@ -9870,7 +9870,7 @@
 
 .how-bitcoin-works .answer-option:hover {
   background: #e3f2fd;
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
@@ -9880,7 +9880,7 @@
   border-radius: 16px;
   padding: 24px;
   margin-top: 24px;
-  border: 2px solid #4caf50;
+  border: 2px solid var(--color-success-500);
 }
 
 .how-bitcoin-works .user-choice h4 {
@@ -9889,7 +9889,7 @@
 }
 
 .how-bitcoin-works .correct-choice {
-  color: #4caf50;
+  color: var(--color-success-500);
   font-weight: 600;
   font-size: 1.1em;
   margin-bottom: 20px;
@@ -9935,7 +9935,7 @@
 }
 
 .how-bitcoin-works .continue-concept-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, var(--color-success-500), #66bb6a);
   color: var(--color-dark-text);
   border: none;
   border-radius: 12px;
@@ -10012,13 +10012,13 @@
 
 .scarcity-value .stat-item.highlight {
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   font-weight: bold;
 }
 
 .scarcity-value .stat-label {
   font-size: 0.9em;
-  color: #666;
+  color: var(--color-neutral-500);
   margin-bottom: 8px;
 }
 
@@ -10052,7 +10052,7 @@
 }
 
 .scarcity-value .comparison-item.bitcoin-system {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   background: linear-gradient(135deg, #fff3e0, #ffe0b2);
 }
 
@@ -10098,7 +10098,7 @@
 
 .scarcity-value .prediction-option:hover {
   background: #e3f2fd;
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
@@ -10110,7 +10110,7 @@
 }
 
 .scarcity-value .option-prediction {
-  color: #666;
+  color: var(--color-neutral-500);
   font-style: italic;
   font-size: 0.9em;
 }
@@ -10120,7 +10120,7 @@
   border-radius: 16px;
   padding: 24px;
   margin-top: 24px;
-  border: 2px solid #4caf50;
+  border: 2px solid var(--color-success-500);
 }
 
 .scarcity-value .reality-truth {
@@ -10146,7 +10146,7 @@
 }
 
 .scarcity-value .continue-example-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, var(--color-success-500), #66bb6a);
   color: var(--color-dark-text);
   border: none;
   border-radius: 12px;
