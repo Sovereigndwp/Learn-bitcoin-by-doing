@@ -3,13 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   ArrowRight, 
-  ArrowLeft,
-  Coins, 
-  Zap, 
+  ArrowLeft, 
+  CheckCircle,
   Calculator,
   Eye,
   Copy,
-  CheckCircle,
   AlertCircle,
   TrendingUp,
   Clock,
@@ -23,7 +21,6 @@ import {
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton,
   NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
@@ -34,12 +31,6 @@ const TransactionsModule = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
-
-  // Interactive state management
-  const [transactionBuilder, setTransactionBuilder] = useState({});
-  const [utxoSet, setUtxoSet] = useState([]);
-  const [feeCalculator, setFeeCalculator] = useState({});
-  const [mempoolDemo, setMempoolDemo] = useState({});
 
   // Transaction Learning Steps
   const transactionSteps = [
@@ -389,7 +380,7 @@ const TransactionsModule = () => {
   function UtxoModel() {
     const [walletView, setWalletView] = useState('alice');
     const [simulationStep, setSimulationStep] = useState(0);
-    const [utxoHistory, setUtxoHistory] = useState([]);
+  const [utxoHistory] = useState([]);
 
     const wallets = {
       alice: {
@@ -712,7 +703,7 @@ const TransactionsModule = () => {
 
     useEffect(() => {
       calculateFees();
-    }, [feeScenario, transactionSize]);
+    }, [feeRate, transactionSize, calculateFees]);
 
     const FeeOption = ({ priority, fee, time, recommended = false }) => (
       <div className={`fee-option ${recommended ? 'recommended' : ''}`}>
