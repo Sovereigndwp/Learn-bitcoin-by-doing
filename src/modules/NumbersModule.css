@@ -1,6 +1,6 @@
 /* ===== BITCOIN ORANGE THEME VARIABLES ===== */
 :root {
-  --bitcoin-orange: #f7931a;
+  --bitcoin-orange: var(--color-primary-500);
   --bitcoin-orange-dark: #e8851c;
   --bitcoin-orange-light: #ffb347;
   --bitcoin-orange-glow: rgba(247, 147, 26, 0.3);
@@ -977,7 +977,7 @@
 .skip-button:focus,
 .submit-button:focus,
 .home-button:focus {
-  outline: 3px solid #f7931a;
+  outline: 3px solid var(--color-primary-500);
   outline-offset: 2px;
 }
 
@@ -991,7 +991,7 @@
   .reflection-step {
     background: white !important;
     box-shadow: none !important;
-    border: 1px solid #000 !important;
+    border: 1px solid var(--color-neutral-900) !important;
   }
 
   .continue-button,

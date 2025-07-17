@@ -7,7 +7,7 @@
   --bitcoin-orange: #f7931a;
   --bitcoin-orange-light: #ffa940;
   --bitcoin-orange-dark: #d4741a;
-  --bitcoin-black: #000000;
+  --bitcoin-black: var(--color-neutral-900);
   --bitcoin-gold: #ffb703;
   --custody-red: #dc2626;
   --custody-blue: #2563eb;
@@ -17,8 +17,8 @@
 
 .custody-module {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-neutral-900) 0%, var(--color-neutral-800) 100%);
+  color: var(--color-text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #000000;
+  color: var(--color-neutral-900);
 }
 
 .achievement-content svg {
@@ -104,7 +104,7 @@
 
 .progress-stats .label {
   font-size: 14px;
-  color: #aaa;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
@@ -180,21 +180,21 @@
   border-radius: 12px;
   background: linear-gradient(135deg, var(--step-color, var(--bitcoin-orange)), rgba(255, 255, 255, 0.1));
   margin-bottom: 16px;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .step-info h4 {
   margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
   line-height: 1.3;
 }
 
 .step-info p {
   margin: 0;
   font-size: 14px;
-  color: #aaa;
+  color: var(--color-text-muted);
   line-height: 1.4;
 }
 
@@ -232,7 +232,7 @@
 .phase-header p {
   margin: 0 0 24px 0;
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -275,7 +275,7 @@
 
 .investigation-stats .label {
   font-size: 14px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   font-weight: 500;
 }
 
@@ -337,7 +337,7 @@
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
   flex: 1;
 }
 
@@ -375,14 +375,14 @@
 
 .current-value {
   font-size: 12px;
-  color: #aaa;
+  color: var(--color-text-muted);
 }
 
 .victims {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   font-size: 14px;
 }
 
@@ -392,7 +392,7 @@
 
 .lesson-type {
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--color-text-primary);
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 11px;
@@ -419,7 +419,7 @@
 .crisis-description {
   margin: 0 0 20px 0;
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   line-height: 1.6;
 }
 
@@ -488,7 +488,7 @@
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .security-level {
@@ -515,13 +515,13 @@
 
 .score-bar span:first-child {
   min-width: 80px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   font-weight: 500;
 }
 
 .score-bar span:last-child {
   min-width: 40px;
-  color: #fff;
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
@@ -542,7 +542,7 @@
 .method-description {
   margin: 0 0 20px 0;
   font-size: 14px;
-  color: #aaa;
+  color: var(--color-text-muted);
   line-height: 1.5;
 }
 
@@ -565,7 +565,7 @@
   gap: 8px;
   margin-bottom: 8px;
   font-size: 13px;
-  color: #ccc;
+  color: var(--color-text-subtle);
 }
 
 .risk-factors li svg {
@@ -604,12 +604,12 @@
 
 .metric-label {
   font-weight: 500;
-  color: #ccc;
+  color: var(--color-text-subtle);
 }
 
 .metric-value {
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .metric-value.low {
@@ -656,7 +656,7 @@
 
 .layer-type {
   font-weight: 600;
-  color: #ccc;
+  color: var(--color-text-subtle);
 }
 
 .layer-method {
@@ -723,14 +723,14 @@
   border: 2px solid rgba(255, 255, 255, 0.2);
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
   flex-shrink: 0;
 }
 
 .sovereignty-step.completed .step-indicator {
   background: linear-gradient(135deg, var(--custody-green), rgba(22, 163, 74, 0.8));
   border-color: var(--custody-green);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .step-content {
@@ -744,7 +744,7 @@
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .complete-step-btn {
@@ -752,7 +752,7 @@
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
-  color: #000000;
+  color: var(--color-neutral-900);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -783,7 +783,7 @@
 .sovereignty-achievement p {
   margin: 0;
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-text-subtle);
 }
 
 /* Emergency Architect Phase */
@@ -839,7 +839,7 @@
   margin: 0;
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
   flex: 1;
 }
 
@@ -876,7 +876,7 @@
   border: none;
   border-radius: 8px;
   padding: 8px 16px;
-  color: #000000;
+  color: var(--color-neutral-900);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -918,7 +918,7 @@
 .emergency-mastery p {
   margin: 0;
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-text-subtle);
 }
 
 /* Scale Commander Phase */
@@ -972,7 +972,7 @@
   margin: 0 0 12px 0;
   font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .solution-scale {
@@ -998,7 +998,7 @@
 .requirements li {
   margin-bottom: 8px;
   font-size: 14px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   position: relative;
 }
 
@@ -1014,7 +1014,7 @@
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -1076,7 +1076,7 @@
   margin: 0 0 12px 0;
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .metric-card .metric-value {
@@ -1090,7 +1090,7 @@
 .metric-card p {
   margin: 0;
   font-size: 14px;
-  color: #aaa;
+  color: var(--color-text-muted);
 }
 
 .sovereignty-declaration {
@@ -1111,7 +1111,7 @@
 .declaration-text p {
   margin: 0 0 16px 0;
   font-size: 16px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   }
 
 .declaration-text ul {
@@ -1127,7 +1127,7 @@
 .declaration-text li {
   margin-bottom: 8px;
   font-size: 14px;
-  color: #ccc;
+  color: var(--color-text-subtle);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1160,7 +1160,7 @@
   border: none;
   border-radius: 12px;
   padding: 16px 32px;
-  color: #000000;
+  color: var(--color-neutral-900);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -1181,7 +1181,7 @@
   
 .continue-btn.investigation-complete {
   background: linear-gradient(135deg, var(--custody-green), rgba(22, 163, 74, 0.8));
-  color: #ffffff;
+  color: var(--color-text-primary);
   }
   
 .continue-btn.investigation-complete:hover {
@@ -1190,7 +1190,7 @@
 
 .continue-btn.design-setup {
   background: linear-gradient(135deg, var(--custody-purple), rgba(124, 58, 237, 0.8));
-  color: #ffffff;
+  color: var(--color-text-primary);
   }
   
 .continue-btn.design-setup:hover {
