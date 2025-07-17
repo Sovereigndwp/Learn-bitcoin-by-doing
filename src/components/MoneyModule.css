@@ -9,7 +9,7 @@
   top: 20px;
   right: 20px;
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-primary);
@@ -32,14 +32,14 @@
   margin: 0 0 var(--spacing-xs) 0;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .achievement-text p {
   margin: 0;
   font-size: var(--font-size-lg);
   opacity: 0.9;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .achievement-controls {
@@ -47,9 +47,9 @@
 }
 
 .achievement-dismiss {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #ffffff;
+  background: var(--color-overlay-light);
+  border: 1px solid var(--color-overlay-medium);
+  color: var(--color-text-primary);
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-lg);
@@ -58,8 +58,8 @@
 }
 
 .achievement-dismiss:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--color-overlay-medium);
+  border-color: var(--color-border-light);
 }
 
 .achievement-hint {
@@ -67,7 +67,7 @@
   font-size: var(--font-size-md);
   opacity: 0.7;
   margin-top: var(--spacing-sm);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 /* ========================================
@@ -386,42 +386,42 @@
 
 .choice-card.low {
   border-color: var(--color-success-light);
-  background: linear-gradient(135deg, var(--color-dark-bgCard), rgba(16, 185, 129, 0.1));
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-success-bg-subtle));
 }
 
 .choice-card.low:hover {
   border-color: var(--color-success-light);
-  background: rgba(16, 185, 129, 0.15);
+  background: var(--color-success-bg);
 }
 
 .choice-card.medium {
   border-color: var(--color-warning-light);
-  background: linear-gradient(135deg, var(--color-dark-bgCard), rgba(245, 158, 11, 0.1));
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-warning-bg-subtle));
 }
 
 .choice-card.medium:hover {
   border-color: var(--color-warning-light);
-  background: rgba(245, 158, 11, 0.15);
+  background: var(--color-warning-bg);
 }
 
 .choice-card.high {
   border-color: var(--color-primary-500);
-  background: linear-gradient(135deg, var(--color-dark-bgCard), rgba(247, 147, 26, 0.1));
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-primary-bg-subtle));
 }
 
 .choice-card.high:hover {
   border-color: var(--color-primary-500);
-  background: rgba(247, 147, 26, 0.15);
+  background: var(--color-primary-bg);
 }
 
 .choice-card.very_high {
   border-color: var(--color-error-light);
-  background: linear-gradient(135deg, var(--color-dark-bgCard), rgba(239, 68, 68, 0.1));
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-danger-bg-subtle));
 }
 
 .choice-card.very_high:hover {
   border-color: var(--color-error-light);
-  background: rgba(239, 68, 68, 0.15);
+  background: var(--color-danger-bg);
 }
 
 .choice-text {
@@ -461,7 +461,7 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-lg);
   margin: var(--spacing-lg) 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-lg);
 }
@@ -470,14 +470,14 @@
   font-size: var(--font-size-lg);
   margin: var(--spacing-sm) 0;
   line-height: 1.6;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .insight-box h5 {
   margin: 0 0 var(--spacing-sm) 0;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .analysis-complete {
@@ -649,18 +649,18 @@
   padding: var(--spacing-md);
   background: var(--color-primary-500);
   border-radius: var(--radius-md);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .function-identified h4 {
   margin: 0 0 var(--spacing-sm) 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: var(--font-size-lg);
 }
 
 .function-identified p {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: var(--font-size-md);
 }
 
@@ -717,12 +717,12 @@
 .analysis-stats {
   display: flex;
   gap: var(--spacing-xl);
-  justify-content: center;
+  justify-content: flex-start;
   margin: var(--spacing-lg) 0;
 }
 
 .stat-item {
-  text-align: center;
+  text-align: left;
 }
 
 .stat-label {
@@ -742,7 +742,7 @@
 .progress-indicators {
   display: flex;
   gap: var(--spacing-md);
-  justify-content: center;
+  justify-content: flex-start;
   margin: var(--spacing-lg) 0;
 }
 
@@ -752,7 +752,7 @@
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
   background: var(--color-dark-bgSecondary);
@@ -827,7 +827,7 @@
   }
   
   .demo-buttons {
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 
