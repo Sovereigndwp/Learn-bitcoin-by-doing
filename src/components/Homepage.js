@@ -424,6 +424,7 @@ const LearningSection = ({
                 getModuleProgress={getModuleProgress}
                 isModuleCompleted={isModuleCompleted}
                 moduleIcons={moduleIcons}
+                groupKey={groupKey}
               />
             ))}
         </div>
@@ -439,13 +440,14 @@ const ModuleGroup = ({
   isModuleUnlocked, 
   getModuleProgress, 
   isModuleCompleted,
-  moduleIcons 
+  moduleIcons,
+  groupKey
 }) => {
   const completedCount = modules.filter(m => isModuleCompleted(m.id)).length;
     const unlockedCount = modules.filter(m => isModuleUnlocked(m)).length;
     
     return (
-    <div className="module-group">
+    <div className="module-group" data-group={groupKey}>
         <div className="group-header">
         <h4>{groupInfo.title}</h4>
         <span className="group-progress">{completedCount}/{modules.length}</span>

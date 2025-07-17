@@ -1,27 +1,90 @@
 /* ========================================
-   PROFESSIONAL MODERN COMPONENTS
+   ENHANCED MODERN COMPONENTS WITH COLOR PSYCHOLOGY
    ======================================== */
-/* Enhanced components with sophisticated design and better visual hierarchy */
+/* Enhanced components with sophisticated design and color psychology system */
 
-/* Professional Button Variants */
+/* Enhanced Professional Button Variants */
 .btn--primary {
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
   color: var(--color-dark-text);
   border: none;
   box-shadow: var(--shadow-glow-orange);
   font-weight: 600;
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn--primary:hover {
   background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
-  box-shadow: var(--shadow-glow-orange-lg);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-orange-lg);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .btn--primary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--shadow-dark-md);
+}
+
+/* COLOR PSYCHOLOGY BUTTON VARIANTS */
+.btn--foundations {
+  background: linear-gradient(135deg, var(--color-foundations), var(--color-foundations-dark));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-glow-foundations);
+  font-weight: 600;
+  transition: all var(--transition-hover);
+}
+
+.btn--foundations:hover {
+  background: linear-gradient(135deg, var(--color-foundations-light), var(--color-foundations));
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-foundations);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.btn--technical {
+  background: linear-gradient(135deg, var(--color-technical), var(--color-technical-dark));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-glow-technical);
+  font-weight: 600;
+  transition: all var(--transition-hover);
+}
+
+.btn--technical:hover {
+  background: linear-gradient(135deg, var(--color-technical-light), var(--color-technical));
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-technical);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.btn--mechanics {
+  background: linear-gradient(135deg, var(--color-mechanics), var(--color-mechanics-dark));
+  color: var(--color-dark-text);
+  border: none;
+  box-shadow: var(--shadow-glow-mechanics);
+  font-weight: 600;
+  transition: all var(--transition-hover);
+}
+
+.btn--mechanics:hover {
+  background: linear-gradient(135deg, var(--color-mechanics-light), var(--color-mechanics));
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-mechanics);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.btn--mastery {
+  background: linear-gradient(135deg, var(--color-mastery), var(--color-mastery-dark));
+  color: white;
+  border: none;
+  box-shadow: var(--shadow-glow-mastery);
+  font-weight: 600;
+  transition: all var(--transition-hover);
+}
+
+.btn--mastery:hover {
+  background: linear-gradient(135deg, var(--color-mastery-light), var(--color-mastery));
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-mastery);
+  transform: translateY(-2px) scale(1.05);
 }
 
 .btn--secondary {
@@ -29,7 +92,8 @@
   color: var(--color-primary-500);
   border: 2px solid var(--color-primary-500);
   font-weight: 600;
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  backdrop-filter: blur(10px);
 }
 
 .btn--secondary:hover {
@@ -37,7 +101,7 @@
   color: var(--color-dark-text);
   border-color: var(--color-primary-600);
   box-shadow: var(--shadow-glow-orange);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.02);
 }
 
 .btn--outline {
@@ -45,14 +109,16 @@
   color: var(--color-primary-500);
   border: 2px solid var(--color-dark-border);
   font-weight: 500;
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  backdrop-filter: blur(5px);
 }
 
 .btn--outline:hover {
   background: var(--color-dark-bgCard);
   border-color: var(--color-primary-500);
   color: var(--color-primary-400);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-dark-md);
+  transform: scale(1.02);
 }
 
 .btn--ghost {
@@ -60,12 +126,13 @@
   color: var(--color-dark-textSecondary);
   border: none;
   font-weight: 500;
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
 }
 
 .btn--ghost:hover {
   background: var(--color-dark-bgCard);
   color: var(--color-primary-500);
+  transform: scale(1.05);
 }
 
 .btn--success {
@@ -73,13 +140,14 @@
   color: var(--color-dark-text);
   border: none;
   font-weight: 600;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-dark-md);
+  transition: all var(--transition-hover);
 }
 
 .btn--success:hover {
   background: linear-gradient(135deg, var(--color-success-dark), var(--color-success-light));
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
 }
 
 .btn--warning {
@@ -87,7 +155,13 @@
   color: var(--color-dark-text);
   border: none;
   font-weight: 600;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-dark-md);
+  transition: all var(--transition-hover);
+}
+
+.btn--warning:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
 }
 
 .btn--error {
@@ -95,38 +169,49 @@
   color: var(--color-dark-text);
   border: none;
   font-weight: 600;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-dark-md);
+  transition: all var(--transition-hover);
 }
 
-/* Professional Button Sizes */
+.btn--error:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
+}
+
+/* Enhanced Professional Button Sizes */
 .btn--xs {
   padding: var(--spacing-xs) var(--spacing-sm);
   font-size: var(--text-xs);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-md);
+  min-height: 32px;
 }
 
 .btn--sm {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
+  min-height: 40px;
 }
 
 .btn--md {
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: var(--text-base);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  min-height: 48px;
 }
 
 .btn--lg {
   padding: var(--spacing-lg) var(--spacing-xl);
   font-size: var(--text-lg);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
+  min-height: 56px;
 }
 
 .btn--xl {
   padding: var(--spacing-xl) var(--spacing-2xl);
   font-size: var(--text-xl);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
+  min-height: 64px;
 }
 
 .btn--full {
@@ -134,60 +219,112 @@
   justify-content: center;
 }
 
-/* Professional Card Components */
+/* Enhanced Professional Card Components */
 .card--elevated {
   background: var(--color-dark-bgElevated);
   border: 1px solid var(--color-dark-borderLight);
   box-shadow: var(--shadow-dark-lg);
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  backdrop-filter: blur(10px);
+  will-change: transform;
 }
 
 .card--elevated:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-dark-lg), var(--shadow-glow-orange);
-  border-color: var(--color-dark-borderAccent);
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-orange);
+  border-color: var(--color-primary-500);
 }
 
 .card--glass {
-  background: rgba(28, 33, 40, 0.8);
-  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--color-dark-borderAccent);
   box-shadow: var(--shadow-dark-md);
+  transition: all var(--transition-hover);
+}
+
+.card--glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-dark-lg), var(--shadow-glow-orange);
 }
 
 .card--interactive {
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  will-change: transform;
 }
 
 .card--interactive:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.015);
   box-shadow: var(--shadow-glow-orange);
   border-color: var(--color-primary-500);
 }
 
 .card--interactive:active {
-  transform: translateY(0);
+  transform: translateY(-2px) scale(1.01);
 }
 
-/* Professional Input Components */
+/* COLOR PSYCHOLOGY CARD VARIANTS */
+.card--foundations {
+  border-left: 4px solid var(--color-foundations);
+}
+
+.card--foundations:hover {
+  border-color: var(--color-foundations);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-foundations);
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-foundations-bg));
+}
+
+.card--technical {
+  border-left: 4px solid var(--color-technical);
+}
+
+.card--technical:hover {
+  border-color: var(--color-technical);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-technical);
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-technical-bg));
+}
+
+.card--mechanics {
+  border-left: 4px solid var(--color-mechanics);
+}
+
+.card--mechanics:hover {
+  border-color: var(--color-mechanics);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-mechanics);
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-mechanics-bg));
+}
+
+.card--mastery {
+  border-left: 4px solid var(--color-mastery);
+}
+
+.card--mastery:hover {
+  border-color: var(--color-mastery);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-mastery);
+  background: linear-gradient(135deg, var(--color-dark-bgCard), var(--color-mastery-bg));
+}
+
+/* Enhanced Professional Input Components */
 .input {
   width: 100%;
   padding: var(--spacing-md);
   background: var(--color-dark-bgCard);
   border: 2px solid var(--color-dark-border);
-  border-radius: var(--radius-md);
-  color: var(--color-dark-text);
+  border-radius: var(--radius-lg);
+  color: var(--color-dark-textSecondary);
   font-size: var(--text-base);
   font-family: var(--font-family-sans);
-  transition: all var(--transition-base);
+  transition: all var(--transition-hover);
+  backdrop-filter: blur(5px);
 }
 
 .input:focus {
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-dark-borderAccent);
+  box-shadow: 0 0 0 3px var(--color-dark-borderAccent), var(--shadow-glow-orange);
   background: var(--color-dark-bgElevated);
+  color: var(--color-dark-text);
 }
 
 .input::placeholder {
@@ -209,23 +346,26 @@
 
 .textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
-/* Professional Badge Components */
+/* Enhanced Professional Badge Components */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
   font-size: var(--text-xs);
-  font-weight: 600;
+  font-weight: 700;
   border-radius: var(--radius-full);
   transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .badge--primary {
-  background: var(--color-primary-500);
-  color: var(--color-dark-text);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  color: white;
+  box-shadow: var(--shadow-glow-orange);
 }
 
 .badge--secondary {
@@ -235,28 +375,53 @@
 }
 
 .badge--success {
-  background: var(--color-success-light);
-  color: var(--color-dark-text);
+  background: linear-gradient(135deg, var(--color-success-light), var(--color-success-dark));
+  color: white;
 }
 
 .badge--warning {
-  background: var(--color-warning-light);
+  background: linear-gradient(135deg, var(--color-warning-light), var(--color-warning-dark));
   color: var(--color-dark-text);
 }
 
 .badge--error {
-  background: var(--color-error-light);
-  color: var(--color-dark-text);
+  background: linear-gradient(135deg, var(--color-error-light), var(--color-error-dark));
+  color: white;
 }
 
 .badge--info {
-  background: var(--color-info-light);
-  color: var(--color-dark-text);
+  background: linear-gradient(135deg, var(--color-info-light), var(--color-info-dark));
+  color: white;
 }
 
 .badge--outline {
   background: transparent;
-  border: 1px solid currentColor;
+  border: 2px solid currentColor;
+}
+
+/* COLOR PSYCHOLOGY BADGE VARIANTS */
+.badge--foundations {
+  background: linear-gradient(135deg, var(--color-foundations), var(--color-foundations-dark));
+  color: white;
+  box-shadow: var(--shadow-glow-foundations);
+}
+
+.badge--technical {
+  background: linear-gradient(135deg, var(--color-technical), var(--color-technical-dark));
+  color: white;
+  box-shadow: var(--shadow-glow-technical);
+}
+
+.badge--mechanics {
+  background: linear-gradient(135deg, var(--color-mechanics), var(--color-mechanics-dark));
+  color: var(--color-dark-text);
+  box-shadow: var(--shadow-glow-mechanics);
+}
+
+.badge--mastery {
+  background: linear-gradient(135deg, var(--color-mastery), var(--color-mastery-dark));
+  color: white;
+  box-shadow: var(--shadow-glow-mastery);
 }
 
 /* Professional Alert Components */
@@ -292,13 +457,14 @@
   border-color: var(--color-info-light);
 }
 
-/* Professional Progress Components */
+/* Enhanced Professional Progress Components */
 .progress {
   width: 100%;
-  height: 8px;
-  background: var(--color-dark-bgCard);
+  height: 10px;
+  background: var(--color-dark-border);
   border-radius: var(--radius-full);
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .progress__bar {
@@ -306,36 +472,75 @@
   background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-400));
   border-radius: var(--radius-full);
   transition: width var(--transition-slow);
+  box-shadow: 0 0 10px rgba(247, 147, 26, 0.4);
+  position: relative;
+}
+
+.progress__bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .progress--thick {
-  height: 12px;
+  height: 16px;
 }
 
 .progress--thin {
-  height: 4px;
+  height: 6px;
 }
 
-/* Professional Loading Components */
+/* COLOR PSYCHOLOGY PROGRESS VARIANTS */
+.progress--foundations .progress__bar {
+  background: linear-gradient(90deg, var(--color-foundations), var(--color-foundations-light));
+  box-shadow: 0 0 10px var(--color-foundations-border);
+}
+
+.progress--technical .progress__bar {
+  background: linear-gradient(90deg, var(--color-technical), var(--color-technical-light));
+  box-shadow: 0 0 10px var(--color-technical-border);
+}
+
+.progress--mechanics .progress__bar {
+  background: linear-gradient(90deg, var(--color-mechanics), var(--color-mechanics-light));
+  box-shadow: 0 0 10px var(--color-mechanics-border);
+}
+
+.progress--mastery .progress__bar {
+  background: linear-gradient(90deg, var(--color-mastery), var(--color-mastery-light));
+  box-shadow: 0 0 10px var(--color-mastery-border);
+}
+
+/* Enhanced Professional Loading Components */
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-dark-border);
-  border-top: 2px solid var(--color-primary-500);
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-dark-border);
+  border-top: 3px solid var(--color-primary-500);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .spinner--sm {
-  width: 16px;
-  height: 16px;
-  border-width: 1.5px;
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
 }
 
 .spinner--lg {
   width: 32px;
   height: 32px;
-  border-width: 3px;
+  border-width: 4px;
 }
 
 @keyframes spin {
@@ -343,11 +548,11 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Professional Divider Components */
+/* Enhanced Professional Divider Components */
 .divider {
   height: 1px;
-  background: var(--color-dark-border);
-  margin: var(--spacing-lg) 0;
+  background: linear-gradient(90deg, transparent, var(--color-dark-border), transparent);
+  margin: var(--spacing-xl) 0;
 }
 
 .divider--thick {
@@ -360,10 +565,11 @@
 }
 
 .divider--gradient {
-  background: linear-gradient(90deg, transparent, var(--color-dark-border), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary-500), transparent);
+  height: 2px;
 }
 
-/* Professional Tooltip Components */
+/* Enhanced Professional Tooltip Components */
 .tooltip {
   position: relative;
   display: inline-block;
@@ -375,23 +581,24 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--color-dark-bgElevated);
-  color: var(--color-dark-text);
+  color: var(--color-dark-textSecondary);
   padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   font-size: var(--text-sm);
   white-space: nowrap;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-dark-xl);
   border: 1px solid var(--color-dark-border);
+  backdrop-filter: blur(10px);
   z-index: var(--z-tooltip);
   opacity: 0;
   visibility: hidden;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-hover);
 }
 
 .tooltip:hover .tooltip__content {
   opacity: 1;
   visibility: visible;
-  transform: translateX(-50%) translateY(-4px);
+  transform: translateX(-50%) translateY(-6px);
 }
 
 .tooltip__content::after {
@@ -400,11 +607,11 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border: 6px solid transparent;
+  border: 8px solid transparent;
   border-top-color: var(--color-dark-bgElevated);
 }
 
-/* Professional Animation Utilities */
+/* Enhanced Professional Animation Utilities */
 .animate-fade-in {
   animation: fadeIn var(--transition-base) ease-out;
 }
@@ -421,6 +628,14 @@
   animation: scaleIn var(--transition-base) ease-out;
 }
 
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -429,7 +644,7 @@
 @keyframes slideUp {
   from { 
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to { 
     opacity: 1;
@@ -440,7 +655,7 @@
 @keyframes slideDown {
   from { 
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-30px);
   }
   to { 
     opacity: 1;
@@ -451,10 +666,30 @@
 @keyframes scaleIn {
   from { 
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.8);
   }
   to { 
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { 
+    transform: translateY(0);
+  }
+  50% { 
+    transform: translateY(-10px);
   }
 } 
