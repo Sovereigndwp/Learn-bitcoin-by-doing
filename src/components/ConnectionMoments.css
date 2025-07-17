@@ -66,7 +66,7 @@
 }
 
 .progress-text {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   opacity: 0.8;
   font-weight: 500;
 }

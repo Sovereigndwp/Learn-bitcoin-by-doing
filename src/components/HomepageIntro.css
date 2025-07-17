@@ -238,7 +238,7 @@
 
 .homepage-intro .canva-attribution {
   display: block;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   color: #666;
   margin-bottom: 1rem;
   font-family: inherit;

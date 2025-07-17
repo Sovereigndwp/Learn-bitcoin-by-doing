@@ -230,6 +230,6 @@
   .code-output,
   .error-output {
     min-height: 120px;
-    font-size: 0.8rem;
+    font-size: var(--font-size-lg);
   }
 } 

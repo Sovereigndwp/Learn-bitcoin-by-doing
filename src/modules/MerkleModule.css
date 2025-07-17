@@ -460,7 +460,7 @@
   color: #000000;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
 }
 
@@ -688,7 +688,7 @@
 
 .step-position {
   color: #94a3b8;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
 }
 
 .validation-results {
@@ -929,7 +929,7 @@
   color: #e9d5ff;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   margin: 0.25rem;
   display: inline-block;
 }

@@ -15,10 +15,10 @@
 
 /* ===== SOVEREIGNTY HEADER ===== */
 .sovereignty-header {
-  background: linear-gradient(135deg, #f7931a 0%, #e67e22 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-warning-600) 100%);
   padding: 2rem;
   border-radius: 0 0 20px 20px;
-  box-shadow: 0 8px 32px rgba(247, 147, 26, 0.3);
+  box-shadow: 0 8px 32px var(--color-primary-200);
   position: relative;
   overflow: hidden;
 }
@@ -160,7 +160,7 @@
   display: block;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 0.5rem;
 }
 
@@ -196,7 +196,7 @@
 .siege-icon {
   width: 48px;
   height: 48px;
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: siegeShake 2s ease-in-out infinite;
 }
 
@@ -223,7 +223,7 @@
 
 .scenario-selection h3 {
   text-align: center;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -241,7 +241,7 @@
 }
 
 .scenario-story h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -265,7 +265,7 @@
 }
 
 .reaction-prompt h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -316,7 +316,7 @@
 }
 
 .bitcoin-promise h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -398,8 +398,8 @@
 }
 
 .entropy-method.selected {
-  border-color: #f7931a;
-  background: rgba(247, 147, 26, 0.1);
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-100);
 }
 
 .method-header {
@@ -474,13 +474,13 @@
 }
 
 .entropy-hex.generating {
-  border-color: #f7931a;
+  border-color: var(--color-primary-500);
   animation: entropyPulse 1s ease-in-out infinite;
 }
 
 @keyframes entropyPulse {
-  0%, 100% { border-color: #f7931a; }
-  50% { border-color: #e67e22; }
+  0%, 100% { border-color: var(--color-primary-500); }
+  50% { border-color: var(--color-warning-600); }
 }
 
 .generating-status {
@@ -533,7 +533,7 @@
 .step-number {
   width: 40px;
   height: 40px;
-  background: #f7931a;
+  background: var(--color-primary-500);
   border-radius: 50%;
   display: flex;
   align-items: center;

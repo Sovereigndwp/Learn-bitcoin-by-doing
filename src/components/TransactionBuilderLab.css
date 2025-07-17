@@ -18,7 +18,7 @@
   padding: 0.5rem 1rem;
   border-radius: 6px;
   color: #666;
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   transition: all 0.2s;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .utxo-confirmations {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #666;
 }
 
@@ -233,7 +233,7 @@
 }
 
 .summary-fee {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #666;
 }
 

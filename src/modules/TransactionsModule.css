@@ -26,7 +26,7 @@
 
 /* Module Header */
 .module-header {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 50%, #f7931a 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 50%, var(--color-primary-500) 100%);
   padding: 3rem 2rem;
   text-align: center;
   position: relative;
@@ -99,17 +99,17 @@
 }
 
 .progress-fill {
-  background: linear-gradient(90deg, #ff6b35, #f7931a, #ffa500);
+  background: linear-gradient(90deg, var(--color-primary-400), var(--color-primary-500), var(--color-warning-500));
   height: 100%;
   border-radius: 50px;
   transition: width 0.8s ease;
-  box-shadow: 0 0 20px rgba(247, 147, 26, 0.6);
+  box-shadow: 0 0 20px var(--color-primary-300);
   animation: progressGlow 2s infinite alternate;
 }
 
 @keyframes progressGlow {
-  0% { box-shadow: 0 0 15px rgba(247, 147, 26, 0.4); }
-  100% { box-shadow: 0 0 25px rgba(247, 147, 26, 0.8); }
+  0% { box-shadow: 0 0 15px var(--color-primary-200); }
+  100% { box-shadow: 0 0 25px var(--color-primary-300); }
 }
 
 /* Strategic Module Tabs */
@@ -163,9 +163,9 @@
 }
 
 .tab.active {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 100%);
-  border-color: #f7931a;
-  box-shadow: 0 8px 30px rgba(247, 147, 26, 0.4);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 8px 30px var(--color-primary-200);
   transform: translateY(-2px);
 }
 
@@ -296,7 +296,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   margin: 2rem 0 1rem 0;
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .choice-buttons {
@@ -390,22 +390,22 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(247, 147, 26, 0.2);
+  background: var(--color-primary-100);
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: 1px solid #f7931a;
+  border: 1px solid var(--color-primary-500);
 }
 
 .detective-insight {
-  background: rgba(247, 147, 26, 0.1);
-  border: 2px solid #f7931a;
+  background: var(--color-primary-50);
+  border: 2px solid var(--color-primary-500);
   border-radius: 12px;
   padding: 1.5rem;
   margin: 2rem 0;
 }
 
 .detective-insight h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -433,7 +433,7 @@
 
 .alchemy-header h2 {
   font-size: 3rem;
-  background: linear-gradient(90deg, #f7931a, #ff6b35, #ffa500);
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-400), var(--color-warning-500));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -447,8 +447,8 @@
 }
 
 .mission-box {
-  background: linear-gradient(135deg, rgba(247, 147, 26, 0.2) 0%, rgba(255, 107, 53, 0.2) 100%);
-  border: 2px solid #f7931a;
+  background: linear-gradient(135deg, var(--color-primary-100) 0%, var(--color-primary-50) 100%);
+  border: 2px solid var(--color-primary-500);
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem 0;
@@ -526,14 +526,14 @@
 
 .utxo-coin:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(247, 147, 26, 0.4);
-  border-color: #f7931a;
+  box-shadow: 0 10px 30px var(--color-primary-200);
+  border-color: var(--color-primary-500);
 }
 
 .utxo-coin.selected {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 100%);
-  border-color: #f7931a;
-  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.5);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 8px 25px var(--color-primary-300);
   animation: selectedPulse 2s infinite;
 }
 
@@ -564,7 +564,7 @@
 .coin-privacy {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
 }
 
 .privacy-high {
@@ -671,8 +671,8 @@
 
 .tx-total {
   font-weight: bold;
-  color: #f7931a;
-  border-top: 2px solid #f7931a;
+  color: var(--color-primary-500);
+  border-top: 2px solid var(--color-primary-500);
   padding-top: 0.5rem;
   margin-top: 1rem;
 }
@@ -695,11 +695,11 @@
 }
 
 .mastery-fill {
-  background: linear-gradient(90deg, #f7931a, #ff6b35, #ffa500);
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-400), var(--color-warning-500));
   height: 100%;
   border-radius: 50px;
   transition: width 0.8s ease;
-  box-shadow: 0 0 15px rgba(247, 147, 26, 0.6);
+  box-shadow: 0 0 15px var(--color-primary-300);
   animation: masteryGlow 2s infinite alternate;
 }
 
@@ -736,7 +736,7 @@
 
 .strategy-header h2 {
   font-size: 3rem;
-  background: linear-gradient(90deg, #fbbf24, #f59e0b, #f7931a);
+  background: linear-gradient(90deg, var(--color-warning-400), var(--color-warning-500), var(--color-primary-500));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -768,8 +768,8 @@
 }
 
 .strategy-briefing {
-  background: rgba(247, 147, 26, 0.1);
-  border: 2px solid #f7931a;
+  background: var(--color-primary-50);
+  border: 2px solid var(--color-primary-500);
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem 0;
@@ -814,9 +814,9 @@
 }
 
 .strategy-card.selected {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 100%);
-  border-color: #f7931a;
-  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.5);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 8px 25px var(--color-primary-300);
 }
 
 .strategy-header-card {
@@ -918,13 +918,13 @@
 .position-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   color: #9ca3af;
 }
 
 .strategic-insight {
-  background: rgba(247, 147, 26, 0.1);
-  border: 2px solid #f7931a;
+  background: var(--color-primary-50);
+  border: 2px solid var(--color-primary-500);
   border-radius: 12px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -932,7 +932,7 @@
 }
 
 .strategic-insight h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -1224,7 +1224,7 @@
   font-weight: bold;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
 }
 
 .spec-value.basic {
@@ -1650,8 +1650,8 @@
 
 /* Transaction Architect Completion */
 .transaction-architect-completion {
-  background: linear-gradient(135deg, rgba(247, 147, 26, 0.2) 0%, rgba(255, 107, 53, 0.2) 100%);
-  border: 3px solid #f7931a;
+  background: linear-gradient(135deg, var(--color-primary-100) 0%, var(--color-primary-50) 100%);
+  border: 3px solid var(--color-primary-500);
   border-radius: 12px;
   padding: 3rem;
   margin: 3rem 0;
@@ -1704,10 +1704,10 @@
 }
 
 .achievement-glow {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
   border-radius: 12px;
   padding: 3px;
-  box-shadow: 0 10px 30px rgba(247, 147, 26, 0.4);
+  box-shadow: 0 10px 30px var(--color-primary-200);
   animation: achievementGlow 3s infinite alternate;
 }
 
@@ -1739,7 +1739,7 @@
 
 .achievement-text h3 {
   margin: 0 0 0.5rem 0;
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.1rem;
   font-weight: bold;
 }
@@ -1778,9 +1778,9 @@
 }
 
 .command-controls .action-button.active {
-  background: linear-gradient(135deg, #f7931a 0%, #ff6b35 100%);
-  border-color: #f7931a;
-  box-shadow: 0 6px 20px rgba(247, 147, 26, 0.4);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-400) 100%);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 6px 20px var(--color-primary-200);
 }
 
 /* Responsive Design */

@@ -65,7 +65,7 @@
 }
 
 .compression-info {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #666;
 }
 
@@ -128,7 +128,7 @@
 
 .key-text {
   word-break: break-all;
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #1a1a1a;
 }
 
@@ -139,7 +139,7 @@
 }
 
 .key-info {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #666;
 }
 
@@ -152,7 +152,7 @@
 }
 
 .derivation-arrow p {
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   margin: 0;
   color: #666;
 }

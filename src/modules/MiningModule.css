@@ -15,9 +15,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 80%, #f7931a15 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, #f7931a10 0%, transparent 50%),
-              radial-gradient(circle at 40% 40%, #f7931a08 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 80%, var(--color-primary-100) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--color-primary-100) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, var(--color-primary-100) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -29,12 +29,12 @@
 
 /* Module Header */
 .module-header {
-  background: linear-gradient(135deg, #f7931a 0%, #ff8c00 50%, #ff7f00 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-warning-500) 50%, var(--color-warning-600) 100%);
   padding: 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
-  border-bottom: 3px solid #f7931a;
+  border-bottom: 3px solid var(--color-primary-500);
 }
 
 .module-header::before {
@@ -102,9 +102,9 @@
 }
 
 .progress-flame.completed {
-  background: #f7931a;
-  border-color: #ff8c00;
-  box-shadow: 0 0 10px rgba(247, 147, 26, 0.6);
+  background: var(--color-primary-500);
+  border-color: var(--color-primary-600);
+  box-shadow: var(--shadow-glow-orange);
 }
 
 .progress-flame.completed::before {
@@ -166,7 +166,7 @@
 .mastery-count {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 0.5rem;
 }
 
@@ -180,7 +180,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-warning-500));
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -242,7 +242,7 @@
 
 .detective-briefing h2 {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -271,7 +271,7 @@
 }
 
 .crisis-investigation-grid h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
@@ -296,9 +296,9 @@
 }
 
 .crisis-card.investigating {
-  border-color: #f7931a;
-  background: rgba(247, 147, 26, 0.12);
-  box-shadow: 0 0 20px rgba(247, 147, 26, 0.4);
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-100);
+  box-shadow: 0 0 20px var(--color-primary-200);
 }
 
 .crisis-header {
@@ -315,11 +315,11 @@
 }
 
 .investigating-badge {
-  background: #f7931a;
-  color: #000000;
+  background: var(--color-primary-500);
+  color: var(--color-dark-text);
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
   animation: investigatingPulse 2s ease-in-out infinite;
 }
@@ -408,7 +408,7 @@
 }
 
 .conclusion-header h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
@@ -431,7 +431,7 @@
 }
 
 .bitcoin-contrast strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.8rem;
   font-size: 1.1rem;
@@ -446,7 +446,7 @@
 .discovery-complete-button {
   display: block;
   margin: 2rem auto 0;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-warning-500));
   border: none;
   color: #ffffff;
   padding: 1rem 2rem;
@@ -460,8 +460,8 @@
 
 .discovery-complete-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(247, 147, 26, 0.4);
-  background: linear-gradient(135deg, #ff8c00, #f7931a);
+  box-shadow: 0 8px 25px var(--color-primary-200);
+  background: linear-gradient(135deg, var(--color-warning-500), var(--color-primary-500));
 }
 
 /* Electricity Alchemy Lab Styles */
@@ -483,7 +483,7 @@
 
 .lab-introduction h2 {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -574,7 +574,7 @@
   color: #f7931a;
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   font-weight: 600;
 }
 
@@ -598,7 +598,7 @@
 }
 
 .difficulty-display code {
-  color: #f7931a;
+  color: var(--color-primary-500);
   background: none;
   padding: 0;
 }
@@ -612,7 +612,7 @@
 
 .start-alchemy-button {
   width: 100%;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-warning-500));
   border: none;
   color: #ffffff;
   padding: 0.8rem 1.5rem;
@@ -639,7 +639,7 @@
 }
 
 .alchemy-in-progress h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -712,7 +712,7 @@
 
 .work-display {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.8rem;
+  font-size: var(--font-size-lg);
   animation: computingText 1.5s ease-in-out infinite;
 }
 

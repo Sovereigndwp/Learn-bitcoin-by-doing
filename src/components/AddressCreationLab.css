@@ -48,7 +48,7 @@
   padding: 0.5rem;
   background: #f8f9fa;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #1a1a1a;
 }
 
@@ -110,7 +110,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #1a1a1a;
 }
 
@@ -177,7 +177,7 @@
 }
 
 .address-info {
-  font-size: 0.9rem;
+  font-size: var(--font-size-lg);
   color: #666;
 }
 
