@@ -235,5 +235,5 @@
 
 /* Ensure all text in the game is visible */
 .money-game * {
-  color: #ffffff;
+  color: var(--color-text-primary);
 } 

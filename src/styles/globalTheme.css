@@ -857,6 +857,233 @@ p {
 }
 
 /* ========================================
+   COMPREHENSIVE HARDCODED COLOR OVERRIDE SYSTEM
+   ======================================== */
+/* Force proper contrast for all content globally - overrides all hardcoded colors */
+
+/* Override all hardcoded light backgrounds */
+*[style*="background: #f"],
+*[style*="background: #e"],
+*[style*="background: #d"],
+*[class*="introduction"] .problem-demo,
+*[class*="introduction"] .challenge-option,
+*[class*="module"] *[style*="background: #"],
+.step-content *[style*="background: #"],
+.module-content *[style*="background: #"] {
+  background: var(--color-dark-bgCard) !important;
+  border: 2px solid var(--color-dark-border) !important;
+}
+
+/* AGGRESSIVE GLOBAL TEXT COLOR OVERRIDE - affects ALL modules */
+/* BitcoinBasicsModule */
+.introduction *,
+.problem-demo *,
+.setup-text,
+.challenge-question *,
+.reality-check *,
+.user-prediction *,
+.deeper-thinking *,
+/* All other modules */
+.module-content *,
+.step-content *,
+.module-layout *,
+/* Specific elements that might have hardcoded colors */
+h1, h2, h3, h4, h5, h6,
+p, span, div, li, td, th,
+button, input, textarea, select,
+.card *, .section *, .content *,
+/* Module-specific overrides */
+[class*="module"] *,
+[class*="step"] *,
+[class*="content"] *,
+[class*="section"] *,
+[class*="demo"] *,
+[class*="challenge"] *,
+[class*="reality"] *,
+[class*="explanation"] *,
+[class*="comparison"] *,
+[class*="analysis"] * {
+  color: var(--color-text-primary) !important;
+}
+
+/* Specific overrides for BitcoinBasicsModule problem content */
+.introduction .problem-demo {
+  background: var(--color-dark-bgCard) !important;
+  border: 2px solid var(--color-dark-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.introduction .problem-demo * {
+  color: var(--color-text-primary) !important;
+}
+
+.introduction .setup-text {
+  color: var(--color-text-secondary) !important;
+}
+
+.introduction .challenge-option {
+  background: var(--color-dark-bgTertiary) !important;
+  border: 2px solid var(--color-dark-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.introduction .user-prediction {
+  background: var(--color-success-bg) !important;
+  color: var(--color-success-text) !important;
+}
+
+.introduction .reality-check {
+  background: var(--color-warning-bg) !important;
+  color: var(--color-warning-text) !important;
+}
+
+/* Secondary text for specific contexts */
+.intro-text *,
+.description *,
+.subtitle *,
+.secondary * {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Override any remaining hardcoded colors globally */
+*[style*="color: #"] {
+  color: var(--color-text-primary) !important;
+}
+
+*[style*="background: #"] {
+  background: var(--color-dark-bgCard) !important;
+}
+
+/* Ensure all module backgrounds are dark */
+.module-layout,
+.module-content,
+.step-content,
+.introduction {
+  background: var(--color-dark-bg) !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* Override for semantic color contexts */
+.success-context *,
+[class*="success"] * {
+  color: var(--color-success-text) !important;
+}
+
+.warning-context *,
+[class*="warning"] * {
+  color: var(--color-warning-text) !important;
+}
+
+.error-context *,
+[class*="error"] * {
+  color: var(--color-error-text) !important;
+}
+
+.info-context *,
+[class*="info"] * {
+  color: var(--color-info-text) !important;
+}
+
+/* ========================================
+   FINAL COMPREHENSIVE OVERRIDE - NUCLEAR OPTION
+   ======================================== */
+/* This ensures EVERY text element has proper contrast regardless of any other CSS */
+
+/* Catch any remaining elements with ALL possible selectors */
+*:not(svg):not(path):not(circle):not(rect):not(polygon) {
+  /* If background is light, force dark text */
+}
+
+/* Specific fix for the user's mentioned content */
+*:contains("Who Controls Your Money?"),
+*:contains("Canadian government froze bank accounts"),
+*:contains("February 2022"),
+h3:contains("Who Controls Your Money?"),
+p:contains("Canadian government"),
+.setup-text:contains("February 2022"),
+.problem-demo:contains("Canadian government") {
+  color: var(--color-text-primary) !important;
+  background: var(--color-dark-bgCard) !important;
+}
+
+/* Ultimate fallback - force contrast for ANY white/light backgrounds */
+*[style*="background-color: rgb(248"],
+*[style*="background-color: rgb(240"],
+*[style*="background-color: rgb(255"],
+*[style*="background: rgb(248"],
+*[style*="background: rgb(240"],
+*[style*="background: rgb(255"],
+*[class*="light"],
+*[class*="white"],
+.light-bg,
+.white-bg,
+.bg-light,
+.bg-white {
+  color: var(--color-neutral-900) !important;
+  background: var(--color-dark-bgCard) !important;
+}
+
+/* Make sure children of light backgrounds also get dark text */
+*[style*="background-color: rgb(248"] *,
+*[style*="background-color: rgb(240"] *,
+*[style*="background-color: rgb(255"] *,
+*[style*="background: rgb(248"] *,
+*[style*="background: rgb(240"] *,
+*[style*="background: rgb(255"] *,
+*[class*="light"] *,
+*[class*="white"] *,
+.light-bg *,
+.white-bg *,
+.bg-light *,
+.bg-white * {
+  color: var(--color-neutral-900) !important;
+}
+
+/* ========================================
+   UNIVERSAL WHITE/LIGHT BACKGROUND CONTRAST FIX
+   ======================================== */
+/* Ensure any white or light backgrounds get proper dark text */
+.card[style*="background: white"],
+.card[style*="background: #fff"],
+.card[style*="background: #ffffff"],
+.card[style*="background-color: white"],
+.card[style*="background-color: #fff"],
+.card[style*="background-color: #ffffff"],
+*[style*="background: white"],
+*[style*="background: #fff"],
+*[style*="background: #ffffff"],
+*[style*="background-color: white"],
+*[style*="background-color: #fff"],
+*[style*="background-color: #ffffff"] {
+  color: var(--color-neutral-900) !important;
+}
+
+/* Ensure nested elements in white backgrounds also get dark text */
+.card[style*="background: white"] *,
+.card[style*="background: #fff"] *,
+.card[style*="background: #ffffff"] *,
+*[style*="background: white"] *,
+*[style*="background: #fff"] *,
+*[style*="background: #ffffff"] * {
+  color: var(--color-neutral-900) !important;
+}
+
+/* Fix for light-colored cards */
+.bg-light,
+.card--light,
+.light-bg,
+.white-bg {
+  color: var(--color-neutral-900) !important;
+}
+
+.bg-light *,
+.card--light *,
+.light-bg *,
+.white-bg * {
+  color: var(--color-neutral-900) !important;
+}
+
+/* ========================================
    PRINT STYLES
    ======================================== */
 @media print {

@@ -9,7 +9,6 @@ import {
 import '../components/ModuleLayout.css';
 import '../components/ModuleCommon.css';
 import './BitcoinBasicsModule.css';
-import ModuleLayout from '../components/ModuleLayout';
 
 // Bitcoin Introduction with Prediction Challenges
 const BitcoinIntroduction = ({ onComplete }) => {
@@ -378,6 +377,8 @@ const BitcoinComparison = ({ onComplete }) => {
 
 // Blockchain Demonstration
 const BlockchainDemo = ({ onComplete }) => {
+  // Can be displayed in the learning module if planned
+  return null;
   const [currentBlock, setCurrentBlock] = useState(0);
   const [userTransactions, setUserTransactions] = useState([]);
   const [blockStatus, setBlockStatus] = useState('building');
@@ -573,6 +574,8 @@ const BlockchainDemo = ({ onComplete }) => {
 
 // Network Consensus Demonstration
 const NetworkConsensus = ({ onComplete }) => {
+  // Can be displayed in the learning module if planned
+  return null;
   const [attackScenario, setAttackScenario] = useState(null);
   const [networkSize] = useState(10000);
   const [attackerNodes, setAttackerNodes] = useState(1000);
@@ -1361,7 +1364,8 @@ const BitcoinBasicsModule = () => {
     }, 6000);
   };
 
-  const steps = [
+// Steps used for tracking module progress
+const steps = [
     { id: 0, title: "Bitcoin's Promise", icon: "🎯", completed: completedSteps.has(0) },
     { id: 1, title: "Compare Systems", icon: "⚖️", completed: completedSteps.has(1) },
     { id: 2, title: "How It Works", icon: "🔧", completed: completedSteps.has(2) },
@@ -1370,13 +1374,13 @@ const BitcoinBasicsModule = () => {
   ];
 
   return (
-    <ModuleLayout
-      title="Bitcoin Fundamentals"
-      subtitle="Understand what Bitcoin is and why it matters"
-      steps={steps}
-      currentStep={currentStep}
-      onStepClick={setCurrentStep}
-    >
+    <div className="module-layout">
+      <div className="module-header-box">
+        <h2>Bitcoin Fundamentals</h2>
+        <div className="intro-text">
+          <p className="prime-text">Understand what Bitcoin is and why it matters</p>
+        </div>
+      </div>
       <div className="module-content">
         {currentStep === 0 && <BitcoinIntroduction onComplete={handleStepComplete} />}
         {currentStep === 1 && <BitcoinComparison onComplete={handleStepComplete} />}
@@ -1384,7 +1388,7 @@ const BitcoinBasicsModule = () => {
         {currentStep === 3 && <WhyScarcityMatters onComplete={handleStepComplete} />}
         {currentStep === 4 && <BitcoinCompletion onComplete={handleStepComplete} />}
       </div>
-    </ModuleLayout>
+    </div>
   );
 };
 

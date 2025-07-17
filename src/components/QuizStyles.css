@@ -105,20 +105,20 @@
   font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 1rem;
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 .module-container .quiz-container .explanation-card .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
   line-height: 1.5;
 }
 
 .module-container .quiz-container .explanation-card.incorrect .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 .module-container .quiz-container .explanation-card.correct .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 /* Reflection step styles */
@@ -133,7 +133,7 @@
 .module-container .reflection-step h3,
 .module-container .reflection-step p,
 .module-container .reflection-step li {
-  color: #ffffff !important;
+  color: var(--color-text-primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -180,20 +180,20 @@
 }
 
 .module-container .reflection-step .explanation-card .feedback-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
   font-weight: 600;
 }
 
 .module-container .reflection-step .explanation-card .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 .module-container .reflection-step .explanation-card.correct .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 .module-container .reflection-step .explanation-card.incorrect .explanation-text {
-  color: #000000 !important;
+  color: var(--color-text-primary);
 }
 
 /* Global quiz text contrast and alignment - FIXED */
