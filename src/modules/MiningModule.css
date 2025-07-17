@@ -1,8 +1,8 @@
 /* Mining Module - Energy Alchemist Theme */
 .mining-module {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #1a1a2e 100%);
+  background: linear-gradient(135deg, var(--color-neutral-800) 0%, #16213e 30%, #0f3460 70%, var(--color-neutral-800) 100%);
   min-height: 100vh;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   position: relative;
   overflow-x: hidden;
@@ -91,7 +91,7 @@
 
 .progress-flame.active {
   background: rgba(255, 255, 255, 0.9);
-  border-color: #ffffff;
+  border-color: var(--color-text-primary);
   box-shadow: 0 0 15px rgba(247, 147, 26, 0.8);
   transform: scale(1.2);
 }
@@ -134,7 +134,7 @@
   font-size: 2.5rem;
   font-weight: bold;
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -202,7 +202,7 @@
 
 .alchemy-achievement-text h4 {
   margin: 0 0 0.5rem 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 1rem;
   font-weight: 600;
 }
@@ -262,7 +262,7 @@
   border: 1px solid rgba(247, 147, 26, 0.4);
   border-radius: 8px;
   padding: 1rem;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -309,7 +309,7 @@
 }
 
 .crisis-header h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin: 0;
   font-size: 1.3rem;
 }
@@ -355,7 +355,7 @@
 
 .evidence-section strong,
 .hidden-cost strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -381,13 +381,13 @@
 }
 
 .shocking-revelation strong {
-  color: #ff4444;
+  color: var(--color-danger-500);
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .revelation-text {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 500;
   margin: 0;
 }
@@ -439,7 +439,7 @@
 
 .bitcoin-contrast p {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
@@ -448,7 +448,7 @@
   margin: 2rem auto 0;
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-warning-500));
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1.1rem;
@@ -515,20 +515,20 @@
   border: 1px solid rgba(247, 147, 26, 0.4);
   border-radius: 8px;
   padding: 0.8rem 1.2rem;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 500;
   font-size: 0.9rem;
 }
 
 .formula-arrow {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.5rem;
   font-weight: bold;
 }
 
 /* Experiment Selection */
 .experiment-selection h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
@@ -564,14 +564,14 @@
 }
 
 .experiment-header h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin: 0;
   font-size: 1.2rem;
 }
 
 .energy-requirement {
   background: rgba(247, 147, 26, 0.2);
-  color: #f7931a;
+  color: var(--color-primary-500);
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: var(--font-size-lg);
@@ -614,7 +614,7 @@
   width: 100%;
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-warning-500));
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -666,7 +666,7 @@
 
 .energy-icon,
 .computation-icon {
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: iconPulse 2s ease-in-out infinite;
 }
 
@@ -687,7 +687,7 @@
 }
 
 .stat-value {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-size: 1.2rem;
   font-weight: 600;
   display: block;
@@ -701,7 +701,7 @@
 }
 
 .transformation-arrow {
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: arrowFlow 2s ease-in-out infinite;
 }
 
@@ -729,7 +729,7 @@
 }
 
 .status-text {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -741,7 +741,7 @@
 
 .target-info code {
   background: rgba(0, 0, 0, 0.3);
-  color: #f7931a;
+  color: var(--color-primary-500);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
 }
@@ -758,7 +758,7 @@
 }
 
 .proof-creation-success h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -780,7 +780,7 @@
 }
 
 .proof-icon {
-  color: #f7931a;
+  color: var(--color-primary-500);
   animation: proofGlow 2s ease-in-out infinite;
 }
 
@@ -790,7 +790,7 @@
 }
 
 .proof-header h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin: 0;
   font-size: 1.5rem;
 }
@@ -804,14 +804,14 @@
 }
 
 .proof-hash strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.5rem;
 }
 
 .hash-display {
   font-family: monospace;
-  color: #ffffff;
+  color: var(--color-text-primary);
   background: rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
   border-radius: 4px;
@@ -840,7 +840,7 @@
 }
 
 .summary-stat .stat-value {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
 }
 
@@ -855,7 +855,7 @@
 }
 
 .alchemy-revelation h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -875,7 +875,7 @@
 }
 
 .bitcoin-connection strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -883,9 +883,9 @@
 .mastery-complete-button {
   display: block;
   margin: 2rem auto 0;
-  background: linear-gradient(135deg, #00a650, #00d162);
+  background: linear-gradient(135deg, var(--color-success-600), #00d162);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1.1rem;
@@ -918,7 +918,7 @@
 
 .simulator-briefing h2 {
   font-size: 2rem;
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   margin-bottom: 1rem;
 }
 
@@ -938,13 +938,13 @@
   border: 1px solid rgba(247, 147, 26, 0.4);
   border-radius: 8px;
   padding: 1rem;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 500;
 }
 
 /* Attack Planning */
 .attack-planning h3 {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
@@ -973,7 +973,7 @@
 }
 
 .attack-header h4 {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -993,7 +993,7 @@
 }
 
 .requirements-preview strong {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -1006,9 +1006,9 @@
 
 .plan-attack-button {
   width: 100%;
-  background: linear-gradient(135deg, #ff6b6b, #ff4757);
+  background: linear-gradient(135deg, var(--color-danger-400), #ff4757);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -1033,7 +1033,7 @@
 }
 
 .attack-calculation h3 {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -1083,7 +1083,7 @@
 }
 
 .progress-fill.calculating {
-  background: linear-gradient(90deg, #ff6b6b, #ff4757);
+  background: linear-gradient(90deg, var(--color-danger-400), #ff4757);
   animation: progressCalculating 2s ease-in-out infinite;
 }
 
@@ -1109,7 +1109,7 @@
 }
 
 .attack-results h3 {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   text-align: center;
   margin-bottom: 2rem;
   font-size: 1.8rem;
@@ -1123,7 +1123,7 @@
 }
 
 .attack-target h4 {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   margin-bottom: 0.5rem;
 }
 
@@ -1140,7 +1140,7 @@
 
 .cost-analysis h5,
 .expected-outcome h5 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.2rem;
 }
@@ -1165,7 +1165,7 @@
 }
 
 .cost-value {
-  color: #ff6b6b;
+  color: var(--color-danger-400);
   font-weight: 600;
 }
 
@@ -1186,7 +1186,7 @@
 }
 
 .loss-amount {
-  color: #ff4444;
+  color: var(--color-danger-500);
   font-size: 1.3rem;
   font-weight: 700;
   margin-left: 0.5rem;
@@ -1213,7 +1213,7 @@
 .realization-2 strong,
 .realization-3 strong,
 .realization-4 strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .final-realization {
@@ -1231,13 +1231,13 @@
 }
 
 .final-realization h5 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
 
 .ultimate-insight p {
-  color: #ffffff;
+  color: var(--color-text-primary);
   line-height: 1.6;
   font-size: 1.05rem;
   font-weight: 500;
@@ -1254,7 +1254,7 @@
 }
 
 .security-conclusion h4 {
-  color: #00a650;
+  color: var(--color-success-600);
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
@@ -1267,9 +1267,9 @@
 
 .realization-complete-button {
   margin-top: 2rem;
-  background: linear-gradient(135deg, #00a650, #00d162);
+  background: linear-gradient(135deg, var(--color-success-600), #00d162);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1.1rem;
@@ -1302,7 +1302,7 @@
 
 .control-introduction h2 {
   font-size: 2rem;
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -1351,7 +1351,7 @@
 }
 
 .beat-time {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -1364,7 +1364,7 @@
 
 /* Difficulty Education */
 .difficulty-education h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
 }
@@ -1378,7 +1378,7 @@
 }
 
 .adjustment-process h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -1399,8 +1399,8 @@
 }
 
 .step-number {
-  background: #f7931a;
-  color: #000000;
+  background: var(--color-primary-500);
+  color: var(--color-neutral-900);
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -1412,7 +1412,7 @@
 }
 
 .step-content strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.3rem;
 }
@@ -1427,7 +1427,7 @@
 }
 
 .current-network-stats h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -1453,7 +1453,7 @@
 }
 
 .stat-value {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
 }
 
@@ -1467,7 +1467,7 @@
 }
 
 .simulation-challenge h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
 }
 
@@ -1498,7 +1498,7 @@
 }
 
 .scenario-header h5 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.2rem;
 }
@@ -1519,14 +1519,14 @@
 }
 
 .expected-effect strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
 }
 
 .simulate-button {
   width: 100%;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff8c00);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -1550,7 +1550,7 @@
 }
 
 .difficulty-simulation h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   text-align: center;
   margin-bottom: 2rem;
   font-size: 1.8rem;
@@ -1588,7 +1588,7 @@
 }
 
 .step-week {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -1614,7 +1614,7 @@
 }
 
 .metric-value {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   font-size: 0.85rem;
 }
@@ -1634,13 +1634,13 @@
 }
 
 .progress-label {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
 .progress-percentage {
-  color: #f7931a;
+  color: var(--color-primary-500);
   font-weight: 600;
   margin-top: 0.5rem;
 }
@@ -1657,7 +1657,7 @@
 }
 
 .difficulty-mastery h3 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -1689,7 +1689,7 @@
 }
 
 .achievement-text h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
@@ -1709,7 +1709,7 @@
 }
 
 .mastery-insights h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -1728,7 +1728,7 @@
   }
   
 .insight-item strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   }
   
 .personal-impact {
@@ -1741,7 +1741,7 @@
   }
   
 .personal-impact h4 {
-  color: #f7931a;
+  color: var(--color-primary-500);
   margin-bottom: 1rem;
   font-size: 1.3rem;
   }
@@ -1899,7 +1899,7 @@
   width: 100%;
   background: linear-gradient(135deg, #32c832, #28a428);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -2009,7 +2009,7 @@
 .phase.completed {
   background: rgba(50, 200, 50, 0.15);
   border-color: rgba(50, 200, 50, 0.5);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 /* Energy Revolution Complete */
@@ -2120,7 +2120,7 @@
 }
 
 .sovereignty-achievement strong {
-  color: #f7931a;
+  color: var(--color-primary-500);
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -2145,9 +2145,9 @@
 
 .journey-complete-button {
   margin-top: 2rem;
-  background: linear-gradient(135deg, #f7931a, #ff8c00);
+  background: linear-gradient(135deg, var(--color-primary-500), #ff8c00);
   border: none;
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1.1rem;
