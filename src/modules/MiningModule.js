@@ -116,7 +116,7 @@ const MiningModule = () => {
       <div className="energy-comparison">
         <div className="module-header">
           <h2>⚡ Energy Reality Check: Bitcoin vs The World</h2>
-          <p>Let's examine actual energy consumption data...</p>
+          <p>Let's examine actual energy consumption data and see how Bitcoin compares...</p>
             </div>
 
         <div className="comparison-tabs">

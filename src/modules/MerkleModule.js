@@ -1336,11 +1336,11 @@ const MerkleModule = () => {
       {
         id: 'authenticated_structures',
         name: 'Authenticated Data Structures',
-        difficulty: 'Expert',
-        description: 'Any data structure with cryptographic authentication',
-        useCase: 'Authenticated databases, logs, and complex data types',
-        benefit: 'Apply Merkle principles to lists, maps, sets, and custom structures',
-        explanation: 'Add hash-based authentication to any data structure for verifiable computation'
+        difficulty: 'Advanced',
+        description: 'Data structures that can prove their contents are authentic',
+        useCase: 'Verifiable databases and audit logs',
+        benefit: 'Trust data without trusting the source',
+        explanation: 'Like a tamper-evident seal on any type of data container'
       }
     ];
 

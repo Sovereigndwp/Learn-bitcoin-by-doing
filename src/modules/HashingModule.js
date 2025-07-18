@@ -24,6 +24,29 @@ const HashingModule = () => {
   const [hashComparisons, setHashComparisons] = useState({});
   const [proofOfWorkDemo, setProofOfWorkDemo] = useState({});
 
+  // Network data functions
+  const getBitcoinPrice = async () => {
+    try {
+      const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+      const data = await response.json();
+      return Math.round(data.bpi.USD.rate_float);
+    } catch (error) {
+      console.log('Failed to fetch Bitcoin price, using fallback');
+      return null;
+    }
+  };
+
+  const getNetworkHashRate = async () => {
+    try {
+      const response = await fetch('https://api.blockchain.info/stats');
+      const data = await response.json();
+      return data.hash_rate || null;
+    } catch (error) {
+      console.log('Failed to fetch network hash rate, using fallback');
+      return null;
+    }
+  };
+
   // Hashing Learning Steps
   const hashingSteps = [
     {

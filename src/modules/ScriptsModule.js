@@ -175,12 +175,13 @@ const ScriptsModule = () => {
         {currentDemo === 'overview' && (
           <div className="intro-content">
             <div className="concept-intro">
-              <div className="thinking-challenge">
-                <h3>🤔 Before we dive in, what do you think?</h3>
-                <p>When you send someone Bitcoin, you're not just sending digital coins. You're creating a small computer program that defines exactly how those coins can be spent.</p>
-                
-                <div className="prediction-challenge">
-                  <p><strong>Question:</strong> If you could program money, what kinds of conditions would you want to set? (e.g., "only spendable after my birthday", "requires my spouse's approval", etc.)</p>
+      <div className="thinking-challenge">
+        <h3>🤔 Think of money like a smart contract</h3>
+        <p>Imagine if cash could be programmed with rules. For example, a $20 bill that can only be spent at grocery stores, or a check that becomes valid only after a certain date.</p>
+        
+        <div className="prediction-challenge">
+          <p><strong>Real-world analogy:</strong> This is like writing conditions on a check - "Pay to John Smith only after January 1st" or "Valid only with two signatures."</p>
+          <p><strong>Your turn:</strong> If you could program money with custom rules, what would you want to control?
                   <textarea
                     value={userPrediction}
                     onChange={(e) => setUserPrediction(e.target.value)}
@@ -374,8 +375,12 @@ const ScriptsModule = () => {
         {currentExercise === 'concept' && (
           <div className="stack-concept">
             <div className="concept-explanation">
-              <h3>🥞 What is a Stack?</h3>
-              <p>Think of a stack like a stack of plates. You can only add plates to the top (PUSH) and remove plates from the top (POP). This "Last In, First Out" (LIFO) behavior is perfect for executing mathematical operations in order.</p>
+            <h3>🥞 What is a Stack? (Like a Stack of Plates)</h3>
+            <p>Imagine you're washing dishes and stacking clean plates. You always put the newest clean plate on top of the stack, and when you need a plate, you take the top one first. This "Last In, First Out" system is exactly how Bitcoin processes script operations.</p>
+            <div className="real-world-example">
+              <p><strong>Real world:</strong> Email - newest messages appear at the top</p>
+              <p><strong>Bitcoin:</strong> Newest data goes on top of the stack</p>
+            </div>
               
               <div className="stack-analogy">
                 <div className="analogy-visual">

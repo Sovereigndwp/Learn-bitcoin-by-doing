@@ -82,7 +82,7 @@ const TransactionsModule = () => {
       simple: {
         name: 'Simple Payment',
         txid: 'f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16',
-        description: 'The first Bitcoin transaction - Satoshi to Hal Finney',
+        description: 'The first Bitcoin transaction - Satoshi sent 10 BTC to Hal Finney',
         inputs: [
           {
             txid: '0437cd7f8525ceed2324359c2d0ba26006d92d856a9c20fa0241106ee5a597c9',
@@ -110,7 +110,7 @@ const TransactionsModule = () => {
       multisig: {
         name: 'Multisig Transaction',
         txid: 'a1b2c3d4e5f6789012345678901234567890123456789012345678901234567890',
-        description: '2-of-3 multisig requiring multiple signatures',
+        description: '2-of-3 multisig - requires 2 out of 3 signatures to spend',
         inputs: [
           {
             txid: 'b2c3d4e5f6789012345678901234567890123456789012345678901234567890a1',
@@ -133,7 +133,7 @@ const TransactionsModule = () => {
       coinbase: {
         name: 'Coinbase Transaction',
         txid: 'coinbase123456789012345678901234567890123456789012345678901234567890',
-        description: 'Block reward transaction creating new Bitcoin',
+        description: 'Block reward transaction - how new Bitcoin is created',
         inputs: [
           {
             txid: '0000000000000000000000000000000000000000000000000000000000000000',
@@ -179,7 +179,7 @@ const TransactionsModule = () => {
       <div className="transaction-anatomy">
         <div className="module-header">
           <h2>🔍 Transaction Anatomy: Inside a Bitcoin Transaction</h2>
-          <p>Every Bitcoin transaction is a data structure that transfers value...</p>
+          <p>Every Bitcoin transaction is like a digital receipt that transfers value from one address to another...</p>
         </div>
 
         <div className="transaction-selector">
@@ -883,15 +883,94 @@ const TransactionsModule = () => {
   // Continue with remaining steps...
   // For brevity, I'll implement the key remaining steps
 
-  // Step 4: Transaction Builder (simplified for space)
+  // Step 4: Transaction Builder - Fixed implementation
   function TransactionBuilder() {
+    const [fromAddress, setFromAddress] = useState('');
+    const [toAddress, setToAddress] = useState('');
+    const [amount, setAmount] = useState('');
+    const [feeRate, setFeeRate] = useState(10);
+    const [builtTransaction, setBuiltTransaction] = useState(null);
+    
+    const buildTransaction = () => {
+      if (!fromAddress || !toAddress || !amount) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      const tx = {
+        inputs: [{ address: fromAddress, amount: parseFloat(amount) }],
+        outputs: [{ address: toAddress, amount: parseFloat(amount) }],
+        fee: (parseFloat(amount) * feeRate) / 1000000, // Simple fee calculation
+        size: 250, // Estimated transaction size
+        id: `tx_${Date.now()}`
+      };
+      
+      setBuiltTransaction(tx);
+    };
+    
     return (
       <div className="transaction-builder">
         <div className="module-header">
           <h2>🛠️ Build Your Transaction</h2>
           <p>Interactive transaction construction lab</p>
         </div>
-        {/* Transaction building interface would go here */}
+        
+        <div className="builder-interface">
+          <div className="input-group">
+            <label>From Address:</label>
+            <input
+              type="text"
+              value={fromAddress}
+              onChange={(e) => setFromAddress(e.target.value)}
+              placeholder="1YourAddressHere..."
+            />
+          </div>
+          
+          <div className="input-group">
+            <label>To Address:</label>
+            <input
+              type="text"
+              value={toAddress}
+              onChange={(e) => setToAddress(e.target.value)}
+              placeholder="1RecipientAddressHere..."
+            />
+          </div>
+          
+          <div className="input-group">
+            <label>Amount (BTC):</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0.001"
+              step="0.00000001"
+            />
+          </div>
+          
+          <div className="input-group">
+            <label>Fee Rate (sat/byte):</label>
+            <input
+              type="range"
+              min="1"
+              max="100"
+              value={feeRate}
+              onChange={(e) => setFeeRate(e.target.value)}
+            />
+            <span>{feeRate} sat/byte</span>
+          </div>
+          
+          <ActionButton onClick={buildTransaction} className="primary">
+            Build Transaction
+          </ActionButton>
+        </div>
+        
+        {builtTransaction && (
+          <div className="transaction-result">
+            <h3>Built Transaction:</h3>
+            <pre>{JSON.stringify(builtTransaction, null, 2)}</pre>
+          </div>
+        )}
+        
         <ContinueButton onClick={() => setCurrentStep(4)}>
           Explore Mempool <ArrowRight className="w-4 h-4" />
         </ContinueButton>
@@ -899,15 +978,63 @@ const TransactionsModule = () => {
     );
   }
 
-  // Step 5: Mempool Dynamics (simplified)
+  // Step 5: Mempool Dynamics - Fixed implementation
   function MempoolDynamics() {
+    const [mempoolData, setMempoolData] = useState({
+      pending: 12500,
+      avgFee: 25,
+      highPriority: 1200,
+      mediumPriority: 8300,
+      lowPriority: 3000
+    });
+    
+    const simulateMempool = () => {
+      setMempoolData(prev => ({
+        ...prev,
+        pending: prev.pending + Math.floor(Math.random() * 1000 - 500),
+        avgFee: Math.max(1, prev.avgFee + Math.floor(Math.random() * 10 - 5))
+      }));
+    };
+    
     return (
       <div className="mempool-dynamics">
         <div className="module-header">
           <h2>📊 Mempool Dynamics</h2>
           <p>How transactions wait and get confirmed</p>
         </div>
-        {/* Mempool visualization would go here */}
+        
+        <div className="mempool-visualization">
+          <div className="mempool-stats">
+            <div className="stat-card">
+              <h3>Pending Transactions</h3>
+              <div className="stat-value">{mempoolData.pending.toLocaleString()}</div>
+            </div>
+            <div className="stat-card">
+              <h3>Average Fee</h3>
+              <div className="stat-value">{mempoolData.avgFee} sat/byte</div>
+            </div>
+          </div>
+          
+          <div className="priority-breakdown">
+            <h3>Priority Breakdown</h3>
+            <div className="priority-bar">
+              <div className="high-priority" style={{width: `${(mempoolData.highPriority / mempoolData.pending) * 100}%`}}>
+                High ({mempoolData.highPriority})
+              </div>
+              <div className="medium-priority" style={{width: `${(mempoolData.mediumPriority / mempoolData.pending) * 100}%`}}>
+                Medium ({mempoolData.mediumPriority})
+              </div>
+              <div className="low-priority" style={{width: `${(mempoolData.lowPriority / mempoolData.pending) * 100}%`}}>
+                Low ({mempoolData.lowPriority})
+              </div>
+            </div>
+          </div>
+          
+          <ActionButton onClick={simulateMempool} className="secondary">
+            Simulate Mempool Changes
+          </ActionButton>
+        </div>
+        
         <ContinueButton onClick={() => setCurrentStep(5)}>
           Learn Transaction Privacy <ArrowRight className="w-4 h-4" />
         </ContinueButton>
@@ -939,7 +1066,10 @@ const TransactionsModule = () => {
               <li>✅ Privacy considerations</li>
             </ul>
             
-            <ActionButton onClick={() => completeModule('transactions')} className="primary large">
+            <ActionButton onClick={() => {
+              setCompletedSteps(prev => new Set([...prev, 5]));
+              completeModule('transactions');
+            }} className="primary large">
               <CheckCircle className="w-5 h-5" />
               Complete Transactions Module
             </ActionButton>

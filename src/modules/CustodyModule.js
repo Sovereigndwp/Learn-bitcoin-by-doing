@@ -190,29 +190,29 @@ const CustodyModule = () => {
         options: ['Safely returned to users', 'Lost forever due to hack', 'Frozen by government', 'Converted to cash'],
         reality: 'Lost forever - 850,000 Bitcoin ($25+ billion today) disappeared',
         explanation: 'Mt. Gox was the world\'s largest Bitcoin exchange, handling 70% of all Bitcoin transactions. Poor security and possible insider fraud led to massive losses.',
-        lesson: 'This disaster taught the Bitcoin community: "Not your keys, not your Bitcoin"',
-        thinkingQuestion: 'If you had Bitcoin on Mt. Gox, what would you have learned about custody?'
-      },
+        lesson: 'This disaster highlighted that if someone else holds your keys, you don\'t truly own your Bitcoin',
+        thinkingQuestion: 'Had you owned Bitcoin stored in Mt. Gox, what might you have realized about true ownership?'
+      }
       {
         id: 'quadriga',
         event: 'QuadrigaCX CEO Death (2019)',
-        question: 'What happened when QuadrigaCX CEO died with the only access to cold storage?',
+        question: 'What happened when the CEO of QuadrigaCX passed away without sharing access to the cold storage?',
         options: ['Funds were recovered', 'Company hired experts', '$190M lost forever', 'Insurance covered losses'],
-        reality: '$190 million in cryptocurrency was lost forever',
-        explanation: 'The CEO was the only person with access to the exchange\'s cold storage wallets. When he died unexpectedly, 76,000 users lost their funds.',
-        lesson: 'Single points of failure in custody can be catastrophic - always have backup plans',
-        thinkingQuestion: 'How could proper custody planning have prevented this disaster?'
-      },
+        reality: '$190 million in cryptocurrency was permanently inaccessible',
+        explanation: 'The CEO held exclusive access to the exchange\'s cold storage. His sudden passing left 76,000 users unable to retrieve their funds.',
+        lesson: 'Custody planning must involve multiple parties to avoid critical single points of failure',
+        thinkingQuestion: 'What would you implement to ensure asset recovery when key holders are unavailable?'
+      }
       {
         id: 'personal-loss',
         event: 'Personal Key Loss Stories',
         question: 'How much Bitcoin has been lost due to forgotten passwords and lost keys?',
-        options: ['Very little', 'About 1 million BTC', '4-6 million BTC', 'Over 10 million BTC'],
-        reality: 'Estimated 4-6 million Bitcoin are lost forever (20% of total supply)',
-        explanation: 'Chainalysis estimates that 20% of all Bitcoin is in lost wallets. This includes forgotten passwords, lost hardware, and discarded drives.',
-        lesson: 'Proper backup and recovery planning is essential for Bitcoin custody',
-        thinkingQuestion: 'What backup strategy would ensure you never lose access to your Bitcoin?'
-      }
+          options: ['Very little', 'About 1 million BTC', '4-6 million BTC', 'Over 10 million BTC'],
+          reality: 'Roughly 4-6 million Bitcoin (or 20% of the total supply) are lost',
+          explanation: 'According to Chainalysis, around 20% of Bitcoin may reside in lost wallets, due to forgotten passwords, lost devices, or discarded storage.',
+          lesson: 'Effective backup and recovery strategies are vital to protect your Bitcoin',
+          thinkingQuestion: 'What measures can you implement to maximize your access to your Bitcoin?'
+        }
     ];
 
     const custodyPrinciples = [

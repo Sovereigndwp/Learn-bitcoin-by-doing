@@ -196,7 +196,7 @@ const BitcoinComparison = ({ onComplete }) => {
       traditional: {
         controller: 'Government can freeze, confiscate, or restrict your money',
         example: 'Bank accounts frozen during protests, capital controls, asset seizures',
-        realExample: 'Canadian truckers (2022), Greek bank closures (2015), Chinese capital controls',
+        realExample: 'Canadian truckers (2022), Nigerian bank protests (2024), Russian sanctions (2022)',
         risk: 'Your money exists at government permission'
       },
       bitcoin: {
@@ -213,7 +213,7 @@ const BitcoinComparison = ({ onComplete }) => {
       traditional: {
         controller: 'Central banks print unlimited money, causing inflation',
         example: 'Your $100 from 2000 only buys $69 worth of stuff today',
-        realExample: 'Venezuela (99% inflation), Turkey (80% inflation), US (average 3% per year)',
+        realExample: 'Argentina (211% inflation 2023), Turkey (64% inflation 2024), US (3.1% average)',
         risk: 'Your purchasing power constantly erodes through money printing'
       },
       bitcoin: {
@@ -823,10 +823,10 @@ const WhyScarcityMatters = ({ onComplete }) => {
       setup: "Here are real numbers from the US money supply:",
       statistics: {
         money_2000: "$4.9 trillion",
-        money_2024: "$21.1 trillion", 
+        money_2024: "$21.7 trillion",
         increase: "4.3x more dollars",
         debt_2000: "$5.6 trillion",
-        debt_2024: "$33.7 trillion",
+        debt_2024: "$34.2 trillion",
         debt_increase: "6x more debt"
       },
       question: "If there are 4x more dollars today than in 2000, what happened to the value of each dollar?",

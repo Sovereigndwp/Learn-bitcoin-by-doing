@@ -41,11 +41,11 @@ const AdvancedTopicsModule = () => {
       id: 'privacy-technologies',
       title: 'Privacy & Confidentiality',
       icon: <Shield className="step-icon" />,
-      description: 'Master Bitcoin privacy technologies and implementations',
+      description: 'Learn practical Bitcoin privacy tools anyone can use',
       learningObjectives: [
-        'Understand confidential transactions',
-        'Explore mixing and privacy protocols',
-        'Learn practical privacy techniques'
+        'Simple privacy techniques for everyday users',
+        'Understanding transaction analysis',
+        'Practical wallet privacy features'
       ]
     },
     {
