@@ -7,12 +7,14 @@ import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
 import './styles/globalTheme.css';
-import './styles/GlobalContrast.css';
 import './styles/modernComponents.css';
+import './styles/modernInteractions.css';
 import './components/EnhancedButtons.css';
 import './components/NotificationSystem.css';
-
 import './App.css';
+
+/* GlobalContrast.css MUST be imported last to override everything */
+import './styles/GlobalContrast.css';
 
 // Import all modules
 import MoneyModule from './modules/MoneyModule';

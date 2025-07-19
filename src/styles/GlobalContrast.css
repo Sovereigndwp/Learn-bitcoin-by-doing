@@ -1,6 +1,6 @@
 /* =====================================================
-   MASTER DARK THEME ENFORCEMENT
-   Ensures no white backgrounds with light text anywhere
+   MASTER DARK THEME ENFORCEMENT WITH ABSOLUTE CONTRAST
+   Ensures light text on dark backgrounds EVERYWHERE
    ===================================================== */
 
 /* Force dark background on all elements */
@@ -11,12 +11,55 @@
 /* Root body styling - enforce dark theme */
 body {
   background: var(--color-dark-bg) !important;
-  color: var(--color-dark-text) !important;
+  color: #ffffff !important;
   min-height: 100vh;
   font-family: var(--font-family-sans);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* =====================================================
+   ABSOLUTE TEXT CONTRAST ENFORCEMENT
+   Override ALL text color rules globally
+   ===================================================== */
+
+/* HIGHEST PRIORITY - All text elements forced to proper contrast */
+h1, h2, h3, h4, h5, h6,
+.hero-title, .module-title, .step-title, .card-title,
+.slide-title, .section-title, .page-title {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* All body text - force light gray for readability on dark */
+p, span, div, li, td, th, label, 
+.description, .subtitle, .text, .content,
+.hero-description, .module-description, .step-description,
+.card-content, .card-body, .module-content, .learning-content {
+  color: #e2e8f0 !important;
+}
+
+/* Specific UI elements that need bright white */
+.hero-highlight, .badge, .pill, .tag, .status,
+.nav-tab.active, .button.primary, .btn-primary,
+.achievement-title, .progress-title, .stat-number {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* CRITICAL FIX: Hero highlight must be visible */
+.hero-highlight {
+  background: linear-gradient(135deg, #f7931a, #e8750a) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-weight: 700 !important;
+  padding: 8px 16px !important;
+  border-radius: 25px !important;
+  display: inline-block !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
 }
 
 /* Ensure all main containers have dark backgrounds */
@@ -472,4 +515,104 @@ input::placeholder, textarea::placeholder {
   button, .button, .btn {
     border: 2px solid var(--color-primary-500) !important;
   }
+}
+
+/* =====================================================
+   ULTRA-SPECIFIC OVERRIDES FOR PROBLEMATIC ELEMENTS
+   HIGHEST PRIORITY - Must be at the end
+   ===================================================== */
+
+/* HERO HIGHLIGHT - Must be visible at all costs */
+.hero-highlight,
+.welcome-section .hero-highlight,
+.slide-container .hero-highlight,
+span.hero-highlight,
+div .hero-highlight {
+  background: linear-gradient(135deg, #f7931a, #e8750a) !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9) !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  border-radius: 30px !important;
+  display: inline-block !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  font-size: 16px !important;
+  box-shadow: 0 4px 15px rgba(247, 147, 26, 0.4) !important;
+  position: relative !important;
+  z-index: 999 !important;
+}
+
+/* Force all text elements to have proper visibility */
+.homepage-modern *,
+.welcome-section *,
+.slide-container *,
+.hero-content * {
+  color: #e2e8f0 !important;
+}
+
+.homepage-modern h1,
+.homepage-modern h2,
+.homepage-modern h3,
+.welcome-section h1,
+.welcome-section h2,
+.welcome-section h3,
+.slide-container h1,
+.slide-container h2,
+.slide-container h3,
+.hero-content h1,
+.hero-content h2,
+.hero-content h3 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Module cards and navigation must be visible */
+.module-card h5,
+.module-card .module-title,
+.nav-tab,
+.slide-nav-button,
+.nav-button {
+  color: #ffffff !important;
+}
+
+.module-card p,
+.module-card .description,
+.group-description {
+  color: #cbd5e0 !important;
+}
+
+/* Ensure ALL buttons are properly contrasted */
+button,
+.button,
+.btn,
+.nav-button,
+.slide-nav-button,
+.start-journey-button,
+.quiz-option {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+button:hover,
+.button:hover,
+.btn:hover,
+.nav-button:hover,
+.slide-nav-button:hover {
+  background: #f7931a !important;
+  border-color: #f7931a !important;
+  color: #ffffff !important;
+}
+
+/* Override any remaining problematic styles */
+.hero-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7) !important;
+}
+
+.hero-description {
+  color: #e2e8f0 !important;
 }
