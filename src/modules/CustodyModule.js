@@ -396,7 +396,7 @@ const CustodyModule = () => {
           <StepNavigation
             currentStep={0}
             totalSteps={learningSteps.length}
-            onNext={() => handleStepNavigation(1)}
+            onNext={() => setCurrentStep(prev => prev < learningSteps.length - 1 ? prev + 1 : prev)}
             canGoBack={false}
             nextLabel="Explore Custody Methods"
           />
@@ -584,11 +584,11 @@ const CustodyModule = () => {
             <StepNavigation
               currentStep={1}
               totalSteps={learningSteps.length}
-              onPrevious={() => handleStepNavigation(0)}
-              onNext={() => handleStepNavigation(2)}
+              onPrevious={() => setCurrentStep(prev => prev > 0 ? prev - 1 : prev)}
+              onNext={() => setCurrentStep(prev => prev < learningSteps.length - 1 ? prev + 1 : prev)}
               canGoBack={true}
               nextLabel="Learn Threat Modeling"
-              previousLabel="Back to Introduction"
+              previousLabel="Previous Step"
             />
           )}
         </div>
@@ -728,11 +728,11 @@ const CustodyModule = () => {
             <StepNavigation
               currentStep={2}
               totalSteps={learningSteps.length}
-              onPrevious={() => handleStepNavigation(1)}
-              onNext={() => handleStepNavigation(3)}
+              onPrevious={() => setCurrentStep(prev => prev > 0 ? prev - 1 : prev)}
+              onNext={() => setCurrentStep(prev => prev < learningSteps.length - 1 ? prev + 1 : prev)}
               canGoBack={true}
               nextLabel="Design Backup Systems"
-              previousLabel="Back to Custody Methods"
+              previousLabel="Previous Step"
             />
           )}
         </div>
@@ -887,11 +887,11 @@ const CustodyModule = () => {
             <StepNavigation
               currentStep={3}
               totalSteps={learningSteps.length}
-              onPrevious={() => handleStepNavigation(2)}
-              onNext={() => handleStepNavigation(4)}
+              onPrevious={() => setCurrentStep(prev => prev > 0 ? prev - 1 : prev)}
+              onNext={() => setCurrentStep(prev => prev < learningSteps.length - 1 ? prev + 1 : prev)}
               canGoBack={true}
               nextLabel="Plan Inheritance"
-              previousLabel="Back to Threat Modeling"
+              previousLabel="Previous Step"
             />
           )}
         </div>
@@ -1038,11 +1038,11 @@ const CustodyModule = () => {
             <StepNavigation
               currentStep={4}
               totalSteps={learningSteps.length}
-              onPrevious={() => handleStepNavigation(3)}
-              onNext={() => handleStepNavigation(5)}
+              onPrevious={() => setCurrentStep(prev => prev > 0 ? prev - 1 : prev)}
+              onNext={() => setCurrentStep(prev => prev < learningSteps.length - 1 ? prev + 1 : prev)}
               canGoBack={true}
               nextLabel="Complete Custody Mastery"
-              previousLabel="Back to Backup Systems"
+              previousLabel="Previous Step"
             />
           )}
         </div>
@@ -1181,11 +1181,11 @@ const CustodyModule = () => {
       <StepNavigation
         currentStep={5}
         totalSteps={learningSteps.length}
-        onPrevious={() => handleStepNavigation(4)}
+        onPrevious={() => setCurrentStep(prev => prev > 0 ? prev - 1 : prev)}
         onNext={() => handleStepComplete(5)}
         canGoBack={true}
         nextLabel="Complete Custody Module"
-        previousLabel="Back to Inheritance Planning"
+        previousLabel="Previous Step"
       />
     </div>
   );

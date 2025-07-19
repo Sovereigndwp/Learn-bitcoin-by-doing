@@ -853,6 +853,14 @@ const MythsModule = () => {
 
                     {responses[index] !== undefined && (
                       <div className="navigation-buttons">
+                        {index > 0 && (
+                          <ActionButton
+                            onClick={() => setCurrentChallenge(index - 1)}
+                            className="previous-question"
+                          >
+                            Previous Question
+                          </ActionButton>
+                        )}
                         {index < masteryQuestions.length - 1 ? (
                           <ActionButton
                             onClick={() => setCurrentChallenge(index + 1)}

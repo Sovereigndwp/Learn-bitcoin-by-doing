@@ -58,7 +58,7 @@ const NumbersModule = () => {
   ];
 
   // Step 1: Binary Basics
-  function BinaryBasics() {
+  function BinaryBasics({ onComplete }) {
     const [mode, setMode] = useState('learn');
     const [binaryInput, setBinaryInput] = useState('');
     const [decimalInput, setDecimalInput] = useState('');
@@ -281,6 +281,14 @@ const NumbersModule = () => {
 
               {challengeAnswers[currentChallenge]?.correct && (
                 <div className="challenge-navigation">
+                  {currentChallenge > 0 && (
+                    <ActionButton 
+                      onClick={() => setCurrentChallenge(currentChallenge - 1)}
+                      className="secondary"
+                    >
+                      <ArrowLeft className="w-4 h-4" /> Previous Challenge
+                    </ActionButton>
+                  )}
                   {currentChallenge < binaryChallenges.length - 1 ? (
                     <ActionButton 
                       onClick={() => setCurrentChallenge(currentChallenge + 1)}
@@ -289,8 +297,8 @@ const NumbersModule = () => {
                       Next Challenge <ArrowRight className="w-4 h-4" />
                     </ActionButton>
                   ) : (
-                    <ContinueButton onClick={() => setCurrentStep(1)}>
-                      Master Hexadecimal <ArrowRight className="w-4 h-4" />
+                    <ContinueButton onClick={() => onComplete(0)}>
+                      Complete Binary Basics <ArrowRight className="w-4 h-4" />
                     </ContinueButton>
                   )}
         </div>
@@ -303,7 +311,7 @@ const NumbersModule = () => {
   }
 
   // Step 2: Hexadecimal Power
-  function HexadecimalPower() {
+  function HexadecimalPower({ onComplete }) {
   const [hexInput, setHexInput] = useState('');
     const [decimalInput, setDecimalInput] = useState('');
     const [binaryInput, setBinaryInput] = useState('');
@@ -496,7 +504,7 @@ const NumbersModule = () => {
             </div>
           </div>
           
-        <ContinueButton onClick={() => setCurrentStep(2)}>
+        <ContinueButton onClick={() => onComplete()}>
           Learn Byte Order <ArrowRight className="w-4 h-4" />
         </ContinueButton>
             </div>
@@ -504,7 +512,7 @@ const NumbersModule = () => {
   }
 
   // Step 3: Byte Order (Endianness)
-  function ByteOrderMastery() {
+  function ByteOrderMastery({ onComplete }) {
     const [selectedBytes, setSelectedBytes] = useState('12345678');
     const [endianDemo, setEndianDemo] = useState(null);
 
@@ -634,7 +642,7 @@ const NumbersModule = () => {
           <p>Notice how it starts with many zeros - this is why it's called "proof of work"!</p>
           </div>
           
-        <ContinueButton onClick={() => setCurrentStep(3)}>
+        <ContinueButton onClick={() => onComplete()}>
           Master Hash Numbers <ArrowRight className="w-4 h-4" />
         </ContinueButton>
         </div>
@@ -642,7 +650,7 @@ const NumbersModule = () => {
   }
 
   // Step 4: Hash Numbers
-  function HashNumberMastery() {
+  function HashNumberMastery({ onComplete }) {
     const [inputText, setInputText] = useState('Hello Bitcoin!');
     const [hashResult, setHashResult] = useState('');
     const [hashAnalysis, setHashAnalysis] = useState(null);
@@ -831,7 +839,7 @@ const NumbersModule = () => {
           </div>
         </div>
 
-        <ContinueButton onClick={() => setCurrentStep(4)}>
+        <ContinueButton onClick={() => onComplete()}>
           Master Bitcoin Precision <ArrowRight className="w-4 h-4" />
         </ContinueButton>
       </div>
@@ -839,7 +847,7 @@ const NumbersModule = () => {
   }
 
   // Step 5: Bitcoin Precision
-  function BitcoinPrecision() {
+  function BitcoinPrecision({ onComplete }) {
     const [bitcoinAmount, setBitcoinAmount] = useState('1.0');
     const [satoshiAmount, setSatoshiAmount] = useState('100000000');
     const [precisionDemo, setPrecisionDemo] = useState(null);
@@ -1048,8 +1056,8 @@ const NumbersModule = () => {
           </div>
 
       <div className="step-content">
-        {StepComponent && <StepComponent />}
-                  </div>
+        {StepComponent && <StepComponent onComplete={() => handleStepComplete(currentStep)} />}
+      </div>
 
       <div className="module-navigation">
         {currentStep > 0 && (
