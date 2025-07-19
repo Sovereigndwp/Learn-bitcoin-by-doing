@@ -1,4 +1,4 @@
-. **Interactive Quizzes & Knowledge Checks**
+ . **Interactive Quizzes & Knowledge Checks**
 
 ### Current Gaps:
 - Limited knowledge validation
