@@ -492,24 +492,24 @@ const BlockchainDemo = ({ onComplete }) => {
             <p>Create some transactions to include in the next block:</p>
             
             <div className="quick-transactions">
-            <Button 
+            <ActionButton 
                 onClick={() => handleAddTransaction('Alice', 'Bob', '0.5')}
                 className="quick-tx-button"
               >
                 Alice → Bob: 0.5 BTC
-              </Button>
-              <Button 
+              </ActionButton>
+              <ActionButton 
                 onClick={() => handleAddTransaction('Charlie', 'Diana', '1.2')}
                 className="quick-tx-button"
               >
                 Charlie → Diana: 1.2 BTC
-              </Button>
-              <Button 
+              </ActionButton>
+              <ActionButton 
                 onClick={() => handleAddTransaction('Eve', 'Frank', '0.8')}
                 className="quick-tx-button"
               >
                 Eve → Frank: 0.8 BTC
-            </Button>
+            </ActionButton>
           </div>
 
             {userTransactions.length >= 2 && (
@@ -1108,12 +1108,12 @@ const BitcoinCompletion = ({ onComplete }) => {
             </div>
           </div>
 
-        <Button 
+        <ActionButton 
           className="complete-module-button"
           onClick={() => onComplete(4)}
         >
           Complete Bitcoin Fundamentals
-        </Button>
+        </ActionButton>
       </div>
       </div>
     );
