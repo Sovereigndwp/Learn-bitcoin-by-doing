@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Wrench, CheckCircle, Trophy, Copy, Hash, Key, 
   Calculator, Search, Code, Clock, Download, Target, Info
 } from 'lucide-react';
 import { 
-  ActionButton 
+  ActionButton,
+  NavigationButton
 } from '../components/EnhancedButtons';
 // Using global CSS only - no module-specific overrides
 
 const BitcoinToolkitModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentTool, setCurrentTool] = useState(null);
   const [completedTools, setCompletedTools] = useState(new Set());
 
@@ -437,6 +440,16 @@ const BitcoinToolkitModule = () => {
               </div>
             </div>
           </div>
+        </div>
+        
+        {/* Navigation Footer */}
+        <div className="module-navigation">
+          <NavigationButton 
+            onClick={() => navigate('/')}
+            className="home-button"
+          >
+            Return to Homepage
+          </NavigationButton>
         </div>
       </div>
     </div>

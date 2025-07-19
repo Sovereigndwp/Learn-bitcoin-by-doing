@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Zap, Clock, DollarSign, TrendingUp, Globe, Trophy,
@@ -20,6 +21,7 @@ import ModuleLayout from '../components/ModuleLayout';
 
 const LightningModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userPredictions, setUserPredictions] = useState({});
@@ -1291,6 +1293,25 @@ const LightningModule = () => {
 
         <div className="module-content">
           {renderStepContent()}
+        </div>
+        
+        {/* Navigation Footer */}
+        <div className="module-navigation">
+          {currentStep > 0 && (
+            <NavigationButton 
+              onClick={() => setCurrentStep(currentStep - 1)}
+              direction="prev"
+            >
+              Previous Step
+            </NavigationButton>
+          )}
+          
+          <NavigationButton 
+            onClick={() => navigate('/')}
+            className="home-button"
+          >
+            Return to Homepage
+          </NavigationButton>
         </div>
       </div>
     </div>

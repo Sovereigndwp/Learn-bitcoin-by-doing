@@ -524,15 +524,19 @@
 .option-explanation {
   margin-top: var(--spacing-sm);
   padding: var(--spacing-md);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
   border-radius: var(--radius-lg);
-  color: var(--color-dark-textSecondary);
+  color: var(--color-dark-text) !important; /* Improved contrast */
   font-size: var(--text-sm);
   line-height: 1.5;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  animation: fadeInUp 0.3s ease-out;
+  animation: fadeInUp 0.5s ease-out; /* Slower animation */
+  min-height: 80px !important; /* Ensure explanations are visible */
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: all 0.5s ease-out !important; /* Prevent quick disappearing */
 }
 
 @keyframes fadeInUp {
@@ -544,6 +548,24 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Ensure explanations and popups stay visible longer */
+.popup-content, .explanation-content, .feedback-content, .help-content {
+  background: var(--glass-bg) !important;
+  color: var(--color-dark-text) !important;
+  border: 2px solid var(--glass-border) !important;
+  min-height: 60px !important;
+  padding: var(--spacing-md) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 1s ease-out !important; /* Much slower fade */
+}
+
+/* Override any quick-fade styles */
+.fade-out, .disappear, .hide-quick {
+  transition: opacity 2s ease-out !important; /* Prevent quick disappearing */
+  animation-duration: 1s !important;
 }
 
 /* Navigation buttons */

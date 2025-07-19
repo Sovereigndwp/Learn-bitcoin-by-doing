@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Shield, 
@@ -30,6 +31,7 @@ import '../components/ModuleCommon.css';
 
 const CustodyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userPredictions, setUserPredictions] = useState({});
@@ -268,13 +270,13 @@ const CustodyModule = () => {
                 {challenges[lesson.id] !== false ? (
                   <div className="prediction-options">
                     {lesson.options.map(option => (
-                      <button
+                      <OptionButton
                         key={option}
                         className="prediction-option"
                         onClick={() => handlePrediction(lesson.id, option)}
                       >
                         {option}
-                      </button>
+                      </OptionButton>
                     ))}
                   </div>
                 ) : (
@@ -301,12 +303,12 @@ const CustodyModule = () => {
           </div>
 
           {allAnswered && !showPrinciples && (
-            <button 
+            <ActionButton 
               className="show-principles-btn"
               onClick={() => setShowPrinciples(true)}
             >
               Learn Custody Principles
-            </button>
+            </ActionButton>
           )}
 
           {showPrinciples && (
@@ -570,13 +572,13 @@ const CustodyModule = () => {
 
           {selectedMethod && !customSetup && (
             <div className="build-setup">
-              <button 
+              <ActionButton 
                 className="build-setup-btn"
                 onClick={buildCustomSetup}
+                icon={<Settings className="btn-icon" />}
               >
-                <Settings className="btn-icon" />
                 Build Multi-Layer Setup
-              </button>
+              </ActionButton>
             </div>
           )}
 
@@ -714,13 +716,13 @@ const CustodyModule = () => {
 
           {assessedThreats.length === threats.length && !mitigationPlan && (
             <div className="create-plan">
-              <button 
+              <ActionButton 
                 className="create-plan-btn"
                 onClick={createMitigationPlan}
+                icon={<Shield className="btn-icon" />}
               >
-                <Shield className="btn-icon" />
                 Create Mitigation Plan
-              </button>
+              </ActionButton>
             </div>
           )}
 
@@ -847,12 +849,12 @@ const CustodyModule = () => {
                   </div>
                   
                   {!implementedBackups.find(s => s.id === strategy.id) && (
-                    <button 
+                    <ActionButton 
                       className="implement-btn"
                       onClick={() => implementBackup(strategy)}
                     >
                       Implement Strategy
-                    </button>
+                    </ActionButton>
                   )}
                 </div>
               ))}
@@ -873,13 +875,13 @@ const CustodyModule = () => {
             <div className="recovery-test">
               <h3>🧪 Test Your Recovery</h3>
               <p>The final step is testing that your backups actually work. Practice recovering a test wallet.</p>
-              <button 
+              <ActionButton 
                 className="test-recovery-btn"
                 onClick={testRecovery}
+                icon={<Target className="btn-icon" />}
               >
-                <Target className="btn-icon" />
                 Test Recovery Process
-              </button>
+              </ActionButton>
             </div>
           )}
 
@@ -1024,13 +1026,13 @@ const CustodyModule = () => {
 
           {selectedOptions.length >= 2 && !inheritancePlan && (
             <div className="create-inheritance-plan">
-              <button 
+              <ActionButton 
                 className="create-plan-btn"
                 onClick={createInheritancePlan}
+                icon={<FileText className="btn-icon" />}
               >
-                <FileText className="btn-icon" />
                 Create Inheritance Plan
-              </button>
+              </ActionButton>
             </div>
           )}
 
@@ -1236,6 +1238,26 @@ const CustodyModule = () => {
 
         <div className="module-content">
           {renderStepContent()}
+        </div>
+        
+        {/* Navigation Footer */}
+        <div className="module-navigation-footer">
+          {currentStep > 0 && (
+            <button 
+              className="nav-button previous" 
+              onClick={() => setCurrentStep(prev => prev - 1)}
+            >
+              ← Previous Step
+            </button>
+          )}
+          
+          <button 
+            className="nav-button home" 
+            onClick={() => navigate('/')}
+            title="Return to Homepage"
+          >
+            🏠 Return to Homepage
+          </button>
         </div>
       </div>
     </div>

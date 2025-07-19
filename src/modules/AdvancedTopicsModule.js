@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   Search, Shield, Zap, Cpu, Globe, Trophy, Target,
@@ -12,6 +13,7 @@ import {
 
 const AdvancedTopicsModule = () => {
   const { completeModule } = useProgress();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [userExplorations, setUserExplorations] = useState({});
@@ -1054,6 +1056,26 @@ const AdvancedTopicsModule = () => {
       {/* Main Content */}
       <div className="module-content">
         {renderCurrentStep()}
+      </div>
+
+      {/* Navigation Footer */}
+      <div className="module-navigation-footer">
+        {currentStep > 0 && (
+          <button 
+            className="nav-button previous" 
+            onClick={() => setCurrentStep(prev => prev - 1)}
+          >
+            ← Previous Step
+          </button>
+        )}
+        
+        <button 
+          className="nav-button home" 
+          onClick={() => navigate('/')}
+          title="Return to Homepage"
+        >
+          🏠 Return to Homepage
+        </button>
       </div>
       </div>
     );

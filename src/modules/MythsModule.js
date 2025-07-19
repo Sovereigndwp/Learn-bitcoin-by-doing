@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
@@ -17,6 +18,7 @@ import '../components/ModuleCommon.css';
 
 const MythsModule = () => {
   const { completeModule } = useProgress();
+  const navigate = useNavigate();
   
   // Core State Management
   const [currentStep, setCurrentStep] = useState(0);
@@ -1036,6 +1038,25 @@ const MythsModule = () => {
       {/* Main Content */}
       <div className="module-content">
         {renderCurrentStep()}
+      </div>
+      
+      {/* Navigation Footer */}
+      <div className="module-navigation">
+        {currentStep > 0 && (
+          <NavigationButton 
+            onClick={() => setCurrentStep(currentStep - 1)}
+            direction="prev"
+          >
+            Previous Step
+          </NavigationButton>
+        )}
+        
+        <NavigationButton 
+          onClick={() => navigate('/')}
+          className="home-button"
+        >
+          Return to Homepage
+        </NavigationButton>
       </div>
     </div>
   );

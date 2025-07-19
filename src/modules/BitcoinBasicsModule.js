@@ -116,13 +116,13 @@ const BitcoinIntroduction = ({ onComplete }) => {
 
                 <div className="challenge-options">
                   {currentProblem.challengeOptions.map((option, index) => (
-                    <button
+                    <OptionButton
                       key={index}
                       className="challenge-option"
                       onClick={() => handleChallengeChoice(option)}
                     >
                       {option}
-                    </button>
+                    </OptionButton>
                   ))}
             </div>
               </div>
@@ -300,13 +300,14 @@ const BitcoinComparison = ({ onComplete }) => {
       <div className="content-text">
         <div className="aspect-tabs">
           {aspects.map(aspect => (
-            <button
-              key={aspect.id}
-              className={`aspect-tab ${selectedAspect === aspect.id ? 'active' : ''}`}
-              onClick={() => handleAspectSelect(aspect.id)}
-            >
-              {aspect.title}
-            </button>
+              <OptionButton
+                key={aspect.id}
+                className={`aspect-tab ${selectedAspect === aspect.id ? 'active' : ''}`}
+                selected={selectedAspect === aspect.id}
+                onClick={() => handleAspectSelect(aspect.id)}
+              >
+                {aspect.title}
+              </OptionButton>
           ))}
                 </div>
 
@@ -318,18 +319,18 @@ const BitcoinComparison = ({ onComplete }) => {
             <div className="choice-prompt">
               <p>Which system better protects your financial interests?</p>
               <div className="choice-buttons">
-                <button 
+                <OptionButton 
                   className="choice-button traditional"
                   onClick={() => handleChoice('traditional')}
                 >
                   Traditional Banking
-                </button>
-                <button 
+                </OptionButton>
+                <OptionButton 
                   className="choice-button bitcoin"
                   onClick={() => handleChoice('bitcoin')}
                 >
                   Bitcoin System
-                </button>
+                </OptionButton>
                   </div>
               </div>
             )}

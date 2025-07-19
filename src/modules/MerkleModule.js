@@ -1643,6 +1643,14 @@ const MerkleModule = () => {
             <ArrowRight size={20} />
           </NavigationButton>
         )}
+        
+        <NavigationButton 
+          onClick={() => navigate('/')}
+          variant="secondary"
+          title="Return to Homepage"
+        >
+          🏠 Return to Homepage
+        </NavigationButton>
       </div>
     </div>
   );

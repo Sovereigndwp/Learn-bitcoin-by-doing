@@ -422,7 +422,8 @@ const OptionButton = ({
     // Show explanation if feedback is enabled
     if (showFeedback && explanation) {
       setShowExplanation(true);
-      setTimeout(() => setShowExplanation(false), 6000); // Extended from 3000
+      // Much longer timeout to prevent disappearing too quickly
+      setTimeout(() => setShowExplanation(false), 12000); // Extended to 12 seconds
     }
   };
 
@@ -785,7 +786,7 @@ export const useAutoAdvance = (
   currentStep, 
   totalSteps, 
   onAdvance, 
-  delay = 3000, 
+  delay = 8000, // Increased default delay
   autoStart = false
 ) => {
   const [isPaused, setIsPaused] = useState(!autoStart);

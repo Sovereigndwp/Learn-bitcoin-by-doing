@@ -36,9 +36,32 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow: none !important;
 }
 
-/* All paragraph text must be light gray */
+/* All paragraph text must be light gray - improved contrast */
 p, span, div, li, td, th, label {
   color: var(--color-dark-textSecondary) !important;
+}
+
+/* Ensure no white-on-white scenarios */
+.white-background, .light-background {
+  background: var(--glass-bg) !important;
+  color: var(--color-dark-textSecondary) !important;
+}
+
+/* Fix any remaining white text on white backgrounds */
+.card-body, .module-body, .content-body, .text-content {
+  background: var(--glass-bg) !important;
+  color: var(--color-dark-textSecondary) !important;
+}
+
+/* Ensure input fields have proper contrast */
+input, textarea, select {
+  background: var(--glass-bg) !important;
+  color: var(--color-dark-text) !important;
+  border: 2px solid var(--glass-border) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-dark-textMuted) !important;
 }
 
 /* Ensure strong text is white */
@@ -179,6 +202,38 @@ button:disabled, .button:disabled, .btn:disabled, .quiz-option:disabled {
   background: var(--glass-bg) !important;
   border: 2px solid var(--glass-border) !important;
   color: var(--color-dark-textSecondary) !important;
+}
+
+/* Fix popup and modal backgrounds */
+.popup, .modal, .dropdown, .tooltip {
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  color: var(--color-dark-textSecondary) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* Ensure explanations are visible and stay open longer */
+.explanation, .feedback, .help-text, .description {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--color-dark-textSecondary) !important;
+  padding: var(--spacing-md) !important;
+  border-radius: var(--radius-lg) !important;
+  animation: fadeInUp 0.3s ease-out !important;
+  min-height: 60px !important; /* Ensure explanations are visible */
+}
+
+/* Override any quick-disappearing content */
+.fade-out {
+  animation-duration: 0.5s !important; /* Slower fade-out */
+}
+
+/* Ensure proper contrast for all interactive elements */
+.interactive, .clickable, .selectable {
+  background: var(--glass-bg) !important;
+  color: var(--color-dark-textSecondary) !important;
+  border: 2px solid var(--glass-border) !important;
 }
 
 .quiz-option:hover {
