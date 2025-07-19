@@ -177,7 +177,7 @@
 .hero-highlight {
   display: inline-block;
   background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
-  color: var(--color-text-primary);
+  color: #ffffff;
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: var(--radius-full);
   font-size: var(--font-size-lg);
@@ -185,6 +185,9 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: var(--shadow-glow-orange);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  /* Ensure high contrast */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Enhanced Learning Preview with Glassmorphic Cards */
@@ -1025,6 +1028,58 @@
 .confirm-button:hover {
   background: #c0392b;
   border-color: #c0392b;
+}
+
+/* =====================================================
+   ADDITIONAL TEXT VISIBILITY FIXES
+   ===================================================== */
+
+/* Ensure all text on dark backgrounds is visible */
+.module-card,
+.preview-card,
+.stat-card,
+.achievement-card,
+.slide-container {
+  color: var(--color-dark-text) !important;
+}
+
+.module-card p,
+.preview-card p,
+.module-content p,
+.group-description {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+/* Fix any remaining contrast issues */
+.module-card h5,
+.preview-card h4,
+.stat-number,
+.achievement-name {
+  color: #ffffff !important;
+}
+
+/* Ensure navigation elements are visible */
+.nav-tab,
+.slide-nav-button,
+.nav-button {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+.nav-tab.active,
+.slide-nav-button:hover,
+.nav-button.primary {
+  color: #ffffff !important;
+}
+
+/* Ensure module status indicators are visible */
+.group-progress,
+.progress-text,
+.unlock-requirement {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+.completed-icon {
+  color: var(--color-success-text) !important;
 }
 
 /* Responsive Design */
