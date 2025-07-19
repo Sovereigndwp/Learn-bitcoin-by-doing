@@ -7,9 +7,7 @@ import {
   ActionButton,
   StepNavigation
 } from '../components/ModernButtons';
-import '../components/ModuleLayout.css';
-import '../components/ModuleCommon.css';
-import '../components/MoneyModule.css';
+// Using global CSS only - no module-specific overrides
 
 // Simplified Introduction 
 const Introduction = ({ onComplete }) => {
@@ -702,58 +700,97 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 2,
-      context: "Throughout history, every government that could print money eventually printed too much, making it worth less and less.",
-      question: "What does this tell us?",
+      context: "In 1971, U.S. President Richard Nixon announced — on national television — that the dollar would no longer be backed by gold. No vote. No debate. Just one decision. Overnight, the entire world was placed on a fiat money system.",
+      question: "What does this show us about money?",
       options: [
-        "This is just how economies work",
-        "Governments need to print money sometimes", 
-        "When one group controls money printing, they always print too much"
+        "The president should be able to act fast",
+        "One leader can change the rules for everyone",
+        "If one person can control the money system, they can change it to benefit themselves — and hurt everyone else"
       ],
       answer: 2,
-      insight: "History shows that when governments can print money, they eventually print too much and destroy its value.",
-      trait: "Fixed Supply"
+      insight: "When control over money is concentrated, it can be abused without consent from the people who use it. To protect everyone's interests, money should be decentralized — no one should have absolute control.",
+      trait: "Decentralization"
     },
     {
       id: 3,
-      context: "Zimbabwe printed so much money that prices doubled every day. A loaf of bread cost billions of dollars.",
+      context: "After Nixon removed the gold standard, the U.S. could print as much money as it wanted — and it did. The money supply (M2) skyrocketed. The price of everyday things — like a Big Mac — rose steadily as dollars lost value.",
       question: "What does this show us about money?",
       options: [
-        "They should have printed even more money",
-        "Money only works if there's a limited amount of it",
-        "This was just a temporary problem"
+        "More money means more prosperity",
+        "Printing money always helps the economy",
+        "Without limits, governments always print too much"
       ],
-      answer: 1,
-      insight: "If you can create unlimited money, it becomes worthless. Scarcity is what gives money value.",
-      trait: "Genuine Scarcity"
+      answer: 2,
+      insight: "Good money needs hard rules. If you can print infinite amounts, it stops being trustworthy.",
+      trait: "Fixed Supply"
     },
     {
       id: 4,
-      context: "Gold was great money for thousands of years, but it was heavy to carry and hard to verify if it was real.",
-      question: "What problem did gold have?",
+      context: "Zimbabwe printed so much money that prices doubled every day. A loaf of bread cost billions of dollars.",
+      question: "What does this show us about money?",
       options: [
-        "It wasn't pretty enough",
-        "It was hard to transport and check",
-        "There wasn't enough of it"
+        "People should use different money",
+        "The limited supply must be real and enforced",
+        "Inflation is normal"
       ],
       answer: 1,
-      insight: "Good money needs to be easy to carry around and verify quickly.",
-      trait: "Portability"
+      insight: "Scarcity must be mathematically provable and impossible to circumvent, creating reliable store of value.",
+      trait: "Genuine Scarcity"
     },
     {
       id: 5,
-      context: "Ancient people used things like grain and cows as money, but these would rot or die over time.",
-      question: "What was the problem?",
+      context: "Gold was great money for thousands of years, but it was heavy to carry and difficult to verify quickly.",
+      question: "What problem did gold have?",
       options: [
-        "They were too valuable",
-        "They didn't last long enough",
-        "They were too easy to divide"
+        "It was too valuable",
+        "It was hard to transport from one place to another",
+        "People didn't like it"
       ],
       answer: 1,
-      insight: "Money needs to last a long time so you can save it without it going bad.",
-      trait: "Durability"
+      insight: "Good money should be easy to transport from one place to another — physically or digitally. You should be able to carry it in your pocket or send it across the world.",
+      trait: "Portability"
     },
     {
       id: 6,
+      context: "Ancient Romans mixed cheap metals into gold coins to stretch their money supply. People couldn't easily tell the difference.",
+      question: "What does this teach us?",
+      options: [
+        "Gold is always valuable",
+        "It should be easy to verify that money is real and not counterfeit",
+        "Coins don't need to be pure"
+      ],
+      answer: 1,
+      insight: "Good money must be hard to fake and easy to check. If you can't tell if money is real, it's easy to be fooled.",
+      trait: "Verifiability"
+    },
+    {
+      id: 7,
+      context: "On Yap Island, they used huge stone discs as money. But you couldn't exactly break off a piece to pay for lunch.",
+      question: "What's the issue here?",
+      options: [
+        "Stones are cool",
+        "You can't use money you can't divide",
+        "Everyone should use stones again"
+      ],
+      answer: 1,
+      insight: "Good money should work at any scale — whether you're buying a house or a coffee.",
+      trait: "Divisibility"
+    },
+    {
+      id: 8,
+      context: "Sheep were used as money in ancient times, but they would die or get sick, making the money worthless.",
+      question: "What went wrong?",
+      options: [
+        "Sheep are cute",
+        "Money needs to last over time without degrading",
+        "People should have used cows instead"
+      ],
+      answer: 1,
+      insight: "Money must maintain its physical and economic properties across long periods without deterioration.",
+      trait: "Durability"
+    },
+    {
+      id: 9,
       context: "Roman coins became unreliable because some had more silver than others. People started rejecting certain coins.",
       question: "What happened to trust in the money?",
       options: [
@@ -762,21 +799,21 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
         "Extra coins made up for it"
       ],
       answer: 1,
-      insight: "Good money means every unit is exactly the same as every other unit.",
+      insight: "Each unit of money must be interchangeable with any other unit, ensuring consistent acceptance.",
       trait: "Fungibility"
     },
     {
-      id: 7,
-      context: "On Yap Island, they used giant stone wheels as money. The stones never moved - people just remembered who owned them.",
-      question: "What does this teach us?",
+      id: 10,
+      context: "On Yap Island, people used giant stone wheels as money — but they were only used locally. Gold, on the other hand, was used across continents and centuries.",
+      question: "What does this tell us?",
       options: [
-        "You have to physically hold your money",
-        "Keeping track of ownership can work without moving things around",
-        "Stone money was a bad idea"
+        "Bigger money is better",
+        "Rare items make good money",
+        "Money that survives through time and across cultures earns trust"
       ],
-      answer: 1,
-      insight: "Money can work as a record of who owns what, even without physical exchange.",
-      trait: "Consensus Ledger"
+      answer: 2,
+      insight: "A long, reliable track record makes money more trustworthy.",
+      trait: "Track Record"
     }
   ];
 
@@ -876,13 +913,16 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
             
             {showFeedback && (
               <div className="feedback-section">
-                <div className={`selected-answer ${selectedAnswer === currentQuestionData.answer ? 'correct' : 'incorrect'}`}>
-                  <p><strong>You selected:</strong> {currentQuestionData.options[selectedAnswer]}</p>
-                </div>
-                
-                <div className="correct-answer">
-                  <p><strong>The key insight:</strong> {currentQuestionData.options[currentQuestionData.answer]}</p>
-                </div>
+                {selectedAnswer === currentQuestionData.answer ? (
+                  <div className="correct-feedback">
+                    <p>✅ <strong>Correct!</strong></p>
+                  </div>
+                ) : (
+                  <div className="incorrect-feedback">
+                    <p>❌ <strong>Not quite.</strong></p>
+                    <p><strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}</p>
+                  </div>
+                )}
                 
                 <div className="insight-box">
                   <h4>💡 What This Teaches Us</h4>
@@ -935,7 +975,7 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
               </div>
               <div className="trait-card">
                 <h5>📱 Portability</h5>
-                <p>Easy to transport and verify</p>
+                <p>Should be easy to transport from one place to another — physically or digitally</p>
               </div>
               <div className="trait-card">
                 <h5>⏳ Durability</h5>
@@ -946,8 +986,20 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
                 <p>Every unit is identical to every other unit</p>
               </div>
               <div className="trait-card">
-                <h5>📋 Consensus Ledger</h5>
-                <p>Everyone agrees on who owns what</p>
+                <h5>🌐 Decentralization</h5>
+                <p>No single group can control or change it</p>
+              </div>
+              <div className="trait-card">
+                <h5>➗ Divisibility</h5>
+                <p>Must be easy to divide into smaller units for small or large transactions</p>
+              </div>
+              <div className="trait-card">
+                <h5>🔍 Verifiability</h5>
+                <p>It should be easy to verify that the money is real and not counterfeit</p>
+              </div>
+              <div className="trait-card">
+                <h5>📈 Track Record</h5>
+                <p>Money earns trust by working over time</p>
               </div>
             </div>
           </div>

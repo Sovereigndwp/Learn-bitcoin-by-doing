@@ -8,8 +8,7 @@ import {
   OptionButton,
   NavigationButton 
 } from '../components/EnhancedButtons';
-import '../components/ModuleCommon.css';
-import './KeysModule.css';
+// Using global CSS only - no module-specific overrides
 import { generatePrivateKey, privateKeyToPublicKey, publicKeyToAddress } from '../utils/bitcoin';
 
 const KeysModule = () => {

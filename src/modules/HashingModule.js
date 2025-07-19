@@ -10,7 +10,6 @@ import {
   NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './HashingModule.css';
 
 const HashingModule = () => {
   const { completeModule } = useProgress();

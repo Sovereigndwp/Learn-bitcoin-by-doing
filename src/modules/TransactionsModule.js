@@ -24,8 +24,7 @@ import {
   ActionButton, 
   NavigationButton 
 } from '../components/EnhancedButtons';
-import '../components/ModuleCommon.css';
-import './TransactionsModule.css';
+// Using global CSS only - no module-specific overrides
 
 const TransactionsModule = () => {
   const { completeModule } = useProgress();

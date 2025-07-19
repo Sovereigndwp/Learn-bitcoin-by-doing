@@ -14,7 +14,6 @@ import {
   ChevronDown, ChevronUp, ExternalLink, Play, Clock, DollarSign
 } from 'lucide-react';
 import '../components/ModuleCommon.css';
-import './MythsModule.css';
 
 const MythsModule = () => {
   const { completeModule } = useProgress();

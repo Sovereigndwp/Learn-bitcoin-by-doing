@@ -9,7 +9,6 @@ import {
   NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './MiningModule.css';
 
 const MiningModule = () => {
   const { completeModule } = useProgress();

@@ -33,7 +33,6 @@ import {
   NavigationButton
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './ScriptsModule.css';
 
 const ScriptsModule = () => {
   const { completeModule } = useProgress();

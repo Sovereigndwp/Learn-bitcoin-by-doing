@@ -27,7 +27,6 @@ import {
   StepNavigation
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './CustodyModule.css';
 
 const CustodyModule = () => {
   const { completeModule, isModuleCompleted } = useProgress();

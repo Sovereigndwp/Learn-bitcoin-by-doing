@@ -32,7 +32,6 @@ import {
   NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './MerkleModule.css';
 import { sha256 } from '../utils/bitcoin';
 
 const MerkleModule = () => {

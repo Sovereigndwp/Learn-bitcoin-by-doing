@@ -6,9 +6,7 @@ import {
   ActionButton, 
   Button
 } from '../components/EnhancedButtons';
-import '../components/ModuleLayout.css';
-import '../components/ModuleCommon.css';
-import './BitcoinBasicsModule.css';
+// Using global CSS only - no module-specific overrides
 
 // Bitcoin Introduction with Prediction Challenges
 const BitcoinIntroduction = ({ onComplete }) => {

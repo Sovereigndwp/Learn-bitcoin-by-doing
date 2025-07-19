@@ -8,8 +8,7 @@ import {
   ContinueButton, 
   ActionButton 
 } from '../components/EnhancedButtons';
-import '../components/ModuleCommon.css';
-import './AdvancedTopicsModule.css';
+// Using global CSS only - no module-specific overrides
 
 const AdvancedTopicsModule = () => {
   const { completeModule } = useProgress();
