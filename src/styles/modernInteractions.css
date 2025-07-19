@@ -1,0 +1,427 @@
+/* =====================================================
+   MODERN INTERACTION SYSTEM
+   Premium animations, transitions, and micro-interactions
+   ===================================================== */
+
+/* =====================================================
+   MODERN CARD SYSTEM - Neumorphism + Glassmorphism
+   ===================================================== */
+.modern-card {
+  /* Soft, tactile feeling with depth */
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 
+    inset 2px 2px 5px rgba(255,255,255,0.1),
+    inset -2px -2px 5px rgba(0,0,0,0.1),
+    8px 8px 25px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-2xl);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    inset 2px 2px 5px rgba(255,255,255,0.15),
+    inset -2px -2px 5px rgba(0,0,0,0.15),
+    12px 12px 35px rgba(0,0,0,0.2),
+    0 0 20px rgba(247, 147, 26, 0.1);
+}
+
+.modern-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.modern-card:hover::before {
+  left: 100%;
+}
+
+/* Enhanced card variants */
+.modern-card.concept-card {
+  background: linear-gradient(145deg, rgba(14, 165, 233, 0.15), rgba(14, 165, 233, 0.05));
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.modern-card.practice-card {
+  background: linear-gradient(145deg, rgba(250, 204, 21, 0.15), rgba(250, 204, 21, 0.05));
+  border-color: rgba(250, 204, 21, 0.3);
+}
+
+.modern-card.mastery-card {
+  background: linear-gradient(145deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* =====================================================
+   SMOOTH PAGE TRANSITIONS
+   ===================================================== */
+.page-transition-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Context-aware transitions */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomInWithGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  50% {
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(247, 147, 26, 0.4);
+  }
+}
+
+/* Progressive disclosure animations */
+@keyframes cascadeReveal {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes blockByBlockBuild {
+  0% {
+    transform: translateY(-30px) scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes nodesConnecting {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Apply transitions based on content type */
+.concept-transition {
+  animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.practice-transition {
+  animation: slideInFromBottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mastery-transition {
+  animation: zoomInWithGlow 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Progressive disclosure with stagger */
+.cascade-reveal > * {
+  animation: cascadeReveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.cascade-reveal > *:nth-child(1) { animation-delay: 0.1s; }
+.cascade-reveal > *:nth-child(2) { animation-delay: 0.2s; }
+.cascade-reveal > *:nth-child(3) { animation-delay: 0.3s; }
+.cascade-reveal > *:nth-child(4) { animation-delay: 0.4s; }
+.cascade-reveal > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* =====================================================
+   DYNAMIC COLOR PSYCHOLOGY SYSTEM
+   ===================================================== */
+
+/* Learning phase color temperatures */
+:root {
+  /* Exploration phase - Warm, inviting colors */
+  --color-exploration-primary: #FF6B35;    /* Warm orange-red */
+  --color-exploration-secondary: #F7931A;  /* Bitcoin orange */
+  --color-exploration-accent: #FFB347;     /* Peach */
+  --color-exploration-bg: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 179, 71, 0.05));
+  
+  /* Creativity phase - Vibrant, inspiring colors */
+  --color-creativity-primary: #FFD700;     /* Gold */
+  --color-creativity-secondary: #FFA500;   /* Orange */
+  --color-creativity-accent: #FF8C00;      /* Dark orange */
+  --color-creativity-bg: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.05));
+  
+  /* Technical precision - Cool, focused colors */
+  --color-technical-primary: #0EA5E9;      /* Sky blue */
+  --color-technical-secondary: #0284C7;    /* Blue */
+  --color-technical-accent: #0369A1;       /* Dark blue */
+  --color-technical-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(3, 105, 161, 0.05));
+  
+  /* Mastery phase - Achievement colors */
+  --color-mastery-primary: #22C55E;        /* Green */
+  --color-mastery-secondary: #16A34A;      /* Dark green */
+  --color-mastery-accent: #15803D;         /* Forest green */
+  --color-mastery-bg: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(21, 128, 61, 0.05));
+  
+  /* Bitcoin theme consistency */
+  --color-bitcoin-primary: #F7931A;        /* Official Bitcoin orange */
+  --color-bitcoin-secondary: #FF9500;      /* Lighter orange */
+  --color-bitcoin-accent: #E6820A;         /* Darker orange */
+}
+
+/* Apply color psychology to learning phases */
+.learning-phase-exploration {
+  background: var(--color-exploration-bg);
+  border-color: var(--color-exploration-primary);
+}
+
+.learning-phase-exploration .step-icon,
+.learning-phase-exploration .primary-text {
+  color: var(--color-exploration-primary);
+}
+
+.learning-phase-creativity {
+  background: var(--color-creativity-bg);
+  border-color: var(--color-creativity-primary);
+}
+
+.learning-phase-creativity .step-icon,
+.learning-phase-creativity .primary-text {
+  color: var(--color-creativity-primary);
+}
+
+.learning-phase-technical {
+  background: var(--color-technical-bg);
+  border-color: var(--color-technical-primary);
+}
+
+.learning-phase-technical .step-icon,
+.learning-phase-technical .primary-text {
+  color: var(--color-technical-primary);
+}
+
+.learning-phase-mastery {
+  background: var(--color-mastery-bg);
+  border-color: var(--color-mastery-primary);
+}
+
+.learning-phase-mastery .step-icon,
+.learning-phase-mastery .primary-text {
+  color: var(--color-mastery-primary);
+}
+
+/* Bitcoin theme thread throughout */
+.bitcoin-accent {
+  color: var(--color-bitcoin-primary);
+  text-shadow: 0 0 10px rgba(247, 147, 26, 0.3);
+}
+
+.bitcoin-glow {
+  box-shadow: 0 0 20px rgba(247, 147, 26, 0.3);
+}
+
+/* =====================================================
+   CONTEXTUAL MICRO-INTERACTIONS
+   ===================================================== */
+
+/* Smart hover states */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.interactive-element:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Contextual help animations */
+.contextual-help {
+  position: absolute;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.show-help .contextual-help {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* User behavior responsive animations */
+.user-staring .additional-explanation {
+  animation: slideInFromRight 0.5s ease;
+}
+
+.user-clicking .interactive-highlight {
+  animation: pulseHighlight 0.3s ease;
+}
+
+@keyframes pulseHighlight {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(247, 147, 26, 0.7);
+  }
+  50% { 
+    box-shadow: 0 0 0 10px rgba(247, 147, 26, 0);
+  }
+}
+
+.user-scrolling .progress-indicator {
+  animation: smoothProgressUpdate 0.3s ease;
+}
+
+@keyframes smoothProgressUpdate {
+  0% { transform: scaleX(0.95); }
+  100% { transform: scaleX(1); }
+}
+
+/* =====================================================
+   SPRING PHYSICS ANIMATIONS
+   ===================================================== */
+.spring-button {
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.spring-button:active {
+  transform: scale(0.95);
+}
+
+.spring-button:hover {
+  transform: scale(1.05);
+}
+
+/* =====================================================
+   ACHIEVEMENT CELEBRATION EFFECTS
+   ===================================================== */
+@keyframes celebrationPulse {
+  0% { 
+    transform: scale(1); 
+    box-shadow: 0 0 0 0 rgba(247, 147, 26, 0.7);
+  }
+  50% { 
+    transform: scale(1.1); 
+    box-shadow: 0 0 0 20px rgba(247, 147, 26, 0);
+  }
+  100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 0 0 rgba(247, 147, 26, 0);
+  }
+}
+
+.achievement-celebration {
+  animation: celebrationPulse 0.8s ease-out;
+}
+
+/* Floating particle effect for achievements */
+@keyframes floatingParticle {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.floating-particle {
+  position: absolute;
+  animation: floatingParticle 2s ease-out;
+  pointer-events: none;
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN ENHANCEMENTS
+   ===================================================== */
+@media (max-width: 768px) {
+  .modern-card {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  .modern-card:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  /* Reduce motion for mobile to preserve battery */
+  .cascade-reveal > * {
+    animation-duration: 0.3s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modern-card,
+  .interactive-element,
+  .spring-button {
+    animation: none;
+    transition: opacity 0.2s ease;
+  }
+  
+  .modern-card:hover {
+    transform: none;
+    opacity: 0.9;
+  }
+}
+
+/* =====================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ===================================================== */
+.modern-card:focus-visible {
+  outline: 3px solid var(--color-bitcoin-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .modern-card {
+    border-width: 2px;
+    border-color: var(--color-bitcoin-primary);
+  }
+  
+  .modern-card:hover {
+    border-width: 3px;
+  }
+}

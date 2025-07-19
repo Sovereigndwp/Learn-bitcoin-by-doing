@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ArrowLeft, ArrowRight, Play, Pause } from 'lucide-react';
+import audioSystem from '../utils/audioSystem';
+import contextualBehavior from '../utils/contextualBehavior';
+import '../styles/modernInteractions.css';
 
 // Enhanced Button Component with Visual Hierarchy, Feedback, and Accessibility
 const Button = ({
@@ -50,6 +53,9 @@ const Button = ({
 
   const baseClasses = [
     'button',
+    'modern-card', // Apply modern card styling
+    'interactive-element', // Mark as interactive for contextual behavior
+    'spring-button', // Apply spring physics
     `button-${variant}`,
     `button-${size}`,
     `button-priority-${priority}`,
@@ -70,6 +76,12 @@ const Button = ({
     // Provide immediate feedback
     provideFeedback();
     
+    // Audio feedback
+    audioSystem.onInteraction('click');
+    
+    // Contextual behavior tracking
+    contextualBehavior.updateBehavior('clicking', true);
+    
     try {
       setButtonState('active');
       
@@ -79,6 +91,7 @@ const Button = ({
         // Handle success
         if (result !== false) {
           setButtonState('success');
+          audioSystem.onAchievement('normal');
           if (onSuccess) onSuccess();
           
           // Reset state after animation
@@ -195,6 +208,7 @@ const Button = ({
       className={baseClasses}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onMouseEnter={() => audioSystem.onInteraction('hover')}
       disabled={disabled || loading}
       aria-label={ariaLabel || (typeof children === 'string' ? children : undefined)}
       aria-describedby={ariaDescribedBy}
