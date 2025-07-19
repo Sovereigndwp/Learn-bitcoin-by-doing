@@ -180,7 +180,7 @@ const ScriptsModule = () => {
         
         <div className="prediction-challenge">
           <p><strong>Real-world analogy:</strong> This is like writing conditions on a check - "Pay to John Smith only after January 1st" or "Valid only with two signatures."</p>
-          <p><strong>Your turn:</strong> If you could program money with custom rules, what would you want to control?
+          <p><strong>Your turn:</strong> If you could program money with custom rules, what would you want to control?</p>
                   <textarea
                     value={userPrediction}
                     onChange={(e) => setUserPrediction(e.target.value)}

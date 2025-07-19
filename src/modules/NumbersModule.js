@@ -23,6 +23,18 @@ const NumbersModule = () => {
   const [challenges, setChallenges] = useState({});
   const [insights, setInsights] = useState({});
 
+  const handleStepComplete = (stepIndex) => {
+    const newCompleted = new Set(completedSteps);
+    newCompleted.add(stepIndex || currentStep);
+    setCompletedSteps(newCompleted);
+    
+    if ((stepIndex || currentStep) === numberSteps.length - 1) {
+      completeModule('numbers');
+    } else {
+      setCurrentStep(prev => prev < numberSteps.length - 1 ? prev + 1 : prev);
+    }
+  };
+
   // Number System Learning Steps
   const numberSteps = [
     {
@@ -1056,7 +1068,7 @@ const NumbersModule = () => {
           </div>
 
       <div className="step-content">
-        {StepComponent && <StepComponent onComplete={() => handleStepComplete(currentStep)} />}
+        {StepComponent && <StepComponent onComplete={handleStepComplete} />}
       </div>
 
       <div className="module-navigation">

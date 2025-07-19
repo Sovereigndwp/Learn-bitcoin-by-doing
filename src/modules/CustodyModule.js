@@ -193,7 +193,7 @@ const CustodyModule = () => {
         explanation: 'Mt. Gox was the world\'s largest Bitcoin exchange, handling 70% of all Bitcoin transactions. Poor security and possible insider fraud led to massive losses.',
         lesson: 'This disaster highlighted that if someone else holds your keys, you don\'t truly own your Bitcoin',
         thinkingQuestion: 'Had you owned Bitcoin stored in Mt. Gox, what might you have realized about true ownership?'
-      }
+      },
       {
         id: 'quadriga',
         event: 'QuadrigaCX CEO Death (2019)',
@@ -203,7 +203,7 @@ const CustodyModule = () => {
         explanation: 'The CEO held exclusive access to the exchange\'s cold storage. His sudden passing left 76,000 users unable to retrieve their funds.',
         lesson: 'Custody planning must involve multiple parties to avoid critical single points of failure',
         thinkingQuestion: 'What would you implement to ensure asset recovery when key holders are unavailable?'
-      }
+      },
       {
         id: 'personal-loss',
         event: 'Personal Key Loss Stories',
