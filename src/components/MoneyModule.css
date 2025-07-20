@@ -66,11 +66,30 @@
   color: #f7931a;
   filter: drop-shadow(0 2px 8px rgba(247, 147, 26, 0.3));
   transition: all var(--transition-normal);
+  position: relative;
+  z-index: 2;
 }
 
 .hero-icon-svg:hover {
   transform: scale(1.05);
   filter: drop-shadow(0 4px 12px rgba(247, 147, 26, 0.4));
+}
+
+/* Enhanced hero icon container for layered animations */
+.hero-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Lottie animation background styling */
+.hero-icon .lottie-animation-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .hero-text {

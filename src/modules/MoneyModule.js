@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
-import { Coins } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton,
   StepNavigation,
   NavigationButton
 } from '../components/EnhancedButtons';
+// Import new visual system components
+import { 
+  BitcoinIcon, 
+  HashIcon, 
+  TransactionIcon, 
+  WalletIcon, 
+  LearnIcon,
+  SuccessIcon,
+  ErrorIcon,
+  WarningIcon,
+  InfoIcon,
+  ProgressIcon
+} from '../components/ui/SVGIcons';
+import LottieAnimation, { LazyLottieAnimation } from '../components/ui/LottieAnimation';
+import { PLACEHOLDER_ANIMATIONS } from '../config/lottieAnimations';
 import '../components/ModuleCommon.css';
 // Using global CSS + Money module specific styles
 
@@ -1231,7 +1245,24 @@ const MoneyModule = () => {
         <div className="hero-ambient-glow"></div>
         <div className="hero-content">
           <div className="hero-icon">
-            <Coins className="hero-icon-svg" />
+            {/* Combining SVG icon with Lottie animation for enhanced visual appeal */}
+            <BitcoinIcon className="hero-icon-svg" size={64} animated />
+            {/* Example of Lottie integration - using placeholder animation */}
+            <LottieAnimation 
+              animationData={PLACEHOLDER_ANIMATIONS.simpleCircle}
+              loop={true}
+              autoplay={true}
+              width={64}
+              height={64}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                opacity: 0.3,
+                zIndex: -1
+              }}
+              aria-label="Bitcoin animation background"
+            />
           </div>
           <div className="hero-text">
             <h1 className="hero-title">Understanding Money</h1>

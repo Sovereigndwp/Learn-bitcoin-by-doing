@@ -72,6 +72,12 @@
   border-radius: 50%;
 }
 
+.property-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary-500);
+}
+
 .property-content {
   flex: 1;
 }

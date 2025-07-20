@@ -6,8 +6,13 @@ import {
   ActionButton,
   NavigationButton,
   OptionButton
-} from '../components/EnhancedButtons';
-// Using global CSS only - no module-specific overrides
+} from '../components/ui/UnifiedButton';
+import ProgressCounter, { 
+  StepProgressCounter,
+  CircularProgressCounter 
+} from '../components/ui/ProgressCounter';
+import { ModuleCard, FeaturedCard } from '../components/ui/ModuleCard';
+// Using unified UI components for consistency
 
 // Bitcoin Introduction with Prediction Challenges
 const BitcoinIntroduction = ({ onComplete }) => {
@@ -1380,7 +1385,37 @@ const steps = [
         <div className="intro-text">
           <p className="prime-text">Understand what Bitcoin is and why it matters</p>
         </div>
+        
+        {/* Progress tracking */}
+        <ProgressCounter
+          moduleId="bitcoin-basics"
+          totalSteps={5}
+          currentStep={currentStep + 1}
+          variant="default"
+          size="md"
+          showPercentage={true}
+          showSteps={true}
+          showLabel={true}
+          className="module-progress"
+        />
+        
+        {/* Step progress indicator */}
+        <StepProgressCounter
+          moduleId="bitcoin-basics"
+          totalSteps={5}
+          currentStep={currentStep + 1}
+          variant="labels"
+          stepLabels={[
+            "Bitcoin's Promise",
+            "Compare Systems", 
+            "How It Works",
+            "Why It's Valuable",
+            "Complete"
+          ]}
+          className="step-progress"
+        />
       </div>
+      
       <div className="module-content">
         {currentStep === 0 && <BitcoinIntroduction onComplete={handleStepComplete} />}
         {currentStep === 1 && <BitcoinComparison onComplete={handleStepComplete} />}

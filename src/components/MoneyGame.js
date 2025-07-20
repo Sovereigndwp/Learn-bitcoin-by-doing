@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Scale, Zap, Clock, Globe, Lock, Shield, HelpCircle, CheckCircle } from 'lucide-react';
+import {
+  HashIcon,
+  SecurityIcon,
+  NetworkIcon,
+  KeyIcon,
+  TransactionIcon,
+  LightningIcon,
+  SuccessIcon,
+  InfoIcon
+} from '../components/ui/SVGIcons';
 import './MoneyGame.css';
 
 const moneyProperties = [
   {
     id: 'scarce',
-    icon: Scale,
+    icon: HashIcon,
     title: 'Scarce / Hard to Create',
     description: 'Supply is limited and growth rate decreases over time.',
     isCorrect: true,
@@ -16,7 +25,7 @@ const moneyProperties = [
   },
   {
     id: 'durable',
-    icon: Clock,
+    icon: SecurityIcon,
     title: 'Durable & Unchangeable',
     description: 'Maintains its integrity over time without degrading.',
     isCorrect: true,
@@ -25,7 +34,7 @@ const moneyProperties = [
   },
   {
     id: 'portable',
-    icon: Zap,
+    icon: LightningIcon,
     title: 'Portable & Divisible',
     description: 'Easy to move and can be split into smaller units.',
     isCorrect: true,
@@ -34,7 +43,7 @@ const moneyProperties = [
   },
   {
     id: 'verifiable',
-    icon: Shield,
+    icon: SecurityIcon,
     title: 'Verifiable',
     description: 'Can be authenticated without trusting a third party.',
     isCorrect: true,
@@ -43,7 +52,7 @@ const moneyProperties = [
   },
   {
     id: 'unconfiscatable',
-    icon: Lock,
+    icon: KeyIcon,
     title: 'Censorship-Resistant / Unconfiscatable',
     description: 'Your money remains yours no matter where you go.',
     isCorrect: true,
@@ -52,7 +61,7 @@ const moneyProperties = [
   },
   {
     id: 'decentralized',
-    icon: Globe,
+    icon: NetworkIcon,
     title: 'Decentralized',
     description: 'No single point of control or failure.',
     isCorrect: true,
@@ -61,7 +70,7 @@ const moneyProperties = [
   },
   {
     id: 'printable',
-    icon: Scale,
+    icon: HashIcon,
     title: 'Can be printed to stimulate the economy',
     description: 'Central banks can create more when needed.',
     isCorrect: false,
@@ -70,7 +79,7 @@ const moneyProperties = [
   },
   {
     id: 'government',
-    icon: Shield,
+    icon: SecurityIcon,
     title: 'Government-backed',
     description: 'Requires official support to function.',
     isCorrect: false,
@@ -186,7 +195,7 @@ const MoneyGame = ({ onComplete }) => {
         </div>
 
         <div className="hint-box" onClick={handleHint}>
-          <HelpCircle size={20} />
+          <InfoIcon size={20} />
           {showHint && properties[hintIndex]?.hint}
         </div>
 
@@ -212,7 +221,7 @@ const MoneyGame = ({ onComplete }) => {
 
         {droppedProperties.filter(p => p.isCorrect).length >= 6 && (
           <div className="completion-box">
-            <CheckCircle size={32} />
+            <SuccessIcon size={32} />
             <h2>You just built Bitcoin — without even knowing it.</h2>
             <p>Want to see how it works in real life?</p>
             <button className="continue-button" onClick={onComplete}>Continue</button>

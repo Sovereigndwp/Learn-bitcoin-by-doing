@@ -1,0 +1,262 @@
+/* ===================================
+   MODULE CARD SYSTEM - CSS
+   Provides unified styling for all module cards.
+   =================================== */
+
+/* CSS Custom Properties for custom theming */
+:root {
+  --card-bg-light: #f9fafb;
+  --card-bg-dark: #1f2937;
+  --card-bg-bitcoin: #fbd38d;
+  --card-bg-lightning: #e2e8f0;
+  --card-title-color: #374151;
+  --card-subtitle-color: #71717a;
+  --card-text-color: #4b5563;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --card-transition: all 0.2s ease-in-out;
+}
+
+/* Base Card Styles */
+.module-card {
+  position: relative;
+  background: var(--card-bg-light);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  border: 2px solid transparent;
+  transition: var(--card-transition);
+  font-family: inherit;
+  color: var(--card-text-color);
+  user-select: none;
+  cursor: default;
+}
+
+.module-card:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Card Size Variants */
+.module-card--sm {
+  width: 250px;
+}
+
+.module-card--md {
+  width: 300px;
+}
+
+.module-card--lg {
+  width: 350px;
+}
+
+.module-card--xl {
+  width: 400px;
+}
+
+/* Card Variants */
+.module-card--theme-dark {
+  background: var(--card-bg-dark);
+  color: var(--card-text-color-light);
+}
+
+.module-card--theme-bitcoin {
+  background: var(--card-bg-bitcoin);
+  border-color: var(--card-title-color);
+}
+
+.module-card--theme-lightning {
+  background: var(--card-bg-lightning);
+  border-color: var(--card-title-color);
+}
+
+/* Card Interactions */
+.module-card--clickable {
+  cursor: pointer;
+}
+
+.module-card--clickable:hover {
+  border-color: var(--card-title-color);
+}
+
+/* Card Header */
+.module-card__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.module-card__icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.module-card__title {
+  color: var(--card-title-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.module-card__subtitle {
+  color: var(--card-subtitle-color);
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Card Content */
+.module-card__content {
+  padding: 1rem;
+}
+
+.module-card__description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Card Footer */
+.module-card__footer {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.module-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--card-text-color);
+}
+
+.module-card__status {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--card-title-color);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-bottom-left-radius: 12px;
+}
+
+.module-card__status--completed {
+  background: var(--card-text-color);
+}
+
+.module-card__status--locked {
+  background: var(--card-text-color);
+}
+
+/* Badge */
+.module-card__badge {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  background: var(--card-title-color);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress */
+.module-card__progress {
+  margin-top: 0.5rem;
+}
+
+.module-card__progress-track {
+  background: rgba(0, 0, 0, 0.1);
+  height: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.module-card__progress-fill {
+  background: var(--card-title-color);
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.module-card__progress-text {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--card-subtitle-color);
+}
+
+/* Difficulty */
+.module-card__difficulty {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.module-card__difficulty-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.module-card__difficulty-dot.active {
+  background: var(--card-title-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .module-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .module-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .module-card__icon {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .module-card {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .module-card {
+    transition: none;
+  }
+
+  .module-card:hover {
+    transform: none;
+  }
+
+  .module-card__progress-fill {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --card-bg-light: #1f2937;
+    --card-bg-dark: #111827;
+    --card-bg-bitcoin: #6b4226;
+    --card-bg-lightning: #3b3f4a;
+    --card-title-color: #d1d5db;
+    --card-subtitle-color: #9ca3af;
+    --card-text-color: #d1d5db;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  }
+}

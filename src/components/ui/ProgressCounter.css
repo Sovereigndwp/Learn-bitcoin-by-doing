@@ -1,0 +1,519 @@
+/* ===================================
+   PROGRESS COUNTER SYSTEM - CSS
+   Provides unified styling for all progress tracking components.
+   =================================== */
+
+/* CSS Custom Properties */
+:root {
+  --progress-bg: #e5e7eb;
+  --progress-fill: #3b82f6;
+  --progress-text: #374151;
+  --progress-label: #6b7280;
+  --progress-completed: #10b981;
+  --progress-current: #f59e0b;
+  --progress-disabled: #9ca3af;
+  --progress-track-height: 8px;
+  --progress-border-radius: 4px;
+  --progress-transition: all 0.3s ease-in-out;
+}
+
+/* ===================================
+   MAIN PROGRESS COUNTER
+   =================================== */
+
+.progress-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: inherit;
+}
+
+.progress-counter--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.progress-counter__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--progress-label);
+  margin-bottom: 0.25rem;
+}
+
+.progress-counter__container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-counter__track {
+  flex: 1;
+  background: var(--progress-bg);
+  height: var(--progress-track-height);
+  border-radius: var(--progress-border-radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-counter__fill {
+  background: var(--progress-fill);
+  height: 100%;
+  border-radius: var(--progress-border-radius);
+  transition: var(--progress-transition);
+  position: relative;
+}
+
+.progress-counter__fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.progress-counter__info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--progress-text);
+  white-space: nowrap;
+}
+
+.progress-counter__steps {
+  font-weight: 500;
+}
+
+.progress-counter__percentage {
+  color: var(--progress-label);
+}
+
+.progress-counter__next-btn {
+  background: var(--progress-fill);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--progress-transition);
+  align-self: flex-start;
+}
+
+.progress-counter__next-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.progress-counter__next-btn:active {
+  transform: translateY(0);
+}
+
+/* Size Variants */
+.progress-counter--sm {
+  font-size: 0.75rem;
+}
+
+.progress-counter--sm .progress-counter__track {
+  height: 6px;
+}
+
+.progress-counter--sm .progress-counter__next-btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+.progress-counter--lg {
+  font-size: 1rem;
+}
+
+.progress-counter--lg .progress-counter__track {
+  height: 12px;
+}
+
+.progress-counter--lg .progress-counter__next-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* Variant Styles */
+.progress-counter--success .progress-counter__fill {
+  background: var(--progress-completed);
+}
+
+.progress-counter--warning .progress-counter__fill {
+  background: var(--progress-current);
+}
+
+.progress-counter--minimal .progress-counter__track {
+  background: transparent;
+  border: 2px solid var(--progress-bg);
+}
+
+/* ===================================
+   CIRCULAR PROGRESS COUNTER
+   =================================== */
+
+.circular-progress-counter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress-counter__svg {
+  transform: rotate(-90deg);
+}
+
+.circular-progress-counter__track {
+  color: var(--progress-bg);
+  opacity: 0.3;
+}
+
+.circular-progress-counter__fill {
+  color: var(--progress-fill);
+  transition: stroke-dashoffset 0.5s ease-in-out;
+  stroke-linecap: round;
+}
+
+.circular-progress-counter__text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--progress-text);
+}
+
+/* ===================================
+   MINI PROGRESS COUNTER
+   =================================== */
+
+.mini-progress-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.mini-progress-counter__track {
+  flex: 1;
+  min-width: 60px;
+  background: var(--progress-bg);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mini-progress-counter__fill {
+  background: var(--progress-fill);
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease-in-out;
+}
+
+.mini-progress-counter__text {
+  color: var(--progress-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ===================================
+   STEP PROGRESS COUNTER
+   =================================== */
+
+.step-progress-counter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: inherit;
+}
+
+.step-progress-counter__step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.step-progress-counter__step--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.step-progress-counter__dot,
+.step-progress-counter__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--progress-bg);
+  color: var(--progress-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: var(--progress-transition);
+  border: 2px solid transparent;
+}
+
+.step-progress-counter__step--completed .step-progress-counter__dot,
+.step-progress-counter__step--completed .step-progress-counter__number {
+  background: var(--progress-completed);
+  color: white;
+}
+
+.step-progress-counter__step--current .step-progress-counter__dot,
+.step-progress-counter__step--current .step-progress-counter__number {
+  background: var(--progress-current);
+  color: white;
+  border-color: var(--progress-current);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.2);
+}
+
+.step-progress-counter__step:hover:not(.step-progress-counter__step--disabled) .step-progress-counter__dot,
+.step-progress-counter__step:hover:not(.step-progress-counter__step--disabled) .step-progress-counter__number {
+  transform: scale(1.1);
+}
+
+.step-progress-counter__connector {
+  position: absolute;
+  top: 50%;
+  right: -1rem;
+  width: 2rem;
+  height: 2px;
+  background: var(--progress-bg);
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.step-progress-counter__step--completed + .step-progress-counter__step .step-progress-counter__connector {
+  background: var(--progress-completed);
+}
+
+/* Labels variant */
+.step-progress-counter--labels {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.step-progress-counter--labels .step-progress-counter__step {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-progress-counter__label-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-progress-counter__label {
+  font-size: 0.75rem;
+  color: var(--progress-label);
+  text-align: center;
+  max-width: 80px;
+}
+
+.step-progress-counter__step--current .step-progress-counter__label {
+  color: var(--progress-current);
+  font-weight: 600;
+}
+
+.step-progress-counter__step--completed .step-progress-counter__label {
+  color: var(--progress-completed);
+}
+
+/* ===================================
+   MODULE PROGRESS SUMMARY
+   =================================== */
+
+.module-progress-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--progress-bg);
+}
+
+.module-progress-summary__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.module-progress-summary__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--progress-text);
+  margin: 0;
+}
+
+.module-progress-summary__stats {
+  font-size: 0.875rem;
+  color: var(--progress-label);
+}
+
+.module-progress-summary__overall {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.module-progress-summary__track {
+  flex: 1;
+  background: var(--progress-bg);
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.module-progress-summary__fill {
+  background: linear-gradient(90deg, var(--progress-fill), var(--progress-completed));
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease-in-out;
+}
+
+.module-progress-summary__percentage {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--progress-text);
+  min-width: 48px;
+  text-align: right;
+}
+
+.module-progress-summary__modules {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.module-progress-summary__module {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.module-progress-summary__module-name {
+  font-size: 0.875rem;
+  color: var(--progress-text);
+  text-transform: capitalize;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 768px) {
+  .progress-counter__container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .progress-counter__info {
+    justify-content: space-between;
+  }
+
+  .step-progress-counter {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .module-progress-summary__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .step-progress-counter--dots,
+  .step-progress-counter--numbers {
+    justify-content: space-between;
+  }
+
+  .step-progress-counter__connector {
+    display: none;
+  }
+}
+
+/* ===================================
+   DARK MODE SUPPORT
+   =================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --progress-bg: #374151;
+    --progress-fill: #60a5fa;
+    --progress-text: #f9fafb;
+    --progress-label: #d1d5db;
+    --progress-completed: #34d399;
+    --progress-current: #fbbf24;
+    --progress-disabled: #6b7280;
+  }
+
+  .module-progress-summary {
+    background: #1f2937;
+    border-color: #374151;
+  }
+}
+
+/* ===================================
+   HIGH CONTRAST MODE
+   =================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --progress-bg: #000000;
+    --progress-fill: #0066cc;
+    --progress-text: #000000;
+    --progress-completed: #008800;
+    --progress-current: #cc6600;
+  }
+
+  .progress-counter__track,
+  .mini-progress-counter__track {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ===================================
+   REDUCED MOTION SUPPORT
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-counter__fill,
+  .mini-progress-counter__fill,
+  .module-progress-summary__fill,
+  .circular-progress-counter__fill,
+  .step-progress-counter__dot,
+  .step-progress-counter__number {
+    transition: none;
+  }
+
+  .progress-counter__fill::after {
+    animation: none;
+  }
+
+  .progress-counter__next-btn:hover {
+    transform: none;
+  }
+}
