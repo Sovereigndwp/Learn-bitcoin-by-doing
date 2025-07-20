@@ -171,123 +171,125 @@ const ScriptsModule = () => {
           <p>Learn how Bitcoin uses simple programs to control when and how money can be spent</p>
         </div>
 
-        {currentDemo === 'overview' && (
-          <div className="intro-content">
-            <div className="concept-intro">
-      <div className="thinking-challenge">
-        <h3>🤔 Think of money like a smart contract</h3>
-        <p>Imagine if cash could be programmed with rules. For example, a $20 bill that can only be spent at grocery stores, or a check that becomes valid only after a certain date.</p>
-        
-        <div className="prediction-challenge">
-          <p><strong>Real-world analogy:</strong> This is like writing conditions on a check - "Pay to John Smith only after January 1st" or "Valid only with two signatures."</p>
-          <p><strong>Your turn:</strong> If you could program money with custom rules, what would you want to control?</p>
-                  <textarea
-                    value={userPrediction}
-                    onChange={(e) => setUserPrediction(e.target.value)}
-                    placeholder="Share your ideas about programmable money..."
-                    className="prediction-input"
-                    rows={3}
-                  />
-                  <ActionButton 
-                    onClick={handlePredictionSubmit}
-                    disabled={userPrediction.length < 10}
-                  >
-                    See What's Actually Possible
-                  </ActionButton>
+        <>
+          {currentDemo === 'overview' && (
+            <div className="intro-content">
+              <div className="concept-intro">
+                <div className="thinking-challenge">
+                  <h3>🤔 Think of money like a smart contract</h3>
+                  <p>Imagine if cash could be programmed with rules. For example, a $20 bill that can only be spent at grocery stores, or a check that becomes valid only after a certain date.</p>
+                  
+                  <div className="prediction-challenge">
+                    <p><strong>Real-world analogy:</strong> This is like writing conditions on a check - "Pay to John Smith only after January 1st" or "Valid only with two signatures."</p>
+                    <p><strong>Your turn:</strong> If you could program money with custom rules, what would you want to control?</p>
+                    <textarea
+                      value={userPrediction}
+                      onChange={(e) => setUserPrediction(e.target.value)}
+                      placeholder="Share your ideas about programmable money..."
+                      className="prediction-input"
+                      rows={3}
+                    />
+                    <ActionButton 
+                      onClick={handlePredictionSubmit}
+                      disabled={userPrediction.length < 10}
+                    >
+                      See What's Actually Possible
+                    </ActionButton>
+                  </div>
+
+                  {showReality && (
+                    <div className="reality-reveal">
+                      <div className="insight-box">
+                        <Lightbulb size={24} />
+                        <div>
+                          <h4>Your instincts are spot-on!</h4>
+                          <p>Bitcoin scripts can do exactly what you imagined and more. Every Bitcoin transaction contains a small program that must be successfully executed for the money to be spent.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {showReality && (
-                  <div className="reality-reveal">
-                    <div className="insight-box">
-                      <Lightbulb size={24} />
-                      <div>
-                        <h4>Your instincts are spot-on!</h4>
-                        <p>Bitcoin scripts can do exactly what you imagined and more. Every Bitcoin transaction contains a small program that must be successfully executed for the money to be spent.</p>
-                      </div>
+                  <div className="script-examples">
+                    <h3>🎯 Real Bitcoin Script Examples</h3>
+                    <p>Here are three common types of Bitcoin scripts. Click one to see how it works:</p>
+                    
+                    <div className="script-grid">
+                      {scriptDemos.map(demo => (
+                        <div 
+                          key={demo.id} 
+                          className="script-card"
+                          onClick={() => handleScriptSelect(demo)}
+                        >
+                          <h4>{demo.name}</h4>
+                          <p>{demo.description}</p>
+                          <div className="script-logic">
+                            <strong>Logic:</strong> {demo.humanLogic}
+                          </div>
+                          <div className="real-world">
+                            <strong>Real World:</strong> {demo.realWorld}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
               </div>
+            </div>
+          )}
 
-              {showReality && (
-                <div className="script-examples">
-                  <h3>🎯 Real Bitcoin Script Examples</h3>
-                  <p>Here are three common types of Bitcoin scripts. Click one to see how it works:</p>
-                  
-                  <div className="script-grid">
-                    {scriptDemos.map(demo => (
-                      <div 
-                        key={demo.id} 
-                        className="script-card"
-                        onClick={() => handleScriptSelect(demo)}
-                      >
-                        <h4>{demo.name}</h4>
-                        <p>{demo.description}</p>
-                        <div className="script-logic">
-                          <strong>Logic:</strong> {demo.humanLogic}
-                        </div>
-                        <div className="real-world">
-                          <strong>Real World:</strong> {demo.realWorld}
-                        </div>
-                      </div>
-                    ))}
+          {currentDemo === 'execution' && selectedScript && (
+            <div className="script-execution-demo">
+              <div className="execution-header">
+                <h3>🔍 How "{selectedScript.name}" Works</h3>
+                <p>{selectedScript.description}</p>
+              </div>
+
+              <div className="script-breakdown">
+                <div className="human-logic-section">
+                  <h4>🧠 Human Logic</h4>
+                  <div className="logic-box">
+                    {selectedScript.humanLogic}
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-        )}
 
-        {currentDemo === 'execution' && selectedScript && (
-          <div className="script-execution-demo">
-            <div className="execution-header">
-              <h3>🔍 How "{selectedScript.name}" Works</h3>
-              <p>{selectedScript.description}</p>
-            </div>
+                <div className="script-code-section">
+                  <h4>💻 Bitcoin Script Code</h4>
+                  <div className="script-code">
+                    {selectedScript.script}
+                  </div>
+                </div>
 
-            <div className="script-breakdown">
-              <div className="human-logic-section">
-                <h4>🧠 Human Logic</h4>
-                <div className="logic-box">
-                  {selectedScript.humanLogic}
+                <div className="real-world-section">
+                  <h4>🌍 Real World Analogy</h4>
+                  <div className="analogy-box">
+                    {selectedScript.realWorld}
+                  </div>
                 </div>
               </div>
 
-              <div className="script-code-section">
-                <h4>💻 Bitcoin Script Code</h4>
-                <div className="script-code">
-                  {selectedScript.script}
+              <div className="key-insight">
+                <div className="insight-box">
+                  <Target size={24} />
+                  <div>
+                    <h4>Key Insight: Unstoppable Execution</h4>
+                    <p>Unlike traditional contracts that require human interpretation, Bitcoin scripts execute exactly as programmed. No one can override, change, or reinterpret them once they're in the blockchain.</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="real-world-section">
-                <h4>🌍 Real World Analogy</h4>
-                <div className="analogy-box">
-                  {selectedScript.realWorld}
-                </div>
+              <div className="demo-controls">
+                <ActionButton onClick={() => setCurrentDemo('overview')}>
+                  ← See Other Examples
+                </ActionButton>
+                <ContinueButton onClick={handleContinue}>
+                  Learn Stack Operations →
+                </ContinueButton>
               </div>
             </div>
-
-            <div className="key-insight">
-              <div className="insight-box">
-                <Target size={24} />
-                <div>
-                  <h4>Key Insight: Unstoppable Execution</h4>
-                  <p>Unlike traditional contracts that require human interpretation, Bitcoin scripts execute exactly as programmed. No one can override, change, or reinterpret them once they're in the blockchain.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="demo-controls">
-              <ActionButton onClick={() => setCurrentDemo('overview')}>
-                ← See Other Examples
-              </ActionButton>
-              <ContinueButton onClick={handleContinue}>
-                Learn Stack Operations →
-              </ContinueButton>
-            </div>
-          </div>
-        )}
+          )}
+        </>
       </div>
     );
   }

@@ -179,8 +179,6 @@ class ContextualBehaviorSystem {
   }
 
   trackFocusBehavior() {
-    let focusStartTime = Date.now();
-    
     // Track how long user spends on different sections
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -285,6 +283,9 @@ class ContextualBehaviorSystem {
         break;
       case 'excelling':
         this.activateAdvancedMode();
+        break;
+      default:
+        // Handle other behavior types or ignore
         break;
     }
   }
@@ -441,7 +442,7 @@ class ContextualBehaviorSystem {
             📖 Review Previous Section
           </button>
           <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
-            🎯 Focus on Practical Examples  
+            🎯 Focus on Practical Examples
           </button>
           <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
             💡 Get Alternative Explanation

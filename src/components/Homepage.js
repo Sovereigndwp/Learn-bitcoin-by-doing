@@ -98,21 +98,21 @@ const Homepage = () => {
 
   return (
     <div className="homepage-modern">
-      {/* Modern Header */}
+      {/* Streamlined Header */}
       <header className="modern-header">
         <div className="header-content">
           <div className="logo-section">
             <span className="bitcoin-symbol">₿</span>
             <div className="logo-text">
-              <h1>Bitcoin Learning Journey</h1>
-              <p>From monetary confusion to digital clarity</p>
+              <h1>Learn Bitcoin by Doing</h1>
+              <p>Master money and Bitcoin through interactive exploration</p>
             </div>
           </div>
           <nav className="header-nav">
-            <PrimaryButton onClick={() => setCurrentView('progress')} className={`nav-tab ${currentView === 'progress' ? 'active' : ''}`}>Progress</PrimaryButton>
-            <PrimaryButton onClick={() => setCurrentView('learning')} className={`nav-tab ${currentView === 'learning' ? 'active' : ''}`}>Learning</PrimaryButton>
             {hasStarted && (
-              <PrimaryButton onClick={() => setShowResetConfirm(true)} className="nav-tab reset-tab">Reset</PrimaryButton>
+              <button onClick={() => setShowResetConfirm(true)} className="reset-btn-minimal">
+                <RotateCcw size={16} /> Reset
+              </button>
             )}
           </nav>
         </div>

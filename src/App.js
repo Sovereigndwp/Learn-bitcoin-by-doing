@@ -53,8 +53,8 @@ function App() {
               <Route path="/module/scripts" element={<ModuleLayout><ScriptsModule /></ModuleLayout>} />
               <Route path="/module/merkle" element={<ModuleLayout><MerkleModule /></ModuleLayout>} />
               <Route path="/module/custody" element={<ModuleLayout><CustodyModule /></ModuleLayout>} />
-                <Route path="/module/lightning" element={<ModuleLayout><LightningModule /></ModuleLayout>} />
-                <Route path="/module/advanced-topics" element={<ModuleLayout><AdvancedTopicsModule /></ModuleLayout>} />
+              <Route path="/module/lightning" element={<ModuleLayout><LightningModule /></ModuleLayout>} />
+              <Route path="/module/advanced-topics" element={<ModuleLayout><AdvancedTopicsModule /></ModuleLayout>} />
               <Route path="/module/myths" element={<ModuleLayout><MythsModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-toolkit" element={<ModuleLayout><BitcoinToolkitModule /></ModuleLayout>} />
             </Routes>

@@ -1068,7 +1068,7 @@ const NumbersModule = () => {
           </div>
 
       <div className="step-content">
-        {StepComponent && <StepComponent onComplete={handleStepComplete} />}
+        {StepComponent && <StepComponent onComplete={() => handleStepComplete(currentStep)} />}
       </div>
 
       <div className="module-navigation">

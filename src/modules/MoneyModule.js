@@ -7,7 +7,8 @@ import {
   ActionButton,
   StepNavigation
 } from '../components/ModernButtons';
-// Using global CSS only - no module-specific overrides
+import '../components/MoneyModule.css';
+// Using global CSS + Money module specific styles
 
 // Simplified Introduction 
 const Introduction = ({ onComplete }) => {
@@ -620,9 +621,10 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
   
   return (
     <div className="module-container dark-theme">
-      <div className="functions-analysis-section">
-        <h2>What Jobs Does Money Do?</h2>
+      <div className="card-hero">
+        <h1 className="heading-critical">What Jobs Does Money Do?</h1>
         <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
+      </div>
         
         <div className="scenario-progress">
           <div className="progress-indicators">
@@ -675,7 +677,6 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
             <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
           </div>
         )}
-      </div>
     </div>
   );
 };
@@ -1087,10 +1088,12 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
 
   return (
     <div className="module-container dark-theme">
-      <div className="sound-money-framework-section">
-        <h2>{frameworkSteps[step].title}</h2>
+      <div className="card-hero">
+        <h1 className="heading-critical">{frameworkSteps[step].title}</h1>
         <p>Step {step + 1} of {frameworkSteps.length}</p>
-        
+      </div>
+      
+      <div className="card-feature">
         {frameworkSteps[step].content}
         
         <StepNavigation
@@ -1222,44 +1225,45 @@ const MoneyModule = () => {
 
   return (
     <div className="module-container">
-      <div className="module-header">
-        <h1 className="module-title">
-          <Coins className="module-icon" />
-          Understanding Money
-        </h1>
-      </div>
-
-      <ContinueButton className="reset-progress-button" onClick={handleResetProgress}>
-        Reset Progress
-      </ContinueButton>
-
-      <div className="module-progress">
-        <div className="progress-bar">
-          <div 
-            className="progress-fill"
-            style={{ width: `${(completedSteps.size / 7) * 100}%` }}
-          />
+      {/* HERO SECTION - World-class design principles */}
+      <div className="money-module-hero">
+        <div className="hero-ambient-glow"></div>
+        <div className="hero-content">
+          <div className="hero-icon">
+            <Coins className="hero-icon-svg" />
+          </div>
+          <div className="hero-text">
+            <h1 className="hero-title">Understanding Money</h1>
+            <p className="hero-description">
+              Discover how money really works and why Bitcoin matters
+            </p>
+          </div>
         </div>
-        <span className="progress-text">
-          {completedSteps.size} / 7 sections completed
-        </span>
       </div>
 
-      <div className="top-navigation">
-        {['How Payments Work', 'Life Without Money', 'What Money Does', 'Real World Example', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
-          <ContinueButton
-            key={index}
-            className={`top-nav-button ${
-              index === currentStep ? 'active' : ''
-            } ${completedSteps.has(index) ? 'completed' : ''}`}
-            onClick={() => handleTabClick(index)}
-          >
-            <span className="nav-text">
-              {index + 1}. {step}
-            </span>
-          </ContinueButton>
-        ))}
+      {/* TERTIARY: Navigation Steps - Medium Importance */}
+      <div className="learning-path-navigation">
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+            {['How Payments Work', 'Life Without Money', 'What Money Does', 'Real World Example', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
+              <button
+                key={index}
+                className={`step-nav-button ${
+                  index === currentStep ? 'current' : ''
+                } ${completedSteps.has(index) ? 'completed' : ''}`}
+                onClick={() => handleTabClick(index)}
+              >
+                <span className="step-nav-number">
+                  {completedSteps.has(index) ? '✓' : index + 1}
+                </span>
+                <span className="step-nav-label">{step}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
+
 
       <div className="module-content">
         {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}

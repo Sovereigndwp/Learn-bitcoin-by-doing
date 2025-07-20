@@ -26,9 +26,10 @@ const HashingModule = () => {
   // Network data functions
   const getBitcoinPrice = async () => {
     try {
-      const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+      // Updated to use CoinGecko API which is more reliable and modern
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
       const data = await response.json();
-      return Math.round(data.bpi.USD.rate_float);
+      return Math.round(data.bitcoin.usd);
     } catch (error) {
       console.log('Failed to fetch Bitcoin price, using fallback');
       return null;
@@ -37,7 +38,8 @@ const HashingModule = () => {
 
   const getNetworkHashRate = async () => {
     try {
-      const response = await fetch('https://api.blockchain.info/stats');
+      // Using BlockCypher API for more reliable network statistics
+      const response = await fetch('https://api.blockcypher.com/v1/btc/main');
       const data = await response.json();
       return data.hash_rate || null;
     } catch (error) {

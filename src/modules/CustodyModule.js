@@ -208,12 +208,12 @@ const CustodyModule = () => {
         id: 'personal-loss',
         event: 'Personal Key Loss Stories',
         question: 'How much Bitcoin has been lost due to forgotten passwords and lost keys?',
-          options: ['Very little', 'About 1 million BTC', '4-6 million BTC', 'Over 10 million BTC'],
-          reality: 'Roughly 4-6 million Bitcoin (or 20% of the total supply) are lost',
-          explanation: 'According to Chainalysis, around 20% of Bitcoin may reside in lost wallets, due to forgotten passwords, lost devices, or discarded storage.',
-          lesson: 'Effective backup and recovery strategies are vital to protect your Bitcoin',
-          thinkingQuestion: 'What measures can you implement to maximize your access to your Bitcoin?'
-        }
+        options: ['Very little', 'About 1 million BTC', '4-6 million BTC', 'Over 10 million BTC'],
+        reality: 'Roughly 4-6 million Bitcoin (or 20% of the total supply) are lost',
+        explanation: 'According to Chainalysis, around 20% of Bitcoin may reside in lost wallets, due to forgotten passwords, lost devices, or discarded storage.',
+        lesson: 'Effective backup and recovery strategies are vital to protect your Bitcoin',
+        thinkingQuestion: 'What measures can you implement to maximize your access to your Bitcoin?'
+      }
     ];
 
     const custodyPrinciples = [
