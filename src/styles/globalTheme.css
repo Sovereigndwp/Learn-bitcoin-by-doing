@@ -1083,6 +1083,109 @@ p:contains("Canadian government"),
 }
 
 /* ========================================
+   PAGE SCROLLING/NAVIGATION BUTTON LAYOUT
+   ======================================== */
+/* Target only page scrolling buttons - NOT module header buttons */
+.page-scrolling-buttons,
+.step-pagination,
+.content-navigation,
+.page-controls {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 1rem 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 0.5rem 0;
+}
+
+/* Specific styling for page scrolling buttons only */
+.page-scrolling-buttons button,
+.step-pagination button,
+.content-navigation button,
+.page-controls button,
+/* Target buttons with specific page navigation classes */
+button[class*="page-"],
+button[class*="step-"],
+.pagination-btn,
+.step-btn {
+  flex: 0 0 auto;
+  min-width: fit-content;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.1rem;
+  border-radius: 6px;
+  min-height: 32px;
+  max-height: 32px;
+}
+
+/* Scrollable horizontal container for many page buttons */
+.page-scrolling-buttons::-webkit-scrollbar,
+.step-pagination::-webkit-scrollbar {
+  height: 3px;
+}
+
+.page-scrolling-buttons::-webkit-scrollbar-track,
+.step-pagination::-webkit-scrollbar-track {
+  background: var(--color-dark-border);
+  border-radius: 3px;
+}
+
+.page-scrolling-buttons::-webkit-scrollbar-thumb,
+.step-pagination::-webkit-scrollbar-thumb {
+  background: var(--color-primary-500);
+  border-radius: 3px;
+}
+
+/* Card-based sections separation */
+.section-card,
+.content-section,
+.page-section {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-card + .section-card,
+.content-section + .content-section,
+.page-section + .page-section {
+  margin-top: 1.5rem;
+}
+
+/* On very small screens, keep buttons small and scrollable */
+@media (max-width: 480px) {
+  .page-scrolling-buttons,
+  .step-pagination,
+  .content-navigation,
+  .page-controls {
+    gap: 0.1rem;
+    justify-content: flex-start;
+    padding-bottom: 0.75rem;
+  }
+  
+  .page-scrolling-buttons button,
+  .step-pagination button,
+  .content-navigation button,
+  .page-controls button,
+  button[class*="page-"],
+  button[class*="step-"],
+  .pagination-btn,
+  .step-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    min-height: 28px;
+    max-height: 28px;
+  }
+}
+
+/* ========================================
    PRINT STYLES
    ======================================== */
 @media print {
@@ -1097,4 +1200,4 @@ p:contains("Canadian government"),
     color: black !important;
     box-shadow: none !important;
   }
-} 
+}

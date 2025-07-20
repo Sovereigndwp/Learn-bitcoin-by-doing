@@ -224,6 +224,27 @@
   text-align: center !important;
 }
 
+/* Ensure quiz options container displays options in column */
+.module-container .quiz-container .quiz-options,
+.module-container .quiz-container .options,
+.module-container .quiz-container .question-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+/* Force column layout for any quiz choice containers */
+.module-container .quiz-container .choices,
+.module-container .quiz-container .answers,
+.module-container .quiz-container .selections {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 /* Global quiz text contrast - FIXED */
 .module-container .quiz-container *:not(.quiz-option):not(.explanation-card):not(button) {
   color: var(--color-text-primary);
