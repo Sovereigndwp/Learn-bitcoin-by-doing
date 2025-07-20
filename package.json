@@ -1,5 +1,6 @@
 {
-  "name": "bitcoin-learning-site",
+  "name": "learn-bitcoin-by-doing",
+  "homepage": "https://sovereigndwp.github.io/Learn-bitcoin-by-doing",
   "version": "0.1.0",
   "private": true,
   "resolutions": {
