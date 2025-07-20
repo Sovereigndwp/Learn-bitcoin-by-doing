@@ -3,6 +3,8 @@ name: Build and Deploy
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
@@ -33,8 +35,9 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-files
-          path: build
+          name: build-files-${{ github.sha }}
+          path: build/
+          retention-days: 30
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
