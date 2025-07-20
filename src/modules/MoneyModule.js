@@ -56,14 +56,16 @@ const Introduction = ({ onComplete }) => {
 
   return (
     <div className="module-container dark-theme">
-      <div className="payment-demo-section">
-        <h2>What's Really Happening When You Pay?</h2>
+      <div className="module-intro-card">
+        <h1 className="heading-critical">What's Really Happening When You Pay?</h1>
         <p>Modern payments look simple, but there's a lot happening behind the scenes. Let's see what's really going on.</p>
-        
-        <h3>Let's Look at Common Payments</h3>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">Let's Look at Common Payments</h2>
         <p>Click through these everyday payment examples to see what really happens...</p>
 
-        <div className="demo-container">
+        <div className="card-content">
           <div className="payment-demo-card">
             <h4>{currentDemoData.title}</h4>
             <p>{currentDemoData.description}</p>
@@ -110,8 +112,8 @@ const Introduction = ({ onComplete }) => {
         </div>
 
         {showAnalysis && (
-          <div className="analysis-section">
-            <h4>The Hidden Complexity</h4>
+          <div className="card-content">
+            <h3 className="heading-medium">The Hidden Complexity</h3>
             <p>Every "simple" payment involves multiple companies, systems, and potential points of failure. This complexity is invisible to users but creates:</p>
             <ul>
               <li>Higher costs (fees hidden in exchange rates and processing)</li>
@@ -120,8 +122,8 @@ const Introduction = ({ onComplete }) => {
               <li>Control points (accounts can be frozen or restricted)</li>
             </ul>
             
-            <div className="insight-box">
-              <h5>Key Insight</h5>
+            <div className="concept-card">
+              <h4 className="heading-standard">💡 Key Insight</h4>
               What if money could work more like the internet - direct, open, and without requiring permission from intermediaries?
             </div>
 
@@ -282,11 +284,13 @@ const BarterWorld = ({ onComplete }) => {
   
   return (
     <div className="module-container dark-theme">
-      <div className="barter-world-section">
-        <h2>Life Without Money</h2>
+      <div className="card-hero">
+        <h1 className="heading-critical">Life Without Money</h1>
         <p>Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
+      </div>
         
-        <h3>Trading Scenarios</h3>
+      <div className="card-feature">
+        <h2 className="heading-high">Trading Scenarios</h2>
         <p>Click through these everyday trading examples to see what really happens...</p>
 
         <div className="scenario-tracker">
@@ -302,9 +306,9 @@ const BarterWorld = ({ onComplete }) => {
           </div>
         </div>
 
-        <div className="scenario-card">
+        <div className="card-content">
           <div className="scenario-header">
-            <h3>{currentScenarioData.title}</h3>
+            <h3 className="heading-medium">{currentScenarioData.title}</h3>
             <div className="scenario-setup">
               <p><strong>Situation:</strong> {currentScenarioData.situation}</p>
               <p><strong>What happens:</strong> {currentScenarioData.trader}</p>
@@ -341,8 +345,8 @@ const BarterWorld = ({ onComplete }) => {
         </div>
 
         {discoveredProblems.size > 0 && (
-          <div className="problems-identified">
-            <h3>📊 Problems We've Found:</h3>
+          <div className="card-supporting">
+            <h3 className="heading-standard">📊 Problems We've Found:</h3>
             <div className="problems-grid">
               {Array.from(discoveredProblems).map(problem => (
                 <div key={problem} className="problem-badge">
@@ -354,13 +358,13 @@ const BarterWorld = ({ onComplete }) => {
         )}
 
         {currentScenario === economicScenarios.length - 1 && showOutcome && (
-          <div className="analysis-conclusion">
+          <div className="concept-card">
             <div className="conclusion-box">
-              <h3>📈 What We Learned</h3>
+              <h2 className="heading-high">📈 What We Learned</h2>
               <p>Trading without money is really hard! That's why every society eventually invented some form of money.</p>
               
-              <div className="economic-insights">
-                <h4>The Big Problems:</h4>
+              <div className="card-supporting">
+                <h4 className="heading-standard">The Big Problems:</h4>
                 <ul>
                   <li><strong>Hard to Match:</strong> Finding someone who has what you want AND wants what you have</li>
                   <li><strong>Takes Forever:</strong> Searching for the right trading partners</li>
@@ -370,8 +374,8 @@ const BarterWorld = ({ onComplete }) => {
                 </ul>
               </div>
 
-              <div className="innovation-insight">
-                <h4>💡 The Big Idea</h4>
+              <div className="tip-card">
+                <h4 className="heading-standard">💡 The Big Idea</h4>
                 <p>Money solved these problems by giving people something everyone would accept. This wasn't invented by governments—people created it because they needed it.</p>
               </div>
             </div>

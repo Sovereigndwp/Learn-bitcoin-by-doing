@@ -1,0 +1,393 @@
+/* ========================================
+   PROFESSIONAL VISUAL HIERARCHY SYSTEM
+   ======================================== */
+/* 
+   This system establishes clear visual importance through size, spacing, 
+   and styling based on content significance and educational priority
+*/
+
+/* ========================================
+   HIERARCHICAL TYPOGRAPHY SYSTEM
+   ======================================== */
+
+/* CRITICAL IMPORTANCE - Module/Page Titles */
+.heading-critical,
+h1.critical {
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem); /* 40-72px responsive */
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 var(--spacing-2xl) 0;
+  color: var(--color-dark-text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
+  max-width: var(--text-max-width);
+}
+
+/* HIGH IMPORTANCE - Section Headers */
+.heading-high,
+h2.high {
+  font-size: clamp(1.875rem, 4vw, 3rem); /* 30-48px responsive */
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--color-dark-text);
+  letter-spacing: -0.01em;
+  max-width: var(--text-max-width);
+}
+
+/* MEDIUM IMPORTANCE - Subsection Headers */
+.heading-medium,
+h3.medium {
+  font-size: clamp(1.5rem, 3vw, 2.25rem); /* 24-36px responsive */
+  font-weight: 650;
+  line-height: 1.25;
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-dark-text);
+  max-width: var(--text-max-width);
+}
+
+/* STANDARD IMPORTANCE - Card Titles */
+.heading-standard,
+h4.standard {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem); /* 20-28px responsive */
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--color-dark-text);
+  max-width: var(--text-max-width);
+}
+
+/* LOW IMPORTANCE - Component Headers */
+.heading-low,
+h5.low {
+  font-size: clamp(1.125rem, 2vw, 1.375rem); /* 18-22px responsive */
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-dark-textSecondary);
+  max-width: var(--text-max-width);
+}
+
+/* MINIMAL IMPORTANCE - Small Labels */
+.heading-minimal,
+h6.minimal {
+  font-size: clamp(1rem, 1.5vw, 1.125rem); /* 16-18px responsive */
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--color-dark-textTertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  max-width: var(--text-max-width);
+}
+
+/* ========================================
+   HIERARCHICAL CARD SIZING SYSTEM
+   ======================================== */
+
+/* HERO CARDS - Critical content (module introductions, major concepts) */
+.card-hero {
+  background: var(--glass-bg-hover);
+  border: 2px solid var(--glass-border-hover);
+  border-radius: var(--radius-2xl);
+  padding: clamp(2.5rem, 5vw, 4rem);
+  min-height: clamp(250px, 30vh, 350px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-orange);
+  transition: all var(--transition-hover);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.card-hero:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-glass-xl), var(--shadow-glow-orange-lg);
+}
+
+/* FEATURE CARDS - Important content (main learning sections) */
+.card-feature {
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(2rem, 4vw, 3rem);
+  min-height: clamp(180px, 22vh, 260px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-glass);
+  transition: all var(--transition-hover);
+  margin-bottom: var(--spacing-xl);
+}
+
+.card-feature:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-orange);
+}
+
+/* CONTENT CARDS - Standard content (exercises, examples) */
+.card-content {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  min-height: clamp(140px, 18vh, 200px);
+  box-shadow: 0 4px 12px var(--color-shadow-sm);
+  transition: all var(--transition-hover);
+  margin-bottom: var(--spacing-lg);
+}
+
+.card-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--color-shadow-md);
+}
+
+/* SUPPORTING CARDS - Secondary content (tips, notes, details) */
+.card-supporting {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-md);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  min-height: clamp(100px, 15vh, 150px);
+  box-shadow: 0 2px 8px var(--color-shadow-sm);
+  transition: all var(--transition-hover);
+  margin-bottom: var(--spacing-md);
+}
+
+.card-supporting:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-shadow-sm);
+}
+
+/* COMPACT CARDS - Minor content (quick facts, small interactions) */
+.card-compact {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-sm);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  min-height: clamp(80px, 12vh, 120px);
+  box-shadow: 0 1px 4px var(--color-shadow-xs);
+  transition: all var(--transition-hover);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ========================================
+   SECTION-SPECIFIC HIERARCHICAL CARDS
+   ======================================== */
+
+/* Module Introduction Cards - Highest Priority */
+.module-intro-card {
+  background: linear-gradient(135deg, var(--glass-bg-hover), var(--color-primary-bg));
+  border: 2px solid var(--color-primary-500);
+  border-radius: var(--radius-2xl);
+  padding: clamp(3rem, 6vw, 4.5rem);
+  min-height: clamp(300px, 35vh, 400px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glass-xl), var(--shadow-glow-orange);
+  margin-bottom: var(--spacing-3xl);
+}
+
+/* Learning Concept Cards - High Priority */
+.concept-card {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border-hover);
+  border-left: 6px solid var(--color-primary-500);
+  border-radius: var(--radius-xl);
+  padding: clamp(2.25rem, 4.5vw, 3.25rem);
+  min-height: clamp(220px, 28vh, 300px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-glass-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Exercise Cards - Standard Priority */
+.exercise-card {
+  background: var(--color-dark-bgCard);
+  border: 1px solid var(--color-technical);
+  border-left: 4px solid var(--color-technical);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.75rem, 3.25vw, 2.5rem);
+  min-height: clamp(160px, 20vh, 220px);
+  box-shadow: 0 4px 12px var(--color-shadow-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Quiz Cards - Interactive Priority */
+.quiz-card {
+  background: var(--color-dark-bgCard);
+  border: 2px solid var(--color-success-500);
+  border-radius: var(--radius-lg);
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  min-height: clamp(180px, 25vh, 260px);
+  box-shadow: 0 4px 16px var(--color-success-shadow);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* Tip Cards - Supporting Priority */
+.tip-card,
+.note-card {
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-left: 4px solid var(--color-warning-500);
+  border-radius: var(--radius-md);
+  padding: clamp(1rem, 2.25vw, 1.5rem);
+  min-height: clamp(80px, 12vh, 120px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--spacing-md);
+}
+
+/* ========================================
+   CONTENT TYPE SPECIFIC STYLING
+   ======================================== */
+
+/* Video/Demo Content Cards */
+.demo-card,
+.video-card {
+  aspect-ratio: 16 / 9;
+  min-height: clamp(200px, 25vh, 300px);
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass-lg);
+}
+
+/* Text-Heavy Content Cards */
+.reading-card,
+.explanation-card {
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1.7;
+  max-width: var(--text-max-width);
+  font-size: clamp(1rem, 1.25vw, 1.125rem);
+}
+
+/* Interactive Content Cards */
+.interactive-card {
+  background: linear-gradient(135deg, var(--glass-bg), var(--color-info-bg));
+  border: 2px solid var(--color-info-500);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  min-height: clamp(160px, 20vh, 240px);
+  cursor: pointer;
+}
+
+.interactive-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-technical);
+}
+
+/* ========================================
+   PROGRESS AND STATUS INDICATORS
+   ======================================== */
+
+/* Completed Content Styling */
+.card-completed {
+  border-color: var(--color-success-500) !important;
+  background: linear-gradient(135deg, var(--color-success-bg), var(--glass-bg)) !important;
+  position: relative;
+}
+
+.card-completed::before {
+  content: "✓";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-success-500);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* In Progress Content Styling */
+.card-in-progress {
+  border-color: var(--color-warning-500) !important;
+  background: linear-gradient(135deg, var(--color-warning-bg), var(--glass-bg)) !important;
+}
+
+/* Locked Content Styling */
+.card-locked {
+  opacity: 0.6;
+  filter: grayscale(0.3);
+  cursor: not-allowed;
+  border-color: var(--color-neutral-400) !important;
+}
+
+.card-locked:hover {
+  transform: none !important;
+  box-shadow: inherit !important;
+}
+
+/* ========================================
+   RESPONSIVE BEHAVIOR
+   ======================================== */
+
+@media (max-width: 768px) {
+  .card-hero {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    min-height: clamp(200px, 25vh, 280px);
+  }
+  
+  .card-feature {
+    padding: clamp(1.25rem, 3vw, 2rem);
+    min-height: clamp(140px, 18vh, 200px);
+  }
+  
+  .card-content {
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    min-height: clamp(120px, 15vh, 160px);
+  }
+  
+  .module-intro-card {
+    padding: clamp(2rem, 4.5vw, 3rem);
+    min-height: clamp(240px, 30vh, 320px);
+  }
+  
+  .concept-card {
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    min-height: clamp(180px, 22vh, 240px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-hero {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .card-feature {
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .card-content {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  /* Reduce margins on small screens */
+  .card-supporting {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .card-compact {
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+@media print {
+  .card-hero,
+  .card-feature,
+  .card-content,
+  .card-supporting,
+  .card-compact {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+    background: white !important;
+    color: black !important;
+  }
+}

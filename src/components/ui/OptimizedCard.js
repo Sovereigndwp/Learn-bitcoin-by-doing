@@ -11,7 +11,8 @@ const OptimizedCard = ({
   subtitle,
   children,
   variant = 'default', // default, elevated, outlined, glass
-  size = 'md', // sm, md, lg, xl
+  size = 'standard', // compact, supporting, standard, content, feature, hero
+  importance = 'standard', // critical, high, medium, standard, low, minimal
   collapsible = false,
   defaultExpanded = true,
   interactive = false,
@@ -40,6 +41,8 @@ const OptimizedCard = ({
     'opt-card',
     `opt-card--${variant}`,
     `opt-card--${size}`,
+    `card-${size}`, // Use hierarchical card classes from hierarchicalSystem.css
+    `heading-${importance}`, // Use hierarchical heading classes
     interactive && 'opt-card--interactive',
     collapsible && 'opt-card--collapsible',
     isHovered && 'opt-card--hovered',
