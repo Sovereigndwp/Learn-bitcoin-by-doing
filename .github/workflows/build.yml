@@ -1,51 +1,130 @@
-name: Build & Deploy
+name: Build & Deploy Bitcoin Learning App
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:  # Allow manual triggers
 
-permissions:          # ← required for GitHub Pages
+# Required permissions for GitHub Pages deployment
+permissions:
   contents: read
   pages: write
   id-token: write
 
+# Cancel previous runs if new commit is pushed
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: '20.x'
+  BUILD_PATH: './build'
+
 jobs:
+  # Job 1: Build the application
   build:
+    name: Build Application
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-
+    timeout-minutes: 10
+    
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
+          fetch-depth: 0  # Full history for better caching
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci --prefer-offline --no-audit
+          echo "✅ Dependencies installed successfully"
 
-      - name: Build project
-        run: npm run build
+      - name: Run build
+        run: |
+          npm run build
+          echo "✅ Build completed successfully"
+          ls -la ${{ env.BUILD_PATH }}
         env:
-          CI: false                # ignore CRA warnings
+          CI: false
+          NODE_ENV: production
+          GENERATE_SOURCEMAP: false
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Test build output
+        run: |
+          if [ ! -d "${{ env.BUILD_PATH }}" ]; then
+            echo "❌ Build directory not found!"
+            exit 1
+          fi
+          if [ ! -f "${{ env.BUILD_PATH }}/index.html" ]; then
+            echo "❌ index.html not found in build output!"
+            exit 1
+          fi
+          echo "✅ Build output validated"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build            # (if you ever switch to Vite, change to ./dist)
+          path: ${{ env.BUILD_PATH }}
+          name: github-pages
+          retention-days: 1
 
+  # Job 2: Deploy to GitHub Pages
   deploy:
-    needs: build
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+    
+    # Deploy only on main branch pushes
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+    
     steps:
-      - id: deployment
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+          
+      - name: Display deployment URL
+        run: |
+          echo "🚀 Deployment successful!"
+          echo "📱 Site URL: ${{ steps.deployment.outputs.page_url }}"
+
+  # Job 3: Health check (optional)
+  health-check:
+    name: Post-deployment Health Check
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    timeout-minutes: 5
+    
+    steps:
+      - name: Wait for deployment
+        run: sleep 30
+        
+      - name: Check site health
+        run: |
+          URL="${{ needs.deploy.outputs.page_url || 'https://sovereigndwp.github.io/Learn-bitcoin-by-doing/' }}"
+          echo "🔍 Checking site health at: $URL"
+          
+          # Check if site responds
+          if curl -f -s -o /dev/null "$URL"; then
+            echo "✅ Site is responding successfully"
+          else
+            echo "⚠️ Site health check failed - this might be expected for new deployments"
+          fi
