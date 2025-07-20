@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Home, Globe, ArrowLeft, Menu, X } from 'lucide-react';
+import { OptimizedPopup, Tooltip } from './ui';
 import './ModuleLayout.css';
 import './ModuleCommon.css';
 import './QuizStyles.css';
@@ -76,36 +77,38 @@ const ModuleLayout = ({ children }) => {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="mobile-nav-menu">
-            {!isHomepage && (
+          <OptimizedPopup>
+            <div className="mobile-nav-menu">
+              {!isHomepage && (
+                <Link 
+                  to="/" 
+                  className="nav-button back-button mobile-nav-item"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <ArrowLeft size={18} className="button-icon button-icon-left" />
+                  Back to Homepage
+                </Link>
+              )}
               <Link 
                 to="/" 
-                className="nav-button back-button mobile-nav-item"
+                className="nav-button home-button mobile-nav-item"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <ArrowLeft size={18} className="button-icon button-icon-left" />
-                Back to Homepage
+                <Home size={20} className="button-icon button-icon-left" />
+                Homepage
               </Link>
-            )}
-            <Link 
-              to="/" 
-              className="nav-button home-button mobile-nav-item"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <Home size={20} className="button-icon button-icon-left" />
-              Homepage
-            </Link>
-            <button 
-              className="nav-button language-toggle mobile-nav-item"
-              onClick={() => {
-                toggleLanguage();
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              <Globe size={20} className="button-icon button-icon-left" />
-              Switch to {language === 'en' ? 'Spanish' : 'English'}
-            </button>
-          </div>
+              <button 
+                className="nav-button language-toggle mobile-nav-item"
+                onClick={() => {
+                  toggleLanguage();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                <Globe size={20} className="button-icon button-icon-left" />
+                Switch to {language === 'en' ? 'Spanish' : 'English'}
+              </button>
+            </div>
+          </OptimizedPopup>
         )}
       </header>
 

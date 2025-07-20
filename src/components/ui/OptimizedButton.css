@@ -1,0 +1,171 @@
+/*
+  OptimizedButton.css
+  -------------------
+  Unified button styles and animations for consistent UI design
+*/
+
+.opt-btn-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.opt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.opt-btn--primary {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  border-color: var(--color-primary-500);
+  color: var(--color-dark-text);
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.opt-btn--primary:hover:not(.opt-btn--disabled) {
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-xl), var(--shadow-glow-orange-lg);
+}
+
+.opt-btn--secondary {
+  background: var(--glass-bg);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-500);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.opt-btn--secondary:hover:not(.opt-btn--disabled) {
+  background: var(--color-primary-500);
+  color: var(--color-dark-text);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.opt-btn--success {
+  background: linear-gradient(135deg, var(--color-success-light), var(--color-success-dark));
+  border-color: var(--color-success-light);
+  color: var(--color-dark-text);
+  box-shadow: var(--shadow-glow-mastery);
+}
+
+.opt-btn--success:hover:not(.opt-btn--disabled) {
+  background: linear-gradient(135deg, var(--color-success-dark), var(--color-success-light));
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
+}
+
+.opt-btn--warning {
+  background: linear-gradient(135deg, var(--color-warning-light), var(--color-warning-dark));
+  border-color: var(--color-warning-light);
+  color: var(--color-dark-text);
+  box-shadow: var(--shadow-glow-foundations);
+}
+
+.opt-btn--warning:hover:not(.opt-btn--disabled) {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
+}
+
+.opt-btn--danger {
+  background: linear-gradient(135deg, var(--color-error-light), var(--color-error-dark));
+  border-color: var(--color-error-light);
+  color: var(--color-dark-text);
+}
+
+.opt-btn--danger:hover:not(.opt-btn--disabled) {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-dark-lg);
+}
+
+.opt-btn--outline {
+  background: transparent;
+  border-color: var(--glass-border);
+  color: var(--color-dark-textSecondary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.opt-btn--outline:hover:not(.opt-btn--disabled) {
+  background: var(--glass-bg);
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-500);
+  box-shadow: var(--shadow-glass);
+  transform: scale(1.02);
+}
+
+.opt-btn--ghost {
+  background: none;
+  border: none;
+  color: var(--color-dark-textSecondary);
+}
+
+.opt-btn--ghost:hover:not(.opt-btn--disabled) {
+  background: var(--glass-bg);
+  color: var(--color-primary-500);
+  transform: scale(1.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.opt-btn--disabled, .opt-btn--loading {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.opt-btn--full {
+  width: 100%;
+}
+
+.opt-btn--progress {
+  position: relative;
+}
+
+.opt-btn__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background-color: var(--color-primary-light);
+  transition: width 0.3s ease;
+}
+
+.opt-btn-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: #333;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.opt-btn__spinner {
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -25,13 +25,22 @@ const MODULES = [
     prerequisites: []
   },
   {
+    id: 'myths',
+    title: 'Bitcoin Myths & Facts',
+    description: 'Explore and debunk common Bitcoin myths and misconceptions before diving deeper into the technology.',
+    estimatedTime: '40 min',
+    difficulty: 2,
+    category: 'foundational',
+    prerequisites: ['money']
+  },
+  {
     id: 'bitcoin-basics',
     title: 'Bitcoin Basics: Your First Steps',
     description: 'Learn how to get started with Bitcoin - from choosing a wallet to making your first transaction, with practical security tips.',
     estimatedTime: '35 min',
     difficulty: 1,
     category: 'foundational',
-    prerequisites: ['money']
+    prerequisites: ['myths']
   },
   {
     id: 'numbers',

@@ -841,9 +841,9 @@ p {
 }
 
 /* ========================================
-   LIGHT MODE OVERRIDE
+   OPTIMIZED GLOBAL THEME VARIABLES
    ======================================== */
-@media (prefers-color-scheme: light) {
+/* Enhanced color system with consistent naming and improved organization */
   .auto-theme {
     background: var(--color-light-bg);
     color: var(--color-light-text);
@@ -853,7 +853,6 @@ p {
     background: var(--color-light-bgCard);
     border-color: var(--color-light-border);
     color: var(--color-light-text);
-  }
 }
 
 /* ========================================

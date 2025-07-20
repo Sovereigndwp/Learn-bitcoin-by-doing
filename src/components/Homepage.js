@@ -9,6 +9,7 @@ import {
   RotateCcw, BookOpen, TrendingUp, Eye, ChevronRight,
   DollarSign, Coins, Lock, Unlock, MessageCircle, BarChart3
 } from 'lucide-react';
+import { PrimaryButton, ConfirmDialog } from './ui';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -95,7 +96,7 @@ const Homepage = () => {
     return module.prerequisites.every(prereq => isModuleCompleted(prereq));
   };
 
-    return (
+  return (
     <div className="homepage-modern">
       {/* Modern Header */}
       <header className="modern-header">
@@ -108,31 +109,13 @@ const Homepage = () => {
             </div>
           </div>
           <nav className="header-nav">
-          <button 
-              onClick={() => setCurrentView('progress')} 
-              className={`nav-tab ${currentView === 'progress' ? 'active' : ''}`}
-          >
-              <BarChart3 size={16} />
-              Progress
-          </button>
-            <button 
-              onClick={() => setCurrentView('learning')} 
-              className={`nav-tab ${currentView === 'learning' ? 'active' : ''}`}
-            >
-              <BookOpen size={16} />
-              Learning
-            </button>
+            <PrimaryButton onClick={() => setCurrentView('progress')} className={`nav-tab ${currentView === 'progress' ? 'active' : ''}`}>Progress</PrimaryButton>
+            <PrimaryButton onClick={() => setCurrentView('learning')} className={`nav-tab ${currentView === 'learning' ? 'active' : ''}`}>Learning</PrimaryButton>
             {hasStarted && (
-              <button 
-                onClick={() => setShowResetConfirm(true)} 
-                className="nav-tab reset-tab"
-              >
-                <RotateCcw size={16} />
-                Reset
-              </button>
+              <PrimaryButton onClick={() => setShowResetConfirm(true)} className="nav-tab reset-tab">Reset</PrimaryButton>
             )}
           </nav>
-          </div>
+        </div>
       </header>
 
       {/* Main Content Based on Current View */}
@@ -159,16 +142,19 @@ const Homepage = () => {
       </main>
 
       {/* Reset Confirmation Dialog */}
-      {showResetConfirm && (
-        <ResetConfirmationDialog 
-          userStats={userStats}
-          onConfirm={handleResetProgress}
-          onCancel={() => setShowResetConfirm(false)}
-        />
-        )}
-      </div>
-    );
-  };
+      <ConfirmDialog
+        isOpen={showResetConfirm}
+        onClose={() => setShowResetConfirm(false)}
+        onConfirm={handleResetProgress}
+        title="Reset Progress"
+        message="Are you sure you want to reset your progress? This action cannot be undone."
+        variant="warning"
+        confirmText="Reset"
+        cancelText="Cancel"
+      />
+    </div>
+  );
+};
 
 // Modern Welcome Section
 const WelcomeSection = ({ onStartJourney }) => {

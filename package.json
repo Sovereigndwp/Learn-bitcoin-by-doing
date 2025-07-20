@@ -47,6 +47,9 @@
     "start": "PORT=3003 craco start",
     "build": "craco build",
     "test": "craco test",
+    "test:coverage": "craco test --coverage --watchAll=false",
+    "test:ci": "craco test --coverage --ci --watchAll=false",
+    "test:debug": "craco test --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
