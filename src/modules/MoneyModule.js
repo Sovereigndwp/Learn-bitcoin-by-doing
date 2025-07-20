@@ -5,9 +5,10 @@ import { Coins } from 'lucide-react';
 import { 
   ContinueButton, 
   ActionButton,
-  StepNavigation
-} from '../components/ModernButtons';
-import '../components/MoneyModule.css';
+  StepNavigation,
+  NavigationButton
+} from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 // Using global CSS + Money module specific styles
 
 // Simplified Introduction 
