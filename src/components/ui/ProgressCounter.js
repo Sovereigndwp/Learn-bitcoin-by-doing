@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useProgress } from '../../contexts/ProgressContext';
-import './ProgressCounter.css';
+import { colors, spacing, borderRadius, transitions, components, typography } from '../../styles/globalStyles';
 
 /**
  * Unified Progress Counter Component
@@ -52,31 +52,67 @@ const ProgressCounter = ({
     }
   };
   
+  // Generate styles using global configuration
+  const progressStyles = {
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: spacing[2],
+      opacity: disabled ? 0.5 : 1,
+      transition: transitions.opacity,
+    },
+    track: {
+      width: '100%',
+      height: components.progress.height[size] || components.progress.height.md,
+      backgroundColor: components.progress.backgroundColor,
+      borderRadius: components.progress.borderRadius,
+      overflow: 'hidden',
+      position: 'relative',
+    },
+    fill: {
+      height: '100%',
+      backgroundColor: components.progress.fillColor,
+      borderRadius: components.progress.borderRadius,
+      transition: animated ? `width ${transitions.slow}` : 'none',
+    },
+    info: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      fontSize: typography.fontSize.sm,
+      color: colors.text.secondary,
+    },
+    label: {
+      fontSize: typography.fontSize.sm,
+      fontWeight: typography.fontWeight.medium,
+      color: colors.text.primary,
+      marginBottom: spacing[1],
+    },
+  };
+
   const baseClasses = [
     'progress-counter',
-    `progress-counter--${variant}`,
-    `progress-counter--${size}`,
     disabled && 'progress-counter--disabled',
     className
   ].filter(Boolean).join(' ');
   
   return (
-    <div className={baseClasses} {...props}>
+    <div className={baseClasses} style={progressStyles.container} {...props}>
       {showLabel && (
-        <div className="progress-counter__label">
+        <div className="progress-counter__label" style={progressStyles.label}>
           Progress
         </div>
       )}
       
       <div className="progress-counter__container">
-        <div className="progress-counter__track">
+        <div className="progress-counter__track" style={progressStyles.track}>
           <div 
             className="progress-counter__fill"
-            style={{ width: `${animatedProgress}%` }}
+            style={{ ...progressStyles.fill, width: `${animatedProgress}%` }}
           />
         </div>
         
-        <div className="progress-counter__info">
+        <div className="progress-counter__info" style={progressStyles.info}>
           {showSteps && (
             <span className="progress-counter__steps">
               {currentStep}/{totalSteps}
@@ -96,6 +132,18 @@ const ProgressCounter = ({
           className="progress-counter__next-btn"
           onClick={handleStepComplete}
           aria-label="Complete next step"
+          style={{
+            marginTop: spacing[3],
+            padding: `${spacing[2]} ${spacing[4]}`,
+            backgroundColor: colors.bitcoin.primary,
+            color: colors.text.inverse,
+            border: 'none',
+            borderRadius: borderRadius.md,
+            fontSize: typography.fontSize.sm,
+            fontWeight: typography.fontWeight.medium,
+            cursor: 'pointer',
+            transition: transitions.interactive,
+          }}
         >
           Next Step
         </button>

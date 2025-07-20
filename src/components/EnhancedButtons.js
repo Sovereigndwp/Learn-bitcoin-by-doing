@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ArrowLeft, ArrowRight, Play, Pause } from 'lucide-react';
 import audioSystem from '../utils/audioSystem';
 import contextualBehavior from '../utils/contextualBehavior';
+import { generateButtonStyles, colors, spacing, borderRadius, transitions, typography } from '../styles/globalStyles';
 import '../styles/modernInteractions.css';
 
 // Enhanced Button Component with Visual Hierarchy, Feedback, and Accessibility
@@ -51,13 +52,14 @@ const Button = ({
     };
   }, []);
 
+  // Generate styles using global configuration
+  const buttonStyles = generateButtonStyles(variant, size);
+  
   const baseClasses = [
     'button',
-    'modern-card', // Apply modern card styling
-    'interactive-element', // Mark as interactive for contextual behavior
-    'spring-button', // Apply spring physics
-    `button-${variant}`,
-    `button-${size}`,
+    'modern-card',
+    'interactive-element',
+    'spring-button',
     `button-priority-${priority}`,
     `button-state-${buttonState}`,
     fullWidth && 'button-full-width',
@@ -206,6 +208,7 @@ const Button = ({
       ref={buttonRef}
       id={id}
       className={baseClasses}
+      style={{ ...buttonStyles, ...props.style }}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       onMouseEnter={() => audioSystem.onInteraction('hover')}

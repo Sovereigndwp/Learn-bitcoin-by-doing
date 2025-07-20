@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronRight, Lock, CheckCircle, Clock, Star, TrendingUp } from 'lucide-react';
-import './ModuleCard.css';
+import { generateCardStyles } from '../../styles/globalStyles';
 
 /**
  * ModuleCard - Unified card component for consistent module presentation
@@ -84,19 +84,12 @@ const ModuleCard = ({
   };
 
   // Build class names
+const cardStyles = generateCardStyles(variant, theme);
+
   const cardClasses = [
     'module-card',
-    `module-card--${variant}`,
-    `module-card--${size}`,
-    theme !== 'auto' && `module-card--theme-${theme}`,
-    category && `module-card--category-${category}`,
-    disabled && 'module-card--disabled',
-    completed && 'module-card--completed',
-    locked && 'module-card--locked',
     isHovered && 'module-card--hovered',
     isPressed && 'module-card--pressed',
-    onClick && 'module-card--clickable',
-    badge && 'module-card--with-badge',
     className
   ].filter(Boolean).join(' ');
 
@@ -214,7 +207,7 @@ const ModuleCard = ({
       tabIndex={onClick && !disabled && !locked ? 0 : -1}
       role={onClick ? 'button' : undefined}
       aria-disabled={disabled || locked}
-      style={style}
+style={{ ...style, ...cardStyles }}
       {...props}
     >
       {/* Background Pattern */}

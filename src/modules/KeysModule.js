@@ -580,7 +580,12 @@ const KeysModule = () => {
               <h4>Ultimate Responsibility</h4>
               <p>Lose your private key = lose your Bitcoin. No customer service can help.</p>
         </div>
-          </div>
+        </div>
+        </div>
+
+        {/* Knowledge Check Section */}
+        <div className="knowledge-check-section">
+          <KnowledgeCheck />
         </div>
 
         <div className="real-world-warning">

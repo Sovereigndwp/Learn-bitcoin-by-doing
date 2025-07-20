@@ -274,7 +274,7 @@ const UnifiedButton = ({
         tabIndex={disabled ? -1 : 0}
         style={{
           ...buttonStyles,
-          transform: isPressed  !disabled ? 'scale(0.98)' : 'scale(1)',
+          transform: isPressed && !disabled ? 'scale(0.98)' : 'scale(1)',
           ...style
         }}
         {...props}
