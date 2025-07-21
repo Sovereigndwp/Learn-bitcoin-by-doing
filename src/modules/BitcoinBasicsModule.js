@@ -6,12 +6,14 @@ import {
   ActionButton,
   NavigationButton,
   OptionButton
-} from '../components/ui/UnifiedButton';
+} from '../components/EnhancedButtons';
+import { ModuleCompletionButton } from '../components/ui';
 import ProgressCounter, { 
   StepProgressCounter,
   CircularProgressCounter 
 } from '../components/ui/ProgressCounter';
 import { ModuleCard, FeaturedCard } from '../components/ui/ModuleCard';
+import '../components/ModuleCommon.css';
 // Using unified UI components for consistency
 
 // Bitcoin Introduction with Prediction Challenges
@@ -1113,12 +1115,11 @@ const BitcoinCompletion = ({ onComplete }) => {
             </div>
           </div>
 
-        <ActionButton 
-          className="complete-module-button"
-          onClick={() => onComplete(4)}
-        >
-          Complete Bitcoin Fundamentals
-        </ActionButton>
+        <ModuleCompletionButton 
+          moduleName="Bitcoin Basics"
+          moduleId="bitcoin-basics"
+          customMessage="🚀 Outstanding! You now understand what makes Bitcoin revolutionary and different from traditional money!"
+        />
       </div>
       </div>
     );
@@ -1224,11 +1225,11 @@ const HowBitcoinWorks = ({ onComplete }) => {
             <h4>{currentConcept_data.question}</h4>
             
             {!userAnswer && (
-              <div className="answer-options">
+              <div className="quiz-options">
                 {currentConcept_data.options.map(option => (
                   <button
                     key={option.id}
-                    className={`answer-option risk-${option.risk}`}
+                    className={`quiz-option risk-${option.risk}`}
                     onClick={() => handleAnswer(option.id)}
                   >
                     {option.text}

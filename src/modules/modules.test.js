@@ -33,7 +33,7 @@ describe('Component Rendering', () => {
       </TestWrapper>
     );
 
-    expect(screen.getByText(/Bitcoin Learning Journey/i)).toBeInTheDocument();
+    expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
   });
 
   test('AboutMe renders in ModuleLayout', () => {
@@ -128,6 +128,6 @@ describe('Component Structure', () => {
     );
 
     // Should find main content
-    expect(screen.getByText(/Bitcoin Learning Journey/i)).toBeInTheDocument();
+    expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
   });
 });

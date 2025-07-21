@@ -189,28 +189,4 @@
   margin-top: 1rem;
 }
 
-.quiz-options {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.quiz-option {
-  padding: 0.75rem 2rem;
-  border: 2px solid #dee2e6;
-  border-radius: 8px;
-  background: var(--color-dark-bgCard);
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--color-text-primary);
-}
-
-.quiz-option:hover {
-  border-color: #f7931a;
-  background: var(--color-dark-bgCard);
-}
-
-.quiz-option.correct:hover {
-  border-color: #28a745;
-  background: var(--color-dark-bgCard);
-} 
+/* Quiz styles removed - now using standardized ModuleCommon.css styles */ 

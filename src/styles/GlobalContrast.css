@@ -616,3 +616,148 @@ button:hover,
 .hero-description {
   color: #e2e8f0 !important;
 }
+
+/* =====================================================
+   GLOBAL WHITE BACKGROUND PREVENTION SYSTEM
+   Ensure NO white backgrounds with white text anywhere
+   ===================================================== */
+
+/* CRITICAL: Override ALL white background hover states */
+.card:hover,
+.module-card:hover,
+.section-card:hover,
+.exercise-card:hover,
+.challenge-card:hover,
+.prediction-card:hover,
+.question-card:hover,
+.practice-card:hover,
+.mastery-card:hover,
+.concept-card:hover,
+.technical-card:hover,
+.modern-card:hover,
+.preview-card:hover,
+.stat-card:hover,
+.dashboard-card:hover,
+.badge-card:hover,
+.property-card:hover,
+.interactive-card:hover,
+.opt-card:hover,
+.opt-card--interactive:hover,
+*[class*="card"]:hover {
+  /* NEVER use white backgrounds - use border illumination instead */
+  background: var(--glass-bg-hover) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(247, 147, 26, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px) !important;
+  color: var(--color-dark-text) !important;
+}
+
+/* Ensure text visibility on hover */
+.card:hover *,
+.module-card:hover *,
+.section-card:hover *,
+*[class*="card"]:hover * {
+  color: var(--color-dark-text) !important;
+}
+
+.card:hover h1,
+.card:hover h2,
+.card:hover h3,
+.card:hover h4,
+.card:hover h5,
+.card:hover h6,
+*[class*="card"]:hover h1,
+*[class*="card"]:hover h2,
+*[class*="card"]:hover h3,
+*[class*="card"]:hover h4,
+*[class*="card"]:hover h5,
+*[class*="card"]:hover h6 {
+  color: #ffffff !important;
+}
+
+.card:hover p,
+.card:hover span,
+.card:hover div,
+*[class*="card"]:hover p,
+*[class*="card"]:hover span,
+*[class*="card"]:hover div {
+  color: var(--color-dark-textSecondary) !important;
+}
+
+/* Special handling for module group cards */
+.module-group:hover {
+  background: var(--glass-bg-hover) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 25px rgba(247, 147, 26, 0.4) !important;
+}
+
+/* Module cards specific illumination */
+.module-card:hover {
+  background: var(--glass-bg-hover) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(247, 147, 26, 0.3) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+}
+
+.module-card.completed:hover {
+  border-color: var(--color-semantic-success) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(76, 175, 80, 0.3) !important;
+}
+
+.module-card.locked:hover {
+  border-color: var(--color-neutral-600) !important;
+  box-shadow: 
+    var(--shadow-glass),
+    0 0 10px rgba(107, 114, 128, 0.2) !important;
+  transform: none !important;
+}
+
+/* Override specific problematic white backgrounds */
+.white-background:hover,
+.light-background:hover,
+*[style*="background: white"]:hover,
+*[style*="background: #fff"]:hover,
+*[style*="background: #ffffff"]:hover,
+*[style*="background-color: white"]:hover,
+*[style*="background-color: #fff"]:hover,
+*[style*="background-color: #ffffff"]:hover {
+  background: var(--glass-bg-hover) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 20px rgba(247, 147, 26, 0.3) !important;
+}
+
+/* Bitcoin orange glow for all interactive elements */
+.interactive-element:hover,
+.clickable:hover,
+.hoverable:hover,
+button:hover,
+.button:hover,
+.btn:hover {
+  border-color: var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass),
+    0 0 15px rgba(247, 147, 26, 0.3) !important;
+}
+
+/* Special Bitcoin orange glow for primary elements */
+.primary:hover,
+.featured:hover,
+.highlighted:hover {
+  background: linear-gradient(135deg, var(--color-bitcoin-primary), var(--color-bitcoin-hover)) !important;
+  border-color: var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 25px rgba(247, 147, 26, 0.5) !important;
+  color: #ffffff !important;
+}

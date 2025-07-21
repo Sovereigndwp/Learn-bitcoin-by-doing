@@ -16,6 +16,7 @@ import {
   Button,
   StepNavigation
 } from '../components/EnhancedButtons';
+import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 import ModuleLayout from '../components/ModuleLayout';
 

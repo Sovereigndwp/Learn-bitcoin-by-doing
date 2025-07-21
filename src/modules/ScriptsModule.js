@@ -24,7 +24,8 @@ import {
   FileText,
   Brain,
   Settings,
-  Globe
+  Globe,
+  X
 } from 'lucide-react';
 import { 
   ContinueButton, 
@@ -1177,6 +1178,8 @@ const ScriptsModule = () => {
     const [currentPattern, setCurrentPattern] = useState('overview');
     const [selectedAdvanced, setSelectedAdvanced] = useState(null);
     const [completedPatterns, setCompletedPatterns] = useState(new Set());
+    const [quizAnswer, setQuizAnswer] = useState(null);
+    const [showQuizFeedback, setShowQuizFeedback] = useState(false);
 
     const advancedPatterns = [
       {
@@ -1217,6 +1220,18 @@ const ScriptsModule = () => {
       setCompletedPatterns(prev => new Set([...prev, patternId]));
       if (completedPatterns.size + 1 >= 2) {
         setCurrentPattern('mastery');
+      }
+    };
+
+    const handleQuizAnswer = (answerIndex) => {
+      setQuizAnswer(answerIndex);
+      setShowQuizFeedback(true);
+      
+      // Only the first option (index 0) is correct
+      if (answerIndex === 0) {
+        setTimeout(() => {
+          completePattern(selectedAdvanced.id);
+        }, 2000);
       }
     };
 
@@ -1335,16 +1350,38 @@ const ScriptsModule = () => {
               <h4>🤔 Understanding Check</h4>
               <p>What makes this pattern special compared to simple payments?</p>
               <div className="quiz-options">
-                <div className="quiz-option" onClick={() => completePattern(selectedAdvanced.id)}>
+                <div className="quiz-option" onClick={() => handleQuizAnswer(0)}>
                   It adds conditional logic that creates new possibilities
                 </div>
-                <div className="quiz-option">
+                <div className="quiz-option" onClick={() => handleQuizAnswer(1)}>
                   It makes transactions faster
                 </div>
-                <div className="quiz-option">
+                <div className="quiz-option" onClick={() => handleQuizAnswer(2)}>
                   It reduces fees
                 </div>
               </div>
+              {showQuizFeedback && (
+                <div className="quiz-feedback">
+                  {quizAnswer === 0 && (
+                    <div className="correct-feedback">
+                      <CheckCircle size={24} />
+                      <p>Correct! This pattern adds conditional logic, enabling new possibilities for Bitcoin applications.</p>
+                    </div>
+                  )}
+                  {quizAnswer === 1 && (
+                    <div className="incorrect-feedback">
+                      <X size={24} />
+                      <p>Not quite. While it might make transactions faster, the key feature is the conditional logic.</p>
+                    </div>
+                  )}
+                  {quizAnswer === 2 && (
+                    <div className="incorrect-feedback">
+                      <X size={24} />
+                      <p>Not quite. While it might reduce fees, the primary benefit is the conditional logic.</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="exploration-controls">

@@ -7,6 +7,7 @@ import {
   StepNavigation,
   NavigationButton
 } from '../components/EnhancedButtons';
+import { ModuleCompletionButton } from '../components/ui';
 // Import new visual system components
 import { 
   BitcoinIcon, 
@@ -23,7 +24,7 @@ import {
 import LottieAnimation, { LazyLottieAnimation } from '../components/ui/LottieAnimation';
 import { PLACEHOLDER_ANIMATIONS } from '../config/lottieAnimations';
 import '../components/ModuleCommon.css';
-// Using global CSS + Money module specific styles
+// Using global CSS only - no module-specific overrides
 
 // Simplified Introduction 
 const Introduction = ({ onComplete }) => {
@@ -71,8 +72,8 @@ const Introduction = ({ onComplete }) => {
   };
 
   return (
-    <div className="module-container dark-theme">
-      <div className="module-intro-card">
+    <div className="module-container">
+      <div className="section-card">
         <h1 className="heading-critical">What's Really Happening When You Pay?</h1>
         <p>Modern payments look simple, but there's a lot happening behind the scenes. Let's see what's really going on.</p>
       </div>
@@ -299,8 +300,8 @@ const BarterWorld = ({ onComplete }) => {
   const currentScenarioData = economicScenarios[currentScenario];
   
   return (
-    <div className="module-container dark-theme">
-      <div className="card-hero">
+    <div className="module-container">
+      <div className="section-card">
         <h1 className="heading-critical">Life Without Money</h1>
         <p>Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
       </div>
@@ -441,8 +442,8 @@ const CarlosFlowerExport = ({ onComplete }) => {
   };
 
   return (
-    <div className="module-container dark-theme">
-      <div className="carlos-export-section">
+    <div className="module-container">
+      <div className="section-card">
         <h2>Real-World Payment System Analysis</h2>
         <p>Having established money's theoretical functions, let's examine how current systems perform in practice through a real international commerce case study.</p>
         
@@ -635,8 +636,8 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
   const currentScenarioData = scenarios[currentScenario];
   
   return (
-    <div className="module-container dark-theme">
-      <div className="card-hero">
+    <div className="module-container">
+      <div className="section-card">
         <h1 className="heading-critical">What Jobs Does Money Do?</h1>
         <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
       </div>
@@ -674,7 +675,7 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
           )}
           
           {feedback[currentScenarioData.id] && (
-            <div className={`result-display ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
+            <div className={`feedback-section ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
               <p>{feedback[currentScenarioData.id]}</p>
               {feedback[currentScenarioData.id].includes('✓') && (
                 <div className="function-identified">
@@ -863,8 +864,8 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
 
   if (showIntro) {
     return (
-      <div className="module-container dark-theme">
-        <div className="historical-intro-section">
+      <div className="module-container">
+        <div className="section-card">
           <h2>Learning from History</h2>
           <p>Let's look at real examples from history to understand what makes money work well.</p>
           
@@ -892,8 +893,8 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
   const currentQuestionData = questions[currentQuestion];
   
   return (
-    <div className="module-container dark-theme">
-      <div className="historical-analysis-section">
+    <div className="module-container">
+      <div className="section-card">
         <h2>Historical Examples</h2>
         <p>Question {currentQuestion + 1} of {questions.length}</p>
         
@@ -1102,8 +1103,8 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
   };
 
   return (
-    <div className="module-container dark-theme">
-      <div className="card-hero">
+    <div className="module-container">
+      <div className="section-card">
         <h1 className="heading-critical">{frameworkSteps[step].title}</h1>
         <p>Step {step + 1} of {frameworkSteps.length}</p>
       </div>
@@ -1127,8 +1128,8 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
 // Module Completion - Simplified
 const ModuleCompletion = ({ onComplete }) => {
   return (
-    <div className="module-container dark-theme">
-      <div className="module-completion-section">
+    <div className="module-container">
+      <div className="section-card">
         <h2>🎉 Congratulations!</h2>
         <p>You've built a solid foundation for understanding money and Bitcoin.</p>
         
@@ -1183,9 +1184,11 @@ const ModuleCompletion = ({ onComplete }) => {
           </a>
         </div>
 
-        <ContinueButton onClick={() => onComplete(6)}>
-          Complete Money Module
-        </ContinueButton>
+        <ModuleCompletionButton 
+          moduleName="Money"
+          moduleId="money"
+          customMessage="🎉 Congratulations! You now understand the fundamentals of money and are ready to explore Bitcoin's revolutionary approach to sound money!"
+        />
       </div>
     </div>
   );
@@ -1241,40 +1244,20 @@ const MoneyModule = () => {
   return (
     <div className="module-container">
       {/* HERO SECTION - World-class design principles */}
-      <div className="money-module-hero">
-        <div className="hero-ambient-glow"></div>
-        <div className="hero-content">
-          <div className="hero-icon">
-            {/* Combining SVG icon with Lottie animation for enhanced visual appeal */}
-            <BitcoinIcon className="hero-icon-svg" size={64} animated />
-            {/* Example of Lottie integration - using placeholder animation */}
-            <LottieAnimation 
-              animationData={PLACEHOLDER_ANIMATIONS.simpleCircle}
-              loop={true}
-              autoplay={true}
-              width={64}
-              height={64}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                opacity: 0.3,
-                zIndex: -1
-              }}
-              aria-label="Bitcoin animation background"
-            />
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <BitcoinIcon size={48} animated />
           </div>
-          <div className="hero-text">
-            <h1 className="hero-title">Understanding Money</h1>
-            <p className="hero-description">
-              Discover how money really works and why Bitcoin matters
-            </p>
-          </div>
+          Understanding Money
+        </div>
+        <div className="module-subtitle">
+          Discover how money really works and why Bitcoin matters
         </div>
       </div>
 
       {/* TERTIARY: Navigation Steps - Medium Importance */}
-      <div className="learning-path-navigation">
+      <div className="section-card">
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">

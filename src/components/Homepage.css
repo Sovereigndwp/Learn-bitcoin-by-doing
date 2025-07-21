@@ -709,10 +709,13 @@
 }
 
 .module-card:hover {
-  border-color: var(--color-primary-500);
-  transform: translateY(-4px) scale(1.015);
-  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-orange);
-  background: var(--glass-bg-hover);
+  background: var(--glass-bg-hover) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 25px rgba(247, 147, 26, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-4px) scale(1.02) !important;
 }
 
 /* Enhanced state-specific styling with message card variants */
@@ -723,8 +726,11 @@
 }
 
 .module-card.completed:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-mastery);
+  border-color: var(--color-semantic-success) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 25px rgba(76, 175, 80, 0.4) !important;
+  transform: translateY(-6px) scale(1.02) !important;
 }
 
 .module-card.started:not(.completed) {
@@ -734,8 +740,11 @@
 }
 
 .module-card.started:not(.completed):hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-glass-lg), var(--shadow-glow-technical);
+  border-color: var(--color-info-primary) !important;
+  box-shadow: 
+    var(--shadow-glass-lg),
+    0 0 25px rgba(33, 150, 243, 0.4) !important;
+  transform: translateY(-6px) scale(1.02) !important;
 }
 
 .module-card.locked {
@@ -746,8 +755,12 @@
 }
 
 .module-card.locked:hover {
-  transform: none;
-  box-shadow: var(--shadow-glass);
+  transform: none !important;
+  opacity: 0.6 !important;
+  border-color: var(--color-neutral-600) !important;
+  box-shadow: 
+    var(--shadow-glass),
+    0 0 10px rgba(107, 114, 128, 0.2) !important;
 }
 
 .module-header {

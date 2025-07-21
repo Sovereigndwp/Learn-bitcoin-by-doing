@@ -26,18 +26,15 @@ describe('User Journey Integration Tests', () => {
     );
 
     // Test homepage loads
-    expect(screen.getByText(/Bitcoin Learning Journey/i)).toBeInTheDocument();
+    expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
 
     // Test "Begin Your Journey" button works
     const startButton = screen.getByText(/Begin Your Journey/i);
     expect(startButton).toBeInTheDocument();
     
-    // Test navigation tabs work
-    const learningTab = screen.getByText('Learning');
-    expect(learningTab).toBeInTheDocument();
-    
-    const progressTab = screen.getByText('Progress');
-    expect(progressTab).toBeInTheDocument();
+    // Test main navigation elements exist
+    expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
+    expect(screen.getByText(/Master money and Bitcoin through interactive exploration/i)).toBeInTheDocument();
   });
 
   test('slide navigation provides educational progression', async () => {

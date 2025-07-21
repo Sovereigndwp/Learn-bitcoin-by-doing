@@ -9,7 +9,6 @@ import {
   NavigationButton 
 } from '../components/EnhancedButtons';
 import '../components/ModuleCommon.css';
-import './NumbersModule.css';
 
 const NumbersModule = () => {
   const { completeModule } = useProgress();

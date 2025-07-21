@@ -5,7 +5,7 @@ import { Home, Globe, ArrowLeft, Menu, X } from 'lucide-react';
 import { OptimizedPopup, Tooltip } from './ui';
 import './ModuleLayout.css';
 import './ModuleCommon.css';
-import './QuizStyles.css';
+
 
 const ModuleLayout = ({ children }) => {
   const { toggleLanguage, language } = useLanguage();

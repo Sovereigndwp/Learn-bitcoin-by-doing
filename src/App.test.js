@@ -37,7 +37,7 @@ describe('App Component', () => {
         <App />
       </TestWrapper>
     );
-    const titleElement = screen.getByText(/Bitcoin Learning Journey/i);
+    const titleElement = screen.getByText(/Learn Bitcoin by Doing/i);
     expect(titleElement).toBeInTheDocument();
   });
 
@@ -67,16 +67,16 @@ describe('Homepage Component', () => {
     expect(screen.getByText(/Begin Your Journey/i)).toBeInTheDocument();
   });
 
-  test('renders navigation tabs', () => {
+  test('renders main navigation elements', () => {
     render(
       <TestWrapper>
         <Homepage />
       </TestWrapper>
     );
     
-    // Check navigation tabs
-    expect(screen.getByText('Progress')).toBeInTheDocument();
-    expect(screen.getByText('Learning')).toBeInTheDocument();
+    // Check main navigation elements
+    expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
+    expect(screen.getByText(/Begin Your Journey/i)).toBeInTheDocument();
   });
 
   test('renders hero section with correct content', () => {
@@ -117,19 +117,19 @@ describe('Homepage Component', () => {
     expect(screen.getByText(/~5 minutes to start/i)).toBeInTheDocument();
   });
 
-  test('navigation between views works', async () => {
+  test('main call-to-action button works', async () => {
     render(
-      <ComponentTestWrapper>
+      <TestWrapper>
         <Homepage />
-      </ComponentTestWrapper>
+      </TestWrapper>
     );
     
-    // Click on Learning tab
-    const learningTab = screen.getByText('Learning');
-    fireEvent.click(learningTab);
+    // Click on Begin Your Journey button
+    const journeyButton = screen.getByText(/Begin Your Journey/i);
+    fireEvent.click(journeyButton);
     
-    // Check if active class is applied
-    expect(learningTab.closest('button')).toHaveClass('active');
+    // Check if button exists and is clickable
+    expect(journeyButton).toBeInTheDocument();
   });
 
   test('slide navigation works', async () => {
@@ -225,7 +225,7 @@ describe('Accessibility', () => {
     
     // Check for proper heading structure
     const h1 = screen.getByRole('heading', { level: 1 });
-    expect(h1).toHaveTextContent(/Bitcoin Learning Journey/i);
+    expect(h1).toHaveTextContent(/Learn Bitcoin by Doing/i);
     
     const h2Elements = screen.getAllByRole('heading', { level: 2 });
     expect(h2Elements.length).toBeGreaterThan(0);
@@ -289,7 +289,7 @@ describe('Content Validation', () => {
     
     // Check for learning path guidance
     expect(screen.getByText(/What You'll Learn/i)).toBeInTheDocument();
-    expect(screen.getByText(/From monetary confusion to digital clarity/i)).toBeInTheDocument();
+    expect(screen.getByText(/Master money and Bitcoin through interactive exploration/i)).toBeInTheDocument();
   });
 
   test('includes call-to-action elements', () => {

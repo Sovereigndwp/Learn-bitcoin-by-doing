@@ -10,7 +10,7 @@ import {
   ChevronRight,
   AlertCircle 
 } from 'lucide-react';
-import globalStyles from '../../config/globalStyles';
+import { colors, spacing, borderRadius, transitions, COLORS, SPACING, BORDER_RADIUS, TRANSITIONS, TYPOGRAPHY } from '../../styles/globalStyles';
 
 /**
  * UnifiedButton - Consolidates features from ModernButtons, EnhancedButtons, and OptimizedButton
@@ -211,7 +211,7 @@ const UnifiedButton = ({
     }
   };
 
-  const { COLORS, SPACING, BORDER_RADIUS, TRANSITIONS, TYPOGRAPHY } = globalStyles;
+  // Using imported design tokens from our amazing unified design system
 
   const buttonStyles = {
     backgroundColor: COLORS[variant] || COLORS.primary,

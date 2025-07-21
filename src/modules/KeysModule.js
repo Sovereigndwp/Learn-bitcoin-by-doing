@@ -8,6 +8,8 @@ import {
   OptionButton,
   NavigationButton 
 } from '../components/EnhancedButtons';
+import { KnowledgeGate, ModuleCompletionButton } from '../components/ui';
+import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 import { generatePrivateKey, privateKeyToPublicKey, publicKeyToAddress } from '../utils/bitcoin';
 
@@ -585,7 +587,15 @@ const KeysModule = () => {
 
         {/* Knowledge Check Section */}
         <div className="knowledge-check-section">
-          <KnowledgeCheck />
+          <KnowledgeGate
+            isUnlocked={true}
+            title="Key Generation Mastery"
+            description="Test your understanding of Bitcoin key generation"
+          >
+            <div className="knowledge-content">
+              <p>You now understand how Bitcoin keys are generated and used. This knowledge is fundamental to Bitcoin security.</p>
+            </div>
+          </KnowledgeGate>
         </div>
 
         <div className="real-world-warning">
@@ -997,10 +1007,11 @@ const KeysModule = () => {
               <li>✅ Custody decisions for different situations</li>
             </ul>
             
-            <ActionButton onClick={() => completeModule('keys')} className="primary large">
-              <Crown className="w-5 h-5" />
-              Complete Keys Module
-            </ActionButton>
+            <ModuleCompletionButton 
+              moduleName="Keys & Cryptography"
+              moduleId="keys"
+              customMessage="🔐 Excellent! You've mastered the cryptographic foundations that make Bitcoin secure and trustless!"
+            />
           </div>
           </div>
     </div>

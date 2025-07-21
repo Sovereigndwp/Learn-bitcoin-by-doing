@@ -56,6 +56,52 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
+// Mock Canvas for Lottie animations
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: jest.fn(() => ({
+    fillStyle: '',
+    fillRect: jest.fn(),
+    clearRect: jest.fn(),
+    getImageData: jest.fn(() => ({ data: [] })),
+    putImageData: jest.fn(),
+    createImageData: jest.fn(() => ({ data: [] })),
+    setTransform: jest.fn(),
+    drawImage: jest.fn(),
+    save: jest.fn(),
+    restore: jest.fn(),
+    beginPath: jest.fn(),
+    moveTo: jest.fn(),
+    lineTo: jest.fn(),
+    closePath: jest.fn(),
+    stroke: jest.fn(),
+    translate: jest.fn(),
+    scale: jest.fn(),
+    rotate: jest.fn(),
+    arc: jest.fn(),
+    fill: jest.fn(),
+    measureText: jest.fn(() => ({ width: 0 })),
+    transform: jest.fn(),
+    rect: jest.fn(),
+    clip: jest.fn(),
+  })),
+});
+
+// Mock lottie-react
+jest.mock('lottie-react', () => {
+  const React = require('react');
+  return {
+    __esModule: true,
+    default: React.forwardRef((props, ref) => 
+      React.createElement('div', { 
+        ...props, 
+        ref,
+        'data-testid': 'lottie-animation',
+        className: 'lottie-mock'
+      })
+    )
+  };
+});
+
 // Mock intersection observer
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),

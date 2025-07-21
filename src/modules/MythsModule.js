@@ -962,19 +962,18 @@ const MythsModule = () => {
         </div>
 
             {selectedMyth && (
-              <div className="myth-analysis-modal">
-                <div className="modal-backdrop" onClick={() => setSelectedMyth(null)} />
-                <div className="modal-content">
+              <div className="popup-overlay" onClick={() => setSelectedMyth(null)}>
+                <div className="popup-content" onClick={(e) => e.stopPropagation()}>
                   <button 
-                    className="modal-close"
+                    className="popup-close"
                     onClick={() => setSelectedMyth(null)}
                   >
                     ×
                   </button>
                   {renderMythAnalysis(bitcoinMyths.find(m => m.id === selectedMyth))}
-            </div>
-          </div>
-        )}
+                </div>
+              </div>
+            )}
 
             {mythsBusted.size >= categoryMyths.length && (
               <ContinueButton 
