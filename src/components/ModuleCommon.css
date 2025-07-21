@@ -205,6 +205,15 @@
 .spacing-2xl { margin-bottom: var(--module-spacing-2xl); }
 .spacing-3xl { margin-bottom: var(--module-spacing-3xl); }
 
+/* Inner button text spacing enhancement */
+.quiz-option,
+.choice-option,
+.answer-option,
+.prediction-option,
+.challenge-option {
+  text-indent: var(--module-spacing-sm);
+}
+
 /* Padding variants */
 .padding-xs { padding: var(--module-spacing-xs); }
 .padding-sm { padding: var(--module-spacing-sm); }
@@ -440,6 +449,7 @@
 .prediction-option,
 .challenge-option {
   padding: var(--module-spacing-lg);
+  padding-left: var(--module-spacing-xl); /* Extra left spacing for text */
   background: var(--glass-bg);
   border: 2px solid var(--glass-border);
   border-radius: var(--module-radius-lg);
@@ -594,6 +604,7 @@
   .choice-option,
   .answer-option {
     padding: var(--module-spacing-md);
+    padding-left: var(--module-spacing-lg); /* Maintain left spacing on mobile */
     font-size: var(--typography-fontSize-sm);
     min-height: 50px;
   }
