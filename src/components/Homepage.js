@@ -320,7 +320,7 @@ const WelcomeSection = ({ onStartJourney }) => {
         <p className="cta-subtitle">~5 minutes to start • No signup required</p>
       </div>
     </section>
-      );
+  );
 };
 
 // Modern Learning Section
