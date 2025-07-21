@@ -583,28 +583,48 @@ div .hero-highlight {
   color: #cbd5e0 !important;
 }
 
-/* Ensure ALL buttons are properly contrasted */
+/* Ensure ALL buttons are properly contrasted AND have proper spacing */
 button,
 .button,
 .btn,
 .nav-button,
 .slide-nav-button,
 .start-journey-button,
-.quiz-option {
+.quiz-option,
+a[class*="button"],
+a[class*="btn"],
+[class*="button"],
+[class*="btn"],
+[role="button"] {
   background: rgba(255, 255, 255, 0.1) !important;
   border: 2px solid rgba(255, 255, 255, 0.2) !important;
   color: #ffffff !important;
   backdrop-filter: blur(12px) !important;
+  padding-left: var(--module-spacing-lg) !important;
+  text-indent: var(--module-spacing-xs) !important;
+}
+
+/* Specific fix for Learning Path module cards text spacing */
+.learning-path .module-card h5,
+.learning-path .module-card p,
+.modules-list .module-card h5,
+.modules-list .module-card p {
+  padding-left: var(--module-spacing-md) !important;
+  text-indent: var(--module-spacing-xs) !important;
 }
 
 button:hover,
 .button:hover,
 .btn:hover,
 .nav-button:hover,
-.slide-nav-button:hover {
+.slide-nav-button:hover,
+[class*="button"]:hover,
+[class*="btn"]:hover {
   background: #f7931a !important;
   border-color: #f7931a !important;
   color: #ffffff !important;
+  padding-left: var(--module-spacing-lg) !important;
+  text-indent: var(--module-spacing-xs) !important;
 }
 
 /* Override any remaining problematic styles */

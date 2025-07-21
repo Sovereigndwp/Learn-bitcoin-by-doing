@@ -205,13 +205,122 @@
 .spacing-2xl { margin-bottom: var(--module-spacing-2xl); }
 .spacing-3xl { margin-bottom: var(--module-spacing-3xl); }
 
-/* Inner button text spacing enhancement */
+/* UNIVERSAL BUTTON TEXT SPACING ENHANCEMENT */
+/* Apply optimized spacing to ALL button types throughout the application */
+
+/* Quiz and choice buttons */
 .quiz-option,
 .choice-option,
 .answer-option,
 .prediction-option,
 .challenge-option {
   text-indent: var(--module-spacing-sm);
+}
+
+/* Universal button selector - covers all buttons */
+button,
+.button,
+.btn,
+.action-button,
+.continue-button,
+.nav-button,
+.slide-nav-button,
+.start-journey-button,
+.reset-button,
+.close-button,
+.confirm-button,
+.cancel-button,
+.generate-button,
+.verify-button,
+.copy-button,
+.format-button,
+.run-button,
+.demo-button,
+.choice-button,
+.template-button,
+.example-button,
+.simulation-button,
+.explore-button,
+.analyze-button,
+.strategy-button,
+.solution-button,
+.scenario-button,
+.route-payment-button,
+.implementation-button,
+.home-button,
+.back-button,
+.next-button,
+.step-nav-button,
+.utility-button,
+.tab-button,
+.selector-button,
+.mode-button,
+.wallet-button,
+.option-button,
+.icon-button,
+.completion-button,
+a[class*="button"],
+a[class*="btn"],
+[class*="button"],
+[class*="btn"],
+[role="button"] {
+  padding-left: var(--module-spacing-lg) !important;
+  text-indent: var(--module-spacing-xs) !important;
+  box-sizing: border-box !important;
+}
+
+/* Specific fix for Learning Path module cards that act as buttons */
+.learning-path .module-card,
+.learning-path .module-card .module-content,
+.modules-list .module-card,
+.modules-list .module-card .module-content {
+  text-indent: var(--module-spacing-sm) !important;
+}
+
+.learning-path .module-card h5,
+.learning-path .module-card p,
+.modules-list .module-card h5,
+.modules-list .module-card p {
+  padding-left: var(--module-spacing-md) !important;
+  text-indent: var(--module-spacing-xs) !important;
+}
+
+/* Special handling for smaller buttons */
+.btn-sm,
+.button-small,
+[class*="small"],
+.icon-button {
+  padding-left: var(--module-spacing-md) !important;
+  text-indent: var(--module-spacing-xs) !important;
+}
+
+/* Special handling for large buttons */
+.btn-lg,
+.button-large,
+[class*="large"],
+.start-journey-button,
+.completion-button {
+  padding-left: var(--module-spacing-xl) !important;
+  text-indent: var(--module-spacing-sm) !important;
+}
+
+/* Mobile responsive button spacing */
+@media (max-width: 767px) {
+  button,
+  .button,
+  .btn,
+  [class*="button"],
+  [class*="btn"] {
+    padding-left: var(--module-spacing-md) !important;
+    text-indent: var(--module-spacing-xs) !important;
+    min-height: 44px; /* Touch-friendly minimum */
+  }
+  
+  .btn-lg,
+  .button-large,
+  [class*="large"] {
+    padding-left: var(--module-spacing-lg) !important;
+  }
 }
 
 /* Padding variants */

@@ -496,7 +496,7 @@ class ContextualBehaviorSystem {
 
   triggerStruggleSupport() {
     audioSystem.playSound('discovery'); // Gentle, encouraging sound
-    this.showNotification("💪 Take your time - mastering Bitcoin takes patience!", 'encouragement');
+    this.showNotification("Don't Trust, Verify!!!", 'encouragement');
   }
 
   triggerEncouragement() {
