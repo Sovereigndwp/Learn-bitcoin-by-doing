@@ -7,7 +7,7 @@ import {
   NavigationButton,
   OptionButton
 } from '../components/EnhancedButtons';
-import { ModuleCompletionButton } from '../components/ui';
+import { ModuleCompletionButton, InteractiveIcon } from '../components/ui';
 import ProgressCounter, { 
   StepProgressCounter,
   CircularProgressCounter 
@@ -1206,34 +1206,40 @@ const HowBitcoinWorks = ({ onComplete }) => {
     };
 
     return (
-    <div className="step-content how-bitcoin-works">
-      <div className="module-header-box">
-        <h2>How Bitcoin Actually Works</h2>
-        <div className="intro-text">
-          <p className="prime-text">Let's understand the core ideas through simple examples:</p>
-        </div>
+    <div className="module-container">
+      <div className="content-section">
+        <div className="subtopic-container">
+          <div className="subtopic-header">
+            <InteractiveIcon type="bitcoin" size={32} className="subtopic-icon" />
+            <h2 className="subtopic-title">How Bitcoin Actually Works</h2>
+          </div>
+          <div className="subtopic-content">
+            <p className="content-body">Let's understand the core ideas through simple examples:</p>
+          </div>
         </div>
 
-      <div className="content-text">
-        <div className="concept-card">
-          <h3>{currentConcept_data.title}</h3>
-          <div className="scenario-text">
-            <p>{currentConcept_data.scenario}</p>
+        <div className="quiz-container">
+          <div className="quiz-header">
+            <h3 className="content-tier-2">{currentConcept_data.title}</h3>
+            <div className="scenario-text">
+              <p className="content-body">{currentConcept_data.scenario}</p>
+            </div>
           </div>
           
           <div className="question-section">
             <h4>{currentConcept_data.question}</h4>
             
             {!userAnswer && (
-              <div className="quiz-options">
-                {currentConcept_data.options.map(option => (
-                  <button
+              <div className="quiz-options two-column">
+                {currentConcept_data.options.map((option, index) => (
+                  <div
                     key={option.id}
                     className={`quiz-option risk-${option.risk}`}
                     onClick={() => handleAnswer(option.id)}
                   >
                     {option.text}
-                  </button>
+                    <div className="option-indicator">{index + 1}</div>
+                  </div>
                 ))}
               </div>
             )}

@@ -1231,7 +1231,7 @@ const ScriptsModule = () => {
       if (answerIndex === 0) {
         setTimeout(() => {
           completePattern(selectedAdvanced.id);
-        }, 2000);
+        }, 4000);
       }
     };
 

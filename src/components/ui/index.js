@@ -3,6 +3,7 @@ export { default as Card } from './Card';
 export { default as Toggle } from './Toggle';
 export { default as QuizChoice } from './QuizChoice';
 export { ModuleCompletionButton } from './ModuleCompletionButton';
+export { default as InteractiveIcon } from './InteractiveIcon';
 
 // Optimized components
 export { default as OptimizedButton } from './OptimizedButton';

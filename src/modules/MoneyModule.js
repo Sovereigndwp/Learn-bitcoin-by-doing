@@ -423,7 +423,7 @@ const CarlosFlowerExport = ({ onComplete }) => {
   const handleExploreStory = () => {
     window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank');
     setStoryViewed(true);
-    setTimeout(() => setShowReflection(true), 3000);
+    setTimeout(() => setShowReflection(true), 5000);
   };
 
   const handleChoice = (choice) => {
@@ -627,7 +627,7 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
         if (currentScenario < scenarios.length - 1) {
           setCurrentScenario(currentScenario + 1);
         } else {
-          setTimeout(() => onComplete(2), 1500);
+          setTimeout(() => onComplete(2), 3000);
         }
       }, 2000);
     }
