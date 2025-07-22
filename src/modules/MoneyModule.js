@@ -413,133 +413,6 @@ const BarterWorld = ({ onComplete }) => {
   );
 };
 
-// Simplified CarlosFlowerExport with professional framing
-const CarlosFlowerExport = ({ onComplete }) => {
-  const [storyViewed, setStoryViewed] = useState(false);
-  const [playerChoice, setPlayerChoice] = useState(null);
-  const [showReflection, setShowReflection] = useState(false);
-
-  const handleExploreStory = () => {
-    window.open('https://layer-d.my.canva.site/inefficiencies-of-traditional-payments-by-dalia', '_blank');
-    setStoryViewed(true);
-    setTimeout(() => setShowReflection(true), 5000);
-  };
-
-  const handleChoice = (choice) => {
-    setPlayerChoice(choice);
-    setTimeout(() => onComplete(4), 2000);
-  };
-
-  const getSystemAnalysis = (choice) => {
-    const analyses = {
-      fees: "Traditional payment systems extract value through multiple layers of fees, reducing efficiency for productive participants.",
-      time: "Settlement delays create cash flow problems and business planning challenges for international commerce.", 
-      control: "Centralized intermediaries introduce systemic dependencies and single points of failure.",
-      system: "The entire infrastructure prioritizes intermediary extraction over participant efficiency."
-    };
-    return analyses[choice] || "Modern payment systems create systematic inefficiencies for productive economic actors.";
-  };
-
-  return (
-    <div className="module-container">
-      <div className="section-card">
-        <h2>Real-World Payment System Analysis</h2>
-        <p>Having established money's theoretical functions, let's examine how current systems perform in practice through a real international commerce case study.</p>
-        
-        <h3>International Commerce Case Study</h3>
-        <p>Carlos operates a flower export business between Colombia and Japan. This represents a typical international commercial transaction involving cross-border payments.</p>
-        <p><strong>Analysis Focus:</strong> How effectively do modern payment systems serve legitimate international commerce?</p>
-
-        <div className="case-study-introduction">
-          <div className="case-study-frame">
-            <div className="case-visual">
-              <div className="case-icon">🌹</div>
-              <h3>International Commerce Case Study</h3>
-            </div>
-            <div className="case-context">
-              <p>Carlos operates a flower export business between Colombia and Japan. This represents a typical international commercial transaction involving cross-border payments.</p>
-              <p><strong>Analysis Focus:</strong> How effectively do modern payment systems serve legitimate international commerce?</p>
-            </div>
-          </div>
-          
-          <div className="case-study-engagement">
-            <p>Follow this payment process to analyze system performance across money's core functions:</p>
-            
-            <ActionButton 
-              onClick={handleExploreStory} 
-              variant="primary"
-            >
-              Analyze Payment Process
-            </ActionButton>
-            
-            {storyViewed && (
-              <div className="analysis-instructions">
-                <p><em>Review the payment process carefully. Focus on system efficiency, cost structure, and reliability...</em></p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {showReflection && (
-          <div className="analysis-section">
-            <div className="analysis-prompt">
-              <h3>🔍 System Performance Analysis</h3>
-              <p>Based on your review of the payment process, which aspect represents the most significant system inefficiency?</p>
-            </div>
-            
-            <div className="analysis-options">
-              <ActionButton 
-                onClick={() => handleChoice('fees')}
-                variant="outline"
-              >
-                💸 <strong>Fee Structure</strong><br/>
-                <span className="analysis-detail">Multiple intermediaries extracting value at each step</span>
-              </ActionButton>
-              
-              <ActionButton 
-                onClick={() => handleChoice('time')}
-                variant="outline"
-              >
-                ⏰ <strong>Settlement Time</strong><br/>
-                <span className="analysis-detail">Multi-day processing creating cash flow inefficiencies</span>
-              </ActionButton>
-              
-              <ActionButton 
-                onClick={() => handleChoice('control')}
-                variant="outline"
-              >
-                🏦 <strong>Centralized Dependencies</strong><br/>
-                <span className="analysis-detail">Multiple single points of failure and control</span>
-              </ActionButton>
-              
-              <ActionButton 
-                onClick={() => handleChoice('system')}
-                variant="outline"
-              >
-                🕸️ <strong>Structural Inefficiency</strong><br/>
-                <span className="analysis-detail">System designed for intermediary benefit, not user efficiency</span>
-              </ActionButton>
-            </div>
-
-            {playerChoice && (
-              <div className="analysis-response">
-                <div className="insight-box">
-                  <h4>📊 Analysis Result</h4>
-                  <p>{getSystemAnalysis(playerChoice)}</p>
-                  <p><strong>This analysis reveals systematic performance gaps in current monetary infrastructure.</strong></p>
-                </div>
-                
-                <div className="next-phase">
-                  <p>This case study demonstrates that current systems fail to deliver money's core functions efficiently. Let's systematically examine why these failures persist across different monetary systems.</p>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 // Simplified Money Functions Analysis
 const MoneyFunctionsAnalysis = ({ onComplete }) => {
@@ -1238,7 +1111,7 @@ const MoneyModule = () => {
       console.warn('Failed to save progress to localStorage:', error);
     }
     
-    if (stepIndex === 6) {
+    if (stepIndex === 5) {
       completeModule('money');
       setTimeout(() => {
         navigate('/');
@@ -1284,7 +1157,7 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-            {['How Payments Work', 'Life Without Money', 'What Money Does', 'Real World Example', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
+            {['Life Without Money', 'What Money Does', 'How Payments Work', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
               <button
                 key={index}
                 className={`step-nav-button ${
@@ -1304,13 +1177,12 @@ const MoneyModule = () => {
 
 
       <div className="module-content">
-        {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <BarterWorld onComplete={handleStepComplete} />}
-        {currentStep === 2 && <MoneyFunctionsAnalysis onComplete={handleStepComplete} />}
-        {currentStep === 3 && <CarlosFlowerExport onComplete={handleStepComplete} />}
-        {currentStep === 4 && <HistoricalAnalysis onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 5 && <SoundMoneyFramework unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 6 && <ModuleCompletion onComplete={handleStepComplete} />}
+        {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
+        {currentStep === 1 && <MoneyFunctionsAnalysis onComplete={handleStepComplete} />}
+        {currentStep === 2 && <Introduction onComplete={handleStepComplete} />}
+        {currentStep === 3 && <HistoricalAnalysis onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 4 && <SoundMoneyFramework unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+        {currentStep === 5 && <ModuleCompletion onComplete={handleStepComplete} />}
       </div>
     </div>
   );
