@@ -29,6 +29,7 @@ import '../components/ModuleCommon.css';
 const Introduction = ({ onComplete }) => {
   const [currentDemo, setCurrentDemo] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(false);
+  const [demoResults, setDemoResults] = useState({});
 
   const modernPaymentDemos = [
     {
@@ -57,6 +58,8 @@ const Introduction = ({ onComplete }) => {
   const currentDemoData = modernPaymentDemos[currentDemo];
 
   const handleDemoAction = () => {
+    setDemoResults(prev => ({ ...prev, [currentDemo]: true }));  // Track completion
+    
     setTimeout(() => {
       if (currentDemo < modernPaymentDemos.length - 1) {
         setCurrentDemo(currentDemo + 1);
@@ -95,13 +98,15 @@ const Introduction = ({ onComplete }) => {
               </ActionButton>
             </div>
             
-            <div className="demo-result">
-              <div className="demo-effect">{currentDemoData.effect}</div>
-              <div className="demo-hidden">
-                <strong>What Really Happens:</strong><br />
-                {currentDemoData.hidden}
+            {demoResults[currentDemo] && (
+              <div className="demo-result">
+                <div className="demo-effect">{currentDemoData.effect}</div>
+                <div className="demo-hidden">
+                  <strong>What Really Happens:</strong><br />
+                  {currentDemoData.hidden}
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="demo-navigation">
@@ -169,19 +174,19 @@ const BarterWorld = ({ onComplete }) => {
       choice: "What do you do?",
       options: [
         { 
-          id: 'A', 
+          id: 1, 
           text: 'Give up and go home', 
           result: 'reject',
           problem: 'coincidence'
         },
         { 
-          id: 'B', 
+          id: 2, 
           text: 'Find someone who wants bread AND can give the shoemaker a haircut', 
           result: 'chain',
           problem: 'complexity'
         },
         { 
-          id: 'C', 
+          id: 3, 
           text: 'Search for other shoemakers', 
           result: 'search',
           problem: 'time'
@@ -196,19 +201,19 @@ const BarterWorld = ({ onComplete }) => {
       choice: "This is getting complicated...",
       options: [
         { 
-          id: 'A', 
+          id: 1, 
           text: 'Try to coordinate all these trades at once', 
           result: 'chaos',
           problem: 'timing'
         },
         { 
-          id: 'B', 
+          id: 2, 
           text: 'Map out all the trades you need to make', 
           result: 'insight',
           problem: 'complexity'
         },
         { 
-          id: 'C', 
+          id: 3, 
           text: 'Build a smaller house', 
           result: 'quit',
           problem: 'failure'
@@ -223,19 +228,19 @@ const BarterWorld = ({ onComplete }) => {
       choice: "Everything has to happen at exactly the right time...",
       options: [
         { 
-          id: 'A', 
+          id: 1, 
           text: 'Start all over again', 
           result: 'chaos',
           problem: 'timing'
         },
         { 
-          id: 'B', 
+          id: 2, 
           text: 'Realize this system has serious problems', 
           result: 'epiphany',
           problem: 'system'
         },
         { 
-          id: 'C', 
+          id: 3, 
           text: 'Think about what everyone would accept', 
           result: 'solution',
           problem: 'innovation'
@@ -342,8 +347,7 @@ const BarterWorld = ({ onComplete }) => {
                     onClick={() => handleChoice(option.id)}
                     variant="outline"
                   >
-                    <span className="option-letter">{option.id}.</span>
-                    <span className="option-text">{option.text}</span>
+                    {option.text}
                   </ActionButton>
                 ))}
               </div>
@@ -428,16 +432,16 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
       description: "You want to buy apples. The seller wants $3 per pound.",
       question: "What job is money doing here?",
       options: [
-        { value: 'A', label: 'Helping you trade - making the exchange possible' },
-        { value: 'B', label: 'Storing your wealth for later' },
-        { value: 'C', label: 'Measuring value - telling you how much things cost' }
+        { value: 1, label: 'Helping you trade - making the exchange possible' },
+        { value: 2, label: 'Storing your wealth for later' },
+        { value: 3, label: 'Measuring value - telling you how much things cost' }
       ],
       feedback: {
-        A: "✓ Right! Money makes trades easy because everyone accepts it.",
-        B: "Not quite - you're using it now, not storing it.",
-        C: "Close, but the main job here is making the exchange work."
+        1: "✓ Right! Money makes trades easy because everyone accepts it.",
+        2: "Not quite - you're using it now, not storing it.",
+        3: "Close, but the main job here is making the exchange work."
       },
-      correctAnswer: 'A',
+      correctAnswer: 1,
       moneyFunction: 'Medium of Exchange',
       explanation: "Money's first job is making trades possible. Everyone accepts it, so you don't need to find someone who wants exactly what you have."
     },
@@ -447,16 +451,16 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
       description: "You put $200 in your savings account each month for a vacation next year.",
       question: "What job is money doing here?",
       options: [
-        { value: 'A', label: 'Helping you make trades right now' },
-        { value: 'B', label: 'Keeping your wealth safe until you need it' },
-        { value: 'C', label: 'Measuring how much things cost' }
+        { value: 1, label: 'Helping you make trades right now' },
+        { value: 2, label: 'Keeping your wealth safe until you need it' },
+        { value: 3, label: 'Measuring how much things cost' }
       ],
       feedback: {
-        A: "Not quite - you're not trading right now, you're saving.",
-        B: "✓ Exactly! Money lets you save up value for later.",
-        C: "That's another job of money, but not what's happening here."
+        1: "Not quite - you're not trading right now, you're saving.",
+        2: "✓ Exactly! Money lets you save up value for later.",
+        3: "That's another job of money, but not what's happening here."
       },
-      correctAnswer: 'B',
+      correctAnswer: 2,
       moneyFunction: 'Store of Value',
       explanation: "Money's second job is holding onto value over time. You can save it today and spend it later."
     },
@@ -466,16 +470,16 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
       description: "You're looking at houses. One costs $300,000, another costs $450,000.",
       question: "What job is money doing here?",
       options: [
-        { value: 'A', label: 'Making the trade possible' },
-        { value: 'B', label: 'Storing value for you' },
-        { value: 'C', label: 'Giving you a way to compare prices' }
+        { value: 1, label: 'Making the trade possible' },
+        { value: 2, label: 'Storing value for you' },
+        { value: 3, label: 'Giving you a way to compare prices' }
       ],
       feedback: {
-        A: "You're not trading yet - just comparing.",
-        B: "You're not storing value - you're comparing prices.",
-        C: "✓ Perfect! Money gives you a standard way to measure and compare value."
+        1: "You're not trading yet - just comparing.",
+        2: "You're not storing value - you're comparing prices.",
+        3: "✓ Perfect! Money gives you a standard way to measure and compare value."
       },
-      correctAnswer: 'C',
+      correctAnswer: 3,
       moneyFunction: 'Unit of Account',
       explanation: "Money's third job is measuring value. It gives everyone the same ruler to compare prices."
     }
@@ -535,14 +539,13 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
           {!feedback[currentScenarioData.id] && (
             <div className="quiz-options">
               {currentScenarioData.options.map(option => (
-                <div
+                <ActionButton
                   key={option.value}
-                  className="quiz-option"
                   onClick={() => handleAnswer(currentScenarioData.id, option.value)}
+                  variant="outline"
                 >
-                  {option.label}
-                  <div className="option-indicator">{option.value}</div>
-                </div>
+                  <span className="option-text">{option.label}</span>
+                </ActionButton>
               ))}
             </div>
           )}
@@ -819,14 +822,13 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
             {!showFeedback && (
               <div className="quiz-options">
                 {currentQuestionData.options.map((option, index) => (
-                  <div
+                  <ActionButton
                     key={index}
-                    className="quiz-option"
                     onClick={() => handleAnswer(index)}
+                    variant="outline"
                   >
-                    {option}
-                    <div className="option-indicator">{String.fromCharCode(65 + index)}</div>
-                  </div>
+                    <span className="option-text">{option}</span>
+                  </ActionButton>
                 ))}
               </div>
             )}
@@ -876,6 +878,20 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
 // Sound Money Framework - Simplified
 const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
   const [step, setStep] = useState(0);
+  const [currentTrait, setCurrentTrait] = useState(0);
+
+  const soundMoneyTraits = [
+    { icon: "🔒", name: "Self Custody", description: "You control your money, not someone else" },
+    { icon: "🌐", name: "Decentralization", description: "No single group can control or change it" },
+    { icon: "📊", name: "Fixed Supply", description: "No one can print more to benefit themselves" },
+    { icon: "💎", name: "Genuine Scarcity", description: "The limited supply is real and enforced" },
+    { icon: "📱", name: "Portability", description: "Easy to transport from one place to another — physically or digitally" },
+    { icon: "🔍", name: "Verifiability", description: "Easy to verify that the money is real and not counterfeit" },
+    { icon: "➗", name: "Divisibility", description: "Easy to divide into smaller units for transactions of any size" },
+    { icon: "⏳", name: "Durability", description: "Lasts over time without degrading" },
+    { icon: "🔄", name: "Fungibility", description: "Every unit is identical to every other unit" },
+    { icon: "🤝", name: "Acceptability", description: "Widely trusted and accepted through social consensus" }
+  ];
 
   const frameworkSteps = [
     {
@@ -885,49 +901,49 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
           <h3>What Makes Good Money?</h3>
           <p>Based on what you've learned from history, here's your framework for evaluating any form of money:</p>
           
+          {/* Individual trait display */}
+          <div className="trait-progress">
+            <p>Property {currentTrait + 1} of {soundMoneyTraits.length}</p>
+          </div>
+
+          <div className="current-trait-display">
+            <div className="trait-card featured">
+              <h5>{soundMoneyTraits[currentTrait].icon} {soundMoneyTraits[currentTrait].name}</h5>
+              <p>{soundMoneyTraits[currentTrait].description}</p>
+            </div>
+          </div>
+
+          <div className="trait-navigation">
+            <ActionButton 
+              onClick={() => setCurrentTrait(Math.max(0, currentTrait - 1))}
+              disabled={currentTrait === 0}
+              variant="secondary"
+            >
+              Previous Property
+            </ActionButton>
+            <ActionButton 
+              onClick={() => setCurrentTrait(Math.min(soundMoneyTraits.length - 1, currentTrait + 1))}
+              disabled={currentTrait === soundMoneyTraits.length - 1}
+              variant="secondary"
+            >
+              Next Property
+            </ActionButton>
+          </div>
+
           <div className="trait-summary">
-            <h4>Essential Properties:</h4>
-            <div className="traits-grid">
-              <div className="trait-card">
-                <h5>🔒 Self Custody</h5>
-                <p>You control your money, not someone else</p>
-              </div>
-              <div className="trait-card">
-                <h5>🌐 Decentralization</h5>
-                <p>No single group can control or change it</p>
-              </div>
-              <div className="trait-card">
-                <h5>📊 Fixed Supply</h5>
-                <p>No one can print more to benefit themselves</p>
-              </div>
-              <div className="trait-card">
-                <h5>💎 Genuine Scarcity</h5>
-                <p>The limited supply is real and enforced</p>
-              </div>
-              <div className="trait-card">
-                <h5>📱 Portability</h5>
-                <p>Easy to transport from one place to another — physically or digitally</p>
-              </div>
-              <div className="trait-card">
-                <h5>🔍 Verifiability</h5>
-                <p>Easy to verify that the money is real and not counterfeit</p>
-              </div>
-              <div className="trait-card">
-                <h5>➗ Divisibility</h5>
-                <p>Easy to divide into smaller units for transactions of any size</p>
-              </div>
-              <div className="trait-card">
-                <h5>⏳ Durability</h5>
-                <p>Lasts over time without degrading</p>
-              </div>
-              <div className="trait-card">
-                <h5>🔄 Fungibility</h5>
-                <p>Every unit is identical to every other unit</p>
-              </div>
-              <div className="trait-card">
-                <h5>🤝 Acceptability</h5>
-                <p>Widely trusted and accepted through social consensus</p>
-              </div>
+            <h4>All {soundMoneyTraits.length} Essential Properties:</h4>
+            <div className="traits-list">
+              {soundMoneyTraits.map((trait, index) => (
+                <div 
+                  key={index} 
+                  className={`trait-list-item ${index === currentTrait ? 'current' : ''}`}
+                  onClick={() => setCurrentTrait(index)}
+                >
+                  <span className="trait-icon">{trait.icon}</span>
+                  <span className="trait-name">{trait.name}</span>
+                  {index === currentTrait && <span className="current-indicator">←</span>}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1039,35 +1055,6 @@ const ModuleCompletion = ({ onComplete }) => {
         <h2>🎉 Congratulations!</h2>
         <p>You've built a solid foundation for understanding money and Bitcoin.</p>
         
-        <h3>What You've Learned</h3>
-        <div className="learning-outcomes">
-          <div className="outcome-item">
-            <span className="outcome-number">1</span>
-            <div className="outcome-content">
-              <h4>Why Money Exists</h4>
-              <p>You understand the problems money solves and why every society needs it.</p>
-            </div>
-          </div>
-          
-          <div className="outcome-item">
-            <span className="outcome-number">2</span>
-            <div className="outcome-content">
-              <h4>How Money Works</h4>
-              <p>You know the three jobs money does and how to recognize when it's working well.</p>
-            </div>
-          </div>
-          
-          <div className="outcome-item">
-            <span className="outcome-number">3</span>
-            <div className="outcome-content">
-              <h4>Lessons from History</h4>
-              <p>You've learned from past successes and failures to understand what makes good money.</p>
-            </div>
-          </div>
-        </div>
-
-
-
         <div className="optional-resources">
           <h3>📚 Want to Learn More?</h3>
           <p>For a deeper look at money throughout history:</p>

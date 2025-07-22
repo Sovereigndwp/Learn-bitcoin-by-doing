@@ -181,8 +181,8 @@ const KeysModule = () => {
                     {option.label}
                     <div className="option-indicator">{index + 1}</div>
                   </div>
-                ))}
-              </div>
+          ))}
+        </div>
 
               {userChoice && (
                 <div className="prediction-feedback">
