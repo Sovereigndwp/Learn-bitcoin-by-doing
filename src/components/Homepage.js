@@ -356,7 +356,10 @@ const LearningSection = ({
       {hasStarted && (
         <div className="back-to-welcome">
           <button 
-            onClick={() => setCurrentView('welcome')}
+            onClick={() => {
+              console.log('Back to welcome clicked');
+              setCurrentView('welcome');
+            }}
             className="back-button"
           >
             ⬅️ Back to Welcome

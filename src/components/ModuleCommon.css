@@ -1189,6 +1189,49 @@ button.challenge-option,
 }
 
 /* ========================================
+   HOMEPAGE MODULE CARD SPACING FIX
+   Fix text touching left border in module cards
+   ======================================== */
+
+/* Fix module card content spacing */
+.module-content {
+  padding: var(--module-spacing-md) !important;
+  margin: 0 !important;
+}
+
+.module-content h5 {
+  margin-bottom: var(--module-spacing-sm) !important;
+  padding: 0 !important;
+}
+
+.module-content p {
+  margin-bottom: var(--module-spacing-md) !important;
+  padding: 0 !important;
+  line-height: var(--typography-lineHeight-relaxed) !important;
+}
+
+/* Ensure module cards have proper internal spacing */
+.module-card {
+  padding: var(--module-spacing-lg) !important;
+}
+
+/* Fix module header spacing */
+.module-header {
+  margin-bottom: var(--module-spacing-md) !important;
+  padding: 0 !important;
+}
+
+/* Progress bar spacing */
+.progress-bar {
+  margin: var(--module-spacing-sm) 0 !important;
+}
+
+.progress-text {
+  margin-top: var(--module-spacing-sm) !important;
+  padding: 0 !important;
+}
+
+/* ========================================
    UNIVERSAL NAVIGATION SYSTEM
    Standardize Previous/Next button behavior
    ======================================== */
