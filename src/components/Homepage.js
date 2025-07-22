@@ -120,11 +120,11 @@ const Homepage = () => {
 
       {/* Main Content Based on Current View */}
       <main className="main-content">
-        {currentView === 'welcome' && !hasStarted && (
-          <WelcomeSection onStartJourney={handleStartJourney} />
+        {currentView === 'welcome' && (
+          <WelcomeSection onStartJourney={handleStartJourney} hasStarted={hasStarted} />
         )}
 
-        {(currentView === 'learning' || hasStarted) && (
+        {(currentView === 'learning' || (hasStarted && currentView !== 'welcome' && currentView !== 'progress')) && (
           <LearningSection 
             userStats={userStats}
             nextModule={nextModule}
@@ -133,6 +133,7 @@ const Homepage = () => {
             isModuleCompleted={isModuleCompleted}
             setCurrentView={setCurrentView}
             hasStarted={hasStarted}
+            currentView={currentView}
           />
         )}
 
@@ -331,7 +332,8 @@ const LearningSection = ({
   getModuleProgress,
   isModuleCompleted,
   setCurrentView,
-  hasStarted
+  hasStarted,
+  currentView
 }) => {
   const moduleIcons = {
     money: '💰',
@@ -357,8 +359,9 @@ const LearningSection = ({
         <div className="back-to-welcome">
           <button 
             onClick={() => {
-              console.log('Back to welcome clicked');
+              console.log('Back to welcome clicked, current view:', currentView);
               setCurrentView('welcome');
+              console.log('View set to welcome');
             }}
             className="back-button"
           >
