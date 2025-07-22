@@ -604,6 +604,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "If someone else can stop you from using your money, do you really own it?",
+      wrongExplanation: "Bank protection and restrictions don't address the fundamental issue of who controls your money.",
       trait: "Self Custody"
     },
     {
@@ -617,6 +618,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 2,
       insight: "When control over money is concentrated, it can be abused without consent from the people who use it. To protect everyone's interests, money should be decentralized — no one should have absolute control.",
+      wrongExplanation: "Fast leadership decisions and centralized control actually make the system more vulnerable to abuse and manipulation.",
       trait: "Decentralization"
     },
     {
@@ -630,6 +632,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 2,
       insight: "Good money needs hard rules. If you can print infinite amounts, it stops being trustworthy.",
+      wrongExplanation: "More money printing actually dilutes value and creates inflation, harming everyone who holds that money.",
       trait: "Fixed Supply"
     },
     {
@@ -643,6 +646,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Scarcity must be mathematically provable and impossible to circumvent, creating reliable store of value.",
+      wrongExplanation: "Using different money or accepting inflation doesn't solve the fundamental problem of unlimited money creation.",
       trait: "Genuine Scarcity"
     },
     {
@@ -656,6 +660,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Good money should be easy to transport from one place to another — physically or digitally. You should be able to carry it in your pocket or send it across the world.",
+      wrongExplanation: "Value and popularity don't matter if the money is too heavy or difficult to move when you need to use it.",
       trait: "Portability"
     },
     {
@@ -669,6 +674,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 2,
       insight: "If you can't tell if money is real, it's easy to be fooled. Verifiable money protects people from fraud.",
+      wrongExplanation: "Assuming gold is always valuable or accepting fake money as long as it looks good leads to fraud and economic collapse.",
       trait: "Verifiability"
     },
     {
@@ -682,6 +688,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Money must be divisible to work for both big and small purchases. Good money should work at any scale — whether you're buying a house or a coffee.",
+      wrongExplanation: "Personal preferences about stones don't address the practical limitation that indivisible money can't function for small transactions.",
       trait: "Divisibility"
     },
     {
@@ -695,6 +702,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Money must maintain its physical and economic properties across long periods without deterioration.",
+      wrongExplanation: "Cuteness or using different animals doesn't solve the fundamental problem that living things deteriorate and die.",
       trait: "Durability"
     },
     {
@@ -706,9 +714,10 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
         "When coins weren't the same, people lost trust",
         "Extra coins made up for it"
       ],
-      answer: 1,
+            answer: 1,
       insight: "Each unit of money must be interchangeable with any other unit, ensuring consistent acceptance.",
-            trait: "Fungibility"
+      wrongExplanation: "People adapting to bad money or hoping extra coins compensate doesn't solve the trust problem when money units aren't identical.",
+      trait: "Fungibility"
     },
     {
       id: 10,
@@ -721,6 +730,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Money works because people agree it has value. Without widespread acceptance, even valuable things won't function as money.",
+      wrongExplanation: "Physical beauty or weight don't determine monetary acceptance - it's about social consensus and trust in value.",
       trait: "Acceptability"
     }
   ];
@@ -837,10 +847,10 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
                   <div className="feedback-text">
                     <p>❌ <strong>Not quite.</strong></p>
                     <div className="incorrect-explanation">
-                      <strong>Why this is wrong:</strong> This choice doesn't address the core lesson about sound money properties.
+                      <strong>Why this is wrong:</strong> {currentQuestionData.wrongExplanation || "This choice doesn't address the core lesson about sound money properties."}
                     </div>
                     <div className="correct-answer">
-                      <strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}
+                      <strong>✅ Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}
                     </div>
                     <div className="insight-explanation">
                       <strong>💡 What This Teaches Us:</strong> {currentQuestionData.insight}
@@ -1056,16 +1066,7 @@ const ModuleCompletion = ({ onComplete }) => {
           </div>
         </div>
 
-        <div className="next-analysis">
-          <h3>🟠 Ready for Bitcoin</h3>
-          <p>Now you can apply your knowledge to understand:</p>
-          <ul>
-            <li>How Bitcoin implements your money framework</li>
-            <li>Why it was designed with these specific features</li>
-            <li>How it compares to traditional money systems</li>
-            <li>What makes it unique among digital currencies</li>
-          </ul>
-        </div>
+
 
         <div className="optional-resources">
           <h3>📚 Want to Learn More?</h3>
