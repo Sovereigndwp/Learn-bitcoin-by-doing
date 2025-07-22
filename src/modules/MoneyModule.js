@@ -660,26 +660,41 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
           <p className="scenario-question"><strong>{currentScenarioData.question}</strong></p>
           
           {!feedback[currentScenarioData.id] && (
-            <div className="analysis-options">
+            <div className="quiz-options">
               {currentScenarioData.options.map(option => (
-                <ActionButton
+                <div
                   key={option.value}
-                  variant={answers[currentScenarioData.id] === option.value ? 'primary' : 'outline'}
+                  className="quiz-option"
                   onClick={() => handleAnswer(currentScenarioData.id, option.value)}
                 >
                   {option.label}
-                </ActionButton>
+                  <div className="option-indicator">{option.value}</div>
+                </div>
               ))}
             </div>
           )}
           
           {feedback[currentScenarioData.id] && (
-            <div className={`feedback-section ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
-              <p>{feedback[currentScenarioData.id]}</p>
-              {feedback[currentScenarioData.id].includes('✓') && (
-                <div className="function-identified">
-                  <h4>Money's Job: {currentScenarioData.moneyFunction}</h4>
-                  <p>{currentScenarioData.explanation}</p>
+            <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
+              {feedback[currentScenarioData.id].includes('✓') ? (
+                <div className="feedback-text">
+                  <p>✅ <strong>Excellent!</strong> You identified the correct function.</p>
+                  <div className="correct-answer">
+                    <strong>Money's Job:</strong> {currentScenarioData.moneyFunction}
+                  </div>
+                  <div className="trait-unlocked">
+                    <p><strong>💡 Key Learning:</strong> {currentScenarioData.explanation}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="feedback-text">
+                  <p>❌ <strong>Not quite.</strong></p>
+                  <div className="incorrect-answer">
+                    <strong>The correct function is:</strong> {currentScenarioData.moneyFunction}
+                  </div>
+                  <div className="correct-answer">
+                    <strong>💡 Key Learning:</strong> {currentScenarioData.explanation}
+                  </div>
                 </div>
               )}
             </div>
@@ -824,16 +839,16 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 10,
-      context: "On Yap Island, people used giant stone wheels as money — but they were only used locally. Gold, on the other hand, was used across continents and centuries.",
-      question: "What does this tell us?",
+      context: "On Yap Island, they used giant stone wheels as money. The stones never moved — people just remembered who owned them.",
+      question: "What does this teach us about money?",
       options: [
-        "Bigger money is better",
-        "Rare items make good money",
-        "Money that survives through time and across cultures earns trust"
+        "Money needs to move to be useful",
+        "Everyone must agree something has value for it to work as money",
+        "Big stones make the best money"
       ],
-      answer: 2,
-      insight: "A long, reliable track record makes money more trustworthy.",
-      trait: "Track Record"
+      answer: 1,
+      insight: "Money depends on shared belief and trust. If everyone accepts it, it works — even if it doesn't move.",
+      trait: "Acceptability"
     }
   ];
 
@@ -919,40 +934,46 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
             <h4>{currentQuestionData.question}</h4>
             
             {!showFeedback && (
-              <div className="answer-options">
+              <div className="quiz-options">
                 {currentQuestionData.options.map((option, index) => (
-                  <ActionButton
+                  <div
                     key={index}
+                    className="quiz-option"
                     onClick={() => handleAnswer(index)}
                   >
                     {option}
-                  </ActionButton>
+                    <div className="option-indicator">{String.fromCharCode(65 + index)}</div>
+                  </div>
                 ))}
               </div>
             )}
             
             {showFeedback && (
-              <div className="feedback-section">
+              <div className={`quiz-feedback ${selectedAnswer === currentQuestionData.answer ? 'correct' : 'incorrect'}`}>
                 {selectedAnswer === currentQuestionData.answer ? (
-                  <div className="correct-feedback">
-                    <p>✅ <strong>Correct!</strong></p>
+                  <div className="feedback-text">
+                    <p>✅ <strong>Excellent!</strong> You chose the correct answer.</p>
+                    <div className="correct-answer">
+                      <strong>💡 What This Teaches Us:</strong> {currentQuestionData.insight}
+                    </div>
+                    <div className="trait-unlocked">
+                      <p><strong>🔓 Property Unlocked:</strong> {currentQuestionData.trait}</p>
+                    </div>
                   </div>
                 ) : (
-                  <div className="incorrect-feedback">
+                  <div className="feedback-text">
                     <p>❌ <strong>Not quite.</strong></p>
-                    <p><strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}</p>
+                    <div className="incorrect-answer">
+                      <strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}
+                    </div>
+                    <div className="correct-answer">
+                      <strong>💡 What This Teaches Us:</strong> {currentQuestionData.insight}
+                    </div>
+                    <div className="trait-unlocked">
+                      <p><strong>🔓 Property Unlocked:</strong> {currentQuestionData.trait}</p>
+                    </div>
                   </div>
                 )}
-                
-                <div className="insight-box">
-                  <h4>💡 What This Teaches Us</h4>
-                  <p>{currentQuestionData.insight}</p>
-                  {selectedAnswer === currentQuestionData.answer && (
-                    <div className="trait-unlocked">
-                      <p><strong>Property Unlocked:</strong> {currentQuestionData.trait}</p>
-                    </div>
-                  )}
-                </div>
                 
                 <ContinueButton onClick={handleNext}>
                   {currentQuestion === questions.length - 1 ? 'Build Your Framework' : 'Next Example'}
@@ -986,6 +1007,10 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
                 <p>You control your money, not someone else</p>
               </div>
               <div className="trait-card">
+                <h5>🌐 Decentralization</h5>
+                <p>No single group can control or change it</p>
+              </div>
+              <div className="trait-card">
                 <h5>📊 Fixed Supply</h5>
                 <p>No one can print more to benefit themselves</p>
               </div>
@@ -995,7 +1020,15 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
               </div>
               <div className="trait-card">
                 <h5>📱 Portability</h5>
-                <p>Should be easy to transport from one place to another — physically or digitally</p>
+                <p>Easy to transport from one place to another — physically or digitally</p>
+              </div>
+              <div className="trait-card">
+                <h5>🔍 Verifiability</h5>
+                <p>Easy to verify that the money is real and not counterfeit</p>
+              </div>
+              <div className="trait-card">
+                <h5>➗ Divisibility</h5>
+                <p>Easy to divide into smaller units for transactions of any size</p>
               </div>
               <div className="trait-card">
                 <h5>⏳ Durability</h5>
@@ -1006,20 +1039,8 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
                 <p>Every unit is identical to every other unit</p>
               </div>
               <div className="trait-card">
-                <h5>🌐 Decentralization</h5>
-                <p>No single group can control or change it</p>
-              </div>
-              <div className="trait-card">
-                <h5>➗ Divisibility</h5>
-                <p>Must be easy to divide into smaller units for small or large transactions</p>
-              </div>
-              <div className="trait-card">
-                <h5>🔍 Verifiability</h5>
-                <p>It should be easy to verify that the money is real and not counterfeit</p>
-              </div>
-              <div className="trait-card">
-                <h5>📈 Track Record</h5>
-                <p>Money earns trust by working over time</p>
+                <h5>🤝 Acceptability</h5>
+                <p>Widely trusted and accepted through social consensus</p>
               </div>
             </div>
           </div>
