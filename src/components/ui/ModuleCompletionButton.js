@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../contexts/ProgressContext';
 import { Trophy, ArrowRight, Home } from 'lucide-react';
-import { ContinueButton } from '../EnhancedButtons';
+import { ContinueButton } from './UnifiedButton';
 
 export const ModuleCompletionButton = ({ 
   moduleName, 

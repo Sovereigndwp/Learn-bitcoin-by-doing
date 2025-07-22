@@ -22,8 +22,9 @@ import {
 import { 
   ContinueButton, 
   ActionButton, 
-  NavigationButton 
-} from '../components/EnhancedButtons';
+  NavigationButton,
+  InteractiveIcon
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 
@@ -1084,12 +1085,21 @@ const TransactionsModule = () => {
   const StepComponent = currentStepData?.component;
 
   return (
-    <div className="transactions-module">
-      <div className="module-progress">
-        <div className="progress-header">
-          <h1>💸 Bitcoin Transactions Mastery</h1>
-          <p>Master how value flows through the Bitcoin network</p>
+    <div className="module-container">
+      {/* HERO SECTION - World-class design principles */}
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="coins" size={48} className="module-icon-transactions" />
+          </div>
+          Bitcoin Transactions Mastery
         </div>
+        <div className="module-subtitle">
+          Master how value flows through the Bitcoin network
+        </div>
+      </div>
+      
+      <div className="section-card">
         
         <div className="steps-progress">
           {transactionSteps.map((step, index) => (

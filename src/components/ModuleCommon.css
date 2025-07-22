@@ -41,22 +41,31 @@
   
   /* Typography System */
   --typography-fontFamily-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --typography-fontSize-sm: 0.875rem;
   --typography-fontSize-base: 1rem;
   --typography-fontSize-lg: 1.125rem;
   --typography-fontSize-xl: 1.25rem;
+  --typography-fontSize-2xl: 1.5rem;
   --typography-fontSize-3xl: 1.875rem;
   --typography-fontWeight-normal: 400;
   --typography-fontWeight-medium: 500;
   --typography-fontWeight-semibold: 600;
   --typography-fontWeight-bold: 700;
   --typography-lineHeight-normal: 1.5;
+  --typography-lineHeight-relaxed: 1.6;
   
-  /* Spacing System (8px grid) */
-  --spacing-2: 0.5rem;
-  --spacing-4: 1rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-  --spacing-12: 3rem;
+  /* Comprehensive Spacing System (8px grid) */
+  --spacing-1: 0.25rem;     /* 4px */
+  --spacing-2: 0.5rem;      /* 8px */
+  --spacing-3: 0.75rem;     /* 12px */
+  --spacing-4: 1rem;        /* 16px */
+  --spacing-5: 1.25rem;     /* 20px */
+  --spacing-6: 1.5rem;      /* 24px */
+  --spacing-8: 2rem;        /* 32px */
+  --spacing-10: 2.5rem;     /* 40px */
+  --spacing-12: 3rem;       /* 48px */
+  --spacing-16: 4rem;       /* 64px */
+  --spacing-20: 5rem;       /* 80px */
   
   /* Border Radius */
   --borderRadius-sm: 0.25rem;
@@ -97,12 +106,16 @@
   --module-text-secondary: var(--color-text-secondary);
   --module-text-inverse: var(--color-text-inverse);
   
-  /* Spacing from our 8px grid system */
-  --module-spacing-sm: var(--spacing-2);
-  --module-spacing-md: var(--spacing-4);
-  --module-spacing-lg: var(--spacing-6);
-  --module-spacing-xl: var(--spacing-8);
-  --module-spacing-2xl: var(--spacing-12);
+  /* Global Module Spacing System - Controls ALL module layouts */
+  --module-spacing-xs: var(--spacing-1);    /* 4px - Tiny gaps */
+  --module-spacing-sm: var(--spacing-2);    /* 8px - Small spacing */
+  --module-spacing-md: var(--spacing-4);    /* 16px - Standard spacing */
+  --module-spacing-lg: var(--spacing-6);    /* 24px - Large spacing */
+  --module-spacing-xl: var(--spacing-8);    /* 32px - Extra large */
+  --module-spacing-2xl: var(--spacing-10);  /* 40px - Section spacing */
+  --module-spacing-3xl: var(--spacing-12);  /* 48px - Major sections */
+  --module-spacing-4xl: var(--spacing-16);  /* 64px - Module sections */
+  --module-spacing-5xl: var(--spacing-20);  /* 80px - Module padding */
   
   /* Border radius from our design system */
   --module-radius-sm: var(--borderRadius-sm);
@@ -120,6 +133,12 @@
   --module-transition: var(--transitions-base);
   --module-transition-fast: var(--transitions-fast);
   --module-transition-interactive: var(--transitions-interactive);
+  
+  /* Glass morphism system */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-bg-hover: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --shadow-glass-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 /* ========================================
@@ -127,11 +146,11 @@
    Nested containers for better content organization
    ======================================== */
 
-/* Main content container with improved spacing */
+/* GLOBAL LAYOUT CONTROLLER - Main content container */
 .module-container {
   margin: 0 auto;
   max-width: 1200px;
-  padding: var(--module-spacing-xl);
+  padding: var(--module-spacing-3xl) var(--module-spacing-2xl); /* Vertical and horizontal padding */
   background: var(--module-bg-primary);
   color: var(--module-text-primary);
   font-family: var(--typography-fontFamily-primary);
@@ -139,17 +158,75 @@
   min-height: 100vh;
   line-height: var(--typography-lineHeight-normal);
   transition: var(--module-transition);
+  position: relative;
 }
 
-/* Content section wrapper - groups related content */
+/* Ensure minimum spacing from viewport edges on all screen sizes */
+@media (max-width: 768px) {
+  .module-container {
+    padding: var(--module-spacing-2xl) var(--module-spacing-lg);
+    margin: 0 var(--module-spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .module-container {
+    padding: var(--module-spacing-xl) var(--module-spacing-md);
+    margin: 0 var(--module-spacing-sm);
+  }
+}
+
+/* GLOBAL CARD ORGANIZATION SYSTEM */
+/* Primary content sections - Major topic divisions */
 .content-section {
-  margin-bottom: var(--module-spacing-3xl);
-  padding: var(--module-spacing-xl);
+  margin-bottom: var(--module-spacing-4xl);
+  padding: var(--module-spacing-2xl);
   background: var(--glass-bg);
   border-radius: var(--module-radius-xl);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Secondary content sections - Sub-topics */
+.section-card {
+  margin-bottom: var(--module-spacing-3xl);
+  padding: var(--module-spacing-xl);
+  background: var(--glass-bg);
+  border-radius: var(--module-radius-lg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--module-shadow-sm);
+}
+
+/* Tertiary content sections - Individual concepts */
+.concept-card {
+  margin-bottom: var(--module-spacing-2xl);
+  padding: var(--module-spacing-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--module-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Interactive content sections - Quizzes, exercises */
+.interactive-card {
+  margin-bottom: var(--module-spacing-xl);
+  padding: var(--module-spacing-lg);
+  background: var(--glass-bg);
+  border-radius: var(--module-radius-lg);
+  border: 2px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--module-transition-interactive);
+}
+
+.interactive-card:hover {
+  border-color: var(--color-bitcoin-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--module-shadow-bitcoin);
 }
 
 /* Subtopic containers - organize content within sections */
@@ -205,122 +282,13 @@
 .spacing-2xl { margin-bottom: var(--module-spacing-2xl); }
 .spacing-3xl { margin-bottom: var(--module-spacing-3xl); }
 
-/* UNIVERSAL BUTTON TEXT SPACING ENHANCEMENT */
-/* Apply optimized spacing to ALL button types throughout the application */
-
-/* Quiz and choice buttons */
+/* Inner button text spacing enhancement */
 .quiz-option,
 .choice-option,
 .answer-option,
 .prediction-option,
 .challenge-option {
   text-indent: var(--module-spacing-sm);
-}
-
-/* Universal button selector - covers all buttons */
-button,
-.button,
-.btn,
-.action-button,
-.continue-button,
-.nav-button,
-.slide-nav-button,
-.start-journey-button,
-.reset-button,
-.close-button,
-.confirm-button,
-.cancel-button,
-.generate-button,
-.verify-button,
-.copy-button,
-.format-button,
-.run-button,
-.demo-button,
-.choice-button,
-.template-button,
-.example-button,
-.simulation-button,
-.explore-button,
-.analyze-button,
-.strategy-button,
-.solution-button,
-.scenario-button,
-.route-payment-button,
-.implementation-button,
-.home-button,
-.back-button,
-.next-button,
-.step-nav-button,
-.utility-button,
-.tab-button,
-.selector-button,
-.mode-button,
-.wallet-button,
-.option-button,
-.icon-button,
-.completion-button,
-a[class*="button"],
-a[class*="btn"],
-[class*="button"],
-[class*="btn"],
-[role="button"] {
-  padding-left: var(--module-spacing-lg) !important;
-  text-indent: var(--module-spacing-xs) !important;
-  box-sizing: border-box !important;
-}
-
-/* Specific fix for Learning Path module cards that act as buttons */
-.learning-path .module-card,
-.learning-path .module-card .module-content,
-.modules-list .module-card,
-.modules-list .module-card .module-content {
-  text-indent: var(--module-spacing-sm) !important;
-}
-
-.learning-path .module-card h5,
-.learning-path .module-card p,
-.modules-list .module-card h5,
-.modules-list .module-card p {
-  padding-left: var(--module-spacing-md) !important;
-  text-indent: var(--module-spacing-xs) !important;
-}
-
-/* Special handling for smaller buttons */
-.btn-sm,
-.button-small,
-[class*="small"],
-.icon-button {
-  padding-left: var(--module-spacing-md) !important;
-  text-indent: var(--module-spacing-xs) !important;
-}
-
-/* Special handling for large buttons */
-.btn-lg,
-.button-large,
-[class*="large"],
-.start-journey-button,
-.completion-button {
-  padding-left: var(--module-spacing-xl) !important;
-  text-indent: var(--module-spacing-sm) !important;
-}
-
-/* Mobile responsive button spacing */
-@media (max-width: 767px) {
-  button,
-  .button,
-  .btn,
-  [class*="button"],
-  [class*="btn"] {
-    padding-left: var(--module-spacing-md) !important;
-    text-indent: var(--module-spacing-xs) !important;
-    min-height: 44px; /* Touch-friendly minimum */
-  }
-  
-  .btn-lg,
-  .button-large,
-  [class*="large"] {
-    padding-left: var(--module-spacing-lg) !important;
-  }
 }
 
 /* Padding variants */
@@ -892,6 +860,133 @@ a[class*="btn"],
   margin-bottom: var(--module-spacing-md);
 }
 
+/* ========================================
+   GLOBAL BUTTON SIZING CONTROL SYSTEM
+   Ensures all buttons are properly sized for their text
+   ======================================== */
+
+/* Global button base styles - controls ALL buttons in modules */
+button,
+.button,
+.quiz-option,
+.choice-option,
+.answer-option,
+.prediction-option,
+.challenge-option,
+.action-button,
+.continue-button,
+.navigation-button {
+  /* Minimum sizing for readability */
+  min-height: 48px; /* Touch-friendly minimum */
+  min-width: 120px; /* Prevents cramped text */
+  padding: var(--module-spacing-md) var(--module-spacing-lg);
+  
+  /* Text sizing and spacing */
+  font-size: var(--typography-fontSize-base);
+  font-weight: var(--typography-fontWeight-medium);
+  line-height: var(--typography-lineHeight-normal);
+  text-align: center;
+  word-wrap: break-word;
+  white-space: normal; /* Allow text wrapping if needed */
+  
+  /* Prevent text overflow */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  /* Enhanced interactive area */
+  border-radius: var(--module-radius-lg);
+  cursor: pointer;
+  transition: var(--module-transition-interactive);
+  
+  /* Better tap targets for mobile */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--module-spacing-sm);
+}
+
+/* Size variants for different button types */
+.button-sm, .quiz-option {
+  min-height: 40px;
+  min-width: 100px;
+  padding: var(--module-spacing-sm) var(--module-spacing-md);
+  font-size: var(--typography-fontSize-sm);
+}
+
+.button-md {
+  min-height: 48px;
+  min-width: 120px;
+  padding: var(--module-spacing-md) var(--module-spacing-lg);
+  font-size: var(--typography-fontSize-base);
+}
+
+.button-lg {
+  min-height: 56px;
+  min-width: 140px;
+  padding: var(--module-spacing-lg) var(--module-spacing-xl);
+  font-size: var(--typography-fontSize-lg);
+}
+
+/* Responsive button sizing */
+@media (max-width: 768px) {
+  button,
+  .button,
+  .quiz-option,
+  .choice-option,
+  .answer-option {
+    min-height: 44px;
+    padding: var(--module-spacing-md) var(--module-spacing-lg);
+    font-size: var(--typography-fontSize-base);
+  }
+}
+
+@media (max-width: 480px) {
+  button,
+  .button,
+  .quiz-option,
+  .choice-option,
+  .answer-option {
+    min-height: 48px; /* Larger on small screens for touch */
+    padding: var(--module-spacing-md) var(--module-spacing-md);
+    font-size: var(--typography-fontSize-sm);
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* ========================================
+   GLOBAL MARGIN CONTROL SYSTEM
+   Prevents content from touching page edges
+   ======================================== */
+
+/* Ensure no content touches viewport edges */
+.module-container > * {
+  margin-left: var(--module-spacing-md);
+  margin-right: var(--module-spacing-md);
+}
+
+/* Override for containers that should be full-width */
+.module-container > .module-header,
+.module-container > .content-section,
+.module-container > .section-card {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Ensure proper spacing between all major elements */
+.module-container > * + * {
+  margin-top: var(--module-spacing-2xl);
+}
+
+/* Special spacing for interactive elements */
+.quiz-container,
+.interactive-card,
+.feedback-section,
+.quiz-feedback {
+  margin: var(--module-spacing-xl) 0;
+}
+
 /* Completion Success State */
 .completion-success {
   background: linear-gradient(135deg, var(--color-semantic-success), var(--color-semantic-successDark));
@@ -960,4 +1055,620 @@ a[class*="btn"],
 @keyframes iconFloat {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-4px); }
+}
+
+/* ========================================
+   GLOBAL UNIVERSAL OVERRIDE SYSTEM
+   Forces consistency across ALL modules - No exceptions!
+   ======================================== */
+
+/* ========================================
+   CRITICAL FIXES FOR SPECIFIC ISSUES
+   Addresses white popups, inconsistent buttons, and counters
+   ======================================== */
+
+/* FORCE DARK BACKGROUNDS FOR ALL POPUPS - NO WHITE-ON-WHITE */
+.popup-content,
+.modal-content,
+.tooltip-content,
+.notification-content,
+.reality-reveal,
+.reality-check,
+.user-prediction,
+.deeper-thinking,
+.feedback-section,
+.quiz-feedback,
+.answer-feedback {
+  background: var(--glass-bg) !important;
+  color: var(--module-text-primary) !important;
+  border: 2px solid var(--glass-border) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* FORCE ALL BUTTON TYPES TO USE STANDARDIZED QUIZ STYLING */
+.challenge-option,
+.challenge-options button,
+.OptionButton,
+button.challenge-option,
+.thinking-challenge button,
+.prediction-option,
+.scenario-option,
+.demo-option {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: var(--module-spacing-lg) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--module-radius-md) !important;
+  cursor: pointer !important;
+  transition: var(--module-transition-interactive) !important;
+  min-height: 60px !important;
+  font-size: var(--typography-fontSize-base) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  color: var(--module-text-primary) !important;
+  width: 100% !important;
+  margin-bottom: var(--module-spacing-md) !important;
+}
+
+.challenge-option:hover,
+.OptionButton:hover,
+.challenge-options button:hover {
+  background: rgba(247, 147, 26, 0.1) !important;
+  border-color: var(--color-bitcoin-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--module-shadow-bitcoin) !important;
+}
+
+/* FORCE ALL DEMO COUNTERS TO USE GLOBAL QUESTION FORMAT */
+.demo-counter,
+.scenario-tracker,
+.progress-indicators,
+.analysis-stats,
+.scenario-progress,
+.progress-tracker {
+  background: rgba(247, 147, 26, 0.1) !important;
+  border: 1px solid rgba(247, 147, 26, 0.3) !important;
+  border-radius: var(--module-radius-md) !important;
+  padding: var(--module-spacing-sm) var(--module-spacing-md) !important;
+  margin-bottom: var(--module-spacing-lg) !important;
+  font-size: var(--typography-fontSize-sm) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  color: var(--module-text-primary) !important;
+}
+
+/* Override demo counter text to use standard format */
+.demo-counter::before {
+  content: "Question " !important;
+}
+
+.demo-counter::after {
+  content: " completed" !important;
+}
+
+/* FORCE SEPARATION BETWEEN SCENARIO AND RESULT */
+.demo-effect,
+.demo-hidden,
+.reality-check,
+.user-prediction,
+.scenario-result {
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--module-radius-md) !important;
+  padding: var(--module-spacing-lg) !important;
+  margin: var(--module-spacing-md) 0 !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+/* Ensure scenario and result are visually separated */
+.demo-effect + .demo-hidden,
+.user-prediction + .reality-check {
+  margin-top: var(--module-spacing-xl) !important;
+  border-top: 2px solid var(--color-bitcoin-primary) !important;
+}
+
+/* CARD SEPARATION - PREVENT CONTENT CRAMMING */
+.ready-for-bitcoin,
+.want-to-learn-more,
+.module-completion,
+.next-steps {
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  border-radius: var(--module-radius-lg) !important;
+  padding: var(--module-spacing-xl) !important;
+  margin: var(--module-spacing-3xl) 0 !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Force each major section into separate cards */
+.ready-for-bitcoin + .want-to-learn-more {
+  margin-top: var(--module-spacing-4xl) !important;
+}
+
+/* ========================================
+   UNIVERSAL NAVIGATION SYSTEM
+   Standardize Previous/Next button behavior
+   ======================================== */
+
+/* Force consistent navigation button styling */
+.demo-buttons,
+.navigation-buttons,
+.step-navigation,
+.scenario-navigation {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: var(--module-spacing-md) !important;
+  margin: var(--module-spacing-xl) 0 !important;
+  padding: var(--module-spacing-md) !important;
+  background: rgba(247, 147, 26, 0.05) !important;
+  border-radius: var(--module-radius-md) !important;
+}
+
+/* Standardize Previous/Next button styling */
+.demo-buttons button,
+.navigation-buttons button,
+button[aria-label*="Previous"],
+button[aria-label*="Next"],
+.previous-button,
+.next-button {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--module-text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: var(--module-radius-md) !important;
+  padding: var(--module-spacing-sm) var(--module-spacing-md) !important;
+  font-size: var(--typography-fontSize-sm) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  cursor: pointer !important;
+  transition: var(--module-transition-interactive) !important;
+  min-height: 40px !important;
+  min-width: 80px !important;
+}
+
+.demo-buttons button:hover,
+.navigation-buttons button:hover,
+.previous-button:hover,
+.next-button:hover {
+  background: rgba(247, 147, 26, 0.2) !important;
+  border-color: var(--color-bitcoin-primary) !important;
+  transform: translateY(-1px) !important;
+}
+
+.demo-buttons button:disabled,
+.navigation-buttons button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* ========================================
+   UNIVERSAL MODULE HEADER STANDARDIZATION
+   All module headers must look identical
+   ======================================== */
+
+/* Force consistent module header structure */
+.module-header,
+.module-title,
+.toolkit-header,
+.module-intro {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--module-spacing-lg) !important;
+  margin-bottom: var(--module-spacing-4xl) !important;
+  padding: var(--module-spacing-2xl) !important;
+  background: var(--glass-bg) !important;
+  border-radius: var(--module-radius-xl) !important;
+  border: 2px solid var(--glass-border) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: var(--module-shadow-lg) !important;
+}
+
+/* Universal module title styling */
+.module-header h1,
+.module-title h1,
+.toolkit-title,
+.module-intro h1,
+h1.heading-critical,
+h1.content-tier-1 {
+  font-size: var(--typography-fontSize-3xl) !important;
+  font-weight: var(--typography-fontWeight-bold) !important;
+  color: var(--module-text-primary) !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Universal module icon styling */
+.module-icon,
+.hero-icon,
+.module-icon-bitcoin {
+  width: 48px !important;
+  height: 48px !important;
+  color: var(--color-bitcoin-primary) !important;
+  flex-shrink: 0 !important;
+}
+
+/* ========================================
+   UNIVERSAL QUIZ/MULTIPLE CHOICE SYSTEM
+   All quizzes must look and behave identically
+   ======================================== */
+
+/* Force consistent quiz container structure */
+.quiz-container,
+.question-container,
+.quiz-section,
+.question-box,
+.interactive-quiz,
+.thinking-challenge {
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  border-radius: var(--module-radius-lg) !important;
+  padding: var(--module-spacing-xl) !important;
+  margin: var(--module-spacing-2xl) 0 !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: var(--module-shadow-md) !important;
+}
+
+/* Universal quiz question styling */
+.quiz-container h3,
+.quiz-container h4,
+.question-box h3,
+.question-box h4,
+.quiz-section h3,
+.quiz-section h4,
+.thinking-challenge h4,
+.challenge-question h4 {
+  font-size: var(--typography-fontSize-xl) !important;
+  font-weight: var(--typography-fontWeight-semibold) !important;
+  color: var(--module-text-primary) !important;
+  margin-bottom: var(--module-spacing-lg) !important;
+  line-height: 1.3 !important;
+}
+
+/* Universal quiz options container */
+.quiz-options,
+.answer-options,
+.choice-options,
+.prediction-options,
+.challenge-options {
+  display: grid !important;
+  gap: var(--module-spacing-md) !important;
+  margin: var(--module-spacing-lg) 0 !important;
+  grid-template-columns: 1fr !important;
+}
+
+/* Universal quiz option styling */
+.quiz-option,
+.answer-option,
+.choice-option,
+.prediction-option,
+.challenge-option {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: var(--module-spacing-lg) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--module-radius-md) !important;
+  cursor: pointer !important;
+  transition: var(--module-transition-interactive) !important;
+  min-height: 60px !important;
+  font-size: var(--typography-fontSize-base) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  color: var(--module-text-primary) !important;
+}
+
+.quiz-option:hover,
+.answer-option:hover,
+.choice-option:hover {
+  background: rgba(247, 147, 26, 0.1) !important;
+  border-color: var(--color-bitcoin-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--module-shadow-bitcoin) !important;
+}
+
+/* Universal option indicators */
+.option-indicator,
+.option-number,
+.choice-indicator {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: var(--color-bitcoin-primary) !important;
+  color: var(--module-text-inverse) !important;
+  border-radius: 50% !important;
+  font-weight: var(--typography-fontWeight-bold) !important;
+  font-size: var(--typography-fontSize-sm) !important;
+  flex-shrink: 0 !important;
+}
+
+/* ========================================
+   UNIVERSAL QUIZ FEEDBACK SYSTEM
+   All feedback must be consistent with proper explanations
+   ======================================== */
+
+/* Universal quiz feedback container */
+.quiz-feedback,
+.feedback-section,
+.answer-feedback,
+.result-explanation {
+  background: var(--glass-bg) !important;
+  border: 2px solid var(--glass-border) !important;
+  border-radius: var(--module-radius-lg) !important;
+  padding: var(--module-spacing-xl) !important;
+  margin: var(--module-spacing-lg) 0 !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* Correct answer feedback */
+.quiz-feedback.correct,
+.feedback-section.correct,
+.correct-feedback {
+  border-color: var(--color-semantic-success) !important;
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    var(--glass-bg) 100%) !important;
+}
+
+/* Incorrect answer feedback */
+.quiz-feedback.incorrect,
+.feedback-section.incorrect,
+.incorrect-feedback {
+  border-color: var(--color-semantic-warning) !important;
+  background: linear-gradient(135deg, 
+    rgba(255, 152, 0, 0.1) 0%, 
+    var(--glass-bg) 100%) !important;
+}
+
+/* Universal feedback text styling */
+.feedback-text,
+.correct-answer,
+.incorrect-answer,
+.answer-explanation {
+  font-size: var(--typography-fontSize-base) !important;
+  line-height: var(--typography-lineHeight-normal) !important;
+  color: var(--module-text-primary) !important;
+  margin-bottom: var(--module-spacing-md) !important;
+}
+
+.feedback-text strong,
+.correct-answer strong,
+.answer-explanation strong {
+  color: var(--color-bitcoin-primary) !important;
+  font-weight: var(--typography-fontWeight-bold) !important;
+}
+
+/* Universal trait/insight unlocked section */
+.trait-unlocked,
+.insight-unlocked,
+.learning-point {
+  background: rgba(247, 147, 26, 0.1) !important;
+  border: 1px solid rgba(247, 147, 26, 0.3) !important;
+  border-radius: var(--module-radius-md) !important;
+  padding: var(--module-spacing-md) !important;
+  margin-top: var(--module-spacing-md) !important;
+}
+
+/* ========================================
+   UNIVERSAL QUESTION COUNTER SYSTEM
+   All modules must show progress consistently
+   ======================================== */
+
+/* Universal counter container */
+.question-counter,
+.quiz-progress,
+.progress-indicator {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(247, 147, 26, 0.1) !important;
+  border: 1px solid rgba(247, 147, 26, 0.3) !important;
+  border-radius: var(--module-radius-md) !important;
+  padding: var(--module-spacing-sm) var(--module-spacing-md) !important;
+  margin-bottom: var(--module-spacing-lg) !important;
+  font-size: var(--typography-fontSize-sm) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  color: var(--module-text-primary) !important;
+}
+
+/* Counter text standardization */
+.question-counter::before,
+.quiz-progress::before {
+  content: "Question " !important;
+}
+
+.question-counter::after,
+.quiz-progress::after {
+  content: " of " attr(data-total) !important;
+}
+
+/* Progress bar for counters */
+.counter-progress,
+.quiz-progress-bar {
+  height: 4px !important;
+  background: rgba(247, 147, 26, 0.2) !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+  margin-top: var(--module-spacing-xs) !important;
+}
+
+.counter-progress-fill,
+.quiz-progress-fill {
+  height: 100% !important;
+  background: var(--color-bitcoin-primary) !important;
+  transition: width 0.3s ease !important;
+}
+
+/* ========================================
+   UNIVERSAL POPUP TIMING SYSTEM
+   All popups must be visible for at least 5 seconds
+   ======================================== */
+
+/* Force consistent popup timing */
+.popup-overlay,
+.modal-backdrop,
+.tooltip-container,
+.notification-popup {
+  z-index: 1050 !important;
+  transition: all 0.5s ease-out !important; /* Longer transition */
+}
+
+.popup-content,
+.modal-content,
+.tooltip-content,
+.notification-content {
+  animation: popupEnhancedAppear 0.6s ease-out !important;
+  animation-fill-mode: both !important;
+}
+
+/* Extended popup auto-close timing */
+.popup-auto-close,
+.auto-dismiss,
+.timed-popup {
+  --popup-duration: 6000ms !important; /* Extended to 6s minimum */
+  animation: popupProgress var(--popup-duration) linear !important;
+}
+
+.popup-progress-bar,
+.dismiss-progress {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  height: 4px !important;
+  background: var(--color-bitcoin-primary) !important;
+  border-radius: 0 0 var(--module-radius-lg) var(--module-radius-lg) !important;
+  animation: popupProgress var(--popup-duration) linear !important;
+}
+
+/* ========================================
+   UNIVERSAL PAGE HIERARCHY ENFORCEMENT
+   All modules must follow the same content structure
+   ======================================== */
+
+/* Force consistent page structure */
+.module-container > * {
+  margin-bottom: var(--module-spacing-2xl) !important;
+}
+
+.module-container > .module-header {
+  margin-bottom: var(--module-spacing-4xl) !important;
+}
+
+/* Universal content section hierarchy */
+.content-section h2,
+.section-card h2,
+h2.content-tier-2,
+h2.heading-high {
+  font-size: var(--typography-fontSize-xl) !important;
+  font-weight: var(--typography-fontWeight-semibold) !important;
+  color: var(--module-text-primary) !important;
+  margin-bottom: var(--module-spacing-lg) !important;
+  line-height: 1.3 !important;
+}
+
+.concept-card h3,
+.concept-card h4,
+h3.content-tier-3,
+h4.content-tier-3 {
+  font-size: var(--typography-fontSize-lg) !important;
+  font-weight: var(--typography-fontWeight-medium) !important;
+  color: var(--module-text-primary) !important;
+  margin-bottom: var(--module-spacing-md) !important;
+  line-height: 1.4 !important;
+}
+
+/* Universal paragraph spacing */
+p,
+.content-body {
+  font-size: var(--typography-fontSize-base) !important;
+  line-height: var(--typography-lineHeight-normal) !important;
+  color: var(--module-text-secondary) !important;
+  margin-bottom: var(--module-spacing-md) !important;
+}
+
+/* ========================================
+   UNIVERSAL CONTINUE BUTTON SYSTEM
+   All continue buttons must be consistent
+   ======================================== */
+
+.continue-button,
+.next-button,
+.proceed-button,
+button[type="submit"] {
+  background: var(--color-bitcoin-primary) !important;
+  color: var(--module-text-inverse) !important;
+  border: 2px solid var(--color-bitcoin-primary) !important;
+  border-radius: var(--module-radius-lg) !important;
+  padding: var(--module-spacing-md) var(--module-spacing-xl) !important;
+  font-size: var(--typography-fontSize-lg) !important;
+  font-weight: var(--typography-fontWeight-semibold) !important;
+  cursor: pointer !important;
+  transition: var(--module-transition-interactive) !important;
+  min-height: 56px !important;
+  min-width: 160px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--module-spacing-sm) !important;
+  margin: var(--module-spacing-lg) 0 !important;
+}
+
+.continue-button:hover,
+.next-button:hover,
+.proceed-button:hover {
+  background: var(--color-bitcoin-hover) !important;
+  border-color: var(--color-bitcoin-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--module-shadow-bitcoin) !important;
+}
+
+/* ========================================
+   UNIVERSAL RESPONSIVE OVERRIDES
+   Ensure consistency across all screen sizes
+   ======================================== */
+
+@media (max-width: 768px) {
+  .quiz-option,
+  .answer-option,
+  .choice-option {
+    min-height: 52px !important;
+    padding: var(--module-spacing-md) !important;
+    font-size: var(--typography-fontSize-sm) !important;
+  }
+  
+  .module-header h1,
+  .module-title h1 {
+    font-size: var(--typography-fontSize-xl) !important;
+  }
+  
+  .module-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .quiz-options,
+  .answer-options {
+    gap: var(--module-spacing-sm) !important;
+  }
+  
+  .quiz-option,
+  .answer-option {
+    min-height: 56px !important; /* Larger on mobile for touch */
+    padding: var(--module-spacing-lg) var(--module-spacing-md) !important;
+  }
+  
+  .continue-button,
+  .next-button {
+    width: 100% !important;
+    min-width: auto !important;
+  }
 }

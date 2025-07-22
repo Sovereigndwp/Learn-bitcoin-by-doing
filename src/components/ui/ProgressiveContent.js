@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Lock, CheckCircle } from 'lucide-react';
-import { OptimizedCard, OptimizedButton } from './';
+import { Button } from './UnifiedButton';
+import ModuleCard from './ModuleCard';
 import './ProgressiveContent.css';
 
 /**
@@ -112,13 +113,13 @@ export const StepByStepContent = ({
             {step.component || step.content}
             
             {index === activeStep && !completedSteps.has(index) && (
-              <OptimizedButton
+              <Button
                 onClick={() => handleStepComplete(index)}
                 className="step-complete-btn"
               >
                 {step.completeText || 'Continue'}
                 <ChevronRight size={16} />
-              </OptimizedButton>
+              </Button>
             )}
           </div>
         ))}
@@ -146,18 +147,18 @@ export const ExpandableSection = ({
   }, [unlockCondition]);
 
   return (
-    <OptimizedCard className={`expandable-section ${className}`}>
+    <ModuleCard className={`expandable-section ${className}`}>
       <div className="expandable-section__header">
         <h3>{title}</h3>
         {canExpand ? (
-          <OptimizedButton
+          <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             icon={<ChevronRight size={16} className={isExpanded ? 'rotated' : ''} />}
           >
             {isExpanded ? 'Collapse' : 'Expand'}
-          </OptimizedButton>
+          </Button>
         ) : (
           <Lock size={20} className="section-locked" />
         )}
@@ -172,7 +173,7 @@ export const ExpandableSection = ({
           </div>
         )}
       </div>
-    </OptimizedCard>
+    </ModuleCard>
   );
 };
 
@@ -192,7 +193,7 @@ export const KnowledgeGate = ({
 
   if (!isUnlocked) {
     return (
-      <OptimizedCard className={`knowledge-gate locked ${className}`}>
+      <ModuleCard className={`knowledge-gate locked ${className}`}>
         <div className="gate-content">
           <Lock size={48} className="gate-icon" />
           <h3>Knowledge Gate</h3>
@@ -220,7 +221,7 @@ export const KnowledgeGate = ({
             </div>
           )}
         </div>
-      </OptimizedCard>
+      </ModuleCard>
     );
   }
 

@@ -5,14 +5,16 @@ import {
   ContinueButton, 
   ActionButton,
   NavigationButton,
-  OptionButton
-} from '../components/EnhancedButtons';
+  OptionButton,
+  PageLayout,
+  ModuleCard
+} from '../components/ui';
 import { ModuleCompletionButton, InteractiveIcon } from '../components/ui';
 import ProgressCounter, { 
   StepProgressCounter,
   CircularProgressCounter 
 } from '../components/ui/ProgressCounter';
-import { ModuleCard, FeaturedCard } from '../components/ui/ModuleCard';
+// ModuleCard already imported from ui index
 import '../components/ModuleCommon.css';
 // Using unified UI components for consistency
 
@@ -324,23 +326,27 @@ const BitcoinComparison = ({ onComplete }) => {
           <p className="aspect-question">{currentAspect.question}</p>
           
           {!userChoice && (
-            <div className="choice-prompt">
-              <p>Which system better protects your financial interests?</p>
-              <div className="choice-buttons">
-                <OptionButton 
-                  className="choice-button traditional"
+            <div className="quiz-container">
+              <div className="quiz-header">
+                <p className="quiz-question">Which system better protects your financial interests?</p>
+              </div>
+              <div className="quiz-options two-column">
+                <div 
+                  className="quiz-option traditional"
                   onClick={() => handleChoice('traditional')}
                 >
                   Traditional Banking
-                </OptionButton>
-                <OptionButton 
-                  className="choice-button bitcoin"
+                  <div className="option-indicator">1</div>
+                </div>
+                <div 
+                  className="quiz-option bitcoin"
                   onClick={() => handleChoice('bitcoin')}
                 >
                   Bitcoin System
-                </OptionButton>
-                  </div>
+                  <div className="option-indicator">2</div>
+                </div>
               </div>
+            </div>
             )}
 
           {showReality && (
@@ -1246,36 +1252,33 @@ const HowBitcoinWorks = ({ onComplete }) => {
               </div>
 
               {showExplanation && (
-            <div className="explanation-section">
-              <div className="user-choice">
-                <h4>You chose: "{currentConcept_data.options.find(opt => opt.id === userAnswer)?.text}"</h4>
+            <div className={`quiz-feedback ${userAnswer === currentConcept_data.explanation.correct ? 'correct' : 'incorrect'}`}>
+              <div className="feedback-text">
+                <p><strong>You chose:</strong> "{currentConcept_data.options.find(opt => opt.id === userAnswer)?.text}"</p>
                 {userAnswer === currentConcept_data.explanation.correct ? (
-                  <div className="correct-choice">✅ Great choice!</div>
+                  <p>✅ <strong>Excellent choice!</strong> You understand this concept well.</p>
                 ) : (
-                  <div className="suboptimal-choice">🤔 Here's why another option might be better:</div>
-                  )}
-                </div>
+                  <p>🤔 <strong>Let's explore this further.</strong> Here's why another option might work better:</p>
+                )}
+              </div>
               
-              <div className="explanation-content">
-                <div className="why-section">
-                  <h5>💡 Why this matters:</h5>
-                  <p>{currentConcept_data.explanation.why}</p>
-            </div>
+              <div className="explanation-text">
+                <div className="correct-answer">
+                  <strong>💡 Why this matters:</strong> {currentConcept_data.explanation.why}
+                </div>
                 
-                <div className="analogy-section">
-                  <h5>🏦 Banking vs Bitcoin:</h5>
-                  <p>{currentConcept_data.explanation.bankingAnalogy}</p>
-          </div>
+                <div className="learning-point">
+                  <strong>🏦 Banking vs Bitcoin:</strong> {currentConcept_data.explanation.bankingAnalogy}
+                </div>
                 
                 <div className="bitcoin-connection">
-                  <h5>🟠 Bitcoin Connection:</h5>
-                  <p>{currentConcept_data.explanation.bitcoinConnection}</p>
+                  <strong>🟠 Bitcoin Connection:</strong> {currentConcept_data.explanation.bitcoinConnection}
                 </div>
-            </div>
+              </div>
 
-              <button className="continue-concept-button" onClick={handleContinue}>
+              <ActionButton className="continue-button" onClick={handleContinue}>
                 {currentConcept < concepts.length - 1 ? 'Next Concept →' : 'Understand Bitcoin\'s Value →'}
-              </button>
+              </ActionButton>
           </div>
         )}
         </div>
@@ -1386,13 +1389,21 @@ const steps = [
   ];
 
   return (
-    <div className="module-layout">
-      <div className="module-header-box">
-        <h2>Bitcoin Fundamentals</h2>
-        <div className="intro-text">
-          <p className="prime-text">Understand what Bitcoin is and why it matters</p>
+    <div className="module-container">
+      {/* HERO SECTION - World-class design principles */}
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="bitcoin" size={48} className="module-icon-bitcoin" />
+          </div>
+          Bitcoin Fundamentals
         </div>
-        
+        <div className="module-subtitle">
+          Understand what Bitcoin is and why it matters
+        </div>
+      </div>
+      
+      <div className="section-card">
         {/* Progress tracking */}
         <ProgressCounter
           moduleId="bitcoin-basics"

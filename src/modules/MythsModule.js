@@ -7,7 +7,7 @@ import {
   OptionButton, 
   NavigationButton, 
   PopupButton 
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import { 
   Shield, AlertTriangle, Target, Zap, CheckCircle, Globe, 
   Search, Database, BarChart3, Building, Network, TrendingUp,
@@ -838,18 +838,19 @@ const MythsModule = () => {
                       <h4>{question.question}</h4>
                     </div>
 
-                    <div className="question-options">
+                    <div className="quiz-options">
                       {question.options.map((option, optIndex) => (
-                        <button
+                        <div
                           key={optIndex}
-                          className={`option-button ${responses[index] === optIndex ? 'selected' : ''}`}
+                          className={`quiz-option ${responses[index] === optIndex ? 'selected' : ''}`}
                           onClick={() => setResponses(prev => ({
                             ...prev,
                             [index]: optIndex
                           }))}
                         >
                           {option}
-                        </button>
+                          <div className="option-indicator">{optIndex + 1}</div>
+                        </div>
                       ))}
                     </div>
 

@@ -4,7 +4,7 @@ import {
   ContinueButton, 
   ActionButton, 
   OptionButton 
-} from './EnhancedButtons';
+} from './ui/UnifiedButton';
 import { ArrowRight, Lightbulb, Link2, CheckCircle, Brain, Target } from 'lucide-react';
 import './ConnectionMoments.css';
 

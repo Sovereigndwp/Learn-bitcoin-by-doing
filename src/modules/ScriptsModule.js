@@ -31,8 +31,10 @@ import {
   ContinueButton, 
   ActionButton,
   OptionButton,
-  NavigationButton
-} from '../components/EnhancedButtons';
+  NavigationButton,
+  PageLayout,
+  ModuleCard
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 
 const ScriptsModule = () => {

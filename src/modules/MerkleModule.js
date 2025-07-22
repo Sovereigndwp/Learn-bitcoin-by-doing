@@ -30,7 +30,7 @@ import {
   ActionButton, 
   OptionButton,
   NavigationButton 
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 import { sha256 } from '../utils/bitcoin';
 

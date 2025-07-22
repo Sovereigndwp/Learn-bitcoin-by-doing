@@ -21,8 +21,7 @@ import {
   InfoIcon,
   ProgressIcon
 } from '../components/ui/SVGIcons';
-import LottieAnimation, { LazyLottieAnimation } from '../components/ui/LottieAnimation';
-import { PLACEHOLDER_ANIMATIONS } from '../config/lottieAnimations';
+// Using InteractiveIcon for all visual elements - no more GIFs or Lottie
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 

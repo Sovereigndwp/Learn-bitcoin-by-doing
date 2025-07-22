@@ -7,7 +7,7 @@ import {
   ActionButton, 
   OptionButton,
   NavigationButton 
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 
 const MiningModule = () => {

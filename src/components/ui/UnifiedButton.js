@@ -589,6 +589,58 @@ export {
   UnifiedButton
 };
 
+// Popup Button - for modal and popup actions
+export const PopupButton = ({
+  children,
+  onOpen,
+  popupContent,
+  position = 'bottom',
+  className = '',
+  ...props
+}) => (
+  <UnifiedButton 
+    variant="outline"
+    size="sm"
+    onClick={onOpen}
+    className={`popup-trigger ${className}`}
+    {...props}
+  >
+    {children}
+  </UnifiedButton>
+);
+
+// Progress Button - shows progress state
+export const ProgressButton = ({
+  progress = 0,
+  children,
+  showPercentage = false,
+  ...props
+}) => (
+  <UnifiedButton
+    progress={progress}
+    className={progress > 0 ? 'progress-active' : ''}
+    {...props}
+  >
+    {showPercentage ? `${children} (${Math.round(progress)}%)` : children}
+  </UnifiedButton>
+);
+
+// Step Navigation Button - for multi-step flows
+export const StepNavigation = ({
+  direction = 'next',
+  children,
+  ...props
+}) => (
+  <UnifiedButton
+    variant={direction === 'next' ? 'primary' : 'secondary'}
+    icon={direction === 'next' ? ArrowRight : ArrowLeft}
+    iconPosition={direction === 'next' ? 'right' : 'left'}
+    {...props}
+  >
+    {children}
+  </UnifiedButton>
+);
+
 // Backward compatibility aliases
 export const Button = UnifiedButton;
 export const ModernButton = UnifiedButton;

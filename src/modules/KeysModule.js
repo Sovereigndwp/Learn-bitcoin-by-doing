@@ -6,8 +6,9 @@ import {
   ContinueButton, 
   ActionButton, 
   OptionButton,
-  NavigationButton 
-} from '../components/EnhancedButtons';
+  NavigationButton,
+  InteractiveIcon
+} from '../components/ui';
 import { KnowledgeGate, ModuleCompletionButton } from '../components/ui';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
@@ -170,17 +171,18 @@ const KeysModule = () => {
                 <span>{challenge.thinkingQuestion}</span>
       </div>
 
-              <div className="challenge-options">
-                {challenge.challengeOptions.map(option => (
-                  <OptionButton
+              <div className="quiz-options">
+                {challenge.challengeOptions.map((option, index) => (
+                  <div
                     key={option.id}
                     onClick={() => handlePrediction(challenge.id, option.id)}
-                    className={`risk-${option.risk} ${userChoice === option.id ? 'selected' : ''}`}
+                    className={`quiz-option prediction-option risk-${option.risk} ${userChoice === option.id ? 'selected' : ''}`}
                   >
                     {option.label}
-                  </OptionButton>
-          ))}
-        </div>
+                    <div className="option-indicator">{index + 1}</div>
+                  </div>
+                ))}
+              </div>
 
               {userChoice && (
                 <div className="prediction-feedback">
@@ -1023,12 +1025,21 @@ const KeysModule = () => {
   const StepComponent = currentStepData?.component;
 
   return (
-    <div className="keys-module">
-      <div className="module-progress">
-        <div className="progress-header">
-          <h1>🔑 Keys & Ownership Mastery</h1>
-          <p>Master the fundamentals of Bitcoin ownership and security</p>
+    <div className="module-container">
+      {/* HERO SECTION - World-class design principles */}
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="key" size={48} className="module-icon-keys" />
+          </div>
+          Keys & Ownership Mastery
+        </div>
+        <div className="module-subtitle">
+          Master the fundamentals of Bitcoin ownership and security
+        </div>
       </div>
+      
+      <div className="section-card">
       
         <div className="steps-progress">
           {cryptoSteps.map((step, index) => (

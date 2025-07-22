@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionButton, ContinueButton } from './ModernButtons';
+import { ActionButton, ContinueButton } from './ui/UnifiedButton';
 
 /**
  * STANDARDIZED CONTENT COMPONENTS

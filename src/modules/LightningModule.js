@@ -15,7 +15,7 @@ import {
   PopupButton,
   Button,
   StepNavigation
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 import ModuleLayout from '../components/ModuleLayout';

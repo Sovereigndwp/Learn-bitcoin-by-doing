@@ -7,8 +7,9 @@ import {
   ContinueButton, 
   ActionButton, 
   OptionButton,
-  NavigationButton 
-} from '../components/EnhancedButtons';
+  NavigationButton,
+  InteractiveIcon
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 
 const HashingModule = () => {
@@ -1092,12 +1093,21 @@ const HashingModule = () => {
   const StepComponent = currentStepData?.component;
 
   return (
-    <div className="hashing-module">
-      <div className="module-progress">
-        <div className="progress-header">
-          <h1>🔐 Cryptographic Hashing Mastery</h1>
-          <p>Master the mathematical foundation of Bitcoin security</p>
+    <div className="module-container">
+      {/* HERO SECTION - World-class design principles */}
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="hash" size={48} className="module-icon-hashing" />
+          </div>
+          Cryptographic Hashing Mastery
+        </div>
+        <div className="module-subtitle">
+          Master the mathematical foundation of Bitcoin security
+        </div>
       </div>
+      
+      <div className="section-card">
         
         <div className="steps-progress">
           {hashingSteps.map((step, index) => (

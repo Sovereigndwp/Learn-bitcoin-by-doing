@@ -8,7 +8,7 @@ import {
 import { 
   ActionButton,
   NavigationButton
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 

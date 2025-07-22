@@ -26,7 +26,7 @@ import {
   NavigationButton, 
   PopupButton,
   StepNavigation
-} from '../components/EnhancedButtons';
+} from '../components/ui';
 import '../components/ModuleCommon.css';
 
 const CustodyModule = () => {
