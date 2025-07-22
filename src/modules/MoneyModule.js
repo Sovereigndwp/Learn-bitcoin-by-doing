@@ -787,15 +787,15 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
     },
     {
       id: 6,
-      context: "Ancient Romans mixed cheap metals into gold coins to stretch their money supply. People couldn't easily tell the difference.",
+      context: "Some Roman emperors secretly mixed cheap metals into gold coins to trick the people. They looked real — but weren't worth the same.",
       question: "What does this teach us?",
       options: [
         "Gold is always valuable",
-        "It should be easy to verify that money is real and not counterfeit",
-        "Coins don't need to be pure"
+        "Coins don't need to be real as long as they look good",
+        "Good money must be easy to check for authenticity"
       ],
-      answer: 1,
-      insight: "Good money must be hard to fake and easy to check. If you can't tell if money is real, it's easy to be fooled.",
+      answer: 2,
+      insight: "If you can't tell if money is real, it's easy to be fooled. Verifiable money protects people from fraud.",
       trait: "Verifiability"
     },
     {
@@ -808,7 +808,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
         "Everyone should use stones again"
       ],
       answer: 1,
-      insight: "Good money should work at any scale — whether you're buying a house or a coffee.",
+      insight: "Money must be divisible to work for both big and small purchases. Good money should work at any scale — whether you're buying a house or a coffee.",
       trait: "Divisibility"
     },
     {
@@ -835,19 +835,19 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
       ],
       answer: 1,
       insight: "Each unit of money must be interchangeable with any other unit, ensuring consistent acceptance.",
-      trait: "Fungibility"
+            trait: "Fungibility"
     },
     {
       id: 10,
-      context: "On Yap Island, they used giant stone wheels as money. The stones never moved — people just remembered who owned them.",
-      question: "What does this teach us about money?",
+      context: "In medieval Europe, people used many different things as money: gold coins, silver pieces, shells, and even cattle. But only gold was accepted everywhere for major trades.",
+      question: "What made gold different?",
       options: [
-        "Money needs to move to be useful",
-        "Everyone must agree something has value for it to work as money",
-        "Big stones make the best money"
+        "Gold was the most beautiful",
+        "Everyone trusted and accepted gold as valuable",
+        "Gold was the heaviest metal"
       ],
       answer: 1,
-      insight: "Money depends on shared belief and trust. If everyone accepts it, it works — even if it doesn't move.",
+      insight: "Money works because people agree it has value. Without widespread acceptance, even valuable things won't function as money.",
       trait: "Acceptability"
     }
   ];
@@ -952,7 +952,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
               <div className={`quiz-feedback ${selectedAnswer === currentQuestionData.answer ? 'correct' : 'incorrect'}`}>
                 {selectedAnswer === currentQuestionData.answer ? (
                   <div className="feedback-text">
-                    <p>✅ <strong>Excellent!</strong> You chose the correct answer.</p>
+                    <p>✅ <strong>Correct!</strong></p>
                     <div className="correct-answer">
                       <strong>💡 What This Teaches Us:</strong> {currentQuestionData.insight}
                     </div>
@@ -963,10 +963,13 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
                 ) : (
                   <div className="feedback-text">
                     <p>❌ <strong>Not quite.</strong></p>
-                    <div className="incorrect-answer">
-                      <strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}
+                    <div className="incorrect-explanation">
+                      <strong>Why this is wrong:</strong> This choice doesn't address the core lesson about sound money properties.
                     </div>
                     <div className="correct-answer">
+                      <strong>Correct answer:</strong> {currentQuestionData.options[currentQuestionData.answer]}
+                    </div>
+                    <div className="insight-explanation">
                       <strong>💡 What This Teaches Us:</strong> {currentQuestionData.insight}
                     </div>
                     <div className="trait-unlocked">
