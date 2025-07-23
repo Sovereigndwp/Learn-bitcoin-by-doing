@@ -4,22 +4,12 @@ import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
   ActionButton,
-  StepNavigation,
-  NavigationButton
+  StepNavigation
 } from '../components/EnhancedButtons';
 import { ModuleCompletionButton } from '../components/ui';
 // Import new visual system components
 import { 
-  BitcoinIcon, 
-  HashIcon, 
-  TransactionIcon, 
-  WalletIcon, 
-  LearnIcon,
-  SuccessIcon,
-  ErrorIcon,
-  WarningIcon,
-  InfoIcon,
-  ProgressIcon
+  BitcoinIcon
 } from '../components/ui/SVGIcons';
 // Using InteractiveIcon for all visual elements - no more GIFs or Lottie
 import '../components/ModuleCommon.css';
@@ -158,8 +148,8 @@ const Introduction = ({ onComplete }) => {
   );
 };
 
-// Simplified Barter World
-const BarterWorld = ({ onComplete }) => {
+// Renamed: BarterWorld -> BarterProblem
+const BarterProblem = ({ onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [playerChoice, setPlayerChoice] = useState(null);
   const [showOutcome, setShowOutcome] = useState(false);
@@ -306,7 +296,7 @@ const BarterWorld = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Life Without Money</h1>
+        <h1 className="heading-critical">Barter Problem</h1>
         <p>Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
       </div>
         
@@ -418,8 +408,8 @@ const BarterWorld = ({ onComplete }) => {
 };
 
 
-// Simplified Money Functions Analysis
-const MoneyFunctionsAnalysis = ({ onComplete }) => {
+// Renamed: MoneySuperpowers -> MoneyFunctions
+const MoneyFunctions = ({ onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
@@ -516,7 +506,7 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">What Jobs Does Money Do?</h1>
+        <h1 className="heading-critical">Money Functions</h1>
         <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
       </div>
         
@@ -589,8 +579,139 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
   );
 };
 
-// Component for the Historical Analysis - Simplified
-const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
+// Renamed: PaymentPlumbing -> PaymentInfrastructure
+const PaymentInfrastructure = ({ onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [showAnimation, setShowAnimation] = useState(false);
+
+  const paymentSteps = [
+    {
+      title: "📱 You Swipe Your Card",
+      description: "Seems instant, right?",
+      detail: "You tap your card at the coffee shop. The screen says 'Approved!' in 2 seconds.",
+      hidden: "But 6 different companies just processed this transaction across 3 different countries..."
+    },
+    {
+      title: "🏪 Coffee Shop → Acquirer",
+      description: "First stop: Payment processor",
+      detail: "Your transaction data goes to the shop's payment processor (like Square or Stripe).",
+      hidden: "Fee #1: Processing fee (2.9% + $0.30 per transaction)"
+    },
+    {
+      title: "🏦 Acquirer → Card Network",
+      description: "Second stop: Visa/Mastercard",
+      detail: "The processor sends your transaction to Visa/Mastercard for authorization.",
+      hidden: "Fee #2: Network fee (0.1-0.2% of transaction)"
+    },
+    {
+      title: "🏛️ Card Network → Your Bank",
+      description: "Third stop: Authorization",
+      detail: "Visa asks your bank: 'Does this person have $5 and are they allowed to spend it?'",
+      hidden: "Your bank checks: Account balance, spending limits, fraud patterns, geographic location..."
+    },
+    {
+      title: "✅ Your Bank → Back Through the Chain",
+      description: "Fourth stop: Approval flows back",
+      detail: "Your bank says 'Yes' and the approval flows back through all the middlemen.",
+      hidden: "This whole authorization took 1-2 seconds, but no money has actually moved yet."
+    },
+    {
+      title: "💸 Settlement (The Real Money Movement)",
+      description: "Final stop: Money actually moves (later)",
+      detail: "The coffee shop gets their money in 1-3 business days through a separate settlement process.",
+      hidden: "Fee #3: Settlement fee, currency conversion fees, chargebacks... Total fees can be 3-5% of transaction."
+    }
+  ];
+
+  const handleNext = () => {
+    if (currentStep < paymentSteps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      onComplete(3);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const currentStepData = paymentSteps[currentStep];
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">Payment Infrastructure</h1>
+        <p>Every "simple" payment actually involves 6 stops and 3 middlemen. Let's trace your money's journey.</p>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">Payment Journey</h2>
+        <p>Step {currentStep + 1} of {paymentSteps.length}</p>
+
+        <div className="payment-step-display">
+          <div className="step-card">
+            <h3 className="heading-medium">{currentStepData.title}</h3>
+            <h4 className="step-subtitle">{currentStepData.description}</h4>
+            <p className="step-detail">{currentStepData.detail}</p>
+            
+            <div className="hidden-info">
+              <h5>🔍 What's Really Happening:</h5>
+              <p className="hidden-detail">{currentStepData.hidden}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="progress-visualization">
+          <div className="progress-dots">
+            {paymentSteps.map((_, index) => (
+              <div 
+                key={index} 
+                className={`progress-dot ${
+                  index === currentStep ? 'current' : ''
+                } ${index < currentStep ? 'completed' : ''}`}
+              >
+                {index < currentStep ? '✅' : index + 1}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {currentStep === paymentSteps.length - 1 && (
+          <div className="concept-card">
+            <h3 className="heading-standard">💡 Key Insight</h3>
+            <p>Notice the 6 stops & 3 middlemen? That's "friction."</p>
+            <p><strong>Link back:</strong> Friction weakens <strong>Money Functions</strong> we learned about earlier - specifically the Medium of Exchange and Unit of Account jobs.</p>
+            
+            <div className="friction-analysis">
+              <h4>What This Friction Creates:</h4>
+              <ul>
+                <li><strong>Cost:</strong> 3-5% in fees (hidden from you)</li>
+                <li><strong>Delay:</strong> Settlement takes 1-3 days</li>
+                <li><strong>Control:</strong> Any middleman can block or reverse transactions</li>
+                <li><strong>Privacy:</strong> Every transaction is tracked and stored</li>
+                <li><strong>Complexity:</strong> Requires 6 different companies to work together</li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <StepNavigation
+          currentStep={currentStep}
+          totalSteps={paymentSteps.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          canGoBack={currentStep > 0}
+          nextLabel={currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Renamed: HistoryWinsAndWipeouts -> MoneyExperiments
+const MoneyExperiments = ({ onComplete, onUnlockTrait }) => {
   const [showIntro, setShowIntro] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -766,10 +887,10 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
 
   if (showIntro) {
     return (
-      <div className="module-container">
-        <div className="section-card">
-          <h2>Learning from History</h2>
-          <p>Let's look at real examples from history to understand what makes money work well.</p>
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">Money Experiments</h1>
+        <p>Let's look at real examples from history to understand what makes money work well.</p>
           
           <h3>Why Look at History?</h3>
           <p>People have been trying different forms of money for thousands of years. Some worked well, others failed spectacularly.</p>
@@ -797,7 +918,7 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h2>Historical Examples</h2>
+        <h1 className="heading-critical">Money Experiments</h1>
         <p>Question {currentQuestion + 1} of {questions.length}</p>
         
         <div className="question-progress">
@@ -877,7 +998,468 @@ const HistoricalAnalysis = ({ onComplete, onUnlockTrait }) => {
   );
 };
 
-// Sound Money Framework - Simplified
+// Already correctly named as MoneyScorecard
+const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
+  const [step, setStep] = useState(0);
+  const [currentTrait, setCurrentTrait] = useState(0);
+
+  const soundMoneyTraits = [
+    { icon: "🔒", name: "Self Custody", description: "You control your money, not someone else", category: "Control" },
+    { icon: "🌐", name: "Decentralization", description: "No single group can control or change it", category: "Control" },
+    { icon: "🔍", name: "Verifiability", description: "Easy to verify that the money is real and not counterfeit", category: "Control" },
+    { icon: "📊", name: "Fixed Supply", description: "No one can print more to benefit themselves", category: "Scarcity" },
+    { icon: "💎", name: "Genuine Scarcity", description: "The limited supply is real and enforced", category: "Scarcity" },
+    { icon: "🔄", name: "Fungibility", description: "Every unit is identical to every other unit", category: "Scarcity" },
+    { icon: "📱", name: "Portability", description: "Easy to transport from one place to another — physically or digitally", category: "Usability" },
+    { icon: "➗", name: "Divisibility", description: "Easy to divide into smaller units for transactions of any size", category: "Usability" },
+    { icon: "⏳", name: "Durability", description: "Lasts over time without degrading", category: "Usability" },
+    { icon: "🤝", name: "Acceptability", description: "Widely trusted and accepted through social consensus", category: "Usability" }
+  ];
+
+  const categories = {
+    "Control": { traits: soundMoneyTraits.filter(t => t.category === "Control"), color: "#ff6b6b" },
+    "Scarcity": { traits: soundMoneyTraits.filter(t => t.category === "Scarcity"), color: "#4ecdc4" },
+    "Usability": { traits: soundMoneyTraits.filter(t => t.category === "Usability"), color: "#45b7d1" }
+  };
+
+  const frameworkSteps = [
+    {
+      title: "10-Point Money Scorecard",
+      content: (
+        <div className="scorecard-intro">
+          <h3>Your Framework for Evaluating Any Money</h3>
+          <p>Based on what you've learned from history, here are the 10 essential properties of sound money, organized into 3 categories:</p>
+          
+          <div className="categories-overview">
+            {Object.entries(categories).map(([categoryName, categoryData]) => (
+              <div key={categoryName} className="category-card" style={{ borderLeft: `4px solid ${categoryData.color}` }}>
+                <h4>{categoryName}</h4>
+                <div className="category-traits">
+                  {categoryData.traits.map((trait, index) => (
+                    <div key={index} className="trait-item">
+                      <span className="trait-icon">{trait.icon}</span>
+                      <span className="trait-name">{trait.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="scorecard-insight">
+            <h4>💡 How to Use This Scorecard</h4>
+            <p>For any form of money, ask: "How many of these 10 properties does it have?" The more it has, the better it functions as money.</p>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Deep Dive: Each Property",
+      content: (
+        <div className="trait-deep-dive">
+          <h3>Understanding Each Property</h3>
+          <p>Let's examine each property in detail:</p>
+          
+          <div className="trait-progress">
+            <p>Property {currentTrait + 1} of {soundMoneyTraits.length}</p>
+          </div>
+
+          <div className="current-trait-display">
+            <div className="trait-card featured" style={{ borderColor: categories[soundMoneyTraits[currentTrait].category].color }}>
+              <div className="trait-header">
+                <span className="trait-icon-large">{soundMoneyTraits[currentTrait].icon}</span>
+                <div className="trait-info">
+                  <h5>{soundMoneyTraits[currentTrait].name}</h5>
+                  <span className="trait-category">{soundMoneyTraits[currentTrait].category}</span>
+                </div>
+              </div>
+              <p className="trait-description">{soundMoneyTraits[currentTrait].description}</p>
+            </div>
+          </div>
+
+          <div className="trait-navigation">
+            <ActionButton 
+              onClick={() => setCurrentTrait(Math.max(0, currentTrait - 1))}
+              disabled={currentTrait === 0}
+              variant="secondary"
+            >
+              Previous Property
+            </ActionButton>
+            <ActionButton 
+              onClick={() => setCurrentTrait(Math.min(soundMoneyTraits.length - 1, currentTrait + 1))}
+              disabled={currentTrait === soundMoneyTraits.length - 1}
+              variant="secondary"
+            >
+              Next Property
+            </ActionButton>
+          </div>
+
+          <div className="trait-summary">
+            <h4>All 10 Properties:</h4>
+            <div className="traits-grid">
+              {soundMoneyTraits.map((trait, index) => (
+                <div 
+                  key={index} 
+                  className={`trait-grid-item ${index === currentTrait ? 'current' : ''}`}
+                  onClick={() => setCurrentTrait(index)}
+                  style={{ borderColor: categories[trait.category].color }}
+                >
+                  <span className="trait-icon">{trait.icon}</span>
+                  <span className="trait-name">{trait.name}</span>
+                  {index === currentTrait && <span className="current-indicator">←</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Ready to Test Your Framework",
+      content: (
+        <div className="framework-ready">
+          <h3>Time to Apply What You've Learned</h3>
+          <p>Now you have a complete framework for evaluating money. Let's test it by comparing different money systems.</p>
+          
+          <div className="preview-comparison">
+            <h4>You'll Compare:</h4>
+            <div className="comparison-preview">
+              <div className="money-type">
+                <h5>🥇 Gold</h5>
+                <p>The historical standard</p>
+              </div>
+              <div className="money-type">
+                <h5>💵 Fiat Currency</h5>
+                <p>Modern government money</p>
+              </div>
+              <div className="money-type">
+                <h5>₿ Bitcoin</h5>
+                <p>Digital sound money</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="excitement-builder">
+            <h4>🎯 What You'll Discover:</h4>
+            <ul>
+              <li>Which money system scores highest on your 10-point framework</li>
+              <li>Why Bitcoin was designed the way it was</li>
+              <li>How different money systems trade off various properties</li>
+              <li>Which system best preserves wealth over time</li>
+            </ul>
+          </div>
+          
+          <p><strong>Ready to see how Bitcoin stacks up?</strong></p>
+        </div>
+      )
+    }
+  ];
+
+  const handleNext = () => {
+    if (step < frameworkSteps.length - 1) {
+      setStep(step + 1);
+    } else {
+      onComplete(4);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">{frameworkSteps[step].title}</h1>
+        <p>Step {step + 1} of {frameworkSteps.length}</p>
+      </div>
+      
+      <div className="card-feature">
+        {frameworkSteps[step].content}
+        
+        <StepNavigation
+          currentStep={step}
+          totalSteps={frameworkSteps.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          canGoBack={step > 0}
+          nextLabel={step === frameworkSteps.length - 1 ? "Apply the Scorecard" : "Next"}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Already correctly named as ApplyScorecard
+const ApplyScorecard = ({ onComplete }) => {
+  const [currentComparison, setCurrentComparison] = useState(0);
+  const [scores, setScores] = useState({});
+  const [showResults, setShowResults] = useState(false);
+
+  const moneyTypes = [
+    {
+      name: "Gold",
+      emoji: "🥇",
+      description: "Physical precious metal, used as money for thousands of years",
+      scores: {
+        "Self Custody": 9,
+        "Decentralization": 8,
+        "Verifiability": 6,
+        "Fixed Supply": 9,
+        "Genuine Scarcity": 9,
+        "Fungibility": 7,
+        "Portability": 4,
+        "Divisibility": 5,
+        "Durability": 10,
+        "Acceptability": 8
+      }
+    },
+    {
+      name: "Fiat Currency",
+      emoji: "💵",
+      description: "Government-issued currency (like USD, EUR) backed by trust in government",
+      scores: {
+        "Self Custody": 3,
+        "Decentralization": 1,
+        "Verifiability": 8,
+        "Fixed Supply": 1,
+        "Genuine Scarcity": 1,
+        "Fungibility": 9,
+        "Portability": 8,
+        "Divisibility": 10,
+        "Durability": 6,
+        "Acceptability": 10
+      }
+    },
+    {
+      name: "Bitcoin",
+      emoji: "₿",
+      description: "Digital currency with mathematical scarcity and no central authority",
+      scores: {
+        "Self Custody": 10,
+        "Decentralization": 9,
+        "Verifiability": 10,
+        "Fixed Supply": 10,
+        "Genuine Scarcity": 10,
+        "Fungibility": 8,
+        "Portability": 10,
+        "Divisibility": 10,
+        "Durability": 9,
+        "Acceptability": 6
+      }
+    }
+  ];
+
+  const properties = [
+    "Self Custody", "Decentralization", "Verifiability", "Fixed Supply", 
+    "Genuine Scarcity", "Fungibility", "Portability", "Divisibility", 
+    "Durability", "Acceptability"
+  ];
+
+  const handleScoreSelect = (property, score) => {
+    setScores(prev => ({
+      ...prev,
+      [`${moneyTypes[currentComparison].name}-${property}`]: score
+    }));
+  };
+
+  const handleNext = () => {
+    if (currentComparison < moneyTypes.length - 1) {
+      setCurrentComparison(currentComparison + 1);
+    } else {
+      setShowResults(true);
+    }
+  };
+
+  const calculateTotalScore = (moneyType) => {
+    return Object.values(moneyType.scores).reduce((sum, score) => sum + score, 0);
+  };
+
+  const getScoreColor = (score) => {
+    if (score >= 8) return '#4CAF50'; // Green
+    if (score >= 6) return '#FF9800'; // Orange
+    if (score >= 4) return '#FFC107'; // Yellow
+    return '#F44336'; // Red
+  };
+
+  if (showResults) {
+    const sortedMoneyTypes = [...moneyTypes].sort((a, b) => 
+      calculateTotalScore(b) - calculateTotalScore(a)
+    );
+
+    return (
+      <div className="module-container">
+        <div className="section-card">
+          <h1 className="heading-critical">🏆 Scorecard Results</h1>
+          <p>Here's how each money system scored on your 10-point framework:</p>
+        </div>
+        
+        <div className="card-feature">
+          <div className="results-comparison">
+            {sortedMoneyTypes.map((moneyType, index) => (
+              <div key={moneyType.name} className="money-result-card">
+                <div className="result-header">
+                  <span className="rank">#{index + 1}</span>
+                  <span className="money-emoji">{moneyType.emoji}</span>
+                  <h3>{moneyType.name}</h3>
+                  <div className="total-score">
+                    {calculateTotalScore(moneyType)}/100
+                  </div>
+                </div>
+                
+                <div className="scores-breakdown">
+                  {properties.map(property => (
+                    <div key={property} className="score-row">
+                      <span className="property-name">{property}</span>
+                      <div className="score-bar">
+                        <div 
+                          className="score-fill"
+                          style={{ 
+                            width: `${moneyType.scores[property] * 10}%`,
+                            backgroundColor: getScoreColor(moneyType.scores[property])
+                          }}
+                        />
+                        <span className="score-number">{moneyType.scores[property]}/10</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="insights-section">
+            <h3>🔍 Key Insights</h3>
+            <div className="insight-cards">
+              <div className="insight-card">
+                <h4>🥇 Why Bitcoin Scored Highest</h4>
+                <ul>
+                  <li><strong>Perfect Scarcity:</strong> Only 21 million will ever exist</li>
+                  <li><strong>True Self-Custody:</strong> You can hold your own keys</li>
+                  <li><strong>Fully Verifiable:</strong> Anyone can audit the entire system</li>
+                  <li><strong>Digital Portability:</strong> Send anywhere in minutes</li>
+                </ul>
+              </div>
+              
+              <div className="insight-card">
+                <h4>💵 Fiat's Main Weakness</h4>
+                <ul>
+                  <li><strong>No Scarcity:</strong> Can be printed infinitely</li>
+                  <li><strong>No Self-Custody:</strong> Banks control your money</li>
+                  <li><strong>Centralized:</strong> Government controls the system</li>
+                </ul>
+              </div>
+              
+              <div className="insight-card">
+                <h4>🥇 Gold's Trade-offs</h4>
+                <ul>
+                  <li><strong>Great Scarcity:</strong> Hard to find and mine</li>
+                  <li><strong>Poor Portability:</strong> Heavy and hard to transport</li>
+                  <li><strong>Verification Issues:</strong> Hard to test purity quickly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="next-steps-preview">
+            <h3>🚀 What's Next?</h3>
+            <p>Now you understand <em>why</em> Bitcoin was created and how it solves money's biggest problems. Ready to dive deeper into how Bitcoin actually works?</p>
+            
+            <div className="cta-section">
+              <ActionButton onClick={() => onComplete(5)} variant="primary">
+                Complete Money Module
+              </ActionButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const currentMoney = moneyTypes[currentComparison];
+  
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">Apply Scorecard</h1>
+        <p>Let's test your framework by scoring different money systems. You'll see patterns emerge...</p>
+      </div>
+      
+      <div className="card-feature">
+        <div className="comparison-header">
+          <h2>Evaluating: {currentMoney.emoji} {currentMoney.name}</h2>
+          <p>{currentMoney.description}</p>
+          <div className="progress-indicator">
+            Step {currentComparison + 1} of {moneyTypes.length}
+          </div>
+        </div>
+
+        <div className="scoring-interface">
+          <h3>Quick Assessment</h3>
+          <p>Based on what you've learned, how do you think {currentMoney.name} scores on each property? Make your predictions, then see the analysis:</p>
+          
+          <div className="properties-grid">
+            {properties.slice(0, 3).map(property => (
+              <div key={property} className="property-scorer">
+                <h4>{property}</h4>
+                <div className="score-buttons">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (
+                    <button
+                      key={score}
+                      className={`score-btn ${
+                        scores[`${currentMoney.name}-${property}`] === score ? 'selected' : ''
+                      }`}
+                      onClick={() => handleScoreSelect(property, score)}
+                    >
+                      {score}
+                    </button>
+                  ))}
+                </div>
+                <div className="actual-score">
+                  <strong>Actual Score: {currentMoney.scores[property]}/10</strong>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="quick-summary">
+            <h4>Preview of {currentMoney.name} Strengths & Weaknesses:</h4>
+            <div className="strength-weakness">
+              <div className="strengths">
+                <h5>✅ Strengths:</h5>
+                <ul>
+                  {properties.filter(prop => currentMoney.scores[prop] >= 8).map(prop => (
+                    <li key={prop}>{prop}: {currentMoney.scores[prop]}/10</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="weaknesses">
+                <h5>❌ Weaknesses:</h5>
+                <ul>
+                  {properties.filter(prop => currentMoney.scores[prop] <= 4).map(prop => (
+                    <li key={prop}>{prop}: {currentMoney.scores[prop]}/10</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <StepNavigation
+          currentStep={currentComparison}
+          totalSteps={moneyTypes.length}
+          onNext={handleNext}
+          canGoBack={false}
+          nextLabel={currentComparison === moneyTypes.length - 1 ? "See Full Results" : `Next: ${moneyTypes[currentComparison + 1]?.name}`}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Sound Money Framework - Simplified (keeping for backward compatibility)
 const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
   const [step, setStep] = useState(0);
   const [currentTrait, setCurrentTrait] = useState(0);
@@ -1147,7 +1729,7 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-            {['Life Without Money', 'What Money Does', 'How Payments Work', 'Learning from History', 'Your Money Framework', 'Complete'].map((step, index) => (
+            {['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
               <button
                 key={index}
                 className={`step-nav-button ${
@@ -1167,12 +1749,12 @@ const MoneyModule = () => {
 
 
       <div className="module-content">
-        {currentStep === 0 && <BarterWorld onComplete={handleStepComplete} />}
-        {currentStep === 1 && <MoneyFunctionsAnalysis onComplete={handleStepComplete} />}
-        {currentStep === 2 && <Introduction onComplete={handleStepComplete} />}
-        {currentStep === 3 && <HistoricalAnalysis onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 4 && <SoundMoneyFramework unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 5 && <ModuleCompletion onComplete={handleStepComplete} />}
+        {currentStep === 0 && <BarterProblem onComplete={handleStepComplete} />}
+        {currentStep === 1 && <MoneyFunctions onComplete={handleStepComplete} />}
+        {currentStep === 2 && <PaymentInfrastructure onComplete={handleStepComplete} />}
+        {currentStep === 3 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 4 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+        {currentStep === 5 && <ApplyScorecard onComplete={handleStepComplete} />}
       </div>
     </div>
   );
