@@ -1729,7 +1729,7 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-            {['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
+            {['Barter Problem', 'Money Functions', 'Money Experiments', 'Payment Infrastructure', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
               <button
                 key={index}
                 className={`step-nav-button ${
@@ -1751,8 +1751,8 @@ const MoneyModule = () => {
       <div className="module-content">
         {currentStep === 0 && <BarterProblem onComplete={handleStepComplete} />}
         {currentStep === 1 && <MoneyFunctions onComplete={handleStepComplete} />}
-        {currentStep === 2 && <PaymentInfrastructure onComplete={handleStepComplete} />}
-        {currentStep === 3 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 2 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 3 && <PaymentInfrastructure onComplete={handleStepComplete} />}
         {currentStep === 4 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
         {currentStep === 5 && <ApplyScorecard onComplete={handleStepComplete} />}
       </div>
