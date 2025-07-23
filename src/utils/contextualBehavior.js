@@ -583,6 +583,11 @@ class ContextualBehaviorSystem {
       this.updateBehavior('struggling', true);
     }
     
+    // Auto-scroll to learning path when section is completed successfully
+    if (success) {
+      this.scrollToLearningPath();
+    }
+    
     // Reset section tracking
     this.currentSection = null;
     this.sectionStartTime = null;
@@ -600,6 +605,38 @@ class ContextualBehaviorSystem {
     document.dispatchEvent(new CustomEvent('moduleCompleted', {
       detail: { score, timeSpent }
     }));
+    
+    // Auto-scroll to top (learning path) when module is completed
+    this.scrollToLearningPath();
+  }
+  
+  // Helper method to scroll to learning path or top of page
+  scrollToLearningPath() {
+    // Try to find learning path element first
+    const learningPath = document.querySelector('.learning-path, .module-nav, .breadcrumb, .progress-indicator');
+    
+    if (learningPath) {
+      learningPath.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+    } else {
+      // Fallback to scroll to top
+      window.scrollTo({ 
+        top: 0, 
+        behavior: 'smooth' 
+      });
+    }
+    
+    // Show a subtle notification about next steps
+    this.showNotification('✨ Great progress! Check your learning path above to continue.', 'success');
+  }
+  
+  // Method to be called when all activities on a page are completed
+  allPageActivitiesCompleted() {
+    this.scrollToLearningPath();
+    this.showNotification('🎯 All activities completed! Ready for the next module?', 'completion');
   }
 }
 

@@ -1229,12 +1229,10 @@ const ScriptsModule = () => {
       setQuizAnswer(answerIndex);
       setShowQuizFeedback(true);
       
-      // Only the first option (index 0) is correct
-      if (answerIndex === 0) {
-        setTimeout(() => {
-          completePattern(selectedAdvanced.id);
-        }, 4000);
-      }
+      // Always allow progression after showing feedback, regardless of correctness
+      setTimeout(() => {
+        completePattern(selectedAdvanced.id);
+      }, 4000);
     };
 
     return (

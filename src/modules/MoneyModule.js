@@ -499,14 +499,16 @@ const MoneyFunctionsAnalysis = ({ onComplete }) => {
 
     if (value === scenario.correctAnswer) {
       setUnlockedFunctions(prev => [...prev, scenario.moneyFunction]);
-      setTimeout(() => {
-        if (currentScenario < scenarios.length - 1) {
-          setCurrentScenario(currentScenario + 1);
-        } else {
-          setTimeout(() => onComplete(2), 3000);
-        }
-      }, 2000);
     }
+
+    // Always progress after showing feedback, regardless of correctness
+    setTimeout(() => {
+      if (currentScenario < scenarios.length - 1) {
+        setCurrentScenario(currentScenario + 1);
+      } else {
+        setTimeout(() => onComplete(2), 3000);
+      }
+    }, 2000);
   };
 
   const currentScenarioData = scenarios[currentScenario];

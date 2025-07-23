@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../contexts/ProgressContext';
-import { Trophy, ArrowRight, Home } from 'lucide-react';
+import { Trophy, ArrowRight, Home, ChevronRight } from 'lucide-react';
 import { ContinueButton } from './UnifiedButton';
 
 export const ModuleCompletionButton = ({ 
@@ -13,7 +13,7 @@ export const ModuleCompletionButton = ({
   showHomeButton = true
 }) => {
   const navigate = useNavigate();
-  const { completeModule } = useProgress();
+  const { completeModule, getNextRecommendation } = useProgress();
   const [isCompleting, setIsCompleting] = React.useState(false);
 
   const handleCompletion = () => {
@@ -28,6 +28,16 @@ export const ModuleCompletionButton = ({
 
   const defaultMessage = `🎉 Congratulations! You are done with the ${moduleName} module and ready to unlock the next learning adventure!`;
   const displayMessage = customMessage || defaultMessage;
+  
+  const handleNextModule = () => {
+    const nextModule = getNextRecommendation();
+    if (nextModule) {
+      navigate(`/module/${nextModule.id}`);
+    } else {
+      // If no next module, go to homepage
+      navigate('/');
+    }
+  };
 
   if (isCompleting) {
     return (
@@ -56,12 +66,12 @@ export const ModuleCompletionButton = ({
 
         <div className="completion-actions">
           <ContinueButton 
-            onClick={handleCompletion}
+            onClick={handleNextModule}
             className="primary large completion-button"
           >
             <Trophy size={20} />
-            You are done with "{moduleName}" module
-            <ArrowRight size={20} />
+            Next Module
+            <ChevronRight size={20} />
           </ContinueButton>
           
           {showHomeButton && (

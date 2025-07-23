@@ -1,0 +1,251 @@
+/* Page Activity Tracker Styles */
+.page-activity-tracker {
+  position: sticky;
+  bottom: 20px;
+  z-index: 1000;
+  margin-top: 2rem;
+}
+
+.completion-notification {
+  background: linear-gradient(135deg, var(--color-success-500) 0%, var(--color-success-600) 100%);
+  border: 2px solid var(--color-success-400);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--color-success-shadow-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  max-width: 600px;
+  margin: 0 auto;
+  animation: slideUpFadeIn 0.5s ease-out;
+}
+
+.completion-content {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+.completion-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.completion-icon {
+  font-size: 2rem;
+  animation: celebrationPulse 2s ease-in-out infinite;
+}
+
+.completion-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.completion-message {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  opacity: 0.95;
+}
+
+.completion-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.scroll-to-top-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.scroll-to-top-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top-button:active {
+  transform: translateY(0);
+}
+
+/* Activity Tracked Page Wrapper */
+.activity-tracked-page {
+  position: relative;
+}
+
+/* Animations */
+@keyframes slideUpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes celebrationPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-activity-tracker {
+    bottom: 10px;
+    margin-top: 1.5rem;
+  }
+
+  .completion-notification {
+    margin: 0 1rem;
+    border-radius: 12px;
+  }
+
+  .completion-content {
+    padding: 1.25rem;
+  }
+
+  .completion-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .completion-message {
+    font-size: 1rem;
+  }
+
+  .completion-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .completion-actions .unified-btn {
+    width: 100%;
+    max-width: none;
+  }
+
+  .scroll-to-top-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .completion-notification {
+    margin: 0 0.5rem;
+  }
+
+  .completion-content {
+    padding: 1rem;
+  }
+
+  .completion-icon {
+    font-size: 1.5rem;
+  }
+
+  .completion-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .completion-message {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Integration with existing button styles */
+.completion-actions .unified-btn {
+  min-width: 160px;
+}
+
+.completion-actions .unified-btn.primary {
+  background: var(--color-text-primary);
+  color: var(--color-success-600);
+  border-color: var(--color-text-primary);
+}
+
+.completion-actions .unified-btn.primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.completion-actions .unified-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.completion-actions .unified-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Success State Variations */
+.completion-notification.quiz-complete {
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
+  border-color: var(--color-primary-400);
+  box-shadow: 0 8px 32px var(--color-primary-shadow-lg);
+}
+
+.completion-notification.exercise-complete {
+  background: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
+  border-color: var(--color-secondary-400);
+  box-shadow: 0 8px 32px var(--color-secondary-shadow-lg);
+}
+
+.completion-notification.reflection-complete {
+  background: linear-gradient(135deg, var(--color-warning-500) 0%, var(--color-warning-600) 100%);
+  border-color: var(--color-warning-400);
+  box-shadow: 0 8px 32px var(--color-warning-shadow-lg);
+}
+
+/* Accessibility Improvements */
+.completion-notification:focus-within {
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.scroll-to-top-button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .completion-notification {
+    animation: none;
+  }
+  
+  .completion-icon {
+    animation: none;
+  }
+  
+  .scroll-to-top-button:hover,
+  .completion-actions .unified-btn:hover {
+    transform: none;
+  }
+}
