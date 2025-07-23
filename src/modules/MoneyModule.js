@@ -11,6 +11,7 @@ import { ModuleCompletionButton } from '../components/ui';
 import { 
   BitcoinIcon
 } from '../components/ui/SVGIcons';
+import QuickAssessment from '../components/QuickAssessment';
 // Using InteractiveIcon for all visual elements - no more GIFs or Lottie
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
@@ -1195,7 +1196,7 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
 // Already correctly named as ApplyScorecard
 const ApplyScorecard = ({ onComplete }) => {
   const [currentComparison, setCurrentComparison] = useState(0);
-  const [scores, setScores] = useState({});
+  const [currentProperty, setCurrentProperty] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
   const moneyTypes = [
@@ -1214,6 +1215,18 @@ const ApplyScorecard = ({ onComplete }) => {
         "Divisibility": 5,
         "Durability": 10,
         "Acceptability": 8
+      },
+      hints: {
+        "Self Custody": "You can hold physical gold directly, but storage and security are challenging.",
+        "Decentralization": "No central authority controls gold, but mining and refining can be concentrated.",
+        "Verifiability": "Testing gold purity requires special equipment and expertise.",
+        "Fixed Supply": "Gold mining is limited by geology, making new supply predictable and slow.",
+        "Genuine Scarcity": "Gold is genuinely scarce due to its physical properties and mining difficulty.",
+        "Fungibility": "Pure gold is fungible, but purity and form can vary.",
+        "Portability": "Gold is heavy and difficult to transport, especially in large amounts.",
+        "Divisibility": "Gold can be divided, but precision division is difficult and costly.",
+        "Durability": "Gold doesn't corrode or degrade - it lasts forever.",
+        "Acceptability": "Gold has been accepted as valuable across cultures for millennia."
       }
     },
     {
@@ -1231,6 +1244,18 @@ const ApplyScorecard = ({ onComplete }) => {
         "Divisibility": 10,
         "Durability": 6,
         "Acceptability": 10
+      },
+      hints: {
+        "Self Custody": "Banks and governments can freeze accounts and control access to your money.",
+        "Decentralization": "Central banks and governments have complete control over the monetary system.",
+        "Verifiability": "Modern security features make counterfeiting difficult to detect.",
+        "Fixed Supply": "Governments can print unlimited amounts whenever they choose.",
+        "Genuine Scarcity": "No mathematical or physical limits prevent unlimited money creation.",
+        "Fungibility": "All units of the same denomination are identical and interchangeable.",
+        "Portability": "Cash is light and digital transfers are instant within the banking system.",
+        "Divisibility": "Fiat can be divided to very small units (cents, satoshis equivalent).",
+        "Durability": "Physical cash wears out, but digital records are maintained by banks.",
+        "Acceptability": "Fiat is universally accepted within its jurisdiction due to legal tender laws."
       }
     },
     {
@@ -1248,6 +1273,18 @@ const ApplyScorecard = ({ onComplete }) => {
         "Divisibility": 10,
         "Durability": 9,
         "Acceptability": 6
+      },
+      hints: {
+        "Self Custody": "With private keys, you have complete control over your bitcoin.",
+        "Decentralization": "No single entity controls Bitcoin - it's maintained by thousands of nodes worldwide.",
+        "Verifiability": "Anyone can verify transactions and the total supply using the blockchain.",
+        "Fixed Supply": "The 21 million bitcoin limit is enforced by mathematics and consensus rules.",
+        "Genuine Scarcity": "Bitcoin's scarcity is provable and cannot be circumvented.",
+        "Fungibility": "Most bitcoin is fungible, though transaction history can sometimes be traced.",
+        "Portability": "Bitcoin can be sent anywhere in the world in minutes, regardless of amount.",
+        "Divisibility": "Bitcoin can be divided to 8 decimal places (100 million satoshis per bitcoin).",
+        "Durability": "Bitcoin exists as information on a distributed network - nearly indestructible.",
+        "Acceptability": "Growing acceptance, but still limited compared to traditional money systems."
       }
     }
   ];
@@ -1258,16 +1295,12 @@ const ApplyScorecard = ({ onComplete }) => {
     "Durability", "Acceptability"
   ];
 
-  const handleScoreSelect = (property, score) => {
-    setScores(prev => ({
-      ...prev,
-      [`${moneyTypes[currentComparison].name}-${property}`]: score
-    }));
-  };
-
-  const handleNext = () => {
-    if (currentComparison < moneyTypes.length - 1) {
+  const handleNextProperty = () => {
+    if (currentProperty < properties.length - 1) {
+      setCurrentProperty(currentProperty + 1);
+    } else if (currentComparison < moneyTypes.length - 1) {
       setCurrentComparison(currentComparison + 1);
+      setCurrentProperty(0);
     } else {
       setShowResults(true);
     }
@@ -1283,6 +1316,9 @@ const ApplyScorecard = ({ onComplete }) => {
     if (score >= 4) return '#FFC107'; // Yellow
     return '#F44336'; // Red
   };
+
+  const currentMoney = moneyTypes[currentComparison];
+  const currentProp = properties[currentProperty];
 
   if (showResults) {
     const sortedMoneyTypes = [...moneyTypes].sort((a, b) => 
@@ -1378,8 +1414,6 @@ const ApplyScorecard = ({ onComplete }) => {
     );
   }
 
-  const currentMoney = moneyTypes[currentComparison];
-  
   return (
     <div className="module-container">
       <div className="section-card">
@@ -1396,63 +1430,11 @@ const ApplyScorecard = ({ onComplete }) => {
           </div>
         </div>
 
-        <div className="scoring-interface">
-          <h3>Quick Assessment</h3>
-          <p>Based on what you've learned, how do you think {currentMoney.name} scores on each property? Make your predictions, then see the analysis:</p>
-          
-          <div className="properties-grid">
-            {properties.slice(0, 3).map(property => (
-              <div key={property} className="property-scorer">
-                <h4>{property}</h4>
-                <div className="score-buttons">
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(score => (
-                    <button
-                      key={score}
-                      className={`score-btn ${
-                        scores[`${currentMoney.name}-${property}`] === score ? 'selected' : ''
-                      }`}
-                      onClick={() => handleScoreSelect(property, score)}
-                    >
-                      {score}
-                    </button>
-                  ))}
-                </div>
-                <div className="actual-score">
-                  <strong>Actual Score: {currentMoney.scores[property]}/10</strong>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="quick-summary">
-            <h4>Preview of {currentMoney.name} Strengths & Weaknesses:</h4>
-            <div className="strength-weakness">
-              <div className="strengths">
-                <h5>✅ Strengths:</h5>
-                <ul>
-                  {properties.filter(prop => currentMoney.scores[prop] >= 8).map(prop => (
-                    <li key={prop}>{prop}: {currentMoney.scores[prop]}/10</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="weaknesses">
-                <h5>❌ Weaknesses:</h5>
-                <ul>
-                  {properties.filter(prop => currentMoney.scores[prop] <= 4).map(prop => (
-                    <li key={prop}>{prop}: {currentMoney.scores[prop]}/10</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <StepNavigation
-          currentStep={currentComparison}
-          totalSteps={moneyTypes.length}
-          onNext={handleNext}
-          canGoBack={false}
-          nextLabel={currentComparison === moneyTypes.length - 1 ? "See Full Results" : `Next: ${moneyTypes[currentComparison + 1]?.name}`}
+        <QuickAssessment
+          key={currentComparison}
+          moneyType={currentMoney.name}
+          actualScores={currentMoney.scores}
+          onNext={handleNextProperty}
         />
       </div>
     </div>
@@ -1686,7 +1668,7 @@ const MoneyModule = () => {
     if (stepIndex === 5) {
       completeModule('money');
       setTimeout(() => {
-        navigate('/');
+        navigate('/modules');
       }, 2000);
     } else {
       setCurrentStep(stepIndex + 1);
