@@ -25,6 +25,7 @@ import {
   NavigationButton,
   InteractiveIcon
 } from '../components/ui';
+import ModuleCompletionButton from '../components/ModuleCompletionButton';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 

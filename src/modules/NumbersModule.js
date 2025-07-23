@@ -5,9 +5,10 @@ import { Hash, Binary, Calculator, Zap, Eye, ArrowRight, ArrowLeft, CheckCircle,
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton, 
-  NavigationButton 
+  NavigationButton,
+  InteractiveIcon
 } from '../components/ui';
+import ModuleCompletionButton from '../components/ModuleCompletionButton';
 import '../components/ModuleCommon.css';
 
 const NumbersModule = () => {

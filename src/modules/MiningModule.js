@@ -5,9 +5,10 @@ import { Zap, Trophy, Cpu, ArrowRight, ArrowLeft, Battery, Globe, TrendingUp, Ca
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton,
-  NavigationButton 
+  NavigationButton,
+  InteractiveIcon
 } from '../components/ui';
+import ModuleCompletionButton from '../components/ModuleCompletionButton';
 import '../components/ModuleCommon.css';
 
 const MiningModule = () => {

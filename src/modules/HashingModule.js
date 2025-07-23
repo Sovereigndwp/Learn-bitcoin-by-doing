@@ -6,10 +6,10 @@ import { sha256 } from '../utils/bitcoin';
 import { 
   ContinueButton, 
   ActionButton, 
-  OptionButton,
   NavigationButton,
   InteractiveIcon
 } from '../components/ui';
+import ModuleCompletionButton from '../components/ModuleCompletionButton';
 import '../components/ModuleCommon.css';
 
 const HashingModule = () => {
