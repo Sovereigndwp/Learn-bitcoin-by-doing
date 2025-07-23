@@ -1332,9 +1332,8 @@ const BitcoinBasicsModule = () => {
     if (stepIndex < 4) {
       setCurrentStep(stepIndex + 1);
     } else {
-      completeModule('bitcoin-basics');
-      showAchievement("Bitcoin Graduate", "You've mastered Bitcoin fundamentals!");
-      navigate('/');
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
     }
   };
 

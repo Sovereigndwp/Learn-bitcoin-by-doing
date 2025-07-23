@@ -89,9 +89,7 @@ const MerkleModule = () => {
 
   const handleStepComplete = (stepIndex) => {
     setCompletedSteps(prev => new Set([...prev, stepIndex]));
-    if (stepIndex === merkleSteps.length - 1) {
-      completeModule('merkle');
-    }
+    // Module completion is handled by ModuleCompletionButton
   };
 
   const handleContinue = () => {

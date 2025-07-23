@@ -1078,10 +1078,11 @@ const HashingModule = () => {
               <p><strong>Next:</strong> Now that you understand hashing, you're ready to explore how Bitcoin uses these concepts in mining, transactions, and the blockchain structure.</p>
             </div>
             
-            <ActionButton onClick={() => completeModule('hashing')} className="primary large">
-              <CheckCircle className="w-5 h-5" />
-              Complete Hashing Module
-            </ActionButton>
+            <ModuleCompletionButton 
+              moduleName="Cryptographic Hashing"
+              moduleId="hashing"
+              customMessage="🎉 Excellent! You've mastered the cryptographic foundation that makes Bitcoin secure and tamper-proof!"
+            />
           </div>
         </div>
       </div>

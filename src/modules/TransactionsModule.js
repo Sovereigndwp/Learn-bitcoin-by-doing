@@ -1067,13 +1067,11 @@ const TransactionsModule = () => {
               <li>✅ Privacy considerations</li>
             </ul>
             
-            <ActionButton onClick={() => {
-              setCompletedSteps(prev => new Set([...prev, 5]));
-              completeModule('transactions');
-            }} className="primary large">
-              <CheckCircle className="w-5 h-5" />
-              Complete Transactions Module
-            </ActionButton>
+            <ModuleCompletionButton 
+              moduleName="Bitcoin Transactions"
+              moduleId="transactions"
+              customMessage="🎉 Excellent! You've mastered how value flows through the Bitcoin network and understand the transaction lifecycle!"
+            />
           </div>
         </div>
       </div>

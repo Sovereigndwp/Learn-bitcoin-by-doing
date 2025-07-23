@@ -1295,12 +1295,9 @@ const ApplyScorecard = ({ onComplete }) => {
     "Durability", "Acceptability"
   ];
 
-  const handleNextProperty = () => {
-    if (currentProperty < properties.length - 1) {
-      setCurrentProperty(currentProperty + 1);
-    } else if (currentComparison < moneyTypes.length - 1) {
+  const handleNextMoneyType = () => {
+    if (currentComparison < moneyTypes.length - 1) {
       setCurrentComparison(currentComparison + 1);
-      setCurrentProperty(0);
     } else {
       setShowResults(true);
     }
@@ -1434,7 +1431,7 @@ const ApplyScorecard = ({ onComplete }) => {
           key={currentComparison}
           moneyType={currentMoney.name}
           actualScores={currentMoney.scores}
-          onNext={handleNextProperty}
+          onNext={handleNextMoneyType}
         />
       </div>
     </div>
@@ -1666,10 +1663,8 @@ const MoneyModule = () => {
     }
     
     if (stepIndex === 5) {
-      completeModule('money');
-      setTimeout(() => {
-        navigate('/modules');
-      }, 2000);
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
     } else {
       setCurrentStep(stepIndex + 1);
     }

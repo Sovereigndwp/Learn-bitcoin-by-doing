@@ -1028,10 +1028,11 @@ const NumbersModule = () => {
               <li>✅ Bitcoin precision and satoshis</li>
             </ul>
             
-            <ActionButton onClick={() => completeModule('numbers')} className="primary large">
-              <CheckCircle className="w-5 h-5" />
-              Complete Numbers Module
-            </ActionButton>
+            <ModuleCompletionButton 
+              moduleName="Number Systems"
+              moduleId="numbers"
+              customMessage="🎉 Outstanding! You've mastered the number systems that power Bitcoin's mathematical precision!"
+            />
           </div>
         </div>
       </div>

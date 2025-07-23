@@ -1454,10 +1454,11 @@ const MiningModule = () => {
               <p><strong>Key Insight:</strong> Bitcoin mining is evolving into a renewable energy-driven industry that provides monetary security while incentivizing clean energy development.</p>
                 </div>
             
-            <ActionButton onClick={() => completeModule('mining')} className="primary large">
-              <Trophy className="w-5 h-5" />
-              Complete Mining Module
-            </ActionButton>
+            <ModuleCompletionButton 
+              moduleName="Bitcoin Mining"
+              moduleId="mining"
+              customMessage="⛏️ Excellent! You now understand how Bitcoin mining secures the network and incentivizes renewable energy!"
+            />
           </div>
         </div>
     </div>

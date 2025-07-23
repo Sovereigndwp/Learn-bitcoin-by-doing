@@ -139,9 +139,7 @@ const CustodyModule = () => {
     newCompleted.add(stepIndex);
     setCompletedSteps(newCompleted);
     
-    if (stepIndex === learningSteps.length - 1) {
-      completeModule('custody');
-    }
+    // Module completion is handled by ModuleCompletionButton
     // Removed automatic navigation - users now control progression
   };
 
