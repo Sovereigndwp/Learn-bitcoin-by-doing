@@ -11,7 +11,8 @@ import { ModuleCompletionButton } from '../components/ui';
 import { 
   BitcoinIcon
 } from '../components/ui/SVGIcons';
-import QuickAssessment from '../components/QuickAssessment';
+import MoneyPredictionChart from '../components/MoneyPredictionChart';
+import DigitalScarcity from '../pages/DigitalScarcity';
 // Using InteractiveIcon for all visual elements - no more GIFs or Lottie
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
@@ -1400,6 +1401,10 @@ const ApplyScorecard = ({ onComplete }) => {
             <h3>🚀 What's Next?</h3>
             <p>Now you understand <em>why</em> Bitcoin was created and how it solves money's biggest problems. Ready to dive deeper into how Bitcoin actually works?</p>
             
+            <p className="mt-6 font-semibold">
+              With these ten tests in mind, let's meet the first digital money designed to pass them all.
+            </p>
+            
             <div className="cta-section">
               <ActionButton onClick={() => onComplete(5)} variant="primary">
                 Complete Money Module
@@ -1427,10 +1432,7 @@ const ApplyScorecard = ({ onComplete }) => {
           </div>
         </div>
 
-        <QuickAssessment
-          key={currentComparison}
-          moneyType={currentMoney.name}
-          actualScores={currentMoney.scores}
+        <MoneyPredictionChart
           onNext={handleNextMoneyType}
         />
       </div>
@@ -1664,7 +1666,7 @@ const MoneyModule = () => {
   };
 
   const getCurrentSection = () => {
-    const sectionNames = ['Barter Problem', 'Money Functions', 'Money Experiments', 'Payment Infrastructure', 'Money Scorecard', 'Apply Scorecard'];
+    const sectionNames = ['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'];
     return {
       index: currentStep,
       name: sectionNames[currentStep],
@@ -1696,7 +1698,7 @@ const MoneyModule = () => {
       console.warn('Failed to save progress to localStorage:', error);
     }
     
-    if (stepIndex === 5) {
+    if (stepIndex === 6) {
       // Module completion is handled by ModuleCompletionButton
       setCurrentStep(stepIndex + 1);
     } else {
@@ -1740,20 +1742,20 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-            {['Barter Problem', 'Money Functions', 'Money Experiments', 'Payment Infrastructure', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
-              <button
-                key={index}
-                className={`step-nav-button ${
-                  index === currentStep ? 'current' : ''
-                } ${completedSteps.has(index) ? 'completed' : ''}`}
-                onClick={() => handleTabClick(index)}
-              >
-                <span className="step-nav-number">
-                  {completedSteps.has(index) ? '✓' : index + 1}
-                </span>
-                <span className="step-nav-label">{step}</span>
-              </button>
-            ))}
+          {['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
+            <button
+              key={index}
+              className={`step-nav-button ${
+                index === currentStep ? 'current' : ''
+              } ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => handleTabClick(index)}
+            >
+              <span className="step-nav-number">
+                {completedSteps.has(index) ? '✓' : index + 1}
+              </span>
+              <span className="step-nav-label">{step}</span>
+            </button>
+          ))}
           </div>
         </div>
       </div>
@@ -1762,10 +1764,11 @@ const MoneyModule = () => {
       <div className="module-content">
         {currentStep === 0 && <BarterProblem onComplete={handleStepComplete} />}
         {currentStep === 1 && <MoneyFunctions onComplete={handleStepComplete} />}
-        {currentStep === 2 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 3 && <PaymentInfrastructure onComplete={handleStepComplete} />}
-        {currentStep === 4 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 5 && <ApplyScorecard onComplete={handleStepComplete} />}
+        {currentStep === 2 && <PaymentInfrastructure onComplete={handleStepComplete} />}
+        {currentStep === 3 && <DigitalScarcity onComplete={handleStepComplete} />}
+        {currentStep === 4 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 5 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
+        {currentStep === 6 && <ApplyScorecard onComplete={handleStepComplete} />}
       </div>
     </div>
   );

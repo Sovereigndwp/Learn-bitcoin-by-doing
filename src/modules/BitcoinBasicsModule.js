@@ -189,203 +189,79 @@ const BitcoinIntroduction = ({ onComplete }) => {
     );
   };
 
-// Simplified Bitcoin vs Traditional Comparison
-const BitcoinComparison = ({ onComplete }) => {
-  const [selectedAspect, setSelectedAspect] = useState('control');
-  const [userChoice, setUserChoice] = useState(null);
-  const [showReality, setShowReality] = useState(false);
-
-  // Direct mapping to fiat problems and Bitcoin benefits
-  const aspects = [
-    {
-      id: 'control',
-      title: 'Protection Against Government Interference',
-      question: "When governments want to control money, what can they do to your savings?",
-      traditional: {
-        controller: 'Government can freeze, confiscate, or restrict your money',
-        example: 'Bank accounts frozen during protests, capital controls, asset seizures',
-        realExample: 'Canadian truckers (2022), Nigerian bank protests (2024), Russian sanctions (2022)',
-        risk: 'Your money exists at government permission'
-      },
-      bitcoin: {
-        controller: 'No government or bank can freeze or confiscate Bitcoin',
-        example: 'Self-custody means only you control your Bitcoin with private keys',
-        realExample: 'Activists in authoritarian countries use Bitcoin to avoid financial censorship',
-        risk: 'True financial sovereignty - government-proof money'
-      }
-    },
-    {
-      id: 'value',
-      title: 'Store of Value Protection',
-      question: "How do governments destroy the value of your savings over time?",
-      traditional: {
-        controller: 'Central banks print unlimited money, causing inflation',
-        example: 'Your $100 from 2000 only buys $69 worth of stuff today',
-        realExample: 'Argentina (211% inflation 2023), Turkey (64% inflation 2024), US (3.1% average)',
-        risk: 'Your purchasing power constantly erodes through money printing'
-      },
-      bitcoin: {
-        controller: 'Fixed supply of 21 million - no one can print more Bitcoin',
-        example: 'Like digital gold but with stronger scarcity guarantees',
-        realExample: 'Bitcoin has outperformed all major currencies over 10+ years',
-        risk: 'Immune to inflation - your share cannot be diluted'
-      }
-    },
-    {
-      id: 'fees',
-      title: 'Lower Transaction Costs',
-      question: "How much does it cost to send money with traditional banking?",
-      traditional: {
-        controller: 'Banks charge fees at every step of the process',
-        example: 'Wire transfers ($15-50), international fees (3-5%), currency conversion fees',
-        realExample: 'Sending $500 internationally costs $25-75 in fees (5-15% of total)',
-        risk: 'Multiple intermediaries extract value from every transaction'
-      },
-      bitcoin: {
-        controller: 'Direct peer-to-peer transfers with minimal fees',
-        example: 'Bitcoin transactions typically cost $1-5 regardless of amount',
-        realExample: 'Send $1 million for the same $3 fee as sending $100',
-        risk: 'No intermediaries to extract rent from your money transfers'
-      }
-    },
-    {
-      id: 'speed',
-      title: 'Faster International Transfers',
-      question: "How long does it take banks to send money across borders?",
-      traditional: {
-        controller: 'Multiple banks process transfers in sequence',
-        example: 'International wires take 3-5 business days through correspondent banks',
-        realExample: 'SWIFT system processes through 4-6 intermediary banks',
-        risk: 'Slow settlements mean delayed access to your money'
-      },
-      bitcoin: {
-        controller: 'Global network settles transactions 24/7',
-        example: 'Bitcoin transactions confirm in ~10 minutes, anywhere in the world',
-        realExample: 'Lightning Network enables instant Bitcoin payments globally',
-        risk: 'Always-on global settlement network'
-      }
-    },
-    {
-      id: 'privacy',
-      title: 'Enhanced Privacy and Security',
-      question: "Who can see your financial transactions in traditional banking?",
-      traditional: {
-        controller: 'Banks, governments, and payment processors track everything',
-        example: 'Every purchase, transfer, and balance is monitored and stored',
-        realExample: 'Credit card companies sell your spending data to advertisers',
-        risk: 'Complete financial surveillance with no privacy'
-      },
-      bitcoin: {
-        controller: 'Pseudonymous transactions with optional privacy tools',
-        example: 'Bitcoin addresses don\'t reveal your identity by default',
-        realExample: 'Privacy-focused wallets and mixing services enhance anonymity',
-        risk: 'Financial privacy as a fundamental right, not a privilege'
-      }
-    }
+// Simplified Property Comparison - no redundant stories
+const PropertyCompare = ({ onComplete }) => {
+  const propertyList = [
+    { key: "Self Custody", label: "Self Custody", fiatPass: false, goldPass: true },
+    { key: "Decentralization", label: "Decentralization", fiatPass: false, goldPass: true },
+    { key: "Verifiability", label: "Verifiability", fiatPass: true, goldPass: false },
+    { key: "Fixed Supply", label: "Fixed Supply", fiatPass: false, goldPass: true },
+    { key: "Genuine Scarcity", label: "Genuine Scarcity", fiatPass: false, goldPass: true },
+    { key: "Fungibility", label: "Fungibility", fiatPass: true, goldPass: false },
+    { key: "Portability", label: "Portability", fiatPass: true, goldPass: false },
+    { key: "Divisibility", label: "Divisibility", fiatPass: true, goldPass: false },
+    { key: "Durability", label: "Durability", fiatPass: false, goldPass: true },
+    { key: "Acceptability", label: "Acceptability", fiatPass: true, goldPass: true }
   ];
 
-  const handleAspectSelect = (aspectId) => {
-    setSelectedAspect(aspectId);
-    setUserChoice(null);
-    setShowReality(false);
-  };
+  const [selections, setSelections] = useState(
+    Object.fromEntries(propertyList.map((p) => [p.key, '']))
+  );
 
-  const handleChoice = (choice) => {
-    setUserChoice(choice);
-    setShowReality(true);
+  const verdict = (prop, choice) => {
+    if (!choice) return '';
+    if (choice === 'bitcoin') return '✔';
+    if (choice === 'gold') return prop.goldPass ? '✔' : '✖';
+    return prop.fiatPass ? '✔' : '✖';
   };
-
-  const currentAspect = aspects.find(a => a.id === selectedAspect);
-  const completedAspects = aspects.filter(a => userChoice || a.id !== selectedAspect).length;
 
   return (
     <div className="step-content comparison">
       <div className="module-header-box">
-        <h2>How Bitcoin Fixes Fiat Money Problems</h2>
-        <div className="intro-text">
-          <p className="prime-text">You learned about fiat currency problems. Now see how Bitcoin solves each one:</p>
-              </div>
-            </div>
+        <h2>Bitcoin vs Other Money</h2>
+        <p>Select a money type for each property. Green means it passes.</p>
+      </div>
 
       <div className="content-text">
-        <div className="aspect-tabs">
-          {aspects.map(aspect => (
-              <OptionButton
-                key={aspect.id}
-                className={`aspect-tab ${selectedAspect === aspect.id ? 'active' : ''}`}
-                selected={selectedAspect === aspect.id}
-                onClick={() => handleAspectSelect(aspect.id)}
-              >
-                {aspect.title}
-              </OptionButton>
-          ))}
-                </div>
-
-        <div className="comparison-content">
-          <h3>{currentAspect.title}</h3>
-          <p className="aspect-question">{currentAspect.question}</p>
-          
-          {!userChoice && (
-            <div className="quiz-container">
-              <div className="quiz-header">
-                <p className="quiz-question">Which system better protects your financial interests?</p>
-              </div>
-              <div className="quiz-options two-column">
-                <div 
-                  className="quiz-option traditional"
-                  onClick={() => handleChoice('traditional')}
-                >
-                  Traditional Banking
-                  <div className="option-indicator">1</div>
-                </div>
-                <div 
-                  className="quiz-option bitcoin"
-                  onClick={() => handleChoice('bitcoin')}
-                >
-                  Bitcoin System
-                  <div className="option-indicator">2</div>
-                </div>
-              </div>
-            </div>
-            )}
-
-          {showReality && (
-            <div className="reality-comparison">
-              <div className="system-column traditional">
-                <h4>🏦 Fiat Currency Problem</h4>
-                <div className="system-details">
-                  <div className="controller">{currentAspect.traditional.controller}</div>
-                  <div className="example">How it works: {currentAspect.traditional.example}</div>
-                  <div className="real-example">Real examples: {currentAspect.traditional.realExample}</div>
-                  <div className="risk">Result: {currentAspect.traditional.risk}</div>
-                </div>
-              </div>
-
-              <div className="system-column bitcoin">
-                <h4>🟠 Bitcoin Solution</h4>
-                <div className="system-details">
-                  <div className="controller">{currentAspect.bitcoin.controller}</div>
-                  <div className="example">How it works: {currentAspect.bitcoin.example}</div>
-                  <div className="real-example">Real examples: {currentAspect.bitcoin.realExample}</div>
-                  <div className="risk">Result: {currentAspect.bitcoin.risk}</div>
-                 </div>
-              </div>
-             </div>
-           )}
-              </div>
-
-        {completedAspects >= 5 && (
-          <div className="comparison-complete">
-            <h3>🎯 Complete Solution</h3>
-            <p>Bitcoin systematically solves every major problem with fiat currency. Now let's understand how it works...</p>
-            <ContinueButton onClick={() => onComplete(1)}>
-              See How Bitcoin Works
-          </ContinueButton>
-          </div>
-        )}
+        <table className="w-full text-sm">
+          <thead>
+            <tr>
+              <th className="text-left">Property</th>
+              <th>Choose</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            {propertyList.map((prop) => (
+              <tr key={prop.key}>
+                <td>{prop.label}</td>
+                <td>
+                  <select
+                    value={selections[prop.key]}
+                    onChange={(e) =>
+                      setSelections({ ...selections, [prop.key]: e.target.value })
+                    }
+                  >
+                    <option value="">—</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="gold">Gold</option>
+                    <option value="bitcoin">Bitcoin</option>
+                  </select>
+                </td>
+                <td className="text-center">
+                  {verdict(prop, selections[prop.key])}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        
+        <ContinueButton onClick={() => onComplete(1)}>
+          See How Bitcoin Works
+        </ContinueButton>
       </div>
-          </div>
-        );
+    </div>
+  );
   };
 
 // Blockchain Demonstration
@@ -1191,6 +1067,24 @@ const HowBitcoinWorks = ({ onComplete }) => {
         bankingAnalogy: "Hack one bank = control all accounts. Hack Bitcoin = need to control thousands of computers simultaneously.",
         bitcoinConnection: "This is why Bitcoin is more secure than banks. Attackers would need to control thousands of computers instead of just one bank's server."
       }
+    },
+    {
+      id: 'proof_of_work',
+      title: 'Preventing Double-Spending',
+      scenario: "Imagine trying to spend the same $20 bill at two different stores simultaneously. In the physical world, this is impossible - you can't be in two places at once.",
+      question: "How does Bitcoin prevent someone from spending the same digital money twice?",
+      options: [
+        { id: 'trust_people', text: "Trust that people won't try to cheat", risk: 'very_high' },
+        { id: 'central_authority', text: "Have a bank check every transaction", risk: 'high' },
+        { id: 'energy_cost', text: "Make it expensive to create false records", risk: 'low' },
+        { id: 'complex_passwords', text: "Use really complicated passwords", risk: 'medium' }
+      ],
+      explanation: {
+        correct: 'energy_cost',
+        why: "Bitcoin uses 'Proof-of-Work' - miners must spend real electricity to add transactions to the record. This makes creating fake records extremely expensive.",
+        bankingAnalogy: "Banks prevent double-spending by being the single authority. Bitcoin prevents it by making cheating cost more than the reward.",
+        bitcoinConnection: "Proof-of-Work makes double-spending as futile as rewriting yesterday's newspaper - technically possible, but economically irrational."
+      }
     }
   ];
 
@@ -1435,7 +1329,7 @@ const steps = [
       
       <div className="module-content">
         {currentStep === 0 && <BitcoinIntroduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <BitcoinComparison onComplete={handleStepComplete} />}
+        {currentStep === 1 && <PropertyCompare onComplete={handleStepComplete} />}
         {currentStep === 2 && <HowBitcoinWorks onComplete={handleStepComplete} />}
         {currentStep === 3 && <WhyScarcityMatters onComplete={handleStepComplete} />}
         {currentStep === 4 && <BitcoinCompletion onComplete={handleStepComplete} />}
