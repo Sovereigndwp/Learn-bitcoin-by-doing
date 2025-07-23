@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
@@ -1651,6 +1651,40 @@ const MoneyModule = () => {
     return saved ? new Set(JSON.parse(saved)) : new Set();
   });
   const [unlockedTraits, setUnlockedTraits] = useState([]);
+
+  // Navigation functions for Learning Support buttons
+  const handleReviewPrevious = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleContinueLearning = () => {
+    navigate('/?view=learning');
+  };
+
+  const getCurrentSection = () => {
+    const sectionNames = ['Barter Problem', 'Money Functions', 'Money Experiments', 'Payment Infrastructure', 'Money Scorecard', 'Apply Scorecard'];
+    return {
+      index: currentStep,
+      name: sectionNames[currentStep],
+      total: sectionNames.length
+    };
+  };
+
+  // Make navigation functions globally available for the Learning Support buttons
+  useEffect(() => {
+    window.moduleNavigation = {
+      reviewPrevious: handleReviewPrevious,
+      continueLearning: handleContinueLearning,
+      currentModule: 'money',
+      getCurrentSection
+    };
+    
+    return () => {
+      delete window.moduleNavigation;
+    };
+  }, [currentStep]);
 
   const handleStepComplete = (stepIndex) => {
     const newCompletedSteps = new Set(completedSteps).add(stepIndex);

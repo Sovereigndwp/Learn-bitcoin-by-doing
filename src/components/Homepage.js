@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { useNotifications } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
@@ -15,6 +15,7 @@ import './Homepage.css';
 const Homepage = () => {
   const { getModuleProgress, isModuleCompleted, completeModule, resetProgress } = useProgress();
   const { showNotification } = useNotifications();
+  const location = useLocation();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [currentView, setCurrentView] = useState('welcome'); // welcome, learning, progress
 
@@ -47,6 +48,17 @@ const Homepage = () => {
       achievements
     });
   }, [getModuleProgress, isModuleCompleted]);
+
+  // Handle URL parameters for view selection
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const viewParam = searchParams.get('view');
+    if (viewParam === 'learning') {
+      setCurrentView('learning');
+    } else if (viewParam === 'progress') {
+      setCurrentView('progress');
+    }
+  }, [location.search]);
 
   // Check if user has started their journey
   const hasStarted = userStats.completedModules > 0;

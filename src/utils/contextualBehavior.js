@@ -438,20 +438,14 @@ class ContextualBehaviorSystem {
         <h3>🤝 Learning Support</h3>
         <p>Bitcoin concepts can be challenging! Here are some ways to make learning easier:</p>
         <div class="assistance-options">
-          <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
+          <button class="assistance-option" onclick="if(window.moduleNavigation && window.moduleNavigation.reviewPrevious) { window.moduleNavigation.reviewPrevious(); } this.parentElement.parentElement.parentElement.remove();">
             📖 Review Previous Section
-          </button>
-          <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
-            🎯 Focus on Practical Examples
           </button>
           <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
             💡 Get Alternative Explanation
           </button>
-          <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
-            ⏰ Take a Break
-          </button>
         </div>
-        <button class="modal-close" onclick="this.parentElement.parentElement.remove()">
+        <button class="modal-close" onclick="if(window.moduleNavigation && window.moduleNavigation.continueLearning) { window.moduleNavigation.continueLearning(); } this.parentElement.parentElement.remove();">
           Continue Learning
         </button>
       </div>
