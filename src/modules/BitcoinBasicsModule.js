@@ -1281,6 +1281,10 @@ const steps = [
     { id: 4, title: "Complete", icon: "🎉", completed: completedSteps.has(4) }
   ];
 
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
+  };
+
   return (
     <div className="module-container">
       {/* HERO SECTION - World-class design principles */}
@@ -1296,35 +1300,27 @@ const steps = [
         </div>
       </div>
       
+      {/* TERTIARY: Navigation Steps - Medium Importance */}
       <div className="section-card">
-        {/* Progress tracking */}
-        <ProgressCounter
-          moduleId="bitcoin-basics"
-          totalSteps={5}
-          currentStep={currentStep + 1}
-          variant="default"
-          size="md"
-          showPercentage={true}
-          showSteps={true}
-          showLabel={true}
-          className="module-progress"
-        />
-        
-        {/* Step progress indicator */}
-        <StepProgressCounter
-          moduleId="bitcoin-basics"
-          totalSteps={5}
-          currentStep={currentStep + 1}
-          variant="labels"
-          stepLabels={[
-            "Bitcoin's Promise",
-            "Compare Systems", 
-            "How It Works",
-            "Why It's Valuable",
-            "Complete"
-          ]}
-          className="step-progress"
-        />
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+          {["Bitcoin's Promise", "Compare Systems", "How It Works", "Why It's Valuable", "Complete"].map((step, index) => (
+            <button
+              key={index}
+              className={`step-nav-button ${
+                index === currentStep ? 'current' : ''
+              } ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => handleTabClick(index)}
+            >
+              <span className="step-nav-number">
+                {completedSteps.has(index) ? '✓' : index + 1}
+              </span>
+              <span className="step-nav-label">{step}</span>
+            </button>
+          ))}
+          </div>
+        </div>
       </div>
       
       <div className="module-content">

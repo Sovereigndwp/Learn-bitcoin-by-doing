@@ -15,7 +15,32 @@ const MiningModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('miningModuleCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
+  const handleStepComplete = (stepIndex) => {
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    try {
+      localStorage.setItem('miningModuleCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
+    
+    if (stepIndex === miningSteps.length - 1) {
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
+    } else {
+      setCurrentStep(stepIndex + 1);
+    }
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
+  };
 
   // Interactive state management
   const [miningSimulation, setMiningSimulation] = useState({});
@@ -1221,7 +1246,7 @@ const MiningModule = () => {
           </div>
         </div>
 
-        <ContinueButton onClick={() => setCurrentStep(5)}>
+        <ContinueButton onClick={() => handleStepComplete(4)}>
           Explore Renewable Energy <ArrowRight className="w-4 h-4" />
         </ContinueButton>
     </div>

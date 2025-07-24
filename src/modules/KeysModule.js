@@ -18,7 +18,32 @@ const KeysModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('keysModuleCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
+  const handleStepComplete = (stepIndex) => {
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    try {
+      localStorage.setItem('keysModuleCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
+    
+    if (stepIndex === cryptoSteps.length - 1) {
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
+    } else {
+      setCurrentStep(stepIndex + 1);
+    }
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
+  };
 
   // Interactive state management
   const [userPredictions, setUserPredictions] = useState({});
@@ -255,9 +280,9 @@ const KeysModule = () => {
                   Next Challenge <ArrowRight className="w-4 h-4" />
                 </ActionButton>
               ) : (
-                <ContinueButton onClick={() => setCurrentStep(1)}>
-                  Master Randomness & Security <ArrowRight className="w-4 h-4" />
-                </ContinueButton>
+        <ContinueButton onClick={() => handleStepComplete(0)}>
+          Master Randomness & Security <ArrowRight className="w-4 h-4" />
+        </ContinueButton>
               )}
         </div>
       </div>
@@ -424,7 +449,7 @@ const KeysModule = () => {
                   Next Challenge <ArrowRight className="w-4 h-4" />
                 </ActionButton>
               ) : (
-                <ContinueButton onClick={() => setCurrentStep(2)}>
+                <ContinueButton onClick={() => handleStepComplete(1)}>
                   Explore Private Keys <ArrowRight className="w-4 h-4" />
                 </ContinueButton>
               )}
@@ -608,7 +633,7 @@ const KeysModule = () => {
         </div>
       </div>
 
-        <ContinueButton onClick={() => setCurrentStep(3)}>
+        <ContinueButton onClick={() => handleStepComplete(2)}>
           Learn Address Generation <ArrowRight className="w-4 h-4" />
         </ContinueButton>
     </div>
@@ -768,7 +793,7 @@ const KeysModule = () => {
         </div>
       </div>
 
-        <ContinueButton onClick={() => setCurrentStep(4)}>
+        <ContinueButton onClick={() => handleStepComplete(3)}>
           Master Custody Decisions <ArrowRight className="w-4 h-4" />
         </ContinueButton>
     </div>
@@ -1039,21 +1064,26 @@ const KeysModule = () => {
         </div>
       </div>
       
+      {/* TERTIARY: Navigation Steps - Medium Importance */}
       <div className="section-card">
-      
-        <div className="steps-progress">
-          {cryptoSteps.map((step, index) => (
-            <div 
-              key={step.id}
-              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+          {['Ownership Fundamentals', 'Randomness Security', 'Private Key Power', 'Address Generation', 'Custody Decisions'].map((step, index) => (
+            <button
+              key={index}
+              className={`step-nav-button ${
+                index === currentStep ? 'current' : ''
+              } ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => handleTabClick(index)}
             >
-              <div className="step-number">{index + 1}</div>
-              <div className="step-info">
-                <div className="step-title">{step.title}</div>
-                <div className="step-subtitle">{step.subtitle}</div>
-      </div>
-        </div>
+              <span className="step-nav-number">
+                {completedSteps.has(index) ? '✓' : index + 1}
+              </span>
+              <span className="step-nav-label">{step}</span>
+            </button>
           ))}
+          </div>
         </div>
       </div>
 

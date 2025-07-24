@@ -10,8 +10,8 @@ export const course = [
         views: ['intro', 'scenario1', 'scenario2', 'summary'] 
       },
       { 
-        id: 'functions', 
-        title: 'Money Functions',
+        id: 'properties', 
+        title: 'Money Properties',
         views: ['intro', 'example1', 'example2', 'wrapUp'] 
       },
       { 
@@ -101,8 +101,8 @@ export const course = [
     overview: '/module/hashing',
     lessons: [
       { 
-        id: 'hash-functions', 
-        title: 'Hash Functions',
+        id: 'hash-properties', 
+        title: 'Hash Properties',
         views: ['intro', 'properties', 'examples'] 
       },
       { 

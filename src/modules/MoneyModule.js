@@ -406,7 +406,7 @@ const BarterProblem = ({ onComplete }) => {
               onClick={handleNext}
               variant="primary"
             >
-              {currentScenario === economicScenarios.length - 1 ? "Learn About Money's Jobs" : "Next Scenario"}
+              {currentScenario === economicScenarios.length - 1 ? "Learn About Money Properties" : "Next Scenario"}
             </ActionButton>
           </div>
         )}
@@ -416,8 +416,8 @@ const BarterProblem = ({ onComplete }) => {
 };
 
 
-// Renamed: MoneySuperpowers -> MoneyFunctions
-const MoneyFunctions = ({ onComplete }) => {
+// Renamed: MoneySuperpowers -> MoneyProperties  
+const MoneyProperties = ({ onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
@@ -428,7 +428,7 @@ const MoneyFunctions = ({ onComplete }) => {
       id: 1,
       title: "🛒 Shopping at the Market",
       description: "You want to buy apples. The seller wants $3 per pound.",
-      question: "What job is money doing here?",
+      question: "What property is money demonstrating here?",
       options: [
         { value: 1, label: 'Helping you trade - making the exchange possible' },
         { value: 2, label: 'Storing your wealth for later' },
@@ -447,7 +447,7 @@ const MoneyFunctions = ({ onComplete }) => {
       id: 2,
       title: "💰 Saving for a Vacation",
       description: "You put $200 in your savings account each month for a vacation next year.",
-      question: "What job is money doing here?",
+      question: "What property is money demonstrating here?",
       options: [
         { value: 1, label: 'Helping you make trades right now' },
         { value: 2, label: 'Keeping your wealth safe until you need it' },
@@ -466,7 +466,7 @@ const MoneyFunctions = ({ onComplete }) => {
       id: 3,
       title: "🏠 Comparing House Prices",
       description: "You're looking at houses. One costs $300,000, another costs $450,000.",
-      question: "What job is money doing here?",
+      question: "What property is money demonstrating here?",
       options: [
         { value: 1, label: 'Making the trade possible' },
         { value: 2, label: 'Storing value for you' },
@@ -514,8 +514,8 @@ const MoneyFunctions = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Money Functions</h1>
-        <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
+        <h1 className="heading-critical">Money Properties</h1>
+        <p>Money has three main properties. Let's look at some everyday examples to understand each one.</p>
       </div>
         
         <div className="scenario-progress">
@@ -554,9 +554,9 @@ const MoneyFunctions = ({ onComplete }) => {
             <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
               {feedback[currentScenarioData.id].includes('✓') ? (
                 <div className="feedback-text">
-                  <p>✅ <strong>Excellent!</strong> You identified the correct function.</p>
+                  <p>✅ <strong>Excellent!</strong> You identified the correct property.</p>
                   <div className="correct-answer">
-                    <strong>Money's Job:</strong> {currentScenarioData.moneyFunction}
+                    <strong>Money's Property:</strong> {currentScenarioData.moneyFunction}
                   </div>
                   <div className="trait-unlocked">
                     <p><strong>💡 Key Learning:</strong> {currentScenarioData.explanation}</p>
@@ -566,7 +566,7 @@ const MoneyFunctions = ({ onComplete }) => {
                 <div className="feedback-text">
                   <p>❌ <strong>Not quite.</strong></p>
                   <div className="incorrect-answer">
-                    <strong>The correct function is:</strong> {currentScenarioData.moneyFunction}
+                    <strong>The correct property is:</strong> {currentScenarioData.moneyFunction}
                   </div>
                   <div className="correct-answer">
                     <strong>💡 Key Learning:</strong> {currentScenarioData.explanation}
@@ -579,8 +579,8 @@ const MoneyFunctions = ({ onComplete }) => {
 
         {unlockedFunctions.length === 3 && (
           <div className="analysis-complete">
-            <h3>✅ All Three Jobs Found!</h3>
-            <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
+            <h3>✅ All Three Properties Found!</h3>
+            <p>Great! Now you understand what money needs to do. Let's see how well current money demonstrates these properties.</p>
           </div>
         )}
     </div>
@@ -690,7 +690,7 @@ const PaymentInfrastructure = ({ onComplete }) => {
           <div className="concept-card">
             <h3 className="heading-standard">💡 Key Insight</h3>
             <p>Notice the 6 stops & 3 middlemen? That's "friction."</p>
-            <p><strong>Link back:</strong> Friction weakens <strong>Money Functions</strong> we learned about earlier - specifically the Medium of Exchange and Unit of Account jobs.</p>
+            <p><strong>Link back:</strong> Friction weakens <strong>Money Properties</strong> we learned about earlier - specifically the Medium of Exchange and Unit of Account jobs.</p>
             
             <div className="friction-analysis">
               <h4>What This Friction Creates:</h4>
@@ -1693,7 +1693,7 @@ const MoneyModule = () => {
   };
 
   const getCurrentSection = () => {
-    const sectionNames = ['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'];
+    const sectionNames = ['Barter Problem', 'Money Properties', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'];
     return {
       index: currentStep,
       name: sectionNames[currentStep],
@@ -1769,7 +1769,7 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-          {['Barter Problem', 'Money Functions', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
+          {['Barter Problem', 'Money Properties', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${
@@ -1790,7 +1790,7 @@ const MoneyModule = () => {
 
       <div className="module-content">
         {currentStep === 0 && <BarterProblem onComplete={handleStepComplete} />}
-        {currentStep === 1 && <MoneyFunctions onComplete={handleStepComplete} />}
+        {currentStep === 1 && <MoneyProperties onComplete={handleStepComplete} />}
         {currentStep === 2 && <PaymentInfrastructure onComplete={handleStepComplete} />}
         {currentStep === 3 && <DigitalScarcity onComplete={handleStepComplete} />}
         {currentStep === 4 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}

@@ -16,7 +16,32 @@ const HashingModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('hashingModuleCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
+  const handleStepComplete = (stepIndex) => {
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    try {
+      localStorage.setItem('hashingModuleCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
+    
+    if (stepIndex === hashingSteps.length - 1) {
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
+    } else {
+      setCurrentStep(stepIndex + 1);
+    }
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
+  };
 
   // Interactive state management
   const [hashInputs, setHashInputs] = useState({});
@@ -264,7 +289,7 @@ const HashingModule = () => {
           </div>
         </div>
 
-        <ContinueButton onClick={() => setCurrentStep(1)}>
+        <ContinueButton onClick={() => handleStepComplete(0)}>
           Explore Avalanche Effect <ArrowRight className="w-4 h-4" />
         </ContinueButton>
     </div>
@@ -453,7 +478,7 @@ const HashingModule = () => {
             </div>
           </div>
 
-        <ContinueButton onClick={() => setCurrentStep(2)}>
+        <ContinueButton onClick={() => handleStepComplete(1)}>
           Understand One-Way Functions <ArrowRight className="w-4 h-4" />
         </ContinueButton>
       </div>
@@ -644,7 +669,7 @@ const HashingModule = () => {
           </div>
         </div>
 
-        <ContinueButton onClick={() => setCurrentStep(3)}>
+        <ContinueButton onClick={() => handleStepComplete(2)}>
           Learn Proof of Work <ArrowRight className="w-4 h-4" />
         </ContinueButton>
     </div>
@@ -1108,21 +1133,26 @@ const HashingModule = () => {
         </div>
       </div>
       
+      {/* TERTIARY: Navigation Steps - Medium Importance */}
       <div className="section-card">
-        
-        <div className="steps-progress">
-          {hashingSteps.map((step, index) => (
-            <div 
-              key={step.id}
-              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+          {['Hash Fundamentals', 'Avalanche Effect', 'One-Way Functions', 'Proof of Work', 'Hash Applications'].map((step, index) => (
+            <button
+              key={index}
+              className={`step-nav-button ${
+                index === currentStep ? 'current' : ''
+              } ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => handleTabClick(index)}
             >
-              <div className="step-number">{index + 1}</div>
-              <div className="step-info">
-                <div className="step-title">{step.title}</div>
-                <div className="step-subtitle">{step.subtitle}</div>
-              </div>
-            </div>
+              <span className="step-nav-number">
+                {completedSteps.has(index) ? '✓' : index + 1}
+              </span>
+              <span className="step-nav-label">{step}</span>
+            </button>
           ))}
+          </div>
         </div>
       </div>
 

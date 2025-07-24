@@ -15,25 +15,38 @@ const NumbersModule = () => {
   const { completeModule } = useProgress();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('numbersModuleCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
+  const handleStepComplete = (stepIndex) => {
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    try {
+      localStorage.setItem('numbersModuleCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
+    
+    if (stepIndex === numberSteps.length - 1) {
+      // Module completion is handled by ModuleCompletionButton
+      setCurrentStep(stepIndex + 1);
+    } else {
+      setCurrentStep(stepIndex + 1);
+    }
+  };
+
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
+  };
 
   // Interactive state management
   const [userInputs, setUserInputs] = useState({});
   const [conversions, setConversions] = useState({});
   const [challenges, setChallenges] = useState({});
   const [insights, setInsights] = useState({});
-
-  const handleStepComplete = (stepIndex) => {
-    const newCompleted = new Set(completedSteps);
-    newCompleted.add(stepIndex || currentStep);
-    setCompletedSteps(newCompleted);
-    
-    if ((stepIndex || currentStep) === numberSteps.length - 1) {
-      completeModule('numbers');
-    } else {
-      setCurrentStep(prev => prev < numberSteps.length - 1 ? prev + 1 : prev);
-    }
-  };
 
   // Number System Learning Steps
   const numberSteps = [
@@ -309,7 +322,7 @@ const NumbersModule = () => {
                       Next Challenge <ArrowRight className="w-4 h-4" />
                     </ActionButton>
                   ) : (
-                    <ContinueButton onClick={() => onComplete(0)}>
+                    <ContinueButton onClick={() => onComplete()}>
                       Complete Binary Basics <ArrowRight className="w-4 h-4" />
                     </ContinueButton>
                   )}
@@ -1045,28 +1058,42 @@ const NumbersModule = () => {
   const StepComponent = currentStepData?.component;
 
     return (
-    <div className="numbers-module">
-      <div className="module-progress">
-        <div className="progress-header">
-          <h1>🔢 Number Systems Mastery</h1>
-          <p>Master the mathematical foundations of Bitcoin</p>
+    <div className="module-container">
+      {/* HERO SECTION - World-class design principles */}
+      <div className="module-header">
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="calculator" size={48} className="module-icon-numbers" />
+          </div>
+          Number Systems Mastery
         </div>
-        
-        <div className="steps-progress">
-          {numberSteps.map((step, index) => (
-            <div 
-              key={step.id}
-              className={`step-indicator ${index === currentStep ? 'active' : ''} ${completedSteps.has(index) ? 'completed' : ''}`}
+        <div className="module-subtitle">
+          Master the mathematical foundations of Bitcoin
+        </div>
+      </div>
+      
+      {/* TERTIARY: Navigation Steps - Medium Importance */}
+      <div className="section-card">
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+          {['Binary Basics', 'Hexadecimal Power', 'Byte Order', 'Hash Numbers', 'Bitcoin Precision'].map((step, index) => (
+            <button
+              key={index}
+              className={`step-nav-button ${
+                index === currentStep ? 'current' : ''
+              } ${completedSteps.has(index) ? 'completed' : ''}`}
+              onClick={() => handleTabClick(index)}
             >
-              <div className="step-number">{index + 1}</div>
-              <div className="step-info">
-                <div className="step-title">{step.title}</div>
-                <div className="step-subtitle">{step.subtitle}</div>
+              <span className="step-nav-number">
+                {completedSteps.has(index) ? '✓' : index + 1}
+              </span>
+              <span className="step-nav-label">{step}</span>
+            </button>
+          ))}
           </div>
         </div>
-          ))}
-            </div>
-          </div>
+      </div>
 
       <div className="step-content">
         {StepComponent && <StepComponent onComplete={() => handleStepComplete(currentStep)} />}
