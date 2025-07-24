@@ -1,0 +1,205 @@
+/* Compact PrevNext Footer */
+.prev-next-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(26, 26, 26, 0.95);
+  border-top: 1px solid #333;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  font-size: 0.9rem;
+}
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.progress-text {
+  color: #888;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.progress-bar {
+  width: 120px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f7931a 0%, #ffb84d 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(.disabled) {
+  background: #3a3a3a;
+  border-color: #f7931a;
+  transform: translateY(-1px);
+}
+
+.nav-btn:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.nav-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nav-btn.complete {
+  background: #28a745;
+  border-color: #28a745;
+}
+
+.nav-btn.complete:hover {
+  background: #218838;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.nav-text {
+  font-size: 0.85rem;
+}
+
+/* Compact version */
+.prev-next-compact {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.compact-nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #2a2a2a;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.compact-nav-button:hover:not(:disabled) {
+  background: #3a3a3a;
+  border-color: #f7931a;
+}
+
+.compact-nav-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .prev-next-container {
+    padding: 0.75rem;
+  }
+
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .progress-indicator {
+    margin-bottom: 0.75rem;
+  }
+
+  .progress-text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .prev-next-container {
+    padding: 0.5rem;
+  }
+
+  .nav-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-label {
+    gap: 0.25rem;
+  }
+
+  .completion-hint {
+    font-size: 0.8rem;
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+/* Animation for progress updates */
+@keyframes progressUpdate {
+  0% {
+    transform: scaleX(0.95);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.progress-fill {
+  animation: progressUpdate 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.nav-button:focus {
+  outline: 2px solid #f7931a;
+  outline-offset: 2px;
+}
+
+.compact-nav-button:focus {
+  outline: 2px solid #f7931a;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .nav-button {
+    border-width: 2px;
+  }
+  
+  .progress-bar {
+    border: 1px solid #fff;
+  }
+}

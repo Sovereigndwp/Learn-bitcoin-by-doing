@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
-  ActionButton,
-  StepNavigation
+  ActionButton
 } from '../components/EnhancedButtons';
 import { ModuleCompletionButton } from '../components/ui';
 // Import new visual system components
@@ -395,14 +394,21 @@ const BarterProblem = ({ onComplete }) => {
         )}
 
         {showOutcome && (
-          <StepNavigation
-            currentStep={currentScenario}
-            totalSteps={economicScenarios.length}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            canGoBack={currentScenario > 0}
-            nextLabel={currentScenario === economicScenarios.length - 1 ? "Learn About Money's Jobs" : "Next Scenario"}
-          />
+          <div className="scenario-navigation">
+            <ActionButton 
+              onClick={handlePrevious}
+              disabled={currentScenario === 0}
+              variant="secondary"
+            >
+              Previous Scenario
+            </ActionButton>
+            <ActionButton 
+              onClick={handleNext}
+              variant="primary"
+            >
+              {currentScenario === economicScenarios.length - 1 ? "Learn About Money's Jobs" : "Next Scenario"}
+            </ActionButton>
+          </div>
         )}
       </div>
     </div>
@@ -699,14 +705,21 @@ const PaymentInfrastructure = ({ onComplete }) => {
           </div>
         )}
 
-        <StepNavigation
-          currentStep={currentStep}
-          totalSteps={paymentSteps.length}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          canGoBack={currentStep > 0}
-          nextLabel={currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
-        />
+        <div className="step-navigation">
+          <ActionButton 
+            onClick={handlePrevious}
+            disabled={currentStep === 0}
+            variant="secondary"
+          >
+            Previous Step
+          </ActionButton>
+          <ActionButton 
+            onClick={handleNext}
+            variant="primary"
+          >
+            {currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
+          </ActionButton>
+        </div>
       </div>
     </div>
   );
@@ -1181,14 +1194,21 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="card-feature">
         {frameworkSteps[step].content}
         
-        <StepNavigation
-          currentStep={step}
-          totalSteps={frameworkSteps.length}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          canGoBack={step > 0}
-          nextLabel={step === frameworkSteps.length - 1 ? "Apply the Scorecard" : "Next"}
-        />
+        <div className="step-navigation">
+          <ActionButton 
+            onClick={handlePrevious}
+            disabled={step === 0}
+            variant="secondary"
+          >
+            Previous
+          </ActionButton>
+          <ActionButton 
+            onClick={handleNext}
+            variant="primary"
+          >
+            {step === frameworkSteps.length - 1 ? "Apply the Scorecard" : "Next"}
+          </ActionButton>
+        </div>
       </div>
     </div>
   );
@@ -1599,14 +1619,21 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
       <div className="card-feature">
         {frameworkSteps[step].content}
         
-        <StepNavigation
-          currentStep={step}
-          totalSteps={frameworkSteps.length}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          canGoBack={step > 0}
-          nextLabel={step === frameworkSteps.length - 1 ? "Complete Money Module" : "Next"}
-        />
+        <div className="step-navigation">
+          <ActionButton 
+            onClick={handlePrevious}
+            disabled={step === 0}
+            variant="secondary"
+          >
+            Previous
+          </ActionButton>
+          <ActionButton 
+            onClick={handleNext}
+            variant="primary"
+          >
+            {step === frameworkSteps.length - 1 ? "Complete Money Module" : "Next"}
+          </ActionButton>
+        </div>
       </div>
     </div>
   );

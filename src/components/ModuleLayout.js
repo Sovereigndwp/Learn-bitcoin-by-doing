@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Home, Globe, ArrowLeft, Menu, X } from 'lucide-react';
 import { OptimizedPopup, Tooltip } from './ui';
+import PrevNext from './PrevNext';
 import './ModuleLayout.css';
 import './ModuleCommon.css';
 
@@ -10,9 +11,13 @@ import './ModuleCommon.css';
 const ModuleLayout = ({ children }) => {
   const { toggleLanguage, language } = useLanguage();
   const location = useLocation();
+  const { moduleId, lessonId, viewId } = useParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   const isHomepage = location.pathname === '/';
+  
+  // Show PrevNext for all lesson views
+  const shouldShowPrevNext = moduleId && lessonId && viewId;
 
   return (
     <div className="module-layout">
@@ -116,6 +121,9 @@ const ModuleLayout = ({ children }) => {
       <main className="module-main">
         {children}
       </main>
+      
+      {/* PrevNext Navigation - only for lesson views that don't have their own navigation */}
+      {shouldShowPrevNext && <PrevNext />}
     </div>
   );
 };
