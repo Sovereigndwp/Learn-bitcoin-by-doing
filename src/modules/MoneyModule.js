@@ -13,6 +13,8 @@ import {
 } from '../components/ui/SVGIcons';
 import MoneyPredictionChart from '../components/MoneyPredictionChart';
 import Introduction from '../components/Introduction';
+import MortgageQuiz from '../components/MortgageQuiz';
+import ControlScenarios from '../components/ControlScenarios';
 // Import page components for state-based flow
 // All components are defined locally
 // import MoneyFunctions from '../pages/MoneyFunctions';
@@ -306,6 +308,7 @@ const MoneyFunctions = ({ onComplete }) => {
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
   const [unlockedFunctions, setUnlockedFunctions] = useState([]);
+  const [showMortgageQuiz, setShowMortgageQuiz] = useState(false);
 
   const scenarios = [
     {
@@ -388,7 +391,7 @@ const MoneyFunctions = ({ onComplete }) => {
       if (currentScenario < scenarios.length - 1) {
         setCurrentScenario(currentScenario + 1);
       } else {
-        setTimeout(() => onComplete(2), 3000);
+        setTimeout(() => setShowMortgageQuiz(true), 3000); // Show MortgageQuiz
       }
     }, 2000);
   };
@@ -397,45 +400,49 @@ const MoneyFunctions = ({ onComplete }) => {
   
   return (
     <div className="module-container">
-      <div className="section-card">
-        <h1 className="heading-critical">Money Functions</h1>
-        <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
-      </div>
-        
-        <div className="scenario-progress">
-          <div className="progress-indicators">
-            {scenarios.map((_, index) => (
-              <div 
-                key={index} 
-                className={`indicator ${index === currentScenario ? 'current' : ''} ${index < currentScenario ? 'completed' : ''}`}
-              >
-                {index < currentScenario ? '✅' : index + 1}
-              </div>
-            ))}
+      {showMortgageQuiz ? (
+        <MortgageQuiz onContinue={() => onComplete(2)} />
+      ) : (
+        <>
+          <div className="section-card">
+            <h1 className="heading-critical">Money Functions</h1>
+            <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
           </div>
-        </div>
 
-        <div className="current-scenario">
-          <h3>{currentScenarioData.title}</h3>
-          <p className="scenario-description">{currentScenarioData.description}</p>
-          <p className="scenario-question"><strong>{currentScenarioData.question}</strong></p>
-          
-          {!feedback[currentScenarioData.id] && (
-            <div className="quiz-options">
-              {currentScenarioData.options.map(option => (
-                <ActionButton
-                  key={option.value}
-                  onClick={() => handleAnswer(currentScenarioData.id, option.value)}
-                  variant="outline"
+          <div className="scenario-progress">
+            <div className="progress-indicators">
+              {scenarios.map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`indicator ${index === currentScenario ? 'current' : ''} ${index < currentScenario ? 'completed' : ''}`}
                 >
-                  <span className="option-text">{option.label}</span>
-                </ActionButton>
+                  {index < currentScenario ? '✅' : index + 1}
+                </div>
               ))}
             </div>
-          )}
-          
-          {feedback[currentScenarioData.id] && (
-            <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
+          </div>
+
+          <div className="current-scenario">
+            <h3>{currentScenarioData.title}</h3>
+            <p className="scenario-description">{currentScenarioData.description}</p>
+            <p className="scenario-question"><strong>{currentScenarioData.question}</strong></p>
+            
+            {!feedback[currentScenarioData.id] && (
+              <div className="quiz-options">
+                {currentScenarioData.options.map(option => (
+                  <ActionButton
+                    key={option.value}
+                    onClick={() => handleAnswer(currentScenarioData.id, option.value)}
+                    variant="outline"
+                  >
+                    <span className="option-text">{option.label}</span>
+                  </ActionButton>
+                ))}
+              </div>
+            )}
+
+            {feedback[currentScenarioData.id] && (
+              <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
               {feedback[currentScenarioData.id].includes('✓') ? (
                 <div className="feedback-text">
                   <p>✅ <strong>Excellent!</strong> You identified the correct function.</p>
@@ -467,6 +474,8 @@ const MoneyFunctions = ({ onComplete }) => {
             <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
           </div>
         )}
+        </>
+      )}
     </div>
   );
 };
@@ -475,6 +484,8 @@ const MoneyFunctions = ({ onComplete }) => {
 const PaymentInfrastructure = ({ onComplete }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [showControl, setShowControl] = useState(false);
+  const [showFinalInsight, setShowFinalInsight] = useState(false);
 
   const paymentSteps = [
     {
@@ -518,8 +529,16 @@ const PaymentInfrastructure = ({ onComplete }) => {
   const handleNext = () => {
     if (currentStep < paymentSteps.length - 1) {
       setCurrentStep(currentStep + 1);
+    } else if (!showFinalInsight) {
+      setShowFinalInsight(true);
+      // Automatically launch ControlScenarios after 3 seconds
+      setTimeout(() => {
+        setShowControl(true);
+      }, 3000);
+    } else if (!showControl) {
+      setShowControl(true);        // manual launch mini-lab (fallback)
     } else {
-      onComplete(3);
+      onComplete(3);               // finished; move to MoneyExperiments
     }
   };
 
@@ -531,7 +550,9 @@ const PaymentInfrastructure = ({ onComplete }) => {
 
   const currentStepData = paymentSteps[currentStep];
 
-  return (
+  return showControl ? (
+    <ControlScenarios onFinish={handleNext} />
+  ) : (
     <div className="module-container">
       <div className="section-card">
         <h1 className="heading-critical">Payment Infrastructure</h1>
@@ -586,17 +607,31 @@ const PaymentInfrastructure = ({ onComplete }) => {
                 <li><strong>Complexity:</strong> Requires 6 different companies to work together</li>
               </ul>
             </div>
+            
+            {showFinalInsight && (
+              <div className="auto-transition-message">
+                <p><strong>🚀 But here's the real question...</strong></p>
+                <p>If these middlemen can block or reverse your transactions, who really controls your money?</p>
+                <p className="transition-notice">Let's find out... (launching in 3 seconds)</p>
+              </div>
+            )}
           </div>
         )}
 
-        <StepNavigation
-          currentStep={currentStep}
-          totalSteps={paymentSteps.length}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          canGoBack={currentStep > 0}
-          nextLabel={currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
-        />
+        {!showControl && (
+          <StepNavigation
+            currentStep={currentStep}
+            totalSteps={paymentSteps.length + 1}  // Add 1 to prevent auto-disable on final step
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            canGoBack={currentStep > 0 && !showFinalInsight}
+            canGoNext={true}
+            nextLabel={currentStep === paymentSteps.length - 1 ? 
+              (showFinalInsight ? "Launch Control Test" : "Complete Payment Journey") : 
+              "Next Step"
+            }
+          />
+        )}
       </div>
     </div>
   );
