@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
-  ActionButton
+  ActionButton,
+  StepNavigation
 } from '../components/EnhancedButtons';
 import { ModuleCompletionButton } from '../components/ui';
 // Import new visual system components
@@ -11,145 +12,36 @@ import {
   BitcoinIcon
 } from '../components/ui/SVGIcons';
 import MoneyPredictionChart from '../components/MoneyPredictionChart';
+import Introduction from '../components/Introduction';
+// Import page components for state-based flow
+// All components are defined locally
+// import MoneyFunctions from '../pages/MoneyFunctions';
+// import PaymentInfrastructure from '../pages/PaymentInfrastructure';
 import DigitalScarcity from '../pages/DigitalScarcity';
+// import MoneyExperiments from '../pages/MoneyExperiments';
+// import MoneyScorecard from '../pages/MoneyScorecard';
+// import ApplyScorecard from '../pages/ApplyScorecard';
 // Using InteractiveIcon for all visual elements - no more GIFs or Lottie
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 
-// Simplified Introduction 
-const Introduction = ({ onComplete }) => {
-  const [currentDemo, setCurrentDemo] = useState(0);
-  const [showAnalysis, setShowAnalysis] = useState(false);
-  const [demoResults, setDemoResults] = useState({});
+// Step labels for consistent navigation
+const stepLabels = [
+  'Introduction',
+  'Barter Problem',
+  'Money Functions',
+  'Payment Infrastructure', 
+  'Money Experiments',
+  'Money Scorecard',
+  'Digital Scarcity',
+  'Apply Scorecard'
+];
 
-  const modernPaymentDemos = [
-    {
-      title: "💳 Card Payment",
-      description: "You tap your card. Money moves instantly.",
-      action: "See What Happens",
-      effect: "✨ $25 sent successfully!",
-      hidden: "What actually happens: 7 companies process this, across 3 countries, with multiple fees and delays..."
-    },
-    {
-      title: "📱 Send Money to Friend",
-      description: "You send $20 through your phone app.",
-      action: "Look Behind the Scenes", 
-      effect: "💸 Money sent instantly!",
-      hidden: "Hidden steps: ID checks, spending limits, tracking systems, bank connections, possible account freezing..."
-    },
-    {
-      title: "🌍 Send Money Overseas",
-      description: "Send $500 to family in another country.",
-      action: "Follow the Money",
-      effect: "🚀 Transfer started!",
-      hidden: "Reality: Takes 3-5 days, costs $15-50, poor exchange rates, lots of paperwork..."
-    }
-  ];
 
-  const currentDemoData = modernPaymentDemos[currentDemo];
+// Local components removed - now using imported page components
 
-  const handleDemoAction = () => {
-    setDemoResults(prev => ({ ...prev, [currentDemo]: true }));  // Track completion
-    
-    setTimeout(() => {
-      if (currentDemo < modernPaymentDemos.length - 1) {
-        setCurrentDemo(currentDemo + 1);
-      } else {
-        setShowAnalysis(true);
-      }
-    }, 2500);
-  };
-
-  const handleContinue = () => {
-    onComplete(0);
-  };
-
-  return (
-    <div className="module-container">
-      <div className="section-card">
-        <h1 className="heading-critical">What's Really Happening When You Pay?</h1>
-        <p>Modern payments look simple, but there's a lot happening behind the scenes. Let's see what's really going on.</p>
-      </div>
-      
-      <div className="card-feature">
-        <h2 className="heading-high">Let's Look at Common Payments</h2>
-        <p>Click through these everyday payment examples to see what really happens...</p>
-
-        <div className="card-content">
-          <div className="payment-demo-card">
-            <h4>{currentDemoData.title}</h4>
-            <p>{currentDemoData.description}</p>
-            
-            <div className="demo-interaction">
-              <ActionButton 
-                onClick={handleDemoAction}
-                variant="primary"
-              >
-                {currentDemoData.action}
-              </ActionButton>
-            </div>
-            
-            {demoResults[currentDemo] && (
-              <div className="demo-result">
-                <div className="demo-effect">{currentDemoData.effect}</div>
-                <div className="demo-hidden">
-                  <strong>What Really Happens:</strong><br />
-                  {currentDemoData.hidden}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="demo-navigation">
-            <div className="demo-counter">
-              Demo {currentDemo + 1} of {modernPaymentDemos.length}
-            </div>
-            <div className="demo-buttons">
-              <ActionButton 
-                onClick={() => setCurrentDemo(Math.max(0, currentDemo - 1))}
-                disabled={currentDemo === 0}
-                variant="secondary"
-              >
-                Previous
-              </ActionButton>
-              <ActionButton 
-                onClick={() => setCurrentDemo(Math.min(modernPaymentDemos.length - 1, currentDemo + 1))}
-                disabled={currentDemo === modernPaymentDemos.length - 1}
-                variant="secondary"
-              >
-                Next
-              </ActionButton>
-            </div>
-          </div>
-        </div>
-
-        {showAnalysis && (
-          <div className="card-content">
-            <h3 className="heading-medium">The Hidden Complexity</h3>
-            <p>Every "simple" payment involves multiple companies, systems, and potential points of failure. This complexity is invisible to users but creates:</p>
-            <ul>
-              <li>Higher costs (fees hidden in exchange rates and processing)</li>
-              <li>Slower settlement (your money doesn't move instantly)</li>
-              <li>Privacy concerns (every transaction is tracked)</li>
-              <li>Control points (accounts can be frozen or restricted)</li>
-            </ul>
-            
-            <div className="concept-card">
-              <h4 className="heading-standard">💡 Key Insight</h4>
-              What if money could work more like the internet - direct, open, and without requiring permission from intermediaries?
-            </div>
-
-            <ActionButton onClick={handleContinue} variant="primary">
-              Continue Learning
-            </ActionButton>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Renamed: BarterWorld -> BarterProblem
+// Main Module Component
+// BarterProblem component definition
 const BarterProblem = ({ onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [playerChoice, setPlayerChoice] = useState(null);
@@ -394,30 +286,22 @@ const BarterProblem = ({ onComplete }) => {
         )}
 
         {showOutcome && (
-          <div className="scenario-navigation">
-            <ActionButton 
-              onClick={handlePrevious}
-              disabled={currentScenario === 0}
-              variant="secondary"
-            >
-              Previous Scenario
-            </ActionButton>
-            <ActionButton 
-              onClick={handleNext}
-              variant="primary"
-            >
-              {currentScenario === economicScenarios.length - 1 ? "Learn About Money Properties" : "Next Scenario"}
-            </ActionButton>
-          </div>
+          <StepNavigation
+            currentStep={currentScenario}
+            totalSteps={economicScenarios.length}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            canGoBack={currentScenario > 0}
+            nextLabel={currentScenario === economicScenarios.length - 1 ? "Learn About Money's Jobs" : "Next Scenario"}
+          />
         )}
       </div>
     </div>
   );
 };
 
-
-// Renamed: MoneySuperpowers -> MoneyProperties  
-const MoneyProperties = ({ onComplete }) => {
+// Renamed: MoneySuperpowers -> MoneyFunctions
+const MoneyFunctions = ({ onComplete }) => {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
@@ -428,7 +312,7 @@ const MoneyProperties = ({ onComplete }) => {
       id: 1,
       title: "🛒 Shopping at the Market",
       description: "You want to buy apples. The seller wants $3 per pound.",
-      question: "What property is money demonstrating here?",
+      question: "What job is money doing here?",
       options: [
         { value: 1, label: 'Helping you trade - making the exchange possible' },
         { value: 2, label: 'Storing your wealth for later' },
@@ -447,7 +331,7 @@ const MoneyProperties = ({ onComplete }) => {
       id: 2,
       title: "💰 Saving for a Vacation",
       description: "You put $200 in your savings account each month for a vacation next year.",
-      question: "What property is money demonstrating here?",
+      question: "What job is money doing here?",
       options: [
         { value: 1, label: 'Helping you make trades right now' },
         { value: 2, label: 'Keeping your wealth safe until you need it' },
@@ -466,7 +350,7 @@ const MoneyProperties = ({ onComplete }) => {
       id: 3,
       title: "🏠 Comparing House Prices",
       description: "You're looking at houses. One costs $300,000, another costs $450,000.",
-      question: "What property is money demonstrating here?",
+      question: "What job is money doing here?",
       options: [
         { value: 1, label: 'Making the trade possible' },
         { value: 2, label: 'Storing value for you' },
@@ -514,8 +398,8 @@ const MoneyProperties = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Money Properties</h1>
-        <p>Money has three main properties. Let's look at some everyday examples to understand each one.</p>
+        <h1 className="heading-critical">Money Functions</h1>
+        <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
       </div>
         
         <div className="scenario-progress">
@@ -554,9 +438,9 @@ const MoneyProperties = ({ onComplete }) => {
             <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
               {feedback[currentScenarioData.id].includes('✓') ? (
                 <div className="feedback-text">
-                  <p>✅ <strong>Excellent!</strong> You identified the correct property.</p>
+                  <p>✅ <strong>Excellent!</strong> You identified the correct function.</p>
                   <div className="correct-answer">
-                    <strong>Money's Property:</strong> {currentScenarioData.moneyFunction}
+                    <strong>Money's Job:</strong> {currentScenarioData.moneyFunction}
                   </div>
                   <div className="trait-unlocked">
                     <p><strong>💡 Key Learning:</strong> {currentScenarioData.explanation}</p>
@@ -566,7 +450,7 @@ const MoneyProperties = ({ onComplete }) => {
                 <div className="feedback-text">
                   <p>❌ <strong>Not quite.</strong></p>
                   <div className="incorrect-answer">
-                    <strong>The correct property is:</strong> {currentScenarioData.moneyFunction}
+                    <strong>The correct function is:</strong> {currentScenarioData.moneyFunction}
                   </div>
                   <div className="correct-answer">
                     <strong>💡 Key Learning:</strong> {currentScenarioData.explanation}
@@ -579,8 +463,8 @@ const MoneyProperties = ({ onComplete }) => {
 
         {unlockedFunctions.length === 3 && (
           <div className="analysis-complete">
-            <h3>✅ All Three Properties Found!</h3>
-            <p>Great! Now you understand what money needs to do. Let's see how well current money demonstrates these properties.</p>
+            <h3>✅ All Three Jobs Found!</h3>
+            <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
           </div>
         )}
     </div>
@@ -690,7 +574,7 @@ const PaymentInfrastructure = ({ onComplete }) => {
           <div className="concept-card">
             <h3 className="heading-standard">💡 Key Insight</h3>
             <p>Notice the 6 stops & 3 middlemen? That's "friction."</p>
-            <p><strong>Link back:</strong> Friction weakens <strong>Money Properties</strong> we learned about earlier - specifically the Medium of Exchange and Unit of Account jobs.</p>
+            <p><strong>Link back:</strong> Friction weakens <strong>Money Functions</strong> we learned about earlier - specifically the Medium of Exchange and Unit of Account jobs.</p>
             
             <div className="friction-analysis">
               <h4>What This Friction Creates:</h4>
@@ -705,21 +589,14 @@ const PaymentInfrastructure = ({ onComplete }) => {
           </div>
         )}
 
-        <div className="step-navigation">
-          <ActionButton 
-            onClick={handlePrevious}
-            disabled={currentStep === 0}
-            variant="secondary"
-          >
-            Previous Step
-          </ActionButton>
-          <ActionButton 
-            onClick={handleNext}
-            variant="primary"
-          >
-            {currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
-          </ActionButton>
-        </div>
+        <StepNavigation
+          currentStep={currentStep}
+          totalSteps={paymentSteps.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          canGoBack={currentStep > 0}
+          nextLabel={currentStep === paymentSteps.length - 1 ? "Learn from History" : "Next Step"}
+        />
       </div>
     </div>
   );
@@ -1194,21 +1071,14 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
       <div className="card-feature">
         {frameworkSteps[step].content}
         
-        <div className="step-navigation">
-          <ActionButton 
-            onClick={handlePrevious}
-            disabled={step === 0}
-            variant="secondary"
-          >
-            Previous
-          </ActionButton>
-          <ActionButton 
-            onClick={handleNext}
-            variant="primary"
-          >
-            {step === frameworkSteps.length - 1 ? "Apply the Scorecard" : "Next"}
-          </ActionButton>
-        </div>
+        <StepNavigation
+          currentStep={step}
+          totalSteps={frameworkSteps.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          canGoBack={step > 0}
+          nextLabel={step === frameworkSteps.length - 1 ? "Apply the Scorecard" : "Next"}
+        />
       </div>
     </div>
   );
@@ -1619,21 +1489,14 @@ const SoundMoneyFramework = ({ unlockedTraits, onComplete }) => {
       <div className="card-feature">
         {frameworkSteps[step].content}
         
-        <div className="step-navigation">
-          <ActionButton 
-            onClick={handlePrevious}
-            disabled={step === 0}
-            variant="secondary"
-          >
-            Previous
-          </ActionButton>
-          <ActionButton 
-            onClick={handleNext}
-            variant="primary"
-          >
-            {step === frameworkSteps.length - 1 ? "Complete Money Module" : "Next"}
-          </ActionButton>
-        </div>
+        <StepNavigation
+          currentStep={step}
+          totalSteps={frameworkSteps.length}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          canGoBack={step > 0}
+          nextLabel={step === frameworkSteps.length - 1 ? "Complete Money Module" : "Next"}
+        />
       </div>
     </div>
   );
@@ -1693,11 +1556,10 @@ const MoneyModule = () => {
   };
 
   const getCurrentSection = () => {
-    const sectionNames = ['Barter Problem', 'Money Properties', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'];
     return {
       index: currentStep,
-      name: sectionNames[currentStep],
-      total: sectionNames.length
+      name: stepLabels[currentStep],
+      total: stepLabels.length
     };
   };
 
@@ -1725,7 +1587,7 @@ const MoneyModule = () => {
       console.warn('Failed to save progress to localStorage:', error);
     }
     
-    if (stepIndex === 6) {
+    if (stepIndex === 5) {
       // Module completion is handled by ModuleCompletionButton
       setCurrentStep(stepIndex + 1);
     } else {
@@ -1734,6 +1596,8 @@ const MoneyModule = () => {
   };
 
   const handleTabClick = (stepIndex) => {
+    // Allow navigation to any step (including going back)
+    console.log(`Navigating to step ${stepIndex}: ${stepLabels[stepIndex]}`);
     setCurrentStep(stepIndex);
   };
 
@@ -1769,7 +1633,7 @@ const MoneyModule = () => {
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-          {['Barter Problem', 'Money Properties', 'Payment Infrastructure', 'Digital Scarcity', 'Money Experiments', 'Money Scorecard', 'Apply Scorecard'].map((step, index) => (
+          {stepLabels.map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${
@@ -1789,13 +1653,14 @@ const MoneyModule = () => {
 
 
       <div className="module-content">
-        {currentStep === 0 && <BarterProblem onComplete={handleStepComplete} />}
-        {currentStep === 1 && <MoneyProperties onComplete={handleStepComplete} />}
-        {currentStep === 2 && <PaymentInfrastructure onComplete={handleStepComplete} />}
-        {currentStep === 3 && <DigitalScarcity onComplete={handleStepComplete} />}
+        {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
+        {currentStep === 1 && <BarterProblem onComplete={handleStepComplete} />}
+        {currentStep === 2 && <MoneyFunctions onComplete={handleStepComplete} />}
+        {currentStep === 3 && <PaymentInfrastructure onComplete={handleStepComplete} />}
         {currentStep === 4 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
         {currentStep === 5 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 6 && <ApplyScorecard onComplete={handleStepComplete} />}
+        {currentStep === 6 && <DigitalScarcity onComplete={handleStepComplete} />}
+        {currentStep === 7 && <ApplyScorecard onComplete={handleStepComplete} />}
       </div>
     </div>
   );

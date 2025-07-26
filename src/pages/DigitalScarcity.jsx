@@ -286,8 +286,8 @@ const DigitalScarcity = ({ onComplete }) => {
           </p>
         </div>
 
-        <ActionButton onClick={() => onComplete(3)} variant="primary">
-          Learn from History
+        <ActionButton onClick={() => onComplete(6)} variant="primary">
+          Continue to Apply Scorecard
         </ActionButton>
       </div>
     </div>
