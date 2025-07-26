@@ -1,0 +1,146 @@
+.gm-container {
+  text-align: center;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.gm-intro {
+  color: var(--card-text);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.gm-stats {
+  background: var(--surface-muted);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.gm-instruction {
+  color: var(--card-text);
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
+.gm-observation {
+  color: var(--card-text);
+  background: var(--surface-muted);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--warning-border);
+}
+
+.gm-insight {
+  background: var(--surface-muted);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  color: var(--card-text);
+  border-left: 4px solid var(--accent-primary);
+}
+
+.gm-thought {
+  font-style: italic;
+  color: var(--accent-primary);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.gm-question-container {
+  background: var(--surface-muted);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.gm-question {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--card-text);
+  margin-bottom: 1rem;
+}
+
+.gm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.gm-answer-feedback {
+  margin-top: 1rem;
+}
+
+.gm-answer-feedback .correct {
+  color: var(--success-text);
+  font-weight: 600;
+}
+
+.gm-answer-feedback .incorrect {
+  color: var(--warning-text);
+  font-weight: 600;
+}
+
+.gm-explanation {
+  color: var(--card-text);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-primary);
+}
+
+.gm-completion {
+  background: var(--surface-muted);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  border-left: 4px solid var(--success-border);
+}
+
+.gm-completion h3 {
+  color: var(--success-text);
+  margin-bottom: 1rem;
+}
+
+.gm-completion .gm-insight {
+  color: var(--card-text);
+  margin-bottom: 1rem;
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+.gm-challenge {
+  color: var(--warning-text);
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.gm-bridge {
+  color: var(--card-text);
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.mining-animation {
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+
+.gm-info {
+  margin: 1.2rem 0;
+  font-size: .95rem;
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+}

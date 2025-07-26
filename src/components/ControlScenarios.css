@@ -2,7 +2,10 @@
   text-align: center; 
   max-width: 780px; 
   margin: 0 auto; 
-  padding: 2rem 1rem; 
+  padding: 2rem 1rem;
+  background: var(--color-dark-bgCard);
+  color: var(--color-dark-text);
+  border-radius: var(--radius-lg);
 }
 
 .card-grid { 
@@ -13,20 +16,33 @@
 }
 
 .scenario-card { 
-  border: 1px solid #ddd; 
-  border-radius: 8px; 
-  padding: 1rem; 
+  background: var(--glass-bg);
+  border: 1px solid var(--color-dark-borderLight);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  color: var(--color-dark-text);
+  backdrop-filter: blur(8px);
+  transition: var(--transition-hover);
+}
+
+.scenario-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--color-primary-500);
+  transform: translateY(-2px);
 }
 
 .bank-response { 
-  background: #f9f9f9; 
+  background: var(--color-dark-bgTertiary);
+  border: 1px solid var(--color-dark-border);
   margin-top: 0.75rem; 
   padding: 0.75rem; 
-  border-radius: 6px; 
-  font-size: 0.9rem; 
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  color: var(--color-dark-textSecondary);
 }
 
 .wrap-up { 
   margin: 2rem 0 1rem; 
-  font-weight: 500; 
+  font-weight: 500;
+  color: var(--color-dark-text);
 }
