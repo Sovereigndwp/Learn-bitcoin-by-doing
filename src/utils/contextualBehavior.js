@@ -43,10 +43,8 @@ class ContextualBehaviorSystem {
 
   trackMouseBehavior() {
     let mouseIdleTimer = null;
-    let lastMouseMove = Date.now();
     
     document.addEventListener('mousemove', (e) => {
-      lastMouseMove = Date.now();
       this.updateBehavior('staring', false);
       
       // Clear existing timer
@@ -428,37 +426,9 @@ class ContextualBehaviorSystem {
   }
 
   offerLearningAssistance() {
-    // Create assistance modal if one doesn't exist
-    if (document.querySelector('.learning-assistance-modal')) return;
-    
-    const modal = document.createElement('div');
-    modal.className = 'learning-assistance-modal modern-card';
-    modal.innerHTML = `
-      <div class="assistance-content">
-        <h3>🤝 Learning Support</h3>
-        <p>Bitcoin concepts can be challenging! Here are some ways to make learning easier:</p>
-        <div class="assistance-options">
-          <button class="assistance-option" onclick="if(window.moduleNavigation && window.moduleNavigation.reviewPrevious) { window.moduleNavigation.reviewPrevious(); } this.parentElement.parentElement.parentElement.remove();">
-            📖 Review Previous Section
-          </button>
-          <button class="assistance-option" onclick="this.parentElement.parentElement.parentElement.remove()">
-            💡 Get Alternative Explanation
-          </button>
-        </div>
-        <button class="modal-close" onclick="if(window.moduleNavigation && window.moduleNavigation.continueLearning) { window.moduleNavigation.continueLearning(); } this.parentElement.parentElement.remove();">
-          Continue Learning
-        </button>
-      </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Auto-remove after 15 seconds if not interacted with
-    setTimeout(() => {
-      if (modal.parentElement) {
-        modal.remove();
-      }
-    }, 15000);
+    // Learning Support modal disabled for homepage
+    // This functionality has been removed as it's not relevant for the homepage experience
+    return;
   }
 
   offerAdvancedChallenges() {

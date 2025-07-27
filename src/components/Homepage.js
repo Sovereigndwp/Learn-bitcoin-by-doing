@@ -171,169 +171,188 @@ const Homepage = () => {
 
 // Modern Welcome Section
 const WelcomeSection = ({ onStartJourney }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-  const slides = [
-    {
-      icon: "💰",
-      title: "Money Shapes Everything",
-      description: "Yet most of us were never taught how it actually works. This changes today.",
-      highlight: "Start with the basics"
-    },
-    {
-      icon: "🧠", 
-      title: "Think Independently",
-      description: "We'll show you the data, ask the right questions, and let you draw your own conclusions.",
-      highlight: "Evidence-based learning"
-    },
-    {
-      icon: "📊",
-      title: "Warm-up: Money Foundations",
-      description: "Before diving into Bitcoin, explore how traditional monetary systems work in this interactive presentation.",
-      highlight: "Preparatory learning",
-      isCanvaSlide: true
-    },
-    {
-      icon: "₿",
-      title: "Master Bitcoin",
-      description: "Understand the technology that's changing money forever through hands-on exploration.",
-      highlight: "Interactive education"
-    }
-  ];
+  const [activeQuestions, setActiveQuestions] = useState([]);
 
-  const handleSlideNavigation = (direction) => {
-    if (direction === 'next' && currentSlide < slides.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    } else if (direction === 'prev' && currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
+  // Reveal animation effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setActiveQuestions([0, 1, 2, 3]);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const scrollToQuestions = () => {
+    const questionsElement = document.getElementById('questions-section');
+    if (questionsElement) {
+      questionsElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // Removed automatic slide transitions - now user-controlled
-
-    return (
+  return (
     <section className="welcome-section">
-      <div className="welcome-hero">
+      {/* Hero Section */}
+      <div className="hero-section">
         <div className="hero-content">
-          <div className="slide-container">
-            <div className="slide-icon">{slides[currentSlide].icon}</div>
-            <h2 className="hero-title">{slides[currentSlide].title}</h2>
-            <p className="hero-description">{slides[currentSlide].description}</p>
-            <span className="hero-highlight">{slides[currentSlide].highlight}</span>
-            
-            {slides[currentSlide].isCanvaSlide && (
-              <div className="canva-presentation-container">
-                <div className="canva-intro-text">
-                  <p>Explore this interactive presentation to understand how traditional money works, or skip to Bitcoin learning.</p>
-          </div>
-        
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                  height: '0', 
-                  paddingTop: '56.2225%',
-                  paddingBottom: '0', 
-                boxShadow: '0 2px 8px 0 rgba(63,69,81,0.16)',
-                  margin: '1.5em 0', 
-                overflow: 'hidden',
-                  borderRadius: '12px', 
-                willChange: 'transform'
-              }}>
-                <iframe 
-                  title="Interactive Money Foundations Presentation"
-                  loading="lazy" 
-                  style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                      top: '0', 
-                      left: '0', 
-                    border: 'none',
-                      padding: '0',
-                      margin: '0'
-                  }}
-                    src="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?embed" 
-                  allowFullScreen="allowfullscreen"
-                    allow="fullscreen">
-                  </iframe>
-              </div>
-                
-                <div className="presentation-attribution">
-            <a
-                    href="https://www.canva.com/design/DAGsxTuHAPQ/3wSLQVpMathQYC5B7dJwIA/view?utm_content=DAGsxTuHAPQ&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
-              target="_blank"
-              rel="noopener noreferrer"
-                    className="presentation-link"
-            >
-                    📈 View Full Presentation in New Tab
-                  </a>
-                  <p className="attribution-text">Educational content by Dalia Platt</p>
-                </div>
-              </div>
-            )}
-        </div>
-
-        {/* Manual Navigation Controls */}
-        <div className="slide-navigation">
-          <button 
-            onClick={() => handleSlideNavigation('prev')}
-            disabled={currentSlide === 0}
-            className="slide-nav-button"
-          >
-            ⬅️ Previous
-          </button>
-          <button 
-            onClick={() => handleSlideNavigation('next')}
-            disabled={currentSlide === slides.length - 1}
-            className="slide-nav-button"
-          >
-            Next ➡️
-          </button>
-        </div>
-
-          <div className="slide-indicators">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                className={`slide-indicator ${index === currentSlide ? 'active' : ''}`}
-                onClick={() => setCurrentSlide(index)}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="learning-preview">
-        <h3>What You'll Learn</h3>
-        <div className="preview-grid">
-          <div className="preview-card">
-            <Coins className="preview-icon" />
-            <h4>How Money Really Works</h4>
-            <p>Trace money from gold to government promises to digital scarcity</p>
+          <div className="hero-icon">
+            <div className="sound-money-circle">
+              <div className="inner-circle"></div>
             </div>
-          <div className="preview-card">
-            <Shield className="preview-icon" />
-            <h4>Bitcoin Fundamentals</h4>
-            <p>Master the technology enabling trustless digital money</p>
-              </div>
-          <div className="preview-card">
-            <Brain className="preview-icon" />
-            <h4>Critical Thinking</h4>
-            <p>Learn to evaluate claims and think from first principles</p>
+          </div>
+          
+          <h1 className="hero-title">
+            Discover <span className="gradient-text">Sound Money</span>
+          </h1>
+          
+          <p className="hero-description">
+            Journey through the most important financial discovery of our time.
+          </p>
+          
+          <p className="hero-subtitle">
+            <span className="highlight-text">Question everything you thought you knew about money.</span>
+          </p>
+          
+          <button onClick={scrollToQuestions} className="hero-cta-button">
+            Begin Your Discovery
+          </button>
+        </div>
+      </div>
+
+      {/* Questions Section */}
+      <div id="questions-section" className="questions-section">
+        <div className="questions-header">
+          <h2 className="questions-title">
+            <span className="gradient-text">Question</span> Everything
+          </h2>
+          <div className="questions-subtitle">
+            <p>Challenge your assumptions.</p>
+            <p>Awaken your curiosity.</p>
+            <p className="highlight-text">Don't trust. Verify.</p>
+          </div>
+        </div>
+
+        <div className="questions-grid-2x2">
+          {/* Question 1 */}
+          <div className={`question-card ${activeQuestions.includes(0) ? 'active' : ''}`} style={{'--border-color': '#8b5cf6'}}>
+            <div className="question-icon">🔍</div>
+            <h3 className="question-title">What is money, really?</h3>
+            <div className="question-content">
+              <p>→ If you had to define money without using the word "money," what would you say it is?</p>
+              <p>→ Why do we all accept small pieces of paper or numbers on a screen in exchange for real things like food and shelter?</p>
+            </div>
+          </div>
+
+          {/* Question 2 */}
+          <div className={`question-card ${activeQuestions.includes(1) ? 'active' : ''}`} style={{'--border-color': '#3b82f6'}}>
+            <div className="question-icon">🧠</div>
+            <h3 className="question-title">Who gets to decide what money is?</h3>
+            <div className="question-content">
+              <p>→ Did we, as a society, ever vote on what counts as money?</p>
+              <p>→ What happens when that power is in the hands of just a few people?</p>
+            </div>
+          </div>
+
+          {/* Question 3 */}
+          <div className={`question-card ${activeQuestions.includes(2) ? 'active' : ''}`} style={{'--border-color': '#ef4444'}}>
+            <div className="question-icon">💸</div>
+            <h3 className="question-title">If new money can be created at will...</h3>
+            <div className="question-content">
+              <p>→ Would you feel safe storing your savings in something that can be printed endlessly?</p>
+              <p>→ What would happen if gold were suddenly easy and cheap to find?</p>
+            </div>
+          </div>
+
+          {/* Question 4 */}
+          <div className={`question-card ${activeQuestions.includes(3) ? 'active' : ''}`} style={{'--border-color': '#10b981'}}>
+            <div className="question-icon">⚖️</div>
+            <h3 className="question-title">Is our financial system fair—or just familiar?</h3>
+            <div className="question-content">
+              <p>→ Who benefits the most from the current system?</p>
+              <p>→ Who gets left behind? And why?</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="cta-section">
-        <button onClick={onStartJourney} className="start-journey-button">
-          <Play size={20} />
-          <span>Begin Your Journey</span>
-          <ArrowRight size={16} />
+      {/* Discovery Section */}
+      <div className="discovery-section">
+        <h2 className="discovery-title">
+          The <span className="gradient-text">Answer</span> Changes Everything
+        </h2>
+        
+        <div className="bitcoin-discovery-card">
+          <div className="discovery-icon">₿</div>
+          <h3 className="discovery-subtitle">Bitcoin: The Discovery of Sound Money</h3>
+          <p className="discovery-description">
+            For the first time in human history, we have money that is <span className="highlight-text">mathematically scarce</span>, 
+            <span className="highlight-text"> globally accessible</span>, and 
+            <span className="highlight-text"> controlled by no one</span>. 
+            This isn't just another currency—it's a fundamental breakthrough in human coordination.
+          </p>
+        </div>
+
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon secure">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                <path d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+              </svg>
+              <div className="feature-pulse"></div>
+            </div>
+            <h4 className="feature-title">Mathematically Secure</h4>
+            <p className="feature-description">Protected by the strongest cryptography and the world's most powerful computer network</p>
+          </div>
+          
+          <div className="feature-card">
+            <div className="feature-icon accessible">
+              <div className="spinning-circle">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                </svg>
+                <div className="center-dot"></div>
+              </div>
+              <div className="feature-bounce"></div>
+            </div>
+            <h4 className="feature-title">Globally Accessible</h4>
+            <p className="feature-description">Available to anyone, anywhere, without permission from banks or governments</p>
+          </div>
+          
+          <div className="feature-card">
+            <div className="feature-icon scarce">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <div className="sparkle sparkle-1"></div>
+              <div className="sparkle sparkle-2"></div>
+            </div>
+            <h4 className="feature-title">Truly Scarce</h4>
+            <p className="feature-description">Only 21 million will ever exist—no exceptions, no inflation, no debasement</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Final CTA Section */}
+      <div className="final-cta-section">
+        <h2 className="cta-title">
+          Ready to <span className="gradient-text">Transform</span> Your Understanding?
+        </h2>
+        
+        <p className="cta-description">
+          Join thousands who have discovered why Bitcoin represents the most important monetary innovation in centuries.
+        </p>
+        
+        <button onClick={onStartJourney} className="final-cta-button">
+          Start Your Journey
         </button>
-        <p className="cta-subtitle">~5 minutes to start • No signup required</p>
+        
+        <div className="cta-benefits">
+          <p>🎓 No prior knowledge required</p>
+          <p>🚀 Transform your financial future</p>
+        </div>
       </div>
     </section>
-      );
+  );
 };
 
 // Modern Learning Section
