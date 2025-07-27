@@ -10,6 +10,16 @@ import {
   DollarSign, Coins, Lock, Unlock, MessageCircle, BarChart3
 } from 'lucide-react';
 import { PrimaryButton, ConfirmDialog } from './ui';
+import { 
+  AnimatedSearchIcon, 
+  AnimatedBrainIcon, 
+  AnimatedMoneyIcon, 
+  AnimatedScaleIcon, 
+  AnimatedBitcoinIcon,
+  AnimatedShieldIcon,
+  AnimatedNetworkIcon,
+  AnimatedStarIcon
+} from './AnimatedIcons';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -233,7 +243,7 @@ const WelcomeSection = ({ onStartJourney }) => {
         <div className="questions-grid-2x2">
           {/* Question 1 */}
           <div className={`question-card ${activeQuestions.includes(0) ? 'active' : ''}`} style={{'--border-color': '#8b5cf6'}}>
-            <div className="question-icon">🔍</div>
+            <div className="question-icon"><AnimatedSearchIcon /></div>
             <h3 className="question-title">What is money, really?</h3>
             <div className="question-content">
               <p>→ If you had to define money without using the word "money," what would you say it is?</p>
@@ -243,7 +253,7 @@ const WelcomeSection = ({ onStartJourney }) => {
 
           {/* Question 2 */}
           <div className={`question-card ${activeQuestions.includes(1) ? 'active' : ''}`} style={{'--border-color': '#3b82f6'}}>
-            <div className="question-icon">🧠</div>
+            <div className="question-icon"><AnimatedBrainIcon /></div>
             <h3 className="question-title">Who gets to decide what money is?</h3>
             <div className="question-content">
               <p>→ Did we, as a society, ever vote on what counts as money?</p>
@@ -253,7 +263,7 @@ const WelcomeSection = ({ onStartJourney }) => {
 
           {/* Question 3 */}
           <div className={`question-card ${activeQuestions.includes(2) ? 'active' : ''}`} style={{'--border-color': '#ef4444'}}>
-            <div className="question-icon">💸</div>
+            <div className="question-icon"><AnimatedMoneyIcon /></div>
             <h3 className="question-title">If new money can be created at will...</h3>
             <div className="question-content">
               <p>→ Would you feel safe storing your savings in something that can be printed endlessly?</p>
@@ -263,7 +273,7 @@ const WelcomeSection = ({ onStartJourney }) => {
 
           {/* Question 4 */}
           <div className={`question-card ${activeQuestions.includes(3) ? 'active' : ''}`} style={{'--border-color': '#10b981'}}>
-            <div className="question-icon">⚖️</div>
+            <div className="question-icon"><AnimatedScaleIcon /></div>
             <h3 className="question-title">Is our financial system fair—or just familiar?</h3>
             <div className="question-content">
               <p>→ Who benefits the most from the current system?</p>
@@ -280,7 +290,7 @@ const WelcomeSection = ({ onStartJourney }) => {
         </h2>
         
         <div className="bitcoin-discovery-card">
-          <div className="discovery-icon">₿</div>
+          <div className="discovery-icon"><AnimatedBitcoinIcon /></div>
           <h3 className="discovery-subtitle">Bitcoin: The Discovery of Sound Money</h3>
           <p className="discovery-description">
             For the first time in human history, we have money that is <span className="highlight-text">mathematically scarce</span>, 
@@ -293,11 +303,7 @@ const WelcomeSection = ({ onStartJourney }) => {
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon secure">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                <path d="M10 17l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-              </svg>
-              <div className="feature-pulse"></div>
+              <AnimatedShieldIcon />
             </div>
             <h4 className="feature-title">Mathematically Secure</h4>
             <p className="feature-description">Protected by the strongest cryptography and the world's most powerful computer network</p>
@@ -305,14 +311,7 @@ const WelcomeSection = ({ onStartJourney }) => {
           
           <div className="feature-card">
             <div className="feature-icon accessible">
-              <div className="spinning-circle">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                </svg>
-                <div className="center-dot"></div>
-              </div>
-              <div className="feature-bounce"></div>
+              <AnimatedNetworkIcon />
             </div>
             <h4 className="feature-title">Globally Accessible</h4>
             <p className="feature-description">Available to anyone, anywhere, without permission from banks or governments</p>
@@ -320,11 +319,7 @@ const WelcomeSection = ({ onStartJourney }) => {
           
           <div className="feature-card">
             <div className="feature-icon scarce">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              <div className="sparkle sparkle-1"></div>
-              <div className="sparkle sparkle-2"></div>
+              <AnimatedStarIcon />
             </div>
             <h4 className="feature-title">Truly Scarce</h4>
             <p className="feature-description">Only 21 million will ever exist—no exceptions, no inflation, no debasement</p>
