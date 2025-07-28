@@ -1,5 +1,5 @@
 {
-  "name": "smd-july-2025",
+  "name": "learn-bitcoin-by-doing",
   "homepage": "./",
   "version": "0.1.0",
   "private": true,
@@ -43,7 +43,7 @@
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2",
     "web-vitals": "^3.5.0",
-    "webpack": "^5.101.0"
+    "webpack": "^5.89.0"
   },
   "scripts": {
     "start": "PORT=3003 craco start",

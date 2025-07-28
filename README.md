@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# SMD July 2025 - Sound Money Discovery
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An interactive educational platform that helps users understand Bitcoin and sound money principles through hands-on learning experiences.
+
+## Overview
+
+This project provides interactive tools and modules to help users discover the fundamentals of money, Bitcoin, and sound monetary principles. Built with React and modern web technologies.
 
 ## Available Scripts
 

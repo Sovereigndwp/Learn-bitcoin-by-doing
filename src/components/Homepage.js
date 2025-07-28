@@ -222,7 +222,7 @@ const WelcomeSection = ({ onStartJourney }) => {
           </p>
           
           <button onClick={scrollToQuestions} className="hero-cta-button">
-            Begin Your Discovery
+            Don't Trust, Verify!
           </button>
         </div>
       </div>
@@ -338,7 +338,7 @@ const WelcomeSection = ({ onStartJourney }) => {
         </p>
         
         <button onClick={onStartJourney} className="final-cta-button">
-          Start Your Journey
+          Begin Your Discovery
         </button>
         
         <div className="cta-benefits">
