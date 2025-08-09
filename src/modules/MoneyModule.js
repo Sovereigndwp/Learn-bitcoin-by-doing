@@ -2068,6 +2068,7 @@ const MoneyModule = () => {
         {currentStep === 4 && <CombinedModernMoney onComplete={handleStepComplete} />}
         {currentStep === 5 && <CombinedSoundMoneyFramework onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
         {currentStep === 6 && <ApplyScorecard onComplete={handleStepComplete} />}
+        {currentStep === 7 && <ModuleCompletion />}
       </div>
     </div>
   );

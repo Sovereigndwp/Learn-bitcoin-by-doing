@@ -66,11 +66,11 @@ export const ModuleCompletionButton = ({
 
         <div className="completion-actions">
           <ContinueButton 
-            onClick={handleNextModule}
+            onClick={handleCompletion}
             className="primary large completion-button"
           >
             <Trophy size={20} />
-            Next Module
+            Complete Module
             <ChevronRight size={20} />
           </ContinueButton>
           
