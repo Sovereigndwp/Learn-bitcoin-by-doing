@@ -418,7 +418,6 @@
    ======================================== */
 .challenge-card,
 .prediction-card,
-.insight-box,
 .reality-check {
   background: var(--module-bg-card);
   border: 2px solid var(--module-primary);
@@ -427,6 +426,17 @@
   margin: var(--module-spacing-md) 0;
   box-shadow: var(--module-shadow-bitcoin);
   transition: var(--module-transition-interactive);
+}
+
+.insight-box {
+  background: var(--color-primary-bg-subtle) !important;
+  border: 2px solid var(--color-primary-alpha-30) !important;
+  border-radius: var(--module-radius-lg);
+  padding: var(--module-spacing-lg);
+  margin: var(--module-spacing-md) 0;
+  color: var(--module-text-primary) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .challenge-card:hover,
@@ -565,14 +575,14 @@
 }
 
 .quiz-option.correct {
-  background: rgba(76, 175, 80, 0.1);
-  border-color: var(--color-semantic-success);
+  background: var(--color-success-bg);
+  border-color: var(--color-success-light);
   box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
 }
 
 .quiz-option.incorrect {
-  background: rgba(244, 67, 54, 0.1);
-  border-color: var(--color-semantic-error);
+  background: var(--color-error-bg);
+  border-color: var(--color-error-light);
   box-shadow: 0 0 15px rgba(244, 67, 54, 0.3);
 }
 
@@ -652,14 +662,14 @@
 
 .feedback-section.correct,
 .quiz-feedback.correct {
-  border-left: 4px solid var(--color-semantic-success);
-  background: rgba(76, 175, 80, 0.05);
+  border-left: 4px solid var(--color-success-light);
+  background: var(--color-success-bg);
 }
 
 .feedback-section.incorrect,
 .quiz-feedback.incorrect {
-  border-left: 4px solid var(--color-semantic-error);
-  background: rgba(244, 67, 54, 0.05);
+  border-left: 4px solid var(--color-error-light);
+  background: var(--color-error-bg);
 }
 
 /* Responsive design for quiz options */
@@ -705,17 +715,17 @@
 .explanation-card.correct,
 .feedback-section.correct,
 .quiz-feedback.correct {
-  background: var(--colors-semantic-successLight);
-  border: 2px solid var(--module-success);
-  color: var(--module-success);
+  background: var(--color-success-bg);
+  border: 2px solid var(--color-success-light);
+  color: var(--color-success-text);
 }
 
 .explanation-card.incorrect,
 .feedback-section.incorrect,
 .quiz-feedback.incorrect {
-  background: var(--colors-semantic-errorLight);
-  border: 2px solid var(--module-error);
-  color: var(--module-error);
+  background: var(--color-error-bg);
+  border: 2px solid var(--color-error-light);
+  color: var(--color-error-text);
 }
 
 .feedback-text,
@@ -1076,8 +1086,8 @@ button,
 }
 
 .feedback-correct {
-  background: rgba(76, 175, 80, 0.1);
-  border: 2px solid var(--color-semantic-success);
+  background: var(--color-success-bg);
+  border: 2px solid var(--color-success-light);
   border-radius: var(--module-radius-md);
   padding: var(--module-spacing-lg);
   margin: var(--module-spacing-md) 0;
@@ -1090,8 +1100,8 @@ button,
 }
 
 .feedback-hint {
-  background: rgba(255, 152, 0, 0.1);
-  border: 2px solid var(--color-semantic-warning);
+  background: var(--color-warning-bg);
+  border: 2px solid var(--color-warning-light);
   border-radius: var(--module-radius-md);
   padding: var(--module-spacing-lg);
   margin: var(--module-spacing-md) 0;
@@ -1610,9 +1620,9 @@ h1.content-tier-1 {
 .quiz-feedback.correct,
 .feedback-section.correct,
 .correct-feedback {
-  border-color: var(--color-semantic-success) !important;
+  border-color: var(--color-success-light) !important;
   background: linear-gradient(135deg, 
-    rgba(76, 175, 80, 0.1) 0%, 
+    var(--color-success-bg) 0%, 
     var(--glass-bg) 100%) !important;
 }
 
@@ -1620,9 +1630,9 @@ h1.content-tier-1 {
 .quiz-feedback.incorrect,
 .feedback-section.incorrect,
 .incorrect-feedback {
-  border-color: var(--color-semantic-warning) !important;
+  border-color: var(--color-warning-light) !important;
   background: linear-gradient(135deg, 
-    rgba(255, 152, 0, 0.1) 0%, 
+    var(--color-warning-bg) 0%, 
     var(--glass-bg) 100%) !important;
 }
 
@@ -1648,8 +1658,8 @@ h1.content-tier-1 {
 .trait-unlocked,
 .insight-unlocked,
 .learning-point {
-  background: rgba(247, 147, 26, 0.1) !important;
-  border: 1px solid rgba(247, 147, 26, 0.3) !important;
+  background: var(--color-primary-bg-subtle) !important;
+  border: 1px solid var(--color-primary-alpha-30) !important;
   border-radius: var(--module-radius-md) !important;
   padding: var(--module-spacing-md) !important;
   margin-top: var(--module-spacing-md) !important;

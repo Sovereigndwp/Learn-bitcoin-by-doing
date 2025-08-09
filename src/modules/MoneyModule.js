@@ -31,318 +31,255 @@ import '../components/ModuleCommon.css';
 // Step labels for consistent navigation
 const stepLabels = [
   'Introduction',
-  'Barter Problem',
-  'Money Functions',
-  'Payment Infrastructure', 
-  'Money Experiments',
-  'Money Scorecard',
-  'Digital Scarcity',
-  'Apply Scorecard',
-  'Money Evolution Timeline'
+  'Why Money?',
+  'What Money Must Do',
+  'Time vs Money',
+  'How Modern Money Works', 
+  'Sound Money Framework',
+  'Apply Your Framework'
 ];
 
 
 // Local components removed - now using imported page components
 
 // Main Module Component
-// BarterProblem component definition
-const BarterProblem = ({ onComplete }) => {
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [playerChoice, setPlayerChoice] = useState(null);
-  const [showOutcome, setShowOutcome] = useState(false);
-  const [discoveredProblems, setDiscoveredProblems] = useState(new Set());
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+// WhyMoney component - Combined comprehensive lesson
+const WhyMoney = ({ onComplete }) => {
+  const [stage, setStage] = useState(0); // 0: intro, 1: comprehensive scenario, 2: conclusion
+  const [playerChoices, setPlayerChoices] = useState([]);
+  const [allProblems, setAllProblems] = useState(new Set());
 
-  const economicScenarios = [
-    {
-      id: 1,
-      title: "🍞 The Baker's Problem",
-      situation: "You're a baker. You need shoes, but the shoemaker doesn't want bread.",
-      trader: "Shoemaker says: 'I already have bread. I need a haircut.'",
-      question: "What's the core problem here?",
-      options: [
-        { 
-          id: 1, 
-          text: 'The shoemaker is being difficult', 
-          result: 'wrong',
-          problem: 'coincidence',
-          isCorrect: false
-        },
-        { 
-          id: 2, 
-          text: 'You need to find someone who wants bread AND can give the shoemaker a haircut', 
-          result: 'correct',
-          problem: 'complexity',
-          isCorrect: true
-        },
-        { 
-          id: 3, 
-          text: 'You should have brought different goods to trade', 
-          result: 'wrong',
-          problem: 'coincidence',
-          isCorrect: false
-        }
-      ],
-      correctAnswer: 2,
-      insight: "This demonstrates the 'double coincidence of wants' problem - both parties must want what the other has, at the same time.",
-      wrongExplanation: "The real issue isn't personality or preparation - it's that barter requires finding someone who wants exactly what you have AND has what you want."
-    },
-    {
-      id: 2,
-      title: "🏠 The House Builder's Challenge",
-      situation: "You want to build a house. You need: bricks, wood, nails, and tools. Everyone wants different things from you.",
-      trader: "Brick maker wants fish. Wood seller wants clothes. Nail maker wants meat. Tool maker wants grain.",
-      question: "What makes this situation so complex?",
-      options: [
-        { 
-          id: 1, 
-          text: 'You need too many different materials', 
-          result: 'wrong',
-          problem: 'timing',
-          isCorrect: false
-        },
-        { 
-          id: 2, 
-          text: 'Coordinating multiple trades with different people creates a complex chain that can easily break', 
-          result: 'correct',
-          problem: 'complexity',
-          isCorrect: true
-        },
-        { 
-          id: 3, 
-          text: 'The prices are too high', 
-          result: 'wrong',
-          problem: 'failure',
-          isCorrect: false
-        }
-      ],
-      correctAnswer: 2,
-      insight: "Complex barter chains are fragile - if any link breaks, the entire sequence fails. This shows why simple, universally accepted exchange is valuable.",
-      wrongExplanation: "The core issue isn't about quantities or prices, but the fundamental difficulty of coordinating multiple interdependent trades."
-    },
-    {
-      id: 3,
-      title: "⏰ The Timing Problem",
-      situation: "You've arranged a 4-step trade chain, but the brick maker already traded their bricks yesterday.",
-      trader: "The brick maker says: 'I already traded my bricks yesterday. Come back next month.'",
-      question: "What does this reveal about barter systems?",
-      options: [
-        { 
-          id: 1, 
-          text: 'You should have moved faster', 
-          result: 'wrong',
-          problem: 'timing',
-          isCorrect: false
-        },
-        { 
-          id: 2, 
-          text: 'Barter requires perfect timing - everyone must be ready to trade at exactly the same moment', 
-          result: 'correct',
-          problem: 'system',
-          isCorrect: true
-        },
-        { 
-          id: 3, 
-          text: 'People are unreliable trading partners', 
-          result: 'wrong',
-          problem: 'innovation',
-          isCorrect: false
-        }
-      ],
-      correctAnswer: 2,
-      insight: "Barter systems require synchronization that's nearly impossible to achieve. Good money should work regardless of timing.",
-      wrongExplanation: "The issue isn't speed or people's reliability - it's that barter fundamentally requires impossible coordination of multiple parties' needs and timing."
+  const handleAnswer = (problemType, isCorrect) => {
+    if (isCorrect) {
+      setAllProblems(prev => new Set([...prev, problemType]));
     }
-  ];
-
-  const problemTypes = {
-    coincidence: "Both People Must Want What the Other Has",
-    complexity: "Too Many Steps Required", 
-    time: "Takes Too Long to Find Trading Partners",
-    timing: "Everything Must Happen at the Same Time",
-    failure: "System Doesn't Work",
-    system: "The Whole Approach is Flawed",
-    innovation: "Need a Better Solution"
+    setPlayerChoices(prev => [...prev, { problemType, isCorrect }]);
   };
 
-  const handleChoice = (optionId) => {
-    setPlayerChoice(optionId);
-    setShowOutcome(true);
-    
-    const selectedOption = economicScenarios[currentScenario].options.find(opt => opt.id === optionId);
-    console.log('Selected option:', selectedOption);
-    console.log('Is correct?', selectedOption?.isCorrect);
-    
-    if (selectedOption?.problem) {
-      setDiscoveredProblems(prev => new Set([...prev, selectedOption.problem]));
-    }
+  const handleNextStage = () => {
+    setStage(prev => prev + 1);
   };
 
-  const handleNext = () => {
-    if (currentScenario < economicScenarios.length - 1) {
-      setCurrentScenario(prev => prev + 1);
-      setPlayerChoice(null);
-      setShowOutcome(false);
-    } else {
-      onComplete(1);
-    }
-  };
+  if (stage === 0) {
+    return (
+      <div className="module-container">
+        <div className="section-card">
+          <h1 className="heading-critical">Why Money?</h1>
+          <p>Before we explore how money works today, let's understand why it exists at all.</p>
+          <p>Imagine a world without money. How would you get the things you need?</p>
+        </div>
+        
+        <div className="card-feature">
+          <h2 className="heading-high">The Challenge</h2>
+          <p>You're a skilled baker in a village without money. You make amazing bread, but you need shoes for winter. The shoemaker needs a roof repair, the carpenter needs medicine, and the herbalist needs... bread.</p>
+          
+          <div className="scenario-setup">
+            <h3>Your Mission</h3>
+            <p>Trade your bread for shoes. Sounds simple? Let's see what actually happens in a barter world.</p>
+          </div>
+          
+          <ActionButton onClick={handleNextStage} variant="primary">
+            Start Trading →
+          </ActionButton>
+        </div>
+      </div>
+    );
+  }
 
-  const handlePrevious = () => {
-    if (currentScenario > 0) {
-      setCurrentScenario(prev => prev - 1);
-      setPlayerChoice(null);
-      setShowOutcome(false);
-    }
-  };
+  if (stage === 1) {
+    return (
+      <ComprehensiveBarterScenario 
+        onAnswer={handleAnswer}
+        onComplete={handleNextStage}
+        discoveredProblems={allProblems}
+      />  
+    );
+  }
 
-  const getOutcomeText = (result) => {
-    const outcomes = {
-      reject: "❌ Trade fails because you both don't want what the other has.",
-      chain: "🔗 You realize you need to find multiple people and coordinate complex trades.",
-      search: "🔍 You spend hours looking but most people don't want bread.",
-      quit: "⏸️ You give up because it's too complicated.",
-      insight: "💡 You see that coordinating multiple trades gets extremely difficult.",
-      chaos: "🌪️ When one person isn't ready, the whole chain falls apart.",
-      epiphany: "⚡ You realize the problem isn't the people - it's the system itself.",
-      solution: "🧠 What if there was something everyone would accept? That's the idea behind money."
-    };
-    return outcomes[result] || "You tried something...";
-  };
-
-  const currentScenarioData = economicScenarios[currentScenario];
-  
+  // Conclusion stage
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Barter World: Why We Invented Money</h1>
-        <p>Imagine waking up in a world with no money. Not bad money—no money at all.</p>
-        <p>You want shoes. Someone else wants bread. Another needs roof repair. Unless you find the exact person who wants what you have and has what you need, you can't trade. This is called the double coincidence of wants—and it makes life frustrating.</p>
-        <p>Plus, even if you trade, you can't save extra food (it spoils), and nobody agrees what things are worth.</p>
-        <p>Without money, trade is slow, saving is risky, and comparing value is messy.</p>
+        <h1 className="heading-critical">💡 The Big Realization</h1>
+        <p>You've discovered why every civilization eventually invented money!</p>
       </div>
-        
+      
       <div className="card-feature">
-        <h2 className="heading-high">Trading Scenarios</h2>
-        <p>Click through these everyday trading examples to see what really happens...</p>
-
-        <div className="scenario-tracker">
-          <div className="analysis-stats">
-            <div className="stat-item">
-              <span className="stat-label">Scenario:</span>
-              <span className="stat-value">{currentScenario + 1} of {economicScenarios.length}</span>
+        <h2 className="heading-high">The Problems You Found</h2>
+        <div className="problems-discovered">
+          {Array.from(allProblems).map(problem => (
+            <div key={problem} className="problem-insight">
+              <span className="problem-icon">✓</span>
+              <div className="problem-details">
+                <h4>{problemLabels[problem]}</h4>
+                <p>{problemExplanations[problem]}</p>
+              </div>
             </div>
-            <div className="stat-item">
-              <span className="stat-label">Problems Found:</span>
-              <span className="stat-value">{discoveredProblems.size}</span>
-            </div>
-          </div>
+          ))}
         </div>
-
-        <div className="card-content">
-          <div className="scenario-header">
-            <h3 className="heading-medium">{currentScenarioData.title}</h3>
-            <div className="scenario-setup">
-              <p><strong>Situation:</strong> {currentScenarioData.situation}</p>
-              <p><strong>What happens:</strong> {currentScenarioData.trader}</p>
-            </div>
-          </div>
+        
+        <div className="concept-card">
+          <h3>🚀 The Solution: Money</h3>
+          <p>Money solved all these problems by creating something everyone would accept in trade. This wasn't invented by governments—people created it because they desperately needed it.</p>
           
-          <div className="choice-section">
-            <p><strong>{currentScenarioData.question}</strong></p>
-            
-            {!showOutcome ? (
-              <div className="quiz-options">
-                {currentScenarioData.options.map(option => (
-                  <ActionButton
-                    key={option.id}
-                    onClick={() => handleChoice(option.id)}
-                    variant="outline"
-                  >
-                    <span className="option-text">{option.text}</span>
-                  </ActionButton>
-                ))}
-              </div>
-            ) : (
-              <div className={`quiz-feedback ${economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.isCorrect ? 'correct' : 'incorrect'}`}>
-                {economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.isCorrect ? (
-                  <div className="feedback-text">
-                    <p>✅ <strong>Excellent!</strong> You identified the core problem.</p>
-                    <div className="correct-answer">
-                      <strong>💡 What This Teaches Us:</strong> {currentScenarioData.insight}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="feedback-text">
-                    <p>❌ <strong>Not quite.</strong></p>
-                    <div className="incorrect-explanation">
-                      <strong>Why this is wrong:</strong> {currentScenarioData.wrongExplanation}
-                    </div>
-                    <div className="correct-answer">
-                      <strong>✅ Correct answer:</strong> {currentScenarioData.options.find(o => o.isCorrect)?.text}
-                    </div>
-                    <div className="insight-explanation">
-                      <strong>💡 What This Teaches Us:</strong> {currentScenarioData.insight}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+          <div className="key-insight">
+            <h4>Key Insight</h4>
+            <p>Money isn't just convenient—it's essential for complex civilization. Without it, we'd still be living in small villages, limited by what we could trade directly.</p>
           </div>
         </div>
-
-        {discoveredProblems.size > 0 && (
-          <div className="card-supporting">
-            <h3 className="heading-standard">📊 Problems We've Found:</h3>
-            <div className="problems-grid">
-              {Array.from(discoveredProblems).map(problem => (
-                <div key={problem} className="problem-badge">
-                  ✓ {problemTypes[problem]}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {currentScenario === economicScenarios.length - 1 && showOutcome && (
-          <div className="concept-card">
-            <div className="conclusion-box">
-              <h2 className="heading-high">📈 What We Learned</h2>
-              <p>Trading without money is really hard! That's why every society eventually invented some form of money.</p>
-              
-              <div className="card-supporting">
-                <h4 className="heading-standard">The Big Problems:</h4>
-                <ul>
-                  <li><strong>Hard to Match:</strong> Finding someone who has what you want AND wants what you have</li>
-                  <li><strong>Takes Forever:</strong> Searching for the right trading partners</li>
-                  <li><strong>Bad Timing:</strong> Everyone needs to be ready to trade at the same time</li>
-                  <li><strong>Can't Save:</strong> Food spoils, so you can't store wealth</li>
-                  <li><strong>Can't Compare:</strong> How many chickens equals one cow?</li>
-                </ul>
-              </div>
-
-              <div className="tip-card">
-                <h4 className="heading-standard">💡 The Big Idea</h4>
-                <p>Money solved these problems by giving people something everyone would accept. This wasn't invented by governments—people created it because they needed it.</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showOutcome && (
-          <StepNavigation
-            currentStep={currentScenario}
-            totalSteps={economicScenarios.length}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            canGoBack={currentScenario > 0}
-            nextLabel={currentScenario === economicScenarios.length - 1 ? "Continue to Money Functions" : "Next Scenario"}
-          />
-        )}
+        
+        <ActionButton onClick={() => onComplete(1)} variant="primary">
+          Now Let's See What Money Must Do →
+        </ActionButton>
       </div>
     </div>
   );
 };
+
+// Comprehensive barter scenario combining all problems into one experience
+const ComprehensiveBarterScenario = ({ onAnswer, onComplete, discoveredProblems }) => {
+  const [step, setStep] = useState(0);
+  const [choices, setChoices] = useState([]);
+  
+  const scenarioSteps = [
+    {
+      title: "🍞 First Attempt: Direct Trade",
+      situation: "You approach the shoemaker with your fresh bread.",
+      dialogue: "'Nice bread,' says the shoemaker, 'but I already have plenty. I need my roof fixed.'",
+      question: "What's the core problem?",
+      options: [
+        { text: "The shoemaker doesn't appreciate good bread", correct: false },
+        { text: "You need to find someone who wants bread AND has shoes", correct: false },
+        { text: "Both people must want what the other has, at the same time", correct: true, problem: "coincidence" }
+      ],
+      insight: "This is called the 'double coincidence of wants' problem—the foundation of why barter is so difficult."
+    },
+    {
+      title: "🔗 Second Attempt: Chain Trading",  
+      situation: "You decide to create a trade chain: bread → roof repair → shoes.",
+      dialogue: "You find a carpenter who wants bread and can fix roofs. But when you both go to the shoemaker, he says: 'I need medicine, not roof repair.'",
+      question: "What makes this even harder?", 
+      options: [
+        { text: "You need too many different people", correct: false },
+        { text: "Coordinating multiple people creates fragile chains", correct: true, problem: "complexity" },
+        { text: "Everyone is being unreasonable", correct: false }
+      ],
+      insight: "Trade chains are fragile—if any link breaks, the entire sequence fails. More people = more failure points."
+    },
+    {
+      title: "⏰ Third Attempt: Timing Issues",
+      situation: "You finally arrange a 4-person trade chain, but...",
+      dialogue: "By the time you coordinate everyone, the herbalist has already traded her medicine. 'Come back next month,' she says.",
+      question: "What does this reveal?",
+      options: [
+        { text: "You should have moved faster", correct: false },
+        { text: "Everyone must be ready to trade at exactly the same moment", correct: true, problem: "timing" },
+        { text: "People can't be trusted", correct: false }
+      ],
+      insight: "Barter requires impossible synchronization. Everyone must want to trade at the exact same moment—nearly impossible to coordinate."
+    },
+    {
+      title: "💔 The Fundamental Problem",
+      situation: "After weeks of trying, you realize the deeper issue.",
+      dialogue: "Even when trades work, you can't save extra bread (it spoils), can't easily compare values (is 1 shoe = 3 loaves or 5?), and every transaction requires finding exact matches.",
+      question: "What does this tell us about trade without money?",
+      options: [
+        { text: "It works fine with patience", correct: false },
+        { text: "The whole system is fundamentally flawed for complex societies", correct: true, problem: "system" },
+        { text: "People just need to be more flexible", correct: false }
+      ],
+      insight: "Barter can't support complex civilization. It limits communities to small, simple economies where everyone knows everyone."
+    }
+  ];
+  
+  const currentStep = scenarioSteps[step];
+  
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">The Great Barter Experiment</h1>
+        <p>Step {step + 1} of {scenarioSteps.length}: Let's see what happens when you try to trade...</p>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentStep.title}</h2>
+        
+        <div className="scenario-content">
+          <div className="situation-box">
+            <h3>What's Happening</h3>
+            <p>{currentStep.situation}</p>
+          </div>
+          
+          <div className="dialogue-box">
+            <p><em>{currentStep.dialogue}</em></p>
+          </div>
+          
+          <div className="question-section">
+            <h4>{currentStep.question}</h4>
+            
+            {!choices[step] && (
+              <div className="quiz-options">
+                {currentStep.options.map((option, index) => (
+                  <ActionButton
+                    key={index}
+                    onClick={() => {
+                      const newChoices = [...choices];
+                      newChoices[step] = option;
+                      setChoices(newChoices);
+                      onAnswer(option.problem, option.correct);
+                    }}
+                    variant="outline"
+                  >
+                    {option.text}
+                  </ActionButton>
+                ))}
+              </div>
+            )}
+            
+            {choices[step] && (
+              <div className={`quiz-feedback ${choices[step].correct ? 'correct' : 'incorrect'}`}>
+                <div className="feedback-text">
+                  <p>{choices[step].correct ? '✅ Exactly right!' : '❌ Not quite.'}</p>
+                  <div className="insight-box">
+                    <strong>💡 Key Learning:</strong> {currentStep.insight}
+                  </div>
+                </div>
+                
+                <ActionButton 
+                  onClick={() => {
+                    if (step < scenarioSteps.length - 1) {
+                      setStep(step + 1);
+                    } else {
+                      onComplete();
+                    }
+                  }}
+                  variant="primary"
+                >
+                  {step < scenarioSteps.length - 1 ? 'Continue the Experiment →' : 'See What You Discovered →'}
+                </ActionButton>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const problemLabels = {
+  "coincidence": "Double Coincidence of Wants",
+  "complexity": "Coordination Complexity", 
+  "timing": "Perfect Timing Required",
+  "system": "Systematic Failure"
+};
+
+const problemExplanations = {
+  "coincidence": "Both parties must want exactly what the other has, at the same time. This is mathematically unlikely.",
+  "complexity": "Multiple-party trades create fragile chains where any single failure breaks the entire sequence.",
+  "timing": "Everyone involved must be ready to trade at the exact same moment, which is nearly impossible to coordinate.",
+  "system": "The fundamental limitations make barter unsuitable for anything beyond simple, small-scale economies."
+};
+
 
 // Renamed: MoneySuperpowers -> MoneyFunctions
 const MoneyFunctions = ({ onComplete }) => {
@@ -518,6 +455,295 @@ const MoneyFunctions = ({ onComplete }) => {
         )}
         </>
       )}
+    </div>
+  );
+};
+
+// Time Preference and Opportunity Cost Interactive Lesson
+const TimeAndMoneyLesson = ({ onComplete }) => {
+  const [currentScenario, setCurrentScenario] = useState(() => {
+    const saved = localStorage.getItem('timeAndMoneyLesson_currentScenario');
+    return saved ? parseInt(saved) : 0;
+  });
+  const [playerChoices, setPlayerChoices] = useState(() => {
+    const saved = localStorage.getItem('timeAndMoneyLesson_playerChoices');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [showInsights, setShowInsights] = useState(false);
+  const [completedScenarios, setCompletedScenarios] = useState(() => {
+    const saved = localStorage.getItem('timeAndMoneyLesson_completedScenarios');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+  
+  const scenarios = [
+    {
+      id: 1,
+      title: "🎯 The Weekend Choice",
+      situation: "It's Friday evening. You just got paid $400 for a week of hard work at your part-time job.",
+      context: "Your friends are planning an expensive weekend trip that costs $300. It would be amazing fun, and you'd create great memories. But you've also been saving for a new laptop that costs $800 - you'd need it for school and potential freelance work.",
+      question: "What do you choose?",
+      options: [
+        { 
+          id: 'immediate', 
+          text: "Take the trip now - life is short and you deserve fun after working hard!", 
+          timePreference: "high",
+          consequence: "You have an amazing weekend but are back to $100 savings. The laptop dream is pushed back months."
+        },
+        { 
+          id: 'delayed', 
+          text: "Skip the trip, save the money - you're halfway to your laptop goal!", 
+          timePreference: "low",
+          consequence: "You miss out on the trip but now have $500 saved. Just 3 more paychecks until your laptop!"
+        }
+      ],
+      insight: "This choice reveals your **time preference** - how much you value immediate pleasure vs. future benefits. Neither choice is 'wrong', but they lead to very different outcomes.",
+      moneyInsight: "Money lets you store your work (time) and move it to the future. Without money, your 40 hours of work this week would be gone forever."
+    },
+    {
+      id: 2,
+      title: "⚖️ The Opportunity Trade-off",
+      situation: "You have $1,000 saved up from months of work. Three opportunities appear at once:",
+      context: "Option A: A course that teaches valuable skills ($800) - could help you earn more later\nOption B: A reliable used car ($900) - would save you 2 hours of commuting daily\nOption C: Keep saving for a down payment on an apartment ($1000+) - would mean independence",
+      question: "You can only choose one. What matters most?",
+      options: [
+        { 
+          id: 'skills', 
+          text: "Invest in the course - skills pay dividends forever", 
+          opportunity: "Better earnings potential, but still dealing with long commutes and living at home",
+          consequence: "You gain valuable skills and earn 20% more within 6 months, but still have transportation and housing challenges."
+        },
+        { 
+          id: 'transport', 
+          text: "Buy the car - time is money, and 2 hours daily is huge", 
+          opportunity: "More time and freedom, but delayed skill development and apartment goals",
+          consequence: "You save 14 hours per week (728 hours/year!) and can take jobs farther away, but other goals are delayed."
+        },
+        { 
+          id: 'housing', 
+          text: "Keep saving for the apartment - independence is priceless", 
+          opportunity: "Future independence, but continued transportation costs and current skill level",
+          consequence: "You're 6 months closer to having your own place, but still dealing with commute time and current income level."
+        }
+      ],
+      insight: "This is **opportunity cost** - every choice means giving up other opportunities. There's no 'free' choice - everything has a trade-off.",
+      moneyInsight: "Money represents stored work and time. When you spend it on one thing, you're choosing NOT to spend that time/work on something else."
+    },
+    {
+      id: 3,
+      title: "💰 The Value Storage Challenge",
+      situation: "You've been working part-time for a year and saved $2,000. Your grandmother gives you advice:",
+      context: "Grandma: 'When I was your age, $2,000 could buy a decent used car. Now it barely covers a semester of textbooks. Money doesn't hold its value like it used to.'\n\nYou start thinking: If money loses value over time, what's the point of saving?",
+      question: "What's really happening here?",
+      options: [
+        { 
+          id: 'prices', 
+          text: "Everything just costs more now - that's normal", 
+          understanding: "surface",
+          consequence: "You accept that 'things cost more' but don't understand why your savings lose buying power."
+        },
+        { 
+          id: 'money_printing', 
+          text: "Someone is creating more money, making each dollar worth less", 
+          understanding: "deeper",
+          consequence: "You realize that when more money is created, your saved money can buy less. Your work is being diluted."
+        },
+        { 
+          id: 'just_save_more', 
+          text: "I need to work harder and save faster than prices rise", 
+          understanding: "reactive",
+          consequence: "You're in a race against inflation, working harder just to maintain the same purchasing power."
+        }
+      ],
+      insight: "When money is created faster than goods and services, each unit becomes less valuable. Your stored work (savings) buys less over time.",
+      moneyInsight: "Good money should preserve the value of your work over time. If it doesn't, you're forced to spend immediately or find other ways to store value."
+    },
+    {
+      id: 4,
+      title: "🔄 The Time-Money Connection",
+      situation: "After thinking about your grandmother's advice, you have a realization:",
+      context: "You work 20 hours per week at $15/hour = $300 per week\nThat's 20 hours of your life, your energy, your time\nWhen you save that $300, you're essentially storing those 20 hours\nWhen prices rise but your savings don't, those 20 hours become worth less",
+      question: "What is money really?",
+      options: [
+        { 
+          id: 'paper', 
+          text: "Money is paper/digital numbers that represents value", 
+          depth: "surface",
+          consequence: "You see money as an abstract concept, missing its deeper connection to human effort."
+        },
+        { 
+          id: 'stored_time', 
+          text: "Money is stored time and work - it represents hours of my life", 
+          depth: "profound",
+          consequence: "You understand that money = your life energy. When money loses value, your time is being stolen."
+        },
+        { 
+          id: 'tool', 
+          text: "Money is a useful tool for buying things I want or need", 
+          depth: "practical",
+          consequence: "You see money's utility but miss the deeper truth about what it represents."
+        }
+      ],
+      insight: "Money is crystallized time and work. When you earn $300, you're trading 20 hours of your life for that money. When money loses value, your life energy loses value.",
+      moneyInsight: "This is why **good money matters**. It's not just about economics - it's about preserving the value of human time and effort. Bad money steals your life energy."
+    }
+  ];
+  
+  const currentScenarioData = scenarios[currentScenario];
+  
+  // Save progress automatically
+  useEffect(() => {
+    localStorage.setItem('timeAndMoneyLesson_currentScenario', currentScenario.toString());
+  }, [currentScenario]);
+  
+  useEffect(() => {
+    localStorage.setItem('timeAndMoneyLesson_playerChoices', JSON.stringify(playerChoices));
+  }, [playerChoices]);
+  
+  useEffect(() => {
+    localStorage.setItem('timeAndMoneyLesson_completedScenarios', JSON.stringify(Array.from(completedScenarios)));
+  }, [completedScenarios]);
+  
+  const handleChoice = (optionId) => {
+    const option = currentScenarioData.options.find(opt => opt.id === optionId);
+    setPlayerChoices(prev => ({
+      ...prev,
+      [currentScenarioData.id]: option
+    }));
+    setCompletedScenarios(prev => new Set([...prev, currentScenarioData.id]));
+    setShowInsights(true);
+  };
+  
+  const handleNext = () => {
+    if (currentScenario < scenarios.length - 1) {
+      setCurrentScenario(currentScenario + 1);
+      setShowInsights(false);
+    } else {
+      // All scenarios completed - move to final summary
+      setCurrentScenario(scenarios.length);
+      setShowInsights(false);
+    }
+  };
+  
+  const handleComplete = () => {
+    onComplete(3); // Move to step 4 (How Modern Money Works)
+  };
+  
+  if (currentScenario >= scenarios.length) {
+    // Final summary
+    return (
+      <div className="module-container">
+        <div className="section-card">
+          <h1 className="heading-critical">💡 The Big Picture</h1>
+          <p>You've discovered the fundamental connection between time, work, and money.</p>
+        </div>
+        
+        <div className="card-feature">
+          <h2 className="heading-high">What You've Learned</h2>
+          
+          <div className="concept-card">
+            <h3>🕐 Money = Time</h3>
+            <p>Every dollar you earn represents hours of your life. When you work 8 hours at $20/hour, you're trading 8 hours of your existence for $160.</p>
+          </div>
+          
+          <div className="concept-card">
+            <h3>⚖️ Every Choice Has a Cost</h3>
+            <p>When you spend money, you're not just spending dollars - you're spending the time you worked to earn those dollars. That $100 dinner is 5 hours of work.</p>
+          </div>
+          
+          <div className="concept-card">
+            <h3>⏳ Time Preference Shapes Your Future</h3>
+            <p>Choosing immediate pleasure vs. future benefit determines your life path. Both are valid, but they lead to very different outcomes.</p>
+          </div>
+          
+          <div className="concept-card">
+            <h3>🔒 Good Money Preserves Your Work</h3>
+            <p>Money should store the value of your work over time. When money loses value, your past work becomes worth less - your time is being stolen.</p>
+          </div>
+          
+          <div className="insight-box">
+            <strong>💡 Key Insight:</strong> Now you understand why the quality of money matters. It's not just about economics - it's about preserving the value of your life energy and work.
+          </div>
+          
+          <ActionButton onClick={handleComplete} variant="primary">
+            Now Let's See How Modern Money Measures Up →
+          </ActionButton>
+        </div>
+      </div>
+    );
+  }
+  
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">Time vs Money</h1>
+        <p>Before we explore how modern money works, let's understand what money really represents.</p>
+        
+        <div className="scenario-progress">
+          <p>Scenario {currentScenario + 1} of {scenarios.length}</p>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${((currentScenario + 1) / scenarios.length) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentScenarioData.title}</h2>
+        
+        <div className="scenario-content">
+          <div className="situation-box">
+            <h3>The Situation</h3>
+            <p>{currentScenarioData.situation}</p>
+            <div className="context-details">
+              <p>{currentScenarioData.context}</p>
+            </div>
+          </div>
+          
+          {!showInsights && (
+            <>
+              <h4>{currentScenarioData.question}</h4>
+              <div className="quiz-options">
+                {currentScenarioData.options.map(option => (
+                  <ActionButton
+                    key={option.id}
+                    onClick={() => handleChoice(option.id)}
+                    variant="outline"
+                    className="scenario-option"
+                  >
+                    {option.text}
+                  </ActionButton>
+                ))}
+              </div>
+            </>
+          )}
+          
+          {showInsights && playerChoices[currentScenarioData.id] && (
+            <div className="quiz-feedback correct">
+              <div className="feedback-text">
+                <h4>Your Choice:</h4>
+                <p><strong>{playerChoices[currentScenarioData.id].text}</strong></p>
+                
+                <h4>What Happens:</h4>
+                <p>{playerChoices[currentScenarioData.id].consequence}</p>
+                
+                <div className="insight-box">
+                  <strong>💡 Key Learning:</strong> {currentScenarioData.insight}
+                </div>
+                
+                <div className="insight-box">
+                  <strong>🏦 Money Connection:</strong> {currentScenarioData.moneyInsight}
+                </div>
+              </div>
+              
+              <ActionButton onClick={handleNext} variant="primary">
+                {currentScenario < scenarios.length - 1 ? 'Next Scenario →' : 'See the Big Picture →'}
+              </ActionButton>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
@@ -986,9 +1212,9 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
   ];
 
   const categories = {
-    "Control": { traits: soundMoneyTraits.filter(t => t.category === "Control"), color: "#ff6b6b" },
-    "Scarcity": { traits: soundMoneyTraits.filter(t => t.category === "Scarcity"), color: "#4ecdc4" },
-    "Usability": { traits: soundMoneyTraits.filter(t => t.category === "Usability"), color: "#45b7d1" }
+    "Control": { traits: soundMoneyTraits.filter(t => t.category === "Control"), color: "var(--color-error-light)" },
+    "Scarcity": { traits: soundMoneyTraits.filter(t => t.category === "Scarcity"), color: "var(--color-technical)" },
+    "Usability": { traits: soundMoneyTraits.filter(t => t.category === "Usability"), color: "var(--color-info-light)" }
   };
 
   const frameworkSteps = [
@@ -1161,10 +1387,8 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
   );
 };
 
-// Already correctly named as ApplyScorecard
+// Apply Scorecard - Simplified for better learning experience
 const ApplyScorecard = ({ onComplete }) => {
-  const [currentComparison, setCurrentComparison] = useState(0);
-  const [currentProperty, setCurrentProperty] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
   const moneyTypes = [
@@ -1184,23 +1408,13 @@ const ApplyScorecard = ({ onComplete }) => {
         "Durability": 10,
         "Acceptability": 8
       },
-      hints: {
-        "Self Custody": "You can hold physical gold directly, but storage and security are challenging.",
-        "Decentralization": "No central authority controls gold, but mining and refining can be concentrated.",
-        "Verifiability": "Testing gold purity requires special equipment and expertise.",
-        "Fixed Supply": "Gold mining is limited by geology, making new supply predictable and slow.",
-        "Genuine Scarcity": "Gold is genuinely scarce due to its physical properties and mining difficulty.",
-        "Fungibility": "Pure gold is fungible, but purity and form can vary.",
-        "Portability": "Gold is heavy and difficult to transport, especially in large amounts.",
-        "Divisibility": "Gold can be divided, but precision division is difficult and costly.",
-        "Durability": "Gold doesn't corrode or degrade - it lasts forever.",
-        "Acceptability": "Gold has been accepted as valuable across cultures for millennia."
-      }
+      strengths: ["Naturally scarce", "Durable forever", "Self-custodial", "Decentralized"],
+      weaknesses: ["Heavy to transport", "Hard to verify purity", "Difficult to divide precisely"]
     },
     {
       name: "Fiat Currency",
       emoji: "💵",
-      description: "Government-issued currency (like USD, EUR) backed by trust in government",
+      description: "Government-issued currency (USD, EUR) backed by trust in government",
       scores: {
         "Self Custody": 3,
         "Decentralization": 1,
@@ -1213,18 +1427,8 @@ const ApplyScorecard = ({ onComplete }) => {
         "Durability": 6,
         "Acceptability": 10
       },
-      hints: {
-        "Self Custody": "Banks and governments can freeze accounts and control access to your money.",
-        "Decentralization": "Central banks and governments have complete control over the monetary system.",
-        "Verifiability": "Modern security features make counterfeiting difficult to detect.",
-        "Fixed Supply": "Governments can print unlimited amounts whenever they choose.",
-        "Genuine Scarcity": "No mathematical or physical limits prevent unlimited money creation.",
-        "Fungibility": "All units of the same denomination are identical and interchangeable.",
-        "Portability": "Cash is light and digital transfers are instant within the banking system.",
-        "Divisibility": "Fiat can be divided to very small units (cents, satoshis equivalent).",
-        "Durability": "Physical cash wears out, but digital records are maintained by banks.",
-        "Acceptability": "Fiat is universally accepted within its jurisdiction due to legal tender laws."
-      }
+      strengths: ["Widely accepted", "Easy to use", "Highly divisible", "Portable"],
+      weaknesses: ["Banks control access", "No supply limit", "Centralized control", "Loses value over time"]
     },
     {
       name: "Bitcoin",
@@ -1242,18 +1446,8 @@ const ApplyScorecard = ({ onComplete }) => {
         "Durability": 9,
         "Acceptability": 6
       },
-      hints: {
-        "Self Custody": "With private keys, you have complete control over your bitcoin.",
-        "Decentralization": "No single entity controls Bitcoin - it's maintained by thousands of nodes worldwide.",
-        "Verifiability": "Anyone can verify transactions and the total supply using the blockchain.",
-        "Fixed Supply": "The 21 million bitcoin limit is enforced by mathematics and consensus rules.",
-        "Genuine Scarcity": "Bitcoin's scarcity is provable and cannot be circumvented.",
-        "Fungibility": "Most bitcoin is fungible, though transaction history can sometimes be traced.",
-        "Portability": "Bitcoin can be sent anywhere in the world in minutes, regardless of amount.",
-        "Divisibility": "Bitcoin can be divided to 8 decimal places (100 million satoshis per bitcoin).",
-        "Durability": "Bitcoin exists as information on a distributed network - nearly indestructible.",
-        "Acceptability": "Growing acceptance, but still limited compared to traditional money systems."
-      }
+      strengths: ["Perfect scarcity (21M max)", "True self-custody", "Fully verifiable", "Global digital portability"],
+      weaknesses: ["Growing but limited acceptance", "Transaction history is traceable"]
     }
   ];
 
@@ -1263,27 +1457,16 @@ const ApplyScorecard = ({ onComplete }) => {
     "Durability", "Acceptability"
   ];
 
-  const handleNextMoneyType = () => {
-    if (currentComparison < moneyTypes.length - 1) {
-      setCurrentComparison(currentComparison + 1);
-    } else {
-      setShowResults(true);
-    }
-  };
-
   const calculateTotalScore = (moneyType) => {
     return Object.values(moneyType.scores).reduce((sum, score) => sum + score, 0);
   };
 
   const getScoreColor = (score) => {
-    if (score >= 8) return '#4CAF50'; // Green
-    if (score >= 6) return '#FF9800'; // Orange
-    if (score >= 4) return '#FFC107'; // Yellow
-    return '#F44336'; // Red
+    if (score >= 8) return 'var(--color-success-light)';
+    if (score >= 6) return 'var(--color-warning-light)';
+    if (score >= 4) return 'var(--color-mechanics)';
+    return 'var(--color-error-light)';
   };
-
-  const currentMoney = moneyTypes[currentComparison];
-  const currentProp = properties[currentProperty];
 
   if (showResults) {
     const sortedMoneyTypes = [...moneyTypes].sort((a, b) => 
@@ -1327,56 +1510,78 @@ const ApplyScorecard = ({ onComplete }) => {
                     </div>
                   ))}
                 </div>
+
+                <div className="strengths-weaknesses">
+                  <div className="strengths">
+                    <h4>✅ Strengths</h4>
+                    <ul>
+                      {moneyType.strengths.map((strength, idx) => (
+                        <li key={idx}>{strength}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="weaknesses">
+                    <h4>❌ Weaknesses</h4>
+                    <ul>
+                      {moneyType.weaknesses.map((weakness, idx) => (
+                        <li key={idx}>{weakness}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="insights-section">
-            <h3>🔍 Key Insights</h3>
-            <div className="insight-cards">
-              <div className="insight-card">
-                <h4>🥇 Why Bitcoin Scored Highest</h4>
-                <ul>
-                  <li><strong>Perfect Scarcity:</strong> Only 21 million will ever exist</li>
-                  <li><strong>True Self-Custody:</strong> You can hold your own keys</li>
-                  <li><strong>Fully Verifiable:</strong> Anyone can audit the entire system</li>
-                  <li><strong>Digital Portability:</strong> Send anywhere in minutes</li>
-                </ul>
-              </div>
+          <div className="key-insights">
+            <h2 className="heading-high">🔍 Key Insights</h2>
+            
+            <div className="insight-box">
+              <h3>💡 What This Reveals</h3>
+              <p><strong>Bitcoin scored highest (91/100)</strong> because it was specifically designed to solve money's biggest problems:</p>
               
-              <div className="insight-card">
-                <h4>💵 Fiat's Main Weakness</h4>
-                <ul>
-                  <li><strong>No Scarcity:</strong> Can be printed infinitely</li>
-                  <li><strong>No Self-Custody:</strong> Banks control your money</li>
-                  <li><strong>Centralized:</strong> Government controls the system</li>
-                </ul>
+              <div className="comparison-highlights">
+                <div className="highlight-item">
+                  <span className="highlight-icon">🔒</span>
+                  <div>
+                    <h4>Control Problem Solved</h4>
+                    <p>Unlike fiat (banks control your money), Bitcoin gives you complete self-custody with private keys.</p>
+                  </div>
+                </div>
+                
+                <div className="highlight-item">
+                  <span className="highlight-icon">📊</span>
+                  <div>
+                    <h4>Scarcity Problem Solved</h4>
+                    <p>Unlike fiat (unlimited printing), Bitcoin has a hard cap of 21 million coins, enforced by mathematics.</p>
+                  </div>
+                </div>
+                
+                <div className="highlight-item">
+                  <span className="highlight-icon">📱</span>
+                  <div>
+                    <h4>Portability Problem Solved</h4>
+                    <p>Unlike gold (heavy and hard to move), Bitcoin can be sent anywhere instantly, digitally.</p>
+                  </div>
+                </div>
               </div>
-              
-              <div className="insight-card">
-                <h4>🥇 Gold's Trade-offs</h4>
-                <ul>
-                  <li><strong>Great Scarcity:</strong> Hard to find and mine</li>
-                  <li><strong>Poor Portability:</strong> Heavy and hard to transport</li>
-                  <li><strong>Verification Issues:</strong> Hard to test purity quickly</li>
-                </ul>
-              </div>
+            </div>
+
+            <div className="insight-box">
+              <h3>🎯 The Pattern</h3>
+              <p>Each money system excels in some areas but fails in others. Bitcoin was designed to score high across <em>all</em> ten properties - the first money to attempt this comprehensive approach.</p>
             </div>
           </div>
 
-          <div className="next-steps-preview">
-            <h3>🚀 What's Next?</h3>
-            <p>Now you understand <em>why</em> Bitcoin was created and how it solves money's biggest problems. Ready to dive deeper into how Bitcoin actually works?</p>
+          <div className="conclusion">
+            <h2 className="heading-high">🚀 What You've Discovered</h2>
+            <p>You now understand why Bitcoin was created and why it matters. It's not just "digital money" - it's the first money designed to pass all ten tests of sound money.</p>
             
-            <p className="mt-6 font-semibold">
-              With these ten tests in mind, let's meet the first digital money designed to pass them all.
-            </p>
+            <p><strong>Ready to learn how Bitcoin actually works?</strong></p>
             
-            <div className="cta-section">
-              <ActionButton onClick={() => onComplete(5)} variant="primary">
-                Complete Money Module
-              </ActionButton>
-            </div>
+            <ActionButton onClick={() => onComplete(5)} variant="primary">
+              Complete Money Module →
+            </ActionButton>
           </div>
         </div>
       </div>
@@ -1386,22 +1591,40 @@ const ApplyScorecard = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Apply Scorecard</h1>
-        <p>Let's test your framework by scoring different money systems. You'll see patterns emerge...</p>
+        <h1 className="heading-critical">Apply Your Scorecard</h1>
+        <p>Time to test your framework! Let's see how different money systems score on the 10 properties you learned.</p>
       </div>
       
       <div className="card-feature">
-        <div className="comparison-header">
-          <h2>Evaluating: {currentMoney.emoji} {currentMoney.name}</h2>
-          <p>{currentMoney.description}</p>
-          <div className="progress-indicator">
-            Step {currentComparison + 1} of {moneyTypes.length}
+        <h2 className="heading-high">The Ultimate Money Test</h2>
+        
+        <div className="scorecard-preview">
+          <p>We'll compare three very different approaches to money:</p>
+          
+          <div className="money-types-preview">
+            {moneyTypes.map((moneyType, index) => (
+              <div key={index} className="money-preview-card">
+                <span className="money-emoji-large">{moneyType.emoji}</span>
+                <h3>{moneyType.name}</h3>
+                <p>{moneyType.description}</p>
+              </div>
+            ))}
           </div>
         </div>
-
-        <MoneyPredictionChart
-          onNext={handleNextMoneyType}
-        />
+        
+        <div className="expectation-setting">
+          <h3>🎯 What Will You Discover?</h3>
+          <ul>
+            <li>Which money system scores highest on your 10-point framework</li>
+            <li>Why Bitcoin was designed the way it was</li>
+            <li>The trade-offs each system makes</li>
+            <li>Why sound money properties matter</li>
+          </ul>
+        </div>
+        
+        <ActionButton onClick={() => setShowResults(true)} variant="primary">
+          Run the Scorecard Test →
+        </ActionButton>
       </div>
     </div>
   );
@@ -1610,6 +1833,115 @@ const ModuleCompletion = ({ onComplete }) => {
   );
 };
 
+// Combined Modern Money lesson (Payment Infrastructure + Control)
+const CombinedModernMoney = ({ onComplete }) => {
+  const [phase, setPhase] = useState(0); // 0: intro, 1: payment journey, 2: control scenarios
+  
+  if (phase === 0) {
+    return (
+      <div className="module-container">
+        <div className="section-card">
+          <h1 className="heading-critical">How Modern Money Really Works</h1>
+          <p>You understand what money should do. Now let's see how well today's money actually does those jobs.</p>
+          <p>We'll trace a simple $5 coffee purchase to reveal the hidden complexity behind every "simple" payment.</p>
+        </div>
+        
+        <div className="card-feature">
+          <h2 className="heading-high">The $5 Coffee Challenge</h2>
+          <p>You tap your card. Screen says "Approved!" in 2 seconds. Simple, right?</p>
+          
+          <div className="challenge-setup">
+            <h3>Let's Find Out What Really Happened</h3>
+            <p>We'll follow your $5 through the entire payment system, then discover who really controls your money.</p>
+          </div>
+          
+          <ActionButton onClick={() => setPhase(1)} variant="primary">
+            Trace My $5 Coffee →
+          </ActionButton>
+        </div>
+      </div>
+    );
+  }
+  
+  if (phase === 1) {
+    return <PaymentInfrastructure onComplete={() => setPhase(2)} />;
+  }
+  
+  // Control scenarios phase
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">💡 The Real Question</h1>
+        <p>You've seen the complexity. Now let's discover who really controls your money.</p>
+      </div>
+      
+      <ControlScenarios onFinish={() => onComplete(3)} />
+    </div>
+  );
+};
+
+// Combined Sound Money Framework lesson (History + Framework Building)
+const CombinedSoundMoneyFramework = ({ onComplete, onUnlockTrait }) => {
+  const [phase, setPhase] = useState(0); // 0: intro, 1: history, 2: framework
+  const [unlockedTraits, setUnlockedTraits] = useState([]);
+  
+  const handleUnlockTrait = (trait) => {
+    if (!unlockedTraits.includes(trait)) {
+      setUnlockedTraits(prev => [...prev, trait]);
+      onUnlockTrait(trait);
+    }
+  };
+  
+  if (phase === 0) {
+    return (
+      <div className="module-container">
+        <div className="section-card">
+          <h1 className="heading-critical">Sound Money Framework</h1>
+          <p>Modern money has problems. But what would good money look like?</p>
+          <p>Let's learn from history's successes and failures to build a framework for evaluating any money.</p>
+        </div>
+        
+        <div className="card-feature">
+          <h2 className="heading-high">Learning from History</h2>
+          <p>For thousands of years, people tried different forms of money. Some worked well, others failed spectacularly.</p>
+          
+          <div className="history-preview">
+            <h3>We'll Explore:</h3>
+            <ul>
+              <li>🏛️ What made Roman coins fail</li>
+              <li>🏺 Why stone money couldn't scale</li> 
+              <li>📈 How governments broke the gold standard</li>
+              <li>💸 What hyperinflation teaches us</li>
+              <li>⚖️ The properties that matter most</li>
+            </ul>
+          </div>
+          
+          <ActionButton onClick={() => setPhase(1)} variant="primary">
+            Learn from History →
+          </ActionButton>
+        </div>
+      </div>
+    );
+  }
+  
+  if (phase === 1) {
+    return (
+      <MoneyExperiments 
+        onComplete={() => setPhase(2)} 
+        onUnlockTrait={handleUnlockTrait} 
+      />
+    );
+  }
+  
+  // Framework building phase
+  return (
+    <MoneyScorecard 
+      unlockedTraits={unlockedTraits}
+      onComplete={() => onComplete(4)} 
+    />
+  );
+};
+
 // Main Module Component
 const MoneyModule = () => {
   const { completeModule } = useProgress();
@@ -1664,7 +1996,7 @@ const MoneyModule = () => {
       console.warn('Failed to save progress to localStorage:', error);
     }
     
-    if (stepIndex === 5) {
+    if (stepIndex === 6) {
       // Module completion is handled by ModuleCompletionButton
       setCurrentStep(stepIndex + 1);
     } else {
@@ -1674,7 +2006,6 @@ const MoneyModule = () => {
 
   const handleTabClick = (stepIndex) => {
     // Allow navigation to any step (including going back)
-    console.log(`Navigating to step ${stepIndex}: ${stepLabels[stepIndex]}`);
     setCurrentStep(stepIndex);
   };
 
@@ -1731,14 +2062,12 @@ const MoneyModule = () => {
 
       <div className="module-content">
         {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <BarterProblem onComplete={handleStepComplete} />}
+        {currentStep === 1 && <WhyMoney onComplete={handleStepComplete} />}
         {currentStep === 2 && <MoneyFunctions onComplete={handleStepComplete} />}
-        {currentStep === 3 && <PaymentInfrastructure onComplete={handleStepComplete} />}
-        {currentStep === 4 && <MoneyExperiments onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 5 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
-        {currentStep === 6 && <DigitalScarcity onComplete={handleStepComplete} />}
-        {currentStep === 7 && <ApplyScorecard onComplete={handleStepComplete} />}
-        {currentStep === 8 && <MoneyEvolutionTimeline onComplete={handleStepComplete} />}
+        {currentStep === 3 && <TimeAndMoneyLesson onComplete={handleStepComplete} />}
+        {currentStep === 4 && <CombinedModernMoney onComplete={handleStepComplete} />}
+        {currentStep === 5 && <CombinedSoundMoneyFramework onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 6 && <ApplyScorecard onComplete={handleStepComplete} />}
       </div>
     </div>
   );
