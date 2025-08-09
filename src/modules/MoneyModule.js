@@ -15,6 +15,7 @@ import MoneyPredictionChart from '../components/MoneyPredictionChart';
 import Introduction from '../components/Introduction';
 import MortgageQuiz from '../components/MortgageQuiz';
 import ControlScenarios from '../components/ControlScenarios';
+import MoneyEvolutionTimeline from '../components/MoneyEvolutionTimeline';
 // Import page components for state-based flow
 // All components are defined locally
 // import MoneyFunctions from '../pages/MoneyFunctions';
@@ -36,7 +37,8 @@ const stepLabels = [
   'Money Experiments',
   'Money Scorecard',
   'Digital Scarcity',
-  'Apply Scorecard'
+  'Apply Scorecard',
+  'Money Evolution Timeline'
 ];
 
 
@@ -49,6 +51,7 @@ const BarterProblem = ({ onComplete }) => {
   const [playerChoice, setPlayerChoice] = useState(null);
   const [showOutcome, setShowOutcome] = useState(false);
   const [discoveredProblems, setDiscoveredProblems] = useState(new Set());
+  const [correctAnswers, setCorrectAnswers] = useState(0);
 
   const economicScenarios = [
     {
@@ -56,81 +59,99 @@ const BarterProblem = ({ onComplete }) => {
       title: "🍞 The Baker's Problem",
       situation: "You're a baker. You need shoes, but the shoemaker doesn't want bread.",
       trader: "Shoemaker says: 'I already have bread. I need a haircut.'",
-      choice: "What do you do?",
+      question: "What's the core problem here?",
       options: [
         { 
           id: 1, 
-          text: 'Give up and go home', 
-          result: 'reject',
-          problem: 'coincidence'
+          text: 'The shoemaker is being difficult', 
+          result: 'wrong',
+          problem: 'coincidence',
+          isCorrect: false
         },
         { 
           id: 2, 
-          text: 'Find someone who wants bread AND can give the shoemaker a haircut', 
-          result: 'chain',
-          problem: 'complexity'
+          text: 'You need to find someone who wants bread AND can give the shoemaker a haircut', 
+          result: 'correct',
+          problem: 'complexity',
+          isCorrect: true
         },
         { 
           id: 3, 
-          text: 'Search for other shoemakers', 
-          result: 'search',
-          problem: 'time'
+          text: 'You should have brought different goods to trade', 
+          result: 'wrong',
+          problem: 'coincidence',
+          isCorrect: false
         }
-      ]
+      ],
+      correctAnswer: 2,
+      insight: "This demonstrates the 'double coincidence of wants' problem - both parties must want what the other has, at the same time.",
+      wrongExplanation: "The real issue isn't personality or preparation - it's that barter requires finding someone who wants exactly what you have AND has what you want."
     },
     {
       id: 2,
       title: "🏠 The House Builder's Challenge",
-      situation: "You want to build a house. You need: bricks, wood, nails, and tools. But everyone wants different things from you.",
+      situation: "You want to build a house. You need: bricks, wood, nails, and tools. Everyone wants different things from you.",
       trader: "Brick maker wants fish. Wood seller wants clothes. Nail maker wants meat. Tool maker wants grain.",
-      choice: "This is getting complicated...",
+      question: "What makes this situation so complex?",
       options: [
         { 
           id: 1, 
-          text: 'Try to coordinate all these trades at once', 
-          result: 'chaos',
-          problem: 'timing'
+          text: 'You need too many different materials', 
+          result: 'wrong',
+          problem: 'timing',
+          isCorrect: false
         },
         { 
           id: 2, 
-          text: 'Map out all the trades you need to make', 
-          result: 'insight',
-          problem: 'complexity'
+          text: 'Coordinating multiple trades with different people creates a complex chain that can easily break', 
+          result: 'correct',
+          problem: 'complexity',
+          isCorrect: true
         },
         { 
           id: 3, 
-          text: 'Build a smaller house', 
-          result: 'quit',
-          problem: 'failure'
+          text: 'The prices are too high', 
+          result: 'wrong',
+          problem: 'failure',
+          isCorrect: false
         }
-      ]
+      ],
+      correctAnswer: 2,
+      insight: "Complex barter chains are fragile - if any link breaks, the entire sequence fails. This shows why simple, universally accepted exchange is valuable.",
+      wrongExplanation: "The core issue isn't about quantities or prices, but the fundamental difficulty of coordinating multiple interdependent trades."
     },
     {
       id: 3,
       title: "⏰ The Timing Problem",
-      situation: "You need to make 4 trades in a row, but the timing has to be perfect.",
+      situation: "You've arranged a 4-step trade chain, but the brick maker already traded their bricks yesterday.",
       trader: "The brick maker says: 'I already traded my bricks yesterday. Come back next month.'",
-      choice: "Everything has to happen at exactly the right time...",
+      question: "What does this reveal about barter systems?",
       options: [
         { 
           id: 1, 
-          text: 'Start all over again', 
-          result: 'chaos',
-          problem: 'timing'
+          text: 'You should have moved faster', 
+          result: 'wrong',
+          problem: 'timing',
+          isCorrect: false
         },
         { 
           id: 2, 
-          text: 'Realize this system has serious problems', 
-          result: 'epiphany',
-          problem: 'system'
+          text: 'Barter requires perfect timing - everyone must be ready to trade at exactly the same moment', 
+          result: 'correct',
+          problem: 'system',
+          isCorrect: true
         },
         { 
           id: 3, 
-          text: 'Think about what everyone would accept', 
-          result: 'solution',
-          problem: 'innovation'
+          text: 'People are unreliable trading partners', 
+          result: 'wrong',
+          problem: 'innovation',
+          isCorrect: false
         }
-      ]
+      ],
+      correctAnswer: 2,
+      insight: "Barter systems require synchronization that's nearly impossible to achieve. Good money should work regardless of timing.",
+      wrongExplanation: "The issue isn't speed or people's reliability - it's that barter fundamentally requires impossible coordination of multiple parties' needs and timing."
     }
   ];
 
@@ -149,6 +170,9 @@ const BarterProblem = ({ onComplete }) => {
     setShowOutcome(true);
     
     const selectedOption = economicScenarios[currentScenario].options.find(opt => opt.id === optionId);
+    console.log('Selected option:', selectedOption);
+    console.log('Is correct?', selectedOption?.isCorrect);
+    
     if (selectedOption?.problem) {
       setDiscoveredProblems(prev => new Set([...prev, selectedOption.problem]));
     }
@@ -191,8 +215,11 @@ const BarterProblem = ({ onComplete }) => {
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">Barter Problem</h1>
-        <p>Before money existed, people had to trade directly with each other. Let's see what problems this created.</p>
+        <h1 className="heading-critical">Barter World: Why We Invented Money</h1>
+        <p>Imagine waking up in a world with no money. Not bad money—no money at all.</p>
+        <p>You want shoes. Someone else wants bread. Another needs roof repair. Unless you find the exact person who wants what you have and has what you need, you can't trade. This is called the double coincidence of wants—and it makes life frustrating.</p>
+        <p>Plus, even if you trade, you can't save extra food (it spoils), and nobody agrees what things are worth.</p>
+        <p>Without money, trade is slow, saving is risky, and comparing value is messy.</p>
       </div>
         
       <div className="card-feature">
@@ -222,28 +249,43 @@ const BarterProblem = ({ onComplete }) => {
           </div>
           
           <div className="choice-section">
-            <p><strong>{currentScenarioData.choice}</strong></p>
+            <p><strong>{currentScenarioData.question}</strong></p>
             
             {!showOutcome ? (
-              <div className="choice-options">
+              <div className="quiz-options">
                 {currentScenarioData.options.map(option => (
                   <ActionButton
                     key={option.id}
                     onClick={() => handleChoice(option.id)}
                     variant="outline"
                   >
-                    {option.text}
+                    <span className="option-text">{option.text}</span>
                   </ActionButton>
                 ))}
               </div>
             ) : (
-              <div className="outcome-display">
-                <div className="choice-result">
-                  <p><strong>You chose:</strong> {economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.text}</p>
-                  <div className="outcome-box">
-                    <p className="outcome-text">{getOutcomeText(economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.result)}</p>
+              <div className={`quiz-feedback ${economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.isCorrect ? 'correct' : 'incorrect'}`}>
+                {economicScenarios[currentScenario].options.find(o => o.id === playerChoice)?.isCorrect ? (
+                  <div className="feedback-text">
+                    <p>✅ <strong>Excellent!</strong> You identified the core problem.</p>
+                    <div className="correct-answer">
+                      <strong>💡 What This Teaches Us:</strong> {currentScenarioData.insight}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="feedback-text">
+                    <p>❌ <strong>Not quite.</strong></p>
+                    <div className="incorrect-explanation">
+                      <strong>Why this is wrong:</strong> {currentScenarioData.wrongExplanation}
+                    </div>
+                    <div className="correct-answer">
+                      <strong>✅ Correct answer:</strong> {currentScenarioData.options.find(o => o.isCorrect)?.text}
+                    </div>
+                    <div className="insight-explanation">
+                      <strong>💡 What This Teaches Us:</strong> {currentScenarioData.insight}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -294,7 +336,7 @@ const BarterProblem = ({ onComplete }) => {
             onPrevious={handlePrevious}
             onNext={handleNext}
             canGoBack={currentScenario > 0}
-            nextLabel={currentScenario === economicScenarios.length - 1 ? "Learn About Money's Jobs" : "Next Scenario"}
+            nextLabel={currentScenario === economicScenarios.length - 1 ? "Continue to Money Functions" : "Next Scenario"}
           />
         )}
       </div>
@@ -1696,6 +1738,7 @@ const MoneyModule = () => {
         {currentStep === 5 && <MoneyScorecard unlockedTraits={unlockedTraits} onComplete={handleStepComplete} />}
         {currentStep === 6 && <DigitalScarcity onComplete={handleStepComplete} />}
         {currentStep === 7 && <ApplyScorecard onComplete={handleStepComplete} />}
+        {currentStep === 8 && <MoneyEvolutionTimeline onComplete={handleStepComplete} />}
       </div>
     </div>
   );
