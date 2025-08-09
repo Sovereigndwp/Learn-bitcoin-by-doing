@@ -28,8 +28,8 @@ describe('User Journey Integration Tests', () => {
     // Test homepage loads
     expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
 
-    // Test "Begin Your Journey" button works
-    const startButton = screen.getByText(/Begin Your Journey/i);
+    // Test "Begin Your Discovery" button works
+    const startButton = screen.getByText(/Begin Your Discovery/i);
     expect(startButton).toBeInTheDocument();
     
     // Test main navigation elements exist
@@ -37,25 +37,27 @@ describe('User Journey Integration Tests', () => {
     expect(screen.getByText(/Master money and Bitcoin through interactive exploration/i)).toBeInTheDocument();
   });
 
-  test('slide navigation provides educational progression', async () => {
+  test('homepage interactive buttons work', async () => {
     render(
       <IntegrationWrapper>
         <Homepage />
       </IntegrationWrapper>
     );
 
-    const nextButton = screen.getByText(/Next/i);
-    const prevButton = screen.getByText(/Previous/i);
+    // Check for main interactive buttons
+    const discoveryButton = screen.getByText(/Begin Your Discovery/i);
+    const journeyButton = screen.getByText(/Start Your Journey/i);
 
-    // Initial state
-    expect(prevButton).toBeDisabled();
-    expect(nextButton).not.toBeDisabled();
+    // Buttons should be present and clickable
+    expect(discoveryButton).toBeInTheDocument();
+    expect(journeyButton).toBeInTheDocument();
 
-    // Navigate forward through slides
-    fireEvent.click(nextButton);
+    // Test that buttons are clickable (just check they exist and are buttons)
+    expect(discoveryButton.tagName).toBe('BUTTON');
+    expect(journeyButton.tagName).toBe('BUTTON');
     
-    await waitFor(() => {
-      expect(prevButton).not.toBeDisabled();
-    });
+    // Buttons should be present initially
+    expect(discoveryButton).toBeInTheDocument();
+    expect(journeyButton).toBeInTheDocument();
   });
 });

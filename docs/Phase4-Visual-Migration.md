@@ -50,7 +50,7 @@ Successfully migrated the Money module from basic emoji/GIF placeholders to a pr
 - **Placeholder animations** for development/testing
 - **Helper functions** for animation loading and verification
 
-### 4. Money Module Migration (`/src/modules/MoneyModule.js` & `/src/components/MoneyGame.js`)
+### 4. Money Module Migration (`/` & `/src/components/MoneyGame.js`)
 #### Before → After:
 - ❌ `Coins` (Lucide) → ✅ `BitcoinIcon` (Custom SVG)
 - ❌ `Scale` (Lucide) → ✅ `HashIcon` (Bitcoin-themed)

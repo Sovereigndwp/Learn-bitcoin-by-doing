@@ -386,7 +386,7 @@ const MILESTONES = [
 
 export const ProgressProvider = ({ children }) => {
   
-  // Enhanced state management
+  // Enhanced state management with lesson tracking
   const [completedModules, setCompletedModules] = useState(() => {
     const saved = localStorage.getItem('completedModules');
     return saved ? JSON.parse(saved) : [];
@@ -394,6 +394,18 @@ export const ProgressProvider = ({ children }) => {
 
   const [moduleScores, setModuleScores] = useState(() => {
     const saved = localStorage.getItem('moduleScores');
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  // Track lesson progress within modules
+  const [lessonProgress, setLessonProgress] = useState(() => {
+    const saved = localStorage.getItem('lessonProgress');
+    return saved ? JSON.parse(saved) : {};
+  });
+
+  // Track current position in each module
+  const [moduleProgress, setModuleProgress] = useState(() => {
+    const saved = localStorage.getItem('moduleProgress');
     return saved ? JSON.parse(saved) : {};
   });
 
@@ -450,6 +462,8 @@ export const ProgressProvider = ({ children }) => {
     const stateToSave = {
       completedModules,
       moduleScores,
+      lessonProgress,
+      moduleProgress,
       earnedBadges,
       currentStreak,
       longestStreak,
@@ -464,7 +478,7 @@ export const ProgressProvider = ({ children }) => {
     Object.entries(stateToSave).forEach(([key, value]) => {
       localStorage.setItem(key, JSON.stringify(value));
     });
-  }, [completedModules, moduleScores, earnedBadges, currentStreak, longestStreak, totalPoints, totalTimeSpent, learningPath, achievements, connectionMap, conceptualInsights]);
+  }, [completedModules, moduleScores, lessonProgress, moduleProgress, earnedBadges, currentStreak, longestStreak, totalPoints, totalTimeSpent, learningPath, achievements, connectionMap, conceptualInsights]);
 
   // Session tracking
   const startSession = () => {
@@ -809,10 +823,87 @@ export const ProgressProvider = ({ children }) => {
     return recommended;
   };
 
+  // Lesson progress tracking functions
+  const updateLessonProgress = (moduleId, lessonId, viewId, completed = false) => {
+    setLessonProgress(prev => ({
+      ...prev,
+      [moduleId]: {
+        ...prev[moduleId],
+        [lessonId]: {
+          ...prev[moduleId]?.[lessonId],
+          [viewId]: {
+            completed,
+            timestamp: Date.now()
+          }
+        }
+      }
+    }));
+    
+    // Update module position
+    setModuleProgress(prev => ({
+      ...prev,
+      [moduleId]: {
+        currentLesson: lessonId,
+        currentView: viewId,
+        lastAccessed: Date.now()
+      }
+    }));
+  };
+
+  const getLessonProgress = (moduleId, lessonId, viewId) => {
+    return lessonProgress[moduleId]?.[lessonId]?.[viewId]?.completed || false;
+  };
+
+  const getModulePosition = (moduleId) => {
+    return moduleProgress[moduleId] || null;
+  };
+
+  const resetModuleProgress = (moduleId) => {
+    // Remove module from completed list if present
+    setCompletedModules(prev => prev.filter(id => id !== moduleId));
+    
+    // Clear module score
+    setModuleScores(prev => {
+      const updated = { ...prev };
+      delete updated[moduleId];
+      return updated;
+    });
+    
+    // Clear lesson progress for this module
+    setLessonProgress(prev => {
+      const updated = { ...prev };
+      delete updated[moduleId];
+      return updated;
+    });
+    
+    // Clear module position
+    setModuleProgress(prev => {
+      const updated = { ...prev };
+      delete updated[moduleId];
+      return updated;
+    });
+    
+    // Clear connection insights for this module
+    setConnectionMap(prev => {
+      const updated = { ...prev };
+      delete updated[moduleId];
+      return updated;
+    });
+    
+    // Clear conceptual insights for this module
+    setConceptualInsights(prev => {
+      const updated = { ...prev };
+      delete updated[moduleId];
+      return updated;
+    });
+  };
+
   const resetProgress = () => {
     // Clear all state
     setCompletedModules([]);
     setModuleScores({});
+    setLessonProgress({});
+    setModuleProgress({});
     setEarnedBadges([]);
     setCurrentStreak(0);
     setLongestStreak(0);
@@ -825,9 +916,10 @@ export const ProgressProvider = ({ children }) => {
     
     // Clear localStorage
     const keysToRemove = [
-      'completedModules', 'moduleScores', 'earnedBadges', 'currentStreak',
-      'longestStreak', 'totalPoints', 'totalTimeSpent', 'learningPath',
-      'achievements', 'lastActiveDate', 'connectionMap', 'conceptualInsights'
+      'completedModules', 'moduleScores', 'lessonProgress', 'moduleProgress',
+      'earnedBadges', 'currentStreak', 'longestStreak', 'totalPoints', 
+      'totalTimeSpent', 'learningPath', 'achievements', 'lastActiveDate', 
+      'connectionMap', 'conceptualInsights'
     ];
     
     keysToRemove.forEach(key => localStorage.removeItem(key));
@@ -835,16 +927,18 @@ export const ProgressProvider = ({ children }) => {
 
   const value = {
     // State
-      completedModules,
-      earnedBadges,
-      currentStreak,
+    completedModules,
+    earnedBadges,
+    currentStreak,
     longestStreak,
-      totalPoints,
+    totalPoints,
     totalTimeSpent,
     moduleScores,
     achievements,
     connectionMap,
     conceptualInsights,
+    lessonProgress,
+    moduleProgress,
     
     // Module data
     modules: MODULES,
@@ -852,20 +946,24 @@ export const ProgressProvider = ({ children }) => {
     milestones: MILESTONES,
     
     // Actions
-      completeModule,
+    completeModule,
     startSession,
     endSession,
-      earnBadge,
+    earnBadge,
     resetProgress,
+    resetModuleProgress,
     recordConceptualInsight,
+    updateLessonProgress,
     
     // Helpers
-      getModuleProgress,
-      isModuleCompleted,
-      getBadgeDetails,
+    getModuleProgress,
+    isModuleCompleted,
+    getBadgeDetails,
     getLearningStats,
     getNextRecommendation,
-    getConnectionOpportunities
+    getConnectionOpportunities,
+    getLessonProgress,
+    getModulePosition
   };
 
   return (

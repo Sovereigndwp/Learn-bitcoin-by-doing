@@ -6,6 +6,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
+import LessonView from './components/LessonView';
 import './styles/globalTheme.css';
 import './styles/hierarchicalSystem.css'; /* Professional visual hierarchy system */
 import './styles/modernComponents.css';
@@ -43,6 +44,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
+              
+              {/* Module overview routes */}
               <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
               <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
@@ -57,6 +60,9 @@ function App() {
               <Route path="/module/advanced-topics" element={<ModuleLayout><AdvancedTopicsModule /></ModuleLayout>} />
               <Route path="/module/myths" element={<ModuleLayout><MythsModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-toolkit" element={<ModuleLayout><BitcoinToolkitModule /></ModuleLayout>} />
+              
+              {/* Dynamic lesson routes */}
+              <Route path="/module/:moduleId/:lessonId/:viewId" element={<ModuleLayout><LessonView /></ModuleLayout>} />
             </Routes>
           </div>
         </Router>

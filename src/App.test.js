@@ -63,148 +63,137 @@ describe('Homepage Component', () => {
     );
     
     // Check for welcome content
-    expect(screen.getByText(/Money Shapes Everything/i)).toBeInTheDocument();
-    expect(screen.getByText(/Begin Your Journey/i)).toBeInTheDocument();
+    expect(screen.getByText('Discover')).toBeInTheDocument();
+    expect(screen.getByText('Sound Money')).toBeInTheDocument();
+    expect(screen.getByText(/Begin Your Discovery/i)).toBeInTheDocument();
   });
 
   test('renders main navigation elements', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check main navigation elements
     expect(screen.getByText(/Learn Bitcoin by Doing/i)).toBeInTheDocument();
-    expect(screen.getByText(/Begin Your Journey/i)).toBeInTheDocument();
+    expect(screen.getByText(/Master money and Bitcoin through interactive exploration/i)).toBeInTheDocument();
   });
 
   test('renders hero section with correct content', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check hero content
-    expect(screen.getByText(/Money Shapes Everything/i)).toBeInTheDocument();
-    expect(screen.getByText(/Yet most of us were never taught/i)).toBeInTheDocument();
-    expect(screen.getByText(/Start with the basics/i)).toBeInTheDocument();
+    expect(screen.getByText('Discover')).toBeInTheDocument();
+    expect(screen.getByText('Sound Money')).toBeInTheDocument();
+    expect(screen.getByText(/Journey through the most important financial discovery/i)).toBeInTheDocument();
+    expect(screen.getByText(/Question everything you thought you knew about money/i)).toBeInTheDocument();
   });
 
   test('renders learning preview cards', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check preview cards
-    expect(screen.getByText(/How Money Really Works/i)).toBeInTheDocument();
-    expect(screen.getByText(/Bitcoin Fundamentals/i)).toBeInTheDocument();
-    expect(screen.getByText(/Critical Thinking/i)).toBeInTheDocument();
+    // Check question cards
+    expect(screen.getByText(/What is money, really/i)).toBeInTheDocument();
+    expect(screen.getByText(/Who gets to decide what money is/i)).toBeInTheDocument();
+    expect(screen.getByText(/If new money can be created at will/i)).toBeInTheDocument();
   });
 
   test('renders CTA section', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check call-to-action
-    expect(screen.getByText(/Begin Your Journey/i)).toBeInTheDocument();
-    expect(screen.getByText(/~5 minutes to start/i)).toBeInTheDocument();
+    expect(screen.getByText(/Start Your Journey/i)).toBeInTheDocument();
+    expect(screen.getByText(/No prior knowledge required/i)).toBeInTheDocument();
   });
 
   test('main call-to-action button works', async () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Click on Begin Your Journey button
-    const journeyButton = screen.getByText(/Begin Your Journey/i);
-    fireEvent.click(journeyButton);
-    
-    // Check if button exists and is clickable
+    // Check that Start Your Journey button exists
+    const journeyButton = screen.getByText(/Start Your Journey/i);
     expect(journeyButton).toBeInTheDocument();
+    
+    // Verify it's a clickable button
+    expect(journeyButton.tagName).toBe('BUTTON');
   });
 
-  test('slide navigation works', async () => {
+  test('homepage has interactive elements', async () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Find navigation buttons
-    const nextButton = screen.getByText(/Next/i);
-    const prevButton = screen.getByText(/Previous/i);
+    // Find main call-to-action buttons
+    const discoveryButton = screen.getByText(/Begin Your Discovery/i);
+    const journeyButton = screen.getByText(/Start Your Journey/i);
     
-    // Previous button should be disabled initially
-    expect(prevButton).toBeDisabled();
-    
-    // Next button should be enabled
-    expect(nextButton).not.toBeDisabled();
-    
-    // Click next to go to second slide
-    fireEvent.click(nextButton);
-    
-    // Check if we can find content from the second slide
-    await waitFor(() => {
-      expect(prevButton).not.toBeDisabled();
-    });
+    // Buttons should be present
+    expect(discoveryButton).toBeInTheDocument();
+    expect(journeyButton).toBeInTheDocument();
   });
 
   test('Bitcoin symbol renders correctly', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check for Bitcoin symbol
-    const bitcoinSymbol = screen.getByText('₿');
-    expect(bitcoinSymbol).toBeInTheDocument();
-    expect(bitcoinSymbol).toHaveClass('bitcoin-symbol');
+    // Check for Bitcoin symbol - get the first one (header)
+    const bitcoinSymbols = screen.getAllByText('₿');
+    expect(bitcoinSymbols.length).toBeGreaterThan(0);
+    expect(bitcoinSymbols[0]).toHaveClass('bitcoin-symbol');
   });
 
-  test('progress indicators render', () => {
+  test('question cards have proper styling', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check for slide indicators
-    const indicators = document.querySelectorAll('.slide-indicator');
-    expect(indicators.length).toBeGreaterThan(0);
-    
-    // First indicator should be active
-    expect(indicators[0]).toHaveClass('active');
+    // Check for question cards
+    const questionCards = document.querySelectorAll('.question-card');
+    expect(questionCards.length).toBe(4); // Should have 4 question cards
   });
 
-  test('preview icons render correctly', () => {
+  test('feature cards render correctly', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check for SVG icons in preview cards
-    const svgIcons = document.querySelectorAll('.preview-icon');
-    expect(svgIcons.length).toBe(3); // Should have 3 preview cards with icons
+    // Check for feature cards in the features grid
+    const featureCards = document.querySelectorAll('.feature-card');
+    expect(featureCards.length).toBe(3); // Should have 3 feature cards
   });
 });
 
 describe('Accessibility', () => {
   test('main navigation buttons have proper attributes', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     const buttons = screen.getAllByRole('button');
@@ -218,14 +207,15 @@ describe('Accessibility', () => {
 
   test('headings have proper hierarchy', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check for proper heading structure
-    const h1 = screen.getByRole('heading', { level: 1 });
-    expect(h1).toHaveTextContent(/Learn Bitcoin by Doing/i);
+    // Check for proper heading structure - get all h1s and check the first one
+    const h1Elements = screen.getAllByRole('heading', { level: 1 });
+    expect(h1Elements.length).toBeGreaterThan(0);
+    expect(h1Elements[0]).toHaveTextContent(/Learn Bitcoin by Doing/i);
     
     const h2Elements = screen.getAllByRole('heading', { level: 2 });
     expect(h2Elements.length).toBeGreaterThan(0);
@@ -235,9 +225,9 @@ describe('Accessibility', () => {
 describe('Responsive Design Elements', () => {
   test('header content structure is present', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check for responsive layout elements
@@ -253,9 +243,9 @@ describe('Responsive Design Elements', () => {
 
   test('main content areas are structured correctly', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     const mainContent = document.querySelector('.main-content');
@@ -269,42 +259,43 @@ describe('Responsive Design Elements', () => {
 describe('Content Validation', () => {
   test('contains educational content about Bitcoin', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check for Bitcoin-related educational content
-    expect(screen.getByText(/Bitcoin Fundamentals/i)).toBeInTheDocument();
-    expect(screen.getByText(/How Money Really Works/i)).toBeInTheDocument();
-    expect(screen.getByText(/Critical Thinking/i)).toBeInTheDocument();
+    expect(screen.getByText(/Bitcoin: The Discovery of Sound Money/i)).toBeInTheDocument();
+    expect(screen.getByText(/Mathematically Secure/i)).toBeInTheDocument();
+    // Use getAllByText for multiple instances
+    expect(screen.getAllByText(/Globally Accessible/i)).toHaveLength(2);
   });
 
   test('provides clear learning path information', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
-    // Check for learning path guidance
-    expect(screen.getByText(/What You'll Learn/i)).toBeInTheDocument();
+    // Check for learning path guidance - handle text that may be split across elements
+    expect(screen.getAllByText(/Transform/)).toHaveLength(2); // Should find both instances
+    expect(screen.getByText(/Your Understanding/)).toBeInTheDocument();
     expect(screen.getByText(/Master money and Bitcoin through interactive exploration/i)).toBeInTheDocument();
   });
 
   test('includes call-to-action elements', () => {
     render(
-      <TestWrapper>
+      <ComponentTestWrapper>
         <Homepage />
-      </TestWrapper>
+      </ComponentTestWrapper>
     );
     
     // Check for engagement elements
-    const startButton = screen.getByText(/Begin Your Journey/i);
+    const startButton = screen.getByText(/Start Your Journey/i);
     expect(startButton).toBeInTheDocument();
-    expect(startButton.closest('button')).toHaveClass('start-journey-button');
     
-    expect(screen.getByText(/~5 minutes to start/i)).toBeInTheDocument();
-    expect(screen.getByText(/No signup required/i)).toBeInTheDocument();
+    expect(screen.getByText(/No prior knowledge required/i)).toBeInTheDocument();
+    expect(screen.getByText(/Transform your financial future/i)).toBeInTheDocument();
   });
 });

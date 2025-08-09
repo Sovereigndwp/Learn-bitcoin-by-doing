@@ -35,10 +35,10 @@ const ModuleLayout = ({ children }) => {
           <div className="nav-buttons desktop-nav">
             {!isHomepage && (
               <Link 
-                to="/" 
+                to="/?view=learning" 
                 className="nav-button back-button"
                 style={{ zIndex: 1000, position: 'relative' }}
-                title="Go back to homepage"
+                title="Go back to modules"
               >
                 <ArrowLeft size={18} className="button-icon button-icon-left" />
                 Back
@@ -86,12 +86,12 @@ const ModuleLayout = ({ children }) => {
             <div className="mobile-nav-menu">
               {!isHomepage && (
                 <Link 
-                  to="/" 
+                  to="/?view=learning" 
                   className="nav-button back-button mobile-nav-item"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <ArrowLeft size={18} className="button-icon button-icon-left" />
-                  Back to Homepage
+                  Back to Modules
                 </Link>
               )}
               <Link 
