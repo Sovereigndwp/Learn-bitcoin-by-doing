@@ -21,6 +21,7 @@ import './styles/GlobalContrast.css';
 // Import all modules
 import MoneyModule from './modules/MoneyModule';
 import BitcoinBasicsModule from './modules/BitcoinBasicsModule';
+import WhyBitcoinMattersModule from './modules/WhyBitcoinMattersModule';
 import NumbersModule from './modules/NumbersModule';
 import HashingModule from './modules/HashingModule';
 import MiningModule from './modules/MiningModule';
@@ -48,6 +49,7 @@ function App() {
               {/* Module overview routes */}
               <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
+              <Route path="/module/bitcoin-relevance" element={<ModuleLayout><WhyBitcoinMattersModule /></ModuleLayout>} />
               <Route path="/module/numbers" element={<ModuleLayout><NumbersModule /></ModuleLayout>} />
               <Route path="/module/hashing" element={<ModuleLayout><HashingModule /></ModuleLayout>} />
               <Route path="/module/mining" element={<ModuleLayout><MiningModule /></ModuleLayout>} />

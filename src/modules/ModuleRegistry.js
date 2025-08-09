@@ -1,5 +1,6 @@
 import MoneyModule from './MoneyModule';
 import BitcoinBasicsModule from './BitcoinBasicsModule';
+import WhyBitcoinMattersModule from './WhyBitcoinMattersModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
 import MiningModule from './MiningModule';
@@ -14,64 +15,62 @@ import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
-  // Core Foundations - Essential understanding before diving deeper
-  money: {
-    id: 'money',
-    title: 'Understanding Money',
-    description: 'Explore what money is, how it evolved, and why our current system has structural problems.',
-    component: MoneyModule,
-    order: 1,
-    group: 'foundations',
-    prerequisites: []
-  },
+  // Phase 1: Foundation & Immediate Relevance - Get users engaged and motivated
   'bitcoin-basics': {
     id: 'bitcoin-basics',
     title: 'Bitcoin Fundamentals',
     description: 'Learn what Bitcoin is, how it works, and why it represents a different approach to money.',
     component: BitcoinBasicsModule,
+    order: 1,
+    group: 'foundations',
+    prerequisites: []
+  },
+  'bitcoin-relevance': {
+    id: 'bitcoin-relevance',
+    title: 'Why Bitcoin Matters Today',
+    description: 'Real-world scenarios showing Bitcoin\'s immediate relevance to your financial life.',
+    component: WhyBitcoinMattersModule,
     order: 2,
     group: 'foundations',
-    prerequisites: ['money']
-  },
-
-  // Technical Building Blocks - Core knowledge needed for everything else
-  numbers: {
-    id: 'numbers',
-    title: 'Number Systems & Data Representation',
-    description: 'Learn how computers represent numbers and data - essential for understanding Bitcoin.',
-    component: NumbersModule,
-    order: 3,
-    group: 'technical-blocks',
     prerequisites: ['bitcoin-basics']
   },
-  hashing: {
-    id: 'hashing',
-    title: 'Cryptographic Hashing',
-    description: 'Understand how Bitcoin uses mathematical functions to create secure digital fingerprints.',
-    component: HashingModule,
-    order: 4,
-    group: 'technical-blocks',
-    prerequisites: ['numbers']
+  myths: {
+    id: 'myths',
+    title: 'Bitcoin Myths & Facts',
+    description: 'Address common misconceptions about Bitcoin with evidence and data.',
+    component: MythsModule,
+    order: 3,
+    group: 'foundations',
+    prerequisites: ['bitcoin-relevance']
   },
-  mining: {
-    id: 'mining',
-    title: 'Bitcoin Mining',
-    description: 'Learn how Bitcoin creates new coins and secures the network through proof-of-work.',
-    component: MiningModule,
-    order: 5,
-    group: 'technical-blocks',
-    prerequisites: ['hashing']
+  money: {
+    id: 'money',
+    title: 'Understanding Money',
+    description: 'Essential money concepts - streamlined for practical understanding.',
+    component: MoneyModule,
+    order: 4,
+    group: 'foundations',
+    prerequisites: ['myths']
   },
 
-  // Bitcoin Mechanics - How Bitcoin actually works under the hood
-  keys: {
-    id: 'keys',
-    title: 'Private Keys & Addresses',
-    description: 'Master Bitcoin ownership through cryptographic keys and address generation.',
-    component: KeysModule,
+  // Phase 2: Practical Mastery First - Immediate value and hands-on skills
+  custody: {
+    id: 'custody',
+    title: 'Self-Custody & Security',
+    description: 'Learn practical strategies for safely storing and managing your Bitcoin.',
+    component: CustodyModule,
+    order: 5,
+    group: 'practical-first',
+    prerequisites: ['money']
+  },
+  'bitcoin-toolkit': {
+    id: 'bitcoin-toolkit',
+    title: 'Bitcoin Tools & Practice',
+    description: 'Hands-on experience with Bitcoin tools and real-world applications.',
+    component: BitcoinToolkitModule,
     order: 6,
-    group: 'bitcoin-mechanics',
-    prerequisites: ['mining']
+    group: 'practical-first',
+    prerequisites: ['custody']
   },
   transactions: {
     id: 'transactions',
@@ -79,100 +78,111 @@ export const moduleRegistry = {
     description: 'Understand how Bitcoin moves value through the transaction system.',
     component: TransactionsModule,
     order: 7,
-    group: 'bitcoin-mechanics',
+    group: 'practical-first',
+    prerequisites: ['bitcoin-toolkit']
+  },
+  keys: {
+    id: 'keys',
+    title: 'Private Keys & Addresses',
+    description: 'Master Bitcoin ownership through cryptographic keys and address generation.',
+    component: KeysModule,
+    order: 8,
+    group: 'practical-first',
+    prerequisites: ['transactions']
+  },
+
+  // Phase 3: Technical Deep Dive - Now that users see the value, learn the details
+  numbers: {
+    id: 'numbers',
+    title: 'Number Systems & Data',
+    description: 'Gentle introduction to how computers represent data - foundation for technical concepts.',
+    component: NumbersModule,
+    order: 9,
+    group: 'technical-deep-dive',
     prerequisites: ['keys']
+  },
+  hashing: {
+    id: 'hashing',
+    title: 'Cryptographic Hashing',
+    description: 'Understand how Bitcoin uses mathematical functions to create secure digital fingerprints.',
+    component: HashingModule,
+    order: 10,
+    group: 'technical-deep-dive',
+    prerequisites: ['numbers']
+  },
+  mining: {
+    id: 'mining',
+    title: 'Bitcoin Mining',
+    description: 'Learn how Bitcoin creates new coins and secures the network through proof-of-work.',
+    component: MiningModule,
+    order: 11,
+    group: 'technical-deep-dive',
+    prerequisites: ['hashing']
   },
   scripts: {
     id: 'scripts',
     title: 'Bitcoin Scripts',
     description: 'Learn how Bitcoin uses programmable conditions to control spending.',
     component: ScriptsModule,
-    order: 8,
-    group: 'bitcoin-mechanics',
-    prerequisites: ['transactions']
+    order: 12,
+    group: 'technical-deep-dive',
+    prerequisites: ['mining']
   },
+
+  // Phase 4: Advanced Understanding - Complete the comprehensive picture
   merkle: {
     id: 'merkle',
     title: 'Merkle Trees',
     description: 'Discover how Bitcoin efficiently verifies large amounts of data using tree structures.',
     component: MerkleModule,
-    order: 9,
-    group: 'bitcoin-mechanics',
+    order: 13,
+    group: 'advanced-mastery',
     prerequisites: ['scripts']
-  },
-
-  // Practical Mastery - Real-world application and advanced topics
-  custody: {
-    id: 'custody',
-    title: 'Self-Custody & Security',
-    description: 'Learn practical strategies for safely storing and managing your Bitcoin.',
-    component: CustodyModule,
-    order: 10,
-    group: 'practical-mastery',
-    prerequisites: ['merkle']
   },
   lightning: {
     id: 'lightning',
     title: 'Lightning Network',
     description: 'Understand Bitcoin\'s second layer for fast, cheap payments.',
     component: LightningModule,
-    order: 11,
-    group: 'practical-mastery',
-    prerequisites: ['custody']
+    order: 14,
+    group: 'advanced-mastery',
+    prerequisites: ['merkle']
   },
   'advanced-topics': {
     id: 'advanced-topics',
     title: 'Advanced Bitcoin Topics',
     description: 'Explore cutting-edge Bitcoin technology and future developments.',
     component: AdvancedTopicsModule,
-    order: 12,
-    group: 'practical-mastery',
+    order: 15,
+    group: 'advanced-mastery',
     prerequisites: ['lightning']
-  },
-  myths: {
-    id: 'myths',
-    title: 'Bitcoin Myths & Facts',
-    description: 'Examine common misconceptions about Bitcoin with evidence and data.',
-    component: MythsModule,
-    order: 13,
-    group: 'practical-mastery',
-    prerequisites: ['advanced-topics']
-  },
-  'bitcoin-toolkit': {
-    id: 'bitcoin-toolkit',
-    title: 'Bitcoin Tools & Practice',
-    description: 'Hands-on experience with Bitcoin tools and real-world applications.',
-    component: BitcoinToolkitModule,
-    order: 14,
-    group: 'practical-mastery',
-    prerequisites: ['myths']
   }
 };
 
-// Group definitions with emojis and descriptions
+// Group definitions with emojis and descriptions - RESTRUCTURED FOR ENGAGEMENT
 export const moduleGroups = {
   'foundations': {
-    title: '🎯 Core Foundations',
-    description: 'Essential understanding before diving deeper',
-    emoji: '🎯',
+    title: '⚡ Foundation & Motivation',
+    description: 'Why Bitcoin matters and essential concepts',
+    emoji: '⚡',
     order: 1
   },
-  'technical-blocks': {
-    title: '🔧 Technical Building Blocks',
-    description: 'Core knowledge needed for everything else',
-    emoji: '🔧',
+  'practical-first': {
+    title: '🛠️ Practical Skills First',
+    description: 'Immediate value - secure and use Bitcoin today',
+    emoji: '🛠️',
     order: 2
   },
-  'bitcoin-mechanics': {
-    title: '⚙️ Bitcoin Mechanics',
+  'technical-deep-dive': {
+    title: '🔬 Technical Deep Dive',
     description: 'How Bitcoin actually works under the hood',
-    emoji: '⚙️',
+    emoji: '🔬',
     order: 3
   },
-  'practical-mastery': {
-    title: '🚀 Practical Mastery',
-    description: 'Real-world application and advanced topics',
-    emoji: '🚀',
+  'advanced-mastery': {
+    title: '🎓 Advanced Mastery',
+    description: 'Complete your Bitcoin understanding',
+    emoji: '🎓',
     order: 4
   }
 };
