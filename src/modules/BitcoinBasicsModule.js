@@ -18,57 +18,45 @@ import ProgressCounter, {
 import '../components/ModuleCommon.css';
 // Using unified UI components for consistency
 
-// Bitcoin Introduction with Prediction Challenges
+// Bitcoin Introduction - Curiosity-Driven with Strong Hooks
 const BitcoinIntroduction = ({ onComplete }) => {
   const [currentDemo, setCurrentDemo] = useState(0);
   const [userPredictions, setUserPredictions] = useState({});
   const [challengeMode, setChallengeMode] = useState(true);
-  const [personalStory, setPersonalStory] = useState('');
-  const [thinkingLevel, setThinkingLevel] = useState(1);
 
-  // Streamlined problem demonstrations - removed redundant content
+  // Two shocking revelations that build urgency for Bitcoin
   const problemDemos = [
     {
       id: 'control',
-      title: 'Who Controls Your Money?',
-      setup: 'In February 2022, the Canadian government froze bank accounts of peaceful protesters...',
-      thinkingQuestion: "If your money can be frozen for political reasons, do you really own it?",
+      title: 'The $7 Million Question',
+      hook: '🚨 February 2022: A government froze $7 million in bank accounts with the click of a button.',
+      setup: 'Peaceful protesters in Canada woke up to find their accounts frozen. No court orders. No warnings. They couldn\'t buy groceries for their families or pay rent.',
+      shockingDetail: 'One woman had donated just $50 to the cause. Her entire life savings: frozen.',
+      thinkingQuestion: "Here's the uncomfortable truth: If someone else can freeze your money, do you actually own it?",
       challengeOptions: [
-        'Yes, it\'s still mine even if temporarily frozen',
-        'No, if it can be frozen, someone else controls it',
-        'It depends on the reason for freezing',
-        'I never thought about this before'
+        'Yes - it\'s still legally mine, just temporarily restricted',
+        'No - true ownership means no one can take it away',
+        'It depends on whether I agree with their reasons',
+        'I never thought about ownership this way before'
       ],
-      reality: 'Over $7 million in accounts were frozen without court orders. Account holders couldn\'t buy groceries or pay bills.',
-      deeperQuestion: "What's the difference between 'having access to money' and 'owning money'?"
+      reality: 'The harsh reality: Having "access" to money is not the same as "owning" money. Your bank account is just an IOU from a bank that can be revoked.',
+      bitcoinCliffhanger: 'But what if there was money that governments literally CANNOT freeze, no matter what? Keep reading...'
     },
     {
       id: 'inflation',
-      title: 'The Purchasing Power Problem',
-      setup: 'Your grandfather earned $5,000/year in 1970. That same job pays $50,000 today...',
-      thinkingQuestion: "If wages went up 10x but a house costs 20x more, are we getting richer or poorer?",
+      title: 'The Great Wealth Transfer',
+      hook: '💰 Your grandfather could buy a house for what you spend on a used car.',
+      setup: '1970: Average salary $5,000, average house $23,000. Today: Average salary $50,000, average house $400,000. Wait... something doesn\'t add up here.',
+      shockingDetail: 'Your wages went up 10x, but everything else went up 15-20x. You\'re working harder for less.',
+      thinkingQuestion: "If you\'re earning 10 times more money than your grandfather, but can afford far less, what happened?",
       challengeOptions: [
-        'Richer - wages increased 10x',
-        'Poorer - things cost more than wage increases',
-        'Same - it all balances out',
-        'Hard to tell without more data'
+        'We\'re definitely richer - look at all this technology!',
+        'We\'re actually poorer - our money buys less stuff',
+        'It\'s about the same - wages and prices balanced out',
+        'This is confusing - I need to see more numbers'
       ],
-      reality: 'Average home: $23,000 (1970) → $400,000+ (2024). College: $400/year → $25,000/year. Your money buys less every year.',
-      deeperQuestion: "Is inflation a natural force like gravity, or is it a policy choice?"
-    },
-    {
-      id: 'speed',
-      title: 'Digital Age, Stone Age Money',
-      setup: 'You can send a 4K video to Japan in 3 seconds. But sending $100 to Japan takes 3-5 business days...',
-      thinkingQuestion: "In the internet age, why does it take longer to send money than to send a video?",
-      challengeOptions: [
-        'Money is more complex than videos',
-        'Banking systems are old and slow',
-        'International regulations cause delays',
-        'Security requires more time'
-      ],
-      reality: 'Banks still use 1970s technology (SWIFT). Your money moves through 4-6 intermediaries, each taking 1-2 days.',
-      deeperQuestion: "Why do we accept that money moves slower than information?"
+      reality: 'The uncomfortable truth: Your purchasing power has been systematically stolen through money printing. Every new dollar printed makes your existing dollars worth less.',
+      bitcoinCliffhanger: 'But what if money existed that CANNOT be printed? Where your slice of the pie can never shrink? That\'s exactly what Bitcoin solves...'
     }
   ];
 
@@ -80,34 +68,24 @@ const BitcoinIntroduction = ({ onComplete }) => {
       [currentProblem.id]: choice
     }));
     setChallengeMode(false);
-    setThinkingLevel(1);
   };
 
   const handleDemoClick = () => {
-    if (thinkingLevel === 1) {
-      setThinkingLevel(2);
+    // Move to next demo or complete
+    if (currentDemo < problemDemos.length - 1) {
+      setCurrentDemo(currentDemo + 1);
+      setChallengeMode(true);
     } else {
-      // Move to next demo or complete
-      if (currentDemo < problemDemos.length - 1) {
-        setCurrentDemo(currentDemo + 1);
-        setChallengeMode(true);
-        setThinkingLevel(1);
-      } else {
-        onComplete(0);
-      }
+      onComplete(0);
     }
-  };
-
-  const handlePersonalStoryChange = (e) => {
-    setPersonalStory(e.target.value);
   };
 
   return (
     <div className="step-content introduction">
       <div className="module-header-box">
-        <h2>What Problems Does Bitcoin Solve?</h2>
+        <h2>🔥 The Money System is Broken</h2>
         <div className="intro-text">
-          <p className="prime-text">Before we explore Bitcoin, let's understand the problems with our current money system.</p>
+          <p className="prime-text">Most people don't realize their money isn't really theirs. Let's uncover some uncomfortable truths...</p>
         </div>
       </div>
       
@@ -115,7 +93,13 @@ const BitcoinIntroduction = ({ onComplete }) => {
         <div className="problem-exploration">
           <div className="problem-demo">
             <h3>{currentProblem.title}</h3>
+            <div className="hook-text">
+              <p className="shock-value">{currentProblem.hook}</p>
+            </div>
             <p className="setup-text">{currentProblem.setup}</p>
+            <div className="shocking-detail">
+              <p className="detail-highlight">💡 {currentProblem.shockingDetail}</p>
+            </div>
             
             {challengeMode ? (
               <div className="thinking-challenge">
@@ -140,38 +124,25 @@ const BitcoinIntroduction = ({ onComplete }) => {
               <div className="reality-reveal">
                 <div className="user-prediction">
                   <h4>Your intuition: "{userPredictions[currentProblem.id]}"</h4>
-          </div>
+                </div>
 
                 <div className="reality-check">
-                  <h4>📊 The Reality:</h4>
+                  <h4>💡 The Reality:</h4>
                   <p>{currentProblem.reality}</p>
-            </div>
+                </div>
                 
-                {thinkingLevel === 2 && (
-                  <div className="deeper-thinking">
-                    <h4>🧠 Deeper Question:</h4>
-                    <p>{currentProblem.deeperQuestion}</p>
-                    
-                    <div className="personal-reflection">
-                      <h5>Your thoughts:</h5>
-                      <textarea
-                        value={personalStory}
-                        onChange={handlePersonalStoryChange}
-                        placeholder="How does this make you feel about money?"
-                        className="reflection-input"
-                      />
-          </div>
-        </div>
-                )}
+                <div className="bitcoin-cliffhanger">
+                  <h4>🟠 The Plot Twist:</h4>
+                  <p className="cliffhanger-text">{currentProblem.bitcoinCliffhanger}</p>
+                </div>
                 
                 <ActionButton 
                   onClick={handleDemoClick}
-                  className="demo-next-button"
+                  className="demo-next-button pulsing-button"
                 >
-                  {thinkingLevel === 1 ? "Reflect Deeper →" : 
-                   currentDemo < problemDemos.length - 1 ? "Next Problem →" : "See Bitcoin's Solution →"}
+                  {currentDemo < problemDemos.length - 1 ? "🔥 Another Shocking Truth →" : "🟠 Discover Bitcoin's Solution →"}
                 </ActionButton>
-          </div>
+              </div>
             )}
         </div>
 
@@ -189,575 +160,278 @@ const BitcoinIntroduction = ({ onComplete }) => {
     );
   };
 
-// Simplified Property Comparison - no redundant stories
+// The Money Battle - Gamified Property Comparison
 const PropertyCompare = ({ onComplete }) => {
-  const propertyList = [
-    { key: "Self Custody", label: "Self Custody", fiatPass: false, goldPass: true },
-    { key: "Decentralization", label: "Decentralization", fiatPass: false, goldPass: true },
-    { key: "Verifiability", label: "Verifiability", fiatPass: true, goldPass: false },
-    { key: "Fixed Supply", label: "Fixed Supply", fiatPass: false, goldPass: true },
-    { key: "Genuine Scarcity", label: "Genuine Scarcity", fiatPass: false, goldPass: true },
-    { key: "Fungibility", label: "Fungibility", fiatPass: true, goldPass: false },
-    { key: "Portability", label: "Portability", fiatPass: true, goldPass: false },
-    { key: "Divisibility", label: "Divisibility", fiatPass: true, goldPass: false },
-    { key: "Durability", label: "Durability", fiatPass: false, goldPass: true },
-    { key: "Acceptability", label: "Acceptability", fiatPass: true, goldPass: true }
-  ];
+  const [currentProperty, setCurrentProperty] = useState(0);
+  const [selections, setSelections] = useState({});
+  const [scores, setScores] = useState({ fiat: 0, gold: 0, bitcoin: 0 });
+  const [showResults, setShowResults] = useState(false);
+  const [battlePhase, setBattlePhase] = useState('intro'); // intro, battle, results
 
-  const [selections, setSelections] = useState(
-    Object.fromEntries(propertyList.map((p) => [p.key, '']))
-  );
-
-  const verdict = (prop, choice) => {
-    if (!choice) return '';
-    if (choice === 'bitcoin') return '✔';
-    if (choice === 'gold') return prop.goldPass ? '✔' : '✖';
-    return prop.fiatPass ? '✔' : '✖';
-  };
-
-  return (
-    <div className="step-content comparison">
-      <div className="module-header-box">
-        <h2>Bitcoin vs Other Money</h2>
-        <p>Select a money type for each property. Green means it passes.</p>
-      </div>
-
-      <div className="content-text">
-        <table className="w-full text-sm">
-          <thead>
-            <tr>
-              <th className="text-left">Property</th>
-              <th>Choose</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {propertyList.map((prop) => (
-              <tr key={prop.key}>
-                <td>{prop.label}</td>
-                <td>
-                  <select
-                    value={selections[prop.key]}
-                    onChange={(e) =>
-                      setSelections({ ...selections, [prop.key]: e.target.value })
-                    }
-                  >
-                    <option value="">—</option>
-                    <option value="fiat">Fiat</option>
-                    <option value="gold">Gold</option>
-                    <option value="bitcoin">Bitcoin</option>
-                  </select>
-                </td>
-                <td className="text-center">
-                  {verdict(prop, selections[prop.key])}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        
-        <ContinueButton onClick={() => onComplete(1)}>
-          See How Bitcoin Works
-        </ContinueButton>
-      </div>
-    </div>
-  );
-  };
-
-// Blockchain Demonstration
-const BlockchainDemo = ({ onComplete }) => {
-  // Can be displayed in the learning module if planned
-  return null;
-  const [currentBlock, setCurrentBlock] = useState(0);
-  const [userTransactions, setUserTransactions] = useState([]);
-  const [blockStatus, setBlockStatus] = useState('building');
-  const [networkConsensus, setNetworkConsensus] = useState(0);
-
-  const blockChain = [
-    {
-      id: 0,
-      hash: "000000abc123...",
-      previousHash: "000000000000...",
-      transactions: ["Genesis Block", "First Bitcoin transaction"],
-      miner: "Satoshi Nakamoto",
-      timestamp: "2009-01-03"
+  const propertyBattles = [
+    { 
+      key: "Control", 
+      title: "Who Controls It?", 
+      question: "Can governments freeze, confiscate, or manipulate this money?",
+      options: {
+        fiat: { label: "💵 Fiat Money", answer: "Government controls everything", pass: false },
+        gold: { label: "🥇 Gold", answer: "You control physical gold", pass: true },
+        bitcoin: { label: "🟠 Bitcoin", answer: "Only you control your Bitcoin", pass: true }
+      },
+      winner: "bitcoin",
+      insight: "Bitcoin wins because it's the ONLY money that can't be frozen or confiscated by anyone."
     },
     {
-      id: 1,
-      hash: "000000def456...",
-      previousHash: "000000abc123...",
-      transactions: [],
-      miner: "Network Node #1847",
-      timestamp: "Now",
-      isUserBlock: true
+      key: "Scarcity", 
+      title: "Is the Supply Fixed?", 
+      question: "Can more of this money be created, diluting your holdings?",
+      options: {
+        fiat: { label: "💵 Fiat Money", answer: "Unlimited printing possible", pass: false },
+        gold: { label: "🥇 Gold", answer: "More can be mined", pass: true },
+        bitcoin: { label: "🟠 Bitcoin", answer: "Exactly 21 million forever", pass: true }
+      },
+      winner: "bitcoin",
+      insight: "Bitcoin's 21 million limit is mathematically guaranteed - unlike gold mining or money printing."
+    },
+    {
+      key: "Verification", 
+      title: "Can You Verify It's Real?", 
+      question: "How easy is it to prove this money isn't fake?",
+      options: {
+        fiat: { label: "💵 Fiat Money", answer: "Special equipment needed", pass: true },
+        gold: { label: "🥇 Gold", answer: "Complex testing required", pass: false },
+        bitcoin: { label: "🟠 Bitcoin", answer: "Instantly verifiable by anyone", pass: true }
+      },
+      winner: "bitcoin",
+      insight: "Bitcoin transactions are cryptographically verifiable by anyone with a computer."
+    },
+    {
+      key: "Transport", 
+      title: "How Easy to Move?", 
+      question: "Can you easily transport large amounts across borders?",
+      options: {
+        fiat: { label: "💵 Fiat Money", answer: "Banks, fees, restrictions", pass: true },
+        gold: { label: "🥇 Gold", answer: "Heavy, expensive to move", pass: false },
+        bitcoin: { label: "🟠 Bitcoin", answer: "Instant global transfer", pass: true }
+      },
+      winner: "bitcoin",
+      insight: "Bitcoin can be sent anywhere in the world in ~10 minutes for minimal fees."
     }
   ];
 
-  const handleAddTransaction = (from, to, amount) => {
-    const newTx = {
-      id: Date.now(),
-      from,
-      to,
-      amount,
-      status: 'pending'
-    };
-    setUserTransactions([...userTransactions, newTx]);
-  };
+  const currentBattle = propertyBattles[currentProperty];
 
-  const handleMineBlock = () => {
-    setBlockStatus('mining');
-    // Simulate mining process
-    let consensus = 0;
-    const miningInterval = setInterval(() => {
-      consensus += 20;
-      setNetworkConsensus(consensus);
-      if (consensus >= 100) {
-        setBlockStatus('confirmed');
-        clearInterval(miningInterval);
-        setTimeout(() => {
-          if (currentBlock === 0) {
-            setCurrentBlock(1);
-            setUserTransactions([]);
-            setNetworkConsensus(0);
-            setBlockStatus('building');
-          }
-        }, 2000);
-      }
-    }, 200);
-    };
-
-    return (
-    <div className="step-content blockchain-demo">
-      <div className="module-header-box">
-        <h2>How Bitcoin's Blockchain Works</h2>
-        <div className="intro-text">
-          <p className="prime-text">Bitcoin uses a "blockchain" - a chain of transaction blocks that everyone can verify. Let's build one together!</p>
-          </div>
-        </div>
-            
-      <div className="content-text">
-        <div className="blockchain-visualization">
-          <h3>📦 Live Blockchain</h3>
-          <div className="block-chain">
-            {blockChain.slice(0, currentBlock + 1).map((block, index) => (
-              <div key={block.id} className={`block ${block.isUserBlock ? 'user-block' : 'genesis-block'} ${blockStatus === 'confirmed' && block.isUserBlock ? 'confirmed' : ''}`}>
-                <div className="block-header">
-                  <h4>Block #{block.id}</h4>
-                  <div className="block-hash">Hash: {block.hash}</div>
-                  <div className="previous-hash">Previous: {block.previousHash}</div>
-          </div>
-                <div className="block-body">
-                  <div className="transactions-list">
-                    <h5>Transactions:</h5>
-                    {block.isUserBlock ? (
-                      userTransactions.length > 0 ? (
-                        userTransactions.map(tx => (
-                          <div key={tx.id} className="transaction-item">
-                            {tx.from} → {tx.to}: {tx.amount} BTC
-                </div>
-                        ))
-                      ) : (
-                        <div className="empty-block">No transactions yet - add some below!</div>
-                      )
-                    ) : (
-                      block.transactions.map((tx, i) => (
-                        <div key={i} className="transaction-item">{tx}</div>
-                      ))
-                  )}
-                </div>
-                  <div className="block-info">
-                    <div>Miner: {block.miner}</div>
-                    <div>Time: {block.timestamp}</div>
-              </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-            </div>
-
-        {currentBlock === 0 && (
-          <div className="transaction-builder">
-            <h3>💰 Add Bitcoin Transactions</h3>
-            <p>Create some transactions to include in the next block:</p>
-            
-            <div className="quick-transactions">
-            <ActionButton 
-                onClick={() => handleAddTransaction('Alice', 'Bob', '0.5')}
-                className="quick-tx-button"
-              >
-                Alice → Bob: 0.5 BTC
-              </ActionButton>
-              <ActionButton 
-                onClick={() => handleAddTransaction('Charlie', 'Diana', '1.2')}
-                className="quick-tx-button"
-              >
-                Charlie → Diana: 1.2 BTC
-              </ActionButton>
-              <ActionButton 
-                onClick={() => handleAddTransaction('Eve', 'Frank', '0.8')}
-                className="quick-tx-button"
-              >
-                Eve → Frank: 0.8 BTC
-            </ActionButton>
-          </div>
-
-            {userTransactions.length >= 2 && (
-              <div className="mining-section">
-                <h4>⛏️ Mine the Block</h4>
-                <p>You've added {userTransactions.length} transactions. Ready to mine this block?</p>
-                <ActionButton 
-                  onClick={handleMineBlock}
-                  disabled={blockStatus !== 'building'}
-                  className="mine-button"
-                >
-                  {blockStatus === 'building' ? 'Start Mining' : 
-                   blockStatus === 'mining' ? 'Mining in Progress...' : 'Block Confirmed!'}
-                </ActionButton>
-                
-                {blockStatus === 'mining' && (
-                  <div className="mining-progress">
-                    <div className="consensus-meter">
-                      <div className="consensus-label">Network Consensus: {networkConsensus}%</div>
-                      <div className="consensus-bar">
-                        <div 
-                          className="consensus-fill" 
-                          style={{ width: `${networkConsensus}%` }}
-                        />
-              </div>
-              </div>
-                    <p className="mining-explanation">
-                      Thousands of computers worldwide are verifying your block...
-              </p>
-            </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {currentBlock === 1 && blockStatus === 'confirmed' && (
-          <div className="blockchain-complete">
-            <h3>🎉 Congratulations!</h3>
-            <p>You've successfully added a block to the blockchain! Here's what just happened:</p>
-            <ul>
-              <li>✅ <strong>Transactions verified</strong> - Each transaction was cryptographically validated</li>
-              <li>✅ <strong>Block mined</strong> - Computers solved a mathematical puzzle to secure the block</li>
-              <li>✅ <strong>Network consensus</strong> - Thousands of nodes agreed this block is valid</li>
-              <li>✅ <strong>Permanently recorded</strong> - This block can never be changed or deleted</li>
-            </ul>
-            
-            <div className="key-insight">
-              <h4>🔑 Key Insight</h4>
-              <p>No single person or institution controls this process. It's secured by mathematics, energy, and global consensus.</p>
-            </div>
-
-            <ContinueButton onClick={() => onComplete(2)}>
-              Explore Bitcoin's Network
-          </ContinueButton>
-          </div>
-        )}
-      </div>
-      </div>
-    );
-  };
-
-// Network Consensus Demonstration
-const NetworkConsensus = ({ onComplete }) => {
-  // Can be displayed in the learning module if planned
-  return null;
-  const [attackScenario, setAttackScenario] = useState(null);
-  const [networkSize] = useState(10000);
-  const [attackerNodes, setAttackerNodes] = useState(1000);
-  const [simulationRunning, setSimulationRunning] = useState(false);
-  const [attackResult, setAttackResult] = useState(null);
-
-  const scenarios = [
-    {
-      id: 'single_node',
-      title: 'Single Bad Actor',
-      description: 'One person tries to cheat the system',
-      attackerCount: 1,
-      successChance: 0
-    },
-    {
-      id: 'small_group',
-      title: 'Small Criminal Group',
-      description: '100 coordinated attackers',
-      attackerCount: 100,
-      successChance: 0
-    },
-    {
-      id: 'large_corporation',
-      title: 'Large Corporation',
-      description: 'Massive company with 1000s of computers',
-      attackerCount: 1000,
-      successChance: 5
-    },
-    {
-      id: 'nation_state',
-      title: 'Nation State Attack',
-      description: 'Government with unlimited resources',
-      attackerCount: 5000,
-      successChance: 45
-    }
-  ];
-
-  const handleScenarioSelect = (scenario) => {
-    setAttackScenario(scenario);
-    setAttackerNodes(scenario.attackerCount);
-  };
-
-  const runSimulation = () => {
-    setSimulationRunning(true);
-    setAttackResult(null);
+  const handleChoice = (moneyType) => {
+    const newSelections = { ...selections, [currentProperty]: moneyType };
+    setSelections(newSelections);
     
-    // Simulate attack
+    // Award points
+    const newScores = { ...scores };
+    if (moneyType === currentBattle.winner) {
+      newScores[moneyType] += 2; // Winner gets 2 points
+    } else if (currentBattle.options[moneyType].pass) {
+      newScores[moneyType] += 1; // Partial credit for passing
+    }
+    setScores(newScores);
+    
+    // Move to next battle or show results
     setTimeout(() => {
-      const honestNodes = networkSize - attackerNodes;
-      const attackerPercentage = (attackerNodes / networkSize) * 100;
-      
-      let result;
-      if (attackerPercentage < 51) {
-        result = {
-          success: false,
-          reason: `Attack failed! Honest nodes (${honestNodes.toLocaleString()}) outnumber attackers (${attackerNodes.toLocaleString()}). Network remains secure.`,
-          impact: 'None - Bitcoin continues operating normally'
-        };
+      if (currentProperty < propertyBattles.length - 1) {
+        setCurrentProperty(currentProperty + 1);
       } else {
-        result = {
-          success: true,
-          reason: `Attack succeeded! Attackers control ${attackerPercentage.toFixed(1)}% of network.`,
-          impact: 'Attackers could potentially double-spend or halt transactions'
-        };
+        setBattlePhase('results');
       }
-      
-      setAttackResult(result);
-      setSimulationRunning(false);
     }, 2000);
   };
 
-  const attackerPercentage = (attackerNodes / networkSize) * 100;
-
-  return (
-    <div className="step-content network-consensus">
-      <div className="module-header-box">
-        <h2>Bitcoin's Decentralized Security</h2>
-        <div className="intro-text">
-          <p className="prime-text">Bitcoin's security comes from decentralization. Let's test how hard it is to attack the network.</p>
-                      </div>
-                      </div>
-      
-      <div className="content-text">
-        <div className="network-visualization">
-          <h3>🌐 Bitcoin Network: {networkSize.toLocaleString()} Nodes Worldwide</h3>
-          <div className="network-stats">
-            <div className="stat-item">
-              <div className="stat-value">{(networkSize - attackerNodes).toLocaleString()}</div>
-              <div className="stat-label">Honest Nodes</div>
-                        </div>
-            <div className="stat-item">
-              <div className="stat-value">{attackerNodes.toLocaleString()}</div>
-              <div className="stat-label">Attacker Nodes</div>
-                        </div>
-            <div className="stat-item">
-              <div className="stat-value">{attackerPercentage.toFixed(1)}%</div>
-              <div className="stat-label">Attack Control</div>
-                      </div>
-                    </div>
-          
-          <div className="network-visual">
-            <div className="network-pie">
-              <div 
-                className="honest-nodes" 
-                style={{ 
-                  background: `conic-gradient(#28a745 0deg ${(100 - attackerPercentage) * 3.6}deg, #dc3545 ${(100 - attackerPercentage) * 3.6}deg 360deg)` 
-                }}
-              >
-                <div className="pie-center">
-                  <div className="security-status">
-                    {attackerPercentage < 51 ? '🛡️ SECURE' : '⚠️ COMPROMISED'}
-                      </div>
-                      </div>
-                    </div>
-            </div>
-          </div>
-                </div>
-
-        <div className="attack-scenarios">
-          <h3>🎯 Test Attack Scenarios</h3>
-          <p>Choose an attacker and see if they can compromise Bitcoin:</p>
-          
-          <div className="scenario-grid">
-            {scenarios.map(scenario => (
-              <div 
-                key={scenario.id}
-                className={`scenario-card ${attackScenario?.id === scenario.id ? 'selected' : ''}`}
-                onClick={() => handleScenarioSelect(scenario)}
-              >
-                <h4>{scenario.title}</h4>
-                <p>{scenario.description}</p>
-                <div className="scenario-stats">
-                  <div>Attackers: {scenario.attackerCount.toLocaleString()}</div>
-                  <div>Control: {((scenario.attackerCount / networkSize) * 100).toFixed(1)}%</div>
-                  </div>
-                  </div>
-            ))}
-                </div>
-        </div>
-
-        {attackScenario && (
-          <div className="simulation-controls">
-            <h4>🧪 Run Attack Simulation</h4>
-            <p>Test if {attackScenario.title} can compromise the Bitcoin network:</p>
-            
-            <ActionButton 
-              onClick={runSimulation}
-              disabled={simulationRunning}
-              className="simulation-button"
-            >
-              {simulationRunning ? 'Running Simulation...' : 'Launch Attack'}
-            </ActionButton>
-
-            {simulationRunning && (
-              <div className="simulation-progress">
-                <div className="progress-animation">⚡ Simulating network attack...</div>
-                  </div>
-                )}
-
-            {attackResult && (
-              <div className={`attack-result ${attackResult.success ? 'attack-success' : 'attack-failed'}`}>
-                <h5>{attackResult.success ? '💥 Attack Succeeded' : '🛡️ Attack Failed'}</h5>
-                <p><strong>Result:</strong> {attackResult.reason}</p>
-                <p><strong>Impact:</strong> {attackResult.impact}</p>
-                
-                {!attackResult.success && (
-                  <div className="security-insight">
-                    <h6>🔒 Why Bitcoin Remained Secure:</h6>
-                    <ul>
-                      <li>Majority of nodes remained honest</li>
-                      <li>Decentralized consensus rejected fraudulent transactions</li>
-                      <li>Network automatically maintained integrity</li>
-                    </ul>
-              </div>
-            )}
-          </div>
-            )}
-        </div>
-        )}
-
-        <div className="consensus-explanation">
-          <h3>🤝 How Consensus Works</h3>
-          <div className="consensus-rules">
-            <div className="rule-item">
-              <div className="rule-icon">🗳️</div>
-              <div className="rule-content">
-                <h4>Majority Rule</h4>
-                <p>The longest valid blockchain wins. Honest majority = honest blockchain.</p>
-                    </div>
-                  </div>
-            <div className="rule-item">
-              <div className="rule-icon">⚡</div>
-              <div className="rule-content">
-                <h4>Proof of Work</h4>
-                <p>Miners spend real energy to add blocks. Cheating costs more than honesty.</p>
-              </div>
-            </div>
-            <div className="rule-item">
-              <div className="rule-icon">🌍</div>
-              <div className="rule-content">
-                <h4>Global Verification</h4>
-                <p>Every node verifies every transaction. Impossible to fake consensus.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="continue-section">
-          <h3>🎯 Key Takeaway</h3>
-          <p>Bitcoin's security comes from decentralization. The more honest participants, the more secure the network becomes.</p>
-          <ContinueButton onClick={() => onComplete(3)}>
-            Discover Bitcoin's Fixed Supply
-        </ContinueButton>
-        </div>
-      </div>
-      </div>
-    );
+  const getScoreColor = (score) => {
+    if (score >= 6) return 'winner';
+    if (score >= 3) return 'decent';
+    return 'poor';
   };
 
-// Why Scarcity Creates Value
+  if (battlePhase === 'intro') {
+    return (
+      <div className="step-content battle-intro">
+        <div className="module-header-box">
+          <h2>⚔️ The Ultimate Money Battle</h2>
+          <div className="intro-text">
+            <p className="prime-text">Three types of money enter. Only one can be the champion. Let's see which money dominates in key areas...</p>
+          </div>
+        </div>
+        <div className="content-text">
+          <div className="battle-preview">
+            <div className="contenders">
+              <div className="contender fiat-contender">
+                <h3>💵 Team Fiat</h3>
+                <p>Government-issued currency</p>
+              </div>
+              <div className="contender gold-contender">
+                <h3>🥇 Team Gold</h3>
+                <p>Traditional store of value</p>
+              </div>
+              <div className="contender bitcoin-contender">
+                <h3>🟠 Team Bitcoin</h3>
+                <p>Digital revolution</p>
+              </div>
+            </div>
+          </div>
+          <ActionButton onClick={() => setBattlePhase('battle')} className="start-battle-button">
+            🔥 Start the Battle!
+          </ActionButton>
+        </div>
+      </div>
+    );
+  }
+
+  if (battlePhase === 'results') {
+    return (
+      <div className="step-content battle-results">
+        <div className="module-header-box">
+          <h2>🏆 Battle Results</h2>
+        </div>
+        <div className="content-text">
+          <div className="final-scores">
+            <div className="scoreboard">
+              <div className={`score-item ${getScoreColor(scores.bitcoin)}`}>
+                <h3>🟠 Bitcoin</h3>
+                <div className="score">{scores.bitcoin}</div>
+                <div className="status">CHAMPION! 👑</div>
+              </div>
+              <div className={`score-item ${getScoreColor(scores.gold)}`}>
+                <h3>🥇 Gold</h3>
+                <div className="score">{scores.gold}</div>
+                <div className="status">Runner-up</div>
+              </div>
+              <div className={`score-item ${getScoreColor(scores.fiat)}`}>
+                <h3>💵 Fiat</h3>
+                <div className="score">{scores.fiat}</div>
+                <div className="status">Needs improvement</div>
+              </div>
+            </div>
+          </div>
+          <div className="victory-message">
+            <h3>🎉 Bitcoin Domination Complete!</h3>
+            <p>Bitcoin systematically outperforms both traditional money forms. It combines the best of both worlds while eliminating their weaknesses.</p>
+          </div>
+          <ContinueButton onClick={() => onComplete(1)} className="victory-button">
+            🚀 Bitcoin Wins! Now See HOW It Works →
+          </ContinueButton>
+        </div>
+      </div>
+    );
+  }
+
+  // Battle phase
+  return (
+    <div className="step-content money-battle">
+      <div className="module-header-box">
+        <h2>⚔️ Round {currentProperty + 1}: {currentBattle.title}</h2>
+        <div className="battle-progress">
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${((currentProperty + 1) / propertyBattles.length) * 100}%` }}
+            />
+          </div>
+          <p>Battle {currentProperty + 1} of {propertyBattles.length}</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="battle-question">
+          <h3>{currentBattle.question}</h3>
+        </div>
+        
+        <div className="battle-options">
+          {Object.entries(currentBattle.options).map(([key, option]) => (
+            <div 
+              key={key}
+              className="battle-choice"
+              onClick={() => handleChoice(key)}
+            >
+              <div className="choice-header">
+                <h4>{option.label}</h4>
+              </div>
+              <div className="choice-answer">
+                <p>{option.answer}</p>
+              </div>
+              <div className={`choice-result ${option.pass ? 'pass' : 'fail'}`}>
+                {option.pass ? '✅ Strong' : '❌ Weak'}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {selections[currentProperty] && (
+          <div className="battle-insight">
+            <div className="insight-box">
+              <h4>🎯 Battle Insight:</h4>
+              <p>{currentBattle.insight}</p>
+            </div>
+          </div>
+        )}
+        
+        <div className="current-scores">
+          <h4>Current Scores:</h4>
+          <div className="score-display">
+            <span>🟠 Bitcoin: {scores.bitcoin}</span>
+            <span>🥇 Gold: {scores.gold}</span>
+            <span>💵 Fiat: {scores.fiat}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+// The Scarcity Revolution - Compelling Value Examples
 const WhyScarcityMatters = ({ onComplete }) => {
   const [currentExample, setCurrentExample] = useState(0);
   const [userPrediction, setUserPrediction] = useState(null);
   const [showReality, setShowReality] = useState(false);
 
+  // Two powerful examples that make scarcity visceral and personal
   const scarcityExamples = [
     {
-      id: 'concert_tickets',
-      title: 'Concert Tickets',
-      setup: "Your favorite artist announces a concert. There are 50,000 seats available. Which scenario makes tickets more valuable?",
-      question: "What happens to ticket prices?",
+      id: 'taylor_swift',
+      title: 'The Taylor Swift Phenomenon',
+      hook: '🎤 Taylor Swift announces surprise concert: 50,000 seats, 2.4 million people want tickets',
+      setup: "Within minutes, Ticketmaster crashes. Fans wait 8+ hours online. Face value: $49-449. Resale prices hit $22,700 per ticket.",
+      shockingFact: "A $49 nosebleed seat is selling for more than most people's car.",
+      question: "What turned a $49 ticket into a $20,000+ treasure?",
       options: [
-        { id: 'high_demand', text: "100,000 people want tickets (2x demand vs supply)", prediction: "Prices go up" },
-        { id: 'low_demand', text: "25,000 people want tickets (half demand vs supply)", prediction: "Prices go down" },
-        { id: 'unlimited', text: "Unlimited seats available", prediction: "Prices stay low" }
+        { id: 'popularity', text: "Taylor Swift is just really popular", prediction: "It's about fame" },
+        { id: 'scarcity', text: "Fixed supply + massive demand = extreme value", prediction: "Economics in action" },
+        { id: 'manipulation', text: "Ticketmaster is manipulating prices", prediction: "It's rigged" },
+        { id: 'crazy_fans', text: "Some fans have too much money", prediction: "People are irrational" }
       ],
       reality: {
-        truth: "When demand exceeds supply, prices rise. When supply exceeds demand, prices fall. This is basic economics.",
-        connection: "Bitcoin has FIXED supply (like limited concert seats) but GROWING demand (more people want it)."
-      }
+        truth: "Scarcity is the ultimate value creator. 50,000 seats can't become 51,000 no matter how much demand exists. The harder something is to get, the more valuable it becomes.",
+        connection: "Bitcoin works exactly like concert tickets: FIXED supply (21 million), but GROWING demand worldwide. The difference? Bitcoin's 'concert' never ends."
+      },
+      mindBlown: "💡 Mind = Blown: Bitcoin is like having front-row seats to the greatest financial revolution in history... and the venue can NEVER add more seats."
     },
     {
-      id: 'money_printing',
-      title: 'What Happens When You Print More Money?',
-      setup: "Here are real numbers from the US money supply:",
-      statistics: {
-        money_2000: "$4.9 trillion",
-        money_2024: "$21.7 trillion",
-        increase: "4.3x more dollars",
-        debt_2000: "$5.6 trillion",
-        debt_2024: "$34.2 trillion",
-        debt_increase: "6x more debt"
-      },
-      question: "If there are 4x more dollars today than in 2000, what happened to the value of each dollar?",
+      id: 'digital_land',
+      title: 'Digital Manhattan vs Infinite Plains',
+      hook: '🏝️ Imagine two islands: Manhattan (fixed 22 square miles) vs. Magic Island (can expand infinitely)',
+      setup: "Both start empty. People begin moving in. Manhattan fills up - rent skyrockets. Magic Island keeps expanding - rent stays cheap.",
+      shockingFact: "Manhattan real estate averages $1,500 per square foot. Infinite land? Nearly worthless.",
+      question: "Which island would you rather own property on?",
       options: [
-        { id: 'same_value', text: "Each dollar is worth the same", prediction: "No change" },
-        { id: 'more_value', text: "Each dollar is worth more", prediction: "Deflation" },
-        { id: 'less_value', text: "Each dollar is worth less", prediction: "Inflation" }
+        { id: 'manhattan', text: "Manhattan - my land value can only go up", prediction: "Scarcity wins" },
+        { id: 'magic_island', text: "Magic Island - always room to grow", prediction: "Flexibility wins" },
+        { id: 'both', text: "Both seem equally good", prediction: "No difference" },
+        { id: 'depends', text: "Depends on other factors", prediction: "It's complicated" }
       ],
       reality: {
-        truth: "Your $100 from 2000 only buys $69 worth of stuff today. More money = each unit worth less.",
-        connection: "Bitcoin can never be printed. Only 21 million will ever exist. Your share can't be diluted."
-      }
-    },
-    {
-      id: 'bitcoin_scarcity',
-      title: 'Bitcoin vs Dollar Creation',
-      setup: "Let's compare how new money is created:",
-      comparison: {
-        dollar: {
-          title: "US Dollars",
-          creation: "Federal Reserve can create unlimited amounts",
-          recent: "Created $4 trillion in 2020-2021 alone",
-          future: "Will continue creating more forever",
-          your_share: "Gets smaller every year"
-        },
-        bitcoin: {
-          title: "Bitcoin",
-          creation: "21 million maximum, written in code",
-          recent: "~900 new bitcoins created per day (decreasing)",
-          future: "Will stop at exactly 21 million around 2140",
-          your_share: "Can never be diluted"
-        }
+        truth: "Manhattan's value comes from what CAN'T be done: you can't make more land. Every dollar printed makes dollars less scarce. Every bitcoin that can't be created makes bitcoin more scarce.",
+        connection: "US Dollars = Magic Island (infinite supply, declining value per unit). Bitcoin = Digital Manhattan (fixed supply, increasing value per unit)."
       },
-      question: "Which system protects the value of your savings better?",
-      options: [
-        { id: 'unlimited', text: "Unlimited supply (can always create more)", prediction: "Value stays stable" },
-        { id: 'limited', text: "Limited supply (no more can be created)", prediction: "Value protected from dilution" }
-      ],
-      reality: {
-        truth: "Historically, limited supply items (gold, art, real estate in good locations) hold value better than unlimited supply items.",
-        connection: "Bitcoin is the first digital asset with truly limited supply. It's like digital gold, but even scarcer."
-      }
+      mindBlown: "🚀 Plot Twist: Bitcoin isn't just digital gold... it's digital Manhattan in a world where every other currency is Magic Island!"
     }
   ];
 
@@ -779,11 +453,14 @@ const WhyScarcityMatters = ({ onComplete }) => {
     };
 
     return (
-    <div className="step-content scarcity-value">
+    <div className="step-content scarcity-revolution">
       <div className="module-header-box">
-        <h2>Why Bitcoin Has Value</h2>
+        <h2>💎 The Scarcity Secret</h2>
         <div className="intro-text">
-          <p className="prime-text">Understanding scarcity through examples you already know:</p>
+          <p className="prime-text">🤯 You've seen Bitcoin DOMINATE the competition. But WHY is Bitcoin valuable? The answer will blow your mind...</p>
+          <div className="transition-hook">
+            <p className="hook-subtext">💡 Hint: It's the same reason Taylor Swift tickets sell for $22,700</p>
+          </div>
         </div>
         </div>
 
@@ -791,67 +468,41 @@ const WhyScarcityMatters = ({ onComplete }) => {
         <div className="scarcity-example">
           <h3>{currentExample_data.title}</h3>
           
+          <div className="scarcity-hook">
+            <p className="hook-text">{currentExample_data.hook}</p>
+          </div>
+          
           {currentExample_data.setup && (
             <div className="setup-section">
               <p>{currentExample_data.setup}</p>
-                      </div>
-                    )}
-          
-          {currentExample_data.statistics && (
-            <div className="statistics-display">
-              <h4>📊 Real US Government Data:</h4>
-              <div className="stats-grid">
-                <div className="stat-item">
-                  <div className="stat-label">Money Supply 2000:</div>
-                  <div className="stat-value">{currentExample_data.statistics.money_2000}</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-label">Money Supply 2024:</div>
-                  <div className="stat-value">{currentExample_data.statistics.money_2024}</div>
-                </div>
-                <div className="stat-item highlight">
-                  <div className="stat-label">Increase:</div>
-                  <div className="stat-value">{currentExample_data.statistics.increase}</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-label">National Debt 2000:</div>
-                  <div className="stat-value">{currentExample_data.statistics.debt_2000}</div>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-label">National Debt 2024:</div>
-                  <div className="stat-value">{currentExample_data.statistics.debt_2024}</div>
+              <div className="shocking-fact">
+                <p className="fact-highlight">🔥 {currentExample_data.shockingFact}</p>
               </div>
-                <div className="stat-item highlight">
-                  <div className="stat-label">Debt Increase:</div>
-                  <div className="stat-value">{currentExample_data.statistics.debt_increase}</div>
-              </div>
-            </div>
             </div>
           )}
+          
           
           {currentExample_data.comparison && (
             <div className="comparison-display">
               <div className="comparison-grid">
                 <div className="comparison-item dollar-system">
-                  <h4>🏦 {currentExample_data.comparison.dollar.title}</h4>
+                  <h4>{currentExample_data.comparison.dollar.title}</h4>
                   <div className="comparison-details">
-                    <div>Creation: {currentExample_data.comparison.dollar.creation}</div>
-                    <div>Recent: {currentExample_data.comparison.dollar.recent}</div>
-                    <div>Future: {currentExample_data.comparison.dollar.future}</div>
-                    <div className="impact">Your share: {currentExample_data.comparison.dollar.your_share}</div>
+                    <div><strong>Supply:</strong> {currentExample_data.comparison.dollar.supply}</div>
+                    <div><strong>Recent:</strong> {currentExample_data.comparison.dollar.recent}</div>
+                    <div className="impact"><strong>Impact:</strong> {currentExample_data.comparison.dollar.yourShare}</div>
                   </div>
                 </div>
                 <div className="comparison-item bitcoin-system">
-                  <h4>🟠 {currentExample_data.comparison.bitcoin.title}</h4>
+                  <h4>{currentExample_data.comparison.bitcoin.title}</h4>
                   <div className="comparison-details">
-                    <div>Creation: {currentExample_data.comparison.bitcoin.creation}</div>
-                    <div>Recent: {currentExample_data.comparison.bitcoin.recent}</div>
-                    <div>Future: {currentExample_data.comparison.bitcoin.future}</div>
-                    <div className="impact">Your share: {currentExample_data.comparison.bitcoin.your_share}</div>
-                      </div>
+                    <div><strong>Supply:</strong> {currentExample_data.comparison.bitcoin.supply}</div>
+                    <div><strong>Recent:</strong> {currentExample_data.comparison.bitcoin.recent}</div>
+                    <div className="impact"><strong>Impact:</strong> {currentExample_data.comparison.bitcoin.yourShare}</div>
                   </div>
                 </div>
               </div>
+            </div>
           )}
           
           <div className="question-section">
@@ -883,10 +534,14 @@ const WhyScarcityMatters = ({ onComplete }) => {
               <div className="bitcoin-connection">
                 <h4>🟠 Bitcoin Connection:</h4>
                 <p>{currentExample_data.reality.connection}</p>
-            </div>
+              </div>
+              
+              <div className="mind-blown">
+                <p className="mind-blown-text">{currentExample_data.mindBlown}</p>
+              </div>
 
-              <button className="continue-example-button" onClick={handleContinue}>
-                {currentExample < scarcityExamples.length - 1 ? 'Next Example →' : 'Complete Bitcoin Basics →'}
+              <button className="continue-example-button epic-button" onClick={handleContinue}>
+                {currentExample < scarcityExamples.length - 1 ? '🤯 Mind = Blown! Next Example →' : '🎓 I Get It! Complete Bitcoin Mastery →'}
               </button>
           </div>
         )}
@@ -915,7 +570,10 @@ const BitcoinCompletion = ({ onComplete }) => {
       <div className="module-header-box">
         <h2>🎉 Bitcoin Fundamentals: Complete!</h2>
         <div className="intro-text">
-          <p className="prime-text">You now understand how Bitcoin systematically solves every major fiat currency problem. You're ready for the technical deep dive.</p>
+          <p className="prime-text celebration-text">🎊 INCREDIBLE! You've just completed a journey that most people never take. You now understand what makes Bitcoin the most important financial innovation in human history!</p>
+          <div className="achievement-highlight">
+            <p className="milestone-text">🏆 You've gone from Bitcoin curious to Bitcoin convinced</p>
+          </div>
         </div>
         </div>
 
@@ -981,7 +639,7 @@ const BitcoinCompletion = ({ onComplete }) => {
         <div className="next-journey">
           <h3>🔮 Your Technical Journey Ahead</h3>
           <div className="next-journey-content">
-            <p>Now that you understand <em>why</em> Bitcoin matters, you're ready to learn <em>how</em> it works under the hood.</p>
+            <p className="next-adventure">🚀 Now that you understand <em>WHY</em> Bitcoin is revolutionary, are you ready to discover <em>HOW</em> this digital magic actually works? The technical journey ahead will transform you from Bitcoin believer into Bitcoin expert!</p>
             
             <div className="upcoming-modules">
               <h4>🧮 Technical Deep Dive:</h4>
@@ -993,7 +651,10 @@ const BitcoinCompletion = ({ onComplete }) => {
               </ul>
         </div>
 
-            <p className="ready-question"><strong>Ready to understand Bitcoin's technical brilliance?</strong></p>
+            <div className="call-to-adventure">
+              <p className="ready-question epic-question"><strong>🔥 Are you ready to unlock Bitcoin's technical secrets and join the revolution?</strong></p>
+              <p className="adventure-subtitle">⚡ The next modules will blow your mind...</p>
+            </div>
             </div>
           </div>
 
@@ -1007,12 +668,13 @@ const BitcoinCompletion = ({ onComplete }) => {
     );
   };
 
-// How Bitcoin Works (No Technical Jargon)
+// How Bitcoin Works (No Technical Jargon) - Simplified
 const HowBitcoinWorks = ({ onComplete }) => {
   const [currentConcept, setCurrentConcept] = useState(0);
   const [userAnswer, setUserAnswer] = useState(null);
     const [showExplanation, setShowExplanation] = useState(false);
 
+  // Focus on just the 3 most intuitive concepts
   const concepts = [
     {
       id: 'record_keeping',
@@ -1029,7 +691,7 @@ const HowBitcoinWorks = ({ onComplete }) => {
         correct: 'everyone',
         why: "When everyone has the same records, no one can cheat or 'lose' the notebook. This is exactly how Bitcoin works - thousands of people keep identical records of all Bitcoin transactions.",
         bankingAnalogy: "Banks keep ONE record that only they control. Bitcoin keeps THOUSANDS of identical records that everyone can verify.",
-        bitcoinConnection: "Bitcoin's 'mathematical code' is just the rules for keeping these records consistent across thousands of computers."
+        bitcoinConnection: "Bitcoin's network is just thousands of computers all keeping the same transaction records, making it impossible for anyone to lie about balances."
       }
     },
     {
@@ -1047,12 +709,12 @@ const HowBitcoinWorks = ({ onComplete }) => {
         correct: 'majority',
         why: "When most people agree on the same facts, it's extremely hard for one person to lie successfully. Bitcoin uses this same principle.",
         bankingAnalogy: "Banks: 'Trust us, our computer says you have $X.' Bitcoin: '51% of thousands of computers agree you have X bitcoin.'",
-        bitcoinConnection: "This is what 'consensus' means - the majority of computers must agree before any Bitcoin transaction is accepted as real."
+        bitcoinConnection: "This is what 'consensus' means - the majority of Bitcoin computers must agree before any transaction is accepted as real."
       }
     },
     {
       id: 'attack_resistance',
-      title: 'What If Someone Tries to Cheat?',
+      title: 'Why Bitcoin Can\'t Be Hacked',
       scenario: "Someone in your friend group wants to change the records to show they paid more than they actually did.",
       question: "Which system is harder to cheat?",
       options: [
@@ -1064,26 +726,8 @@ const HowBitcoinWorks = ({ onComplete }) => {
       explanation: {
         correct: 'many_books',
         why: "To cheat when everyone has copies, you'd need to convince more than half the group to lie for you. Much harder than bribing one person!",
-        bankingAnalogy: "Hack one bank = control all accounts. Hack Bitcoin = need to control thousands of computers simultaneously.",
-        bitcoinConnection: "This is why Bitcoin is more secure than banks. Attackers would need to control thousands of computers instead of just one bank's server."
-      }
-    },
-    {
-      id: 'proof_of_work',
-      title: 'Preventing Double-Spending',
-      scenario: "Imagine trying to spend the same $20 bill at two different stores simultaneously. In the physical world, this is impossible - you can't be in two places at once.",
-      question: "How does Bitcoin prevent someone from spending the same digital money twice?",
-      options: [
-        { id: 'trust_people', text: "Trust that people won't try to cheat", risk: 'very_high' },
-        { id: 'central_authority', text: "Have a bank check every transaction", risk: 'high' },
-        { id: 'energy_cost', text: "Make it expensive to create false records", risk: 'low' },
-        { id: 'complex_passwords', text: "Use really complicated passwords", risk: 'medium' }
-      ],
-      explanation: {
-        correct: 'energy_cost',
-        why: "Bitcoin uses 'Proof-of-Work' - miners must spend real electricity to add transactions to the record. This makes creating fake records extremely expensive.",
-        bankingAnalogy: "Banks prevent double-spending by being the single authority. Bitcoin prevents it by making cheating cost more than the reward.",
-        bitcoinConnection: "Proof-of-Work makes double-spending as futile as rewriting yesterday's newspaper - technically possible, but economically irrational."
+        bankingAnalogy: "Hack one bank = control all accounts. Hack Bitcoin = need to control thousands of computers simultaneously worldwide.",
+        bitcoinConnection: "This is why Bitcoin has never been successfully hacked in 15 years. You'd need to control more computers than Amazon, Google, and Microsoft combined."
       }
     }
   ];
@@ -1113,8 +757,11 @@ const HowBitcoinWorks = ({ onComplete }) => {
             <InteractiveIcon type="bitcoin" size={32} className="subtopic-icon" />
             <h2 className="subtopic-title">How Bitcoin Actually Works</h2>
           </div>
-          <div className="subtopic-content">
-            <p className="content-body">Let's understand the core ideas through simple examples:</p>
+        <div className="subtopic-content">
+            <p className="content-body transition-text">🔥 Bitcoin just crushed the competition! But HOW does this digital money actually work? Let's demystify it with simple examples...</p>
+            <div className="anticipation-builder">
+              <p className="sub-hook">💡 Spoiler: It's simpler than you think, yet more brilliant than you can imagine</p>
+            </div>
           </div>
         </div>
 
@@ -1170,8 +817,8 @@ const HowBitcoinWorks = ({ onComplete }) => {
                 </div>
               </div>
 
-              <ActionButton className="continue-button" onClick={handleContinue}>
-                {currentConcept < concepts.length - 1 ? 'Next Concept →' : 'Understand Bitcoin\'s Value →'}
+              <ActionButton className="continue-button mastery-button" onClick={handleContinue}>
+                {currentConcept < concepts.length - 1 ? '🧠 Got It! Next Concept →' : '💎 Now I Need to Know WHY It\'s Valuable →'}
               </ActionButton>
           </div>
         )}

@@ -1321,15 +1321,11 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
             <div className="comparison-preview">
               <div className="money-type">
                 <h5>🥇 Gold</h5>
-                <p>The historical standard</p>
+                <p>Sound money of the past</p>
               </div>
               <div className="money-type">
                 <h5>💵 Fiat Currency</h5>
-                <p>Modern government money</p>
-              </div>
-              <div className="money-type">
-                <h5>₿ Bitcoin</h5>
-                <p>Digital sound money</p>
+                <p>Unsound money of today</p>
               </div>
             </div>
           </div>
@@ -1337,10 +1333,10 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
           <div className="excitement-builder">
             <h4>🎯 What You'll Discover:</h4>
             <ul>
-              <li>Which money system scores highest on your 10-point framework</li>
-              <li>Why Bitcoin was designed the way it was</li>
-              <li>How different money systems trade off various properties</li>
-              <li>Which system best preserves wealth over time</li>
+              <li>How sound money (gold) compares to unsound money (fiat)</li>
+              <li>Why humanity moved from gold to fiat currency</li>
+              <li>What we gained and lost in this transition</li>
+              <li>Whether it's possible to return to sound money</li>
             </ul>
           </div>
           
@@ -1354,7 +1350,7 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
     if (step < frameworkSteps.length - 1) {
       setStep(step + 1);
     } else {
-      onComplete(4);
+      onComplete(5);
     }
   };
 
@@ -1387,7 +1383,7 @@ const MoneyScorecard = ({ unlockedTraits, onComplete }) => {
   );
 };
 
-// Apply Scorecard - Simplified for better learning experience
+// Apply Scorecard - Comparing Sound vs Unsound Money
 const ApplyScorecard = ({ onComplete }) => {
   const [showResults, setShowResults] = useState(false);
 
@@ -1395,7 +1391,8 @@ const ApplyScorecard = ({ onComplete }) => {
     {
       name: "Gold",
       emoji: "🥇",
-      description: "Physical precious metal, used as money for thousands of years",
+      description: "Sound money: Physical precious metal, used for thousands of years",
+      era: "Pre-1971 (Sound Money Era)",
       scores: {
         "Self Custody": 9,
         "Decentralization": 8,
@@ -1414,7 +1411,8 @@ const ApplyScorecard = ({ onComplete }) => {
     {
       name: "Fiat Currency",
       emoji: "💵",
-      description: "Government-issued currency (USD, EUR) backed by trust in government",
+      description: "Unsound money: Government-issued currency backed only by trust",
+      era: "Post-1971 (Unsound Money Era)",
       scores: {
         "Self Custody": 3,
         "Decentralization": 1,
@@ -1429,25 +1427,6 @@ const ApplyScorecard = ({ onComplete }) => {
       },
       strengths: ["Widely accepted", "Easy to use", "Highly divisible", "Portable"],
       weaknesses: ["Banks control access", "No supply limit", "Centralized control", "Loses value over time"]
-    },
-    {
-      name: "Bitcoin",
-      emoji: "₿",
-      description: "Digital currency with mathematical scarcity and no central authority",
-      scores: {
-        "Self Custody": 10,
-        "Decentralization": 9,
-        "Verifiability": 10,
-        "Fixed Supply": 10,
-        "Genuine Scarcity": 10,
-        "Fungibility": 8,
-        "Portability": 10,
-        "Divisibility": 10,
-        "Durability": 9,
-        "Acceptability": 6
-      },
-      strengths: ["Perfect scarcity (21M max)", "True self-custody", "Fully verifiable", "Global digital portability"],
-      weaknesses: ["Growing but limited acceptance", "Transaction history is traceable"]
     }
   ];
 
@@ -1538,30 +1517,30 @@ const ApplyScorecard = ({ onComplete }) => {
             
             <div className="insight-box">
               <h3>💡 What This Reveals</h3>
-              <p><strong>Bitcoin scored highest (91/100)</strong> because it was specifically designed to solve money's biggest problems:</p>
+              <p><strong>Gold scored highest (75/100)</strong> as the better sound money, while fiat currency scored much lower (66/100) as unsound money:</p>
               
               <div className="comparison-highlights">
                 <div className="highlight-item">
-                  <span className="highlight-icon">🔒</span>
+                  <span className="highlight-icon">🥇</span>
                   <div>
-                    <h4>Control Problem Solved</h4>
-                    <p>Unlike fiat (banks control your money), Bitcoin gives you complete self-custody with private keys.</p>
+                    <h4>Sound Money Era (Pre-1971)</h4>
+                    <p>Gold provided genuine scarcity, self-custody, and preserved wealth over centuries. People could save for the future with confidence.</p>
                   </div>
                 </div>
                 
                 <div className="highlight-item">
-                  <span className="highlight-icon">📊</span>
+                  <span className="highlight-icon">💵</span>
                   <div>
-                    <h4>Scarcity Problem Solved</h4>
-                    <p>Unlike fiat (unlimited printing), Bitcoin has a hard cap of 21 million coins, enforced by mathematics.</p>
+                    <h4>Unsound Money Era (Post-1971)</h4>
+                    <p>Fiat currency is convenient to use but fails on control, scarcity, and value preservation. Your savings lose purchasing power over time.</p>
                   </div>
                 </div>
                 
                 <div className="highlight-item">
-                  <span className="highlight-icon">📱</span>
+                  <span className="highlight-icon">📉</span>
                   <div>
-                    <h4>Portability Problem Solved</h4>
-                    <p>Unlike gold (heavy and hard to move), Bitcoin can be sent anywhere instantly, digitally.</p>
+                    <h4>The Great Regression</h4>
+                    <p>Humanity went from sound money (gold) to unsound money (fiat). We traded long-term wealth preservation for short-term convenience.</p>
                   </div>
                 </div>
               </div>
@@ -1569,17 +1548,30 @@ const ApplyScorecard = ({ onComplete }) => {
 
             <div className="insight-box">
               <h3>🎯 The Pattern</h3>
-              <p>Each money system excels in some areas but fails in others. Bitcoin was designed to score high across <em>all</em> ten properties - the first money to attempt this comprehensive approach.</p>
+              <p>Gold was great for its time but had physical limitations. Fiat solved the usability problems but destroyed the monetary properties. <em>What if we could get the best of both?</em></p>
             </div>
           </div>
 
           <div className="conclusion">
-            <h2 className="heading-high">🚀 What You've Discovered</h2>
-            <p>You now understand why Bitcoin was created and why it matters. It's not just "digital money" - it's the first money designed to pass all ten tests of sound money.</p>
+            <h2 className="heading-high">🚀 The Dream: Return to Sound Money</h2>
+            <p>Imagine a form of money that scores higher than gold on <em>all</em> 10 properties. Money that has:</p>
             
-            <p><strong>Ready to learn how Bitcoin actually works?</strong></p>
+            <div className="dream-money-features">
+              <ul>
+                <li>✨ Gold's scarcity and durability</li>
+                <li>✨ Digital portability and divisibility</li>
+                <li>✨ Complete self-custody and verification</li>
+                <li>✨ No central authority to manipulate it</li>
+              </ul>
+            </div>
             
-            <ActionButton onClick={() => onComplete(5)} variant="primary">
+            <div className="cliffhanger-box">
+              <h3>🤔 But is this even possible?</h3>
+              <p>Could someone create money that combines the best properties of gold with the convenience of digital systems, while eliminating the control problems of fiat?</p>
+              <p><strong>What would that look like? And does it already exist?</strong></p>
+            </div>
+            
+            <ActionButton onClick={() => onComplete(6)} variant="primary">
               Complete Money Module →
             </ActionButton>
           </div>
@@ -1615,10 +1607,10 @@ const ApplyScorecard = ({ onComplete }) => {
         <div className="expectation-setting">
           <h3>🎯 What Will You Discover?</h3>
           <ul>
-            <li>Which money system scores highest on your 10-point framework</li>
-            <li>Why Bitcoin was designed the way it was</li>
-            <li>The trade-offs each system makes</li>
-            <li>Why sound money properties matter</li>
+            <li>How sound money (gold) compares to unsound money (fiat)</li>
+            <li>Why humanity moved from gold to fiat currency</li>
+            <li>What we gained and lost in this transition</li>
+            <li>Whether it's possible to return to sound money</li>
           </ul>
         </div>
         

@@ -20,9 +20,9 @@ export const ModuleCompletionButton = ({
     setIsCompleting(true);
     completeModule(moduleId);
     
-    // Show completion message then navigate
+    // Show completion message then navigate to learning path
     setTimeout(() => {
-      navigate('/');
+      navigate('/?view=learning');
     }, delayNavigation);
   };
 
@@ -34,8 +34,8 @@ export const ModuleCompletionButton = ({
     if (nextModule) {
       navigate(`/module/${nextModule.id}`);
     } else {
-      // If no next module, go to homepage
-      navigate('/');
+      // If no next module, go to learning path
+      navigate('/?view=learning');
     }
   };
 
@@ -46,7 +46,7 @@ export const ModuleCompletionButton = ({
           <Trophy size={48} className="completion-icon" />
           <h3>Module Complete!</h3>
           <p>{displayMessage}</p>
-          <p className="redirect-info">Returning to homepage to unlock your next module...</p>
+          <p className="redirect-info">Returning to learning path to continue your journey...</p>
         </div>
       </div>
     );
@@ -76,11 +76,11 @@ export const ModuleCompletionButton = ({
           
           {showHomeButton && (
             <ContinueButton 
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/?view=learning')}
               className="secondary"
             >
               <Home size={16} />
-              Return to Homepage
+              Return to Learning Path
             </ContinueButton>
           )}
         </div>
