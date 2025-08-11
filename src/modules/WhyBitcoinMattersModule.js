@@ -4,965 +4,723 @@ import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
   ActionButton,
-  StepNavigation
-} from '../components/EnhancedButtons';
-import { ModuleCompletionButton } from '../components/ui';
-import { 
-  TrendingDown, AlertTriangle, Building2, Globe, Eye, Shield,
-  DollarSign, Zap, Lock, Unlock, ArrowRight, CheckCircle,
-  Clock, Users, Target, Star
-} from 'lucide-react';
+  OptionButton
+} from '../components/ui';
+import { ModuleCompletionButton, InteractiveIcon } from '../components/ui';
 import '../components/ModuleCommon.css';
 
-// Main Module Component
-const WhyBitcoinMattersModule = ({ moduleId = 'bitcoin-relevance' }) => {
-  const navigate = useNavigate();
-  const { updateModuleProgress, completeModule } = useProgress();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [userRealizations, setUserRealizations] = useState(new Set());
-  const [scenarioChoices, setScenarioChoices] = useState({});
+// Step 1: Money's Evolution - From Barter to Bitcoin
+const MoneyEvolutionStory = ({ onComplete }) => {
+  const [currentEra, setCurrentEra] = useState(0);
+  const [userInsights, setUserInsights] = useState({});
+  const [showTransition, setShowTransition] = useState(false);
 
-  // Steps in the urgent relevance journey
-  const steps = [
-    'Your Money Under Attack',
-    'Government Overreach Reality', 
-    'Banking System Fragility',
-    'Global Financial Exclusion',
-    'Privacy Surveillance Crisis',
-    'The Bitcoin Solution'
+  const evolutionEras = [
+    {
+      id: 'barter_problems',
+      title: 'The Barter Dilemma',
+      period: 'Pre-Money Societies',
+      hook: 'Why did every civilization eventually abandon barter for money?',
+      scenario: 'You\'re a blacksmith who needs grain. The farmer wants shoes, but you don\'t make shoes. The shoemaker wants tools, but you need your tools. The tool-maker wants grain...',
+      challenge: 'The circular dependency trap: everyone needs what someone else has, but no one has what you need.',
+      question: 'What fundamental problem does this reveal about direct exchange?',
+      options: [
+        { id: 'complexity', text: 'Too many people involved in every trade', insight: 'surface' },
+        { id: 'timing', text: 'Everyone must want to trade at the exact same moment', insight: 'deeper' },
+        { id: 'coincidence', text: 'Double coincidence of wants is mathematically unlikely', insight: 'core' },
+        { id: 'trust', text: 'People don\'t trust each other enough', insight: 'secondary' }
+      ],
+      revelation: 'Barter requires perfect alignment of needs, timing, and value assessment - an impossible standard for complex societies.',
+      impact: 'This is why barter societies remained small and simple. Complex civilization required a better solution.',
+      transition: 'The breakthrough came when people discovered certain objects everyone would accept...'
+    },
+    {
+      id: 'commodity_money',
+      title: 'The Commodity Money Solution',
+      period: '3000 BC - 1971 AD',
+      hook: 'For 5,000 years, successful money was always backed by something real and scarce.',
+      scenario: 'Civilizations tried shells, cattle, salt, silver, and gold. Through trial and error, they discovered what made good money: scarcity, durability, divisibility, portability, and verifiability.',
+      challenge: 'Gold emerged as the ultimate commodity money because it perfectly balanced all the necessary properties.',
+      question: 'Why did gold become the global standard across disconnected civilizations?',
+      options: [
+        { id: 'cultural', text: 'Similar cultures developed similar preferences', insight: 'naive' },
+        { id: 'government', text: 'Governments coordinated to choose gold', insight: 'backwards' },
+        { id: 'properties', text: 'Gold had objectively superior monetary properties', insight: 'core' },
+        { id: 'availability', text: 'Gold was available everywhere', insight: 'incorrect' }
+      ],
+      revelation: 'Gold wasn\'t chosen because it was pretty - it became valuable because it solved the money problem better than anything else.',
+      impact: 'The gold standard enabled the Industrial Revolution, global trade, and economic prosperity because people could save and plan for the future.',
+      transition: 'But governments found gold\'s constraints limiting their spending desires...'
+    },
+    {
+      id: 'fiat_experiment',
+      title: 'The Great Monetary Experiment',
+      period: '1971 - Present',
+      hook: 'In 1971, humanity began the largest economic experiment in history.',
+      scenario: 'President Nixon "temporarily" ended gold backing for the dollar. For the first time in 5,000 years, money was no longer constrained by physical scarcity.',
+      challenge: 'This unleashed unlimited money creation, but also unlimited monetary expansion.',
+      question: 'What was the inevitable result of removing scarcity constraints from money?',
+      options: [
+        { id: 'prosperity', text: 'Greater prosperity as money supply could grow with the economy', insight: 'naive' },
+        { id: 'flexibility', text: 'More flexibility to respond to economic crises', insight: 'partial' },
+        { id: 'debasement', text: 'Systematic debasement of savings through inflation', insight: 'core' },
+        { id: 'stability', text: 'More stable and predictable monetary system', insight: 'contrary' }
+      ],
+      revelation: 'Without scarcity constraints, governments consistently expanded money supply faster than economic growth, transferring wealth from savers to debtors.',
+      impact: 'Your purchasing power decline isn\'t a bug - it\'s a feature of unlimited money printing.',
+      transition: 'This set the stage for the next evolutionary leap in money...'
+    },
+    {
+      id: 'digital_revolution',
+      title: 'The Digital Money Revolution',
+      period: '2009 - Present', 
+      hook: 'Bitcoin represents the fourth major evolution in money - combining the best of commodity money with digital efficiency.',
+      scenario: 'For the first time, we have digital money with absolute scarcity - only 21 million Bitcoin will ever exist, enforced by mathematics rather than political promises.',
+      challenge: 'Bitcoin solved the "double spend problem" that had prevented digital scarcity for decades.',
+      question: 'What makes Bitcoin fundamentally different from previous digital money attempts?',
+      options: [
+        { id: 'encryption', text: 'Better encryption and security technology', insight: 'partial' },
+        { id: 'decentralized', text: 'No central authority can manipulate the supply', insight: 'core' },
+        { id: 'internet', text: 'Built for the internet age', insight: 'surface' },
+        { id: 'popular', text: 'More popular than previous attempts', insight: 'circular' }
+      ],
+      revelation: 'Bitcoin recreates gold\'s scarcity properties in digital form while eliminating gold\'s physical limitations.',
+      impact: 'This enables the benefits of sound money (savings protection, economic calculation) in a digital world.',
+      transition: 'We\'re witnessing the emergence of the first truly sound digital money in human history.'
+    }
   ];
 
+  const currentEra_data = evolutionEras[currentEra];
+
+  const handleInsight = (optionId) => {
+    const option = currentEra_data.options.find(opt => opt.id === optionId);
+    setUserInsights(prev => ({ ...prev, [currentEra_data.id]: { option, insight: option.insight } }));
+    setShowTransition(true);
+  };
+
+  const handleNext = () => {
+    if (currentEra < evolutionEras.length - 1) {
+      setCurrentEra(currentEra + 1);
+      setShowTransition(false);
+    } else {
+      onComplete(0);
+    }
+  };
+
+  return (
+    <div className="step-content evolution-story">
+      <div className="module-header-box">
+        <h2>📈 The Evolution of Money</h2>
+        <div className="intro-text">
+          <p className="prime-text">Money has evolved through four distinct eras. Understanding this progression reveals why Bitcoin represents a revolutionary advancement, not just another digital payment system.</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="evolution-era">
+          <div className="era-header">
+            <h3>{currentEra_data.title}</h3>
+            <div className="era-period">{currentEra_data.period}</div>
+          </div>
+          
+          <div className="era-hook">
+            <p className="hook-text">{currentEra_data.hook}</p>
+          </div>
+          
+          <div className="era-scenario">
+            <h4>The Situation:</h4>
+            <p>{currentEra_data.scenario}</p>
+            
+            <div className="era-challenge">
+              <h5>Core Challenge:</h5>
+              <p>{currentEra_data.challenge}</p>
+            </div>
+          </div>
+          
+          <div className="era-analysis">
+            <h4>{currentEra_data.question}</h4>
+            
+            {!userInsights[currentEra_data.id] && (
+              <div className="evolution-options">
+                {currentEra_data.options.map(option => (
+                  <button
+                    key={option.id}
+                    className={`evolution-option insight-${option.insight}`}
+                    onClick={() => handleInsight(option.id)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            )}
+            
+            {userInsights[currentEra_data.id] && (
+              <div className="era-insight">
+                <div className="user-choice">
+                  <h4>Your Analysis: "{userInsights[currentEra_data.id].option.text}"</h4>
+                  <div className={`insight-level insight-${userInsights[currentEra_data.id].insight}`}>
+                    {userInsights[currentEra_data.id].insight === 'core' ? '🎯 Core insight!' :
+                     userInsights[currentEra_data.id].insight === 'deeper' ? '💭 Deeper understanding' :
+                     userInsights[currentEra_data.id].insight === 'partial' ? '⚖️ Partially correct' :
+                     '🤷 Surface level'
+                    }
+                  </div>
+                </div>
+                
+                <div className="era-revelation">
+                  <h4>💡 The Reality:</h4>
+                  <p>{currentEra_data.revelation}</p>
+                </div>
+                
+                <div className="era-impact">
+                  <h4>📊 Impact:</h4>
+                  <p>{currentEra_data.impact}</p>
+                </div>
+                
+                {showTransition && (
+                  <div className="era-transition">
+                    <h4>🔮 What This Led To:</h4>
+                    <p>{currentEra_data.transition}</p>
+                  </div>
+                )}
+                
+                <ActionButton onClick={handleNext} className="continue-evolution">
+                  {currentEra < evolutionEras.length - 1 ? 
+                    `Next Era: ${evolutionEras[currentEra + 1].title} →` : 
+                    'Understand Modern Challenges →'
+                  }
+                </ActionButton>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <div className="evolution-progress">
+          <div className="progress-timeline">
+            {evolutionEras.map((era, index) => (
+              <div 
+                key={era.id}
+                className={`timeline-point ${
+                  index === currentEra ? 'current' : 
+                  index < currentEra ? 'completed' : 'upcoming'
+                }`}
+              >
+                <div className="timeline-marker">{index + 1}</div>
+                <div className="timeline-label">{era.title}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Step 2: Current System Problems - No Redundancy with BitcoinBasics
+const CurrentSystemProblems = ({ onComplete }) => {
+  const [currentProblem, setCurrentProblem] = useState(0);
+  const [userRealization, setUserRealization] = useState(null);
+  const [showSolution, setShowSolution] = useState(false);
+
+  const systemProblems = [
+    {
+      id: 'wealth_transfer',
+      title: 'The Hidden Wealth Transfer',
+      hook: 'Every time new money is created, wealth is transferred from you to others - without your consent.',
+      mechanism: 'When central banks create new money, they give it to governments and banks first. These first recipients can spend at current prices. By the time new money reaches you, prices have already risen.',
+      example: 'Government creates $1 trillion. Banks get it first and buy assets at old prices. When your paycheck increases 6 months later, asset prices have already jumped 20%.',
+      question: 'Who benefits most from new money creation?',
+      options: [
+        { id: 'everyone', text: 'Everyone benefits equally from economic growth', naive: true },
+        { id: 'first_receivers', text: 'Those closest to money creation benefit first and most', correct: true },
+        { id: 'workers', text: 'Workers benefit through higher wages', delayed: true },
+        { id: 'savers', text: 'Savers benefit from more available capital', backwards: true }
+      ],
+      reality: 'This is called the "Cantillon Effect" - those closest to new money creation gain purchasing power at the expense of those furthest away.',
+      impact: 'Your savings lose value not through market forces, but through systematic monetary expansion that benefits others first.'
+    },
+    {
+      id: 'financial_surveillance',
+      title: 'The End of Financial Privacy',
+      hook: 'Every digital transaction creates a permanent record of your financial behavior.',
+      mechanism: 'Banks, payment processors, and governments track every purchase, creating detailed profiles of your preferences, habits, and associations.',
+      example: 'Your transaction data reveals when you wake up (coffee purchase), where you work (lunch locations), your health issues (pharmacy visits), your political views (donations), and your relationships (shared expenses).',
+      question: 'Why does financial privacy matter?',
+      options: [
+        { id: 'nothing_to_hide', text: 'If you have nothing to hide, privacy doesn\'t matter', naive: true },
+        { id: 'convenience', text: 'Privacy is less important than convenience', shortsighted: true },
+        { id: 'freedom', text: 'Financial privacy is essential for personal freedom', correct: true },
+        { id: 'criminals', text: 'Only criminals need financial privacy', authoritarian: true }
+      ],
+      reality: 'Financial surveillance enables social control, political persecution, and economic manipulation. Once privacy is lost, it\'s nearly impossible to regain.',
+      impact: 'Central Bank Digital Currencies (CBDCs) will make current surveillance look primitive by comparison.'
+    },
+    {
+      id: 'systemic_fragility',
+      title: 'System-Wide Fragility',
+      hook: 'The global financial system is more interconnected and fragile than ever before.',
+      mechanism: 'Banks lend to each other, own each other\'s debt, and use similar risk models. When one major institution fails, it can trigger cascading failures throughout the system.',
+      example: 'In 2023, Silicon Valley Bank collapsed in 48 hours. This triggered runs on other regional banks and required massive government intervention to prevent systemic collapse.',
+      question: 'What makes the modern banking system particularly fragile?',
+      options: [
+        { id: 'bad_management', text: 'Poor management at individual banks', superficial: true },
+        { id: 'interconnected', text: 'Extreme interconnectedness amplifies individual failures', correct: true },
+        { id: 'complex', text: 'Systems are too complex to understand', partial: true },
+        { id: 'regulated', text: 'Not enough regulation and oversight', misguided: true }
+      ],
+      reality: 'Interconnectedness that was supposed to distribute risk actually concentrates it. In the digital age, confidence can evaporate in hours, not days.',
+      impact: 'Each crisis requires larger bailouts, more money printing, and greater moral hazard - making the next crisis even more severe.'
+    }
+  ];
+
+  const currentProblem_data = systemProblems[currentProblem];
+
+  const handleRealization = (optionId) => {
+    const option = currentProblem_data.options.find(opt => opt.id === optionId);
+    setUserRealization(option);
+    setShowSolution(true);
+  };
+
+  const handleNext = () => {
+    if (currentProblem < systemProblems.length - 1) {
+      setCurrentProblem(currentProblem + 1);
+      setUserRealization(null);
+      setShowSolution(false);
+    } else {
+      onComplete(1);
+    }
+  };
+
+  return (
+    <div className="step-content system-problems">
+      <div className="module-header-box">
+        <h2>⚠️ Systemic Financial Problems</h2>
+        <div className="intro-text">
+          <p className="prime-text">The current financial system has fundamental structural problems that affect everyone. These aren't bugs - they're features of how the system operates.</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="problem-analysis">
+          <h3>{currentProblem_data.title}</h3>
+          
+          <div className="problem-hook">
+            <p className="hook-text">{currentProblem_data.hook}</p>
+          </div>
+          
+          <div className="problem-mechanism">
+            <h4>How It Works:</h4>
+            <p>{currentProblem_data.mechanism}</p>
+          </div>
+          
+          <div className="problem-example">
+            <h4>Real Example:</h4>
+            <p>{currentProblem_data.example}</p>
+          </div>
+          
+          <div className="problem-question">
+            <h4>{currentProblem_data.question}</h4>
+            
+            {!userRealization && (
+              <div className="problem-options">
+                {currentProblem_data.options.map(option => (
+                  <button
+                    key={option.id}
+                    className={`problem-option ${
+                      option.correct ? 'insightful' :
+                      option.naive ? 'naive' :
+                      option.partial ? 'partial' : 'misguided'
+                    }`}
+                    onClick={() => handleRealization(option.id)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            )}
+            
+            {userRealization && showSolution && (
+              <div className="problem-insight">
+                <div className="user-realization">
+                  <h4>Your Analysis: "{userRealization.text}"</h4>
+                  <div className={`realization-feedback ${
+                    userRealization.correct ? 'correct' :
+                    userRealization.naive ? 'naive' :
+                    userRealization.partial ? 'partial' : 'misguided'
+                  }`}>
+                    {userRealization.correct ? '✅ You understand the core issue' :
+                     userRealization.partial ? '⚖️ Partially correct' :
+                     userRealization.naive ? '🤔 This perspective misses the systemic nature' :
+                     '❌ This misunderstands how the system operates'
+                    }
+                  </div>
+                </div>
+                
+                <div className="problem-reality">
+                  <h4>💡 The Systemic Reality:</h4>
+                  <p>{currentProblem_data.reality}</p>
+                </div>
+                
+                <div className="problem-impact">
+                  <h4>📈 Long-term Impact:</h4>
+                  <p>{currentProblem_data.impact}</p>
+                </div>
+                
+                <ActionButton onClick={handleNext} className="continue-problems">
+                  {currentProblem < systemProblems.length - 1 ? 
+                    'Next Systemic Problem →' : 
+                    'Explore Bitcoin\'s Solutions →'
+                  }
+                </ActionButton>
+              </div>
+            )}
+          </div>
+        </div>
+        
+        <div className="problems-progress">
+          <div className="progress-dots">
+            {systemProblems.map((_, index) => (
+              <div 
+                key={index}
+                className={`progress-dot ${
+                  index === currentProblem ? 'active' : 
+                  index < currentProblem ? 'completed' : 'upcoming'
+                }`}
+              />
+            ))}
+          </div>
+          <p>Problem {currentProblem + 1} of {systemProblems.length}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Step 3: Bitcoin's Systematic Solutions
+const BitcoinSystemicSolutions = ({ onComplete }) => {
+  const [currentSolution, setCurrentSolution] = useState(0);
+  const [understandingSolution, setUnderstandingSolution] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
+
+  const bitcoinSolutions = [
+    {
+      id: 'fixed_supply',
+      problem: 'Hidden Wealth Transfer via Money Printing',
+      title: 'Mathematical Scarcity',
+      explanation: 'Bitcoin has a hard cap of 21 million coins, enforced by mathematics and consensus, not political promises.',
+      mechanism: 'New Bitcoin creation follows a predictable schedule that halves every four years, eventually reaching zero. No government, corporation, or individual can create more.',
+      advantage: 'Your Bitcoin cannot be diluted by monetary expansion. If you own 1% of all Bitcoin, you will always own 1% of all Bitcoin.',
+      comparison: {
+        traditional: 'Money supply can expand infinitely based on political decisions',
+        bitcoin: 'Money supply is mathematically fixed and auditable by anyone'
+      },
+      question: 'What does this mean for your long-term wealth preservation?',
+      options: [
+        { id: 'no_difference', text: 'No significant difference - inflation affects everything equally' },
+        { id: 'protection', text: 'Bitcoin protects against monetary debasement by design' },
+        { id: 'risky', text: 'Fixed supply makes Bitcoin too risky' },
+        { id: 'deflationary', text: 'Deflationary money discourages spending' }
+      ],
+      insight: 'Bitcoin separates money from state, preventing the systematic wealth transfer that occurs through fiat monetary expansion.'
+    },
+    {
+      id: 'financial_privacy',
+      problem: 'Complete Financial Surveillance',
+      title: 'Pseudonymous Transactions',
+      explanation: 'Bitcoin transactions are recorded on a public ledger but are not directly linked to your identity.',
+      mechanism: 'Bitcoin addresses are pseudonymous - like numbered bank accounts without names attached. With proper practices, you can maintain financial privacy.',
+      advantage: 'You can transact without revealing your identity, location, or transaction history to third parties.',
+      comparison: {
+        traditional: 'Every transaction linked to your identity and stored indefinitely',
+        bitcoin: 'Transactions are pseudonymous and can be made private with effort'
+      },
+      question: 'Why might financial privacy become more important over time?',
+      options: [
+        { id: 'unnecessary', text: 'Privacy is unnecessary if you\'re not doing anything wrong' },
+        { id: 'essential', text: 'Financial privacy is essential for personal freedom and security' },
+        { id: 'criminals', text: 'Only criminals need financial privacy' },
+        { id: 'convenience', text: 'Convenience is more important than privacy' }
+      ],
+      insight: 'As governments expand surveillance and control, financial privacy becomes a human right, not a criminal tool.'
+    },
+    {
+      id: 'decentralized_resilience',
+      problem: 'System-Wide Fragility and Interconnectedness',
+      title: 'Distributed Network Resilience',
+      explanation: 'Bitcoin operates on a distributed network of thousands of independent nodes with no single point of failure.',
+      mechanism: 'Bitcoin\'s network is designed to continue operating even if 90% of nodes go offline. No single entity can shut it down or manipulate it.',
+      advantage: 'Your Bitcoin remains accessible and valuable even if banks fail, governments collapse, or payment networks break down.',
+      comparison: {
+        traditional: 'Centralized systems with single points of failure and cascading risk',
+        bitcoin: 'Distributed system that becomes stronger as it grows'
+      },
+      question: 'What makes Bitcoin resilient compared to traditional financial systems?',
+      options: [
+        { id: 'technology', text: 'Better technology and encryption' },
+        { id: 'decentralization', text: 'Decentralization eliminates single points of failure' },
+        { id: 'popularity', text: 'More popular so more people will maintain it' },
+        { id: 'government', text: 'Government backing makes it more secure' }
+      ],
+      insight: 'Bitcoin\'s antifragility comes from decentralization - it gets stronger from stresses that break centralized systems.'
+    }
+  ];
+
+  const currentSolution_data = bitcoinSolutions[currentSolution];
+
+  const handleUnderstanding = (optionId) => {
+    setUnderstandingSolution(optionId);
+    setShowComparison(true);
+  };
+
+  const handleNext = () => {
+    if (currentSolution < bitcoinSolutions.length - 1) {
+      setCurrentSolution(currentSolution + 1);
+      setUnderstandingSolution(false);
+      setShowComparison(false);
+    } else {
+      onComplete(2);
+    }
+  };
+
+  return (
+    <div className="step-content bitcoin-solutions">
+      <div className="module-header-box">
+        <h2>🟠 Bitcoin's Systematic Solutions</h2>
+        <div className="intro-text">
+          <p className="prime-text">Bitcoin doesn't just offer improvements - it provides systematic solutions to the fundamental problems of centralized monetary systems.</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="solution-analysis">
+          <div className="problem-context">
+            <h3>Problem: {currentSolution_data.problem}</h3>
+          </div>
+          
+          <div className="solution-overview">
+            <h3>Bitcoin Solution: {currentSolution_data.title}</h3>
+            
+            <div className="solution-explanation">
+              <p>{currentSolution_data.explanation}</p>
+            </div>
+            
+            <div className="solution-mechanism">
+              <h4>How It Works:</h4>
+              <p>{currentSolution_data.mechanism}</p>
+            </div>
+            
+            <div className="solution-advantage">
+              <h4>Your Advantage:</h4>
+              <p>{currentSolution_data.advantage}</p>
+            </div>
+          </div>
+          
+          {!understandingSolution && (
+            <div className="solution-question">
+              <h4>{currentSolution_data.question}</h4>
+              
+              <div className="solution-options">
+                {currentSolution_data.options.map(option => (
+                  <button
+                    key={option.id}
+                    className="solution-option"
+                    onClick={() => handleUnderstanding(option.id)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {showComparison && (
+            <div className="solution-comparison">
+              <h4>🔍 System Comparison</h4>
+              
+              <div className="comparison-grid">
+                <div className="traditional-system">
+                  <h5>🏦 Traditional System</h5>
+                  <p>{currentSolution_data.comparison.traditional}</p>
+                </div>
+                
+                <div className="bitcoin-system">
+                  <h5>🟠 Bitcoin System</h5>
+                  <p>{currentSolution_data.comparison.bitcoin}</p>
+                </div>
+              </div>
+              
+              <div className="solution-insight">
+                <h4>💡 Key Insight:</h4>
+                <p>{currentSolution_data.insight}</p>
+              </div>
+              
+              <ActionButton onClick={handleNext} className="continue-solutions">
+                {currentSolution < bitcoinSolutions.length - 1 ? 
+                  'Next Systematic Solution →' : 
+                  'Complete Understanding →'
+                }
+              </ActionButton>
+            </div>
+          )}
+        </div>
+        
+        <div className="solutions-progress">
+          <div className="progress-dots">
+            {bitcoinSolutions.map((_, index) => (
+              <div 
+                key={index}
+                className={`progress-dot ${
+                  index === currentSolution ? 'active' : 
+                  index < currentSolution ? 'completed' : 'upcoming'
+                }`}
+              />
+            ))}
+          </div>
+          <p>Solution {currentSolution + 1} of {bitcoinSolutions.length}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Module Completion Component
+const RelevanceCompletion = ({ onComplete }) => {
+  return (
+    <div className="step-content completion-step">
+      <div className="module-header-box">
+        <h2>🎯 Bitcoin Relevance: Complete</h2>
+        <div className="intro-text">
+          <p className="prime-text">You now understand why Bitcoin isn't just another digital payment system - it's a systematic solution to fundamental monetary problems.</p>
+        </div>
+      </div>
+      
+      <div className="completion-content">
+        <div className="key-understanding">
+          <h3>🔑 Key Understanding Achieved</h3>
+          
+          <div className="understanding-points">
+            <div className="understanding-item">
+              <h4>📈 Money Evolution Context</h4>
+              <p>Bitcoin represents the natural next step in money's evolution - combining commodity money's scarcity with digital efficiency.</p>
+            </div>
+            
+            <div className="understanding-item">
+              <h4>⚠️ Systemic Problem Awareness</h4>
+              <p>Current monetary systems have structural problems that systematically transfer wealth and erode financial privacy.</p>
+            </div>
+            
+            <div className="understanding-item">
+              <h4>🛡️ Bitcoin's Systematic Solutions</h4>
+              <p>Bitcoin addresses these problems through mathematical scarcity, pseudonymous transactions, and decentralized resilience.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="next-journey">
+          <h3>📚 Your Learning Path Forward</h3>
+          <p>Now that you understand Bitcoin's relevance, you're ready to address common misconceptions and deepen your technical understanding.</p>
+          
+          <div className="upcoming-modules">
+            <div className="upcoming-module">
+              <h4>🔍 Next: Bitcoin Myths & Facts</h4>
+              <p>Develop critical thinking skills to evaluate Bitcoin claims and separate fact from fiction.</p>
+            </div>
+            
+            <div className="upcoming-module">
+              <h4>💰 Then: Understanding Money</h4>
+              <p>Deep dive into monetary theory and economic principles that make Bitcoin significant.</p>
+            </div>
+          </div>
+        </div>
+        
+        <ModuleCompletionButton 
+          moduleName="Bitcoin Relevance"
+          moduleId="bitcoin-relevance"
+          customMessage="🚀 Excellent! You understand why Bitcoin matters in today's financial landscape!"
+        />
+      </div>
+    </div>
+  );
+};
+
+const WhyBitcoinMattersModule = () => {
+  const { completeModule } = useProgress();
+  const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('whyBitcoinMattersCompletedSteps');
+    return saved ? new Set(JSON.parse(saved)) : new Set();
+  });
+
   const handleStepComplete = (stepIndex) => {
-    const nextStep = stepIndex + 1;
-    setCurrentStep(nextStep);
-    updateModuleProgress(moduleId, Math.round((nextStep / steps.length) * 100));
+    const newCompletedSteps = new Set(completedSteps).add(stepIndex);
+    setCompletedSteps(newCompletedSteps);
+    
+    // Save to localStorage
+    try {
+      localStorage.setItem('whyBitcoinMattersCompletedSteps', JSON.stringify(Array.from(newCompletedSteps)));
+    } catch (error) {
+      console.warn('Failed to save progress to localStorage:', error);
+    }
+    
+    // Move to next step or complete module
+    if (stepIndex < 3) {
+      setCurrentStep(stepIndex + 1);
+    } else {
+      setCurrentStep(stepIndex + 1);
+    }
   };
 
-  const handleModuleComplete = () => {
-    completeModule(moduleId);
-    navigate('/');
-  };
-
-  const addRealization = (realization) => {
-    setUserRealizations(prev => new Set([...prev, realization]));
+  const handleTabClick = (stepIndex) => {
+    setCurrentStep(stepIndex);
   };
 
   return (
     <div className="module-container">
+      {/* HERO SECTION */}
       <div className="module-header">
-        <h1>⚡ Why Bitcoin Matters TODAY</h1>
-        <p>Real scenarios showing why Bitcoin isn't just interesting—it's urgently necessary</p>
-        <StepNavigation 
-          steps={steps} 
-          currentStep={currentStep}
-          onStepClick={setCurrentStep}
-        />
+        <div className="module-title">
+          <div className="module-icon">
+            <InteractiveIcon type="bitcoin" size={48} className="module-icon-bitcoin" />
+          </div>
+          Why Bitcoin Matters Today
+        </div>
+        <div className="module-subtitle">
+          Understand Bitcoin's role in monetary evolution and systematic solutions to financial problems
+        </div>
       </div>
-
+      
+      {/* NAVIGATION STEPS */}
+      <div className="section-card">
+        <h3 className="nav-section-title">Learning Path</h3>
+        <div className="step-navigation-container">
+          <div className="step-navigation-scroll">
+            {["Money Evolution", "System Problems", "Bitcoin Solutions", "Complete"].map((step, index) => (
+              <button
+                key={index}
+                className={`step-nav-button ${
+                  index === currentStep ? 'current' : ''
+                } ${completedSteps.has(index) ? 'completed' : ''}`}
+                onClick={() => handleTabClick(index)}
+              >
+                <span className="step-nav-number">
+                  {completedSteps.has(index) ? '✓' : index + 1}
+                </span>
+                <span className="step-nav-label">{step}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      
       <div className="module-content">
-        {currentStep === 0 && (
-          <MoneyUnderAttack 
-            onComplete={() => handleStepComplete(0)}
-            onRealization={addRealization}
-            userChoices={scenarioChoices}
-            setUserChoices={setScenarioChoices}
-          />
-        )}
-        
-        {currentStep === 1 && (
-          <GovernmentOverreach 
-            onComplete={() => handleStepComplete(1)}
-            onRealization={addRealization}
-            userChoices={scenarioChoices}
-            setUserChoices={setScenarioChoices}
-          />
-        )}
-        
-        {currentStep === 2 && (
-          <BankingFragility 
-            onComplete={() => handleStepComplete(2)}
-            onRealization={addRealization}
-            userChoices={scenarioChoices}
-            setUserChoices={setScenarioChoices}
-          />
-        )}
-        
-        {currentStep === 3 && (
-          <GlobalExclusion 
-            onComplete={() => handleStepComplete(3)}
-            onRealization={addRealization}
-            userChoices={scenarioChoices}
-            setUserChoices={setScenarioChoices}
-          />
-        )}
-        
-        {currentStep === 4 && (
-          <PrivacyCrisis 
-            onComplete={() => handleStepComplete(4)}
-            onRealization={addRealization}
-            userChoices={scenarioChoices}
-            setUserChoices={setScenarioChoices}
-          />
-        )}
-        
-        {currentStep === 5 && (
-          <BitcoinSolution 
-            onComplete={handleModuleComplete}
-            userRealizations={userRealizations}
-            userChoices={scenarioChoices}
-          />
-        )}
+        {currentStep === 0 && <MoneyEvolutionStory onComplete={handleStepComplete} />}
+        {currentStep === 1 && <CurrentSystemProblems onComplete={handleStepComplete} />}
+        {currentStep === 2 && <BitcoinSystemicSolutions onComplete={handleStepComplete} />}
+        {currentStep === 3 && <RelevanceCompletion onComplete={handleStepComplete} />}
       </div>
     </div>
   );
-};
-
-// Component 1: Your Money Under Attack
-const MoneyUnderAttack = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [revealedFacts, setRevealedFacts] = useState([]);
-
-  const scenarios = [
-    {
-      id: 'inflation-shock',
-      title: '🛒 The Grocery Store Reality Check',
-      hook: 'Remember when a gallon of milk cost $3? That was just 3 years ago.',
-      setup: 'Today: $5.49. Your salary: still the same.',
-      shockingDetail: 'That\'s not "inflation"—that\'s your purchasing power being destroyed in real-time.',
-      question: 'What\'s really happening to your money?',
-      options: [
-        { id: 'supply', text: 'Supply chain issues will fix themselves', impact: 'temporary' },
-        { id: 'monetary', text: 'Money printing is devaluing every dollar I own', impact: 'permanent', correct: true },
-        { id: 'corporate', text: 'Corporations are just being greedy', impact: 'blame' }
-      ],
-      reality: '🚨 FACT: The money supply increased by 40% in 2020-2021. That\'s not inflation—that\'s monetary debasement. Your dollars are worth 30% less, and it\'s accelerating.',
-      realization: 'money-debasement'
-    },
-    {
-      id: 'savings-destruction',
-      title: '🏦 The Savings Account Trap',
-      hook: '$10,000 in savings earning 0.5% interest vs 8% "inflation"',
-      setup: 'Your savings account: losing $750 in purchasing power this year.',
-      shockingDetail: 'Banks pay you 0.5% while lending YOUR money at 7%. You\'re funding your own poverty.',
-      question: 'What are traditional "safe" savings actually doing?',
-      options: [
-        { id: 'safety', text: 'Keeping my money safe from risk', impact: 'illusion' },
-        { id: 'guaranteed', text: 'Guaranteeing I get poorer every year', impact: 'reality', correct: true },
-        { id: 'building', text: 'Building wealth slowly but surely', impact: 'delusion' }
-      ],
-      reality: '💡 REVELATION: "Safe" savings accounts guarantee you lose money to inflation. The only "risk" is thinking there\'s no risk.',
-      realization: 'savings-trap'
-    },
-    {
-      id: 'retirement-crisis',
-      title: '⏰ The Retirement Math Nightmare',
-      hook: 'Your parents retired on $500K. You\'ll need $2.5M for the same lifestyle.',
-      setup: 'Retirement calculators assume 3% inflation. Reality: 8%+ for essentials.',
-      shockingDetail: 'At current inflation rates, your retirement fund will be worth 50% less by the time you retire.',
-      question: 'What does this mean for your future?',
-      options: [
-        { id: 'work-longer', text: 'I\'ll just work longer', impact: 'delaying' },
-        { id: 'broken-system', text: 'The entire retirement system is broken', impact: 'awakening', correct: true },
-        { id: 'government', text: 'Government will figure it out', impact: 'dependency' }
-      ],
-      reality: '⚠️ TRUTH: Traditional retirement planning assumes a stable currency. With monetary debasement, those assumptions are fantasy.',
-      realization: 'retirement-crisis'
-    }
-  ];
-
-  const currentScene = scenarios[currentScenario];
-
-  const handleChoice = (choice) => {
-    setUserChoices(prev => ({
-      ...prev,
-      [`attack-${currentScene.id}`]: choice
-    }));
-
-    if (choice.correct) {
-      onRealization(currentScene.realization);
-    }
-
-    setRevealedFacts(prev => [...prev, currentScene.reality]);
-
-    setTimeout(() => {
-      if (currentScenario < scenarios.length - 1) {
-        setCurrentScenario(currentScenario + 1);
-        setRevealedFacts([]);
-      } else {
-        onComplete();
-      }
-    }, 3000);
-  };
-
-  return (
-    <div className="section-card">
-      <div className="scenario-header">
-        <TrendingDown className="scenario-icon danger" size={48} />
-        <h2 className="heading-critical">{currentScene.title}</h2>
-      </div>
-
-      <div className="scenario-content">
-        <div className="hook-section">
-          <p className="shock-value">{currentScene.hook}</p>
-          <p className="scenario-setup">{currentScene.setup}</p>
-          <div className="shocking-detail">
-            <AlertTriangle size={20} />
-            <p>{currentScene.shockingDetail}</p>
-          </div>
-        </div>
-
-        <div className="challenge-section">
-          <h3>{currentScene.question}</h3>
-          <div className="options-grid">
-            {currentScene.options.map(option => (
-              <button
-                key={option.id}
-                className={`option-button ${userChoices[`attack-${currentScene.id}`]?.id === option.id ? 'selected' : ''}`}
-                onClick={() => handleChoice(option)}
-                disabled={userChoices[`attack-${currentScene.id}`]}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {revealedFacts.length > 0 && (
-          <div className="reality-reveal">
-            <div className="fact-explosion">
-              <Zap size={24} />
-              <h4>Reality Check</h4>
-              <p>{revealedFacts[0]}</p>
-            </div>
-            <div className="scenario-progress">
-              <p>Scenario {currentScenario + 1} of {scenarios.length}</p>
-              <div className="progress-dots">
-                {scenarios.map((_, index) => (
-                  <span 
-                    key={index} 
-                    className={`dot ${index <= currentScenario ? 'active' : ''}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Component 2: Government Overreach Reality  
-const GovernmentOverreach = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [currentCaseIndex, setCurrentCaseIndex] = useState(0);
-  const [showRealityCheck, setShowRealityCheck] = useState(false);
-
-  const realCases = [
-    {
-      id: 'canada-2022',
-      title: '🇨🇦 Canada 2022: The Trucker Precedent',
-      hook: 'February 15, 2022: Emergency Act invoked for the first time in Canadian history',
-      situation: 'Peaceful protesters had their bank accounts frozen without court orders. Donors who gave $50 to support truckers lost access to their life savings.',
-      shockingFact: 'Over 200 bank accounts frozen. Some belonged to people who just shared a name with donors.',
-      question: 'If this can happen in Canada, what about everywhere else?',
-      options: [
-        { id: 'unique', text: 'Canada is unique, won\'t happen elsewhere', naive: true },
-        { id: 'emergency', text: 'Only in emergencies, for good reasons', conditional: true },
-        { id: 'precedent', text: 'This is the new normal - financial weapons are deployed', awakening: true, correct: true }
-      ],
-      reality: 'Financial weaponization is now standard government toolkit. What starts as "emergency powers" becomes permanent.',
-      realization: 'financial-weapons'
-    },
-    {
-      id: 'china-social-credit',
-      title: '🇨🇳 China: Social Credit in Action',
-      hook: '23 million Chinese citizens banned from buying plane tickets',
-      situation: 'Low social credit scores prevent travel, banking, property purchases. Punishment: jaywalking, wrong political opinions, or associating with "undesirable" people.',
-      shockingFact: 'Your money becomes useless if the state disapproves of your behavior.',
-      question: 'Could digital currencies make this global?',
-      options: [
-        { id: 'china-only', text: 'Only possible in authoritarian countries', naive: true },
-        { id: 'different', text: 'Western democracies would never do this', hopeful: true },
-        { id: 'infrastructure', text: 'The infrastructure for this already exists everywhere', awakening: true, correct: true }
-      ],
-      reality: 'Central Bank Digital Currencies (CBDCs) give governments China-level financial control over citizens.',
-      realization: 'digital-surveillance'
-    },
-    {
-      id: 'cyprus-2013',
-      title: '🇨🇾 Cyprus 2013: The Bank Bail-In',
-      hook: 'Bank holiday: All banks closed indefinitely',
-      situation: 'Government seized 47.5% of all bank deposits over €100,000 to save failing banks. Depositors became involuntary bank shareholders.',
-      shockingFact: 'Your bank deposits aren\'t really yours—you\'re an unsecured creditor to the bank.',
-      question: 'What does this reveal about "your" money in banks?',
-      options: [
-        { id: 'insured', text: 'FDIC insurance protects me', false_security: true },
-        { id: 'extreme', text: 'Extreme situation, won\'t happen again', denial: true },
-        { id: 'unsecured-creditor', text: 'I\'m just an unsecured creditor to the bank', awakening: true, correct: true }
-      ],
-      reality: 'Bank deposits are legally loans to the bank. In crisis, depositors get paid after bondholders and shareholders.',
-      realization: 'banking-creditor'
-    }
-  ];
-
-  const currentCase = realCases[currentCaseIndex];
-
-  const handleChoice = (choice) => {
-    setUserChoices(prev => ({
-      ...prev,
-      [`overreach-${currentCase.id}`]: choice
-    }));
-
-    if (choice.correct) {
-      onRealization(currentCase.realization);
-    }
-
-    setShowRealityCheck(true);
-
-    setTimeout(() => {
-      if (currentCaseIndex < realCases.length - 1) {
-        setCurrentCaseIndex(currentCaseIndex + 1);
-        setShowRealityCheck(false);
-      } else {
-        onComplete();
-      }
-    }, 4000);
-  };
-
-  return (
-    <div className="section-card">
-      <div className="scenario-header">
-        <Building2 className="scenario-icon warning" size={48} />
-        <h2 className="heading-critical">{currentCase.title}</h2>
-      </div>
-
-      <div className="real-case-content">
-        <div className="case-hook">
-          <div className="date-stamp">REAL EVENT</div>
-          <p className="shock-value">{currentCase.hook}</p>
-        </div>
-
-        <div className="situation-box">
-          <h4>What Happened:</h4>
-          <p>{currentCase.situation}</p>
-          <div className="shocking-fact">
-            <AlertTriangle size={18} />
-            <span>{currentCase.shockingFact}</span>
-          </div>
-        </div>
-
-        <div className="critical-question">
-          <Lock size={24} />
-          <h3>{currentCase.question}</h3>
-          <div className="choice-buttons">
-            {currentCase.options.map(option => (
-              <button
-                key={option.id}
-                className={`choice-button ${userChoices[`overreach-${currentCase.id}`]?.id === option.id ? 'selected' : ''}`}
-                onClick={() => handleChoice(option)}
-                disabled={userChoices[`overreach-${currentCase.id}`]}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {showRealityCheck && (
-          <div className="reality-explosion">
-            <div className="reality-header">
-              <Unlock size={24} />
-              <h4>The Uncomfortable Truth</h4>
-            </div>
-            <p>{currentCase.reality}</p>
-            <div className="case-progress">
-              <span>Case {currentCaseIndex + 1} of {realCases.length}</span>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Component 3: Banking System Fragility
-const BankingFragility = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [currentCrisisIndex, setCurrentCrisisIndex] = useState(0);
-  const [revealPhase, setRevealPhase] = useState(0);
-
-  const bankingCrises = [
-    {
-      id: 'svb-2023',
-      title: '🏦 Silicon Valley Bank: 48 Hours to Collapse',
-      hook: 'March 8: "We\'re fine." March 10: Largest bank failure since 2008.',
-      timeline: [
-        'Wednesday: Bank announces $1.8B loss on bond sales',
-        'Thursday: Stock drops 60%, depositors panic',  
-        'Friday: Bank run, regulators shut it down'
-      ],
-      shockingFact: 'In the digital age, banks can collapse in hours, not months.',
-      question: 'What does this speed of collapse mean for your money?',
-      options: [
-        { id: 'fdic-safety', text: 'FDIC insurance makes me safe', false_security: true },
-        { id: 'bank-choice', text: 'I just need to choose better banks', incomplete: true },
-        { id: 'systemic-risk', text: 'The entire system is one panic away from collapse', awakening: true, correct: true }
-      ],
-      reality: 'Modern banking is built on confidence, not reserves. When confidence breaks, the system breaks instantly.',
-      realization: 'systemic-fragility'
-    },
-    {
-      id: 'credit-suisse-2023',
-      title: '🇨🇭 Credit Suisse: 167 Years to Zero',
-      hook: 'Founded 1856. Survived two world wars. Killed by social media in 5 days.',
-      timeline: [
-        'March 14: Saudi National Bank refuses more investment',
-        'March 15: Credit Suisse stock crashes, CDS spreads spike',
-        'March 19: Emergency sale to UBS for $3.2B (was worth $8B in 2022)'
-      ],
-      shockingFact: 'AT1 bondholders lost everything while shareholders got something. The hierarchy of claims was inverted.',
-      question: 'If a 167-year-old bank can die in days, what\'s really safe?',
-      options: [
-        { id: 'too-big', text: 'My bank is too big to fail', dangerous: true },
-        { id: 'diversify', text: 'I\'ll diversify across multiple banks', insufficient: true },
-        { id: 'counter-party', text: 'All banks are counter-party risks to each other', awakening: true, correct: true }
-      ],
-      reality: 'In interconnected banking, there\'s no such thing as an isolated failure. Contagion is built into the system.',
-      realization: 'contagion-risk'
-    }
-  ];
-
-  const currentCrisis = bankingCrises[currentCrisisIndex];
-
-  const handleChoice = (choice) => {
-    setUserChoices(prev => ({
-      ...prev,
-      [`fragility-${currentCrisis.id}`]: choice
-    }));
-
-    if (choice.correct) {
-      onRealization(currentCrisis.realization);
-    }
-
-    setRevealPhase(1);
-
-    setTimeout(() => {
-      if (currentCrisisIndex < bankingCrises.length - 1) {
-        setCurrentCrisisIndex(currentCrisisIndex + 1);
-        setRevealPhase(0);
-      } else {
-        onComplete();
-      }
-    }, 4000);
-  };
-
-  return (
-    <div className="section-card">
-      <div className="crisis-header">
-        <Building2 className="scenario-icon danger" size={48} />
-        <h2 className="heading-critical">{currentCrisis.title}</h2>
-        <div className="crisis-badge">REAL EVENT - 2023</div>
-      </div>
-
-      <div className="crisis-timeline">
-        <div className="hook-text">
-          <Clock size={20} />
-          <p className="shock-value">{currentCrisis.hook}</p>
-        </div>
-
-        <div className="timeline-events">
-          <h4>The Collapse Timeline:</h4>
-          {currentCrisis.timeline.map((event, index) => (
-            <div key={index} className="timeline-event">
-              <div className="event-marker">{index + 1}</div>
-              <p>{event}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="shocking-revelation">
-          <AlertTriangle size={20} />
-          <p><strong>Shocking:</strong> {currentCrisis.shockingFact}</p>
-        </div>
-      </div>
-
-      <div className="critical-assessment">
-        <h3>{currentCrisis.question}</h3>
-        <div className="assessment-options">
-          {currentCrisis.options.map(option => (
-            <button
-              key={option.id}
-              className={`assessment-button ${userChoices[`fragility-${currentCrisis.id}`]?.id === option.id ? 'selected' : ''}`}
-              onClick={() => handleChoice(option)}
-              disabled={userChoices[`fragility-${currentCrisis.id}`]}
-            >
-              {option.text}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {revealPhase === 1 && (
-        <div className="system-reality">
-          <div className="reality-flash">
-            <Shield size={24} />
-            <h4>System Reality Check</h4>
-            <p>{currentCrisis.reality}</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Component 4: Global Financial Exclusion
-const GlobalExclusion = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [perspective, setPerspective] = useState('privileged');
-  const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
-
-  const exclusionStories = [
-    {
-      id: 'unbanked-entrepreneur',
-      title: '🌍 The Unbanked Entrepreneur',
-      location: 'Lagos, Nigeria',
-      character: 'Amara, software developer',
-      situation: 'Builds apps for global clients, but banks won\'t serve her because she lacks "proper" documentation and minimum balances.',
-      impact: 'Cannot receive international payments, cannot save money safely, cannot access global economy.',
-      currentSolution: 'Expensive money transfer services take 15% fees and 5-day delays.',
-      question: 'What does financial exclusion really mean?',
-      options: [
-        { id: 'personal-choice', text: 'People choose not to use banks', privileged: true },
-        { id: 'education', text: 'It\'s about financial education', incomplete: true },
-        { id: 'systemic-exclusion', text: 'The system deliberately excludes billions of people', awakening: true, correct: true }
-      ],
-      reality: '1.7 billion adults globally are unbanked—not by choice, but by systemic exclusion.',
-      realization: 'financial-apartheid'
-    },
-    {
-      id: 'remittance-worker',
-      title: '💸 The Remittance Trap',
-      location: 'Dubai → Philippines', 
-      character: 'Maria, domestic worker',
-      situation: 'Sends $300/month to family. Western Union charges $25 + exchange rate markup + recipient fees.',
-      impact: 'Loses $400+ per year to fees—money that could feed her children for months.',
-      currentSolution: 'No alternatives. Banks require minimum balances she can\'t maintain.',
-      question: 'Why do the poorest pay the highest fees?',
-      options: [
-        { id: 'business-model', text: 'It\'s just how businesses work', accepting: true },
-        { id: 'convenience', text: 'Paying for convenience and service', privileged: true },
-        { id: 'exploitation', text: 'Desperation is exploited by financial gatekeepers', awakening: true, correct: true }
-      ],
-      reality: 'Remittance fees average 7% globally—a $50B tax on the world\'s poorest families.',
-      realization: 'poverty-tax'
-    }
-  ];
-
-  const currentStory = exclusionStories[currentStoryIndex];
-
-  const handleChoice = (choice) => {
-    setUserChoices(prev => ({
-      ...prev,
-      [`exclusion-${currentStory.id}`]: choice
-    }));
-
-    if (choice.correct) {
-      onRealization(currentStory.realization);
-    }
-
-    setTimeout(() => {
-      if (currentStoryIndex < exclusionStories.length - 1) {
-        setCurrentStoryIndex(currentStoryIndex + 1);
-      } else {
-        onComplete();
-      }
-    }, 3000);
-  };
-
-  return (
-    <div className="section-card">
-      <div className="story-header">
-        <Globe className="scenario-icon info" size={48} />
-        <h2 className="heading-critical">Global Financial Reality</h2>
-        <p>Step outside the privileged Western banking bubble</p>
-      </div>
-
-      <div className="human-story">
-        <div className="character-intro">
-          <div className="location-badge">{currentStory.location}</div>
-          <h3>{currentStory.title}</h3>
-          <p className="character"><Users size={16} /> {currentStory.character}</p>
-        </div>
-
-        <div className="story-situation">
-          <h4>The Situation:</h4>
-          <p>{currentStory.situation}</p>
-          
-          <div className="impact-box">
-            <AlertTriangle size={18} />
-            <div>
-              <h5>Real Impact:</h5>
-              <p>{currentStory.impact}</p>
-            </div>
-          </div>
-
-          <div className="broken-solution">
-            <h5>Current "Solution":</h5>
-            <p>{currentStory.currentSolution}</p>
-          </div>
-        </div>
-
-        <div className="perspective-challenge">
-          <h3>{currentStory.question}</h3>
-          <div className="perspective-options">
-            {currentStory.options.map(option => (
-              <button
-                key={option.id}
-                className={`perspective-button ${option.privileged ? 'privileged' : option.awakening ? 'awakening' : 'incomplete'} ${userChoices[`exclusion-${currentStory.id}`]?.id === option.id ? 'selected' : ''}`}
-                onClick={() => handleChoice(option)}
-                disabled={userChoices[`exclusion-${currentStory.id}`]}
-              >
-                {option.text}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {userChoices[`exclusion-${currentStory.id}`] && (
-          <div className="global-reality">
-            <div className="reality-check">
-              <Target size={24} />
-              <h4>Global Reality</h4>
-              <p>{currentStory.reality}</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Component 5: Privacy & Surveillance Crisis
-const PrivacyCrisis = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [surveillanceLevel, setSurveillanceLevel] = useState(0);
-  const [revealedData, setRevealedData] = useState([]);
-
-  const surveillanceRealities = [
-    {
-      level: 'Basic',
-      title: 'Every Transaction is Tracked',
-      data: 'Banks record every purchase, location, time, merchant, amount',
-      implication: 'Complete financial behavior profile built over years',
-      shockingExample: 'Your bank knows your coffee habits better than your spouse does'
-    },
-    {
-      level: 'Advanced', 
-      title: 'Predictive Behavior Modeling',
-      data: 'AI algorithms predict divorce, job loss, health issues, political views from spending',
-      implication: 'Insurance, credit, employment decisions made before you apply',
-      shockingExample: 'Buying certain foods flags you as diabetes risk, raising your insurance premiums'
-    },
-    {
-      level: 'Total',
-      title: 'Financial Social Credit',
-      data: 'Spending patterns determine social credit scores, restrict access to services',
-      implication: 'Wrong purchases = social punishment and economic exclusion',
-      shockingExample: 'Buy too much alcohol? Banned from ride-sharing. Donate to wrong cause? Mortgage denied.'
-    }
-  ];
-
-  const handleSurveillanceReveal = () => {
-    const nextLevel = surveillanceLevel + 1;
-    if (nextLevel < surveillanceRealities.length) {
-      setSurveillanceLevel(nextLevel);
-      setRevealedData(prev => [...prev, surveillanceRealities[nextLevel - 1]]);
-    } else {
-      // Final choice about privacy
-      setRevealedData(surveillanceRealities);
-    }
-  };
-
-  const handlePrivacyChoice = (choice) => {
-    setUserChoices(prev => ({
-      ...prev,
-      'privacy-stance': choice
-    }));
-
-    if (choice.correct) {
-      onRealization('financial-privacy');
-    }
-
-    onComplete();
-  };
-
-  return (
-    <div className="section-card">
-      <div className="surveillance-header">
-        <Eye className="scenario-icon danger" size={48} />
-        <h2 className="heading-critical">Your Financial Privacy is Gone</h2>
-        <p>Every transaction tells your life story to corporations and governments</p>
-      </div>
-
-      <div className="surveillance-revelation">
-        {revealedData.length === 0 && (
-          <div className="privacy-question">
-            <h3>Quick Question: What did you buy last Tuesday?</h3>
-            <p>Don't remember? Your bank does. Every detail. Forever.</p>
-            <ActionButton onClick={handleSurveillanceReveal} variant="warning">
-              Show Me What They Know →
-            </ActionButton>
-          </div>
-        )}
-
-        {revealedData.map((level, index) => (
-          <div key={index} className="surveillance-level">
-            <div className="level-header">
-              <div className="level-badge">{level.level} Surveillance</div>
-              <h4>{level.title}</h4>
-            </div>
-            <div className="data-collection">
-              <p><strong>Data Collected:</strong> {level.data}</p>
-              <p><strong>Used For:</strong> {level.implication}</p>
-              <div className="shocking-example">
-                <AlertTriangle size={16} />
-                <p><strong>Real Example:</strong> {level.shockingExample}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {revealedData.length > 0 && revealedData.length < surveillanceRealities.length && (
-          <div className="reveal-more">
-            <ActionButton onClick={handleSurveillanceReveal} variant="warning">
-              It Gets Worse... →
-            </ActionButton>
-          </div>
-        )}
-
-        {revealedData.length === surveillanceRealities.length && (
-          <div className="privacy-final-choice">
-            <div className="choice-setup">
-              <h3>Now You Know the Truth. What Matters More?</h3>
-              <p>Every digital payment is permanent surveillance. Cash is disappearing. CBDCs make this worse.</p>
-            </div>
-            
-            <div className="privacy-options">
-              <button
-                className="privacy-choice convenience"
-                onClick={() => handlePrivacyChoice({ id: 'convenience', text: 'Convenience over privacy' })}
-              >
-                💳 Convenience Over Privacy
-                <small>I'll accept surveillance for easier payments</small>
-              </button>
-              
-              <button
-                className="privacy-choice privacy-first"
-                onClick={() => handlePrivacyChoice({ id: 'privacy', text: 'Financial privacy is a human right', correct: true })}
-              >
-                🔒 Privacy is a Human Right
-                <small>My financial life should be private</small>
-              </button>
-            </div>
-
-            <div className="privacy-reality">
-              <Shield size={20} />
-              <p><strong>Reality:</strong> Once privacy is lost, it's nearly impossible to get back. The infrastructure for total financial surveillance already exists.</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// Component 6: The Bitcoin Solution
-const BitcoinSolution = ({ onComplete, userRealizations, userChoices }) => {
-  const [solutionPhase, setSolutionPhase] = useState(0);
-  const [finalChoice, setFinalChoice] = useState(null);
-
-  const bitcoinSolutions = [
-    {
-      problem: 'Money Debasement',
-      realization: 'money-debasement',
-      solution: 'Fixed Supply',
-      explanation: 'Bitcoin has a hard cap of 21 million coins. No government or central bank can print more.',
-      impact: 'Your Bitcoin cannot be inflated away.'
-    },
-    {
-      problem: 'Financial Weapons',
-      realization: 'financial-weapons', 
-      solution: 'Censorship Resistance',
-      explanation: 'No government can freeze, seize, or stop Bitcoin transactions.',
-      impact: 'Your money works everywhere, always.'
-    },
-    {
-      problem: 'Banking Fragility',
-      realization: 'systemic-fragility',
-      solution: 'Self-Custody',
-      explanation: 'Be your own bank. No counterparty risk, no bank failures affect you.',
-      impact: 'Your money is truly yours.'
-    },
-    {
-      problem: 'Financial Exclusion',
-      realization: 'financial-apartheid',
-      solution: 'Global Access',
-      explanation: 'Anyone with internet can use Bitcoin. No permission, documentation, or minimum balance required.',
-      impact: 'Banking for everyone, everywhere.'
-    },
-    {
-      problem: 'Financial Surveillance',
-      realization: 'financial-privacy',
-      solution: 'Pseudonymous Transactions',
-      explanation: 'Bitcoin transactions are recorded but not linked to your identity by default.',
-      impact: 'Financial privacy by design.'
-    }
-  ];
-
-  const userRealizationsList = Array.from(userRealizations);
-  const relevantSolutions = bitcoinSolutions.filter(s => userRealizationsList.includes(s.realization));
-
-  const handleFinalChoice = (choice) => {
-    setFinalChoice(choice);
-    setTimeout(() => onComplete(), 2000);
-  };
-
-  if (solutionPhase === 0) {
-    return (
-      <div className="section-card">
-        <div className="solution-header">
-          <div className="bitcoin-icon">₿</div>
-          <h2 className="heading-critical">The Bitcoin Solution</h2>
-          <p>For every problem you discovered, Bitcoin provides a direct solution</p>
-        </div>
-
-        <div className="problems-solutions">
-          <h3>Your Realizations → Bitcoin Solutions</h3>
-          {relevantSolutions.length === 0 && (
-            <div className="no-realizations">
-              <p>Go back through the scenarios and think critically about each situation.</p>
-            </div>
-          )}
-          
-          {relevantSolutions.map((solution, index) => (
-            <div key={index} className="solution-pair">
-              <div className="problem-side">
-                <AlertTriangle size={20} />
-                <div>
-                  <h4>Problem: {solution.problem}</h4>
-                  <p className="realization-check">✓ You realized this matters</p>
-                </div>
-              </div>
-              <div className="arrow">→</div>
-              <div className="solution-side">
-                <CheckCircle size={20} />
-                <div>
-                  <h4>Bitcoin Solution: {solution.solution}</h4>
-                  <p>{solution.explanation}</p>
-                  <div className="impact">
-                    <strong>Impact:</strong> {solution.impact}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="solution-advance">
-          <ActionButton 
-            onClick={() => setSolutionPhase(1)} 
-            variant="primary"
-            disabled={relevantSolutions.length === 0}
-          >
-            I See How Bitcoin Solves This →
-          </ActionButton>
-        </div>
-      </div>
-    );
-  }
-
-  if (solutionPhase === 1) {
-    return (
-      <div className="section-card">
-        <div className="urgency-header">
-          <Clock size={48} />
-          <h2 className="heading-critical">Why This Matters RIGHT NOW</h2>
-        </div>
-
-        <div className="urgency-facts">
-          <div className="urgent-fact">
-            <TrendingDown size={24} />
-            <div>
-              <h4>Your Money is Being Debased Daily</h4>
-              <p>Every day you wait, your savings lose purchasing power to money printing.</p>
-            </div>
-          </div>
-
-          <div className="urgent-fact">
-            <Lock size={24} />
-            <div>
-              <h4>Financial Controls Are Expanding</h4>
-              <p>CBDCs and financial surveillance infrastructure are being deployed globally.</p>
-            </div>
-          </div>
-
-          <div className="urgent-fact">
-            <Building2 size={24} />
-            <div>
-              <h4>Banking System Instability Is Increasing</h4>
-              <p>More bank failures in 2023 than any year since 2008. The next crisis is building.</p>
-            </div>
-          </div>
-
-          <div className="urgent-fact">
-            <Star size={24} />
-            <div>
-              <h4>Bitcoin Adoption Is Accelerating</h4>
-              <p>Countries, institutions, and individuals are moving to Bitcoin. Early adoption advantages disappear with time.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="moment-of-truth">
-          <h3>This Is Your Moment of Choice</h3>
-          <p>You've seen the problems. You understand Bitcoin's solutions. What will you do?</p>
-
-          <div className="final-choice-buttons">
-            <button
-              className="choice-button delay"
-              onClick={() => handleFinalChoice('delay')}
-            >
-              🕐 I'll Think About It
-              <small>Continue with the status quo</small>
-            </button>
-
-            <button
-              className="choice-button action"
-              onClick={() => handleFinalChoice('action')}
-            >
-              🚀 I Need to Learn Bitcoin
-              <small>Take control of my financial future</small>
-            </button>
-          </div>
-        </div>
-
-        {finalChoice && (
-          <div className="choice-result">
-            {finalChoice === 'delay' && (
-              <div className="delay-warning">
-                <AlertTriangle size={24} />
-                <p>Remember: Every day of delay is a day your money loses value and your privacy disappears. But the learning path will be here when you're ready.</p>
-              </div>
-            )}
-            
-            {finalChoice === 'action' && (
-              <div className="action-celebration">
-                <CheckCircle size={24} />
-                <p><strong>Excellent choice!</strong> You're ready to learn how Bitcoin actually works. Next, we'll explore what money must do to serve you better.</p>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
 };
 
 export default WhyBitcoinMattersModule;

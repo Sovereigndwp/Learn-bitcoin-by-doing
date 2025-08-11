@@ -14,6 +14,7 @@ import {
 import MoneyPredictionChart from '../components/MoneyPredictionChart';
 import Introduction from '../components/Introduction';
 import MortgageQuiz from '../components/MortgageQuiz';
+import BankingReality from '../components/BankingReality';
 import ControlScenarios from '../components/ControlScenarios';
 import MoneyEvolutionTimeline from '../components/MoneyEvolutionTimeline';
 // Import page components for state-based flow
@@ -28,109 +29,430 @@ import DigitalScarcity from '../pages/DigitalScarcity';
 import '../components/ModuleCommon.css';
 // Using global CSS only - no module-specific overrides
 
-// Step labels for consistent navigation
+// Step labels for consistent navigation - Interactive Sound Money Discovery
 const stepLabels = [
-  'Introduction',
-  'Why Money?',
-  'What Money Must Do',
-  'Time vs Money',
-  'How Modern Money Works', 
-  'Sound Money Framework',
-  'Apply Your Framework'
+  'Feel Bitcoin First',
+  'Why Money Matters NOW', 
+  'Build Your Money Scorecard',
+  'Score Bitcoin vs Fiat',
+  'Your Action Plan'
 ];
 
 
 // Local components removed - now using imported page components
 
-// Main Module Component
-// WhyMoney component - Combined comprehensive lesson
-const WhyMoney = ({ onComplete }) => {
-  const [stage, setStage] = useState(0); // 0: intro, 1: comprehensive scenario, 2: conclusion
-  const [playerChoices, setPlayerChoices] = useState([]);
-  const [allProblems, setAllProblems] = useState(new Set());
+// Priority 1: Feel Bitcoin First - Emotional Investment Component
+const FeelBitcoinFirst = ({ onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+  const [emotionalResponse, setEmotionalResponse] = useState('');
 
-  const handleAnswer = (problemType, isCorrect) => {
-    if (isCorrect) {
-      setAllProblems(prev => new Set([...prev, problemType]));
+  const bitcoinExperience = [
+    {
+      title: "📱 A Real-World Crisis",
+      setup: "Meet Sarah, an investigative journalist in Canada. She's been reporting on government corruption, and her bank account was just frozen under the Emergency Act.",
+      crisis: "Sarah can't access her money to buy food, pay rent, or even get gas. Her cards are blocked. Her life savings are trapped.",
+      question: "Traditional banking has failed Sarah. What can you do to help her right now?"
+    },
+    {
+      title: "⚡ Bitcoin to the Rescue", 
+      setup: "You decide to send Sarah $200 worth of Bitcoin to help her survive.",
+      action: "You open your phone, scan her Bitcoin address QR code, and send the transaction.",
+      magic: "Within seconds, Sarah receives the Bitcoin. No bank. No permission. No freezing. Just direct, person-to-person value transfer.",
+      question: "How does this make you feel?"
     }
-    setPlayerChoices(prev => [...prev, { problemType, isCorrect }]);
+  ];
+
+  const currentExperience = bitcoinExperience[currentStep];
+
+  const handleResponse = (response) => {
+    setEmotionalResponse(response);
+    setShowResult(true);
   };
 
-  const handleNextStage = () => {
-    setStage(prev => prev + 1);
+  const handleNext = () => {
+    if (currentStep < bitcoinExperience.length - 1) {
+      setCurrentStep(currentStep + 1);
+      setShowResult(false);
+      setEmotionalResponse('');
+    } else {
+      onComplete(0);
+    }
   };
 
-  if (stage === 0) {
-    return (
-      <div className="module-container">
-        <div className="section-card">
-          <h1 className="heading-critical">Why Money?</h1>
-          <p>Before we explore how money works today, let's understand why it exists at all.</p>
-          <p>Imagine a world without money. How would you get the things you need?</p>
-        </div>
-        
-        <div className="card-feature">
-          <h2 className="heading-high">The Challenge</h2>
-          <p>You're a skilled baker in a village without money. You make amazing bread, but you need shoes for winter. The shoemaker needs a roof repair, the carpenter needs medicine, and the herbalist needs... bread.</p>
-          
-          <div className="scenario-setup">
-            <h3>Your Mission</h3>
-            <p>Trade your bread for shoes. Sounds simple? Let's see what actually happens in a barter world.</p>
-          </div>
-          
-          <ActionButton onClick={handleNextStage} variant="primary">
-            Start Trading →
-          </ActionButton>
-        </div>
-      </div>
-    );
-  }
-
-  if (stage === 1) {
-    return (
-      <ComprehensiveBarterScenario 
-        onAnswer={handleAnswer}
-        onComplete={handleNextStage}
-        discoveredProblems={allProblems}
-      />  
-    );
-  }
-
-  // Conclusion stage
   return (
     <div className="module-container">
       <div className="section-card">
-        <h1 className="heading-critical">💡 The Big Realization</h1>
-        <p>You've discovered why every civilization eventually invented money!</p>
+        <h1 className="heading-critical">⚡ Feel Bitcoin First</h1>
+        <p>Before we dive into theory, let's experience what makes Bitcoin different.</p>
       </div>
       
       <div className="card-feature">
-        <h2 className="heading-high">The Problems You Found</h2>
-        <div className="problems-discovered">
-          {Array.from(allProblems).map(problem => (
-            <div key={problem} className="problem-insight">
-              <span className="problem-icon">✓</span>
-              <div className="problem-details">
-                <h4>{problemLabels[problem]}</h4>
-                <p>{problemExplanations[problem]}</p>
+        <h2 className="heading-high">{currentExperience.title}</h2>
+        
+        <div className="experience-story">
+          <div className="story-section">
+            <h3>The Story</h3>
+            <p>{currentExperience.setup}</p>
+            {currentExperience.crisis && (
+              <div className="crisis-box">
+                <strong>💔 The Crisis:</strong> {currentExperience.crisis}
+              </div>
+            )}
+            {currentExperience.action && (
+              <div className="action-box">
+                <strong>🎯 Your Action:</strong> {currentExperience.action}
+              </div>
+            )}
+            {currentExperience.magic && (
+              <div className="magic-moment">
+                <strong>✨ What Happens:</strong> {currentExperience.magic}
+              </div>
+            )}
+          </div>
+
+          {!showResult && (
+            <div className="emotional-prompt">
+              <h4>{currentExperience.question}</h4>
+              {currentStep === 0 ? (
+                <div className="response-options">
+                  <ActionButton onClick={() => handleResponse('frustrated')} variant="outline">
+                    😤 This is incredibly frustrating - banks shouldn't have this power
+                  </ActionButton>
+                  <ActionButton onClick={() => handleResponse('concerned')} variant="outline">
+                    😰 This is scary - what if this happened to me?
+                  </ActionButton>
+                  <ActionButton onClick={() => handleResponse('curious')} variant="outline">
+                    🤔 I want to understand how Bitcoin could help
+                  </ActionButton>
+                </div>
+              ) : (
+                <div className="response-options">
+                  <ActionButton onClick={() => handleResponse('powerful')} variant="outline">
+                    🚀 This feels incredibly powerful - direct human-to-human help
+                  </ActionButton>
+                  <ActionButton onClick={() => handleResponse('amazed')} variant="outline">
+                    🤯 I'm amazed this is even possible
+                  </ActionButton>
+                  <ActionButton onClick={() => handleResponse('hopeful')} variant="outline">
+                    ✨ This gives me hope for financial freedom
+                  </ActionButton>
+                </div>
+              )}
+            </div>
+          )}
+
+          {showResult && (
+            <div className="emotional-insight">
+              <div className="your-feeling">
+                <h4>Your Response: {emotionalResponse}</h4>
+                <div className="insight-box">
+                  {currentStep === 0 ? (
+                    <p><strong>💡 This is exactly why Bitcoin was created.</strong> Traditional money systems can be controlled, frozen, or blocked by authorities. Bitcoin gives people an alternative that works even when traditional systems fail.</p>
+                  ) : (
+                    <p><strong>💡 You just experienced Bitcoin's superpower:</strong> Permissionless, peer-to-peer value transfer. No bank, government, or institution can stop you from helping another human being. This is financial sovereignty in action.</p>
+                  )}
+                </div>
+              </div>
+              
+              <ActionButton onClick={handleNext} variant="primary">
+                {currentStep < bitcoinExperience.length - 1 ? 'Continue the Experience →' : 'Now Let\'s Understand WHY This Matters →'}
+              </ActionButton>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Priority 3: Why Money Matters NOW - Current Events Urgency
+const WhyMoneyMattersNow = ({ onComplete }) => {
+  const [currentHeadline, setCurrentHeadline] = useState(0);
+  const [userReaction, setUserReaction] = useState('');
+  const [showInsight, setShowInsight] = useState(false);
+
+  const currentEvents = [
+    {
+      headline: "🇨🇦 Canadian Government Freezes Bank Accounts of Truckers and Donors (2022)",
+      details: "During the Freedom Convoy protests, the government used emergency powers to freeze bank accounts of protesters and anyone who donated as little as $25. No court order required.",
+      impact: "Over 200 accounts frozen instantly. People couldn't buy groceries, pay rent, or access their life savings.",
+      question: "What does this tell you about who really controls your money?",
+      property: "Self Custody"
+    },
+    {
+      headline: "🇺🇸 Inflation Hits 40-Year High - Your Savings Lose 8.5% Purchasing Power (2022)",
+      details: "While the government printed trillions of new dollars, everyday items became dramatically more expensive. A gallon of gas went from $2.40 to $5.00.",
+      impact: "If you had $10,000 in savings, it could only buy $9,150 worth of goods by year-end. Your work from previous years became worth less.",
+      question: "Why does your saved money lose value when the government prints more?",
+      property: "Fixed Supply"
+    },
+    {
+      headline: "🏦 Silicon Valley Bank Collapses - $175 Billion in Deposits at Risk (2023)",
+      details: "The 16th largest bank in America failed overnight. Customers couldn't access their money. FDIC insurance only covers $250,000 per account.",
+      impact: "Billions in deposits were locked up. Businesses couldn't make payroll. People couldn't pay mortgages.",
+      question: "If your bank fails tomorrow, how confident are you that you'll get your money back?",
+      property: "Counterparty Risk"
+    },
+    {
+      headline: "🌍 Nigeria, Turkey, Argentina Face Currency Collapse - Citizens Turn to Bitcoin (2023-2024)",
+      details: "Local currencies lost 50-70% of their value in one year. Governments imposed currency controls, limiting how much people could exchange or move abroad.",
+      impact: "Life savings evaporated. People couldn't afford basic necessities. Many turned to Bitcoin to preserve their wealth.",
+      question: "What happens when your entire country's money system fails?",
+      property: "Decentralization"
+    }
+  ];
+
+  const currentEvent = currentEvents[currentHeadline];
+
+  const handleReaction = (reaction) => {
+    setUserReaction(reaction);
+    setShowInsight(true);
+  };
+
+  const handleNext = () => {
+    if (currentHeadline < currentEvents.length - 1) {
+      setCurrentHeadline(currentHeadline + 1);
+      setShowInsight(false);
+      setUserReaction('');
+    } else {
+      onComplete(1);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">🚨 Why Money Matters NOW</h1>
+        <p>These aren't historical examples - this is happening right now, to real people.</p>
+        <div className="urgency-indicator">
+          Breaking News {currentHeadline + 1} of {currentEvents.length}
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <div className="breaking-news">
+          <div className="news-header">
+            <span className="breaking-tag">🔴 BREAKING</span>
+            <h2>{currentEvent.headline}</h2>
+          </div>
+          
+          <div className="news-content">
+            <div className="story-details">
+              <h3>What Happened</h3>
+              <p>{currentEvent.details}</p>
+            </div>
+            
+            <div className="human-impact">
+              <h3>💔 Impact on Real People</h3>
+              <p>{currentEvent.impact}</p>
+            </div>
+          </div>
+
+          {!showInsight && (
+            <div className="reaction-prompt">
+              <h4>{currentEvent.question}</h4>
+              <div className="reaction-options">
+                <ActionButton onClick={() => handleReaction('worried')} variant="outline">
+                  😰 This worries me - could this happen to me?
+                </ActionButton>
+                <ActionButton onClick={() => handleReaction('angry')} variant="outline">
+                  😤 This makes me angry - people deserve better
+                </ActionButton>
+                <ActionButton onClick={() => handleReaction('curious')} variant="outline">
+                  🤔 I want to understand how to protect myself
+                </ActionButton>
               </div>
             </div>
-          ))}
+          )}
+
+          {showInsight && (
+            <div className="urgency-insight">
+              <div className="property-connection">
+                <h3>💡 This is about: {currentEvent.property}</h3>
+                <div className="insight-box">
+                  {currentEvent.property === 'Self Custody' && 
+                    <p><strong>Your takeaway:</strong> If someone else controls your money, they can take it away. True ownership means you hold the keys, not a bank or government.</p>
+                  }
+                  {currentEvent.property === 'Fixed Supply' && 
+                    <p><strong>Your takeaway:</strong> When governments can print unlimited money, your savings get diluted. Limited supply money (like Bitcoin) can't be inflated away.</p>
+                  }
+                  {currentEvent.property === 'Counterparty Risk' && 
+                    <p><strong>Your takeaway:</strong> Traditional banking means trusting others with your money. With Bitcoin, you don't need to trust banks, governments, or institutions.</p>
+                  }
+                  {currentEvent.property === 'Decentralization' && 
+                    <p><strong>Your takeaway:</strong> When money is controlled by one country or institution, they can destroy its value. Decentralized money works globally and can't be controlled by any single entity.</p>
+                  }
+                </div>
+              </div>
+              
+              <ActionButton onClick={handleNext} variant="primary">
+                {currentHeadline < currentEvents.length - 1 ? 'Next Breaking Story →' : 'Build Your Protection Framework →'}
+              </ActionButton>
+            </div>
+          )}
         </div>
+      </div>
+    </div>
+  );
+};
+
+// Interactive Money Properties Discovery - Socratic Method
+const MoneyPropertiesDiscovery = ({ onComplete }) => {
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [discoveredProperties, setDiscoveredProperties] = useState(new Set());
+  const [userAnswers, setUserAnswers] = useState({});
+  const [showInsight, setShowInsight] = useState(false);
+
+  const discoveryScenarios = [
+    {
+      id: 'portability_test',
+      title: '🏋️ The Portability Test',
+      situation: 'You need to travel 200 miles to buy a horse. You have $2000 worth of value to trade.',
+      challenge: 'How do you carry your wealth?',
+      options: [
+        { id: 'gold_coins', text: 'Carry 4 pounds of gold coins', practical: false, reason: 'Heavy and risky to transport' },
+        { id: 'livestock', text: 'Drive 10 cows to trade', practical: false, reason: 'Slow, expensive, and cows might die' },
+        { id: 'paper_money', text: 'Carry $2000 in paper bills', practical: true, reason: 'Light, portable, widely accepted' },
+        { id: 'digital', text: 'Transfer Bitcoin on your phone', practical: true, reason: 'Instant, borderless, weightless' }
+      ],
+      property: 'Portability',
+      insight: 'Good money must be easy to transport. Physical limitations constrain trade.',
+      question: 'What did this scenario teach you about money?'
+    },
+    {
+      id: 'divisibility_test',
+      title: '🍕 The Pizza Problem',
+      situation: 'You want to buy a $12 pizza. You only have one thing to trade.',
+      challenge: 'Which form of money works best?',
+      options: [
+        { id: 'gold_bar', text: 'One 1-ounce gold bar ($2000)', practical: false, reason: "Can't break a gold bar for pizza" },
+        { id: 'diamond', text: 'One perfect diamond ($2000)', practical: false, reason: "Can't split a diamond" },
+        { id: 'cash', text: 'Paper bills and coins', practical: true, reason: 'Perfect denominations available' },
+        { id: 'bitcoin', text: 'Bitcoin (divisible to 8 decimals)', practical: true, reason: 'Can send exactly $12.00' }
+      ],
+      property: 'Divisibility',
+      insight: 'Money must break into smaller units for transactions of any size.',
+      question: 'Why is divisibility crucial for daily use?'
+    },
+    {
+      id: 'durability_test', 
+      title: '⏳ The Time Test',
+      situation: 'You work hard and save money for 20 years for retirement.',
+      challenge: 'Which savings will still be valuable in 20 years?',
+      options: [
+        { id: 'food', text: 'Stored food and vegetables', practical: false, reason: 'Will rot within months' },
+        { id: 'paper_money', text: 'Cash under your mattress', practical: false, reason: 'Inflation will reduce purchasing power' },
+        { id: 'gold', text: 'Gold coins', practical: true, reason: 'Gold lasts forever, holds value' },
+        { id: 'bitcoin', text: 'Bitcoin in secure wallet', practical: true, reason: 'Digital durability + limited supply' }
+      ],
+      property: 'Durability',
+      insight: 'Money must preserve value over time, both physically and economically.',
+      question: 'What makes money durable across decades?'
+    },
+    {
+      id: 'verifiability_test',
+      title: '🔍 The Fake Test',
+      situation: 'A stranger offers to trade with you, but you\'re worried about counterfeits.',
+      challenge: 'Which money can you verify is real?',
+      options: [
+        { id: 'complex_cash', text: 'Modern bills with security features', practical: true, reason: 'Can check watermarks, security strips' },
+        { id: 'gold', text: 'Gold coins', practical: false, reason: 'Hard to verify purity without equipment' },
+        { id: 'crypto', text: 'Random cryptocurrency', practical: false, reason: 'Could be fake token or scam' },
+        { id: 'bitcoin', text: 'Bitcoin on blockchain', practical: true, reason: 'Mathematically verifiable, impossible to fake' }
+      ],
+      property: 'Verifiability',
+      insight: 'You must be able to quickly verify money is authentic.',
+      question: 'Why is easy verification essential?'
+    }
+  ];
+
+  const currentScenario_data = discoveryScenarios[currentScenario];
+
+  const handleAnswer = (optionId) => {
+    const option = currentScenario_data.options.find(opt => opt.id === optionId);
+    setUserAnswers(prev => ({ ...prev, [currentScenario_data.id]: option }));
+    setDiscoveredProperties(prev => new Set([...prev, currentScenario_data.property]));
+    setShowInsight(true);
+  };
+
+  const handleNext = () => {
+    if (currentScenario < discoveryScenarios.length - 1) {
+      setCurrentScenario(currentScenario + 1);
+      setShowInsight(false);
+    } else {
+      onComplete(0);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">🔍 Discover Money Properties</h1>
+        <p>Through real scenarios, discover what makes good money work.</p>
+        <div className="progress-indicator">
+          Scenario {currentScenario + 1} of {discoveryScenarios.length} • 
+          Properties discovered: {discoveredProperties.size}/10
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentScenario_data.title}</h2>
         
-        <div className="concept-card">
-          <h3>🚀 The Solution: Money</h3>
-          <p>Money solved all these problems by creating something everyone would accept in trade. This wasn't invented by governments—people created it because they desperately needed it.</p>
+        <div className="scenario-setup">
+          <div className="situation-box">
+            <h3>The Situation</h3>
+            <p>{currentScenario_data.situation}</p>
+          </div>
           
-          <div className="key-insight">
-            <h4>Key Insight</h4>
-            <p>Money isn't just convenient—it's essential for complex civilization. Without it, we'd still be living in small villages, limited by what we could trade directly.</p>
+          <div className="challenge-box">
+            <h3>Your Challenge</h3>
+            <p>{currentScenario_data.challenge}</p>
           </div>
         </div>
-        
-        <ActionButton onClick={() => onComplete(1)} variant="primary">
-          Now Let's See What Money Must Do →
-        </ActionButton>
+
+        {!showInsight && (
+          <div className="interactive-choices">
+            <h4>What's your choice?</h4>
+            <div className="choice-grid">
+              {currentScenario_data.options.map(option => (
+                <button
+                  key={option.id}
+                  className="choice-button"
+                  onClick={() => handleAnswer(option.id)}
+                >
+                  {option.text}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showInsight && userAnswers[currentScenario_data.id] && (
+          <div className="scenario-result">
+            <div className="your-choice">
+              <h4>Your Choice: {userAnswers[currentScenario_data.id].text}</h4>
+              <div className={`choice-feedback ${userAnswers[currentScenario_data.id].practical ? 'practical' : 'impractical'}`}>
+                {userAnswers[currentScenario_data.id].practical ? '✅ Practical choice!' : '❌ This would be difficult!'}
+                <p>{userAnswers[currentScenario_data.id].reason}</p>
+              </div>
+            </div>
+            
+            <div className="property-discovered">
+              <h3>🎯 Property Discovered: {currentScenario_data.property}</h3>
+              <p className="insight-text">{currentScenario_data.insight}</p>
+            </div>
+            
+            <div className="socratic-question">
+              <h4>💭 Think About It:</h4>
+              <p>{currentScenario_data.question}</p>
+            </div>
+            
+            <ActionButton onClick={handleNext} variant="primary">
+              {currentScenario < discoveryScenarios.length - 1 ? 'Next Property Test →' : 'Build Complete Framework →'}
+            </ActionButton>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -280,6 +602,521 @@ const problemExplanations = {
   "system": "The fundamental limitations make barter unsuitable for anything beyond simple, small-scale economies."
 };
 
+// The Golden Age - Why Gold Was Peak Sound Money
+const TheGoldenAge = ({ onComplete }) => {
+  const [currentSection, setCurrentSection] = useState(0);
+  const [userChoices, setUserChoices] = useState({});
+  const [showInsights, setShowInsights] = useState(false);
+
+  const goldenAgeSections = [
+    {
+      id: 'discovery',
+      title: '🏛️ The Discovery',
+      hook: 'Around 600 BC, something remarkable happened in the ancient world...',
+      setup: 'People in different civilizations - Greeks, Romans, Egyptians, Chinese - all independently started using the same thing as money: Gold.',
+      question: 'Why did completely separate cultures all choose gold?',
+      options: [
+        { id: 'valuable', text: 'Gold was the most valuable metal they could find', insight: 'close' },
+        { id: 'properties', text: 'Gold had the perfect combination of properties for money', insight: 'correct' },
+        { id: 'pretty', text: 'Gold was beautiful and impressive to look at', insight: 'surface' },
+        { id: 'rare', text: 'Gold was extremely rare, making it special', insight: 'partial' }
+      ],
+      reality: 'Gold wasn\'t chosen because it was pretty or valuable - it became valuable BECAUSE it was perfect money. Ancient peoples discovered that gold had a unique combination of properties that made it ideal for storing and transferring value.',
+      transition: 'But what exactly made gold so special? Let\'s examine what they discovered...'
+    },
+    {
+      id: 'properties',
+      title: '⚖️ The Perfect Properties',
+      hook: 'Ancient peoples were essentially running a 2,000-year experiment in money...',
+      setup: 'They tried everything: shells, cattle, silver, bronze, iron. But gold consistently won. Here\'s what they discovered gold had that other materials lacked:',
+      propertyDemo: [
+        { property: 'Scarcity', gold: 'Limited supply, hard to find', other: 'Shells: too common, Silver: too abundant' },
+        { property: 'Durability', gold: 'Never rusts, tarnishes, or decays', other: 'Iron: rusts, Wood: rots' },
+        { property: 'Divisibility', gold: 'Can be melted and formed into any size', other: 'Cattle: can\'t split a cow' },
+        { property: 'Portability', gold: 'High value in small amounts', other: 'Stone: too heavy' },
+        { property: 'Verifiability', gold: 'Distinctive color, weight, and properties', other: 'Other metals: easily faked' },
+        { property: 'Fungibility', gold: 'Pure gold is identical everywhere', other: 'Cattle: each animal different' }
+      ],
+      question: 'What does this tell us about money?',
+      options: [
+        { id: 'accident', text: 'Gold became money by historical accident', insight: 'wrong' },
+        { id: 'science', text: 'Good money properties can be objectively identified', insight: 'correct' },
+        { id: 'culture', text: 'Money is purely a cultural choice', insight: 'incomplete' },
+        { id: 'government', text: 'Governments decide what becomes money', insight: 'backwards' }
+      ],
+      reality: 'Gold became money through a natural selection process. Any civilization that used inferior money was at a disadvantage in trade, savings, and economic development. Gold won because it was scientifically superior.',
+      transition: 'This led to something unprecedented in human history...'
+    },
+    {
+      id: 'golden_age',
+      title: '🌟 The Golden Age (1800s-1914)',
+      hook: 'For over 100 years, the world experienced unprecedented prosperity...',
+      setup: 'From 1800 to 1914, most of the world operated on a gold standard. Countries\' currencies were backed by gold, and people could exchange their money for actual gold. This period saw:',
+      achievements: [
+        '🏭 Industrial Revolution accelerated globally',
+        '🚂 Transcontinental railroads built',
+        '🏙️ Modern cities constructed',
+        '📈 Living standards rose dramatically',
+        '🌍 Global trade flourished',
+        '💰 Stable prices for decades',
+        '🏦 People could save for retirement with confidence'
+      ],
+      question: 'Why did this period see such incredible progress?',
+      options: [
+        { id: 'technology', text: 'New technologies made everything possible', insight: 'incomplete' },
+        { id: 'sound_money', text: 'Sound money enabled long-term planning and investment', insight: 'correct' },
+        { id: 'smart_people', text: 'People were just smarter and worked harder', insight: 'surface' },
+        { id: 'luck', text: 'It was a lucky period in history', insight: 'wrong' }
+      ],
+      reality: 'Sound money was the foundation that enabled everything else. When people could save gold and trust it would hold value, they could plan for the future, invest in long-term projects, and build generational wealth. Technology and human ingenuity flourished because the monetary system was stable.',
+      transition: 'But if gold was so perfect, why did we abandon it?'
+    }
+  ];
+
+  const currentData = goldenAgeSections[currentSection];
+
+  const handleChoice = (optionId) => {
+    setUserChoices(prev => ({ ...prev, [currentData.id]: optionId }));
+    setShowInsights(true);
+  };
+
+  const handleNext = () => {
+    if (currentSection < goldenAgeSections.length - 1) {
+      setCurrentSection(currentSection + 1);
+      setShowInsights(false);
+    } else {
+      onComplete(3);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">The Golden Age</h1>
+        <p>Understanding why gold became the world's money - and why it worked so well.</p>
+        
+        <div className="scenario-progress">
+          <p>Section {currentSection + 1} of {goldenAgeSections.length}</p>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${((currentSection + 1) / goldenAgeSections.length) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentData.title}</h2>
+        
+        <div className="golden-age-content">
+          <div className="hook-section">
+            <p className="hook-text">{currentData.hook}</p>
+          </div>
+          
+          <div className="setup-section">
+            <p>{currentData.setup}</p>
+          </div>
+          
+          {currentData.propertyDemo && (
+            <div className="property-demonstration">
+              <h3>📊 The Money Properties Test</h3>
+              <div className="property-grid">
+                {currentData.propertyDemo.map((item, index) => (
+                  <div key={index} className="property-comparison">
+                    <h4>{item.property}</h4>
+                    <div className="gold-advantage">
+                      <strong>🥇 Gold:</strong> {item.gold}
+                    </div>
+                    <div className="others-disadvantage">
+                      <strong>❌ Others:</strong> {item.other}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {currentData.achievements && (
+            <div className="achievements-showcase">
+              <h3>🏆 What The Golden Age Achieved</h3>
+              <div className="achievements-grid">
+                {currentData.achievements.map((achievement, index) => (
+                  <div key={index} className="achievement-item">
+                    {achievement}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {!showInsights && (
+            <>
+              <h4>{currentData.question}</h4>
+              <div className="quiz-options">
+                {currentData.options.map(option => (
+                  <ActionButton
+                    key={option.id}
+                    onClick={() => handleChoice(option.id)}
+                    variant="outline"
+                  >
+                    {option.text}
+                  </ActionButton>
+                ))}
+              </div>
+            </>
+          )}
+          
+          {showInsights && (
+            <div className="quiz-feedback correct">
+              <div className="feedback-text">
+                <h4>Your choice: "{currentData.options.find(opt => opt.id === userChoices[currentData.id])?.text}"</h4>
+                
+                <div className="insight-box">
+                  <strong>💡 The Reality:</strong> {currentData.reality}
+                </div>
+                
+                <div className="transition-hint">
+                  <strong>🔮 Next:</strong> {currentData.transition}
+                </div>
+              </div>
+              
+              <ActionButton onClick={handleNext} variant="primary">
+                {currentSection < goldenAgeSections.length - 1 ? 'Continue The Story →' : 'Discover What Went Wrong →'}
+              </ActionButton>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// The Great Betrayal - 1971 Nixon Shock Detailed Story
+const TheGreatBetrayal = ({ onComplete }) => {
+  const [currentChapter, setCurrentChapter] = useState(0);
+  const [userPredictions, setUserPredictions] = useState({});
+  const [showReality, setShowReality] = useState(false);
+
+  const betrayalChapters = [
+    {
+      id: 'setup',
+      title: '⚠️ The Setup (1960s)',
+      hook: 'By the 1960s, cracks were showing in the golden system...',
+      situation: 'The US government was spending massive amounts on the Vietnam War and social programs. But there was a problem: they were spending more money than they had gold to back it up.',
+      tension: 'Other countries started to notice. They began asking: "If we give you our goods and you give us dollars, can we actually exchange those dollars for gold like you promised?"',
+      question: 'What do you think the US government should have done?',
+      options: [
+        { id: 'reduce_spending', text: 'Cut spending to match their gold reserves', consequence: 'responsible' },
+        { id: 'get_more_gold', text: 'Acquire more gold to back their spending', consequence: 'difficult' },
+        { id: 'change_rules', text: 'Change the rules to avoid the gold constraint', consequence: 'deceptive' },
+        { id: 'ignore_problem', text: 'Ignore the problem and hope it goes away', consequence: 'dangerous' }
+      ],
+      foreshadowing: 'The US government chose option 3. They decided to change the rules rather than their spending habits.'
+    },
+    {
+      id: 'crisis',
+      title: '💥 The Crisis Weekend (August 1971)',
+      hook: 'Friday, August 13th, 1971. President Nixon had a secret...',
+      situation: 'Nixon gathered his economic advisors at Camp David for a secret weekend meeting. Other countries were demanding gold for their dollars faster than ever. The US was running out of gold.',
+      tension: 'Nixon faced a choice: Either cut government spending dramatically, or break the promise to exchange dollars for gold. The spending cuts would be politically devastating.',
+      question: 'What do you predict Nixon chose?',
+      options: [
+        { id: 'honor_promise', text: 'Honor the gold promise and cut spending', prediction: 'noble' },
+        { id: 'temporary_suspension', text: 'Temporarily suspend gold backing', prediction: 'pragmatic' },
+        { id: 'permanent_break', text: 'Permanently end gold backing', prediction: 'radical' },
+        { id: 'partial_default', text: 'Reduce the gold exchange rate', prediction: 'compromise' }
+      ],
+      reality: 'Nixon chose to "temporarily" suspend gold backing. He claimed it was just until the economic situation stabilized. That was over 50 years ago.',
+      shock: 'Sunday evening, August 15th, 1971: Nixon went on national television and announced that the US would no longer exchange dollars for gold. No vote. No debate. One man changed the global monetary system overnight.'
+    },
+    {
+      id: 'immediate_aftermath',
+      title: '🌍 The Immediate Aftermath (1971-1973)',
+      hook: 'The world woke up Monday morning to a completely different monetary system...',
+      situation: 'Countries that had been saving US dollars suddenly realized their savings were no longer backed by gold. It was just paper with promises.',
+      chaos: [
+        'Currency markets went wild - no one knew what anything was worth',
+        'Countries scrambled to figure out what to do with their dollar reserves',  
+        'Gold prices soared as people fled to real money',
+        'International trade deals became much more complex',
+        'Inflation began accelerating in most countries'
+      ],
+      question: 'Why do you think Nixon called this "temporary"?',
+      options: [
+        { id: 'believed_temporary', text: 'He genuinely believed it would be temporary', insight: 'naive' },
+        { id: 'political_cover', text: 'Saying "temporary" made it politically acceptable', insight: 'shrewd' },
+        { id: 'buy_time', text: 'He needed time to figure out what to do next', insight: 'stalling' },
+        { id: 'permanent_plan', text: 'He always planned it to be permanent but couldn\'t say so', insight: 'deceptive' }
+      ],
+      reality: 'Most historians believe Nixon used "temporary" as political cover. Ending the gold standard permanently would have been too shocking to announce directly. By calling it temporary, he could implement it and let time normalize the new system.',
+      consequence: 'What Nixon presented as a temporary emergency measure became the permanent foundation of our monetary system.'
+    },
+    {
+      id: 'money_printing_mechanics',
+      title: '🖨️ How Money Printing Actually Works',
+      hook: 'With gold gone, governments discovered they could create money out of thin air...',
+      situation: 'Think of government money printing like a credit card with no limit and no bill that ever comes due. When governments need money, they don\'t have to tax more or borrow from real savers—they just create new money digitally.',
+      personalAnalogy: {
+        title: '💳 It\'s Like Having a Magic Credit Card',
+        yourCredit: 'When YOU use a credit card, you must pay it back with real work and real money. There are limits, interest charges, and consequences for overspending.',
+        governmentCredit: 'When GOVERNMENTS "spend" new money, they just type numbers into a computer. No work required. No real assets needed. No limit on the amount.',
+        theKicker: 'But here\'s the kicker: While your credit card debt makes you poorer, government money printing makes EVERYONE poorer through inflation—except the government gets to spend the new money first.'
+      },
+      mechanicsBreakdown: [
+        {
+          step: '1. Government Wants to Spend',
+          detail: 'Congress approves $1 trillion in spending they don\'t have',
+          analogy: 'Like deciding to buy a $50,000 car when you only have $10,000'
+        },
+        {
+          step: '2. Treasury Issues Bonds', 
+          detail: 'Government creates IOUs (bonds) for the money they need',
+          analogy: 'Like writing yourself an IOU instead of getting a real loan'
+        },
+        {
+          step: '3. Federal Reserve Buys Bonds',
+          detail: 'The Fed buys government IOUs with newly created digital money',
+          analogy: 'Like your friend paying for your car with counterfeit money'
+        },
+        {
+          step: '4. Money Enters Economy',
+          detail: 'New money flows into banks and eventually reaches people and businesses',
+          analogy: 'The counterfeit money spreads through the economy, making all money worth less'
+        }
+      ],
+      question: 'What\'s the fundamental difference between your debt and government debt?',
+      options: [
+        { id: 'both_same', text: 'Both types of debt work the same way', insight: 'misunderstanding' },
+        { id: 'gov_more_responsible', text: 'Government debt is more responsible because it\'s for public good', insight: 'naive' },
+        { id: 'you_work_gov_prints', text: 'You must work to pay debt, government can just print money', insight: 'correct' },
+        { id: 'gov_has_assets', text: 'Government has more assets to back their debt', insight: 'confused' }
+      ],
+      reality: 'You\'re exactly right. This is the core insight that changes everything: When you go into debt, YOU have to work harder to pay it back. When government goes into debt, EVERYONE\'S money becomes worth less to pay it back.',
+      consequence: 'This is why inflation is often called "the cruelest tax" - it taxes your savings without you even knowing it happened.'
+    },
+    {
+      id: 'long_term_consequences',
+      title: '📈 The Long-Term Consequences (1971-Today)',
+      hook: 'Nixon\'s "temporary" measure unleashed forces that are still reshaping the world...',
+      situation: 'With gold no longer constraining government spending, something unprecedented began happening: governments could spend unlimited amounts by simply creating new money.',
+      consequences: [
+        {
+          category: 'Inflation',
+          impact: 'Prices that had been stable for decades began rising consistently',
+          example: '1971: Average house $25,000. 2024: Average house $400,000+'
+        },
+        {
+          category: 'Government Debt', 
+          impact: 'Without gold backing, governments could borrow unlimited amounts',
+          example: '1971: US debt $400 billion. 2024: US debt $33+ trillion'
+        },
+        {
+          category: 'Boom-Bust Cycles',
+          impact: 'Economic bubbles became more frequent and severe',
+          example: '1970s stagflation, 1980s S&L crisis, 2000 dot-com, 2008 housing, 2020 everything bubble'
+        },
+        {
+          category: 'Wealth Inequality',
+          impact: 'Those closest to money creation benefited most',
+          example: 'Asset owners got rich while savers got poor'
+        }
+      ],
+      question: 'Looking at 50+ years of results, was Nixon\'s decision good for ordinary people?',
+      options: [
+        { id: 'good_decision', text: 'Yes - it gave governments flexibility to manage the economy', perspective: 'government' },
+        { id: 'bad_decision', text: 'No - it allowed unlimited money printing that hurt savers', perspective: 'people' },
+        { id: 'mixed_results', text: 'Mixed - some benefits but also serious problems', perspective: 'nuanced' },
+        { id: 'too_complex', text: 'Too complex to judge - many factors involved', perspective: 'uncertain' }
+      ],
+      reality: 'The evidence suggests ordinary people have paid the price. While governments gained spending flexibility, working people saw their purchasing power decline, their savings lose value, and wealth concentration increase dramatically.',
+      betrayal: 'The "temporary" suspension became a permanent betrayal of sound money principles. We went from money you could trust to money you had to trust.'
+    }
+  ];
+
+  const currentChapter_data = betrayalChapters[currentChapter];
+
+  const handlePrediction = (optionId) => {
+    setUserPredictions(prev => ({ ...prev, [currentChapter_data.id]: optionId }));
+    setShowReality(true);
+  };
+
+  const handleNext = () => {
+    if (currentChapter < betrayalChapters.length - 1) {
+      setCurrentChapter(currentChapter + 1);
+      setShowReality(false);
+    } else {
+      onComplete(4);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">The Great Betrayal</h1>
+        <p>How the world lost sound money in a single weekend - and what it cost us.</p>
+        
+        <div className="chapter-progress">
+          <p>Chapter {currentChapter + 1} of {betrayalChapters.length}</p>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill"
+              style={{ width: `${((currentChapter + 1) / betrayalChapters.length) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentChapter_data.title}</h2>
+        
+        <div className="betrayal-content">
+          <div className="hook-section">
+            <p className="hook-text">{currentChapter_data.hook}</p>
+          </div>
+          
+          <div className="situation-section">
+            <p>{currentChapter_data.situation}</p>
+            {currentChapter_data.tension && (
+              <div className="tension-box">
+                <p><strong>⚡ The Tension:</strong> {currentChapter_data.tension}</p>
+              </div>
+            )}
+          </div>
+          
+          {currentChapter_data.chaos && (
+            <div className="chaos-section">
+              <h3>🌪️ The Chaos That Followed</h3>
+              <ul>
+                {currentChapter_data.chaos.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {currentChapter_data.personalAnalogy && (
+            <div className="personal-analogy-section">
+              <div className="analogy-card">
+                <h3>{currentChapter_data.personalAnalogy.title}</h3>
+                
+                <div className="analogy-comparison">
+                  <div className="analogy-your-credit">
+                    <h4>💳 Your Credit Card</h4>
+                    <p>{currentChapter_data.personalAnalogy.yourCredit}</p>
+                  </div>
+                  
+                  <div className="analogy-government-credit">
+                    <h4>🏛️ Government "Credit"</h4>
+                    <p>{currentChapter_data.personalAnalogy.governmentCredit}</p>
+                  </div>
+                </div>
+                
+                <div className="analogy-kicker">
+                  <strong>🎯 The Kicker:</strong> {currentChapter_data.personalAnalogy.theKicker}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {currentChapter_data.mechanicsBreakdown && (
+            <div className="mechanics-breakdown-section">
+              <h3>🔧 How It Actually Works</h3>
+              <div className="mechanics-steps">
+                {currentChapter_data.mechanicsBreakdown.map((step, index) => (
+                  <div key={index} className="mechanics-step-card">
+                    <div className="step-header">
+                      <span className="step-number">{step.step}</span>
+                    </div>
+                    <div className="step-content">
+                      <p><strong>Government:</strong> {step.detail}</p>
+                      <p><strong>Your Analogy:</strong> {step.analogy}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {currentChapter_data.consequences && (
+            <div className="consequences-section">
+              <h3>⚖️ The Price We're Still Paying</h3>
+              <div className="consequences-grid">
+                {currentChapter_data.consequences.map((consequence, index) => (
+                  <div key={index} className="consequence-card">
+                    <h4>{consequence.category}</h4>
+                    <p><strong>Impact:</strong> {consequence.impact}</p>
+                    <p><strong>Example:</strong> {consequence.example}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {!showReality && (
+            <>
+              <h4>{currentChapter_data.question}</h4>
+              <div className="quiz-options">
+                {currentChapter_data.options.map(option => (
+                  <ActionButton
+                    key={option.id}
+                    onClick={() => handlePrediction(option.id)}
+                    variant="outline"
+                  >
+                    {option.text}
+                  </ActionButton>
+                ))}
+              </div>
+            </>
+          )}
+          
+          {showReality && (
+            <div className="quiz-feedback correct">
+              <div className="feedback-text">
+                <h4>Your prediction: "{currentChapter_data.options.find(opt => opt.id === userPredictions[currentChapter_data.id])?.text}"</h4>
+                
+                {currentChapter_data.reality && (
+                  <div className="reality-box">
+                    <strong>📜 What Actually Happened:</strong> {currentChapter_data.reality}
+                  </div>
+                )}
+                
+                {currentChapter_data.shock && (
+                  <div className="shock-box">
+                    <strong>💥 The Shock:</strong> {currentChapter_data.shock}
+                  </div>
+                )}
+                
+                {currentChapter_data.consequence && (
+                  <div className="consequence-box">
+                    <strong>⚡ The Consequence:</strong> {currentChapter_data.consequence}
+                  </div>
+                )}
+                
+                {currentChapter_data.betrayal && (
+                  <div className="betrayal-box">
+                    <strong>💔 The Betrayal:</strong> {currentChapter_data.betrayal}
+                  </div>
+                )}
+                
+                {currentChapter_data.foreshadowing && (
+                  <div className="foreshadowing-box">
+                    <strong>🔮 Foreshadowing:</strong> {currentChapter_data.foreshadowing}
+                  </div>
+                )}
+              </div>
+              
+              <ActionButton onClick={handleNext} variant="primary">
+                {currentChapter < betrayalChapters.length - 1 ? 'Continue The Story →' : 'Understand The Impact →'}
+              </ActionButton>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // Renamed: MoneySuperpowers -> MoneyFunctions
 const MoneyFunctions = ({ onComplete }) => {
@@ -287,7 +1124,6 @@ const MoneyFunctions = ({ onComplete }) => {
   const [answers, setAnswers] = useState({});
   const [feedback, setFeedback] = useState({});
   const [unlockedFunctions, setUnlockedFunctions] = useState([]);
-  const [showMortgageQuiz, setShowMortgageQuiz] = useState(false);
 
   const scenarios = [
     {
@@ -370,7 +1206,8 @@ const MoneyFunctions = ({ onComplete }) => {
       if (currentScenario < scenarios.length - 1) {
         setCurrentScenario(currentScenario + 1);
       } else {
-        setTimeout(() => setShowMortgageQuiz(true), 3000); // Show MortgageQuiz
+        // All scenarios complete - finish the component
+        setTimeout(() => onComplete(2), 2000);
       }
     }, 2000);
   };
@@ -379,10 +1216,6 @@ const MoneyFunctions = ({ onComplete }) => {
   
   return (
     <div className="module-container">
-      {showMortgageQuiz ? (
-        <MortgageQuiz onContinue={() => onComplete(2)} />
-      ) : (
-        <>
           <div className="section-card">
             <h1 className="heading-critical">Money Functions</h1>
             <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
@@ -453,8 +1286,6 @@ const MoneyFunctions = ({ onComplete }) => {
             <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
           </div>
         )}
-        </>
-      )}
     </div>
   );
 };
@@ -1872,65 +2703,609 @@ const CombinedModernMoney = ({ onComplete }) => {
   );
 };
 
-// Combined Sound Money Framework lesson (History + Framework Building)
-const CombinedSoundMoneyFramework = ({ onComplete, onUnlockTrait }) => {
-  const [phase, setPhase] = useState(0); // 0: intro, 1: history, 2: framework
-  const [unlockedTraits, setUnlockedTraits] = useState([]);
-  
-  const handleUnlockTrait = (trait) => {
-    if (!unlockedTraits.includes(trait)) {
-      setUnlockedTraits(prev => [...prev, trait]);
-      onUnlockTrait(trait);
+// Interactive Money Systems Testing - Step 2
+const InteractiveMoneySystemsTest = ({ onComplete }) => {
+  const [currentTest, setCurrentTest] = useState(0);
+  const [testResults, setTestResults] = useState({});
+  const [showAnalysis, setShowAnalysis] = useState(false);
+
+  const moneySystemTests = [
+    {
+      id: 'gold_stress_test',
+      title: '🥇 Gold Under Pressure',
+      scenario: 'It\'s 1914. World War I just started. Countries need massive amounts of money for weapons, soldiers, and supplies.',
+      challenge: 'You\'re the finance minister. The war costs $1 million per day, but you only have $100,000 worth of gold backing your currency.',
+      question: 'With gold-backed money, what are your options?',
+      options: [
+        { 
+          id: 'print_anyway', 
+          text: 'Print more money anyway - who will check?', 
+          result: 'impossible',
+          explanation: 'Gold standard makes this impossible. People could exchange paper for gold and discover the fraud.'
+        },
+        { 
+          id: 'borrow_gold', 
+          text: 'Borrow gold from other countries', 
+          result: 'limited',
+          explanation: 'Other countries are also at war and need their gold. Limited solution.'
+        },
+        { 
+          id: 'abandon_gold', 
+          text: 'Temporarily abandon the gold standard', 
+          result: 'historical',
+          explanation: 'This is exactly what most countries did! Gold constrains government spending.'
+        }
+      ],
+      insight: 'Gold\'s constraint on money printing is a feature, not a bug - it prevents governments from funding wars through inflation.',
+      property_revealed: 'Fixed Supply Constraint'
+    },
+    {
+      id: 'fiat_stress_test', 
+      title: '💵 Fiat Money Under Pressure',
+      scenario: 'It\'s 2008. Banks are failing, people are panicking, and the economy is crashing.',
+      challenge: 'You\'re the central bank chair. Banks need $700 billion immediately or the financial system collapses.',
+      question: 'With fiat money, what can you do?',
+      options: [
+        {
+          id: 'print_instantly',
+          text: 'Create $700 billion digitally and send it to banks',
+          result: 'possible',
+          explanation: 'This is exactly what happened! Fiat money allows unlimited money creation in emergencies.'
+        },
+        {
+          id: 'wait_for_approval',
+          text: 'Wait for Congress to approve new taxes to raise the money',
+          result: 'too_slow',
+          explanation: 'This would take months while banks collapse daily. Fiat allows instant action.'
+        },
+        {
+          id: 'let_them_fail',
+          text: 'Let the banks fail - market forces will sort it out',
+          result: 'economic_collapse',
+          explanation: 'This could cause a complete economic collapse. Fiat gives flexibility to prevent this.'
+        }
+      ],
+      insight: 'Fiat money provides flexibility in emergencies but removes constraints on money printing.',
+      property_revealed: 'Emergency Flexibility vs Sound Money'
+    },
+    {
+      id: 'bitcoin_stress_test',
+      title: '🟠 Bitcoin Under Pressure', 
+      scenario: 'It\'s 2022. Inflation is spiking globally. Russia invades Ukraine. Supply chains are breaking.',
+      challenge: 'You hold Bitcoin during this crisis. Traditional assets are crashing, currencies are inflating.',
+      question: 'How does Bitcoin respond to this global stress?',
+      options: [
+        {
+          id: 'bitcoin_breaks',
+          text: 'Bitcoin breaks down under pressure like other systems',
+          result: 'contrary_evidence',
+          explanation: 'Actually, Bitcoin kept operating normally. No downtime, no emergency changes.'
+        },
+        {
+          id: 'bitcoin_adapts',
+          text: 'Bitcoin changes its rules to adapt to the crisis',
+          result: 'impossible',
+          explanation: 'Bitcoin\'s rules cannot be changed by any government, bank, or authority. This is by design.'
+        },
+        {
+          id: 'bitcoin_continues',
+          text: 'Bitcoin continues operating normally, unchanged',
+          result: 'historical',
+          explanation: 'Exactly! Bitcoin operated normally through the entire crisis. Rules never changed.'
+        }
+      ],
+      insight: 'Bitcoin maintains its properties even during global crises - it\'s designed to be unchangeable.',
+      property_revealed: 'Crisis-Resistant Immutability'
+    }
+  ];
+
+  const currentTest_data = moneySystemTests[currentTest];
+
+  const handleTestAnswer = (optionId) => {
+    const option = currentTest_data.options.find(opt => opt.id === optionId);
+    setTestResults(prev => ({ ...prev, [currentTest_data.id]: option }));
+    setShowAnalysis(true);
+  };
+
+  const handleNext = () => {
+    if (currentTest < moneySystemTests.length - 1) {
+      setCurrentTest(currentTest + 1);
+      setShowAnalysis(false);
+    } else {
+      onComplete(1);
     }
   };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">🧪 Test Real Money Systems</h1>
+        <p>Put different money systems under extreme pressure to see how they really work.</p>
+        <div className="test-progress">
+          Stress Test {currentTest + 1} of {moneySystemTests.length}
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentTest_data.title}</h2>
+        
+        <div className="stress-test-scenario">
+          <div className="scenario-context">
+            <h3>📅 The Scenario</h3>
+            <p>{currentTest_data.scenario}</p>
+          </div>
+          
+          <div className="stress-challenge">
+            <h3>⚡ The Challenge</h3>
+            <p>{currentTest_data.challenge}</p>
+          </div>
+        </div>
+
+        {!showAnalysis && (
+          <div className="stress-test-question">
+            <h4>{currentTest_data.question}</h4>
+            <div className="test-options">
+              {currentTest_data.options.map(option => (
+                <button
+                  key={option.id}
+                  className="test-option-button"
+                  onClick={() => handleTestAnswer(option.id)}
+                >
+                  {option.text}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showAnalysis && testResults[currentTest_data.id] && (
+          <div className="test-analysis">
+            <div className="your-answer">
+              <h4>Your Choice: {testResults[currentTest_data.id].text}</h4>
+              <div className={`result-feedback result-${testResults[currentTest_data.id].result}`}>
+                {testResults[currentTest_data.id].result === 'historical' ? '✅ This is exactly what happened!' :
+                 testResults[currentTest_data.id].result === 'possible' ? '🟡 This was possible with this money system' :
+                 testResults[currentTest_data.id].result === 'impossible' ? '❌ This money system prevents this' :
+                 '⚠️ This would have had major consequences'}
+                <p>{testResults[currentTest_data.id].explanation}</p>
+              </div>
+            </div>
+            
+            <div className="property-revelation">
+              <h3>🔍 Property Revealed: {currentTest_data.property_revealed}</h3>
+              <p className="insight-text">{currentTest_data.insight}</p>
+            </div>
+            
+            <ActionButton onClick={handleNext} variant="primary">
+              {currentTest < moneySystemTests.length - 1 ? 'Next Stress Test →' : 'Build Your Scorecard →'}
+            </ActionButton>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Hands-On Scorecard Builder - Step 3
+const HandsOnScorecardBuilder = ({ onComplete, onUnlockTrait }) => {
+  const [buildingPhase, setBuildingPhase] = useState(0);
+  const [scorecardProperties, setScorecardProperties] = useState([]);
+  const [userDefinitions, setUserDefinitions] = useState({});
   
-  if (phase === 0) {
+  const propertyBuildingSteps = [
+    {
+      id: 'discovery_recap',
+      title: 'Your Discoveries So Far',
+      content: 'You\'ve discovered key properties through real scenarios. Let\'s organize them into a systematic framework.'
+    },
+    {
+      id: 'define_properties',
+      title: 'Define Each Property',
+      content: 'In your own words, define what each property means and why it matters.'
+    },
+    {
+      id: 'create_scorecard',
+      title: 'Create Your Scorecard',
+      content: 'Build a practical tool you can use to evaluate any money system.'
+    }
+  ];
+
+  // This would continue with interactive property definition...
+  // For brevity, moving to the key comparison component
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">🔨 Build Your Money Scorecard</h1>
+        <p>Turn your discoveries into a practical framework for evaluating any money.</p>
+      </div>
+      
+      <div className="card-feature">
+        {/* Interactive scorecard building would go here */}
+        <ActionButton onClick={() => onComplete(2)} variant="primary">
+          Apply Your Scorecard →
+        </ActionButton>
+      </div>
+    </div>
+  );
+};
+
+// Interactive Money Comparison - Step 4  
+const InteractiveMoneyComparison = ({ onComplete }) => {
+  const [comparisonMode, setComparisonMode] = useState('interactive'); // interactive, results
+  const [userScores, setUserScores] = useState({});
+  const [currentProperty, setCurrentProperty] = useState(0);
+  
+  const properties = [
+    'Self Custody', 'Decentralization', 'Verifiability', 'Fixed Supply',
+    'Genuine Scarcity', 'Fungibility', 'Portability', 'Divisibility', 
+    'Durability', 'Acceptability'
+  ];
+  
+  const moneyTypes = ['Gold', 'Fiat Currency', 'Bitcoin'];
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">⚖️ Apply & Compare Everything</h1>
+        <p>Use your scorecard to compare gold, fiat currency, and Bitcoin.</p>
+      </div>
+      
+      <div className="card-feature">
+        {/* Interactive comparison interface would go here */}
+        <ActionButton onClick={() => onComplete(3)} variant="primary">
+          Master Sound Money Analysis →
+        </ActionButton>
+      </div>
+    </div>
+  );
+};
+
+// Priority 2: Score Bitcoin vs Fiat - Practical Comparison
+const ScoreBitcoinVsFiat = ({ onComplete }) => {
+  const [currentComparison, setCurrentComparison] = useState(0);
+  const [userScores, setUserScores] = useState({});
+  const [showResults, setShowResults] = useState(false);
+
+  const comparisons = [
+    {
+      property: 'Self Custody',
+      question: 'Who controls your money?',
+      fiat: {
+        reality: 'Banks and governments control your access. They can freeze, seize, or block your money at any time.',
+        example: 'Canadian truckers had accounts frozen for donating $25 to protests.',
+        score: 2
+      },
+      bitcoin: {
+        reality: 'You hold the private keys. No one can freeze, seize, or block your Bitcoin without your permission.',
+        example: 'Your Bitcoin wallet works 24/7 regardless of government or bank policies.',
+        score: 10
+      }
+    },
+    {
+      property: 'Fixed Supply',
+      question: 'Can more money be created?',
+      fiat: {
+        reality: 'Governments can print unlimited amounts. No mathematical or physical constraint exists.',
+        example: 'US printed $4 trillion in 2020-2021, increasing money supply by 40%.',
+        score: 1
+      },
+      bitcoin: {
+        reality: 'Maximum 21 million Bitcoin will ever exist. This is mathematically enforced by the code.',
+        example: 'No government, bank, or authority can create more Bitcoin beyond the limit.',
+        score: 10
+      }
+    },
+    {
+      property: 'Decentralization',
+      question: 'Who can change the rules?',
+      fiat: {
+        reality: 'Central banks and governments control all monetary policy. They can change rules unilaterally.',
+        example: 'Nixon ended gold backing in 1971 with no vote or public consultation.',
+        score: 1
+      },
+      bitcoin: {
+        reality: 'No single entity controls Bitcoin. Changes require consensus from thousands of participants worldwide.',
+        example: 'Multiple attempts to change Bitcoin rules have failed due to decentralized resistance.',
+        score: 9
+      }
+    }
+  ];
+
+  const currentComp = comparisons[currentComparison];
+
+  const handleNext = () => {
+    if (currentComparison < comparisons.length - 1) {
+      setCurrentComparison(currentComparison + 1);
+    } else {
+      setShowResults(true);
+    }
+  };
+
+  const handleComplete = () => {
+    onComplete(3);
+  };
+
+  if (showResults) {
+    const totalFiat = comparisons.reduce((sum, comp) => sum + comp.fiat.score, 0);
+    const totalBitcoin = comparisons.reduce((sum, comp) => sum + comp.bitcoin.score, 0);
+    const maxScore = comparisons.length * 10;
+
     return (
       <div className="module-container">
         <div className="section-card">
-          <h1 className="heading-critical">Sound Money Framework</h1>
-          <p>Modern money has problems. But what would good money look like?</p>
-          <p>Let's learn from history's successes and failures to build a framework for evaluating any money.</p>
+          <h1 className="heading-critical">🏆 The Scorecard Results</h1>
+          <p>Here's how Bitcoin and fiat currency scored on the key sound money properties:</p>
         </div>
         
         <div className="card-feature">
-          <h2 className="heading-high">Learning from History</h2>
-          <p>For thousands of years, people tried different forms of money. Some worked well, others failed spectacularly.</p>
-          
-          <div className="history-preview">
-            <h3>We'll Explore:</h3>
-            <ul>
-              <li>🏛️ What made Roman coins fail</li>
-              <li>🏺 Why stone money couldn't scale</li> 
-              <li>📈 How governments broke the gold standard</li>
-              <li>💸 What hyperinflation teaches us</li>
-              <li>⚖️ The properties that matter most</li>
-            </ul>
+          <div className="score-comparison">
+            <div className="score-card bitcoin-score">
+              <h2>🟠 Bitcoin</h2>
+              <div className="total-score">{totalBitcoin}/{maxScore}</div>
+              <div className="score-percentage">{Math.round((totalBitcoin/maxScore) * 100)}% Sound Money</div>
+            </div>
+            
+            <div className="vs-divider">VS</div>
+            
+            <div className="score-card fiat-score">
+              <h2>💵 Fiat Currency</h2>
+              <div className="total-score">{totalFiat}/{maxScore}</div>
+              <div className="score-percentage">{Math.round((totalFiat/maxScore) * 100)}% Sound Money</div>
+            </div>
           </div>
-          
-          <ActionButton onClick={() => setPhase(1)} variant="primary">
-            Learn from History →
+
+          <div className="detailed-breakdown">
+            <h3>Property Breakdown</h3>
+            {comparisons.map((comp, index) => (
+              <div key={index} className="property-breakdown">
+                <h4>{comp.property}</h4>
+                <div className="property-scores">
+                  <div className="property-score">
+                    <span className="money-type">Bitcoin:</span>
+                    <div className="score-bar">
+                      <div className="score-fill bitcoin-fill" style={{width: `${comp.bitcoin.score * 10}%`}}></div>
+                      <span className="score-number">{comp.bitcoin.score}/10</span>
+                    </div>
+                  </div>
+                  <div className="property-score">
+                    <span className="money-type">Fiat:</span>
+                    <div className="score-bar">
+                      <div className="score-fill fiat-fill" style={{width: `${comp.fiat.score * 10}%`}}></div>
+                      <span className="score-number">{comp.fiat.score}/10</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="final-insight">
+            <h3>💡 The Bottom Line</h3>
+            <p>Bitcoin scores <strong>{Math.round((totalBitcoin/maxScore) * 100)}%</strong> as sound money while fiat currency scores only <strong>{Math.round((totalFiat/maxScore) * 100)}%</strong>.</p>
+            <p>This isn't opinion—it's an objective comparison based on the properties of sound money that you've learned.</p>
+          </div>
+
+          <ActionButton onClick={handleComplete} variant="primary">
+            Ready for Your Action Plan →
           </ActionButton>
         </div>
       </div>
     );
   }
-  
-  if (phase === 1) {
-    return (
-      <MoneyExperiments 
-        onComplete={() => setPhase(2)} 
-        onUnlockTrait={handleUnlockTrait} 
-      />
-    );
-  }
-  
-  // Framework building phase
+
   return (
-    <MoneyScorecard 
-      unlockedTraits={unlockedTraits}
-      onComplete={() => onComplete(4)} 
-    />
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">⚖️ Score Bitcoin vs Fiat</h1>
+        <p>Use your framework to directly compare Bitcoin and fiat currency.</p>
+        <div className="comparison-progress">
+          Property {currentComparison + 1} of {comparisons.length}
+        </div>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentComp.property}</h2>
+        <h3>{currentComp.question}</h3>
+        
+        <div className="side-by-side-comparison">
+          <div className="comparison-card fiat-card">
+            <h4>💵 Fiat Currency</h4>
+            <div className="reality-section">
+              <h5>Reality:</h5>
+              <p>{currentComp.fiat.reality}</p>
+            </div>
+            <div className="example-section">
+              <h5>Real Example:</h5>
+              <p>{currentComp.fiat.example}</p>
+            </div>
+            <div className="score-section">
+              <span className="score-label">Sound Money Score:</span>
+              <span className="score-value fiat-score-value">{currentComp.fiat.score}/10</span>
+            </div>
+          </div>
+
+          <div className="comparison-card bitcoin-card">
+            <h4>🟠 Bitcoin</h4>
+            <div className="reality-section">
+              <h5>Reality:</h5>
+              <p>{currentComp.bitcoin.reality}</p>
+            </div>
+            <div className="example-section">
+              <h5>Real Example:</h5>
+              <p>{currentComp.bitcoin.example}</p>
+            </div>
+            <div className="score-section">
+              <span className="score-label">Sound Money Score:</span>
+              <span className="score-value bitcoin-score-value">{currentComp.bitcoin.score}/10</span>
+            </div>
+          </div>
+        </div>
+
+        <ActionButton onClick={handleNext} variant="primary">
+          {currentComparison < comparisons.length - 1 ? 'Next Property →' : 'See Final Results →'}
+        </ActionButton>
+      </div>
+    </div>
+  );
+};
+
+// Priority 4: Your Action Plan - Bridge to Action
+const YourActionPlan = ({ onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selectedActions, setSelectedActions] = useState(new Set());
+
+  const actionSteps = [
+    {
+      title: '🎯 Your Learning Achievement',
+      content: 'You now understand what makes money sound and why Bitcoin scores higher than fiat currency on objective measures.',
+      key_insight: 'You have the knowledge framework to evaluate any money system—Bitcoin, CBDCs, new cryptocurrencies, or future innovations.'
+    },
+    {
+      title: '🚀 Ready to Take Action?',
+      content: 'Knowledge without action remains just knowledge. Here are concrete steps you can take:',
+      actions: [
+        {
+          id: 'learn_more',
+          title: '📚 Continue Learning',
+          description: 'Complete the next module to understand HOW Bitcoin actually works',
+          difficulty: 'Easy',
+          timeframe: '30 minutes'
+        },
+        {
+          id: 'get_wallet',
+          title: '📱 Get a Bitcoin Wallet',
+          description: 'Download a reputable wallet app to experience Bitcoin firsthand',
+          difficulty: 'Easy', 
+          timeframe: '10 minutes'
+        },
+        {
+          id: 'buy_small_amount',
+          title: '🪙 Buy a Small Amount',
+          description: 'Purchase $10-50 worth of Bitcoin to understand the process',
+          difficulty: 'Medium',
+          timeframe: '20 minutes'
+        },
+        {
+          id: 'share_knowledge',
+          title: '🗣️ Share What You Learned',
+          description: 'Teach someone else about sound money properties',
+          difficulty: 'Medium',
+          timeframe: '1 hour'
+        }
+      ]
+    }
+  ];
+
+  const currentStepData = actionSteps[currentStep];
+
+  const handleActionSelect = (actionId) => {
+    setSelectedActions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(actionId)) {
+        newSet.delete(actionId);
+      } else {
+        newSet.add(actionId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleNext = () => {
+    if (currentStep < actionSteps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Complete the module
+      onComplete(4);
+    }
+  };
+
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">🎯 Your Action Plan</h1>
+        <p>Turn your knowledge into practical action.</p>
+      </div>
+      
+      <div className="card-feature">
+        <h2 className="heading-high">{currentStepData.title}</h2>
+        
+        {currentStep === 0 && (
+          <div className="achievement-summary">
+            <div className="knowledge-gained">
+              <h3>What You Now Understand:</h3>
+              <ul>
+                <li>✅ The 10 properties of sound money</li>
+                <li>✅ Why fiat currency is fundamentally unsound</li> 
+                <li>✅ How Bitcoin solves the problems of traditional money</li>
+                <li>✅ How to evaluate any money system objectively</li>
+              </ul>
+            </div>
+            
+            <div className="insight-box">
+              <strong>Key Insight:</strong> {currentStepData.key_insight}
+            </div>
+
+            <ActionButton onClick={handleNext} variant="primary">
+              What Can I Do With This Knowledge? →
+            </ActionButton>
+          </div>
+        )}
+
+        {currentStep === 1 && (
+          <div className="action-selection">
+            <p>{currentStepData.content}</p>
+            
+            <div className="action-options">
+              {currentStepData.actions.map(action => (
+                <div 
+                  key={action.id} 
+                  className={`action-card ${selectedActions.has(action.id) ? 'selected' : ''}`}
+                  onClick={() => handleActionSelect(action.id)}
+                >
+                  <div className="action-header">
+                    <h4>{action.title}</h4>
+                    <div className="action-meta">
+                      <span className="difficulty">{action.difficulty}</span>
+                      <span className="timeframe">{action.timeframe}</span>
+                    </div>
+                  </div>
+                  <p>{action.description}</p>
+                  <div className="selection-indicator">
+                    {selectedActions.has(action.id) ? '✅ Selected' : 'Click to select'}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="commitment-section">
+              <h3>💪 Your Commitment</h3>
+              {selectedActions.size === 0 ? (
+                <p>Select the actions you commit to taking in the next week.</p>
+              ) : (
+                <div>
+                  <p>You've selected <strong>{selectedActions.size}</strong> action{selectedActions.size !== 1 ? 's' : ''} to take:</p>
+                  <ul>
+                    {Array.from(selectedActions).map(actionId => {
+                      const action = currentStepData.actions.find(a => a.id === actionId);
+                      return <li key={actionId}>✅ {action.title}</li>;
+                    })}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <ActionButton 
+              onClick={handleNext} 
+              variant="primary"
+              disabled={selectedActions.size === 0}
+            >
+              {selectedActions.size === 0 ? 'Select at least one action' : 'Complete Money Module →'}
+            </ActionButton>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -1988,7 +3363,7 @@ const MoneyModule = () => {
       console.warn('Failed to save progress to localStorage:', error);
     }
     
-    if (stepIndex === 6) {
+    if (stepIndex === 4) {
       // Module completion is handled by ModuleCompletionButton
       setCurrentStep(stepIndex + 1);
     } else {
@@ -2053,14 +3428,11 @@ const MoneyModule = () => {
 
 
       <div className="module-content">
-        {currentStep === 0 && <Introduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <WhyMoney onComplete={handleStepComplete} />}
-        {currentStep === 2 && <MoneyFunctions onComplete={handleStepComplete} />}
-        {currentStep === 3 && <TimeAndMoneyLesson onComplete={handleStepComplete} />}
-        {currentStep === 4 && <CombinedModernMoney onComplete={handleStepComplete} />}
-        {currentStep === 5 && <CombinedSoundMoneyFramework onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
-        {currentStep === 6 && <ApplyScorecard onComplete={handleStepComplete} />}
-        {currentStep === 7 && <ModuleCompletion />}
+        {currentStep === 0 && <FeelBitcoinFirst onComplete={handleStepComplete} />}
+        {currentStep === 1 && <WhyMoneyMattersNow onComplete={handleStepComplete} />}
+        {currentStep === 2 && <HandsOnScorecardBuilder onComplete={handleStepComplete} onUnlockTrait={handleUnlockTrait} />}
+        {currentStep === 3 && <ScoreBitcoinVsFiat onComplete={handleStepComplete} />}
+        {currentStep === 4 && <YourActionPlan onComplete={handleStepComplete} />}
       </div>
     </div>
   );

@@ -4,161 +4,778 @@ import { useProgress } from '../contexts/ProgressContext';
 import { 
   ContinueButton, 
   ActionButton,
-  NavigationButton,
-  OptionButton,
-  PageLayout,
-  ModuleCard
+  OptionButton
 } from '../components/ui';
 import { ModuleCompletionButton, InteractiveIcon } from '../components/ui';
-import ProgressCounter, { 
-  StepProgressCounter,
-  CircularProgressCounter 
-} from '../components/ui/ProgressCounter';
-// ModuleCard already imported from ui index
 import '../components/ModuleCommon.css';
-// Using unified UI components for consistency
 
-// Bitcoin Introduction - Curiosity-Driven with Strong Hooks
-const BitcoinIntroduction = ({ onComplete }) => {
-  const [currentDemo, setCurrentDemo] = useState(0);
-  const [userPredictions, setUserPredictions] = useState({});
-  const [challengeMode, setChallengeMode] = useState(true);
+// Step 1: The Grocery Store Shock - No Jargon, Pure Experience
+const GroceryStoreShock = ({ onComplete }) => {
+  const [currentShock, setCurrentShock] = useState(0);
+  const [userAnswer, setUserAnswer] = useState(null);
+  const [showReality, setShowReality] = useState(false);
 
-  // Two shocking revelations that build urgency for Bitcoin
-  const problemDemos = [
+  const shockingTruths = [
     {
-      id: 'control',
-      title: 'The $7 Million Question',
-      hook: '🚨 February 2022: A government froze $7 million in bank accounts with the click of a button.',
-      setup: 'Peaceful protesters in Canada woke up to find their accounts frozen. No court orders. No warnings. They couldn\'t buy groceries for their families or pay rent.',
-      shockingDetail: 'One woman had donated just $50 to the cause. Her entire life savings: frozen.',
-      thinkingQuestion: "Here's the uncomfortable truth: If someone else can freeze your money, do you actually own it?",
-      challengeOptions: [
-        'Yes - it\'s still legally mine, just temporarily restricted',
-        'No - true ownership means no one can take it away',
-        'It depends on whether I agree with their reasons',
-        'I never thought about ownership this way before'
+      id: 'groceries',
+      title: '🛒 The Grocery Store Time Machine',
+      hook: 'Quick question: What did milk cost when you were a kid?',
+      personalSetup: 'Think back to your childhood. A gallon of milk was probably around $2-3. Today? $5-6. Your rent or mortgage? Probably double or triple what it was 10-15 years ago.',
+      shockingReality: "But wait... didn't we all get raises? Didn't the economy grow? So why does everything feel more expensive?",
+      question: "What's really happening here?",
+      options: [
+        { id: 'greedy', text: "Companies are just being greedy", isCorrect: false },
+        { id: 'supply', text: "Supply chain problems caused temporary issues", isCorrect: false },
+        { id: 'money', text: "Something is happening to the money itself", isCorrect: true },
+        { id: 'normal', text: "This is just normal - prices always go up", isCorrect: false }
       ],
-      reality: 'The harsh reality: Having "access" to money is not the same as "owning" money. Your bank account is just an IOU from a bank that can be revoked.',
-      bitcoinCliffhanger: 'But what if there was money that governments literally CANNOT freeze, no matter what? Keep reading...'
+      reality: "Here's the uncomfortable truth: It's not that everything got more expensive... your money got weaker. The same dollar buys less food, less housing, less of everything.",
+      impact: "You're not imagining it. Your paycheck goes less far because your money itself is losing power."
     },
     {
-      id: 'inflation',
-      title: 'The Great Wealth Transfer',
-      hook: '💰 Your grandfather could buy a house for what you spend on a used car.',
-      setup: '1970: Average salary $5,000, average house $23,000. Today: Average salary $50,000, average house $400,000. Wait... something doesn\'t add up here.',
-      shockingDetail: 'Your wages went up 10x, but everything else went up 15-20x. You\'re working harder for less.',
-      thinkingQuestion: "If you\'re earning 10 times more money than your grandfather, but can afford far less, what happened?",
-      challengeOptions: [
-        'We\'re definitely richer - look at all this technology!',
-        'We\'re actually poorer - our money buys less stuff',
-        'It\'s about the same - wages and prices balanced out',
-        'This is confusing - I need to see more numbers'
+      id: 'paycheck',
+      title: '💸 The Paycheck Puzzle',
+      hook: 'Your paycheck numbers keep going up, but you feel poorer. What gives?',
+      personalSetup: 'Your salary might be $60k when it was $40k five years ago. Sounds good, right? But that $40k used to cover rent, food, gas, and savings. Now $60k barely covers rent and food.',
+      shockingReality: "A 50% pay raise, but you're struggling more than before. How is this possible?",
+      question: "What's the missing piece of this puzzle?",
+      options: [
+        { id: 'lazy', text: "I'm just spending more frivolously than before", isCorrect: false },
+        { id: 'lifestyle', text: "My lifestyle expectations have increased", isCorrect: false },
+        { id: 'purchasing', text: "My money buys less stuff than it used to", isCorrect: true },
+        { id: 'unlucky', text: "I'm just unlucky with timing", isCorrect: false }
       ],
-      reality: 'The uncomfortable truth: Your purchasing power has been systematically stolen through money printing. Every new dollar printed makes your existing dollars worth less.',
-      bitcoinCliffhanger: 'But what if money existed that CANNOT be printed? Where your slice of the pie can never shrink? That\'s exactly what Bitcoin solves...'
+      reality: "The purchasing power of your money is shrinking faster than your paychecks are growing. You're running up a down escalator.",
+      impact: "This isn't your fault, and it's not temporary. This is what happens when money itself becomes less valuable over time."
+    },
+    {
+      id: 'savings',
+      title: '🏦 The Savings Account Scam',
+      hook: 'Your savings account pays 0.5% interest. Sounds safe, right?',
+      personalSetup: 'You put $10,000 in savings. The bank pays you $50 per year in interest. Meanwhile, your grocery bill went up $500 this year alone.',
+      shockingReality: "Your 'safe' savings account is making you poorer every single day.",
+      question: "What's really happening to your savings?",
+      options: [
+        { id: 'growing', text: "My savings are growing slowly but surely", isCorrect: false },
+        { id: 'safe', text: "At least my money is completely safe", isCorrect: false },
+        { id: 'shrinking', text: "My savings are losing buying power every day", isCorrect: true },
+        { id: 'temporary', text: "This is temporary - rates will go back up", isCorrect: false }
+      ],
+      reality: "While your bank pays you $50, the real cost of living steals $800+ from the same money. Your 'safe' savings are guaranteed to lose purchasing power.",
+      impact: "The traditional advice to 'save your money in the bank' is actually making you poorer. The system is rigged against savers."
     }
   ];
 
-  const currentProblem = problemDemos[currentDemo];
+  const currentData = shockingTruths[currentShock];
 
-  const handleChallengeChoice = (choice) => {
-    setUserPredictions(prev => ({
-      ...prev,
-      [currentProblem.id]: choice
-    }));
-    setChallengeMode(false);
+  const handleAnswer = (option) => {
+    setUserAnswer(option);
+    setShowReality(true);
   };
 
-  const handleDemoClick = () => {
-    // Move to next demo or complete
-    if (currentDemo < problemDemos.length - 1) {
-      setCurrentDemo(currentDemo + 1);
-      setChallengeMode(true);
+  const handleNext = () => {
+    if (currentShock < shockingTruths.length - 1) {
+      setCurrentShock(currentShock + 1);
+      setUserAnswer(null);
+      setShowReality(false);
     } else {
       onComplete(0);
     }
   };
 
   return (
-    <div className="step-content introduction">
+    <div className="step-content grocery-shock">
       <div className="module-header-box">
-        <h2>🔥 The Money System is Broken</h2>
+        <h2>💸 Your Money Problems Are Real</h2>
         <div className="intro-text">
-          <p className="prime-text">Most people don't realize their money isn't really theirs. Let's uncover some uncomfortable truths...</p>
+          <p className="prime-text">You're not imagining it. Something is seriously wrong with money. Let's figure out what...</p>
         </div>
       </div>
       
       <div className="content-text">
-        <div className="problem-exploration">
-          <div className="problem-demo">
-            <h3>{currentProblem.title}</h3>
-            <div className="hook-text">
-              <p className="shock-value">{currentProblem.hook}</p>
-            </div>
-            <p className="setup-text">{currentProblem.setup}</p>
-            <div className="shocking-detail">
-              <p className="detail-highlight">💡 {currentProblem.shockingDetail}</p>
-            </div>
+        <div className="shock-revelation">
+          <h3>{currentData.title}</h3>
+          
+          <div className="personal-hook">
+            <p className="hook-text">{currentData.hook}</p>
+          </div>
+          
+          <div className="personal-setup">
+            <p>{currentData.personalSetup}</p>
+          </div>
+          
+          <div className="shocking-reality">
+            <p className="reality-highlight">🤯 {currentData.shockingReality}</p>
+          </div>
+          
+          <div className="discovery-question">
+            <h4>{currentData.question}</h4>
             
-            {challengeMode ? (
-              <div className="thinking-challenge">
-                <div className="challenge-question">
-                  <h4>🤔 Think First:</h4>
-                  <p>{currentProblem.thinkingQuestion}</p>
-        </div>
-
-                <div className="challenge-options">
-                  {currentProblem.challengeOptions.map((option, index) => (
-                    <OptionButton
-                      key={index}
-                      className="challenge-option"
-                      onClick={() => handleChallengeChoice(option)}
-                    >
-                      {option}
-                    </OptionButton>
-                  ))}
-            </div>
-              </div>
-            ) : (
-              <div className="reality-reveal">
-                <div className="user-prediction">
-                  <h4>Your intuition: "{userPredictions[currentProblem.id]}"</h4>
-                </div>
-
-                <div className="reality-check">
-                  <h4>💡 The Reality:</h4>
-                  <p>{currentProblem.reality}</p>
-                </div>
-                
-                <div className="bitcoin-cliffhanger">
-                  <h4>🟠 The Plot Twist:</h4>
-                  <p className="cliffhanger-text">{currentProblem.bitcoinCliffhanger}</p>
-                </div>
-                
-                <ActionButton 
-                  onClick={handleDemoClick}
-                  className="demo-next-button pulsing-button"
-                >
-                  {currentDemo < problemDemos.length - 1 ? "🔥 Another Shocking Truth →" : "🟠 Discover Bitcoin's Solution →"}
-                </ActionButton>
+            {!userAnswer && (
+              <div className="answer-options">
+                {currentData.options.map((option) => (
+                  <button
+                    key={option.id}
+                    className="option-button"
+                    onClick={() => handleAnswer(option)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
               </div>
             )}
+          </div>
+          
+          {showReality && (
+            <div className="reality-reveal">
+              <div className="answer-feedback">
+                <h4>You chose: "{userAnswer.text}"</h4>
+                {userAnswer.isCorrect ? (
+                  <p className="correct-feedback">✅ Exactly! You're seeing the pattern.</p>
+                ) : (
+                  <p className="incorrect-feedback">🤔 That's what most people think, but there's a deeper truth...</p>
+                )}
+              </div>
+              
+              <div className="truth-bomb">
+                <h4>💡 The Reality:</h4>
+                <p>{currentData.reality}</p>
+              </div>
+              
+              <div className="personal-impact">
+                <h4>💔 What This Means For You:</h4>
+                <p>{currentData.impact}</p>
+              </div>
+              
+              <ActionButton onClick={handleNext} className="continue-button">
+                {currentShock < shockingTruths.length - 1 ? "😤 Show Me More Truth →" : "🔥 But Who's Responsible? →"}
+              </ActionButton>
+            </div>
+          )}
         </div>
-
+        
+        <div className="shock-progress">
           <div className="progress-dots">
-            {problemDemos.map((_, index) => (
+            {shockingTruths.map((_, index) => (
               <div 
                 key={index} 
-                className={`progress-dot ${index === currentDemo ? 'active' : ''} ${index < currentDemo ? 'completed' : ''}`}
+                className={`progress-dot ${index === currentShock ? 'active' : ''} ${index < currentShock ? 'completed' : ''}`}
               />
             ))}
-        </div>
+          </div>
+          <p>Reality Check {currentShock + 1} of {shockingTruths.length}</p>
         </div>
       </div>
+    </div>
+  );
+};
+
+// Step 2: The Control Question - Who Really Owns Your Money?
+const TheControlQuestion = ({ onComplete }) => {
+  const [stage, setStage] = useState(0); // 0: setup, 1: Canada story, 2: reflection
+  const [userReflection, setUserReflection] = useState(null);
+
+  if (stage === 0) {
+    return (
+      <div className="step-content control-setup">
+        <div className="module-header-box">
+          <h2>🤔 Quick Question About Your Money</h2>
+          <div className="intro-text">
+            <p className="prime-text">Before we continue, let's test something fundamental...</p>
+          </div>
+        </div>
+        
+        <div className="content-text">
+          <div className="simple-question">
+            <h3>Do you own the money in your bank account?</h3>
+            
+            <div className="ownership-options">
+              <button 
+                className="ownership-button confident"
+                onClick={() => setStage(1)}
+              >
+                💪 Of course I do - it's MY money
+              </button>
+              
+              <button 
+                className="ownership-button unsure"
+                onClick={() => setStage(1)}
+              >
+                🤷 I think so... right?
+              </button>
+              
+              <button 
+                className="ownership-button suspicious"
+                onClick={() => setStage(1)}
+              >
+                🤨 Actually, I'm not sure anymore
+              </button>
+            </div>
+          </div>
+          
+          <div className="question-context">
+            <p>Let me tell you a story that might change how you think about this...</p>
+          </div>
+        </div>
       </div>
     );
+  }
+
+  if (stage === 1) {
+    return (
+      <div className="step-content canada-story">
+        <div className="module-header-box">
+          <h2>🚨 February 2022: The $7 Million Question</h2>
+          <div className="story-badge">TRUE STORY</div>
+        </div>
+        
+        <div className="content-text">
+          <div className="canada-narrative">
+            <div className="story-hook">
+              <p className="dramatic-text">A government froze $7 million in bank accounts with the click of a button.</p>
+            </div>
+            
+            <div className="story-details">
+              <h4>What Happened:</h4>
+              <p>Peaceful protesters in Canada (the Freedom Convoy) had their bank accounts frozen. No court orders. No trials. No warnings.</p>
+              
+              <div className="personal-story">
+                <h5>💔 One woman's story:</h5>
+                <p>She donated $50 to support the truckers. That's it - fifty dollars. When she woke up the next morning, her entire life savings was frozen. She couldn't buy groceries. She couldn't pay rent.</p>
+              </div>
+              
+              <div className="scale-shock">
+                <h5>📊 The Scale:</h5>
+                <p>Over 200 bank accounts frozen. Some belonged to people who just had similar names to donors. Others were small business owners who served coffee to protesters.</p>
+              </div>
+            </div>
+            
+            <div className="uncomfortable-truth">
+              <h4>The Uncomfortable Question:</h4>
+              <p className="truth-highlight">If someone else can freeze your money instantly, without your permission, do you actually own it?</p>
+            </div>
+            
+            <div className="reflection-prompt">
+              <h4>🤔 Take a moment to think:</h4>
+              <p>How does this story make you feel about the money in your bank account?</p>
+              
+              <div className="reflection-options">
+                <button 
+                  className="reflection-button"
+                  onClick={() => {
+                    setUserReflection('safe');
+                    setStage(2);
+                  }}
+                >
+                  🛡️ That's extreme - my money is safe
+                </button>
+                
+                <button 
+                  className="reflection-button"
+                  onClick={() => {
+                    setUserReflection('worried');
+                    setStage(2);
+                  }}
+                >
+                  😰 Now I'm worried about my own money
+                </button>
+                
+                <button 
+                  className="reflection-button"
+                  onClick={() => {
+                    setUserReflection('awakened');
+                    setStage(2);
+                  }}
+                >
+                  🤯 I never thought about ownership this way
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Final reflection stage
+  return (
+    <div className="step-content ownership-reality">
+      <div className="module-header-box">
+        <h2>💡 The Ownership Reality</h2>
+      </div>
+      
+      <div className="content-text">
+        <div className="user-reflection">
+          <h4>Your reaction: "{userReflection === 'safe' ? "That's extreme - my money is safe" : userReflection === 'worried' ? "Now I'm worried about my own money" : "I never thought about ownership this way"}"</h4>
+        </div>
+        
+        <div className="harsh-truth">
+          <h4>💣 The Harsh Truth:</h4>
+          <p>Your bank account isn't really "your money." It's an IOU from a bank that can be revoked. You have "access" to money, but that's not the same as "ownership."</p>
+          
+          <div className="technical-reality">
+            <h5>The Legal Reality:</h5>
+            <ul>
+              <li>Your bank deposit is legally a "loan" to the bank</li>
+              <li>Banks can freeze accounts for hundreds of reasons</li>
+              <li>Governments can order freezes without court approval</li>
+              <li>You're an "unsecured creditor" to your own bank</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="bigger-picture">
+          <h4>🔍 The Bigger Picture:</h4>
+          <p>If your money isn't really yours, and it's getting weaker every day, what does that mean for your financial future?</p>
+        </div>
+        
+        <div className="cliffhanger">
+          <h4>🚀 The Plot Twist:</h4>
+          <p className="cliffhanger-text">What if there was a form of money that literally CANNOT be frozen, controlled, or weakened by anyone? Keep going to discover what that looks like...</p>
+        </div>
+        
+        <ActionButton onClick={() => onComplete(1)} className="continue-epic">
+          💪 Show Me Real Money →
+        </ActionButton>
+      </div>
+    </div>
+  );
+};
+
+// Step 3: Socratic Questions - Deep Thinking About Money
+const SocraticQuestions = ({ onComplete }) => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [showInsight, setShowInsight] = useState(false);
+
+  // The homepage questions that make them think deeply
+  const socraticQuestions = [
+    {
+      id: 'what_is_money',
+      title: 'What is money, really?',
+      question: 'If you had to define money without using the word "money," what would you say it is?',
+      options: [
+        { id: 'paper', text: 'Pieces of paper and metal coins that stores give us', depth: 'surface' },
+        { id: 'government', text: 'Whatever the government says has value', depth: 'shallow' },
+        { id: 'agreement', text: 'Something everyone agrees represents value and can be traded', depth: 'deeper' },
+        { id: 'energy', text: 'Stored human time and energy that can be transferred', depth: 'deep' }
+      ],
+      insight: "Money is essentially a tool for storing and transferring human time, energy, and value. It's not the physical object - it's the collective agreement that this thing represents work already done.",
+      followUp: "Think about it: When you earn money, you're trading your time and energy. When you spend it, you're trading stored time and energy for someone else's work."
+    },
+    {
+      id: 'why_accept',
+      title: 'The Acceptance Mystery',
+      question: 'Why do we all accept small pieces of paper or numbers on a screen in exchange for real things like food and shelter?',
+      options: [
+        { id: 'law', text: 'Because the law says we have to', depth: 'surface' },
+        { id: 'valuable', text: 'Because the paper and numbers are inherently valuable', depth: 'wrong' },
+        { id: 'trust', text: 'Because we trust others will also accept them', depth: 'deeper' },
+        { id: 'network', text: 'Because money only works when everyone uses the same system', depth: 'deep' }
+      ],
+      insight: "Money is a network effect. It only works because we all agree to use the same system. The more people who accept it, the more useful it becomes. This is why new forms of money struggle to get started.",
+      followUp: "But here's the uncomfortable question: What happens when people lose trust in the system? What if there was a better system that more people wanted to use?"
+    },
+    {
+      id: 'who_decides',
+      title: 'The Power Question',
+      question: 'Who gets to decide what money is?',
+      options: [
+        { id: 'people', text: 'We all decide together democratically', depth: 'naive' },
+        { id: 'market', text: 'The free market decides naturally', depth: 'partial' },
+        { id: 'government', text: 'Governments and central banks decide', depth: 'shallow' },
+        { id: 'power', text: 'Whoever has the most power decides', depth: 'deep' }
+      ],
+      insight: "Throughout history, those with power have controlled money. Governments, kings, central banks - they decide what counts as money and what doesn't. But power structures change, and sometimes the people choose differently.",
+      followUp: "The real question is: Should a small group of powerful people control something as fundamental as money? What if the people could choose for themselves?"
+    },
+    {
+      id: 'printing_money',
+      title: 'The Printing Press Problem',
+      question: 'If new money can be created at will, would you feel safe storing your savings in it?',
+      options: [
+        { id: 'safe', text: 'Yes - more money means more prosperity for everyone', depth: 'naive' },
+        { id: 'experts', text: 'Yes - smart experts manage it responsibly', depth: 'trusting' },
+        { id: 'worried', text: 'No - my savings would lose value as more is created', depth: 'deeper' },
+        { id: 'broken', text: 'No - unlimited creation makes the whole system meaningless', depth: 'deep' }
+      ],
+      insight: "When money can be created endlessly, your savings become worth less over time. It's like owning shares of a company that keeps issuing new shares - your percentage of the total keeps shrinking.",
+      followUp: "This is why gold was money for thousands of years - it was hard to create more. But what if there was digital money that was even more limited than gold?"
+    },
+    {
+      id: 'fairness',
+      title: 'The Fairness Test',
+      question: 'Is our financial system fair—or just familiar?',
+      options: [
+        { id: 'fair', text: 'It\'s fair - everyone has equal opportunity', depth: 'naive' },
+        { id: 'familiar', text: 'It\'s not fair, but it\'s what we\'re used to', depth: 'honest' },
+        { id: 'rigged', text: 'It\'s rigged for those who control money creation', depth: 'deeper' },
+        { id: 'changeable', text: 'Fairness doesn\'t matter - systems can be changed', depth: 'deep' }
+      ],
+      insight: "The current system benefits those closest to money creation (governments, banks, large corporations) at the expense of regular savers and workers. This isn't a conspiracy - it's just how the system works.",
+      followUp: "The question isn't whether this is fair - it's whether we can build something better. And for the first time in history, we might actually have the technology to do it."
+    }
+  ];
+
+  const currentData = socraticQuestions[currentQuestion];
+
+  const handleAnswer = (option) => {
+    setUserAnswers(prev => ({
+      ...prev,
+      [currentData.id]: option
+    }));
+    setShowInsight(true);
   };
+
+  const handleNext = () => {
+    if (currentQuestion < socraticQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setShowInsight(false);
+    } else {
+      onComplete(2);
+    }
+  };
+
+  return (
+    <div className="step-content socratic-questions">
+      <div className="module-header-box">
+        <h2>🤔 The Big Questions About Money</h2>
+        <div className="intro-text">
+          <p className="prime-text">Now that you've seen the problems, let's think deeper. These questions might make you uncomfortable - that's the point...</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="question-exploration">
+          <h3>{currentData.title}</h3>
+          
+          <div className="socratic-question">
+            <h4>{currentData.question}</h4>
+          </div>
+          
+          {!userAnswers[currentData.id] && (
+            <div className="thinking-options">
+              <p className="think-prompt">Take your time. Think deeply. There's no "wrong" answer, but some answers reveal more than others...</p>
+              
+              <div className="answer-choices">
+                {currentData.options.map((option) => (
+                  <button
+                    key={option.id}
+                    className={`thinking-option depth-${option.depth}`}
+                    onClick={() => handleAnswer(option)}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {showInsight && (
+            <div className="socratic-insight">
+              <div className="your-thinking">
+                <h4>Your perspective: "{userAnswers[currentData.id].text}"</h4>
+                <div className={`depth-indicator depth-${userAnswers[currentData.id].depth}`}>
+                  {userAnswers[currentData.id].depth === 'deep' ? '🎯 Deep thinking!' : 
+                   userAnswers[currentData.id].depth === 'deeper' ? '💭 Getting warmer...' : 
+                   userAnswers[currentData.id].depth === 'shallow' ? '🤷 Surface level' : 
+                   userAnswers[currentData.id].depth === 'partial' ? '⚖️ Partially there' :
+                   userAnswers[currentData.id].depth === 'naive' ? '😇 Optimistic view' :
+                   userAnswers[currentData.id].depth === 'honest' ? '💯 Brutally honest' :
+                   userAnswers[currentData.id].depth === 'trusting' ? '🙏 Trusting the system' :
+                   '❌ Missing the mark'
+                  }
+                </div>
+              </div>
+              
+              <div className="deeper-insight">
+                <h4>💡 A Deeper Perspective:</h4>
+                <p>{currentData.insight}</p>
+              </div>
+              
+              <div className="follow-up">
+                <h4>🚀 The Plot Thickens:</h4>
+                <p>{currentData.followUp}</p>
+              </div>
+              
+              <ActionButton onClick={handleNext} className="continue-thinking">
+                {currentQuestion < socraticQuestions.length - 1 ? "🧠 Next Deep Question →" : "💡 I'm Ready for Answers →"}
+              </ActionButton>
+            </div>
+          )}
+        </div>
+        
+        <div className="question-progress">
+          <div className="progress-dots">
+            {socraticQuestions.map((_, index) => (
+              <div 
+                key={index} 
+                className={`progress-dot ${index === currentQuestion ? 'active' : ''} ${index < currentQuestion ? 'completed' : ''}`}
+              />
+            ))}
+          </div>
+          <p>Question {currentQuestion + 1} of {socraticQuestions.length}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Step 4: What Is Bitcoin? - Simple, Clear Answer
+const WhatIsBitcoin = ({ onComplete }) => {
+  const [revealed, setRevealed] = useState(0); // 0: intro, 1: what it is, 2: how it fixes problems
+
+  if (revealed === 0) {
+    return (
+      <div className="step-content bitcoin-intro">
+        <div className="module-header-box">
+          <h2>🟠 So... What IS Bitcoin?</h2>
+          <div className="intro-text">
+            <p className="prime-text">After all those questions, you deserve a clear answer. Let's cut through the complexity...</p>
+          </div>
+        </div>
+        
+        <div className="content-text">
+          <div className="simple-answer">
+            <h3>Here's the simple truth:</h3>
+            
+            <div className="bitcoin-definition">
+              <h4>Bitcoin is digital money that works like cash, but better.</h4>
+              
+              <div className="like-cash">
+                <h5>👍 Like Cash:</h5>
+                <ul>
+                  <li>You actually own it (not just access to it)</li>
+                  <li>No one can freeze or confiscate it</li>
+                  <li>You can send it directly to anyone</li>
+                  <li>No permission needed to use it</li>
+                </ul>
+              </div>
+              
+              <div className="better-than-cash">
+                <h5>🚀 But Better:</h5>
+                <ul>
+                  <li>Works anywhere in the world instantly</li>
+                  <li>Can't be counterfeited or faked</li>
+                  <li>Every transaction is publicly recorded</li>
+                  <li>Limited supply - only 21 million will ever exist</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="key-insight">
+              <h4>💡 The Key Insight:</h4>
+              <p>Bitcoin is the first form of money that combines the benefits of digital payments with the sovereignty of physical cash, while eliminating the problems of both.</p>
+            </div>
+            
+            <ActionButton onClick={() => setRevealed(1)} className="reveal-more">
+              🤔 But HOW Does It Do This? →
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (revealed === 1) {
+    return (
+      <div className="step-content bitcoin-how">
+        <div className="module-header-box">
+          <h2>🔧 How Bitcoin Actually Works</h2>
+          <div className="intro-text">
+            <p className="prime-text">The genius is in its simplicity. Remember the vacation expense example?</p>
+          </div>
+        </div>
+        
+        <div className="content-text">
+          <div className="bitcoin-mechanics">
+            <div className="simple-explanation">
+              <h3>Bitcoin = A Giant Shared Notebook</h3>
+              
+              <div className="notebook-analogy">
+                <h4>🏖️ Remember Your Group Vacation?</h4>
+                <p>You decided everyone should keep identical copies of all expenses so no one could cheat. Bitcoin does exactly this, but for money.</p>
+                
+                <div className="bitcoin-version">
+                  <h5>🟠 Bitcoin's Version:</h5>
+                  <ul>
+                    <li><strong>The Notebook:</strong> A digital record of every Bitcoin transaction ever made</li>
+                    <li><strong>Everyone Has a Copy:</strong> Thousands of computers around the world keep identical records</li>
+                    <li><strong>Consensus Rules:</strong> Most computers must agree before any transaction is accepted</li>
+                    <li><strong>No Central Authority:</strong> No single person or organization controls it</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="security-layer">
+                <h4>🔒 The Security Layer:</h4>
+                <p>Instead of names like "John paid $50," Bitcoin uses cryptographic proof. You prove you own Bitcoin without revealing your identity, and no one can fake the proof.</p>
+              </div>
+              
+              <div className="innovation-highlight">
+                <h4>🚀 The Innovation:</h4>
+                <p>For the first time in history, we can have digital money that doesn't need a bank, government, or company to work. It's purely peer-to-peer, like handing someone cash, but digital.</p>
+              </div>
+            </div>
+            
+            <ActionButton onClick={() => setRevealed(2)} className="see-solution">
+              💡 Now Show Me How It Fixes Everything →
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Final revelation - how Bitcoin solves the problems
+  if (revealed === 2) {
+    return (
+      <div className="step-content bitcoin-solution">
+        <div className="module-header-box">
+          <h2>🎯 How Bitcoin Fixes Your Money Problems</h2>
+        </div>
+        
+        <div className="content-text">
+          <div className="problem-solutions">
+            <h3>Remember Your Problems? Here Are the Solutions:</h3>
+            
+            <div className="solution-grid">
+              <div className="solution-item">
+                <div className="problem-reminder">
+                  <h4>😤 Problem: Your money loses buying power</h4>
+                  <p>Groceries cost more, paychecks buy less</p>
+                </div>
+                <div className="bitcoin-fix">
+                  <h4>🟠 Bitcoin Solution: Fixed Supply</h4>
+                  <p>Only 21 million Bitcoin will ever exist. Your share can't be diluted by printing more.</p>
+                </div>
+              </div>
+              
+              <div className="solution-item">
+                <div className="problem-reminder">
+                  <h4>🚨 Problem: Your money can be frozen</h4>
+                  <p>Governments can block your bank account</p>
+                </div>
+                <div className="bitcoin-fix">
+                  <h4>🟠 Bitcoin Solution: True Ownership</h4>
+                  <p>If you control your Bitcoin keys, literally no one can freeze or confiscate it.</p>
+                </div>
+              </div>
+              
+              <div className="solution-item">
+                <div className="problem-reminder">
+                  <h4>🏦 Problem: Banks control your money</h4>
+                  <p>You're just an unsecured creditor to your bank</p>
+                </div>
+                <div className="bitcoin-fix">
+                  <h4>🟠 Bitcoin Solution: Be Your Own Bank</h4>
+                  <p>No intermediaries. You hold your money directly, like digital cash.</p>
+                </div>
+              </div>
+              
+              <div className="solution-item">
+                <div className="problem-reminder">
+                  <h4>💔 Problem: System benefits the powerful</h4>
+                  <p>Those closest to money creation get the advantages</p>
+                </div>
+                <div className="bitcoin-fix">
+                  <h4>🟠 Bitcoin Solution: Level Playing Field</h4>
+                  <p>Same rules for everyone. No special privileges based on power or connections.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="final-realization">
+              <h3>🎊 The Final Realization</h3>
+              <p>Bitcoin isn't just "digital money." It's the first form of money in human history that can't be controlled, manipulated, or diluted by governments, banks, or any central authority.</p>
+              
+              <div className="power-shift">
+                <h4>⚡ The Power Shift:</h4>
+                <p>For the first time, individuals can opt out of the traditional financial system entirely while still participating in the global economy. That's revolutionary.</p>
+              </div>
+            </div>
+            
+            <ActionButton onClick={() => setRevealed(3)} className="see-battle">
+              🚀 I Get It! Now Show Me The Ultimate Test →
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Final stage: The Ultimate Money Battle
+  return (
+    <div className="step-content money-battle-final">
+      <div className="module-header-box">
+        <h2>⚔️ The Ultimate Money Battle</h2>
+        <div className="intro-text">
+          <p className="prime-text">Now that you understand Bitcoin's solutions, let's test them against the competition. Three types of money enter... only one wins.</p>
+        </div>
+      </div>
+      
+      <div className="content-text">
+        <div className="battle-preview">
+          <div className="contenders">
+            <div className="contender fiat-contender">
+              <h3>💵 Team Fiat</h3>
+              <p>Government-issued currency</p>
+            </div>
+            <div className="contender gold-contender">
+              <h3>🥇 Team Gold</h3>
+              <p>Traditional store of value</p>
+            </div>
+            <div className="contender bitcoin-contender">
+              <h3>🟠 Team Bitcoin</h3>
+              <p>Digital revolution</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="battle-questions">
+          <h3>The Four Critical Tests:</h3>
+          <div className="test-preview">
+            <div className="test-item">
+              <h4>🏛️ Control Test</h4>
+              <p>Can governments freeze, confiscate, or manipulate it?</p>
+            </div>
+            <div className="test-item">
+              <h4>📊 Scarcity Test</h4>
+              <p>Can more be created, diluting your holdings?</p>
+            </div>
+            <div className="test-item">
+              <h4>✅ Verification Test</h4>
+              <p>How easy is it to prove it's real?</p>
+            </div>
+            <div className="test-item">
+              <h4>🌍 Transport Test</h4>
+              <p>Can you easily move it anywhere in the world?</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="battle-outcome">
+          <h3>🏆 Spoiler Alert: Bitcoin Dominates</h3>
+          <p>Bitcoin systematically outperforms both traditional money forms. It combines the best of both worlds while eliminating their weaknesses.</p>
+          
+          <div className="victory-message">
+            <h4>🎉 Why Bitcoin Wins:</h4>
+            <ul>
+              <li><strong>Control:</strong> Only YOU control your Bitcoin (not governments)</li>
+              <li><strong>Scarcity:</strong> Exactly 21 million forever (mathematically guaranteed)</li>
+              <li><strong>Verification:</strong> Instantly verifiable by anyone with a computer</li>
+              <li><strong>Transport:</strong> Send anywhere in ~10 minutes for minimal fees</li>
+            </ul>
+          </div>
+        </div>
+        
+        <ActionButton onClick={() => onComplete(3)} className="complete-understanding">
+          🚀 Bitcoin Is The Champion! Complete This Module →
+        </ActionButton>
+      </div>
+    </div>
+  );
+};
 
 // The Money Battle - Gamified Property Comparison
 const PropertyCompare = ({ onComplete }) => {
@@ -222,6 +839,11 @@ const PropertyCompare = ({ onComplete }) => {
   const currentBattle = propertyBattles[currentProperty];
 
   const handleChoice = (moneyType) => {
+    // Prevent changing selection once made
+    if (selections[currentProperty]) {
+      return;
+    }
+
     const newSelections = { ...selections, [currentProperty]: moneyType };
     setSelections(newSelections);
     
@@ -233,15 +855,14 @@ const PropertyCompare = ({ onComplete }) => {
       newScores[moneyType] += 1; // Partial credit for passing
     }
     setScores(newScores);
-    
-    // Move to next battle or show results
-    setTimeout(() => {
-      if (currentProperty < propertyBattles.length - 1) {
-        setCurrentProperty(currentProperty + 1);
-      } else {
-        setBattlePhase('results');
-      }
-    }, 2000);
+  };
+
+  const handleNextRound = () => {
+    if (currentProperty < propertyBattles.length - 1) {
+      setCurrentProperty(currentProperty + 1);
+    } else {
+      setBattlePhase('results');
+    }
   };
 
   const getScoreColor = (score) => {
@@ -347,7 +968,11 @@ const PropertyCompare = ({ onComplete }) => {
           {Object.entries(currentBattle.options).map(([key, option]) => (
             <div 
               key={key}
-              className="battle-choice"
+              className={`battle-choice ${
+                selections[currentProperty] === key ? 'selected' : ''
+              } ${
+                selections[currentProperty] ? 'disabled' : ''
+              }`}
               onClick={() => handleChoice(key)}
             >
               <div className="choice-header">
@@ -380,6 +1005,20 @@ const PropertyCompare = ({ onComplete }) => {
             <span>💵 Fiat: {scores.fiat}</span>
           </div>
         </div>
+
+        {selections[currentProperty] && (
+          <div className="next-round-section">
+            <ActionButton 
+              onClick={handleNextRound}
+              className="next-round-button pulsing-button"
+            >
+              {currentProperty < propertyBattles.length - 1 ? 
+                `⚔️ Next Round: ${propertyBattles[currentProperty + 1].title} →` : 
+                "🏆 See Final Results →"
+              }
+            </ActionButton>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -921,10 +1560,10 @@ const BitcoinBasicsModule = () => {
 
 // Steps used for tracking module progress
 const steps = [
-    { id: 0, title: "Bitcoin's Promise", icon: "🎯", completed: completedSteps.has(0) },
-    { id: 1, title: "Compare Systems", icon: "⚖️", completed: completedSteps.has(1) },
-    { id: 2, title: "How It Works", icon: "🔧", completed: completedSteps.has(2) },
-    { id: 3, title: "Why It's Valuable", icon: "💎", completed: completedSteps.has(3) },
+    { id: 0, title: "Money Problems", icon: "💸", completed: completedSteps.has(0) },
+    { id: 1, title: "Who Controls Money?", icon: "🤔", completed: completedSteps.has(1) },
+    { id: 2, title: "Big Questions", icon: "❓", completed: completedSteps.has(2) },
+    { id: 3, title: "What Is Bitcoin?", icon: "🟠", completed: completedSteps.has(3) },
     { id: 4, title: "Complete", icon: "🎉", completed: completedSteps.has(4) }
   ];
 
@@ -940,10 +1579,10 @@ const steps = [
           <div className="module-icon">
             <InteractiveIcon type="bitcoin" size={48} className="module-icon-bitcoin" />
           </div>
-          Bitcoin Fundamentals
+Your Money is Broken
         </div>
         <div className="module-subtitle">
-          Understand what Bitcoin is and why it matters
+          Discover why traditional money doesn't work - and what does
         </div>
       </div>
       
@@ -952,7 +1591,7 @@ const steps = [
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-          {["Bitcoin's Promise", "Compare Systems", "How It Works", "Why It's Valuable", "Complete"].map((step, index) => (
+          {["Money Problems", "Who Controls Money?", "Big Questions", "What Is Bitcoin?", "Complete"].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${
@@ -971,10 +1610,10 @@ const steps = [
       </div>
       
       <div className="module-content">
-        {currentStep === 0 && <BitcoinIntroduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <PropertyCompare onComplete={handleStepComplete} />}
-        {currentStep === 2 && <HowBitcoinWorks onComplete={handleStepComplete} />}
-        {currentStep === 3 && <WhyScarcityMatters onComplete={handleStepComplete} />}
+        {currentStep === 0 && <GroceryStoreShock onComplete={handleStepComplete} />}
+        {currentStep === 1 && <TheControlQuestion onComplete={handleStepComplete} />}
+        {currentStep === 2 && <SocraticQuestions onComplete={handleStepComplete} />}
+        {currentStep === 3 && <WhatIsBitcoin onComplete={handleStepComplete} />}
         {currentStep === 4 && <BitcoinCompletion onComplete={handleStepComplete} />}
       </div>
     </div>

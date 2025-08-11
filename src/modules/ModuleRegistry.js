@@ -18,8 +18,8 @@ export const moduleRegistry = {
   // Phase 1: Foundation & Immediate Relevance - Get users engaged and motivated
   'bitcoin-basics': {
     id: 'bitcoin-basics',
-    title: 'Bitcoin Fundamentals',
-    description: 'Learn what Bitcoin is, how it works, and why it represents a different approach to money.',
+    title: 'Your Money is Broken',
+    description: 'Discover the hidden problems with traditional money and why you need a better solution.',
     component: BitcoinBasicsModule,
     order: 1,
     group: 'foundations',

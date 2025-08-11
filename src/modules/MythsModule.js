@@ -46,72 +46,72 @@ const MythsModule = () => {
   const [responses, setResponses] = useState({});
   const [showResults, setShowResults] = useState(false);
 
-  // Learning Steps
+  // Advanced Learning Steps - Building on Foundations
   const learningSteps = [
     {
-      id: 'myth-introduction',
-      title: 'Bitcoin Myth Analysis',
-      icon: <Search className="step-icon" />,
-      description: 'Learn to identify and analyze common Bitcoin misconceptions',
-      learningObjectives: [
-        'Understand how misinformation spreads',
-        'Develop critical thinking skills',
-        'Learn to evaluate evidence'
-      ]
-    },
-    {
-      id: 'energy-myths',
-      title: 'Energy & Environment',
-      icon: <Zap className="step-icon" />,
-      description: 'Examine energy consumption claims with real data',
-      learningObjectives: [
-        'Compare Bitcoin energy use to other systems',
-        'Understand renewable energy incentives',
-        'Analyze environmental impact data'
-      ]
-    },
-    {
-      id: 'security-myths',
-      title: 'Security & Technology',
-      icon: <Shield className="step-icon" />,
-      description: 'Evaluate claims about Bitcoin security and hacking',
-      learningObjectives: [
-        'Distinguish protocol vs exchange security',
-        'Understand cryptographic strength',
-        'Learn about network resilience'
-      ]
-    },
-    {
-      id: 'economic-myths',
-      title: 'Economics & Value',
-      icon: <TrendingUp className="step-icon" />,
-      description: 'Analyze economic misconceptions about Bitcoin',
-      learningObjectives: [
-        'Understand different types of value',
-        'Compare to traditional assets',
-        'Evaluate bubble vs adoption claims'
-      ]
-    },
-    {
-      id: 'critical-thinking',
-      title: 'Critical Thinking Framework',
+      id: 'critical-framework',
+      title: 'Advanced Critical Analysis Framework',
       icon: <Brain className="step-icon" />,
-      description: 'Develop skills to evaluate any Bitcoin claim',
+      description: 'Master systematic approaches to evaluate complex Bitcoin claims',
       learningObjectives: [
-        'Build evaluation frameworks',
-        'Identify reliable sources',
-        'Practice evidence-based reasoning'
+        'Apply sound money principles to evaluate claims',
+        'Identify logical fallacies and cognitive biases',
+        'Distinguish correlation from causation'
       ]
     },
     {
-      id: 'mastery-assessment',
-      title: 'Myth-Busting Mastery',
-      icon: <Award className="step-icon" />,
-      description: 'Test your ability to analyze complex claims',
+      id: 'energy-economics',
+      title: 'Energy Economics & Incentives',
+      icon: <Zap className="step-icon" />,
+      description: 'Analyze energy claims through economic and environmental lens',
       learningObjectives: [
-        'Apply critical thinking skills',
-        'Evaluate mixed claims',
-        'Demonstrate mastery'
+        'Understand energy market dynamics',
+        'Evaluate environmental impact frameworks',
+        'Assess renewable energy incentive structures'
+      ]
+    },
+    {
+      id: 'security-engineering',
+      title: 'Security Engineering Analysis',
+      icon: <Shield className="step-icon" />,
+      description: 'Apply engineering principles to security claims',
+      learningObjectives: [
+        'Distinguish system vs application security',
+        'Understand cryptographic security models',
+        'Evaluate attack vectors and defense mechanisms'
+      ]
+    },
+    {
+      id: 'monetary-theory',
+      title: 'Advanced Monetary Theory Applications',
+      icon: <TrendingUp className="step-icon" />,
+      description: 'Apply Austrian and Keynesian frameworks to value claims',
+      learningObjectives: [
+        'Evaluate intrinsic vs subjective value theories',
+        'Apply time preference to adoption analysis',
+        'Understand network effects and monetary premiums'
+      ]
+    },
+    {
+      id: 'regulatory-analysis',
+      title: 'Regulatory & Political Economy',
+      icon: <Building className="step-icon" />,
+      description: 'Analyze government intervention claims through political economy',
+      learningObjectives: [
+        'Understand regulatory capture and incentives',
+        'Evaluate decentralization vs control tradeoffs',
+        'Apply public choice theory to Bitcoin policy'
+      ]
+    },
+    {
+      id: 'synthesis-mastery',
+      title: 'Synthesis & Advanced Applications',
+      icon: <Award className="step-icon" />,
+      description: 'Synthesize all frameworks to analyze complex, multi-faceted claims',
+      learningObjectives: [
+        'Integrate multiple analytical frameworks',
+        'Evaluate competing narratives',
+        'Demonstrate mastery of nuanced analysis'
       ]
     }
   ];
@@ -367,133 +367,136 @@ const MythsModule = () => {
     }
   };
 
-  const renderMythIntroduction = () => {
-    const mythScenarios = [
+  const renderCriticalFramework = () => {
+    const advancedFrameworks = [
       {
-        id: 'news-headline',
-        headline: '"Bitcoin Mining Consumes More Energy Than Argentina"',
-        question: 'What\'s your first reaction to this headline?',
-        options: [
-          'This proves Bitcoin is wasteful',
-          'I need more context to judge',
-          'Headlines often lack nuance',
-          'Argentina comparison seems arbitrary'
+        id: 'sound-money-analysis',
+        title: 'Sound Money Principle Application',
+        description: 'Apply the 10 sound money properties you learned to evaluate claims',
+        scenario: 'Claim: "Bitcoin fails as money because it\'s too volatile to be a unit of account"',
+        framework: [
+          'Which sound money property is being questioned?',
+          'How does volatility in adoption phase compare to mature money?',
+          'What evidence exists for decreasing volatility over time?',
+          'How do other money properties compensate for current volatility?'
         ],
-        insights: {
-          0: 'Headlines can be misleading without context about value created',
-          1: 'Good instinct! Context about energy sources and value matters',
-          2: 'Excellent critical thinking - headlines often oversimplify',
-          3: 'Smart observation - why Argentina specifically?'
+        application: {
+          property: 'Unit of Account / Acceptability',
+          context: 'Early adoption phases of all money show high volatility',
+          evidence: 'Bitcoin volatility has decreased from 500%+ to ~80% annually',
+          synthesis: 'Short-term volatility doesn\'t negate long-term monetary properties'
         }
       },
       {
-        id: 'expert-claim',
-        claim: 'A Nobel Prize economist says "Bitcoin is a bubble"',
-        question: 'How should you evaluate this claim?',
-        options: [
-          'Nobel Prize = automatically correct',
-          'Even experts can be wrong about new technology', 
-          'Check their reasoning and evidence',
-          'Consider their potential biases'
+        id: 'cognitive-bias-detection',
+        title: 'Cognitive Bias Recognition',
+        description: 'Identify and counteract common biases in Bitcoin analysis',
+        scenario: 'Claim: "I know someone who lost money in Bitcoin, so it\'s a scam"',
+        framework: [
+          'What cognitive bias is present?',
+          'How does anecdotal evidence compare to systematic data?',
+          'What selection bias might be operating?',
+          'How can we reframe using base rates and statistics?'
         ],
-        insights: {
-          0: 'Expertise in one area doesn\'t guarantee expertise in another',
-          1: 'Wise perspective - new technologies often challenge expert assumptions',
-          2: 'Perfect approach - focus on reasoning, not just authority',
-          3: 'Excellent point - everyone has biases and incentives'
+        application: {
+          bias: 'Anecdotal Fallacy + Availability Heuristic',
+          reframe: 'Individual losses don\'t invalidate the system\'s properties',
+          evidence: 'Need systematic data on outcomes, not individual stories',
+          synthesis: 'Personal anecdotes ≠ system evaluation'
+        }
+      },
+      {
+        id: 'systems-thinking',
+        title: 'Systems Thinking Approach',
+        description: 'Analyze Bitcoin claims through complex systems lens',
+        scenario: 'Claim: "Bitcoin mining is wasteful because it doesn\'t process many transactions"',
+        framework: [
+          'What system boundaries are being assumed?',
+          'What system functions are being measured vs ignored?',
+          'How do different system layers interact?',
+          'What are the second and third-order effects?'
+        ],
+        application: {
+          boundary: 'Conflating base layer settlement with payment processing',
+          function: 'Security, finality, and decentralization vs transaction throughput',
+          layers: 'Base layer provides security foundation for higher layers',
+          effects: 'Secure base layer enables innovation in upper layers'
         }
       }
     ];
 
     return (
-      <div className="myth-introduction">
-        <div className="intro-header">
-          <h2>How Do You Evaluate Bitcoin Claims?</h2>
-          <p>Before diving into specific myths, let's test your analytical instincts.</p>
+      <div className="critical-framework">
+        <div className="framework-header">
+          <h2>Advanced Critical Analysis Framework</h2>
+          <p>Building on your sound money knowledge, let's develop sophisticated analytical tools.</p>
         </div>
 
-        <div className="prediction-challenges">
-          {mythScenarios.map((scenario, index) => (
-            <div key={scenario.id} className="prediction-card">
-              <div className="scenario-content">
-                {scenario.headline && (
-                  <div className="news-headline">
-                    📰 {scenario.headline}
-      </div>
-                )}
-                {scenario.claim && (
-                  <div className="expert-claim">
-                    🎓 {scenario.claim}
-                  </div>
-                )}
-                <div className="scenario-question">{scenario.question}</div>
+        <div className="foundation-connection">
+          <h3>🔗 Building on Your Foundations</h3>
+          <div className="foundation-links">
+            <div className="foundation-link">
+              <strong>Why Bitcoin Matters:</strong> Understanding systemic problems and Bitcoin's solutions
+            </div>
+            <div className="foundation-link">
+              <strong>Money Module:</strong> The 10 properties framework for evaluating any monetary system
+            </div>
+            <div className="foundation-link">
+              <strong>Now:</strong> Apply these frameworks to analyze complex, nuanced claims
+            </div>
+          </div>
+        </div>
+
+        <div className="frameworks-detailed">
+          {advancedFrameworks.map((framework, index) => (
+            <div key={framework.id} className="framework-deep-dive">
+              <h3>{framework.title}</h3>
+              <p>{framework.description}</p>
+              
+              <div className="framework-scenario">
+                <h4>📋 Analysis Scenario:</h4>
+                <div className="scenario-text">"{framework.scenario}"</div>
               </div>
 
-              <div className="prediction-options">
-                {scenario.options.map((option, optIndex) => (
-                  <button
-                    key={optIndex}
-                    className={`prediction-option ${userPredictions[scenario.id] === optIndex ? 'selected' : ''}`}
-                    onClick={() => {
-                      setUserPredictions(prev => ({
-                        ...prev,
-                        [scenario.id]: optIndex
-                      }));
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
+              <div className="framework-steps">
+                <h4>🧠 Analytical Framework:</h4>
+                <ol>
+                  {framework.framework.map((step, stepIndex) => (
+                    <li key={stepIndex}>{step}</li>
+                  ))}
+                </ol>
               </div>
 
-              {userPredictions[scenario.id] !== undefined && (
-                <div className="prediction-insight">
-                  💡 <strong>Your insight:</strong> {scenario.insights[userPredictions[scenario.id]]}
+              <div className="framework-application">
+                <h4>🎯 Applied Analysis:</h4>
+                <div className="application-grid">
+                  {Object.entries(framework.application).map(([key, value]) => (
+                    <div key={key} className="application-item">
+                      <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
+
+              <ActionButton
+                onClick={() => setFrameworkMastery(prev => ({ ...prev, [framework.id]: true }))}
+                className={frameworkMastery[framework.id] ? 'completed' : ''}
+              >
+                {frameworkMastery[framework.id] ? '✅ Mastered' : 'Master This Framework'}
+              </ActionButton>
             </div>
           ))}
         </div>
 
-        {Object.keys(userPredictions).length === mythScenarios.length && (
-          <div className="analysis-framework">
-            <h3>Critical Thinking Framework</h3>
-            <div className="framework-steps">
-              <div className="framework-step">
-                <div className="step-number">1</div>
-                <div className="step-content">
-                  <h4>Question Everything</h4>
-                  <p>Who benefits from this claim? What's the source's expertise and potential bias?</p>
-                </div>
-              </div>
-              <div className="framework-step">
-                <div className="step-number">2</div>
-                <div className="step-content">
-                  <h4>Seek Evidence</h4>
-                  <p>What data supports or contradicts the claim? Are sources reliable and recent?</p>
-                </div>
-              </div>
-              <div className="framework-step">
-                <div className="step-number">3</div>
-                <div className="step-content">
-                  <h4>Consider Context</h4>
-                  <p>What's the bigger picture? Are there important details being omitted?</p>
-                </div>
-              </div>
-              <div className="framework-step">
-                <div className="step-number">4</div>
-                <div className="step-content">
-                  <h4>Embrace Nuance</h4>
-                  <p>Most claims have elements of truth and falsehood. What's the nuanced reality?</p>
-                </div>
-              </div>
-            </div>
-
+        {Object.keys(frameworkMastery).length === advancedFrameworks.length && (
+          <div className="framework-complete">
+            <h3>🎓 Analytical Mastery Unlocked</h3>
+            <p>You now have sophisticated tools to analyze any Bitcoin claim. Let's apply them to real-world examples.</p>
             <ContinueButton 
               onClick={() => handleStepComplete(0)}
-              className="intro-complete"
+              className="framework-complete"
             >
-              Apply This Framework to Bitcoin Myths
+              Apply Advanced Analysis →
             </ContinueButton>
           </div>
         )}
@@ -778,33 +781,46 @@ const MythsModule = () => {
     );
   };
 
-  const renderMasteryAssessment = () => {
+  const renderSynthesisMastery = () => {
     const masteryQuestions = [
       {
-        id: 'complex-claim',
-        scenario: 'A famous economist tweets: "Bitcoin wastes energy, gets hacked constantly, and has no backing - it\'s a speculative bubble that governments will ban."',
-        question: 'How would you approach analyzing this multi-part claim?',
+        id: 'systems-analysis',
+        scenario: 'A central bank governor states: "Bitcoin threatens monetary policy effectiveness because it operates outside government control and wastes energy that could power cities, while providing no real economic value beyond speculation."',
+        question: 'Apply your integrated analytical framework to evaluate this complex claim:',
         options: [
-          'Dismiss it because it contains multiple myths',
-          'Address each component claim separately',  
-          'Look for the partial truths in each part',
-          'Both B and C - break it down and find nuance'
+          'Focus only on factual accuracy of energy and value claims',
+          'Consider the source\'s institutional incentives and apply sound money principles',  
+          'Evaluate through systems thinking: monetary policy, energy economics, and value theory',
+          'Integrate all frameworks: source analysis, sound money properties, systems thinking, and cognitive biases'
         ],
         bestAnswer: 3,
-        explanation: 'Complex claims require breaking down into components and finding nuanced truths rather than simple dismissal.'
+        explanation: 'Complex institutional claims require integrated analysis considering source incentives, sound money principles, systems effects, and multiple theoretical frameworks.'
       },
       {
-        id: 'new-myth',
-        scenario: 'A new claim emerges: "Bitcoin mining is causing semiconductor shortages and hurting gaming."',
-        question: 'What\'s your systematic approach to evaluate this unfamiliar claim?',
+        id: 'nuanced-synthesis',
+        scenario: 'A tech journalist writes: "Bitcoin\'s proof-of-work is outdated technology that consumes enormous energy while newer cryptocurrencies achieve the same results more efficiently through proof-of-stake."',
+        question: 'How do you synthesize your knowledge to address this technologically sophisticated claim?',
         options: [
-          'Dismiss it as obvious FUD',
-          'Research semiconductor supply chains and mining hardware',
-          'Check if the timing correlation implies causation',
-          'Both B and C - investigate thoroughly before concluding'
+          'Compare energy consumption numbers between PoW and PoS',
+          'Apply security engineering analysis to compare consensus mechanisms',
+          'Evaluate through Austrian economic principles of time preference and decentralization',
+          'Synthesize security engineering, monetary theory, and energy economics to assess tradeoffs'
         ],
         bestAnswer: 3,
-        explanation: 'New claims require thorough investigation of underlying facts and careful analysis of correlation vs causation.'
+        explanation: 'Technical claims about consensus mechanisms require synthesis of security engineering, economic theory, and energy analysis to properly evaluate fundamental tradeoffs.'
+      },
+      {
+        id: 'regulatory-complexity',
+        scenario: 'A regulatory expert argues: "Bitcoin\'s anonymous nature facilitates money laundering and tax evasion, requiring strict KYC/AML compliance that undermines its decentralized promise - regulation will force centralization."',
+        question: 'Apply advanced political economy analysis to this regulatory claim:',
+        options: [
+          'Focus on factual accuracy regarding Bitcoin\'s privacy features',
+          'Apply public choice theory to understand regulatory capture incentives',
+          'Evaluate the decentralization vs compliance tradeoff through first principles',
+          'Integrate privacy analysis, regulatory incentives, decentralization theory, and implementation tradeoffs'
+        ],
+        bestAnswer: 3,
+        explanation: 'Regulatory claims require integrated analysis of technical privacy features, political economy incentives, game theory of compliance, and practical implementation challenges.'
       }
     ];
 
@@ -819,8 +835,8 @@ const MythsModule = () => {
   return (
       <div className="mastery-assessment">
         <div className="assessment-header">
-          <h2>Myth-Busting Mastery Assessment</h2>
-          <p>Apply your critical thinking skills to complex scenarios</p>
+          <h2>Advanced Synthesis Assessment</h2>
+          <p>Apply multiple analytical frameworks to complex, multi-faceted Bitcoin claims</p>
           </div>
 
         {!showResults ? (
@@ -929,13 +945,20 @@ const MythsModule = () => {
     const step = learningSteps[currentStep];
 
     switch (step.id) {
-      case 'myth-introduction':
-        return renderMythIntroduction();
+      case 'critical-framework':
+        return renderCriticalFramework();
       
-      case 'energy-myths':
-      case 'security-myths':
-      case 'economic-myths':
-        const categoryMyths = bitcoinMyths.filter(myth => myth.category === step.id.replace('-myths', ''));
+      case 'energy-economics':
+      case 'security-engineering': 
+      case 'monetary-theory':
+      case 'regulatory-analysis':
+        const categoryKey = step.id.replace('-economics', '').replace('-engineering', '').replace('-theory', '').replace('-analysis', '');
+        let categoryFilter = categoryKey;
+        if (categoryKey === 'energy') categoryFilter = 'energy';
+        if (categoryKey === 'security') categoryFilter = 'security';
+        if (categoryKey === 'monetary') categoryFilter = 'economics';
+        if (categoryKey === 'regulatory') categoryFilter = 'security'; // regulatory myths often overlap with security
+        const categoryMyths = bitcoinMyths.filter(myth => myth.category === categoryFilter);
         return (
           <div className="category-analysis">
             <div className="category-header">
@@ -987,11 +1010,8 @@ const MythsModule = () => {
           </div>
         );
 
-      case 'critical-thinking':
-        return renderCriticalThinking();
-
-      case 'mastery-assessment':
-        return renderMasteryAssessment();
+      case 'synthesis-mastery':
+        return renderSynthesisMastery();
 
       default:
         return <div>Step content for {step.id}</div>;

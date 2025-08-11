@@ -850,6 +850,20 @@ export const ProgressProvider = ({ children }) => {
     }));
   };
 
+  // Update module progress (for intermediate progress tracking)
+  const updateModuleProgress = (moduleId, progressPercentage) => {
+    // For modules that want to track intermediate progress
+    // This doesn't affect completion status, just tracks progress within module
+    setModuleProgress(prev => ({
+      ...prev,
+      [moduleId]: {
+        ...prev[moduleId],
+        progressPercentage: Math.min(100, Math.max(0, progressPercentage)),
+        lastAccessed: Date.now()
+      }
+    }));
+  };
+
   const getLessonProgress = (moduleId, lessonId, viewId) => {
     return lessonProgress[moduleId]?.[lessonId]?.[viewId]?.completed || false;
   };
@@ -954,6 +968,7 @@ export const ProgressProvider = ({ children }) => {
     resetModuleProgress,
     recordConceptualInsight,
     updateLessonProgress,
+    updateModuleProgress,
     
     // Helpers
     getModuleProgress,

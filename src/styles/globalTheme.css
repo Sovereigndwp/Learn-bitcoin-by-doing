@@ -1218,6 +1218,46 @@ button[class*="step-"],
 }
 
 /* ========================================
+   SPECIFIC MODULE TEXT VISIBILITY FIXES
+   ======================================== */
+/* Force visibility for specific problematic text elements */
+.shocking-reality,
+.shocking-reality *,
+.reality-highlight,
+.personal-setup,
+.personal-setup *,
+.personal-hook,
+.personal-hook *,
+.hook-text,
+.setup-text,
+.truth-bomb,
+.truth-bomb *,
+.personal-impact,
+.personal-impact * {
+  color: var(--color-text-primary) !important;
+  background: transparent !important;
+}
+
+/* Ensure BitcoinBasicsModule content is always visible */
+.step-content *,
+.grocery-shock *,
+.control-setup *,
+.content-text *,
+.shock-revelation *,
+.discovery-question * {
+  color: var(--color-text-primary) !important;
+}
+
+/* Force high contrast for any text that might be invisible */
+.reality-highlight {
+  color: var(--color-text-primary) !important;
+  font-weight: 600 !important;
+  background: var(--color-dark-bgCard) !important;
+  padding: 0.5rem !important;
+  border-radius: 4px !important;
+}
+
+/* ========================================
    PRINT STYLES
    ======================================== */
 @media print {
