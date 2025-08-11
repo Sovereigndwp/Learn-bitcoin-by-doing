@@ -2,6 +2,7 @@ import MoneyModule from './MoneyModule';
 import BitcoinBasicsModule from './BitcoinBasicsModule';
 import WhyBitcoinMattersModule from './WhyBitcoinMattersModule';
 import MoneyJourneyModule from './fundamentals/MoneyJourneyModule';
+import GoodMoneyModule from './fundamentals/GoodMoneyModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
 import MiningModule from './MiningModule';
@@ -39,7 +40,7 @@ export const moduleRegistry = {
     id: 'good-money',
     title: 'What Makes Good Money',
     description: 'Learn the essential properties and functions that make money work for people.',
-    component: BitcoinBasicsModule,
+    component: GoodMoneyModule,
     order: 3,
     group: 'fundamentals',
     prerequisites: ['money-journey']
