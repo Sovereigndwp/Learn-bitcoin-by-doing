@@ -15,21 +15,21 @@ import {
 import '../components/ModuleCommon.css';
 
 // Main Module Component
-const WhyBitcoinMattersModule = ({ moduleId = 'wake-up-call' }) => {
+const WhyBitcoinMattersModule = ({ moduleId = 'bitcoin-relevance' }) => {
   const navigate = useNavigate();
   const { updateModuleProgress, completeModule } = useProgress();
   const [currentStep, setCurrentStep] = useState(0);
   const [userRealizations, setUserRealizations] = useState(new Set());
   const [scenarioChoices, setScenarioChoices] = useState({});
 
-  // Steps in the wake-up call journey - more emotionally impactful
+  // Steps in the urgent relevance journey
   const steps = [
-    'Personal Gut Punch',
-    'Control Test Reality', 
-    'Scarcity Test Reality',
-    'Verification Test Reality',
-    'Transport Test Reality',
-    'Bitcoin Solutions'
+    'Your Money Under Attack',
+    'Government Overreach Reality', 
+    'Banking System Fragility',
+    'Global Financial Exclusion',
+    'Privacy Surveillance Crisis',
+    'The Bitcoin Solution'
   ];
 
   const handleStepComplete = (stepIndex) => {
@@ -50,8 +50,8 @@ const WhyBitcoinMattersModule = ({ moduleId = 'wake-up-call' }) => {
   return (
     <div className="module-container">
       <div className="module-header">
-        <h1>⚡ Why This Matters to You</h1>
-        <p>Real-life disruptions happening right now that could affect your financial life</p>
+        <h1>⚡ Why Bitcoin Matters TODAY</h1>
+        <p>Real scenarios showing why Bitcoin isn't just interesting—it's urgently necessary</p>
         <StepNavigation 
           steps={steps} 
           currentStep={currentStep}
@@ -117,186 +117,139 @@ const WhyBitcoinMattersModule = ({ moduleId = 'wake-up-call' }) => {
   );
 };
 
-// Component 1: Personal Gut Punch - The 15-Second Micro-Story
+// Component 1: Your Money Under Attack
 const MoneyUnderAttack = ({ onComplete, onRealization, userChoices, setUserChoices }) => {
-  const [scenarioPhase, setScenarioPhase] = useState(0); // 0: gut punch, 1: montage, 2: pattern
-  const [showFacts, setShowFacts] = useState(false);
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [revealedFacts, setRevealedFacts] = useState([]);
 
-  // The opening gut punch - designed to hit in 15 seconds
-  const gutPunchScenario = {
-    title: '💳 At the Grocery Store',
-    story: [
-      "You're at the checkout. Cart full of groceries for the week.",
-      "Your card declines.",
-      "You check your phone: 'Account frozen.'",
-      "No explanation. No appeal process. No timeline.",
-      "Rent is due tomorrow."
-    ],
-    finalHook: "What do you do?",
-    emotion: "This instant vulnerability—no warning, no recourse, no alternatives."
-  };
-
-  // The disruption montage - quick emotional hits
-  const disruptionMontage = [
+  const scenarios = [
     {
-      headline: "Bank account frozen for protest donation",
-      location: "Canada, 2022",
-      consequence: "Mother unable to buy baby formula",
-      visual: "👶"
+      id: 'inflation-shock',
+      title: '🛒 The Grocery Store Reality Check',
+      hook: 'Remember when a gallon of milk cost $3? That was just 3 years ago.',
+      setup: 'Today: $5.49. Your salary: still the same.',
+      shockingDetail: 'That\'s not "inflation"—that\'s your purchasing power being destroyed in real-time.',
+      question: 'What\'s really happening to your money?',
+      options: [
+        { id: 'supply', text: 'Supply chain issues will fix themselves', impact: 'temporary' },
+        { id: 'monetary', text: 'Money printing is devaluing every dollar I own', impact: 'permanent', correct: true },
+        { id: 'corporate', text: 'Corporations are just being greedy', impact: 'blame' }
+      ],
+      reality: '🚨 FACT: The money supply increased by 40% in 2020-2021. That\'s not inflation—that\'s monetary debasement. Your dollars are worth 30% less, and it\'s accelerating.',
+      realization: 'money-debasement'
     },
     {
-      headline: "Currency loses 50% value in 6 months",
-      location: "Argentina, 2023",
-      consequence: "Prices doubling between morning and night",
-      visual: "🏪"
+      id: 'savings-destruction',
+      title: '🏦 The Savings Account Trap',
+      hook: '$10,000 in savings earning 0.5% interest vs 8% "inflation"',
+      setup: 'Your savings account: losing $750 in purchasing power this year.',
+      shockingDetail: 'Banks pay you 0.5% while lending YOUR money at 7%. You\'re funding your own poverty.',
+      question: 'What are traditional "safe" savings actually doing?',
+      options: [
+        { id: 'safety', text: 'Keeping my money safe from risk', impact: 'illusion' },
+        { id: 'guaranteed', text: 'Guaranteeing I get poorer every year', impact: 'reality', correct: true },
+        { id: 'building', text: 'Building wealth slowly but surely', impact: 'delusion' }
+      ],
+      reality: '💡 REVELATION: "Safe" savings accounts guarantee you lose money to inflation. The only "risk" is thinking there\'s no risk.',
+      realization: 'savings-trap'
     },
     {
-      headline: "Family flees war with life savings",
-      location: "Ukraine, 2022",
-      consequence: "Border guards seize cash, but 12 words memorized",
-      visual: "🚶‍♂️"
+      id: 'retirement-crisis',
+      title: '⏰ The Retirement Math Nightmare',
+      hook: 'Your parents retired on $500K. You\'ll need $2.5M for the same lifestyle.',
+      setup: 'Retirement calculators assume 3% inflation. Reality: 8%+ for essentials.',
+      shockingDetail: 'At current inflation rates, your retirement fund will be worth 50% less by the time you retire.',
+      question: 'What does this mean for your future?',
+      options: [
+        { id: 'work-longer', text: 'I\'ll just work longer', impact: 'delaying' },
+        { id: 'broken-system', text: 'The entire retirement system is broken', impact: 'awakening', correct: true },
+        { id: 'government', text: 'Government will figure it out', impact: 'dependency' }
+      ],
+      reality: '⚠️ TRUTH: Traditional retirement planning assumes a stable currency. With monetary debasement, those assumptions are fantasy.',
+      realization: 'retirement-crisis'
     }
   ];
 
-  const handleAdvancePhase = () => {
-    if (scenarioPhase === 0) {
-      setScenarioPhase(1);
-      onRealization('vulnerability-awareness');
-    } else if (scenarioPhase === 1) {
-      setScenarioPhase(2);
-      setShowFacts(true);
-    } else {
-      onComplete();
+  const currentScene = scenarios[currentScenario];
+
+  const handleChoice = (choice) => {
+    setUserChoices(prev => ({
+      ...prev,
+      [`attack-${currentScene.id}`]: choice
+    }));
+
+    if (choice.correct) {
+      onRealization(currentScene.realization);
     }
+
+    setRevealedFacts(prev => [...prev, currentScene.reality]);
+
+    setTimeout(() => {
+      if (currentScenario < scenarios.length - 1) {
+        setCurrentScenario(currentScenario + 1);
+        setRevealedFacts([]);
+      } else {
+        onComplete();
+      }
+    }, 3000);
   };
 
-  // Phase 0: The 15-second gut punch
-  if (scenarioPhase === 0) {
-    return (
-      <div className="section-card">
-        <div className="gut-punch-header">
-          <AlertTriangle className="scenario-icon danger" size={48} />
-          <h2 className="heading-critical">{gutPunchScenario.title}</h2>
-        </div>
-
-        <div className="gut-punch-story">
-          {gutPunchScenario.story.map((line, index) => (
-            <p key={index} className={`story-line ${index === gutPunchScenario.story.length - 1 ? 'final-line' : ''}`}>
-              {line}
-            </p>
-          ))}
-          
-          <div className="final-hook">
-            <h3>{gutPunchScenario.finalHook}</h3>
-            <p className="emotion-reveal">{gutPunchScenario.emotion}</p>
-          </div>
-
-          <div className="gut-punch-advance">
-            <ActionButton onClick={handleAdvancePhase} variant="danger">
-              If these feel like random accidents, you're about to see the pattern →
-            </ActionButton>
-          </div>
-        </div>
+  return (
+    <div className="section-card">
+      <div className="scenario-header">
+        <TrendingDown className="scenario-icon danger" size={48} />
+        <h2 className="heading-critical">{currentScene.title}</h2>
       </div>
-    );
-  }
 
-  // Phase 1: Disruption montage
-  if (scenarioPhase === 1) {
-    return (
-      <div className="section-card">
-        <div className="montage-header">
-          <Globe className="scenario-icon warning" size={48} />
-          <h2 className="heading-critical">Real Disruptions Happening Right Now</h2>
-        </div>
-
-        <div className="disruption-montage">
-          {disruptionMontage.map((event, index) => (
-            <div key={index} className="disruption-event">
-              <div className="event-visual">{event.visual}</div>
-              <div className="event-content">
-                <h4>{event.headline}</h4>
-                <p className="location">{event.location}</p>
-                <div className="consequence">
-                  <AlertTriangle size={16} />
-                  <span>{event.consequence}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="pattern-reveal">
-          <h3>What if no one could freeze your money?</h3>
-          <p>What if your savings didn't melt over time?</p>
-          <p>What if you could prove your money is real instantly, from anywhere?</p>
-          
-          <ActionButton onClick={handleAdvancePhase} variant="primary">
-            Show Me The Pattern →
-          </ActionButton>
-        </div>
-      </div>
-    );
-  }
-
-  // Phase 2: Pattern recognition
-  if (scenarioPhase === 2) {
-    return (
-      <div className="section-card">
-        <div className="pattern-header">
-          <Target className="scenario-icon success" size={48} />
-          <h2 className="heading-critical">The Pattern: Money System Failures</h2>
-        </div>
-
-        <div className="pattern-analysis">
-          <p className="pattern-insight">
-            These aren't random accidents. They're predictable failures of centralized money systems.
-          </p>
-          
-          <div className="failure-modes">
-            <div className="failure-mode">
-              <Lock size={24} />
-              <div>
-                <h4>Control Failure</h4>
-                <p>Governments and institutions can freeze, seize, or block access to your money.</p>
-              </div>
-            </div>
-            
-            <div className="failure-mode">
-              <TrendingDown size={24} />
-              <div>
-                <h4>Scarcity Failure</h4>
-                <p>Unlimited money printing destroys your purchasing power over time.</p>
-              </div>
-            </div>
-            
-            <div className="failure-mode">
-              <Shield size={24} />
-              <div>
-                <h4>Verification Failure</h4>
-                <p>Trust-based systems are vulnerable to counterfeiting and fraud.</p>
-              </div>
-            </div>
-            
-            <div className="failure-mode">
-              <Globe size={24} />
-              <div>
-                <h4>Transport Failure</h4>
-                <p>Physical money is difficult to move across borders and store securely.</p>
-              </div>
-            </div>
+      <div className="scenario-content">
+        <div className="hook-section">
+          <p className="shock-value">{currentScene.hook}</p>
+          <p className="scenario-setup">{currentScene.setup}</p>
+          <div className="shocking-detail">
+            <AlertTriangle size={20} />
+            <p>{currentScene.shockingDetail}</p>
           </div>
         </div>
 
-        <div className="pattern-completion">
-          <h3>Now let's test different types of money against these failures...</h3>
-          <ActionButton onClick={handleAdvancePhase} variant="primary">
-            Begin The Money Tests →
-          </ActionButton>
+        <div className="challenge-section">
+          <h3>{currentScene.question}</h3>
+          <div className="options-grid">
+            {currentScene.options.map(option => (
+              <button
+                key={option.id}
+                className={`option-button ${userChoices[`attack-${currentScene.id}`]?.id === option.id ? 'selected' : ''}`}
+                onClick={() => handleChoice(option)}
+                disabled={userChoices[`attack-${currentScene.id}`]}
+              >
+                {option.text}
+              </button>
+            ))}
+          </div>
         </div>
+
+        {revealedFacts.length > 0 && (
+          <div className="reality-reveal">
+            <div className="fact-explosion">
+              <Zap size={24} />
+              <h4>Reality Check</h4>
+              <p>{revealedFacts[0]}</p>
+            </div>
+            <div className="scenario-progress">
+              <p>Scenario {currentScenario + 1} of {scenarios.length}</p>
+              <div className="progress-dots">
+                {scenarios.map((_, index) => (
+                  <span 
+                    key={index} 
+                    className={`dot ${index <= currentScenario ? 'active' : ''}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 // Component 2: Government Overreach Reality  

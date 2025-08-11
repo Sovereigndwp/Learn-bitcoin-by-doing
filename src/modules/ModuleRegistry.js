@@ -15,54 +15,54 @@ import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
-  // Unified Progressive Module - Single Path to Bitcoin Understanding
-  'wake-up-call': {
-    id: 'wake-up-call',
-    title: 'Why This Matters to You',
-    description: 'Real disruptions happening right now that could affect your financial life.',
-    component: WhyBitcoinMattersModule,
+  // Phase 1: Foundation & Immediate Relevance - Get users engaged and motivated
+  'bitcoin-basics': {
+    id: 'bitcoin-basics',
+    title: 'Bitcoin Fundamentals',
+    description: 'Learn what Bitcoin is, how it works, and why it represents a different approach to money.',
+    component: BitcoinBasicsModule,
     order: 1,
-    group: 'unified-path',
+    group: 'foundations',
     prerequisites: []
   },
-  'what-money-is': {
-    id: 'what-money-is',
-    title: 'What Money Is (Without the Jargon)',
-    description: 'The three functions of money explained in plain language with relatable examples.',
-    component: MoneyModule,
+  'bitcoin-relevance': {
+    id: 'bitcoin-relevance',
+    title: 'Why Bitcoin Matters Today',
+    description: 'Real-world scenarios showing Bitcoin\'s immediate relevance to your financial life.',
+    component: WhyBitcoinMattersModule,
     order: 2,
-    group: 'unified-path',
-    prerequisites: ['wake-up-call']
+    group: 'foundations',
+    prerequisites: ['bitcoin-basics']
   },
-  'how-we-got-here': {
-    id: 'how-we-got-here',
-    title: 'A Brief History of How We Got Here',
-    description: 'Gold → Fiat → Bitcoin: Evolution of money systems and why it matters.',
-    component: BitcoinBasicsModule,
-    order: 3,
-    group: 'unified-path',
-    prerequisites: ['what-money-is']
-  },
-  'money-stress-tests': {
-    id: 'money-stress-tests',
-    title: 'The Real-World Money Tests',
-    description: 'Four critical tests every money system faces - and how different types of money perform.',
+  myths: {
+    id: 'myths',
+    title: 'Bitcoin Myths & Facts',
+    description: 'Address common misconceptions about Bitcoin with evidence and data.',
     component: MythsModule,
-    order: 4,
-    group: 'unified-path',
-    prerequisites: ['how-we-got-here']
+    order: 3,
+    group: 'foundations',
+    prerequisites: ['bitcoin-relevance']
   },
-  'protecting-yourself': {
-    id: 'protecting-yourself',
-    title: 'Next Step: Protecting Yourself',
-    description: 'Introduction to self-custody and taking control of your financial sovereignty.',
-    component: CustodyModule,
-    order: 5,
-    group: 'unified-path',
-    prerequisites: ['money-stress-tests']
+  money: {
+    id: 'money',
+    title: 'Understanding Money',
+    description: 'Essential money concepts - streamlined for practical understanding.',
+    component: MoneyModule,
+    order: 4,
+    group: 'foundations',
+    prerequisites: ['myths']
   },
 
-  // Phase 2: Practical Mastery - Build on the foundation
+  // Phase 2: Practical Mastery First - Immediate value and hands-on skills
+  custody: {
+    id: 'custody',
+    title: 'Self-Custody & Security',
+    description: 'Learn practical strategies for safely storing and managing your Bitcoin.',
+    component: CustodyModule,
+    order: 5,
+    group: 'practical-first',
+    prerequisites: ['money']
+  },
   'bitcoin-toolkit': {
     id: 'bitcoin-toolkit',
     title: 'Bitcoin Tools & Practice',
@@ -70,7 +70,7 @@ export const moduleRegistry = {
     component: BitcoinToolkitModule,
     order: 6,
     group: 'practical-first',
-    prerequisites: ['protecting-yourself']
+    prerequisites: ['custody']
   },
   transactions: {
     id: 'transactions',
@@ -161,10 +161,10 @@ export const moduleRegistry = {
 
 // Group definitions with emojis and descriptions - RESTRUCTURED FOR ENGAGEMENT
 export const moduleGroups = {
-  'unified-path': {
-    title: '🎯 The Complete Bitcoin Story',
-    description: 'A progressive journey from real-world problems to Bitcoin solutions',
-    emoji: '🎯',
+  'foundations': {
+    title: '⚡ Foundation & Motivation',
+    description: 'Why Bitcoin matters and essential concepts',
+    emoji: '⚡',
     order: 1
   },
   'practical-first': {
