@@ -4,6 +4,7 @@ import WhyBitcoinMattersModule from './WhyBitcoinMattersModule';
 import MoneyJourneyModule from './fundamentals/MoneyJourneyModule';
 import GoodMoneyModule from './fundamentals/GoodMoneyModule';
 import MoneyGoesBadModule from './fundamentals/MoneyGoesBadModule';
+import BitcoinBlueprintModule from './fundamentals/BitcoinBlueprintModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
 import MiningModule from './MiningModule';
@@ -59,7 +60,7 @@ export const moduleRegistry = {
     id: 'bitcoin-blueprint',
     title: 'Bitcoin: The Better Blueprint',
     description: 'Discover how Bitcoin addresses every money failure through superior design.',
-    component: CustodyModule,
+    component: BitcoinBlueprintModule,
     order: 5,
     group: 'fundamentals',
     prerequisites: ['money-goes-bad']
