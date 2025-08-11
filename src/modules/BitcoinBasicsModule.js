@@ -1309,16 +1309,79 @@ const BitcoinCompletion = ({ onComplete }) => {
 
 // How Bitcoin Works (No Technical Jargon) - Simplified
 const HowBitcoinWorks = ({ onComplete }) => {
+  const [currentStep, setCurrentStep] = useState(0); // 0: vacation setup, 1-3: concepts
   const [currentConcept, setCurrentConcept] = useState(0);
   const [userAnswer, setUserAnswer] = useState(null);
-    const [showExplanation, setShowExplanation] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
+
+  // Step 0: Vacation Expense Setup
+  if (currentStep === 0) {
+    return (
+      <div className="step-content vacation-setup">
+        <div className="module-header-box">
+          <h2>🏖️ Planning the Perfect Group Vacation</h2>
+          <div className="intro-text">
+            <p className="prime-text">Bitcoin might seem complex, but it's actually based on a simple idea you've probably experienced before. Let's start with something familiar...</p>
+          </div>
+        </div>
+        
+        <div className="content-text">
+          <div className="vacation-scenario">
+            <h3>🎯 The Setup: You and 9 Friends</h3>
+            
+            <div className="vacation-details">
+              <div className="scenario-description">
+                <p><strong>The Plan:</strong> You and 9 friends decide to take an amazing group vacation to Costa Rica for a week. Everyone's excited!</p>
+              </div>
+              
+              <div className="expense-challenge">
+                <h4>💸 The Money Challenge</h4>
+                <p>Throughout the trip, different people will pay for different things:</p>
+                <ul>
+                  <li><strong>Sarah</strong> books the Airbnb ($1,200)</li>
+                  <li><strong>Mike</strong> pays for rental cars ($800)</li>
+                  <li><strong>You</strong> cover group dinners ($650)</li>
+                  <li><strong>Lisa</strong> handles activities and tours ($400)</li>
+                  <li><strong>Others</strong> pay for gas, groceries, tips, etc.</li>
+                </ul>
+              </div>
+              
+              <div className="the-problem">
+                <h4>🤔 The Problem</h4>
+                <p className="problem-highlight">By the end of the week, <strong>who owes what to whom?</strong> And more importantly, <strong>how do you keep track of it all fairly</strong> so no one gets cheated?</p>
+              </div>
+              
+              <div className="stakes">
+                <h4>⚠️ What's at Stake</h4>
+                <p>This isn't just about $20 here or there. With 10 people and hundreds of transactions, <strong>thousands of dollars</strong> need to be tracked accurately. Get it wrong and:</p>
+                <ul>
+                  <li>Someone pays way more than their fair share</li>
+                  <li>Friendships could be damaged over money disputes</li>
+                  <li>Future group trips become impossible</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="transition-hook">
+              <h4>💡 Here's the Thing...</h4>
+              <p>This exact problem - keeping track of who owns what money in a group where everyone needs to trust the records - is <strong>exactly what Bitcoin solves</strong>, just on a global scale with millions of people instead of 10 friends.</p>
+            </div>
+            
+            <ActionButton onClick={() => setCurrentStep(1)} className="start-concepts">
+              🧠 Show Me How This Connects to Bitcoin →
+            </ActionButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Focus on just the 3 most intuitive concepts
   const concepts = [
     {
       id: 'record_keeping',
       title: 'Keeping Track of Money',
-      scenario: "Imagine you and 9 friends are sharing expenses for a group vacation. You need to track who paid for what and who owes money to whom.",
+      scenario: "Now back to your Costa Rica trip. You need to track who paid for what and who owes money to whom.",
       question: "What's the most trustworthy way to keep track of everyone's payments?",
       options: [
         { id: 'one_person', text: "One person keeps a notebook with all transactions", risk: 'high' },
@@ -1384,7 +1447,7 @@ const HowBitcoinWorks = ({ onComplete }) => {
       setUserAnswer(null);
       setShowExplanation(false);
     } else {
-      onComplete(2);
+      onComplete(3);
     }
     };
 
@@ -1613,7 +1676,7 @@ Your Money is Broken
         {currentStep === 0 && <GroceryStoreShock onComplete={handleStepComplete} />}
         {currentStep === 1 && <TheControlQuestion onComplete={handleStepComplete} />}
         {currentStep === 2 && <SocraticQuestions onComplete={handleStepComplete} />}
-        {currentStep === 3 && <WhatIsBitcoin onComplete={handleStepComplete} />}
+        {currentStep === 3 && <HowBitcoinWorks onComplete={handleStepComplete} />}
         {currentStep === 4 && <BitcoinCompletion onComplete={handleStepComplete} />}
       </div>
     </div>
