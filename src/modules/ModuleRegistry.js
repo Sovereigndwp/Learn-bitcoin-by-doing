@@ -3,7 +3,6 @@ import BitcoinBasicsModule from './BitcoinBasicsModule';
 import WhyBitcoinMattersModule from './WhyBitcoinMattersModule';
 import MoneyJourneyModule from './fundamentals/MoneyJourneyModule';
 import GoodMoneyModule from './fundamentals/GoodMoneyModule';
-import MoneyGoesBadModule from './fundamentals/MoneyGoesBadModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
 import MiningModule from './MiningModule';
@@ -49,11 +48,11 @@ export const moduleRegistry = {
   'money-goes-bad': {
     id: 'money-goes-bad',
     title: 'When Good Money Goes Bad',
-    description: 'Case studies of money failures and the devastating patterns that lead to financial crisis',
-    component: MoneyGoesBadModule,
+    description: 'Case studies of money failures and the patterns that lead to financial crisis.',
+    component: MythsModule,
     order: 4,
-    prerequisites: ['good-money'],
-    group: 'fundamentals'
+    group: 'fundamentals',
+    prerequisites: ['good-money']
   },
   'bitcoin-blueprint': {
     id: 'bitcoin-blueprint',
