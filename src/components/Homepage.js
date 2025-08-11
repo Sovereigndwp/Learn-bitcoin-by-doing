@@ -4,12 +4,20 @@ import { useProgress } from '../contexts/ProgressContext';
 import { useNotifications } from './NotificationSystem';
 import { moduleRegistry, moduleGroups, getNextModule } from '../modules/ModuleRegistry';
 import { 
-  Trophy, Target, Zap, Users, Clock, Brain, Award, Star, 
-  CheckCircle, Play, ArrowRight, Map, Lightbulb, Shield, 
-  RotateCcw, BookOpen, TrendingUp, Eye, ChevronRight,
-  DollarSign, Coins, Lock, Unlock, MessageCircle, BarChart3
+  Trophy, Target, Zap, Clock, Brain, Award, Star, 
+  CheckCircle, Play, ArrowRight, Shield, 
+  RotateCcw, BookOpen,
+  DollarSign, Coins, Lock, BarChart3,
+  Hammer, Key, RefreshCw, FileText, TreeDeciduous, Zap as Lightning,
+  Rocket, Drama, Settings
 } from 'lucide-react';
-import { PrimaryButton, ConfirmDialog } from './ui';
+import { ConfirmDialog } from './ui';
+import { 
+  ActionButton, 
+  NavigationButton,
+  ContinueButton,
+  IconButton
+} from './ui/UnifiedButton';
 import { 
   AnimatedSearchIcon, 
   AnimatedBrainIcon, 
@@ -19,7 +27,7 @@ import {
   AnimatedShieldIcon,
   AnimatedNetworkIcon,
   AnimatedStarIcon
-} from './AnimatedIcons';
+} from './AnimatedIcons.jsx';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -132,9 +140,15 @@ const Homepage = () => {
           </div>
           <nav className="header-nav">
             {hasStarted && (
-              <button onClick={() => setShowResetConfirm(true)} className="reset-btn-minimal">
-                <RotateCcw size={16} /> Reset
-              </button>
+              <IconButton 
+                onClick={() => setShowResetConfirm(true)} 
+                icon={<RotateCcw size={16} />}
+                tooltip="Reset Progress"
+                size="sm"
+                className="reset-btn-minimal"
+              >
+                Reset
+              </IconButton>
             )}
           </nav>
         </div>
@@ -221,9 +235,16 @@ const WelcomeSection = ({ onStartJourney }) => {
             <span className="highlight-text">Question everything you thought you knew about money.</span>
           </p>
           
-          <button onClick={scrollToQuestions} className="hero-cta-button">
+          <ActionButton 
+            onClick={scrollToQuestions} 
+            variant="primary"
+            size="lg"
+            className="hero-cta-button"
+            feedback="visual"
+            ripple={true}
+          >
             Begin Your Discovery
-          </button>
+          </ActionButton>
         </div>
       </div>
 
@@ -337,9 +358,16 @@ const WelcomeSection = ({ onStartJourney }) => {
           Join thousands who have discovered why Bitcoin represents the most important monetary innovation in centuries.
         </p>
         
-        <button onClick={onStartJourney} className="final-cta-button">
+        <ContinueButton 
+          onClick={onStartJourney} 
+          size="xl"
+          className="final-cta-button"
+          feedback="visual"
+          icon={<ArrowRight size={20} />}
+          iconPosition="right"
+        >
           Start Your Journey
-        </button>
+        </ContinueButton>
         
         <div className="cta-benefits">
           <p>🎓 No prior knowledge required</p>
@@ -362,20 +390,21 @@ const LearningSection = ({
   currentView
 }) => {
   const moduleIcons = {
-    money: '💰',
-    'bitcoin-basics': '₿',
-    numbers: '🔢',
-    hashing: '🔐',
-    mining: '⛏️',
-    keys: '🔑',
-    transactions: '🔄',
-    scripts: '📜',
-    merkle: '🌳',
-    custody: '🛡️',
-    lightning: '⚡',
-    'advanced-topics': '🚀',
-    myths: '🎭',
-    'bitcoin-toolkit': '🛠️'
+    money: <DollarSign size={20} className="module-icon-svg" />,
+    'bitcoin-basics': <Coins size={20} className="module-icon-svg" />,
+    numbers: <BarChart3 size={20} className="module-icon-svg" />,
+    hashing: <Shield size={20} className="module-icon-svg" />,
+    mining: <Hammer size={20} className="module-icon-svg" />,
+    keys: <Key size={20} className="module-icon-svg" />,
+    transactions: <RefreshCw size={20} className="module-icon-svg" />,
+    scripts: <FileText size={20} className="module-icon-svg" />,
+    merkle: <TreeDeciduous size={20} className="module-icon-svg" />,
+    custody: <Lock size={20} className="module-icon-svg" />,
+    lightning: <Lightning size={20} className="module-icon-svg" />,
+    'advanced-topics': <Rocket size={20} className="module-icon-svg" />,
+    myths: <Drama size={20} className="module-icon-svg" />,
+    'bitcoin-toolkit': <Settings size={20} className="module-icon-svg" />,
+    'bitcoin-relevance': <Zap size={20} className="module-icon-svg" />
   };
 
     return (
@@ -383,16 +412,18 @@ const LearningSection = ({
       {/* Back to Welcome Button */}
       {hasStarted && (
         <div className="back-to-welcome">
-          <button 
+          <NavigationButton 
+            direction="back"
             onClick={() => {
               console.log('Back to welcome clicked, current view:', currentView);
               setCurrentView('welcome');
               console.log('View set to welcome');
             }}
             className="back-button"
+            size="sm"
           >
-            ⬅️ Back to Welcome
-          </button>
+            Back to Welcome
+          </NavigationButton>
         </div>
       )}
 
@@ -400,16 +431,21 @@ const LearningSection = ({
       {nextModule && (
         <div className="next-step-cta">
           <div className="next-step-content">
+          <div className="continue-header">
+            <Play size={16} className="continue-play-icon" />
             <h3>Continue Learning</h3>
-            <p>Your next recommended module</p>
-            <Link to={`/module/${nextModule.id}`} className="next-module-card">
-              <div className="module-icon">{moduleIcons[nextModule.id]}</div>
-              <div className="module-info">
-                <h4>{nextModule.title}</h4>
-                <p>{nextModule.description}</p>
-              </div>
-              <ChevronRight className="continue-arrow" />
-            </Link>
+          </div>
+          <p>Your next recommended module</p>
+          <Link to={`/module/${nextModule.id}`} className="next-module-card">
+            <div className="module-icon">{moduleIcons[nextModule.id]}</div>
+            <div className="module-info">
+              <h4>{nextModule.title}</h4>
+              <p>{nextModule.description}</p>
+            </div>
+            <div className="continue-arrow-container">
+              <ArrowRight className="continue-arrow" size={20} />
+            </div>
+          </Link>
           </div>
           <div className="progress-summary">
             <div className="progress-ring">
@@ -468,8 +504,14 @@ const ModuleGroup = ({
     return (
     <div className="module-group" data-group={groupKey}>
         <div className="group-header">
-        <h4>{groupInfo.title}</h4>
-        <span className="group-progress">{completedCount}/{modules.length}</span>
+        <div className="group-title-container">
+          <BookOpen size={18} className="group-icon" />
+          <h4>{groupInfo.title}</h4>
+        </div>
+        <div className="group-progress-container">
+          <Target size={14} className="progress-icon" />
+          <span className="group-progress">{completedCount}/{modules.length}</span>
+        </div>
       </div>
             <p className="group-description">{groupInfo.description}</p>
       
@@ -495,13 +537,19 @@ const ModuleGroup = ({
 const ModuleCard = ({ module, isUnlocked, progress, isCompleted, icon }) => {
   if (!isUnlocked) {
     return (
-      <div className="module-card locked">
-        <Lock className="lock-icon" />
-        <div className="module-content">
-          <h5>{module.title}</h5>
-          <p className="unlock-requirement">Complete prerequisites first</p>
-        </div>
+    <div className="module-card locked">
+      <div className="locked-overlay">
+        <Lock className="lock-icon" size={24} />
+        <span className="lock-text">Locked</span>
       </div>
+      <div className="module-content">
+        <div className="module-header">
+          <span className="module-icon disabled">{icon}</span>
+        </div>
+        <h5>{module.title}</h5>
+        <p className="unlock-requirement">Complete prerequisites first</p>
+      </div>
+    </div>
     );
   }
 
@@ -512,8 +560,11 @@ const ModuleCard = ({ module, isUnlocked, progress, isCompleted, icon }) => {
     >
       <div className="module-header">
         <span className="module-icon">{icon}</span>
-        {isCompleted && <CheckCircle className="completed-icon" />}
-          </div>
+        <div className="module-status">
+          {isCompleted && <CheckCircle className="completed-icon" size={18} />}
+          {!isCompleted && progress > 0 && <Clock className="in-progress-icon" size={16} />}
+        </div>
+      </div>
       <div className="module-content">
         <h5>{module.title}</h5>
         <p>{module.description}</p>
@@ -537,18 +588,24 @@ const ProgressSection = ({ userStats, hasStarted, setCurrentView }) => {
         </div>
         
         <div className="getting-started">
-          <div className="start-info">
-            <Brain size={48} />
-            <h4>Your Journey Awaits</h4>
-            <p>Complete modules to unlock achievements and track your Bitcoin mastery.</p>
-            <button 
-              className="start-learning-btn"
-              onClick={() => setCurrentView('learning')}
-            >
-              <Play size={20} />
-              Start Learning
-            </button>
+        <div className="start-info">
+          <div className="start-icon-container">
+            <Brain size={48} className="brain-icon" />
+            <Zap size={20} className="energy-icon" />
           </div>
+          <h4>Your Journey Awaits</h4>
+          <p>Complete modules to unlock achievements and track your Bitcoin mastery.</p>
+          <ContinueButton 
+            onClick={() => setCurrentView('learning')}
+            className="start-learning-btn"
+            size="lg"
+            icon={<Play size={20} />}
+            iconPosition="left"
+            feedback="visual"
+          >
+            Start Learning
+          </ContinueButton>
+        </div>
         </div>
       </section>
     );

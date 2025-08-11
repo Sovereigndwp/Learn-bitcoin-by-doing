@@ -1174,6 +1174,158 @@
   }
 }
 
+/* Enhanced Icon System Styles */
+.module-icon-svg {
+  color: #f7931a;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.module-icon-svg:hover {
+  transform: scale(1.1);
+}
+
+.module-icon.disabled .module-icon-svg {
+  color: #666;
+  opacity: 0.5;
+}
+
+/* Continue Learning Enhanced */
+.continue-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.continue-play-icon {
+  color: #10b981;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.continue-arrow-container {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: rgba(247, 147, 26, 0.1);
+  transition: all 0.3s ease;
+}
+
+.next-module-card:hover .continue-arrow-container {
+  background: rgba(247, 147, 26, 0.2);
+  transform: translateX(4px);
+}
+
+.continue-arrow {
+  color: #f7931a;
+}
+
+/* Group Headers Enhanced */
+.group-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.group-icon {
+  color: #f7931a;
+}
+
+.group-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.progress-icon {
+  color: #10b981;
+}
+
+/* Module Status Icons */
+.module-status {
+  display: flex;
+  align-items: center;
+}
+
+.completed-icon {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.in-progress-icon {
+  color: #f59e0b;
+  animation: spin 2s linear infinite;
+}
+
+/* Locked Module Enhanced */
+.locked-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.lock-icon {
+  color: #666;
+}
+
+.lock-text {
+  color: #666;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.module-card.locked {
+  position: relative;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.module-card.locked .module-content {
+  filter: blur(1px);
+}
+
+/* Start Learning Enhanced */
+.start-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.brain-icon {
+  color: #8b5cf6;
+}
+
+.energy-icon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  color: #f59e0b;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.button-arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.start-learning-btn:hover .button-arrow {
+  transform: translateX(2px);
+}
+
 /* Existing Learning Section Styles */
 .learning-section {
   padding: 2rem;

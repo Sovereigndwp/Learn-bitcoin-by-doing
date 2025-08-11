@@ -10,7 +10,7 @@ import {
   ChevronRight,
   AlertCircle 
 } from 'lucide-react';
-import { colors, spacing, borderRadius, transitions, COLORS, SPACING, BORDER_RADIUS, TRANSITIONS, TYPOGRAPHY } from '../../styles/globalStyles';
+import './UnifiedButton.css';
 
 /**
  * UnifiedButton - Consolidates features from ModernButtons, EnhancedButtons, and OptimizedButton
@@ -211,20 +211,8 @@ const UnifiedButton = ({
     }
   };
 
-  // Using imported design tokens from our amazing unified design system
-
+  // Style object for dynamic properties
   const buttonStyles = {
-    backgroundColor: COLORS[variant] || COLORS.primary,
-    color: variant === 'ghost' ? COLORS[variant] : COLORS.light,
-    padding: `${SPACING.sm} ${SPACING.md}`,
-    borderRadius: BORDER_RADIUS.md,
-    border: `1px solid ${COLORS.light}`,
-    transition: `all ${TRANSITIONS.duration} ${TRANSITIONS.timingFunction}`,
-    fontFamily: TYPOGRAPHY.fontFamily,
-    fontWeight: TYPOGRAPHY.fontWeightMedium,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     width: fullWidth ? '100%' : 'auto',
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1,
@@ -233,6 +221,7 @@ const UnifiedButton = ({
   // Build class names
   const baseClasses = [
     'unified-btn',
+    `unified-btn--${variant}`,
     `unified-btn--${size}`,
     `unified-btn--priority-${priority}`,
     `unified-btn--state-${buttonState}`,
@@ -272,6 +261,9 @@ const UnifiedButton = ({
         aria-pressed={buttonState === 'active'}
         aria-disabled={disabled || loading}
         tabIndex={disabled ? -1 : 0}
+        data-variant={variant}
+        data-size={size}
+        data-priority={priority}
         style={{
           ...buttonStyles,
           transform: isPressed && !disabled ? 'scale(0.98)' : 'scale(1)',
