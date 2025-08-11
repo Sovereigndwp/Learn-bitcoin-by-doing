@@ -364,7 +364,6 @@ const LearningSection = ({
   const moduleIcons = {
     money: '💰',
     'bitcoin-basics': '₿',
-    'bitcoin-relevance': '⚡',
     numbers: '🔢',
     hashing: '🔐',
     mining: '⛏️',
