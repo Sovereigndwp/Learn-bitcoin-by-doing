@@ -1,6 +1,7 @@
 import MoneyModule from './MoneyModule';
 import BitcoinBasicsModule from './BitcoinBasicsModule';
 import WhyBitcoinMattersModule from './WhyBitcoinMattersModule';
+import MoneyJourneyModule from './fundamentals/MoneyJourneyModule';
 import NumbersModule from './NumbersModule';
 import HashingModule from './HashingModule';
 import MiningModule from './MiningModule';
@@ -15,51 +16,51 @@ import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
-  // Unified Progressive Module - Single Path to Bitcoin Understanding
+  // Fundamentals: Complete Sequence from Problem to Solution
   'wake-up-call': {
     id: 'wake-up-call',
-    title: 'Why This Matters to You',
-    description: 'Real disruptions happening right now that could affect your financial life.',
+    title: 'Wake-Up Call: The Money Problem',
+    description: 'Open your eyes with shocking, relatable examples of money system failures happening right now.',
     component: WhyBitcoinMattersModule,
     order: 1,
-    group: 'unified-path',
+    group: 'fundamentals',
     prerequisites: []
   },
-  'what-money-is': {
-    id: 'what-money-is',
-    title: 'What Money Is (Without the Jargon)',
-    description: 'The three functions of money explained in plain language with relatable examples.',
-    component: MoneyModule,
+  'money-journey': {
+    id: 'money-journey',
+    title: 'The Journey of Money: From Rocks to Digital',
+    description: 'Explore the evolution from barter to Bitcoin through relatable everyday examples.',
+    component: MoneyJourneyModule,
     order: 2,
-    group: 'unified-path',
+    group: 'fundamentals',
     prerequisites: ['wake-up-call']
   },
-  'how-we-got-here': {
-    id: 'how-we-got-here',
-    title: 'A Brief History of How We Got Here',
-    description: 'Gold → Fiat → Bitcoin: Evolution of money systems and why it matters.',
+  'good-money': {
+    id: 'good-money',
+    title: 'What Makes Good Money',
+    description: 'Learn the essential properties and functions that make money work for people.',
     component: BitcoinBasicsModule,
     order: 3,
-    group: 'unified-path',
-    prerequisites: ['what-money-is']
+    group: 'fundamentals',
+    prerequisites: ['money-journey']
   },
-  'money-stress-tests': {
-    id: 'money-stress-tests',
-    title: 'The Real-World Money Tests',
-    description: 'Four critical tests every money system faces - and how different types of money perform.',
+  'money-goes-bad': {
+    id: 'money-goes-bad',
+    title: 'When Good Money Goes Bad',
+    description: 'Case studies of money failures and the patterns that lead to financial crisis.',
     component: MythsModule,
     order: 4,
-    group: 'unified-path',
-    prerequisites: ['how-we-got-here']
+    group: 'fundamentals',
+    prerequisites: ['good-money']
   },
-  'protecting-yourself': {
-    id: 'protecting-yourself',
-    title: 'Next Step: Protecting Yourself',
-    description: 'Introduction to self-custody and taking control of your financial sovereignty.',
+  'bitcoin-blueprint': {
+    id: 'bitcoin-blueprint',
+    title: 'Bitcoin: The Better Blueprint',
+    description: 'Discover how Bitcoin addresses every money failure through superior design.',
     component: CustodyModule,
     order: 5,
-    group: 'unified-path',
-    prerequisites: ['money-stress-tests']
+    group: 'fundamentals',
+    prerequisites: ['money-goes-bad']
   },
 
   // Phase 2: Practical Mastery - Build on the foundation
@@ -70,7 +71,7 @@ export const moduleRegistry = {
     component: BitcoinToolkitModule,
     order: 6,
     group: 'practical-first',
-    prerequisites: ['protecting-yourself']
+    prerequisites: ['bitcoin-blueprint']
   },
   transactions: {
     id: 'transactions',
@@ -161,9 +162,9 @@ export const moduleRegistry = {
 
 // Group definitions with emojis and descriptions - RESTRUCTURED FOR ENGAGEMENT
 export const moduleGroups = {
-  'unified-path': {
-    title: '🎯 The Complete Bitcoin Story',
-    description: 'A progressive journey from real-world problems to Bitcoin solutions',
+  'fundamentals': {
+    title: '🎯 Fundamentals',
+    description: 'High-impact journey from money problems to Bitcoin solutions',
     emoji: '🎯',
     order: 1
   },
