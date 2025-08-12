@@ -1759,6 +1759,99 @@ h1.content-tier-1 {
 }
 
 /* ========================================
+   CRITICAL UNIVERSAL DARK THEME OVERRIDE
+   Prevents white-on-white text issues across all pages
+   ======================================== */
+   
+/* Force dark theme on ALL page containers */
+.step-content,
+.module-content,
+.lesson-content,
+.page-content,
+.intro-content,
+[class*="intro"],
+[class*="content"],
+[class*="step"],
+[class*="lesson"],
+[class*="module"] {
+  background: var(--color-dark-bg, #0D1117) !important;
+  color: var(--color-dark-text, #ffffff) !important;
+}
+
+/* Force all text elements to use proper dark theme colors */
+h1, h2, h3, h4, h5, h6,
+p, span, div, li, a,
+.text, .content, .description,
+.title, .subtitle, .heading {
+  color: var(--color-dark-text, #ffffff) !important;
+}
+
+/* Force all background containers to use dark backgrounds */
+.container,
+.card,
+.box,
+.section,
+.panel,
+.wrapper,
+[class*="container"],
+[class*="card"],
+[class*="box"],
+[class*="section"],
+[class*="panel"],
+[class*="wrapper"] {
+  background: var(--color-dark-bgCard, #1c2128) !important;
+  color: var(--color-dark-text, #ffffff) !important;
+  border-color: var(--color-dark-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+/* Force input elements to use dark theme */
+input, textarea, select, button {
+  background: var(--color-dark-bgCard, #1c2128) !important;
+  color: var(--color-dark-text, #ffffff) !important;
+  border-color: var(--color-dark-border, rgba(255, 255, 255, 0.1)) !important;
+}
+
+/* Ensure Bitcoin orange accents are preserved */
+.bitcoin-highlight,
+.primary-accent,
+.orange-accent,
+[class*="bitcoin"],
+[class*="primary"],
+[class*="accent"] {
+  color: var(--color-primary-400, #f7931a) !important;
+}
+
+/* Force success colors */
+.success,
+.correct,
+.complete,
+[class*="success"],
+[class*="correct"],
+[class*="complete"] {
+  color: var(--color-success-text, #4ade80) !important;
+}
+
+/* Force warning colors */
+.warning,
+.caution,
+.alert,
+[class*="warning"],
+[class*="caution"],
+[class*="alert"] {
+  color: var(--color-warning-text, #fb923c) !important;
+}
+
+/* Force error colors */
+.error,
+.danger,
+.incorrect,
+[class*="error"],
+[class*="danger"],
+[class*="incorrect"] {
+  color: var(--color-error-text, #f87171) !important;
+}
+
+/* ========================================
    UNIVERSAL PAGE HIERARCHY ENFORCEMENT
    All modules must follow the same content structure
    ======================================== */
