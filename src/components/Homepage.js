@@ -114,17 +114,21 @@ const Homepage = () => {
     });
   };
   
-  // Progressive unlocking logic
+  // Progressive unlocking logic - TEMPORARILY UNLOCKED FOR TESTING
   const isModuleUnlocked = (module) => {
-    if (module.id === 'money') {
-      return bankingExperienceCompleted;
-    }
+    // 🚨 TEMP: All modules unlocked for testing
+    return true;
     
-    if (module.prerequisites.length === 0) {
-      return bankingExperienceCompleted;
-    }
-    
-    return module.prerequisites.every(prereq => isModuleCompleted(prereq));
+    // Original logic (commented out temporarily):
+    // if (module.id === 'money') {
+    //   return bankingExperienceCompleted;
+    // }
+    // 
+    // if (module.prerequisites.length === 0) {
+    //   return bankingExperienceCompleted;
+    // }
+    // 
+    // return module.prerequisites.every(prereq => isModuleCompleted(prereq));
   };
 
   return (
