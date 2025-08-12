@@ -15,22 +15,31 @@ import MythsModule from './MythsModule';
 import BitcoinToolkitModule from './BitcoinToolkitModule';
 
 export const moduleRegistry = {
-  // Phase 1: Foundation & Immediate Relevance - Get users engaged and motivated
-  'bitcoin-basics': {
-    id: 'bitcoin-basics',
-    title: 'Bitcoin Fundamentals',
-    description: 'Learn what Bitcoin is, how it works, and why it represents a different approach to money.',
-    component: BitcoinBasicsModule,
+  // Phase 1: Foundation - Start with the money problem, then show the solution
+  money: {
+    id: 'money',
+    title: 'Understanding Money',
+    description: 'Discover how money really works, why current systems fail, and what we desperately need.',
+    component: MoneyModule,
     order: 1,
     group: 'foundations',
     prerequisites: []
+  },
+  'bitcoin-basics': {
+    id: 'bitcoin-basics',
+    title: 'Bitcoin Basics',
+    description: 'Learn what Bitcoin is, how it works, and why it represents the solution to money\'s problems.',
+    component: BitcoinBasicsModule,
+    order: 2,
+    group: 'foundations',
+    prerequisites: ['money']
   },
   'bitcoin-relevance': {
     id: 'bitcoin-relevance',
     title: 'Why Bitcoin Matters Today',
     description: 'Real-world scenarios showing Bitcoin\'s immediate relevance to your financial life.',
     component: WhyBitcoinMattersModule,
-    order: 2,
+    order: 3,
     group: 'foundations',
     prerequisites: ['bitcoin-basics']
   },
@@ -39,18 +48,9 @@ export const moduleRegistry = {
     title: 'Bitcoin Myths & Facts',
     description: 'Address common misconceptions about Bitcoin with evidence and data.',
     component: MythsModule,
-    order: 3,
-    group: 'foundations',
-    prerequisites: ['bitcoin-relevance']
-  },
-  money: {
-    id: 'money',
-    title: 'Understanding Money',
-    description: 'Essential money concepts - streamlined for practical understanding.',
-    component: MoneyModule,
     order: 4,
     group: 'foundations',
-    prerequisites: ['myths']
+    prerequisites: ['bitcoin-relevance']
   },
 
   // Phase 2: Practical Mastery First - Immediate value and hands-on skills
@@ -61,7 +61,7 @@ export const moduleRegistry = {
     component: CustodyModule,
     order: 5,
     group: 'practical-first',
-    prerequisites: ['money']
+    prerequisites: ['myths']
   },
   'bitcoin-toolkit': {
     id: 'bitcoin-toolkit',
@@ -163,7 +163,7 @@ export const moduleRegistry = {
 export const moduleGroups = {
   'foundations': {
     title: '⚡ Foundation & Motivation',
-    description: 'Why Bitcoin matters and essential concepts',
+    description: 'The money problem and Bitcoin solution - essential concepts that change everything',
     emoji: '⚡',
     order: 1
   },

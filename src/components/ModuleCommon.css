@@ -28,16 +28,16 @@
   --colors-neutral-gray400: #BDBDBD;
   --colors-neutral-gray500: #9E9E9E;
   
-  /* Background System */
-  --color-background-primary: #FFFFFF;
-  --color-background-secondary: #FAFAFA;
-  --color-background-card: #FFFFFF;
+  /* Background System - Dark Theme */
+  --color-background-primary: var(--color-dark-bg);
+  --color-background-secondary: var(--color-dark-bgSecondary);
+  --color-background-card: var(--color-dark-bgCard);
   --color-background-cardHover: var(--glass-bg-hover);
   
-  /* Text System */
-  --color-text-primary: #212121;
-  --color-text-secondary: #757575;
-  --color-text-inverse: #FFFFFF;
+  /* Text System - Dark Theme */
+  --color-text-primary: var(--color-dark-text);
+  --color-text-secondary: var(--color-dark-textSecondary);
+  --color-text-inverse: var(--color-dark-bg);
   
   /* Typography System */
   --typography-fontFamily-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -96,16 +96,16 @@
   --module-error: var(--color-semantic-error);
   --module-info: var(--color-semantic-info);
   
-  /* Background System */
-  --module-bg-primary: var(--color-background-primary);
-  --module-bg-secondary: var(--color-background-secondary);
-  --module-bg-card: var(--color-background-card);
-  --module-bg-card-hover: var(--color-background-cardHover);
+  /* Background System - Dark Theme */
+  --module-bg-primary: var(--color-dark-bg);
+  --module-bg-secondary: var(--color-dark-bgSecondary);
+  --module-bg-card: var(--color-dark-bgCard);
+  --module-bg-card-hover: var(--color-dark-bgElevated);
   
-  /* Text System */
-  --module-text-primary: var(--color-text-primary);
-  --module-text-secondary: var(--color-text-secondary);
-  --module-text-inverse: var(--color-text-inverse);
+  /* Text System - Dark Theme */
+  --module-text-primary: var(--color-dark-text);
+  --module-text-secondary: var(--color-dark-textSecondary);
+  --module-text-inverse: var(--color-dark-bg);
   
   /* Global Module Spacing System - Controls ALL module layouts */
   --module-spacing-xs: var(--spacing-1);    /* 4px - Tiny gaps */
@@ -152,8 +152,8 @@
   margin: 0 auto;
   max-width: 1200px;
   padding: var(--module-spacing-3xl) var(--module-spacing-2xl); /* Vertical and horizontal padding */
-  background: var(--module-bg-primary);
-  color: var(--module-text-primary);
+  background: var(--color-dark-bg);
+  color: var(--color-dark-text);
   font-family: var(--typography-fontFamily-primary);
   font-weight: var(--typography-fontWeight-normal);
   min-height: 100vh;
@@ -182,22 +182,24 @@
 .content-section {
   margin-bottom: var(--module-spacing-4xl);
   padding: var(--module-spacing-2xl);
-  background: var(--glass-bg);
+  background: var(--color-dark-bgCard);
   border-radius: var(--module-radius-xl);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-dark-border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-dark-lg);
 }
 
 /* Secondary content sections - Sub-topics */
 .section-card {
   margin-bottom: var(--module-spacing-3xl);
   padding: var(--module-spacing-xl);
-  background: var(--glass-bg);
+  background: var(--color-dark-bgCard);
   border-radius: var(--module-radius-lg);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-dark-border);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-dark-md);
   box-shadow: var(--module-shadow-sm);
 }
 

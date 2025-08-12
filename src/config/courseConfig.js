@@ -52,9 +52,9 @@ export const course = [
         views: ['intro'] 
       },
       { 
-        id: 'compare', 
-        title: 'Compare Systems',
-        views: ['intro', 'interactive'] 
+        id: 'what-is-bitcoin', 
+        title: 'What is Bitcoin?',
+        views: ['intro', 'key-features', 'simple-explanation'] 
       },
       { 
         id: 'how-it-works', 
@@ -65,6 +65,11 @@ export const course = [
         id: 'why-valuable', 
         title: 'Why Bitcoin is Valuable',
         views: ['intro', 'examples'] 
+      },
+      { 
+        id: 'compare', 
+        title: 'Compare Systems',
+        views: ['intro', 'interactive'] 
       },
       { 
         id: 'complete', 

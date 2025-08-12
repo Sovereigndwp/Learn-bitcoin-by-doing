@@ -32,7 +32,7 @@ import '../components/ModuleCommon.css';
 const stepLabels = [
   'Introduction',
   'Why Money?',
-  'What Money Must Do',
+  'Journey of Money',
   'Time vs Money',
   'How Modern Money Works', 
   'Sound Money Framework',
@@ -43,228 +43,499 @@ const stepLabels = [
 // Local components removed - now using imported page components
 
 // Main Module Component
-// WhyMoney component - Combined comprehensive lesson
+// WhyMoney component - Interactive trading story demo
 const WhyMoney = ({ onComplete }) => {
-  const [stage, setStage] = useState(0); // 0: intro, 1: comprehensive scenario, 2: conclusion
-  const [playerChoices, setPlayerChoices] = useState([]);
-  const [allProblems, setAllProblems] = useState(new Set());
-
-  const handleAnswer = (problemType, isCorrect) => {
-    if (isCorrect) {
-      setAllProblems(prev => new Set([...prev, problemType]));
-    }
-    setPlayerChoices(prev => [...prev, { problemType, isCorrect }]);
-  };
-
-  const handleNextStage = () => {
-    setStage(prev => prev + 1);
-  };
-
-  if (stage === 0) {
-    return (
-      <div className="module-container">
-        <div className="section-card">
-          <h1 className="heading-critical">Why Money?</h1>
-          <p>Before we explore how money works today, let's understand why it exists at all.</p>
-          <p>Imagine a world without money. How would you get the things you need?</p>
+  return (
+    <div className="module-container">
+      <div className="section-card">
+        <h1 className="heading-critical">💰 Why Money Exists</h1>
+        <p>Follow the story of four traders and discover the problems that money solves</p>
+      </div>
+      
+      <div className="card-feature">
+        <div style={{
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
+          color: '#f5f5f5',
+          borderRadius: '15px',
+          padding: '20px',
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+        }}>
+          <TradingStoryDemo />
         </div>
         
-        <div className="card-feature">
-          <h2 className="heading-high">The Challenge</h2>
-          <p>You're a skilled baker in a village without money. You make amazing bread, but you need shoes for winter. The shoemaker needs a roof repair, the carpenter needs medicine, and the herbalist needs... bread.</p>
-          
-          <div className="scenario-setup">
-            <h3>Your Mission</h3>
-            <p>Trade your bread for shoes. Sounds simple? Let's see what actually happens in a barter world.</p>
-          </div>
-          
-          <ActionButton onClick={handleNextStage} variant="primary">
-            Start Trading →
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <ActionButton onClick={() => onComplete(1)} variant="primary">
+            Now Let's See What Money Must Do →
           </ActionButton>
         </div>
       </div>
-    );
+    </div>
+  );
+};
+
+// Trading Story Demo Component
+class TradingStoryDemo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentStep: 0,
+      players: [
+        {
+          name: "Alice",
+          has: "🍎 Fresh Apples",
+          wants: "👟 Running Shoes",
+          active: false,
+          speaking: false
+        },
+        {
+          name: "Bob", 
+          has: "📚 Math Textbook",
+          wants: "🍎 Fresh Apples",
+          active: false,
+          speaking: false
+        },
+        {
+          name: "Carol",
+          has: "⚡ Phone Charger",
+          wants: "📚 Math Textbook", 
+          active: false,
+          speaking: false
+        },
+        {
+          name: "Dave",
+          has: "👟 Running Shoes",
+          wants: "⚡ Phone Charger",
+          active: false,
+          speaking: false
+        }
+      ],
+      storySteps: [
+        {
+          speaker: "Narrator",
+          text: "Meet our four traders! Each person has one item they want to trade, and needs one specific item. Let's see what happens when they try to trade without money...",
+          activePlayer: null,
+          speakingPlayer: null
+        },
+        {
+          speaker: "Alice",
+          text: "I have fresh apples from my orchard, but I really need running shoes for my morning jogs. Let me see who might want to trade...",
+          activePlayer: 0,
+          speakingPlayer: 0
+        },
+        {
+          speaker: "Alice",
+          text: "Bob, would you like to trade your math textbook for my fresh apples?",
+          activePlayer: 1,
+          speakingPlayer: 0
+        },
+        {
+          speaker: "Bob",
+          text: "I'd love your apples, Alice! But I can't give you my textbook for them - I need running shoes, not apples. Sorry!",
+          activePlayer: 1,
+          speakingPlayer: 1,
+          problem: {
+            title: "Problem #1: Double Coincidence of Wants",
+            text: "Bob wants Alice's apples, but Alice doesn't want Bob's textbook. Both people must want what the other has for a trade to work!"
+          }
+        },
+        {
+          speaker: "Alice",
+          text: "Hmm, let me try Dave. Dave, I have fresh apples - would you trade your running shoes for them?",
+          activePlayer: 3,
+          speakingPlayer: 0
+        },
+        {
+          speaker: "Dave",
+          text: "Alice, I'd love to help, but I need a phone charger, not apples. Plus, how many apples are we talking about? 5 apples? 50 apples? It's hard to know if that's a fair trade for expensive running shoes!",
+          activePlayer: 3,
+          speakingPlayer: 3,
+          problem: {
+            title: "Problem #2: Unit of Account",
+            text: "Without money, it's difficult to compare values. How many apples equal one pair of shoes? There's no standard way to measure and compare different items!"
+          }
+        },
+        {
+          speaker: "Alice",
+          text: "You're right, Dave. This is getting complicated. Maybe I should find someone who wants apples and has what you need?",
+          activePlayer: 0,
+          speakingPlayer: 0
+        },
+        {
+          speaker: "Bob",
+          text: "Wait! I have an idea. Alice, I really want your apples, but I know you need shoes. What if I take your apples now, and in 6 months when I'm done with my textbook, I'll trade it to Carol for her charger, then trade the charger to Dave for his shoes, and give you the shoes?",
+          activePlayer: 1,
+          speakingPlayer: 1
+        },
+        {
+          speaker: "Alice",
+          text: "Bob, that's very complicated, and my apples will be rotten in 6 months! I need to trade them now while they're fresh, but I need the shoes now too. I can't store the value of my apples for later!",
+          activePlayer: 0,
+          speakingPlayer: 0,
+          problem: {
+            title: "Problem #3: Store of Value",
+            text: "Some goods spoil or lose value over time. Alice's apples won't last 6 months! Without money, it's hard to save the value of your goods for future trades."
+          }
+        },
+        {
+          speaker: "Carol",
+          text: "This is so frustrating! We're all here, we all have things others want, but we can't make it work. Bob wants Alice's apples, Alice wants Dave's shoes, Dave wants my charger, and I want Bob's textbook. It should be simple!",
+          activePlayer: 2,
+          speakingPlayer: 2
+        },
+        {
+          speaker: "Dave",
+          text: "Exactly! We need to do this crazy chain: Alice gives apples to Bob, Bob gives textbook to Carol, Carol gives charger to me, and I give shoes to Alice. But we'd all have to coordinate perfectly and trust each other completely!",
+          activePlayer: 3,
+          speakingPlayer: 3,
+          problem: {
+            title: "Problem #4: Medium of Exchange",
+            text: "Without a common medium everyone accepts, complex chains of trades are needed. This requires perfect coordination and trust from everyone involved!"
+          }
+        },
+        {
+          speaker: "Narrator",
+          text: "And this is exactly why money was invented! Money solves all these problems by being something everyone accepts, that doesn't spoil, and provides a standard way to measure value. Let's see how money would solve this...",
+          activePlayer: null,
+          speakingPlayer: null
+        }
+      ]
+    };
   }
 
-  if (stage === 1) {
+  getStepTitle() {
+    const titles = [
+      "Meet the Traders",
+      "Alice Looks for Shoes", 
+      "Alice Approaches Bob",
+      "Bob's Dilemma",
+      "Alice Tries Dave",
+      "Dave's Concerns",
+      "Alice Gets Frustrated",
+      "Bob's Complex Plan",
+      "Alice's Storage Problem",
+      "Carol's Frustration",
+      "Dave's Chain Solution",
+      "The Money Solution"
+    ];
+    return titles[this.state.currentStep] || "Story Step";
+  }
+
+  nextStep = () => {
+    if (this.state.currentStep < this.state.storySteps.length - 1) {
+      this.setState({ currentStep: this.state.currentStep + 1 }, () => {
+        if (this.state.currentStep === this.state.storySteps.length - 1) {
+          this.showLessonSummary();
+        }
+      });
+    }
+  }
+
+  showLessonSummary = () => {
+    // Summary is shown after the last step
+  }
+
+  restartStory = () => {
+    this.setState({ currentStep: 0 });
+  }
+
+  render() {
+    const { currentStep, players, storySteps } = this.state;
+    const currentStoryStep = storySteps[currentStep];
+    
+    // Update player states
+    const updatedPlayers = players.map((player, index) => ({
+      ...player,
+      active: currentStoryStep.activePlayer === index,
+      speaking: currentStoryStep.speakingPlayer === index
+    }));
+
+    const styles = {
+      container: {
+        maxWidth: '1200px',
+        margin: '0 auto'
+      },
+      header: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        padding: '20px',
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        borderRadius: '15px',
+        boxShadow: '0 5px 15px rgba(184, 115, 51, 0.3)'
+      },
+      headerTitle: {
+        fontSize: '1.8rem',
+        marginBottom: '8px',
+        color: '#1a1a1a',
+        fontWeight: 'bold'
+      },
+      headerSubtitle: {
+        fontSize: '1rem',
+        color: '#1a1a1a',
+        opacity: 0.9
+      },
+      storyContainer: {
+        background: '#1a1a1a',
+        borderRadius: '15px',
+        padding: '20px',
+        marginBottom: '20px',
+        boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)',
+        border: '1px solid #333'
+      },
+      storyHeader: {
+        textAlign: 'center',
+        marginBottom: '20px'
+      },
+      storyTitle: {
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        fontSize: '1.5rem',
+        marginBottom: '8px'
+      },
+      stepCounter: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        fontSize: '1.1rem',
+        background: '#2a2a2a',
+        padding: '10px',
+        borderRadius: '8px'
+      },
+      playersGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '12px',
+        marginBottom: '20px'
+      },
+      playerCard: (player) => ({
+        background: player.speaking ? '#3a3a00' : player.active ? '#333' : '#2a2a2a',
+        borderRadius: '10px',
+        padding: '15px',
+        border: `3px solid ${player.speaking ? '#CD7F32' : player.active ? '#B87333' : 'transparent'}`,
+        transition: 'all 0.3s ease',
+        textAlign: 'center',
+        minHeight: '140px',
+        ...(player.speaking && {
+          animation: 'pulse 2s infinite',
+          boxShadow: '0 0 20px rgba(205, 127, 50, 0.3)'
+        }),
+        ...(player.active && !player.speaking && {
+          boxShadow: '0 0 20px rgba(184, 115, 51, 0.3)'
+        })
+      }),
+      playerName: {
+        fontSize: '1.1rem',
+        fontWeight: 'bold',
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        marginBottom: '10px'
+      },
+      playerItem: {
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        color: '#1a1a1a',
+        padding: '8px 12px',
+        borderRadius: '20px',
+        fontSize: '0.9rem',
+        fontWeight: 'bold',
+        margin: '5px 0',
+        display: 'inline-block'
+      },
+      playerWants: {
+        background: 'transparent',
+        border: '2px dashed #B87333',
+        color: '#B87333',
+        padding: '8px 12px',
+        borderRadius: '20px',
+        fontSize: '0.9rem',
+        margin: '5px 0',
+        display: 'inline-block'
+      },
+      storyDialogue: {
+        background: '#2a2a2a',
+        borderRadius: '10px',
+        padding: '20px',
+        marginBottom: '20px',
+        borderLeft: '4px solid #B87333',
+        minHeight: '120px'
+      },
+      dialogueSpeaker: {
+        fontWeight: 'bold',
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        marginBottom: '10px',
+        fontSize: '1.1rem'
+      },
+      dialogueText: {
+        fontSize: '1rem',
+        lineHeight: 1.5,
+        color: '#f5f5f5'
+      },
+      problemHighlight: {
+        background: '#4a1a1a',
+        border: '2px solid #ff4444',
+        borderRadius: '8px',
+        padding: '15px',
+        margin: '15px 0'
+      },
+      problemTitle: {
+        color: '#ff6666',
+        fontWeight: 'bold',
+        marginBottom: '8px',
+        fontSize: '1rem'
+      },
+      controls: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '15px',
+        marginBottom: '20px'
+      },
+      btn: {
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        color: '#1a1a1a',
+        border: 'none',
+        padding: '12px 24px',
+        borderRadius: '8px',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px'
+      },
+      btnSecondary: {
+        background: '#444',
+        color: '#f5f5f5'
+      },
+      lessonSummary: {
+        background: '#1a1a1a',
+        padding: '25px',
+        borderRadius: '15px',
+        marginTop: '20px',
+        border: '2px solid #B87333'
+      },
+      lessonTitle: {
+        background: 'linear-gradient(135deg, #B87333 0%, #CD7F32 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        marginBottom: '15px',
+        fontSize: '1.5rem'
+      },
+      lessonItem: {
+        background: '#2a2a2a',
+        padding: '15px',
+        borderRadius: '8px',
+        marginBottom: '15px',
+        borderLeft: '4px solid #B87333'
+      },
+      lessonItemTitle: {
+        color: '#B87333',
+        marginBottom: '8px'
+      },
+      bigInsight: {
+        marginTop: '20px',
+        padding: '15px',
+        background: '#2a2a2a',
+        borderRadius: '8px'
+      }
+    };
+
     return (
-      <ComprehensiveBarterScenario 
-        onAnswer={handleAnswer}
-        onComplete={handleNextStage}
-        discoveredProblems={allProblems}
-      />  
-    );
-  }
+      <div style={styles.container}>
+        <div style={styles.header}>
+          <h1 style={styles.headerTitle}>💰 Why Money Exists</h1>
+          <p style={styles.headerSubtitle}>Follow the story of four traders and discover the problems that money solves</p>
+        </div>
 
-  // Conclusion stage
-  return (
-    <div className="module-container">
-      <div className="section-card">
-        <h1 className="heading-critical">💡 The Big Realization</h1>
-        <p>You've discovered why every civilization eventually invented money!</p>
-      </div>
-      
-      <div className="card-feature">
-        <h2 className="heading-high">The Problems You Found</h2>
-        <div className="problems-discovered">
-          {Array.from(allProblems).map(problem => (
-            <div key={problem} className="problem-insight">
-              <span className="problem-icon">✓</span>
-              <div className="problem-details">
-                <h4>{problemLabels[problem]}</h4>
-                <p>{problemExplanations[problem]}</p>
+        <div style={styles.storyContainer}>
+          <div style={styles.storyHeader}>
+            <h2 style={styles.storyTitle}>🔄 The Great Trading Chain Story</h2>
+            <p>Click "Next Step" to follow along as our traders try to help each other</p>
+          </div>
+
+          <div style={styles.stepCounter}>
+            Step {currentStep + 1} of {storySteps.length}: {this.getStepTitle()}
+          </div>
+
+          <div style={styles.playersGrid}>
+            {updatedPlayers.map((player, index) => (
+              <div key={index} style={styles.playerCard(player)}>
+                <div style={styles.playerName}>{player.name}</div>
+                <div style={{ marginBottom: '8px', fontWeight: 'bold', color: '#ccc', fontSize: '0.8rem' }}>HAS:</div>
+                <div style={styles.playerItem}>{player.has}</div>
+                <div style={{ margin: '8px 0', fontWeight: 'bold', color: '#ccc', fontSize: '0.8rem' }}>WANTS:</div>
+                <div style={styles.playerWants}>{player.wants}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={styles.storyDialogue}>
+            <div style={styles.dialogueSpeaker}>{currentStoryStep.speaker}</div>
+            <div style={styles.dialogueText}>{currentStoryStep.text}</div>
+            {currentStoryStep.problem && (
+              <div style={styles.problemHighlight}>
+                <div style={styles.problemTitle}>{currentStoryStep.problem.title}</div>
+                <div>{currentStoryStep.problem.text}</div>
+              </div>
+            )}
+          </div>
+
+          <div style={styles.controls}>
+            <button 
+              style={styles.btn} 
+              onClick={this.nextStep}
+              disabled={currentStep >= storySteps.length - 1}
+            >
+              Next Step
+            </button>
+            <button 
+              style={{...styles.btn, ...styles.btnSecondary}} 
+              onClick={this.restartStory}
+            >
+              Restart Story
+            </button>
+          </div>
+
+          {currentStep === storySteps.length - 1 && (
+            <div style={styles.lessonSummary}>
+              <h3 style={styles.lessonTitle}>🎓 What We Learned: The Problems Money Solves</h3>
+              
+              <div style={styles.lessonItem}>
+                <h4 style={styles.lessonItemTitle}>1. Double Coincidence of Wants</h4>
+                <p>Without money, both people must want exactly what the other has. This is very rare and makes trading difficult!</p>
+              </div>
+              
+              <div style={styles.lessonItem}>
+                <h4 style={styles.lessonItemTitle}>2. Unit of Account</h4>
+                <p>Money provides a standard way to measure and compare values. How many apples = 1 pair of shoes? Money gives us the answer!</p>
+              </div>
+              
+              <div style={styles.lessonItem}>
+                <h4 style={styles.lessonItemTitle}>3. Store of Value</h4>
+                <p>Money doesn't spoil like apples! You can save money today and spend it months later, preserving your purchasing power over time.</p>
+              </div>
+              
+              <div style={styles.lessonItem}>
+                <h4 style={styles.lessonItemTitle}>4. Medium of Exchange</h4>
+                <p>Money is something everyone accepts, eliminating the need for complex trading chains. Alice can sell apples for money, then buy shoes with that money!</p>
+              </div>
+              
+              <div style={styles.bigInsight}>
+                <strong>💡 The Big Insight:</strong> Money wasn't invented by governments - it emerged naturally because people needed to solve these trading problems! Money makes our economy possible.
               </div>
             </div>
-          ))}
+          )}
         </div>
-        
-        <div className="concept-card">
-          <h3>🚀 The Solution: Money</h3>
-          <p>Money solved all these problems by creating something everyone would accept in trade. This wasn't invented by governments—people created it because they desperately needed it.</p>
-          
-          <div className="key-insight">
-            <h4>Key Insight</h4>
-            <p>Money isn't just convenient—it's essential for complex civilization. Without it, we'd still be living in small villages, limited by what we could trade directly.</p>
-          </div>
-        </div>
-        
-        <ActionButton onClick={() => onComplete(1)} variant="primary">
-          Now Let's See What Money Must Do →
-        </ActionButton>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-// Comprehensive barter scenario combining all problems into one experience
-const ComprehensiveBarterScenario = ({ onAnswer, onComplete, discoveredProblems }) => {
-  const [step, setStep] = useState(0);
-  const [choices, setChoices] = useState([]);
-  
-  const scenarioSteps = [
-    {
-      title: "🍞 First Attempt: Direct Trade",
-      situation: "You approach the shoemaker with your fresh bread.",
-      dialogue: "'Nice bread,' says the shoemaker, 'but I already have plenty. I need my roof fixed.'",
-      question: "What's the core problem?",
-      options: [
-        { text: "The shoemaker doesn't appreciate good bread", correct: false },
-        { text: "You need to find someone who wants bread AND has shoes", correct: false },
-        { text: "Both people must want what the other has, at the same time", correct: true, problem: "coincidence" }
-      ],
-      insight: "This is called the 'double coincidence of wants' problem—the foundation of why barter is so difficult."
-    },
-    {
-      title: "🔗 Second Attempt: Chain Trading",  
-      situation: "You decide to create a trade chain: bread → roof repair → shoes.",
-      dialogue: "You find a carpenter who wants bread and can fix roofs. But when you both go to the shoemaker, he says: 'I need medicine, not roof repair.'",
-      question: "What makes this even harder?", 
-      options: [
-        { text: "You need too many different people", correct: false },
-        { text: "Coordinating multiple people creates fragile chains", correct: true, problem: "complexity" },
-        { text: "Everyone is being unreasonable", correct: false }
-      ],
-      insight: "Trade chains are fragile—if any link breaks, the entire sequence fails. More people = more failure points."
-    },
-    {
-      title: "⏰ Third Attempt: Timing Issues",
-      situation: "You finally arrange a 4-person trade chain, but...",
-      dialogue: "By the time you coordinate everyone, the herbalist has already traded her medicine. 'Come back next month,' she says.",
-      question: "What does this reveal?",
-      options: [
-        { text: "You should have moved faster", correct: false },
-        { text: "Everyone must be ready to trade at exactly the same moment", correct: true, problem: "timing" },
-        { text: "People can't be trusted", correct: false }
-      ],
-      insight: "Barter requires impossible synchronization. Everyone must want to trade at the exact same moment—nearly impossible to coordinate."
-    },
-    {
-      title: "💔 The Fundamental Problem",
-      situation: "After weeks of trying, you realize the deeper issue.",
-      dialogue: "Even when trades work, you can't save extra bread (it spoils), can't easily compare values (is 1 shoe = 3 loaves or 5?), and every transaction requires finding exact matches.",
-      question: "What does this tell us about trade without money?",
-      options: [
-        { text: "It works fine with patience", correct: false },
-        { text: "The whole system is fundamentally flawed for complex societies", correct: true, problem: "system" },
-        { text: "People just need to be more flexible", correct: false }
-      ],
-      insight: "Barter can't support complex civilization. It limits communities to small, simple economies where everyone knows everyone."
-    }
-  ];
-  
-  const currentStep = scenarioSteps[step];
-  
-  return (
-    <div className="module-container">
-      <div className="section-card">
-        <h1 className="heading-critical">The Great Barter Experiment</h1>
-        <p>Step {step + 1} of {scenarioSteps.length}: Let's see what happens when you try to trade...</p>
-      </div>
-      
-      <div className="card-feature">
-        <h2 className="heading-high">{currentStep.title}</h2>
-        
-        <div className="scenario-content">
-          <div className="situation-box">
-            <h3>What's Happening</h3>
-            <p>{currentStep.situation}</p>
-          </div>
-          
-          <div className="dialogue-box">
-            <p><em>{currentStep.dialogue}</em></p>
-          </div>
-          
-          <div className="question-section">
-            <h4>{currentStep.question}</h4>
-            
-            {!choices[step] && (
-              <div className="quiz-options">
-                {currentStep.options.map((option, index) => (
-                  <ActionButton
-                    key={index}
-                    onClick={() => {
-                      const newChoices = [...choices];
-                      newChoices[step] = option;
-                      setChoices(newChoices);
-                      onAnswer(option.problem, option.correct);
-                    }}
-                    variant="outline"
-                  >
-                    {option.text}
-                  </ActionButton>
-                ))}
-              </div>
-            )}
-            
-            {choices[step] && (
-              <div className={`quiz-feedback ${choices[step].correct ? 'correct' : 'incorrect'}`}>
-                <div className="feedback-text">
-                  <p>{choices[step].correct ? '✅ Exactly right!' : '❌ Not quite.'}</p>
-                  <div className="insight-box">
-                    <strong>💡 Key Learning:</strong> {currentStep.insight}
-                  </div>
-                </div>
-                
-                <ActionButton 
-                  onClick={() => {
-                    if (step < scenarioSteps.length - 1) {
-                      setStep(step + 1);
-                    } else {
-                      onComplete();
-                    }
-                  }}
-                  variant="primary"
-                >
-                  {step < scenarioSteps.length - 1 ? 'Continue the Experiment →' : 'See What You Discovered →'}
-                </ActionButton>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// Note: ComprehensiveBarterScenario component removed - replaced with TradingStoryDemo
 
 const problemLabels = {
   "coincidence": "Double Coincidence of Wants",
@@ -281,180 +552,18 @@ const problemExplanations = {
 };
 
 
-// Renamed: MoneySuperpowers -> MoneyFunctions
+// Renamed: MoneySuperpowers -> MoneyFunctions and replaced with MoneyEvolutionTimeline
 const MoneyFunctions = ({ onComplete }) => {
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [feedback, setFeedback] = useState({});
-  const [unlockedFunctions, setUnlockedFunctions] = useState([]);
-  const [showMortgageQuiz, setShowMortgageQuiz] = useState(false);
-
-  const scenarios = [
-    {
-      id: 1,
-      title: "🛒 Shopping at the Market",
-      description: "You want to buy apples. The seller wants $3 per pound.",
-      question: "What job is money doing here?",
-      options: [
-        { value: 1, label: 'Helping you trade - making the exchange possible' },
-        { value: 2, label: 'Storing your wealth for later' },
-        { value: 3, label: 'Measuring value - telling you how much things cost' }
-      ],
-      feedback: {
-        1: "✓ Right! Money makes trades easy because everyone accepts it.",
-        2: "Not quite - you're using it now, not storing it.",
-        3: "Close, but the main job here is making the exchange work."
-      },
-      correctAnswer: 1,
-      moneyFunction: 'Medium of Exchange',
-      explanation: "Money's first job is making trades possible. Everyone accepts it, so you don't need to find someone who wants exactly what you have."
-    },
-    {
-      id: 2,
-      title: "💰 Saving for a Vacation",
-      description: "You put $200 in your savings account each month for a vacation next year.",
-      question: "What job is money doing here?",
-      options: [
-        { value: 1, label: 'Helping you make trades right now' },
-        { value: 2, label: 'Keeping your wealth safe until you need it' },
-        { value: 3, label: 'Measuring how much things cost' }
-      ],
-      feedback: {
-        1: "Not quite - you're not trading right now, you're saving.",
-        2: "✓ Exactly! Money lets you save up value for later.",
-        3: "That's another job of money, but not what's happening here."
-      },
-      correctAnswer: 2,
-      moneyFunction: 'Store of Value',
-      explanation: "Money's second job is holding onto value over time. You can save it today and spend it later."
-    },
-    {
-      id: 3,
-      title: "🏠 Comparing House Prices",
-      description: "You're looking at houses. One costs $300,000, another costs $450,000.",
-      question: "What job is money doing here?",
-      options: [
-        { value: 1, label: 'Making the trade possible' },
-        { value: 2, label: 'Storing value for you' },
-        { value: 3, label: 'Giving you a way to compare prices' }
-      ],
-      feedback: {
-        1: "You're not trading yet - just comparing.",
-        2: "You're not storing value - you're comparing prices.",
-        3: "✓ Perfect! Money gives you a standard way to measure and compare value."
-      },
-      correctAnswer: 3,
-      moneyFunction: 'Unit of Account',
-      explanation: "Money's third job is measuring value. It gives everyone the same ruler to compare prices."
-    }
-  ];
-
-  const handleAnswer = (questionId, value) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: value
-    }));
-
-    const scenario = scenarios.find(s => s.id === questionId);
-    setFeedback(prev => ({
-      ...prev,
-      [questionId]: scenario.feedback[value]
-    }));
-
-    if (value === scenario.correctAnswer) {
-      setUnlockedFunctions(prev => [...prev, scenario.moneyFunction]);
-    }
-
-    // Always progress after showing feedback, regardless of correctness
-    setTimeout(() => {
-      if (currentScenario < scenarios.length - 1) {
-        setCurrentScenario(currentScenario + 1);
-      } else {
-        setTimeout(() => setShowMortgageQuiz(true), 3000); // Show MortgageQuiz
-      }
-    }, 2000);
-  };
-
-  const currentScenarioData = scenarios[currentScenario];
-  
   return (
     <div className="module-container">
-      {showMortgageQuiz ? (
-        <MortgageQuiz onContinue={() => onComplete(2)} />
-      ) : (
-        <>
-          <div className="section-card">
-            <h1 className="heading-critical">Money Functions</h1>
-            <p>Money has three main jobs. Let's look at some everyday examples to understand each one.</p>
-          </div>
-
-          <div className="scenario-progress">
-            <div className="progress-indicators">
-              {scenarios.map((_, index) => (
-                <div 
-                  key={index} 
-                  className={`indicator ${index === currentScenario ? 'current' : ''} ${index < currentScenario ? 'completed' : ''}`}
-                >
-                  {index < currentScenario ? '✅' : index + 1}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="current-scenario">
-            <h3>{currentScenarioData.title}</h3>
-            <p className="scenario-description">{currentScenarioData.description}</p>
-            <p className="scenario-question"><strong>{currentScenarioData.question}</strong></p>
-            
-            {!feedback[currentScenarioData.id] && (
-              <div className="quiz-options">
-                {currentScenarioData.options.map(option => (
-                  <ActionButton
-                    key={option.value}
-                    onClick={() => handleAnswer(currentScenarioData.id, option.value)}
-                    variant="outline"
-                  >
-                    <span className="option-text">{option.label}</span>
-                  </ActionButton>
-                ))}
-              </div>
-            )}
-
-            {feedback[currentScenarioData.id] && (
-              <div className={`quiz-feedback ${feedback[currentScenarioData.id].includes('✓') ? 'correct' : 'incorrect'}`}>
-              {feedback[currentScenarioData.id].includes('✓') ? (
-                <div className="feedback-text">
-                  <p>✅ <strong>Excellent!</strong> You identified the correct function.</p>
-                  <div className="correct-answer">
-                    <strong>Money's Job:</strong> {currentScenarioData.moneyFunction}
-                  </div>
-                  <div className="trait-unlocked">
-                    <p><strong>💡 Key Learning:</strong> {currentScenarioData.explanation}</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="feedback-text">
-                  <p>❌ <strong>Not quite.</strong></p>
-                  <div className="incorrect-answer">
-                    <strong>The correct function is:</strong> {currentScenarioData.moneyFunction}
-                  </div>
-                  <div className="correct-answer">
-                    <strong>💡 Key Learning:</strong> {currentScenarioData.explanation}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {unlockedFunctions.length === 3 && (
-          <div className="analysis-complete">
-            <h3>✅ All Three Jobs Found!</h3>
-            <p>Great! Now you understand what money needs to do. Let's see how well current money does these jobs.</p>
-          </div>
-        )}
-        </>
-      )}
+      <div className="section-card">
+        <h1 className="heading-critical">Journey of Money</h1>
+        <p>Follow money's incredible evolution from ancient barter to modern Bitcoin.</p>
+      </div>
+      
+      <div className="card-feature">
+        <MoneyEvolutionTimeline onContinue={() => onComplete(2)} />
+      </div>
     </div>
   );
 };
@@ -1565,14 +1674,69 @@ const ApplyScorecard = ({ onComplete }) => {
               </ul>
             </div>
             
-            <div className="cliffhanger-box">
-              <h3>🤔 But is this even possible?</h3>
-              <p>Could someone create money that combines the best properties of gold with the convenience of digital systems, while eliminating the control problems of fiat?</p>
-              <p><strong>What would that look like? And does it already exist?</strong></p>
+            <div className="crisis-realization">
+              <h3>🚨 The Current Crisis</h3>
+              <p>Look at fiat money's scorecard again. <strong>It scores 66/100</strong> - failing on the most critical properties:</p>
+              
+              <div className="critical-failures">
+                <div className="failure-item">
+                  <span className="failure-icon">🚫</span>
+                  <div>
+                    <h4>Self Custody: 3/10</h4>
+                    <p>Banks control access to YOUR money. They can freeze, restrict, or deny access at any time.</p>
+                  </div>
+                </div>
+                <div className="failure-item">
+                  <span className="failure-icon">🏛️</span>
+                  <div>
+                    <h4>Decentralization: 1/10</h4>
+                    <p>A handful of central banks control the entire global monetary system.</p>
+                  </div>
+                </div>
+                <div className="failure-item">
+                  <span className="failure-icon">🖨️</span>
+                  <div>
+                    <h4>Fixed Supply: 1/10</h4>
+                    <p>Unlimited money printing steals your purchasing power every single day.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="wake-up-stats">
+                <h4>💔 The Human Cost</h4>
+                <ul>
+                  <li><strong>Your savings lose 2-8% purchasing power annually</strong> (official inflation)</li>
+                  <li><strong>Real inflation is much higher</strong> - housing, education, healthcare costs</li>
+                  <li><strong>You work harder for less</strong> - wages don't keep up with real price increases</li>
+                  <li><strong>Your financial freedom is an illusion</strong> - banks and governments control every transaction</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="urgent-need">
+              <h3>⚡ What We Desperately Need</h3>
+              <p>Humanity needs to return to <em>sound money</em> - but with modern digital capabilities. We need money that:</p>
+              
+              <div className="dream-money-requirements">
+                <ul>
+                  <li>✨ <strong>YOU control completely</strong> (not banks or governments)</li>
+                  <li>✨ <strong>Has a fixed supply</strong> (no one can print more)</li>
+                  <li>✨ <strong>Works globally and instantly</strong> (digital convenience)</li>
+                  <li>✨ <strong>Can't be seized or frozen</strong> (true ownership)</li>
+                  <li>✨ <strong>Preserves your purchasing power</strong> (store of value)</li>
+                </ul>
+              </div>
             </div>
             
-            <ActionButton onClick={() => onComplete(6)} variant="primary">
-              Complete Money Module →
+            <div className="cliffhanger-box urgent">
+              <h3>🔥 The Million Bitcoin Question</h3>
+              <p><strong>Is this impossible dream... actually possible?</strong></p>
+              <p>What if someone already solved this problem? What if there's already money that scores <em>higher than gold</em> on ALL 10 properties?</p>
+              <p className="cliffhanger-text"><strong>What if the future of money already exists... and most people just don't know about it yet?</strong></p>
+            </div>
+            
+            <ActionButton onClick={() => onComplete(6)} variant="primary" className="urgent-cta">
+              🚀 Discover the Solution →
             </ActionButton>
           </div>
         </div>

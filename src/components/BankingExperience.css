@@ -1,242 +1,139 @@
-.banking-experience-section {
-  margin-bottom: 3rem;
+/* Reality Check Component - Standardized Dark Theme */
+.reality-check-container {
+  margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-md);
 }
 
-.experience-header {
-  text-align: left;
-  margin-bottom: 2rem;
-}
-
-.experience-header h2 {
-  color: #000000;
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-}
-
-.experience-subtitle {
-  color: #000000;
-  font-size: 1.1rem;
-  font-style: normal;
-  margin: 0 0 1.5rem 0;
-  text-align: left;
-}
-
-.banking-demo-box {
-  background: #fff;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid #eee;
-  margin-bottom: 2rem;
-}
-
-.demo-content {
-  width: 100%;
-}
-
-.demo-content h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.5rem;
-  color: #333;
-  font-weight: 600;
-  text-align: left;
-  margin: 0 0 1.5rem 0;
-  padding: 0;
-}
-
-.demo-content p {
-  color: #666;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.interactive-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-/* Canva Embed Styles */
-.canva-embed-container {
-  width: 100%;
-  margin: 1rem 0;
-}
-
-.canva-attribution {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.5rem;
-}
-
-.canva-link {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.canva-link:hover {
-  text-decoration: underline;
-  color: #0056b3;
-}
-
-.launch-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.interactive-demo-link {
-  display: inline-block;
+.reality-check-card {
+  /* Dark gray card background */
   background: var(--color-dark-bgCard);
-  color: #333;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-dark-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  /* Red outline shadow for urgency */
+  box-shadow: 
+    var(--shadow-dark-lg),
+    0 0 20px rgba(220, 38, 38, 0.3),
+    inset 0 0 1px rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+.reality-check-content {
+  width: 100%;
+}
+
+.reality-check-title {
+  font-size: var(--text-2xl);
+  color: var(--color-dark-text); /* White text */
+  font-weight: 600;
+  margin: 0 0 var(--spacing-lg) 0;
+  text-align: left;
+}
+
+.reality-check-description {
+  color: var(--color-dark-text); /* White text */
+  margin-bottom: var(--spacing-xl);
+  line-height: var(--leading-relaxed);
+  font-size: var(--text-base);
+  opacity: 0.9;
+}
+
+.embed-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.video-embed-container {
+  width: 100%;
+  
+  /* Dark gray background for video container */
+  background: var(--color-dark-bgSecondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-dark-border);
+}
+
+.iframe-wrapper {
+  /* Dark shadow and border for iframe */
+  box-shadow: var(--shadow-dark-md);
+  border: 1px solid var(--color-dark-borderLight);
+  margin: var(--spacing-md) 0;
+}
+
+.embed-attribution {
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--color-dark-text); /* White text */
+  margin-top: var(--spacing-sm);
+  opacity: 0.7;
+}
+
+.embed-link {
+  color: var(--color-primary-400); /* Lighter orange for better contrast on dark */
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  border: 1px solid #dee2e6;
-  text-align: center;
-  width: fit-content;
+  transition: color var(--transition-fast);
 }
 
-.interactive-demo-link:hover {
-  background: #e9ecef;
-  border-color: #adb5bd;
-  text-decoration: none;
-  color: #333;
+.embed-link:hover {
+  color: var(--color-primary-300);
+  text-decoration: underline;
 }
 
-.link-subtitle {
-  display: block;
-  font-size: var(--font-size-lg);
-  opacity: 0.9;
-  margin-top: 0.3rem;
-  font-weight: 400;
-}
-
-.completion-container {
+.completion-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: var(--spacing-lg);
+  
+  /* Slightly different gray background for completion area */
+  background: var(--color-dark-bgTertiary);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--color-dark-borderLight);
 }
 
-.completion-container p {
-  margin-bottom: 1rem;
-  color: #000000;
-  font-weight: 500;
-  text-align: center;
-}
-
-.completion-button {
-  background: var(--color-dark-bgCard);
-  color: #333;
-  border: 1px solid #dee2e6;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-  width: fit-content;
-}
-
-.completion-button:hover:not(:disabled) {
-  background: #e9ecef;
-  border-color: #adb5bd;
-}
-
-.completion-button.completed {
-  background: #d4edda;
-  border-color: #c3e6cb;
-  color: #155724;
-  cursor: default;
-}
-
-.completion-button:disabled {
-  cursor: default;
-}
-
-.unlock-message {
-  margin-top: 2rem;
-  opacity: 0;
-  animation: fadeIn 0.8s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.unlock-content {
-  background: #fff;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid #eee;
-  text-align: left;
-}
-
-.unlock-content h3 {
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
-  color: #000000;
-  font-weight: 600;
-  text-align: left;
-}
-
-.unlock-content p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  color: #000000;
-  text-align: left;
-}
-
-.journey-preview {
-  background: rgba(247, 147, 30, 0.1);
-  padding: 1rem;
-  border-radius: 10px;
-  margin-top: 1rem;
-  border: 1px solid rgba(247, 147, 30, 0.2);
-  text-align: left;
-}
-
-.unlock-content strong {
-  color: #000000;
+.reality-check-button {
+  /* Uses UnifiedButton styles with minimum width */
+  min-width: 250px;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .banking-demo-box {
-    padding: 1.5rem;
+  .reality-check-container {
+    padding: 0 var(--spacing-sm);
   }
   
-  .demo-content h2 {
-    font-size: 1.5rem;
+  .reality-check-card {
+    padding: var(--spacing-lg);
   }
   
-  .interactive-section {
-    gap: 1rem;
+  .reality-check-title {
+    font-size: var(--text-xl);
   }
   
-  .interactive-demo-link {
-    width: 100%;
+  .embed-section {
+    gap: var(--spacing-lg);
   }
 
-  .canva-embed-container {
-    margin: 0.5rem 0;
+  .completion-section {
+    padding: var(--spacing-lg);
   }
-} 
+
+  .reality-check-button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .video-embed-container {
+    padding: var(--spacing-xs);
+  }
+}

@@ -28,6 +28,7 @@ import {
   AnimatedNetworkIcon,
   AnimatedStarIcon
 } from './AnimatedIcons.jsx';
+import BankingExperience from './BankingExperience';
 import './Homepage.css';
 
 const Homepage = () => {
@@ -195,7 +196,9 @@ const Homepage = () => {
 
 // Modern Welcome Section
 const WelcomeSection = ({ onStartJourney }) => {
+  const { isModuleCompleted } = useProgress();
   const [activeQuestions, setActiveQuestions] = useState([]);
+  const bankingExperienceCompleted = isModuleCompleted('banking-intro');
 
   // Reveal animation effect
   useEffect(() => {
@@ -348,31 +351,43 @@ const WelcomeSection = ({ onStartJourney }) => {
         </div>
       </div>
 
-      {/* Final CTA Section */}
-      <div className="final-cta-section">
+      {/* Reality Check Section */}
+      <div className="reality-check-section">
         <h2 className="cta-title">
-          Ready to <span className="gradient-text">Transform</span> Your Understanding?
+          First, Let's Do a <span className="gradient-text">Reality Check</span>
         </h2>
         
         <p className="cta-description">
-          Join thousands who have discovered why Bitcoin represents the most important monetary innovation in centuries.
+          Before diving into Bitcoin, let's uncover some uncomfortable truths about our current money system.
         </p>
         
-        <ContinueButton 
-          onClick={onStartJourney} 
-          size="xl"
-          className="final-cta-button"
-          feedback="visual"
-          icon={<ArrowRight size={20} />}
-          iconPosition="right"
-        >
-          Start Your Journey
-        </ContinueButton>
-        
-        <div className="cta-benefits">
-          <p>🎓 No prior knowledge required</p>
-          <p>🚀 Transform your financial future</p>
-        </div>
+        {!bankingExperienceCompleted ? (
+          <BankingExperience />
+        ) : (
+          <div className="reality-check-completed">
+            <div className="completed-message">
+              <CheckCircle size={24} className="completed-icon" />
+              <h3>Reality Check Complete</h3>
+              <p>You've confronted the uncomfortable truths. Now you're ready to explore the solution.</p>
+            </div>
+            
+            <ContinueButton 
+              onClick={onStartJourney} 
+              size="xl"
+              className="final-cta-button"
+              feedback="visual"
+              icon={<ArrowRight size={20} />}
+              iconPosition="right"
+            >
+              Start Learning About Sound Money
+            </ContinueButton>
+            
+            <div className="cta-benefits">
+              <p>🎓 No prior knowledge required</p>
+              <p>🚀 Transform your financial future</p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

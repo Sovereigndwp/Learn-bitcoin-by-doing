@@ -46,7 +46,13 @@ function App() {
               <Route path="/" element={<Homepage />} />
               <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
               
-              {/* Module overview routes */}
+              {/* Module overview routes - Temporary fallback to existing modules */}
+              <Route path="/module/wake-up-call" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/money-journey" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/good-money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/money-goes-bad" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
+              <Route path="/module/bitcoin-blueprint" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
+              {/* Keep original routes for compatibility */}
               <Route path="/module/money" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-basics" element={<ModuleLayout><BitcoinBasicsModule /></ModuleLayout>} />
               <Route path="/module/bitcoin-relevance" element={<ModuleLayout><WhyBitcoinMattersModule /></ModuleLayout>} />

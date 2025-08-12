@@ -160,230 +160,6 @@ const BitcoinIntroduction = ({ onComplete }) => {
     );
   };
 
-// The Money Battle - Gamified Property Comparison
-const PropertyCompare = ({ onComplete }) => {
-  const [currentProperty, setCurrentProperty] = useState(0);
-  const [selections, setSelections] = useState({});
-  const [scores, setScores] = useState({ fiat: 0, gold: 0, bitcoin: 0 });
-  const [showResults, setShowResults] = useState(false);
-  const [battlePhase, setBattlePhase] = useState('intro'); // intro, battle, results
-
-  const propertyBattles = [
-    { 
-      key: "Control", 
-      title: "Who Controls It?", 
-      question: "Can governments freeze, confiscate, or manipulate this money?",
-      options: {
-        fiat: { label: "💵 Fiat Money", answer: "Government controls everything", pass: false },
-        gold: { label: "🥇 Gold", answer: "You control physical gold", pass: true },
-        bitcoin: { label: "🟠 Bitcoin", answer: "Only you control your Bitcoin", pass: true }
-      },
-      winner: "bitcoin",
-      insight: "Bitcoin wins because it's the ONLY money that can't be frozen or confiscated by anyone."
-    },
-    {
-      key: "Scarcity", 
-      title: "Is the Supply Fixed?", 
-      question: "Can more of this money be created, diluting your holdings?",
-      options: {
-        fiat: { label: "💵 Fiat Money", answer: "Unlimited printing possible", pass: false },
-        gold: { label: "🥇 Gold", answer: "More can be mined", pass: true },
-        bitcoin: { label: "🟠 Bitcoin", answer: "Exactly 21 million forever", pass: true }
-      },
-      winner: "bitcoin",
-      insight: "Bitcoin's 21 million limit is mathematically guaranteed - unlike gold mining or money printing."
-    },
-    {
-      key: "Verification", 
-      title: "Can You Verify It's Real?", 
-      question: "How easy is it to prove this money isn't fake?",
-      options: {
-        fiat: { label: "💵 Fiat Money", answer: "Special equipment needed", pass: true },
-        gold: { label: "🥇 Gold", answer: "Complex testing required", pass: false },
-        bitcoin: { label: "🟠 Bitcoin", answer: "Instantly verifiable by anyone", pass: true }
-      },
-      winner: "bitcoin",
-      insight: "Bitcoin transactions are cryptographically verifiable by anyone with a computer."
-    },
-    {
-      key: "Transport", 
-      title: "How Easy to Move?", 
-      question: "Can you easily transport large amounts across borders?",
-      options: {
-        fiat: { label: "💵 Fiat Money", answer: "Banks, fees, restrictions", pass: true },
-        gold: { label: "🥇 Gold", answer: "Heavy, expensive to move", pass: false },
-        bitcoin: { label: "🟠 Bitcoin", answer: "Instant global transfer", pass: true }
-      },
-      winner: "bitcoin",
-      insight: "Bitcoin can be sent anywhere in the world in ~10 minutes for minimal fees."
-    }
-  ];
-
-  const currentBattle = propertyBattles[currentProperty];
-
-  const handleChoice = (moneyType) => {
-    const newSelections = { ...selections, [currentProperty]: moneyType };
-    setSelections(newSelections);
-    
-    // Award points
-    const newScores = { ...scores };
-    if (moneyType === currentBattle.winner) {
-      newScores[moneyType] += 2; // Winner gets 2 points
-    } else if (currentBattle.options[moneyType].pass) {
-      newScores[moneyType] += 1; // Partial credit for passing
-    }
-    setScores(newScores);
-    
-    // Move to next battle or show results
-    setTimeout(() => {
-      if (currentProperty < propertyBattles.length - 1) {
-        setCurrentProperty(currentProperty + 1);
-      } else {
-        setBattlePhase('results');
-      }
-    }, 2000);
-  };
-
-  const getScoreColor = (score) => {
-    if (score >= 6) return 'winner';
-    if (score >= 3) return 'decent';
-    return 'poor';
-  };
-
-  if (battlePhase === 'intro') {
-    return (
-      <div className="step-content battle-intro">
-        <div className="module-header-box">
-          <h2>⚔️ The Ultimate Money Battle</h2>
-          <div className="intro-text">
-            <p className="prime-text">Three types of money enter. Only one can be the champion. Let's see which money dominates in key areas...</p>
-          </div>
-        </div>
-        <div className="content-text">
-          <div className="battle-preview">
-            <div className="contenders">
-              <div className="contender fiat-contender">
-                <h3>💵 Team Fiat</h3>
-                <p>Government-issued currency</p>
-              </div>
-              <div className="contender gold-contender">
-                <h3>🥇 Team Gold</h3>
-                <p>Traditional store of value</p>
-              </div>
-              <div className="contender bitcoin-contender">
-                <h3>🟠 Team Bitcoin</h3>
-                <p>Digital revolution</p>
-              </div>
-            </div>
-          </div>
-          <ActionButton onClick={() => setBattlePhase('battle')} className="start-battle-button">
-            🔥 Start the Battle!
-          </ActionButton>
-        </div>
-      </div>
-    );
-  }
-
-  if (battlePhase === 'results') {
-    return (
-      <div className="step-content battle-results">
-        <div className="module-header-box">
-          <h2>🏆 Battle Results</h2>
-        </div>
-        <div className="content-text">
-          <div className="final-scores">
-            <div className="scoreboard">
-              <div className={`score-item ${getScoreColor(scores.bitcoin)}`}>
-                <h3>🟠 Bitcoin</h3>
-                <div className="score">{scores.bitcoin}</div>
-                <div className="status">CHAMPION! 👑</div>
-              </div>
-              <div className={`score-item ${getScoreColor(scores.gold)}`}>
-                <h3>🥇 Gold</h3>
-                <div className="score">{scores.gold}</div>
-                <div className="status">Runner-up</div>
-              </div>
-              <div className={`score-item ${getScoreColor(scores.fiat)}`}>
-                <h3>💵 Fiat</h3>
-                <div className="score">{scores.fiat}</div>
-                <div className="status">Needs improvement</div>
-              </div>
-            </div>
-          </div>
-          <div className="victory-message">
-            <h3>🎉 Bitcoin Domination Complete!</h3>
-            <p>Bitcoin systematically outperforms both traditional money forms. It combines the best of both worlds while eliminating their weaknesses.</p>
-          </div>
-          <ContinueButton onClick={() => onComplete(1)} className="victory-button">
-            🚀 Bitcoin Wins! Now See HOW It Works →
-          </ContinueButton>
-        </div>
-      </div>
-    );
-  }
-
-  // Battle phase
-  return (
-    <div className="step-content money-battle">
-      <div className="module-header-box">
-        <h2>⚔️ Round {currentProperty + 1}: {currentBattle.title}</h2>
-        <div className="battle-progress">
-          <div className="progress-bar">
-            <div 
-              className="progress-fill" 
-              style={{ width: `${((currentProperty + 1) / propertyBattles.length) * 100}%` }}
-            />
-          </div>
-          <p>Battle {currentProperty + 1} of {propertyBattles.length}</p>
-        </div>
-      </div>
-      
-      <div className="content-text">
-        <div className="battle-question">
-          <h3>{currentBattle.question}</h3>
-        </div>
-        
-        <div className="battle-options">
-          {Object.entries(currentBattle.options).map(([key, option]) => (
-            <div 
-              key={key}
-              className="battle-choice"
-              onClick={() => handleChoice(key)}
-            >
-              <div className="choice-header">
-                <h4>{option.label}</h4>
-              </div>
-              <div className="choice-answer">
-                <p>{option.answer}</p>
-              </div>
-              <div className={`choice-result ${option.pass ? 'pass' : 'fail'}`}>
-                {option.pass ? '✅ Strong' : '❌ Weak'}
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {selections[currentProperty] && (
-          <div className="battle-insight">
-            <div className="insight-box">
-              <h4>🎯 Battle Insight:</h4>
-              <p>{currentBattle.insight}</p>
-            </div>
-          </div>
-        )}
-        
-        <div className="current-scores">
-          <h4>Current Scores:</h4>
-          <div className="score-display">
-            <span>🟠 Bitcoin: {scores.bitcoin}</span>
-            <span>🥇 Gold: {scores.gold}</span>
-            <span>💵 Fiat: {scores.fiat}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 
 
@@ -448,7 +224,7 @@ const WhyScarcityMatters = ({ onComplete }) => {
       setUserPrediction(null);
       setShowReality(false);
     } else {
-      onComplete(3);
+      onComplete(4); // Complete module
     }
     };
 
@@ -570,67 +346,62 @@ const BitcoinCompletion = ({ onComplete }) => {
       <div className="module-header-box">
         <h2>🎉 Bitcoin Fundamentals: Complete!</h2>
         <div className="intro-text">
-          <p className="prime-text celebration-text">🎊 INCREDIBLE! You've just completed a journey that most people never take. You now understand what makes Bitcoin the most important financial innovation in human history!</p>
+          <p className="prime-text celebration-text">🎊 INCREDIBLE! You now have a solid foundation in Bitcoin fundamentals. You understand what Bitcoin is, how it works at a basic level, and why its design makes it valuable!</p>
           <div className="achievement-highlight">
-            <p className="milestone-text">🏆 You've gone from Bitcoin curious to Bitcoin convinced</p>
+            <p className="milestone-text">🏆 You've mastered the Bitcoin basics</p>
           </div>
         </div>
         </div>
 
       <div className="completion-content">
         <div className="achievement-summary">
-          <h3>🏆 Bitcoin Benefits You've Mastered</h3>
+          <h3>🏆 What You've Mastered</h3>
           <div className="accomplishments-grid">
             <div className="accomplishment-item">
-              <div className="accomplishment-icon">🛡️</div>
-              <h4>Government Interference Protection</h4>
-              <p>Bitcoin cannot be frozen, confiscated, or controlled by any authority</p>
+              <div className="accomplishment-icon">🎯</div>
+              <h4>Bitcoin's Purpose</h4>
+              <p>You understand the problems Bitcoin was designed to solve</p>
               </div>
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">🟠</div>
+              <h4>What Bitcoin Is</h4>
+              <p>You can explain Bitcoin in simple terms to anyone</p>
+              </div>
+            <div className="accomplishment-item">
+              <div className="accomplishment-icon">🔧</div>
+              <h4>How Bitcoin Works</h4>
+              <p>You grasp the basic mechanics of consensus and verification</p>
+            </div>
             <div className="accomplishment-item">
               <div className="accomplishment-icon">💎</div>
-              <h4>Store of Value Protection</h4>
-              <p>Fixed 21 million supply protects against inflation and money printing</p>
-              </div>
-            <div className="accomplishment-item">
-              <div className="accomplishment-icon">💰</div>
-              <h4>Lower Transaction Costs</h4>
-              <p>Peer-to-peer transfers eliminate expensive banking intermediaries</p>
-            </div>
-            <div className="accomplishment-item">
-              <div className="accomplishment-icon">⚡</div>
-              <h4>Faster International Transfers</h4>
-              <p>Global settlement in ~10 minutes vs 3-5 days with traditional banking</p>
-            </div>
-            <div className="accomplishment-item">
-              <div className="accomplishment-icon">🔒</div>
-              <h4>Enhanced Privacy & Security</h4>
-              <p>Pseudonymous transactions without complete financial surveillance</p>
+              <h4>Why Bitcoin Has Value</h4>
+              <p>You understand scarcity and value creation principles</p>
             </div>
             </div>
           </div>
 
         <div className="key-insights">
-          <h3>💡 Core Bitcoin Advantages</h3>
+          <h3>💡 Core Bitcoin Insights</h3>
           <div className="insights-list">
             <div className="insight-item">
               <span className="insight-number">1</span>
               <div className="insight-content">
-                <h4>Bitcoin Fixes Fiat Currency's Fatal Flaws</h4>
-                <p>Every problem with traditional money - from inflation to censorship to high fees - has a Bitcoin solution.</p>
+                <h4>Bitcoin is Digital Scarcity</h4>
+                <p>For the first time in history, we have truly scarce digital objects that cannot be copied or counterfeited.</p>
                       </div>
                   </div>
             <div className="insight-item">
               <span className="insight-number">2</span>
               <div className="insight-content">
-                <h4>Mathematical Rules Trump Political Rules</h4>
-                <p>Bitcoin's code-based system eliminates human corruption and political manipulation of money.</p>
+                <h4>Consensus Without Authority</h4>
+                <p>Bitcoin proves that strangers can agree on truth without a central authority - this is revolutionary.</p>
                 </div>
                 </div>
             <div className="insight-item">
               <span className="insight-number">3</span>
               <div className="insight-content">
-                <h4>True Financial Sovereignty is Possible</h4>
-                <p>For the first time in history, individuals can have complete control over their money without relying on institutions.</p>
+                <h4>Value From Network Effects</h4>
+                <p>Bitcoin becomes more valuable as more people understand and use it - you're now part of that network.</p>
             </div>
                 </div>
             </div>
@@ -639,7 +410,7 @@ const BitcoinCompletion = ({ onComplete }) => {
         <div className="next-journey">
           <h3>🔮 Your Technical Journey Ahead</h3>
           <div className="next-journey-content">
-            <p className="next-adventure">🚀 Now that you understand <em>WHY</em> Bitcoin is revolutionary, are you ready to discover <em>HOW</em> this digital magic actually works? The technical journey ahead will transform you from Bitcoin believer into Bitcoin expert!</p>
+            <p className="next-adventure">🚀 Now that you understand <em>WHAT</em> Bitcoin is and <em>WHY</em> it matters, are you ready to discover <em>HOW</em> this digital magic actually works under the hood?</p>
             
             <div className="upcoming-modules">
               <h4>🧮 Technical Deep Dive:</h4>
@@ -652,8 +423,8 @@ const BitcoinCompletion = ({ onComplete }) => {
         </div>
 
             <div className="call-to-adventure">
-              <p className="ready-question epic-question"><strong>🔥 Are you ready to unlock Bitcoin's technical secrets and join the revolution?</strong></p>
-              <p className="adventure-subtitle">⚡ The next modules will blow your mind...</p>
+              <p className="ready-question epic-question"><strong>🔥 Ready to go deeper and understand the technical brilliance behind Bitcoin?</strong></p>
+              <p className="adventure-subtitle">⚡ The technical modules will show you how Bitcoin actually works...</p>
             </div>
             </div>
           </div>
@@ -661,12 +432,229 @@ const BitcoinCompletion = ({ onComplete }) => {
         <ModuleCompletionButton 
           moduleName="Bitcoin Basics"
           moduleId="bitcoin-basics"
-          customMessage="🚀 Outstanding! You now understand what makes Bitcoin revolutionary and different from traditional money!"
+          customMessage="🚀 Outstanding! You now understand Bitcoin's fundamental concepts and are ready for the technical deep dive!"
         />
       </div>
       </div>
     );
   };
+
+// What is Bitcoin? - Simple foundational explanation
+const WhatIsBitcoin = ({ onComplete }) => {
+  const [currentConcept, setCurrentConcept] = useState(0);
+  const [userQuestions, setUserQuestions] = useState({});
+
+  const concepts = [
+    {
+      id: 'simple_definition',
+      title: '💡 What is Bitcoin? (Simple Version)',
+      analogy: 'Think of Bitcoin like digital gold that you can send over the internet.',
+      explanation: 'Bitcoin is digital money that works without banks, governments, or any central authority controlling it.',
+      keyPoints: [
+        'It exists only as computer code',
+        'No single person or organization controls it',
+        'You can send it anywhere in the world in minutes',
+        'There will only ever be 21 million bitcoins'
+      ],
+      question: 'What\'s the most important thing about Bitcoin to you?',
+      options: [
+        'No government can control it',
+        'I can send money anywhere instantly',
+        'It can\'t be printed like regular money',
+        'I own it completely - no bank needed'
+      ]
+    },
+    {
+      id: 'how_different',
+      title: '🆚 How is Bitcoin Different?',
+      analogy: 'Traditional money is like an IOU from your bank. Bitcoin is like having actual gold in your pocket, but digital.',
+      explanation: 'Every other form of digital money requires someone else (banks, PayPal, etc.) to keep track of balances. Bitcoin doesn\'t.',
+      comparison: {
+        traditional: {
+          title: 'Traditional Digital Money',
+          items: ['Bank keeps your balance', 'Can be frozen or restricted', 'Requires permission to send', 'Central point of failure']
+        },
+        bitcoin: {
+          title: 'Bitcoin',
+          items: ['You control your balance', 'Cannot be frozen by anyone', 'Send to anyone, anytime', 'No central point of failure']
+        }
+      },
+      question: 'Which difference surprises you most?',
+      options: [
+        'Bitcoin can never be frozen',
+        'No bank needed to hold Bitcoin',
+        'I can send it without permission',
+        'No one can print more Bitcoin'
+      ]
+    },
+    {
+      id: 'why_now',
+      title: '⏰ Why Bitcoin, Why Now?',
+      analogy: 'Bitcoin is to money what email was to postal mail - a fundamental upgrade for the digital age.',
+      explanation: 'For the first time in history, we can have money that works like the internet: global, instant, and controlled by no one.',
+      context: [
+        'Money hasn\'t been upgraded for the internet age',
+        'Governments are printing money at unprecedented rates',
+        'Digital surveillance is increasing',
+        'Financial censorship is becoming common'
+      ],
+      solution: 'Bitcoin offers an escape hatch - money that works for the internet age and can\'t be controlled, censored, or debased.',
+      question: 'What problem does Bitcoin solve for you personally?',
+      options: [
+        'Protection from inflation',
+        'Financial privacy and freedom',
+        'True ownership of my money',
+        'Global access without restrictions'
+      ]
+    }
+  ];
+
+  const currentConceptData = concepts[currentConcept];
+
+  const handleAnswer = (choice) => {
+    setUserQuestions(prev => ({
+      ...prev,
+      [currentConceptData.id]: choice
+    }));
+  };
+
+  const handleNext = () => {
+    if (currentConcept < concepts.length - 1) {
+      setCurrentConcept(currentConcept + 1);
+    } else {
+      onComplete(1);
+    }
+  };
+
+  return (
+    <div className="step-content what-is-bitcoin">
+      <div className="module-header-box">
+        <h2>🟠 What is Bitcoin?</h2>
+        <p>Let's break down Bitcoin in simple terms, without the technical jargon.</p>
+      </div>
+
+      <div className="content-text">
+        <div className="concept-explanation">
+          <h3>{currentConceptData.title}</h3>
+          
+          <div className="analogy-box">
+            <h4>🎯 Think of it this way:</h4>
+            <p className="analogy-text">{currentConceptData.analogy}</p>
+          </div>
+
+          <div className="main-explanation">
+            <p>{currentConceptData.explanation}</p>
+          </div>
+
+          {currentConceptData.keyPoints && (
+            <div className="key-points">
+              <h4>Key Points:</h4>
+              <ul>
+                {currentConceptData.keyPoints.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {currentConceptData.comparison && (
+            <div className="comparison-grid">
+              <div className="comparison-side traditional">
+                <h4>{currentConceptData.comparison.traditional.title}</h4>
+                <ul>
+                  {currentConceptData.comparison.traditional.items.map((item, index) => (
+                    <li key={index}>❌ {item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="comparison-side bitcoin">
+                <h4>{currentConceptData.comparison.bitcoin.title}</h4>
+                <ul>
+                  {currentConceptData.comparison.bitcoin.items.map((item, index) => (
+                    <li key={index}>✅ {item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {currentConceptData.context && (
+            <div className="context-box">
+              <h4>The Context:</h4>
+              <ul>
+                {currentConceptData.context.map((point, index) => (
+                  <li key={index}>{point}</li>
+                ))}
+              </ul>
+              <div className="solution-highlight">
+                <h5>Bitcoin's Solution:</h5>
+                <p>{currentConceptData.solution}</p>
+              </div>
+            </div>
+          )}
+
+          <div className="reflection-section">
+            <h4>🤔 Personal Reflection:</h4>
+            <p>{currentConceptData.question}</p>
+            
+            {!userQuestions[currentConceptData.id] ? (
+              <div className="reflection-options">
+                {currentConceptData.options.map((option, index) => (
+                  <button
+                    key={index}
+                    className="reflection-option"
+                    onClick={() => handleAnswer(option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="reflection-response">
+                <p><strong>Your perspective:</strong> "{userQuestions[currentConceptData.id]}"</p>
+                
+                {currentConcept < concepts.length - 1 ? (
+                  <button 
+                    onClick={handleNext}
+                    className="next-concept-button"
+                  >
+                    Next Concept →
+                  </button>
+                ) : (
+                  <div className="completion-section">
+                    <div className="understanding-summary">
+                      <h4>🎉 Great! You now understand:</h4>
+                      <ul>
+                        <li>✅ What Bitcoin is in simple terms</li>
+                        <li>✅ How Bitcoin differs from traditional money</li>
+                        <li>✅ Why Bitcoin exists and why it matters now</li>
+                      </ul>
+                    </div>
+                    <ContinueButton onClick={() => onComplete(1)}>
+                      Ready to Learn How Bitcoin Works →
+                    </ContinueButton>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="progress-indicator">
+          <div className="progress-dots">
+            {concepts.map((_, index) => (
+              <div 
+                key={index} 
+                className={`progress-dot ${index === currentConcept ? 'active' : ''} ${index < currentConcept ? 'completed' : ''}`}
+              />
+            ))}
+          </div>
+          <p>Concept {currentConcept + 1} of {concepts.length}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // How Bitcoin Works (No Technical Jargon) - Simplified
 const HowBitcoinWorks = ({ onComplete }) => {
@@ -870,7 +858,7 @@ const BitcoinBasicsModule = () => {
     }
     
     // Move to next step or complete module
-    if (stepIndex < 4) {
+    if (stepIndex < 3) {
       setCurrentStep(stepIndex + 1);
     } else {
       // Module completion is handled by ModuleCompletionButton
@@ -919,10 +907,10 @@ const BitcoinBasicsModule = () => {
     }, 6000);
   };
 
-// Steps used for tracking module progress
+// Steps used for tracking module progress - FOCUSED ON BITCOIN-SPECIFIC CONCEPTS
 const steps = [
     { id: 0, title: "Bitcoin's Promise", icon: "🎯", completed: completedSteps.has(0) },
-    { id: 1, title: "Compare Systems", icon: "⚖️", completed: completedSteps.has(1) },
+    { id: 1, title: "What is Bitcoin?", icon: "🟠", completed: completedSteps.has(1) },
     { id: 2, title: "How It Works", icon: "🔧", completed: completedSteps.has(2) },
     { id: 3, title: "Why It's Valuable", icon: "💎", completed: completedSteps.has(3) },
     { id: 4, title: "Complete", icon: "🎉", completed: completedSteps.has(4) }
@@ -952,7 +940,7 @@ const steps = [
         <h3 className="nav-section-title">Learning Path</h3>
         <div className="step-navigation-container">
           <div className="step-navigation-scroll">
-          {["Bitcoin's Promise", "Compare Systems", "How It Works", "Why It's Valuable", "Complete"].map((step, index) => (
+          {["Bitcoin's Promise", "What is Bitcoin?", "How It Works", "Why It's Valuable", "Complete"].map((step, index) => (
             <button
               key={index}
               className={`step-nav-button ${
@@ -972,7 +960,7 @@ const steps = [
       
       <div className="module-content">
         {currentStep === 0 && <BitcoinIntroduction onComplete={handleStepComplete} />}
-        {currentStep === 1 && <PropertyCompare onComplete={handleStepComplete} />}
+        {currentStep === 1 && <WhatIsBitcoin onComplete={handleStepComplete} />}
         {currentStep === 2 && <HowBitcoinWorks onComplete={handleStepComplete} />}
         {currentStep === 3 && <WhyScarcityMatters onComplete={handleStepComplete} />}
         {currentStep === 4 && <BitcoinCompletion onComplete={handleStepComplete} />}
