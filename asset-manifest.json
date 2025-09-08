@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/Learn-bitcoin-by-doing/static/css/main.80e13f74.css",
+    "main.js": "/Learn-bitcoin-by-doing/static/js/main.52cd4c86.js",
+    "static/js/616.1a87556b.chunk.js": "/Learn-bitcoin-by-doing/static/js/616.1a87556b.chunk.js",
+    "static/js/270.8793ec5e.chunk.js": "/Learn-bitcoin-by-doing/static/js/270.8793ec5e.chunk.js",
+    "static/js/634.58f97179.chunk.js": "/Learn-bitcoin-by-doing/static/js/634.58f97179.chunk.js",
+    "static/js/812.c06781ea.chunk.js": "/Learn-bitcoin-by-doing/static/js/812.c06781ea.chunk.js",
+    "static/js/635.76592ba6.chunk.js": "/Learn-bitcoin-by-doing/static/js/635.76592ba6.chunk.js",
+    "static/js/772.b308a091.chunk.js": "/Learn-bitcoin-by-doing/static/js/772.b308a091.chunk.js",
+    "static/js/643.96f5f657.chunk.js": "/Learn-bitcoin-by-doing/static/js/643.96f5f657.chunk.js",
+    "static/js/103.8eba24af.chunk.js": "/Learn-bitcoin-by-doing/static/js/103.8eba24af.chunk.js",
+    "static/js/488.267b204c.chunk.js": "/Learn-bitcoin-by-doing/static/js/488.267b204c.chunk.js",
+    "index.html": "/Learn-bitcoin-by-doing/index.html",
+    "main.80e13f74.css.map": "/Learn-bitcoin-by-doing/static/css/main.80e13f74.css.map",
+    "main.52cd4c86.js.map": "/Learn-bitcoin-by-doing/static/js/main.52cd4c86.js.map",
+    "616.1a87556b.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/616.1a87556b.chunk.js.map",
+    "270.8793ec5e.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/270.8793ec5e.chunk.js.map",
+    "634.58f97179.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/634.58f97179.chunk.js.map",
+    "812.c06781ea.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/812.c06781ea.chunk.js.map",
+    "635.76592ba6.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/635.76592ba6.chunk.js.map",
+    "772.b308a091.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/772.b308a091.chunk.js.map",
+    "643.96f5f657.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/643.96f5f657.chunk.js.map",
+    "103.8eba24af.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/103.8eba24af.chunk.js.map",
+    "488.267b204c.chunk.js.map": "/Learn-bitcoin-by-doing/static/js/488.267b204c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.80e13f74.css",
+    "static/js/main.52cd4c86.js"
+  ]
+}
