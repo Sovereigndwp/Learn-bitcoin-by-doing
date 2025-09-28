@@ -1,4 +1,5 @@
 // Browser-compatible Bitcoin utilities for educational purposes
+import SHA256 from 'crypto-js/sha256';
 
 // Number and Encoding Utilities
 export const hexToDec = (hex) => {
@@ -21,25 +22,10 @@ export const littleEndianToHex = (littleEndian) => {
   return bytes.reverse().join('');
 };
 
-// Convert string to Uint8Array for crypto operations
-const stringToUint8Array = (str) => {
-  const encoder = new TextEncoder();
-  return encoder.encode(str);
-};
-
-// Convert ArrayBuffer to hex string
-const arrayBufferToHex = (buffer) => {
-  return Array.from(new Uint8Array(buffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-};
-
-// Real SHA-256 implementation using Web Crypto API
-export const sha256 = async (message) => {
+// Real SHA-256 implementation using crypto-js (synchronous)
+export const sha256 = (message) => {
   try {
-    const msgUint8 = stringToUint8Array(message);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-    return arrayBufferToHex(hashBuffer);
+    return SHA256(message).toString();
   } catch (error) {
     console.error('SHA-256 hashing failed:', error);
     throw error;
@@ -47,10 +33,9 @@ export const sha256 = async (message) => {
 };
 
 // Double SHA-256 hash (used in Bitcoin)
-export const hash256 = async (message) => {
+export const hash256 = (message) => {
   try {
-    const firstHash = await sha256(message);
-    return await sha256(firstHash);
+    return SHA256(SHA256(message)).toString();
   } catch (error) {
     console.error('Double SHA-256 hashing failed:', error);
     throw error;
