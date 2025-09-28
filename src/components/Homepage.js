@@ -144,9 +144,12 @@ const Homepage = () => {
             </div>
           </div>
           <nav className="header-nav">
+            <Link to="/bitcoin-sovereign-academy" className="header-nav-link">
+              Academy
+            </Link>
             {hasStarted && (
-              <IconButton 
-                onClick={() => setShowResetConfirm(true)} 
+              <IconButton
+                onClick={() => setShowResetConfirm(true)}
                 icon={<RotateCcw size={16} />}
                 tooltip="Reset Progress"
                 size="sm"
