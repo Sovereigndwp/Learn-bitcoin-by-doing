@@ -7,6 +7,7 @@ import Homepage from './components/Homepage';
 import ModuleLayout from './components/ModuleLayout';
 import AboutMe from './components/AboutMe';
 import LessonView from './components/LessonView';
+import BitcoinSovereignAcademy from './pages/BitcoinSovereignAcademy';
 import './styles/globalTheme.css';
 import './styles/hierarchicalSystem.css'; /* Professional visual hierarchy system */
 import './styles/modernComponents.css';
@@ -45,6 +46,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/about" element={<ModuleLayout><AboutMe /></ModuleLayout>} />
+              <Route path="/bitcoin-sovereign-academy" element={<BitcoinSovereignAcademy />} />
               
               {/* Module overview routes - Temporary fallback to existing modules */}
               <Route path="/module/wake-up-call" element={<ModuleLayout><MoneyModule /></ModuleLayout>} />
